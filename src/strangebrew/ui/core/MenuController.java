@@ -18,6 +18,7 @@ public class MenuController extends Controller {
 	public MenuController(MenuView aView, MainController parent) {
 		super(aView);
 		myContents = aView;
+		myParent = parent;
 	}
 
 	public void init() {
@@ -39,7 +40,18 @@ public class MenuController extends Controller {
       }
       if (myContents.getOpenItem().isSelected()) {
 		ImportXml imp = new ImportXml(myContents.getOpenFilename());
-		myParent.setRecipe(imp.handler.getRecipe());	
+
+		try {
+			Recipe recipe = imp.handler.getRecipe();
+			if (recipe != null) {
+				myParent.setRecipe(recipe);
+			} else {
+				System.out.println("Recipe is null for some reason.");
+			}
+		} catch(Exception e) {
+			System.out.print("Problem loading ");
+			System.out.println(myContents.getOpenFilename());
+		}
       }
 	}
 	

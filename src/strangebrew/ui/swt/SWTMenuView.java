@@ -72,7 +72,8 @@ public class SWTMenuView extends MenuView {
 	
 	public String getOpenFilename() {
 		myOpenFileDialog.open();
-		return myOpenFileDialog.getFileName();
+		return myOpenFileDialog.getFilterPath().concat("/").concat(
+				myOpenFileDialog.getFileName());
 	}
 	
 }
