@@ -6,7 +6,7 @@ import java.util.*;
 import com.mindprod.csv.*;
 
 /**
- * $Id: Database.java,v 1.8 2004/11/11 18:08:23 andrew_avis Exp $
+ * $Id: Database.java,v 1.9 2004/11/15 18:00:07 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -30,11 +30,20 @@ public class Database {
 	public ArrayList yeastDB = new ArrayList();
 	public ArrayList styleDB = new ArrayList();
 
-	public void readFermentables() {
+	public void readDB(String maltPath, 
+			String hopsPath,
+			String yeastPath,
+			String stylePath){
+		readFermentables(maltPath);
+		readHops(hopsPath);
+		readYeast(yeastPath);
+		readStyles(stylePath);
+	}
+	public void readFermentables(String maltPath) {
 		// read the fermentables from the csv file
 		try {
 			CSVReader reader = new CSVReader(new FileReader(
-					"src/strangebrew/data/malts.csv"), ',', '\"', true, false);
+					maltPath), ',', '\"', true, false);
 
 			try {
 				// get the first line and set up the index:
@@ -78,11 +87,11 @@ public class Database {
 
 	}
 
-	public void readHops() {
+	public void readHops(String hopsPath) {
 		// read the hops from the csv file
 		try {
 			CSVReader reader = new CSVReader(new FileReader(
-					"src/strangebrew/data/hops.csv"), ',', '\"', true, false);
+					hopsPath), ',', '\"', true, false);
 
 			try {
 				// get the first line and set up the index:
@@ -123,11 +132,11 @@ public class Database {
 
 	}
 
-	public void readYeast() {
+	public void readYeast(String yeastPath) {
 		// read the yeast from the csv file
 		try {
 			CSVReader reader = new CSVReader(new FileReader(
-					"src/strangebrew/data/yeast.csv"), ',', '\"', true, false);
+					yeastPath), ',', '\"', true, false);
 
 			try {
 				// get the first line and set up the index:
@@ -162,11 +171,11 @@ public class Database {
 
 	}
 
-	public void readStyles(){
+	public void readStyles(String stylePath){
 			// read the styles from the csv file
 			try {
 				CSVReader reader = new CSVReader(new FileReader(
-						"src/strangebrew/data/bjcp_styles.csv"), ',', '\"', true, false);
+						stylePath), ',', '\"', true, false);
 
 				try {
 					// get the first line and set up the index:

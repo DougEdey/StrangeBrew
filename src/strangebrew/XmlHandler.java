@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.14 2004/11/12 15:20:00 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.15 2004/11/15 18:00:07 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -266,6 +266,11 @@ public class XmlHandler extends DefaultHandler{
 					h.setAlpha(Double.parseDouble(currentAttributes.getValue(i)));
 			}
 		}
+		else if (currentElement.equalsIgnoreCase("miscingredient")){
+			r.setYeastName(s);
+			// TODO: there is more data in the yeast record, and there may be other misc ingredients
+			// figure out how to get the yeast, and parse the other data.
+		}
 		else if (currentElement.equalsIgnoreCase("title")){
 			r.setName(s);
 		}
@@ -384,6 +389,8 @@ public class XmlHandler extends DefaultHandler{
 				r.setBrewer(s);
 			} else if (currentElement.equalsIgnoreCase("MASH")) {
 				r.setMashed(Boolean.valueOf(s).booleanValue());
+			} else if (currentElement.equalsIgnoreCase("YEAST")) {
+				r.setYeastName(s);
 			}
 
 		}

@@ -1,12 +1,13 @@
 package strangebrew;
 
 /**
- * $Id: Style.java,v 1.1 2004/10/21 19:40:58 andrew_avis Exp $
+ * $Id: Style.java,v 1.2 2004/11/15 18:00:07 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  * This is a class to create a style object
  * Yes, it would be better as a struct, but what can you do?
  */
+
 public class Style {
 	
 	public String name;
@@ -178,6 +179,8 @@ public class Style {
 	    sb.append( "<DESCR>"+getDescription()+"</DESCR>\n" );
 	    return sb.toString();
 	}
+	
+	
 	
 }
 

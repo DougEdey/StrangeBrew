@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.20 2004/11/12 15:20:00 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.21 2004/11/15 18:00:07 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -46,8 +46,8 @@ public class Recipe {
 	private double totalMashLbs;
 
 	// ingredients
-	public ArrayList hops = new ArrayList();
-	public ArrayList fermentables = new ArrayList();
+	private ArrayList hops = new ArrayList();
+	private ArrayList fermentables = new ArrayList();
 	private ArrayList misc = new ArrayList();
 
 	// default constuctor
@@ -77,6 +77,8 @@ public class Recipe {
 	public double getEfficiency(){ return efficiency; }
 	public double getEstOg(){ return estOg; }	
 	public double getEstFg(){ return estFg; }
+	public ArrayList getFermentablesList() { return fermentables; }
+	public ArrayList getHopsList() { return hops; }
 	public String getHopUnits(){ return hopUnits; }
 	public double getIbu(){ return ibu; }	
 	public String getIBUMethod(){ return ibuCalcMethod; }
@@ -93,27 +95,31 @@ public class Recipe {
 	
 
 	// Set functions:
-	public void setName(String n) {	name = n; }
+	public void addMalt(Fermentable m) { fermentables.add(m);	}
+	public void addHop(Hop h) { hops.add(h); }
+	public void addMisc(Misc m) { misc.add(m); }
+	
+	public void setAttenuation(double a) {	attenuation = a; }
+	public void setBoilMinutes(int b) { boilMinutes = b; }
 	public void setBrewer(String b) { brewer = b; }
+	public void setCreated(Date d) { created.setTime(d); }
+	public void setEfficiency(double e) { efficiency = e; }
+	public void setEstOg(double o) { estOg = o; }
+	public void setEstFg(double f) { estFg = f; }
+	public void setHopsUnits(String h) { hopUnits = h; }
+	public void setMaltUnits(String m) { maltUnits = m; }
+	public void setMashed(boolean m) { mashed = m; }
+	public void setMashRatio(double m) { mash.setMashRatio(m); }
+	public void setMashRatioU(String u) { mash.setMashRatioU(u); }
+	public void setName(String n) {	name = n; }
 	public void setPreBoil(double p) { preBoilVol.setQuantity(null, null, p); }
 	public void setPostBoil(double p) { postBoilVol.setQuantity(null, null, p); }
 	public void setPreBoilVolUnits(String v) {	preBoilVol.setQuantity( v, null, -1); }
 	public void setPostBoilVolUnits(String v) {	postBoilVol.setQuantity( v, null, -1); }
-	public void setEfficiency(double e) { efficiency = e; }
-	public void setAttenuation(double a) {	attenuation = a; }
-	public void setMashed(boolean m) { mashed = m; }
-	public void addMalt(Fermentable m) { fermentables.add(m);	}
-	public void addHop(Hop h) { hops.add(h); }
-	public void addMisc(Misc m) { misc.add(m); }
 	public void setStyle(String s) { style.setName(s); }
-	public void setBoilMinutes(int b) { boilMinutes = b; }
-	public void setHopsUnits(String h) { hopUnits = h; }
-	public void setMaltUnits(String m) { maltUnits = m; }
-	public void setMashRatio(double m) { mash.setMashRatio(m); }
-	public void setMashRatioU(String u) { mash.setMashRatioU(u); }
-	public void setCreated(Date d) { created.setTime(d); }
-	public void setEstOg(double o) { estOg = o; }
-	public void setEstFg(double f) { estFg = f; }
+	public void setYeastName(String s) { yeast.setName(s); }
+		
+	
 	/**
 	 * Handles a string of the form "d u", where d is a double
 	 * amount, and u is a string of units.  For importing the
