@@ -75,6 +75,19 @@ public class Recipe {
 	public void setMaltUnits(String m) { maltUnits = m; }
 	public void setMashRatio(double m) { mashRatio = m; }
 	public void setMashRatioU(String u) { mashRatioU = u; }
+	/**
+	 * Handles a string of the form "d u", where d is a double
+	 * amount, and u is a string of units.  For importing the
+	 * quantity attribute from QBrew xml.
+	 * @param a
+	 */
+	public void setAmountAndUnits(String a){
+		int i = a.indexOf(" ");
+		String d = a.substring(0,i);
+		String u = a.substring(i);
+		postBoilVol = Double.parseDouble(d.trim());
+		volUnits = u.trim();
+	}
 	
 	
 

@@ -220,7 +220,7 @@ public class XmlHandler extends DefaultHandler{
 					m.setPppg(Double.parseDouble(currentAttributes.getValue(i)));						
 			}
 		}
-		if (currentElement.equalsIgnoreCase("HOP")){
+		else if (currentElement.equalsIgnoreCase("HOP")){
 			h.setName(s);
 			for (int i = 0; i < currentAttributes.getLength(); i++) {
 				String str = currentAttributes.getLocalName(i); // Attr name
@@ -234,6 +234,25 @@ public class XmlHandler extends DefaultHandler{
 					h.setAlpha(Double.parseDouble(currentAttributes.getValue(i)));
 			}
 		}
+		else if (currentElement.equalsIgnoreCase("title")){
+			r.setName(s);
+		}
+		else if (currentElement.equalsIgnoreCase("brewer")){
+			r.setBrewer(s);
+		}
+		else if (currentElement.equalsIgnoreCase("style")){
+			r.setStyle(s);
+		}
+		else if (currentElement.equalsIgnoreCase("batch")){
+			for (int i = 0; i < currentAttributes.getLength(); i++) {
+				String str = currentAttributes.getLocalName(i); // Attr name
+				if ("".equalsIgnoreCase(str))
+					str = currentAttributes.getQName(i);
+				if (str.equalsIgnoreCase("quantity"))
+					r.setAmountAndUnits(currentAttributes.getValue(i));
+			}
+		}
+		
 	}
 	
 	
