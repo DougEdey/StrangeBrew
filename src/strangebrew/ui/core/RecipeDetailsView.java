@@ -33,7 +33,7 @@ public abstract class RecipeDetailsView extends View {
 	public abstract TextOutput getColourLabel();
 	public abstract TextOutput getColour();
 	public abstract TextOutput getColourPostfix();
-	public abstract TextInput getYeast();
+	public abstract Dropdown getYeast();
 	public abstract TextOutput getYeastLabel();
 	public abstract TextOutput getFGLabel();
 	public abstract NumberInput getFG();

@@ -76,7 +76,7 @@ public class RecipeDetailsController extends Controller {
 			submitOG();
 		}
 		
-		if(myContents.getYeast().isUpdated()) {
+		if(myContents.getYeast().isSelected()) {
 			submitYeast();
 		}
 
@@ -105,7 +105,7 @@ public class RecipeDetailsController extends Controller {
 		Double colour = new Double(myRecipe.getSrm());
 		myContents.getColour().set(colour.toString());
 		// TODO update Yeast dropdown when it is in recipe
-		myContents.getYeast().set("");
+		// myContents.getYeast().set(myRecipe.???);
 		myContents.getFG().set(myRecipe.getEstFg());
 	}
 	
@@ -162,9 +162,7 @@ public class RecipeDetailsController extends Controller {
 	}
 
 	private void submitYeast() {
-		if (myContents.getYeast().get() != null) {
-			// TODO Update when yeast is added to Recipe
-		}
+		// TODO Update when yeast is added to Recipe
 	}
 
 	private void submitFG() {

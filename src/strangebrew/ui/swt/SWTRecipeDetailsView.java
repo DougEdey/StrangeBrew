@@ -43,7 +43,7 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	SWTTextOutput myColour;
 	SWTTextOutput myColourPostfix;
 	SWTTextOutput myYeastLabel;
-	SWTTextInput myYeast;
+	SWTDropdown myYeast;
 	SWTTextOutput myFGLabel;
 	SWTNumberInput myFG;
 
@@ -101,7 +101,7 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		myColourPostfix.init(myContainer);
 		myYeastLabel = new SWTTextOutput();
 		myYeastLabel.init(myContainer);
-		myYeast = new SWTTextInput(myController);
+		myYeast = new SWTDropdown(myController);
 		myYeast.init(myContainer);
 		myFGLabel = new SWTTextOutput();
 		myFGLabel.init(myContainer);
@@ -330,7 +330,7 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		return myYeastLabel;
 	}
 	
-	public TextInput getYeast() {
+	public Dropdown getYeast() {
 		return myYeast;
 	}
 
