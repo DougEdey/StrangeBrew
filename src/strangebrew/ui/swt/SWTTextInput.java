@@ -15,72 +15,46 @@ import org.eclipse.swt.*;
 public class SWTTextInput extends TextInput {
 
 	Text myText;
-	TypingListener myListener;
+	MyTypingListener myListener;
+	
+	class MyTypingListener extends SWTInput {
+		SWTTextInput myTarget;
+		
+		public MyTypingListener(SWTTextInput aTarget) {
+			super();
+			myTarget = aTarget;
+		    myListener.addTo(this);
+		}
+		
+		public void addListener(TypingListener aListener) {
+			myTarget.addListener(aListener);
+		}
+		
+		public void removeListener(TypingListener aListener) {
+			myTarget.removeListener(aListener);
+		}
+		
+		public void verify() {
+			myTarget.verify();
+		}
+	}
 	
 	public SWTTextInput(Controller aController) {
 		super(aController);
 	}
 
-	class TypingListener implements SelectionListener {
 
-		SWTTextInput target;
-		boolean suspended = true;
-
-		public void addTo(SWTTextInput anInput) {
-			if (target != null) {
-				target.removeListener(this);
-			}
-			suspended = false;
-			target = anInput;
-			target.addListener(this);
-		}
-
-		public void remove() {
-			if (target != null) {
-				target.removeListener(this);
-				suspended = true;
-				target = null;
-			}
-		}
-
-		public void suspend() {
-			suspended = true;
-		}
-
-		public void resume() {
-			suspended = false;
-		}
-
-        /**
-         * Called whenever the user presses return key while in widget.
-         */
-		public void widgetDefaultSelected(SelectionEvent e) {
-			if((target != null)&&(!suspended)) {
-				target.verify();
-			}
-		}
-		
-		/**
-		 * Does nothing since we don't care about widget selection.
-		 */
-		public void widgetSelected(SelectionEvent e) {
-			// Don't really need to do anything here
-		}
-
-	}
-
-	private void addListener(TypingListener aListener) {
+	private void addListener(SelectionListener aListener) {
 		myText.addSelectionListener(aListener);
 	}
 
-	private void removeListener(TypingListener aListener) {
+	private void removeListener(SelectionListener aListener) {
 		myText.removeSelectionListener(aListener);
 	}
 
 	public void init(Composite container) {
 		myText = new Text(container, SWT.SINGLE);
-		myListener = new TypingListener();
-		myListener.addTo(this);
+		myListener = new MyTypingListener(this);
 	}
 
 	public void dispose() {
