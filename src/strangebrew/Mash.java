@@ -2,7 +2,7 @@ package strangebrew;
 
 import java.util.ArrayList;
 /**
- * $Id: Mash.java,v 1.4 2004/10/26 17:06:13 andrew_avis Exp $
+ * $Id: Mash.java,v 1.5 2004/10/26 18:00:29 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -51,8 +51,8 @@ public class Mash {
 		public int rampMin;
 		public String directions;
 
-		public double infuseVol;
-		public double decoctVol;
+		public Quantity infuseVol = new Quantity();
+		public Quantity decoctVol = new Quantity();
 
 		public MashStep(String t, double st, double et, String tu, String m, int min,
 				int rmin) {
@@ -101,6 +101,8 @@ public class Mash {
 		double endTemp = 0;
 		double waterAddedQTS = 0;
 		double waterEquiv = 0;
+		double mr = mashRatio;
+		double currentTemp = grainTemp;
 
 		double displTemp = 0;
 		double tunLoss = 0; // figure out a better way to do this, eg: themal mass
@@ -109,19 +111,18 @@ public class Mash {
 		double totalSpargeTime = 0;
 		double mashWaterQTS = 0;
 		double mashVolQTS = 0;
-		String directions;
 		String stepType;
 		int numSparge = 0;
 		String mashVolU; // gotta define this somewhere
 
 		// convert mash ratio to qts/lb if in l/kg
 		if (mashRatioU.equalsIgnoreCase("l/kg")) {
-			mashRatio *= 0.479325;
+			mr *= 0.479325;
 		}
 
 		// convert CurrentTemp to F
 		if (mashTempU == "C") {
-			grainTemp = cToF(grainTemp);
+			currentTemp = cToF(currentTemp);
 			tunLoss = tunLoss / 1.8;
 		}
 
@@ -132,23 +133,23 @@ public class Mash {
 		MashStep stp = ((MashStep) steps.get(0));
 		targetTemp = stp.startTemp;
 		endTemp = stp.endTemp;
-		strikeTemp = calcStrikeTemp(targetTemp, grainTemp, mashRatio, tunLoss);
-		waterAddedQTS = mashRatio * maltWeightLbs;
-		waterEquiv = maltWeightLbs * (0.192 + mashRatio);
-		mashVolQTS = calcMashVol(maltWeightLbs, mashRatio);
+		strikeTemp = calcStrikeTemp(targetTemp, currentTemp, mr, tunLoss);
+		waterAddedQTS = mr * maltWeightLbs;
+		waterEquiv = maltWeightLbs * (0.192 + mr);
+		mashVolQTS = calcMashVol(maltWeightLbs, mr);
 		totalMashTime += stp.minutes;
 		mashWaterQTS += waterAddedQTS;
-		stp.infuseVol = waterAddedQTS;
+		stp.infuseVol.setQuantity(null, "qt", waterAddedQTS);
 		stp.method = "infusion";
 
 		// subtract the water added from the Water Equiv so that they are correct when added in the next part of the loop
 		waterEquiv -= waterAddedQTS;
 
 		// Updated the water added
-		double waterAddedConv = stp.infuseVol;
+
 		if (tempUnits == "C")
 			strikeTemp = fToC(strikeTemp);
-		directions = "Mash in with " + waterAddedConv + " " + volUnits
+		stp.directions = "Mash in with " + stp.infuseVol.getValueAs(volUnits) + " " + volUnits
 				+ " of water at " + strikeTemp + " " + tempUnits;
 
 		// set TargetTemp to the end temp
@@ -156,7 +157,7 @@ public class Mash {
 
 		for (int i = 1; i < steps.size(); i++) {
 			stp = ((MashStep) steps.get(i));
-			grainTemp = targetTemp; // switch
+			currentTemp = targetTemp; // switch
 			targetTemp = stp.startTemp;
 
 			// do calcs
@@ -166,12 +167,12 @@ public class Mash {
 				strikeTemp = 212; // boiling water -- TODO: add from options
 
 				// Updated the water added
-				waterAddedQTS = calcWaterAddition(targetTemp, grainTemp,
+				waterAddedQTS = calcWaterAddition(targetTemp, currentTemp,
 						waterEquiv, 212);
-				waterAddedConv = waterAddedQTS;
+				stp.infuseVol.setQuantity(null, "qt", waterAddedQTS);
 				if (tempUnits == "C")
 					strikeTemp = 100;
-				directions = "Add " + waterAddedConv + " " + volUnits
+				stp.directions = "Add " + stp.infuseVol.getValueAs(volUnits) + " " + volUnits
 						+ " of water at " + strikeTemp + " " + tempUnits;
 
 				mashWaterQTS += waterAddedQTS;
@@ -186,18 +187,18 @@ public class Mash {
 				strikeTemp = 212; // boiling water
 
 				// Calculate volume (qts) of mash to remove
-				decoct = calcDecoction(targetTemp, grainTemp, waterEquiv, 212);
+				decoct = calcDecoction(targetTemp, currentTemp, waterEquiv, 212);
 
 				// Updated the decoction, convert to right units & make directions
 				double decoctConv = decoct;
-				directions = "Remove " + decoctConv + " " + volUnits
+				stp.directions = "Remove " + decoctConv + " " + volUnits
 						+ " of mash, boil, and return to mash.";
 
 			} else if (stp.method.equals("direct")) { // calculate a direct heat step
 				decoct = 0;
 				waterEquiv += waterAddedQTS; // add previous addition to get WE
 				waterAddedQTS = 0;
-				directions = "Add direct heat until mash reaches " + displTemp
+				stp.directions = "Add direct heat until mash reaches " + displTemp
 						+ " " + tempUnits + ".";
 			}
 
@@ -206,9 +207,8 @@ public class Mash {
 			} else
 				totalMashTime += stp.minutes;
 
-			stp.infuseVol = waterAddedQTS;
-			stp.directions = directions;
-			stp.decoctVol = decoct;
+			stp.infuseVol.setQuantity(null, "qt", waterAddedQTS);
+			stp.decoctVol.setQuantity(null, "qt", decoct);
 
 			// set target temp to end temp for next step
 			targetTemp = stp.endTemp;

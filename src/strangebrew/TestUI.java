@@ -8,7 +8,7 @@
 package strangebrew;
 
 /**
- * $Id: TestUI.java,v 1.16 2004/10/26 17:06:13 andrew_avis Exp $
+ * $Id: TestUI.java,v 1.17 2004/10/26 18:00:29 andrew_avis Exp $
  * @author aavis
  *
  *
@@ -39,6 +39,9 @@ public class TestUI {
 			// Import an xml recipe:
 			ImportXml imp = new ImportXml(args[0]);
 			myRecipe = imp.handler.getRecipe();		
+			myRecipe.calcMaltTotals();
+			
+			myRecipe.mash.setMaltWeight(myRecipe.getTotalMashLbs());
 			myRecipe.mash.calcMashSchedule();
 			System.out.print(myRecipe.toXML());
 			
