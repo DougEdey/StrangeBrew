@@ -9,6 +9,6 @@ package strangebrew.ui.core;
  */
 public abstract class MenuView extends View {
 
-	// Nothing here right now
+	public abstract MenuItem getFileMenu();
 	
 }

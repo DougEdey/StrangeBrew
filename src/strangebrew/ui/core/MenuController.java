@@ -21,6 +21,7 @@ public class MenuController extends Controller {
 	public void init() {
 		myView.init();
 
+		myContents.getFileMenu().set("File");
 		myView.layout();
 	}
 

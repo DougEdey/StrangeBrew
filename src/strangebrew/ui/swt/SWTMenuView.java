@@ -15,7 +15,7 @@ import strangebrew.ui.core.*;
 public class SWTMenuView extends MenuView {
 	Shell myContainer;
 	Menu myMenuBar;
-	MenuItem myItem;
+	SWTMenuItem myFileMenu;
 
 	public SWTMenuView(Shell container) {
 		myContainer = container;
@@ -24,8 +24,8 @@ public class SWTMenuView extends MenuView {
 	public void init() {
        myMenuBar = new Menu(myContainer, SWT.BAR);
        myContainer.setMenuBar(myMenuBar);
-       myItem = new MenuItem(myMenuBar, SWT.NONE);
-       myItem.setText("File");
+       myFileMenu = new SWTMenuItem(myController);
+       myFileMenu.init(myMenuBar);
 	}
 	
 	
@@ -41,6 +41,10 @@ public class SWTMenuView extends MenuView {
 	
 	public void dispose() {
         // @TODO Figure out who should dispose myContainer
+	}
+	
+	public strangebrew.ui.core.MenuItem getFileMenu() {
+		return myFileMenu;
 	}
 
 }
