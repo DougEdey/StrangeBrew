@@ -25,7 +25,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class XmlHandler extends DefaultHandler{
 	private Recipe r = null;
-	private Malt m = null; 
+	private Fermentable m = null; 
 	private Hop h = null;
 	private Attributes currentAttributes = null;
 
@@ -119,7 +119,7 @@ public class XmlHandler extends DefaultHandler{
 		}
 		else if (eName.equalsIgnoreCase("GRAIN")) {
 			// new malt
-			m = new Malt();
+			m = new Fermentable();
 		}
 		// TODO: handle new misc ingredient
 	}
@@ -143,7 +143,7 @@ public class XmlHandler extends DefaultHandler{
 		} else if (eName.equalsIgnoreCase("ITEM")) { // this is an item in a
 			// list
 			if (currentList.equals("FERMENTABLES")) {
-				m = new Malt();
+				m = new Fermentable();
 			} else if (currentList.equals("HOPS")) {
 				h = new Hop();
 			} else if (currentList.equals("MISC")) {

@@ -85,7 +85,7 @@ public class Recipe {
 	public void setVolUnits(String v) {	volUnits = v; }
 	public void setEfficiency(double e) { efficiency = e; }
 	public void setAttenuation(double a) {	attenuation = a; }
-	public void addMalt(Malt m) { malts.add(m);	}
+	public void addMalt(Fermentable m) { malts.add(m);	}
 	public void addHop(Hop h) { hops.add(h); }
 	public void setStyle(String s) { style = s; }
 	public void setBoilMinutes(int b) { boilMinutes = b; }
@@ -134,7 +134,7 @@ public class Recipe {
 
 		// first figure out the total we're dealing with
 		for (int i = 0; i < malts.size(); i++) {
-			Malt m = ((Malt) malts.get(i));
+			Fermentable m = ((Fermentable) malts.get(i));
 			maltTotalLbs += (m.amount.getValueAs("lb"));
 			if (m.mashed) // apply efficiencey
 				maltPoints += (m.pppg - 1) * m.amount.getValueAs("lb") * efficiency
@@ -242,7 +242,7 @@ public class Recipe {
 		sb.append("  <FERMENTABLES>\n");
 		
 		for (int i = 0; i < malts.size(); i++) {
-			Malt m = (Malt) malts.get(i);
+			Fermentable m = (Fermentable) malts.get(i);
 			sb.append(m.toXML());
 		}
 		sb.append("  </FERMENTABLES>\n");

@@ -1,6 +1,6 @@
 /**
  * Created on Oct 4, 2004
- * $Id: Malt.java,v 1.6 2004/10/18 01:16:02 redneckrockets Exp $
+ * $Id: Fermentable.java,v 1.1 2004/10/18 19:11:45 andrew_avis Exp $
  * @author aavis
  *
  * This is the base malt class.  It doesn't do much, except hold data
@@ -9,7 +9,7 @@
 
 package strangebrew;
 
-public class Malt {
+public class Fermentable {
 	// base data
 	public String name;
 	public double pppg;
@@ -33,7 +33,7 @@ public class Malt {
 	public double percent;
 
 	// constructors:
-	public Malt(String n, double p, double l, double a, String u) {
+	public Fermentable(String n, double p, double l, double a, String u) {
 		name = n;
 		pppg = p;
 		lov = l;
@@ -41,7 +41,7 @@ public class Malt {
 		mashed = true;
 	}
 	
-	public Malt(){
+	public Fermentable(){
 		// default constructor
 		name = "Malt";
 		pppg = 0;
