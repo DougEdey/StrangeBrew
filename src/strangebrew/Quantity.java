@@ -27,7 +27,7 @@ public class Quantity {
 		String unit;
 		double toBase;
 		
-		public Converter(String n, String a, double t) {
+		private Converter(String n, String a, double t) {
 			unit = n;
 			abrv = a;
 			toBase = t;
@@ -96,15 +96,16 @@ public class Quantity {
 		fromBase = getBaseValue(u, unit);
 		toBase = getBaseValue(u, to);
 		
-		return value *= toBase / fromBase;
+		return value * toBase / fromBase;
 	}
 	
 
 	// mutators:
-	public void convertTo(String to, String type) {
+/*	public void convertTo(String to, String type) {
 		value = getValueAs(to);
 		unit = to;
 	}
+	*/
 	
 	public void convertTemp(String to){
 		// if we're already the target temp units, or
