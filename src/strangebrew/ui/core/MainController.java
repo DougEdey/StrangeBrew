@@ -4,6 +4,8 @@
  */
 package strangebrew.ui.core;
 
+import strangebrew.Recipe;
+
 /**
  * @author mike
  *
@@ -11,16 +13,18 @@ package strangebrew.ui.core;
  */
 public class MainController extends Controller {
 	RecipeDetails myRecipeDetails;
+	Recipe myRecipe;
 	
-	public MainController(View aView) {
+	public MainController(View aView, Recipe aRecipe) {
 		super(aView);
+		myRecipe = aRecipe;
 	}
 	
 	public void init() {
 		myView.init();
 		Factory factory = myView.createChildFactory("Recipe Details");
 		RecipeDetailsView view = factory.newRecipeDetailsView();
-		myRecipeDetails = new RecipeDetails(view);
+		myRecipeDetails = new RecipeDetails(view, myRecipe);
 		myRecipeDetails.init();
 		myView.layout();
 	}

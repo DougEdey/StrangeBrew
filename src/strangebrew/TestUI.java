@@ -21,19 +21,20 @@ public class TestUI {
 
 	public static void main(String[] args) {
 
-		if (args.length > 0) {
-			if (args[0].equals("--gui")) {
-	            View view = new SWTMainView();
-	            view.init();
-	            MainController controller = new MainController(view);
-	            controller.execute();
-			}
-		}
-		
 		Recipe myRecipe = new Recipe();
 		
 		myRecipe.calcMaltTotals();
 		myRecipe.calcHopsTotals();
+
+		if (args.length > 0) {
+			if (args[0].equals("--gui")) {
+	            View view = new SWTMainView();
+	            view.init();
+	            MainController controller = new MainController(view, myRecipe);
+	            controller.execute();
+			}
+		}
+		
 		System.out.print("Recipe totals: \n");
 		System.out.print("estOG: " + myRecipe.estOg + "\n");
 		System.out.print("estFG: " + myRecipe.estFg + "\n");

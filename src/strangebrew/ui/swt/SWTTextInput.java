@@ -97,6 +97,12 @@ public class SWTTextInput extends TextInput {
 		return myText.getText();
 	}
 	
+	public void setText(String aString) {
+		if(aString != null) {
+			myText.setText(aString);
+		}
+	}
+	
 	public Text getWidget() {
 		return myText;
 	}

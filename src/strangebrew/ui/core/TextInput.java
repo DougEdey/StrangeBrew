@@ -22,6 +22,8 @@ public abstract class TextInput {
 	public abstract void clear();
 	
 	public abstract String getText();
+	
+	public abstract void setText(String aString);
 
 	public void verifyText() {
 		isUpdated = true;

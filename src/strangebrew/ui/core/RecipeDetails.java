@@ -4,6 +4,8 @@
  */
 package strangebrew.ui.core;
 
+import strangebrew.Recipe;
+
 /**
  * @author mike
  *
@@ -12,16 +14,19 @@ package strangebrew.ui.core;
 public class RecipeDetails extends Controller {
 	
 	RecipeDetailsView myContents;
+	Recipe myRecipe;
 	
-	public RecipeDetails(RecipeDetailsView aView) {
+	public RecipeDetails(RecipeDetailsView aView, Recipe aRecipe) {
 		super(aView);
 		myContents = aView;
+		myRecipe = aRecipe;
 	}
 	
 	public void init() {
 		myView.init();
 
 		myContents.getBrewerLabel().set("Brewer:");
+		populateWidgets();
 		myView.layout();
 	}
 	
@@ -34,12 +39,13 @@ public class RecipeDetails extends Controller {
 			submitBrewer();
 		}
 	}
+	
+	private void populateWidgets() {
+		myContents.getBrewer().setText(myRecipe.brewer);
+	}
 
 	private void submitBrewer() {
-		if (myContents.getBrewer().getText().equals
-				(myContents.getBrewerLabel().getText())) {
-			myContents.getBrewer().clear();
-		}
+			myRecipe.brewer = myContents.getBrewer().getText();
 	}
 	
 }
