@@ -38,6 +38,7 @@ public class RecipeDetailsController extends Controller {
 		myContents.getOGLabel().set("OG:");
 		myContents.getColourLabel().set("Colour:");
 		myContents.getColourPostfix().set("(SRM)");
+		myContents.getYeastLabel().set("Yeast:");
 
 		myView.layout();
 	}
@@ -74,6 +75,10 @@ public class RecipeDetailsController extends Controller {
 		if(myContents.getOG().isUpdated()) {
 			submitOG();
 		}
+		
+		if(myContents.getYeast().isUpdated()) {
+			submitYeast();
+		}
 
 	}
 	
@@ -96,6 +101,8 @@ public class RecipeDetailsController extends Controller {
 		myContents.getOG().set(myRecipe.estOg);
 		Double colour = new Double(myRecipe.srm);
 		myContents.getColour().set(colour.toString());
+		// TODO update Yeast dropdown when it is in recipe
+		myContents.getYeast().set("");
 	}
 	
 	public void cleanUp() {
@@ -105,6 +112,7 @@ public class RecipeDetailsController extends Controller {
 		submitAttenuation();
 		submitStyle();
 		submitOG();
+		submitYeast();
 	}
 
 	public void setRecipe(Recipe aRecipe) {
@@ -150,6 +158,12 @@ public class RecipeDetailsController extends Controller {
 
 	private void submitOG() {
 		myRecipe.estOg = myContents.getOG().get();
+	}
+
+	private void submitYeast() {
+		if (myContents.getYeast().get() != null) {
+			// TODO Update when yeast is added to Recipe
+		}
 	}
 
 }
