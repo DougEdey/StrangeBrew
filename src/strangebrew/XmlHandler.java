@@ -14,6 +14,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.util.*;
+
 /**
  * @author aavis
  *
@@ -66,48 +68,73 @@ public class XmlHandler extends DefaultHandler{
 			String qName, // qualified name
 			Attributes attrs) throws SAXException {
 		String eName = lName; // element name
+
 		if ("".equals(eName))
 			eName = qName; // namespaceAware = false
+		
+		currentElement = eName;
 
 		if (eName.equalsIgnoreCase("STRANGEBREWRECIPE")) {
 			importType = "STRANGEBREW";
 			r = new Recipe();
 			emit("StrangeBrew recipe detected.");
-		} else if (eName.equalsIgnoreCase("DETAILS")) {
+		} else if (eName.equalsIgnoreCase("RECIPE")) {
+			if (attrs != null) {
+				for (int i = 0; i < attrs.getLength(); i++) {
+					String s = attrs.getLocalName(i); // Attr name
+					if ("".equalsIgnoreCase(s))
+						s = attrs.getQName(i);
+					if (s.equalsIgnoreCase("generator")&& 
+							"qbrew".equalsIgnoreCase(attrs.getValue(i))){
+						importType = "QBREW";
+						r = new Recipe();
+						emit("QBrew recipe detected.");
+					}						
+				}
+			}
+
+		} else if (importType == "STRANGEBREW") {
+			// call SB start element
+			sbStartElement(eName);
+		}
+
+	}
+	
+	/**
+	 * Start of an element handler when we know this is a StrangeBrew recipe
+	 * 
+	 * @param eName
+	 */
+	void sbStartElement(String eName) {
+		if (eName.equalsIgnoreCase("DETAILS")) {
 			currentList = "DETAILS";
-			emit("New Recipe created");
 		} else if (eName.equalsIgnoreCase("FERMENTABLES")) {
 			currentList = "FERMENTABLES";
 		} else if (eName.equalsIgnoreCase("HOPS")) {
 			currentList = "HOPS";
-		} 
-		else if (eName.equalsIgnoreCase("MASH") && currentList == null) {
+		} else if (eName.equalsIgnoreCase("MASH") && currentList == null) {
 			currentList = "MASH";
-		} 
-		else if (eName.equalsIgnoreCase("MISC")) {
+		} else if (eName.equalsIgnoreCase("MISC")) {
 			currentList = "MISC";
-		} else if (eName.equalsIgnoreCase("ITEM") && importType == "STRANGEBREW") { // this is an item in a list
+		} else if (eName.equalsIgnoreCase("ITEM")) { // this is an item in a
+			// list
 			if (currentList.equals("FERMENTABLES")) {
 				m = new Malt();
 			} else if (currentList.equals("HOPS")) {
 				h = new Hop();
 			} else if (currentList.equals("MISC")) {
 				// TODO: new misc object
-			} 
+			}
 
-		}
-
-		else {
-			currentElement = eName;
-		}
+		} 
 	}
 
 	/**
 	 * At the end of each element, we should check if we're looking at a list.
-	 * If we are, set the list to null.  This way, we can tell if we're looking at
-	 * an element that has (stupidly) the same name as a list... eg <MASH> is
+	 * If we are, set the list to null. This way, we can tell if we're looking
+	 * at an element that has (stupidly) the same name as a list... eg <MASH>is
 	 * in the recipe (indicating whether it's mashed or not), and the name of
-	 * the mash list! 
+	 * the mash list!
 	 */
 	public void endElement(String namespaceURI, String sName, // simple name
 			String qName // qualified name
@@ -138,78 +165,79 @@ public class XmlHandler extends DefaultHandler{
 		String s = new String(buf, offset, len);
 
 		if (!s.trim().equals("") && importType == "STRANGEBREW") {
+			sbCharacters(s.trim());	
+		}
+	}
+	
+	void sbCharacters(String s){
+		if (currentList.equals("FERMENTABLES")) {
+			if (currentElement.equalsIgnoreCase("MALT")) {
+				m.setName(s);
+			} else if (currentElement.equalsIgnoreCase("AMOUNT")) {
+				m.setAmount(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("POINTS")) {
+				m.setPppg(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("COSTLB")) {
+				m.setCost( s );
+			} else if (currentElement.equalsIgnoreCase("UNITS")) {
+				m.setUnits(s);
+			} else if (currentElement.equalsIgnoreCase("LOV")) {
+				m.setLov(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("DescrLookup")) {
+				m.setDesc(s);
+			}
+		}
+		else if (currentList.equalsIgnoreCase("HOPS")) {
+			if (currentElement.equalsIgnoreCase("HOP")) {
+				h.setName(s);
+			} else if (currentElement.equalsIgnoreCase("AMOUNT")) {
+				h.setAmount(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("ALPHA")) {
+				h.setAlpha(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("UNITS")) {
+				h.setUnits(s);
+			} else if (currentElement.equalsIgnoreCase("FORM")) {
+				h.setForm(s);
+			} else if (currentElement.equalsIgnoreCase("COSTOZ")) {
+				// h.setCost( Double.parseDouble(s) );
+			} else if (currentElement.equalsIgnoreCase("ADD")) {
+				h.setAdd(s);
+			} else if (currentElement.equalsIgnoreCase("DescrLookup")) {
+				h.setDesc(s);
+			} else if (currentElement.equalsIgnoreCase("TIME")) {
+				h.setMinutes(Integer.parseInt(s));
+			}
+		}
 
-			if (currentList.equals("FERMENTABLES")) {
-				if (currentElement.equalsIgnoreCase("MALT")) {
-					m.setName(s.trim());
-				} else if (currentElement.equalsIgnoreCase("AMOUNT")) {
-					m.setAmount(Double.parseDouble(s));
-				} else if (currentElement.equalsIgnoreCase("POINTS")) {
-					m.setPppg(Double.parseDouble(s));
-				} else if (currentElement.equalsIgnoreCase("COSTLB")) {
-					m.setCost( s.trim() );
-				} else if (currentElement.equalsIgnoreCase("UNITS")) {
-					m.setUnits(s.trim());
-				} else if (currentElement.equalsIgnoreCase("LOV")) {
-					m.setLov(Double.parseDouble(s));
-				} else if (currentElement.equalsIgnoreCase("DescrLookup")) {
-					m.setDesc(s.trim());
-				}
-
+		else if (currentList.equalsIgnoreCase("DETAILS")) {
+			if (currentElement.equalsIgnoreCase("NAME")) {
+				r.setName(s);
+			} else if (currentElement.equalsIgnoreCase("EFFICIENCY")) {
+				r.setEfficiency(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("ATTENUATION")) {
+				r.setAttenuation(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("PRESIZE")) {
+				r.setPreBoil(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("SIZE")) {
+				r.setPostBoil(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("SIZE_UNITS")) {
+				r.setVolUnits(s);
+			} else if (currentElement.equalsIgnoreCase("STYLE")) {
+				r.setStyle(s);
+			} else if (currentElement.equalsIgnoreCase("BOIL_TIME")) {
+				r.setBoilMinutes(Integer.parseInt(s));
+			} else if (currentElement.equalsIgnoreCase("HOPS_UNITS")) {
+				r.setHopsUnits(s);
+			} else if (currentElement.equalsIgnoreCase("MALT_UNITS")) {
+				r.setMaltUnits(s);
+			} else if (currentElement.equalsIgnoreCase("MASH_RATIO")) {
+				r.setMashRatio(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("MASH_RATIO_U")) {
+				r.setMashRatioU(s);
+			} else if (currentElement.equalsIgnoreCase("BREWER")) {
+				r.setBrewer(s);
 			}
 
-			else if (currentList.equalsIgnoreCase("HOPS")) {
-				if (currentElement.equalsIgnoreCase("HOP")) {
-					h.setName(s.trim());
-				} else if (currentElement.equalsIgnoreCase("AMOUNT")) {
-					h.setAmount(Double.parseDouble(s));
-				} else if (currentElement.equalsIgnoreCase("ALPHA")) {
-					h.setAlpha(Double.parseDouble(s));
-				} else if (currentElement.equalsIgnoreCase("UNITS")) {
-					h.setUnits(s.trim());
-				} else if (currentElement.equalsIgnoreCase("FORM")) {
-					h.setForm(s.trim());
-				} else if (currentElement.equalsIgnoreCase("COSTOZ")) {
-					// h.setCost( Double.parseDouble(s) );
-				} else if (currentElement.equalsIgnoreCase("ADD")) {
-					h.setAdd(s.trim());
-				} else if (currentElement.equalsIgnoreCase("DescrLookup")) {
-					h.setDesc(s.trim());
-				} else if (currentElement.equalsIgnoreCase("TIME")) {
-					h.setMinutes(Integer.parseInt(s.trim()));
-				}
-			}
-
-			else if (currentList.equalsIgnoreCase("DETAILS")) {
-				if (currentElement.equalsIgnoreCase("NAME")) {
-					r.setName(s.trim());
-				} else if (currentElement.equalsIgnoreCase("EFFICIENCY")) {
-					r.setEfficiency(Double.parseDouble(s));
-				} else if (currentElement.equalsIgnoreCase("ATTENUATION")) {
-					r.setAttenuation(Double.parseDouble(s));
-				} else if (currentElement.equalsIgnoreCase("PRESIZE")) {
-					r.setPreBoil(Double.parseDouble(s));
-				} else if (currentElement.equalsIgnoreCase("SIZE")) {
-					r.setPostBoil(Double.parseDouble(s));
-				} else if (currentElement.equalsIgnoreCase("SIZE_UNITS")) {
-					r.setVolUnits(s.trim());
-				} else if (currentElement.equalsIgnoreCase("STYLE")) {
-					r.setStyle(s.trim());
-				} else if (currentElement.equalsIgnoreCase("BOIL_TIME")) {
-					r.setBoilMinutes(Integer.parseInt(s.trim()));
-				} else if (currentElement.equalsIgnoreCase("HOPS_UNITS")) {
-					r.setHopsUnits(s.trim());
-				} else if (currentElement.equalsIgnoreCase("MALT_UNITS")) {
-					r.setMaltUnits(s.trim());
-				} else if (currentElement.equalsIgnoreCase("MASH_RATIO")) {
-					r.setMashRatio(Double.parseDouble(s));
-				} else if (currentElement.equalsIgnoreCase("MASH_RATIO_U")) {
-					r.setMashRatioU(s.trim());
-				} else if (currentElement.equalsIgnoreCase("BREWER")) {
-					r.setBrewer(s.trim());
-				}
-
-			}
 		}
 	}
 
