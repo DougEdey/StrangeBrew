@@ -15,8 +15,8 @@ public class RecipeDetailsController extends Controller {
 	
 	RecipeDetailsView myContents;
 	
-	public RecipeDetailsController(RecipeDetailsView aView, Recipe aRecipe) {
-		super(aView, aRecipe);
+	public RecipeDetailsController(RecipeDetailsView aView) {
+		super(aView);
 		myContents = aView;
 	}
 	
@@ -27,7 +27,6 @@ public class RecipeDetailsController extends Controller {
 		myContents.getEfficiencyLabel().set("% Effic:");
 		myContents.getAlcoholLabel().set("% Alc:");
 		myContents.getAlcoholPostfix().set("by Volume");
-		populateWidgets();
 		myView.layout();
 	}
 	
@@ -56,6 +55,11 @@ public class RecipeDetailsController extends Controller {
 		submitEfficiency();
 	}
 
+	public void setRecipe(Recipe aRecipe) {
+		myRecipe = aRecipe;
+		populateWidgets();
+	}
+
 	private void submitBrewer() {
 		if (myContents.getBrewer().get() != null) {
 			myRecipe.brewer = myContents.getBrewer().get();
@@ -65,5 +69,7 @@ public class RecipeDetailsController extends Controller {
 	private void submitEfficiency() {
 		myRecipe.efficiency = myContents.getEfficiency().get();
 	}
+	
+	
 
 }

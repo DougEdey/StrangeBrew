@@ -14,8 +14,10 @@ import strangebrew.ui.core.*;
  */
 public class SWTMenuView extends MenuView {
 	Shell myContainer;
+	FileDialog myOpenFileDialog;
 	org.eclipse.swt.widgets.Menu myMenuBar;
 	SWTMenu myFileMenu;
+	SWTMenuItem myOpenItem;
 	SWTMenuItem myQuitItem;
 
 	public SWTMenuView(Shell container) {
@@ -23,10 +25,17 @@ public class SWTMenuView extends MenuView {
 	}
 
 	public void init() {
+		myOpenFileDialog = new FileDialog(myContainer, SWT.OPEN);
+		
        myMenuBar = new org.eclipse.swt.widgets.Menu(myContainer, SWT.BAR);
        myContainer.setMenuBar(myMenuBar);
+       
        myFileMenu = new SWTMenu();
        myFileMenu.init(myContainer, myMenuBar);
+       
+       myOpenItem = new SWTMenuItem(myController);
+       myOpenItem.init(myFileMenu.getWidget());
+       
        myQuitItem = new SWTMenuItem(myController);
        myQuitItem.init(myFileMenu.getWidget());
 	}
@@ -49,12 +58,21 @@ public class SWTMenuView extends MenuView {
 		return myFileMenu;
 	}
 	
+	public strangebrew.ui.core.MenuItem getOpenItem() {
+		return myOpenItem;
+	}
+
 	public strangebrew.ui.core.MenuItem getQuitItem() {
 		return myQuitItem;
 	}
-
+	
 	public void quit() {
 		myContainer.close();
+	}
+	
+	public String getOpenFilename() {
+		myOpenFileDialog.open();
+		return myOpenFileDialog.getFileName();
 	}
 	
 }

@@ -17,8 +17,8 @@ public class MainController extends Controller {
 	RecipeDetailsController myRecipeDetails;
 	RecipeNavigationController myRecipeNavigation;
 
-	public MainController(MainView aView, Recipe aRecipe) {
-		super(aView, aRecipe);
+	public MainController(MainView aView) {
+		super(aView);
 		myContents = aView;
 	}
 	
@@ -26,20 +26,22 @@ public class MainController extends Controller {
 		myView.init();
 		
 		MenuView mv = myContents.getMenuView();
-		myMenuController = new MenuController(mv, myRecipe);
+		myMenuController = new MenuController(mv, this);
 		myMenuController.init();
 		
 		RecipeNavigationView nv = 
 			myContents.getRecipeNavigationView();
 		myRecipeNavigation = 
-			new RecipeNavigationController(nv, myRecipe);
+			new RecipeNavigationController(nv);
 		myRecipeNavigation.init();
 		
 		RecipeDetailsView dv = 
 			myContents.getRecipeDetailsView("Recipe Details");
-		myRecipeDetails = new RecipeDetailsController(dv, myRecipe);
+		myRecipeDetails = new RecipeDetailsController(dv);
 		myRecipeDetails.init();
-		
+
+		setRecipe(new Recipe());
+
 		myView.layout();
 	}
 	
@@ -63,5 +65,12 @@ public class MainController extends Controller {
 		myMenuController.cleanUp();
 		myRecipeNavigation.cleanUp();
 		myRecipeDetails.cleanUp();
+	}
+	
+	public void setRecipe(Recipe aRecipe) {
+		myRecipe = aRecipe;
+		myMenuController.setRecipe(aRecipe);
+		myRecipeNavigation.setRecipe(aRecipe);
+		myRecipeDetails.setRecipe(aRecipe);
 	}
 }

@@ -13,8 +13,8 @@ public class RecipeNavigationController extends Controller {
 
 	RecipeNavigationView myContents;
 	
-	public RecipeNavigationController(RecipeNavigationView aView, Recipe aRecipe) {
-		super(aView, aRecipe);
+	public RecipeNavigationController(RecipeNavigationView aView) {
+		super(aView);
 		myContents = aView;
 	}
 
@@ -22,8 +22,7 @@ public class RecipeNavigationController extends Controller {
 		myView.init();
 		
 		myContents.getRecipeNameLabel().set("Recipe Name:");
-		
-		populateWidgets();
+
 		myView.layout();
 	}
 
@@ -43,6 +42,11 @@ public class RecipeNavigationController extends Controller {
 	
 	public void cleanUp() {
 		submitRecipeName();
+	}
+	
+	public void setRecipe(Recipe aRecipe) {
+		myRecipe = aRecipe;
+		populateWidgets();
 	}
 	
 	public void submitRecipeName() {

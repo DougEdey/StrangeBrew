@@ -8,14 +8,17 @@ public abstract class Controller {
 	protected Recipe myRecipe;
 
 	
-	public Controller(View aView, Recipe aRecipe) {
+	public Controller(View aView) {
 		myView = aView;
-		myRecipe = aRecipe;
 		aView.setController(this);
 	}
 	public abstract void init();
 	public abstract void dispose();
 	public abstract void execute();
 	public abstract void cleanUp();
+	public abstract void setRecipe(Recipe aRecipe);
+	public Recipe getRecipe() {
+		return myRecipe;
+	}
 	
 }
