@@ -9,5 +9,6 @@ package strangebrew.ui.core;
  */
 public abstract class RecipeNavigationView extends View {
 
-	// Currently no widgets to worry about.
+	public abstract TextInput getRecipeName();
+	public abstract TextOutput getRecipeNameLabel();
 }

@@ -52,7 +52,7 @@ public class RecipeDetailsController extends Controller {
 	}
 
 	private void submitBrewer() {
-			myRecipe.brewer = myContents.getBrewer().get();
+		myRecipe.brewer = myContents.getBrewer().get();
 	}
 
 	private void submitEfficiency() {

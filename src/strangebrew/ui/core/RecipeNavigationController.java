@@ -20,6 +20,9 @@ public class RecipeNavigationController extends Controller {
 
 	public void init() {
 		myView.init();
+		
+		myContents.getRecipeNameLabel().set("Recipe Name:");
+		
 		populateWidgets();
 		myView.layout();
 	}
@@ -29,11 +32,17 @@ public class RecipeNavigationController extends Controller {
 	}
 	
 	public void populateWidgets() {
-		// Nothing to do yet.
+		myContents.getRecipeName().set(myRecipe.name);
 	}
 
 	public void execute() {
-		// Nothing to do yet.
+		if(myContents.getRecipeName().isUpdated()) {
+			submitRecipeName();
+		}
+	}
+	
+	public void submitRecipeName() {
+		myRecipe.name = myContents.getRecipeName().get();
 	}
 
 }
