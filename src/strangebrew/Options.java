@@ -1,4 +1,5 @@
 /*
+ * $ld$
  * Created on Oct 6, 2004
  *
  * To change the template for this generated file go to
@@ -26,30 +27,40 @@ import java.io.*;
 public class Options {
 	//	declare global variables, set hard defaults		
 	final boolean DEBUG = true;
-	public Properties p;
+	private Properties props;
+	private String type;
 	
-	// constructor
+	// default constructor, create options for a recipe
 	public Options(){
+		type = "strangebrew";
 		Properties d = new Properties();
 		setDefaults(d);
-		p = new Properties(d);
+		props = new Properties(d);
+		loadProperties();
 	}
 	
-	public void loadProperties() {		
+	// constructor for other option types
+	public Options(String t){
+		type = t;
+		Properties d = new Properties();
+		setDefaults(d);
+		props = new Properties(d);
+		loadProperties();
+	}
+	
+	private void loadProperties() {		
 		try {	
 			
 			String path =
-				getClass()
-					.getProtectionDomain()
-					.getCodeSource()
-					.getLocation()
-					.toString()
-					.substring(6);
-			p.load(new FileInputStream(path + "\\strangebrew.ini"));
-			if (DEBUG) {
-
-				System.out.println("ini file read. Contents: \n");
-				p.list(System.out);
+				getClass().getProtectionDomain().getCodeSource()
+					.getLocation().toString().substring(6);
+			File inputFile = new File(path + "\\" + type + ".ini");
+			if (inputFile.exists()){			
+				props.load(new FileInputStream(inputFile));
+				if (DEBUG) {
+					System.out.println(type + ".ini file read. Contents: \n");
+					props.list(System.out);
+				}
 			}
 		}
 		catch (Exception e) {
@@ -67,87 +78,102 @@ public class Options {
 					  .getLocation()
 					  .toString()
 					  .substring(6);
-		  FileOutputStream out = new FileOutputStream(path + "\\strangebrew.ini");
-		  p.store(out, "/* properties updated */");
+		  FileOutputStream out = new FileOutputStream(path + "\\" + type +".ini");
+		  props.store(out, "/* properties updated */");
 		  }
 		catch (Exception e) {
 		  System.out.println(e);
 		  }
 	}
 
-	void setDefaults(Properties p) {
-		p.put("optIBUCalcMethod", "Tinseth");
-		p.put("optAlcCalcMethod", "Volume");
-		p.put("optEvapCalcMethod", "Constant");
-		p.put("optSizeUnits", "gallons US");
-		p.put("optMaltUnits", "pounds");
-		p.put("optHopsUnits", "ounces");
-		p.put("optMashVolUnits", "gallons US");
-		p.put("optMashTempUnits", "F");
-		p.put("optPrimingSugar", "dextrose");
-		p.put("optSugarUnits", "grams");
-		p.put("optBottleUnits", "ml");
-		p.put("optCarbTempU", "F");
-		p.put("optMashRatioUnits", "qt/lb");
-		p.put("optSourceWater", "");
-		p.put("optTargetWater", "");
-		p.put("optFirstScreen", "");
-		p.put("optColourMethod", "SRM");
-		p.put("optBrewer", "Your Name");
-		p.put("optStreet", "Your Street");
-		p.put("optCity", "Your City");
-		p.put("optProv", "Your State/Prov");
-		p.put("optCode", "Your zip/postal code");
-		p.put("optPhone", "Your Phone");
-		p.put("optClub", "Your Club");
-		p.put("optCountry", "Your Country");
-		p.put("optEmail", "Your Email");
-		p.put("optMaltSortOrder", "By Name");
-		p.put("optBrewDayStart", "10:00");
+	private void setDefaults(Properties d) {
 
-		// numerical
-		p.put("optEfficiency", "75");
-		p.put("optAttenuation", "75");
-		p.put("optEvaporation", "1.5");
-		p.put("optSize", "5");
-		p.put("optMashRatio", "1.25");
-		p.put("optGrainTemp", "68");
-		p.put("optPelletHopsPct", "6");
-		p.put("optMiscCost", "5.0");
-		p.put("optBottleSize", "341");
-		p.put("optBottleTemp", "68");
-		p.put("optServeTemp", "45");
-		p.put("optVolsCO2", "2.4");
-		p.put("optBoilTime", "60");
-		p.put("optTunLossF", "3");
-		p.put("optKettleLoss", "1");
-		p.put("optTrubLoss", "1");
-		p.put("optMiscLoss", "1");
-		p.put("optDryHopTime", "");
-		p.put("optFWHTime", "1");
-		p.put("optMashHopTime", "2");
-		p.put("optHopsUtil", "4.15");
-		p.put("optBoilTempF", "212");
+		if (type.equals("strangebrew")) {
+			
+			// Strings:
+			d.put("optIBUCalcMethod", "Tinseth");
+			d.put("optAlcCalcMethod", "Volume");
+			d.put("optEvapCalcMethod", "Constant");
+			d.put("optSizeUnits", "gallons US");
+			d.put("optMaltUnits", "pounds");
+			d.put("optHopsUnits", "ounces");
+			d.put("optMashVolUnits", "gallons US");
+			d.put("optMashTempUnits", "F");
+			d.put("optPrimingSugar", "dextrose");
+			d.put("optSugarUnits", "grams");
+			d.put("optBottleUnits", "ml");
+			d.put("optCarbTempU", "F");
+			d.put("optMashRatioUnits", "qt/lb");
+			d.put("optSourceWater", "");
+			d.put("optTargetWater", "");
+			d.put("optFirstScreen", "");
+			d.put("optColourMethod", "SRM");
+			d.put("optBrewer", "Your Name");
+			d.put("optStreet", "Your Street");
+			d.put("optCity", "Your City");
+			d.put("optProv", "Your State/Prov");
+			d.put("optCode", "Your zip/postal code");
+			d.put("optPhone", "Your Phone");
+			d.put("optClub", "Your Club");
+			d.put("optCountry", "Your Country");
+			d.put("optEmail", "Your Email");
+			d.put("optMaltSortOrder", "By Name");
+			d.put("optBrewDayStart", "10:00");
 
-		// ints
-		p.put("optRed", "8");
-		p.put("optGreen", "10");
-		p.put("optBlue", "20");
-		p.put("optPrepTime", "31");
-		p.put("optSpargeTime", "60");
-		p.put("optGetToBoilTime", "45");
-		p.put("optChillTime", "45");
-		p.put("optCleanTime", "120");
+			// Doubles:
+			d.put("optEfficiency", "75");
+			d.put("optAttenuation", "75");
+			d.put("optEvaporation", "1.5");
+			d.put("optPostBoilVol", "5");
+			d.put("optPreBoilVol", "6");
+			d.put("optMashRatio", "1.25");
+			d.put("optGrainTemp", "68");
+			d.put("optPelletHopsPct", "6");
+			d.put("optMiscCost", "5.0");
+			d.put("optBottleSize", "341");
+			d.put("optBottleTemp", "68");
+			d.put("optServeTemp", "45");
+			d.put("optVolsCO2", "2.4");
+			d.put("optBoilTime", "60");
+			d.put("optTunLossF", "3");
+			d.put("optKettleLoss", "1");
+			d.put("optTrubLoss", "1");
+			d.put("optMiscLoss", "1");
+			d.put("optDryHopTime", "");
+			d.put("optFWHTime", "1");
+			d.put("optMashHopTime", "2");
+			d.put("optHopsUtil", "4.15");
+			d.put("optBoilTempF", "212");
 
-		// boleans:
-		p.put("optMash", "true");
-		p.put("optKegged", "true");
-		p.put("optColourEfficiency", "false");
+			// ints
+			d.put("optRed", "8");
+			d.put("optGreen", "10");
+			d.put("optBlue", "20");
+			d.put("optPrepTime", "31");
+			d.put("optSpargeTime", "60");
+			d.put("optGetToBoilTime", "45");
+			d.put("optChillTime", "45");
+			d.put("optCleanTime", "120");
+			d.put("optBoilTime", "60");
+
+			// boleans:
+			d.put("optMash", "true");
+			d.put("optKegged", "true");
+			d.put("optColourEfficiency", "false");
+		}
 
 	}
 	
 	public String getProperty(String key){
-			return p.getProperty(key);
+			return props.getProperty(key);
+	}
+	
+	public double getDProperty(String key){
+		return Double.parseDouble(props.getProperty(key));
+	}
+	
+	public int getIProperty(String key){
+		return Integer.parseInt(props.getProperty(key));
 	}
 
 }

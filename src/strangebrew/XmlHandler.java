@@ -1,6 +1,7 @@
 /*
+ * $ld$
  * Created on Oct 14, 2004
- *
+ * 
  * This class is the "content handler" for xml input.
  * Each start and end of an element, document, content, etc. is
  * captured by the event handlers, and we use them to "build" a
@@ -14,13 +15,13 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.util.*;
-
 /**
  * @author aavis
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * This class handles XML import.
+ * Currently it handles StrangeBrew 1.8 and QBrew formats.
+ * TODO: handle misc ingredients
+ * TODO: handle mash info
  */
 public class XmlHandler extends DefaultHandler{
 	private Recipe r = null;
@@ -60,10 +61,10 @@ public class XmlHandler extends DefaultHandler{
 
 	/**
 	 * This method is called every time we encounter a new element
-	 * TODO: To handle other xml import types, we should check only for 
+	 * To handle other xml import types, we check for 
 	 * a "signpost" element that indicates the file type, then
 	 * call out to the appropriate element handler for that file type.
-	 * Right now we only look for STRANGEBREWRECIPE.
+	 * 
 	 */
 	public void startElement(String namespaceURI, String lName, // local unit
 			String qName, // qualified unit

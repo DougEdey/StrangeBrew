@@ -1,4 +1,5 @@
 /*
+ * $ld$
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -8,58 +9,75 @@ import java.util.*;
 
 public class Recipe {
 
-	public String name;
-	public String brewer;
-	public double estOg;
-	public double estFg;
-	public double ibu;
-	public double srm;
-	public double preBoilVol;
-	public double postBoilVol;
-	public String volUnits;
-	public double efficiency;
-	public int boilMinutes;
-	public double attenuation;
-	public String style; // change to Style object later
-	public String hopUnits;
-	public String maltUnits;
-	public double mashRatio;
-	public String mashRatioU;
+	private String name;
+	private String brewer;
+	private double estOg;
+	private double estFg;
+	private double ibu;
+	private double srm;
+	private double preBoilVol;
+	private double postBoilVol;
+	private String volUnits;
+	private double efficiency;
+	private int boilMinutes;
+	private double attenuation;
+	private String style; // change to Style object later
+	private String hopUnits;
+	private String maltUnits;
+	private double mashRatio;
+	private String mashRatioU;
 
 	// calculated:
-	public GregorianCalendar created;
-	public double alcohol;
-	public double totalMaltCost;
+	private GregorianCalendar created;
+	private double alcohol;
+	private double totalMaltCost;
 
 	// ingredients
 	// implement arrayList later
-	ArrayList hops = new ArrayList();
+	private ArrayList hops = new ArrayList();
 
-	ArrayList malts = new ArrayList();
+	private ArrayList malts = new ArrayList();
 
-	// test constuctor
+	// default constuctor
 	public Recipe() {
-		// this is just a placeholder until we can
-		// figure the recipe loader
-		// and get the options setup
+		
+		Options o = new Options();
 		name = "My Recipe";
-		efficiency = 75;
-		preBoilVol = 6;
-		postBoilVol = 5;
-		attenuation = 75;
-		boilMinutes = 60;
-
-		/*
-		 * malts.add( new Malt("Pale Ale", 1.036, 3, 8, "lbs")); malts.add( new
-		 * Malt("Carastan", 1.035, 34, 0.5, "lbs")); malts.add( new Malt("Wheat
-		 * Malt", 1.039, 1.7, 0.5, "lbs"));
-		 * 
-		 * hops.add ( new Hop("Saaz", 3.5, 2, 60) ); hops.add ( new Hop("Saaz",
-		 * 3.5, 2, 45) ); hops.add ( new Hop("Saaz", 3.5, 2, 15) );
-		 */
+		created = new GregorianCalendar();
+		efficiency = o.getDProperty("optEfficiency");
+		preBoilVol = o.getDProperty("optEfficiency");
+		postBoilVol = o.getDProperty("optEfficiency");
+		attenuation = o.getDProperty("optAttenuation");
+		boilMinutes = o.getIProperty("optBoilTime");
+		preBoilVol = o.getDProperty("optPreBoilVol");;
+		postBoilVol = o.getDProperty("optPostBoilVol");
+		volUnits = o.getProperty("optVolUnits");
 
 	}
+	
+	// Get functions:
+	public String getName(){ return name; }	
+	public String getBrewer(){ return brewer; }	
+	public double getEstOg(){ return estOg; }	
+	public double getEstFg(){ return estFg; }	
+	public double getIbu(){ return ibu; }	
+	public double getSrm(){ return srm; }
+	public double getPreBoilVol(){ return preBoilVol; }
+	public double getPostBoilVol(){ return postBoilVol; }
+	public String getVolUnits(){ return volUnits; }
+	public double getEfficiency(){ return efficiency; }
+	public int getBoilMinutes(){ return boilMinutes; }
+	public double getAttenuation(){ return attenuation; }
+	public String getStyle(){ return style; } 
+	public String getHopUnits(){ return hopUnits; }
+	public String getMaltUnits(){ return maltUnits; }
+	public double getMashRatio(){ return mashRatio; }
+	public String getMashRatioU(){ return mashRatioU; }
+	public GregorianCalendar getCreated(){ return created; }
+	public double getAlcohol(){ return alcohol; }
+	public double getTotalMaltCost(){ return totalMaltCost; }
 
+	// Set functions:
 	public void setName(String n) {	name = n; }
 	public void setBrewer(String b) { brewer = b; }
 	public void setPreBoil(double p) { preBoilVol = p; }
@@ -75,6 +93,9 @@ public class Recipe {
 	public void setMaltUnits(String m) { maltUnits = m; }
 	public void setMashRatio(double m) { mashRatio = m; }
 	public void setMashRatioU(String u) { mashRatioU = u; }
+	public void setCreated(Date d) { created.setTime(d); }
+	public void setEstOg(double o) { estOg = o; }
+	public void setEstFg(double f) { estFg = f; }
 	/**
 	 * Handles a string of the form "d u", where d is a double
 	 * amount, and u is a string of units.  For importing the
@@ -92,15 +113,15 @@ public class Recipe {
 	
 
 	/**
-	 * Calculate all the malt totals from the array of malt objects TODO:
-	 * support multiple units (this is why we use maltTotalLbs) I still have to
-	 * figure out a "conversion" interface to do this Other things to implement: -
+	 * Calculate all the malt totals from the array of malt objects 
+	 * TODO:  Other things to implement: -
 	 * cost tracking - hopped malt extracts (IBUs) - the % that this malt
 	 * represents - error checking
 	 * 
 	 * @return
 	 */
 
+	// Calc functions.  We'll want to hide these soon.
 	public void calcMaltTotals() {
 
 		double og = 0;
@@ -162,7 +183,8 @@ public class Recipe {
 
 	}
 
-	double calcColour(double lov) {
+	// private calculation functions:
+	private double calcColour(double lov) {
 		// calculates SRM based on MCU (degrees LOV)
 		double colour = 0;
 		if (lov > 0)
@@ -173,7 +195,7 @@ public class Recipe {
 
 	}
 
-	void calcAlcohol(String method) {
+	private void calcAlcohol(String method) {
 		double oPlato = sGToPlato(estOg);
 		double fPlato = sGToPlato(estFg);
 		double q = 0.22 + 0.001 * oPlato;
@@ -184,8 +206,9 @@ public class Recipe {
 
 	}
 
-	double sGToPlato(double sg) { // function to convert a value in specific
-								  // gravity as plato
+	private double sGToPlato(double sg) { 
+		// function to convert a value in specific
+		// gravity as plato
 		// equation based on HBD#3204 post by AJ DeLange
 		double Plato;
 		Plato = -616.989 + 1111.488 * sg - 630.606 * sg * sg + 136.10305 * sg
@@ -193,7 +216,7 @@ public class Recipe {
 		return Plato;
 	}
 
-	double calcTinseth(double amount, double size, double sg, double time,
+	private double calcTinseth(double amount, double size, double sg, double time,
 			double aa, double HopsUtil) {
 		double daautil; // decimal alpha acid utilization
 		double bigness; // bigness factor
