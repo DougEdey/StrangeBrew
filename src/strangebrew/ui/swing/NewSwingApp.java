@@ -37,6 +37,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import javax.swing.JTextArea;
+import java.awt.GridLayout;
+import javax.swing.JSlider;
 /**
  * This code was generated using CloudGarden's Jigloo SWT/Swing GUI Builder,
  * which is free for non-commercial use. If Jigloo is being used commercially
@@ -61,16 +64,6 @@ public class NewSwingApp extends javax.swing.JFrame {
 		}
 	}
 
-	{
-		//Set Look & Feel
-		try {
-			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager
-					.getCrossPlatformLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	private JMenuItem helpMenuItem;
 	private JMenu jMenu5;
 	private JMenuItem deleteMenuItem;
@@ -90,6 +83,20 @@ public class NewSwingApp extends javax.swing.JFrame {
 	private JMenuItem exitMenuItem;
 	private JSeparator jSeparator2;
 	private JLabel lblAlc;
+	private JSlider sldMatch;
+	private JLabel jLabel7;
+	private JLabel jLabel6;
+	private JLabel jLabel5;
+	private JLabel jLabel4;
+	private JLabel jLabel3;
+	private JLabel jLabel2;
+	private JLabel jLabel1;
+	private JTextArea txaStyles;
+	private JScrollPane jScrollPane3;
+	private JPanel jPanel2;
+	private JComboBox cmbStyle2;
+	private JLabel lblStyle2;
+	private JPanel pnlStyle;
 	private JMenuItem exportHTMLmenu;
 	private JMenu exportMenu;
 	private JScrollPane jScrollPane2;
@@ -638,6 +645,131 @@ public class NewSwingApp extends javax.swing.JFrame {
 											GridBagConstraints.NONE,
 											new Insets(0, 0, 0, 0), 0, 0));
 							lblSizeUnits.setText("Size Units");
+						}
+					}
+					{
+						pnlStyle = new JPanel();
+						FlowLayout pnlStyleLayout = new FlowLayout();
+						pnlStyle.setLayout(pnlStyleLayout);
+						jTabbedPane1.addTab("Style", null, pnlStyle, null);
+						{
+							lblStyle2 = new JLabel();
+							pnlStyle.add(lblStyle2);
+							lblStyle2.setText("Style:");
+						}
+						{
+							ComboBoxModel cmbStyle2Model = new DefaultComboBoxModel(
+								new String[] { "Item One", "Item Two" });
+							cmbStyle2 = new JComboBox();
+							pnlStyle.add(cmbStyle2);
+							cmbStyle2.setModel(cmbStyle2Model);
+						}
+						{
+							jPanel2 = new JPanel();
+							GridBagLayout jPanel2Layout1 = new GridBagLayout();
+							jPanel2Layout1.columnWeights = new double[] {0.1,0.1,0.1,0.1};
+							jPanel2Layout1.columnWidths = new int[] {7,7,7,7};
+							jPanel2Layout1.rowWeights = new double[] {0.1,0.1,0.1,0.1,0.1,0.1};
+							jPanel2Layout1.rowHeights = new int[] {7,7,7,7,7,7};
+							jPanel2.setPreferredSize(new java.awt.Dimension(179, 120));
+							jPanel2.setLayout(jPanel2Layout1);
+							pnlStyle.add(jPanel2);
+							jPanel2.setBorder(BorderFactory.createTitledBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false), "Recipe Conformance:", TitledBorder.LEADING, TitledBorder.TOP, new java.awt.Font("Dialog",0,12), new java.awt.Color(0,0,0)));
+							{
+								jLabel5 = new JLabel();
+								jPanel2.add(jLabel5, new GridBagConstraints(
+									0,
+									4,
+									1,
+									1,
+									0.0,
+									0.0,
+									GridBagConstraints.EAST,
+									GridBagConstraints.NONE,
+									new Insets(0, 0, 0, 0),
+									0,
+									0));
+								jLabel5.setText("OG:");
+								jLabel5.setBounds(74, 3, 60, 30);
+							}
+							{
+								jLabel1 = new JLabel();
+								jPanel2.add(jLabel1, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+								GridLayout jLabel1Layout = new GridLayout(1, 1);
+								jLabel1.setLayout(jLabel1Layout);
+								jLabel1.setText("Low:");
+							}
+							{
+								jLabel2 = new JLabel();
+								jPanel2.add(jLabel2, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+								jLabel2.setText("Recipe:");
+							}
+							{
+								jLabel3 = new JLabel();
+								jPanel2.add(jLabel3, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+								jLabel3.setText("High:");
+							}
+							{
+								jLabel4 = new JLabel();
+								jPanel2.add(jLabel4, new GridBagConstraints(
+									0,
+									1,
+									1,
+									1,
+									0.0,
+									0.0,
+									GridBagConstraints.EAST,
+									GridBagConstraints.NONE,
+									new Insets(0, 0, 0, 0),
+									0,
+									0));
+								jLabel4.setText("IBU:");
+							}
+							{
+								jLabel6 = new JLabel();
+								jPanel2.add(jLabel6, new GridBagConstraints(
+									0,
+									2,
+									1,
+									1,
+									0.0,
+									0.0,
+									GridBagConstraints.EAST,
+									GridBagConstraints.NONE,
+									new Insets(0, 0, 0, 0),
+									0,
+									0));
+								jLabel6.setText("Colour:");
+							}
+							{
+								jLabel7 = new JLabel();
+								jPanel2.add(jLabel7, new GridBagConstraints(
+									0,
+									3,
+									1,
+									1,
+									0.0,
+									0.0,
+									GridBagConstraints.EAST,
+									GridBagConstraints.NONE,
+									new Insets(0, 0, 0, 0),
+									0,
+									0));
+								jLabel7.setText("ABV:");
+							}
+						}
+						{
+							jScrollPane3 = new JScrollPane();
+							pnlStyle.add(jScrollPane3);
+							{
+								txaStyles = new JTextArea();
+								jScrollPane3.setViewportView(txaStyles);
+								txaStyles.setText("Matched Styles");
+							}
+						}
+						{
+							sldMatch = new JSlider();
+							pnlStyle.add(sldMatch);
 						}
 					}
 				}
