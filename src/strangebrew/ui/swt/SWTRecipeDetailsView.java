@@ -53,6 +53,8 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		myEfficiencyLabel.getWidget().setLayoutData(data3);
 		
 		FormData data4 = new FormData();
+		data4.width = 25;
+		data4.height = 10;
 		data4.left = new FormAttachment(myEfficiencyLabel.getWidget(), 5);
 		myEfficiency.getWidget().setLayoutData(data4);
 	}

@@ -8,6 +8,7 @@ import strangebrew.ui.core.NumberInput;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.*;
+import java.lang.Number.*;
 
 /**
  * @author mike
@@ -17,29 +18,31 @@ import org.eclipse.swt.*;
  */
 public class SWTNumberInput extends NumberInput {
 
-	Scale myScale;
+	Text myWidget;
 	
 	public void init(Composite aContainer) {
-		myScale = new Scale(aContainer, SWT.VERTICAL);
+		myWidget = new Text(aContainer, SWT.SINGLE);
 	}
 	
 	public void dispose() {
-		myScale.dispose();
+		myWidget.dispose();
 	}
 
 	public void clear() {
-		myScale.setSelection(0);
+		myWidget.setSelection(0);
 	}
 
 	public float get() {
-		return myScale.getSelection();
+		Float n = new Float(myWidget.getText());
+		return n.floatValue();
 	}
 
 	public void set(float aNumber) {
-		myScale.setSelection((int)aNumber);
+		Float n=new Float(aNumber);
+		myWidget.setText(n.toString());
 	}
 
-	public Scale getWidget() {
-		return myScale;
+	public Text getWidget() {
+		return myWidget;
 	}
 }
