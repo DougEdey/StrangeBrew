@@ -1,0 +1,30 @@
+Form		What		Bytes
+-------------------------------------
+a55	Name			55
+f	Alpha			4
+f	Beta			4
+C	IsNoble			1 (boolean)
+f	Cohomulone		4
+f	Myrcene			4
+f	Humulene		4
+f	Carophyllene		4
+C	Usage			1
+{
+	0x01 => Bittering
+	0x02 => Aroma
+	0x03 => Both
+}
+C	Form			1
+{
+	0x02 => Whole
+	0x12 => Plug
+	0x22 => Pellet
+}
+f	StorageFactor		4
+a155	TasteDesc		155
+a55	Origin			55
+a155	Use			155
+a159	Substitutes		159
+f	Quantity		4
+
+-------------------------------------

@@ -1,0 +1,38 @@
+Form		What		Bytes
+-------------------------------------
+a55	Name			55
+C	Type			1
+{
+	0x00 => Spice
+	0x01 => Fruit
+	0x02 => Coffee
+	0x03 => Other
+	0x04 => FiningAgent
+	0x05 => Herb
+}
+l	Time			4
+C	Where			1
+{
+	0x00 => InBoil
+	0x01 => InFermentor
+	0x02 => InMash
+}
+C	Length			1
+{
+	0x00 => InDays
+	0x01 => InMinutes
+}
+C	Units			1
+{
+	0x00 => Ounces
+	0x01 => Grams
+	0x02 => Pounds
+	0x03 => Tsp
+	0x04 => Tbsp
+	0x05 => Cups
+	0x06 => SingleUnit
+}
+f	Quantity		4
+a222	Usage			222
+a155	Comment			155
+-------------------------------------

@@ -1,0 +1,20 @@
+Form		What		Bytes
+-------------------------------------
+c	Type?			1	( 2 or 3 )	
+??	??			8 
+l	AcidRest/TempF		4
+l	AcidRest/Minutes	4
+l	ProteinRest/TempF	4
+l	ProteinRest/Minutes	4
+l	InterRest/TempF		4
+l	InterRest/Minutes	4
+l	SaccRest/TempF		4
+l	SaccRest/Minutes	4
+l	MashOut/TempF		4
+l	MashOut/Minutes		4
+l	Sparge Temp/TempF	4
+l	Sparge Temp/Minutes	4
+f	MashQTS			4
+c	??			1
+
+-------------------------------------
