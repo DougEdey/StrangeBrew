@@ -25,8 +25,10 @@ public class Malt {
 	* parallel array in recipe?
 	* Similar issue with database data
 	*/	
-	public double amount;
-	public String units;
+	
+	public Quantity amount = new Quantity();
+	// public double amount;
+	// public String units;
 	public double percent;
 
 	// constructors:
@@ -34,8 +36,7 @@ public class Malt {
 		name = n;
 		pppg = p;
 		lov = l;
-		amount = a;
-		units = u;
+		amount.setQuantity(u, null, a);
 		mashed = true;
 	}
 	
@@ -44,8 +45,7 @@ public class Malt {
 		name = "Malt";
 		pppg = 0;
 		lov = 0;
-		amount = 1.0;
-		units =  "lbs";
+		amount.setQuantity("pounds", "lb", 1.0);
 		mashed = true;
 			// I want to get options working sometime,
 			// but can't figure out how:
@@ -55,7 +55,7 @@ public class Malt {
 	
 	// setter methods:
 	public void setName(String n){ name = n; }
-	public void setAmount(double a){ amount = a; }
+	public void setAmount(double a){ amount.setQuantity(null, null, a); }
 	public void setPppg(double p){ pppg = p; }
 	public void setCost(double c){ costPerU = c; }
 	public void setCost(String c){
@@ -69,9 +69,10 @@ public class Malt {
 			costPerU = Double.parseDouble(c);
 		
 	}
-	public void setUnits(String u) { units = u; }
 	public void setLov(double l){ lov = l; }
 	public void setDesc(String d){ description = d; }
+	public void setUnits(String u){	amount.setQuantity(null, u, 0);	}
+	
 	/**
 	 * Handles a string of the form "d u", where d is a double
 	 * amount, and u is a string of units.  For importing the
@@ -82,9 +83,10 @@ public class Malt {
 		int i = a.indexOf(" ");
 		String d = a.substring(0,i);
 		String u = a.substring(i);
-		amount = Double.parseDouble(d.trim());
-		units = u.trim();
+		amount.setQuantity(null, u.trim(), Double.parseDouble(d.trim()));
 	}
+	
+	
 	
 	// Need to add the spaces and type attributes to make this
 	// backwards-compatible with SB1.8:
@@ -92,8 +94,8 @@ public class Malt {
 	    StringBuffer sb = new StringBuffer();
 	    sb.append( "    <ITEM>\n" );
 	    sb.append( "      <MALT>"+name+"</MALT>\n" );
-	    sb.append( "      <AMOUNT>"+amount+"</AMOUNT>\n" );
-	    sb.append( "      <UNITS>"+units+"</UNITS>\n" );
+	    sb.append( "      <AMOUNT>"+amount.getValue()+"</AMOUNT>\n" );
+	    sb.append( "      <UNITS>"+amount.getUnits()+"</UNITS>\n" );
 	    sb.append( "      <POINTS>"+pppg+"</POINTS>\n" );
 	    sb.append( "    </ITEM>\n" );
 	    return sb.toString();

@@ -18,17 +18,15 @@ public class Hop {
 	public String description;
 
 	// Recipe-specific values.  Not sure if they should be here.
-	public double amount;
-	public String units;
+	public Quantity amount = new Quantity();
 	public int minutes;
 
 	// Constructors:
 	public Hop(String n, double alph, double am, int m) {
 		name = n;
 		alpha = alph;
-		amount = am;
+		amount.setQuantity("grams", "gr", am);
 		minutes = m;
-		units = "gr";
 	}
 	
 	public Hop(){
@@ -38,9 +36,9 @@ public class Hop {
 	
 	// Setter methods:
 	public void setName(String n){ name = n; }
-	public void setAmount(double a){ amount = a; }
+	public void setAmount(double a){ amount.setQuantity(null, null, a); }
 	public void setAlpha(double a){ alpha = a; }
-	public void setUnits(String u){ units = u; }
+	public void setUnits(String u){ amount.setQuantity( null, u, 0); }
 	public void setForm(String f){ form = f; }
 	public void setAdd(String a){ add = a; }
 	public void setCost(double c){ costPerU = c; }
@@ -57,16 +55,15 @@ public class Hop {
 		int i = a.indexOf(" ");
 		String d = a.substring(0,i);
 		String u = a.substring(i);
-		amount = Double.parseDouble(d.trim());
-		units = u.trim();
+		amount.setQuantity(null, u.trim(), Double.parseDouble(d.trim()));
 	}
 	
 	public String toXML(){
 	    StringBuffer sb = new StringBuffer();
 	    sb.append( "    <ITEM>\n" );
 	    sb.append( "      <HOP>"+name+"</HOP>\n" );
-	    sb.append( "      <AMOUNT>"+amount+"</AMOUNT>\n" );
-	    sb.append( "      <UNITS>"+units+"</UNITS>\n" );
+	    sb.append( "      <AMOUNT>"+amount.getValueAs(amount.getUnits())+"</AMOUNT>\n" );
+	    sb.append( "      <UNITS>"+amount.getUnits()+"</UNITS>\n" );
 	    sb.append( "      <ALPHA>"+alpha+"</ALPHA>\n" );
 	    sb.append( "    </ITEM>\n" );
 	    return sb.toString();

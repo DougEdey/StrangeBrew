@@ -114,15 +114,15 @@ public class Recipe {
 		// first figure out the total we're dealing with
 		for (int i = 0; i < malts.size(); i++) {
 			Malt m = ((Malt) malts.get(i));
-			maltTotalLbs += m.amount;
+			maltTotalLbs += (m.amount.getValueAs("lb"));
 			if (m.mashed) // apply efficiencey
-				maltPoints += (m.pppg - 1) * m.amount * efficiency
+				maltPoints += (m.pppg - 1) * m.amount.getValueAs("lb") * efficiency
 						/ postBoilVol;
 			else
-				maltPoints += (m.pppg - 1) * m.amount * 100 / postBoilVol;
+				maltPoints += (m.pppg - 1) * m.amount.getValueAs("lb") * 100 / postBoilVol;
 
-			mcu += m.lov * m.amount / postBoilVol;
-			maltTotalCost += m.costPerU * m.amount;
+			mcu += m.lov * m.amount.getValueAs("lb") / postBoilVol;
+			maltTotalCost += m.costPerU * m.amount.getValueAs("lb");
 		}
 
 		// set the fields in the object
@@ -152,10 +152,10 @@ public class Recipe {
 			else
 				adjPreSize = postBoilVol;
 			aveOg = 1 + (((estOg - 1) + ((estOg - 1) / (adjPreSize / postBoilVol))) / 2);
-			ibuTotal += calcTinseth(h.amount, postBoilVol, aveOg, h.minutes,
+			ibuTotal += calcTinseth(h.amount.getValueAs("oz"), postBoilVol, aveOg, h.minutes,
 					h.alpha, 4.15);
-			hopsCostTotal += h.costPerU * h.amount;
-			hopsOzTotal += h.amount;
+			hopsCostTotal += h.costPerU * h.amount.getValueAs("oz");
+			hopsOzTotal += h.amount.getValueAs("oz");
 		}
 
 		ibu = ibuTotal;

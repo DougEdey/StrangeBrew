@@ -65,10 +65,10 @@ public class XmlHandler extends DefaultHandler{
 	 * call out to the appropriate element handler for that file type.
 	 * Right now we only look for STRANGEBREWRECIPE.
 	 */
-	public void startElement(String namespaceURI, String lName, // local name
-			String qName, // qualified name
+	public void startElement(String namespaceURI, String lName, // local unit
+			String qName, // qualified unit
 			Attributes attrs) throws SAXException {
-		String eName = lName; // element name
+		String eName = lName; // element unit
 
 		if ("".equals(eName))
 			eName = qName; // namespaceAware = false
@@ -155,8 +155,8 @@ public class XmlHandler extends DefaultHandler{
 	/**
 	 * At the end of each element, we should check if we're looking at a list.
 	 * If we are, set the list to null. This way, we can tell if we're looking
-	 * at an element that has (stupidly) the same name as a list... eg <MASH>is
-	 * in the recipe (indicating whether it's mashed or not), and the name of
+	 * at an element that has (stupidly) the same unit as a list... eg <MASH>is
+	 * in the recipe (indicating whether it's mashed or not), and the unit of
 	 * the mash list!
 	 */
 	public void endElement(String namespaceURI, String sName, // simple name
