@@ -1,10 +1,7 @@
 package strangebrew.ui.swt;
 
 import strangebrew.ui.core.*;
-import strangebrew.ui.swt.SWTInput.TypingListener;
-import strangebrew.ui.swt.SWTNumberInput.MyInput;
 
-import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.*;
 

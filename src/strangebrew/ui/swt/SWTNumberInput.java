@@ -7,7 +7,6 @@ package strangebrew.ui.swt;
 import strangebrew.ui.core.Controller;
 import strangebrew.ui.core.NumberInput;
 
-import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.*;
 
