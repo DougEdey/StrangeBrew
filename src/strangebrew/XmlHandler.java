@@ -26,6 +26,7 @@ public class XmlHandler extends DefaultHandler{
 	private Recipe r = null;
 	private Malt m = null; 
 	private Hop h = null;
+	private Attributes currentAttributes = null;
 
 	private String currentList = null; //current List name
 	private String currentElement = null; // current element name
@@ -73,6 +74,7 @@ public class XmlHandler extends DefaultHandler{
 			eName = qName; // namespaceAware = false
 		
 		currentElement = eName;
+		currentAttributes = attrs;
 
 		if (eName.equalsIgnoreCase("STRANGEBREWRECIPE")) {
 			importType = "STRANGEBREW";
@@ -96,8 +98,29 @@ public class XmlHandler extends DefaultHandler{
 		} else if (importType == "STRANGEBREW") {
 			// call SB start element
 			sbStartElement(eName);
+		} else if (importType == "QBREW") {
+			// call SB start element
+			qbStartElement(eName);
 		}
 
+	}
+	
+	void qbStartElement(String eName){
+		if (eName.equalsIgnoreCase("HOPS")) {
+			currentList = "HOPS";
+		}
+		else if (eName.equalsIgnoreCase("GRAINS")) {
+			currentList = "GRAINS";
+		}
+		else if (eName.equalsIgnoreCase("HOP")) {
+			// new hop
+			h = new Hop();
+		}
+		else if (eName.equalsIgnoreCase("GRAIN")) {
+			// new malt
+			m = new Malt();
+		}
+		// TODO: handle new misc ingredient
 	}
 	
 	/**
@@ -154,6 +177,16 @@ public class XmlHandler extends DefaultHandler{
 				currentList = null;
 			}
 		}
+		else if (importType == "QBREW"){
+			if (qName.equalsIgnoreCase("GRAIN")){
+				r.addMalt(m);
+				m = null;
+			} 
+			else if (qName.equalsIgnoreCase("HOP")){
+				r.addHop(h);
+				h = null;
+			} 
+		}
 	}
 
 	/**
@@ -166,8 +199,43 @@ public class XmlHandler extends DefaultHandler{
 
 		if (!s.trim().equals("") && importType == "STRANGEBREW") {
 			sbCharacters(s.trim());	
+		} 
+		else if (!s.trim().equals("") && importType == "QBREW") {
+				qbCharacters(s.trim());	
+			} 
+	}
+	
+	void qbCharacters(String s){
+		if (currentElement.equalsIgnoreCase("GRAIN")){
+			m.setName(s);
+			for (int i = 0; i < currentAttributes.getLength(); i++) {
+				String str = currentAttributes.getLocalName(i); // Attr name
+				if ("".equalsIgnoreCase(str))
+					str = currentAttributes.getQName(i);
+				if (str.equalsIgnoreCase("quantity"))
+					m.setAmountAndUnits(currentAttributes.getValue(i));
+				else if (str.equalsIgnoreCase("color"))
+					m.setLov(Double.parseDouble(currentAttributes.getValue(i)));
+				else if (str.equalsIgnoreCase("extract"))
+					m.setPppg(Double.parseDouble(currentAttributes.getValue(i)));						
+			}
+		}
+		if (currentElement.equalsIgnoreCase("HOP")){
+			h.setName(s);
+			for (int i = 0; i < currentAttributes.getLength(); i++) {
+				String str = currentAttributes.getLocalName(i); // Attr name
+				if ("".equalsIgnoreCase(str))
+					str = currentAttributes.getQName(i);
+				if (str.equalsIgnoreCase("quantity"))
+					h.setAmountAndUnits(currentAttributes.getValue(i));
+				else if (str.equalsIgnoreCase("time"))
+					h.setMinutes(Integer.parseInt(currentAttributes.getValue(i)));
+				else if (str.equalsIgnoreCase("alpha"))
+					h.setAlpha(Double.parseDouble(currentAttributes.getValue(i)));
+			}
 		}
 	}
+	
 	
 	void sbCharacters(String s){
 		if (currentList.equals("FERMENTABLES")) {

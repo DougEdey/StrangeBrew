@@ -1,18 +1,12 @@
-/*
+/**
  * Created on Oct 5, 2004
  *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * Base class for hops.  This object doesn't do much except hold data and
+ * get/set data.
  */
 
 package strangebrew;
 
-/**
- * @author aavis
- *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 public class Hop {
 	public String name;
 	public double alpha;
@@ -23,12 +17,12 @@ public class Hop {
 	public String add;
 	public String description;
 
-	// not sure if these should be here, probably not - add to
-	// parallel array in recipe?
+	// Recipe-specific values.  Not sure if they should be here.
 	public double amount;
 	public String units;
 	public int minutes;
 
+	// Constructors:
 	public Hop(String n, double alph, double am, int m) {
 		name = n;
 		alpha = alph;
@@ -42,6 +36,7 @@ public class Hop {
 		// TODO: fill in with preferences
 	}
 	
+	// Setter methods:
 	public void setName(String n){ name = n; }
 	public void setAmount(double a){ amount = a; }
 	public void setAlpha(double a){ alpha = a; }
@@ -51,6 +46,20 @@ public class Hop {
 	public void setCost(double c){ costPerU = c; }
 	public void setDesc(String d){ description = d; }
 	public void setMinutes(int m){ minutes = m; }
+	
+	/**
+	 * Handles a string of the form "d u", where d is a double
+	 * amount, and u is a string of units.  For importing the
+	 * quantity attribute from QBrew xml.
+	 * @param a
+	 */
+	public void setAmountAndUnits(String a){
+		int i = a.indexOf(" ");
+		String d = a.substring(0,i);
+		String u = a.substring(i);
+		amount = Double.parseDouble(d.trim());
+		units = u.trim();
+	}
 	
 	public String toXML(){
 	    StringBuffer sb = new StringBuffer();
