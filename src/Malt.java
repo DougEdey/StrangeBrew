@@ -70,12 +70,12 @@ public class Malt {
 	
 	public String toXML(){
 	    StringBuffer sb = new StringBuffer();
-	    sb.append( "<MALT>\n" );
-	    sb.append( "\t<NAME>"+name+"</NAME>\n" );
-	    sb.append( "\t<AMOUNT>"+amount+"</AMOUNT>\n" );
-	    sb.append( "\t<UNITS>"+units+"</UNITS>\n" );
-	    sb.append( "\t<POINTS>"+pppg+"</POINTS>\n" );
-	    sb.append( "</MALT>\n" );
+	    sb.append( "    <ITEM>\n" );
+	    sb.append( "      <MALT>"+name+"</MALT>\n" );
+	    sb.append( "      <AMOUNT>"+amount+"</AMOUNT>\n" );
+	    sb.append( "      <UNITS>"+units+"</UNITS>\n" );
+	    sb.append( "      <POINTS>"+pppg+"</POINTS>\n" );
+	    sb.append( "    </ITEM>\n" );
 	    return sb.toString();
 	}
 	

@@ -16,6 +16,7 @@ public class ImportXml extends DefaultHandler {
 
 	private String currentList = null; //current List name
 	private String currentElement = null; // current element name
+	private String importType = null; // the type of recipe we're importing
 
 	public static void main(String argv[]) {
 		if (argv.length != 1) {
@@ -110,9 +111,12 @@ public class ImportXml extends DefaultHandler {
 		if ("".equals(eName))
 			eName = qName; // namespaceAware = false
 
-		if (eName.equalsIgnoreCase("DETAILS")) {
-			currentList = "DETAILS";
+		if (eName.equalsIgnoreCase("STRANGEBREWRECIPE")) {
+			importType = "STRANGEBREW";
 			r = new Recipe();
+			emit("StrangeBrew recipe detected.");
+		} else if (eName.equalsIgnoreCase("DETAILS")) {
+			currentList = "DETAILS";
 			emit("New Recipe created");
 		} else if (eName.equalsIgnoreCase("FERMENTABLES")) {
 			currentList = "FERMENTABLES";
@@ -200,6 +204,8 @@ public class ImportXml extends DefaultHandler {
 					h.setAdd(s.trim());
 				} else if (currentElement.equalsIgnoreCase("DescrLookup")) {
 					h.setDesc(s.trim());
+				} else if (currentElement.equalsIgnoreCase("TIME")) {
+					h.setMinutes(Integer.parseInt(s.trim()));
 				}
 			}
 
@@ -216,6 +222,20 @@ public class ImportXml extends DefaultHandler {
 					r.setPostBoil(Double.parseDouble(s));
 				} else if (currentElement.equalsIgnoreCase("SIZE_UNITS")) {
 					r.setVolUnits(s.trim());
+				} else if (currentElement.equalsIgnoreCase("STYLE")) {
+					r.setStyle(s.trim());
+				} else if (currentElement.equalsIgnoreCase("BOIL_TIME")) {
+					r.setBoilMinutes(Integer.parseInt(s.trim()));
+				} else if (currentElement.equalsIgnoreCase("HOPS_UNITS")) {
+					r.setHopsUnits(s.trim());
+				} else if (currentElement.equalsIgnoreCase("MALT_UNITS")) {
+					r.setMaltUnits(s.trim());
+				} else if (currentElement.equalsIgnoreCase("MASH_RATIO")) {
+					r.setMashRatio(Double.parseDouble(s));
+				} else if (currentElement.equalsIgnoreCase("MASH_RATIO_U")) {
+					r.setMashRatioU(s.trim());
+				} else if (currentElement.equalsIgnoreCase("BREWER")) {
+					r.setBrewer(s.trim());
 				}
 
 			}
