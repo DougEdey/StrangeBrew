@@ -59,15 +59,10 @@ public class Malt {
 	public void setPppg(double p){ pppg = p; }
 	public void setCost(double c){ costPerU = c; }
 	public void setCost(String c){
-		CharSequence cs = "$";
-		if (c.contains(cs)){
-			
-			String newC = c.substring(1, c.length());
-			costPerU = Double.parseDouble(newC);
+		if (c.substring(0,1).equals("$")) {
+			c = c.substring(1, c.length()); // trim leading "$"
 		}
-		else
-			costPerU = Double.parseDouble(c);
-		
+		costPerU = Double.parseDouble(c);
 	}
 	public void setLov(double l){ lov = l; }
 	public void setDesc(String d){ description = d; }
