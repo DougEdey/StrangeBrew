@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.26 2004/11/19 18:52:03 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.27 2004/11/22 18:02:55 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -89,6 +89,8 @@ public class Recipe {
 	public double getSrm(){ return srm; }
 	public String getStyle(){ return style.getName(); } 
 	public Style getStyleObj(){ return style;}
+	public double getTotalHopsOz(){ return totalHopsOz; }
+	public double getTotalHopsCost(){ return totalHopsCost; }
 	public double getTotalMaltCost(){ return totalMaltCost; }
 	public double getTotalMashLbs(){ return totalMashLbs; }
 	public double getTotalMaltLbs(){ return totalMaltLbs; }
@@ -196,9 +198,9 @@ public class Recipe {
 		double fg = 0;
 		double lov = 0;
 		double maltPoints = 0;
-		double maltTotalCost = 0;
 		double mcu = 0;
 		totalMaltLbs = 0;
+		totalMaltCost = 0;
 		totalMashLbs = 0;
 
 		// first figure out the total we're dealing with
@@ -214,7 +216,7 @@ public class Recipe {
 				maltPoints += (m.getPppg() - 1) * m.getAmountAs("lb") * 100 / postBoilVol.getValueAs("gal");
 
 			mcu += m.getLov() * m.getAmountAs("lb") / postBoilVol.getValueAs("gal");
-			maltTotalCost += m.getCostPerU() * m.getAmountAs("lb");
+			totalMaltCost += m.getCostPerU() * m.getAmountAs("lb");
 		}
 		
 		// now set the malt % by weight:
@@ -222,6 +224,8 @@ public class Recipe {
 			Fermentable m = ((Fermentable) fermentables.get(i));
 			m.setPercent((m.getAmountAs("lb")/totalMaltLbs * 100));
 		}
+		
+		 
 
 		// set the fields in the object
 		estOg = (maltPoints / 100) + 1;
@@ -236,8 +240,8 @@ public class Recipe {
 	public void calcHopsTotals() {
 
 		double ibuTotal = 0;
-		double hopsOzTotal = 0;
-		double hopsCostTotal = 0;
+		totalHopsCost = 0;
+		totalHopsOz = 0;
 
 		for (int i = 0; i < hops.size(); i++) {
 			// calculate the average OG of the boil
@@ -251,14 +255,15 @@ public class Recipe {
 				adjPreSize = postBoilVol.getValueAs("gal");
 			aveOg = 1 + (((estOg - 1) + ((estOg - 1) / (adjPreSize / postBoilVol.getValueAs("gal")))) / 2);
 			if (ibuCalcMethod.equals("Tinseth"))
-				ibuTotal += calcTinseth(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, h.getMinutes(),
-					h.getAlpha(), ibuHopUtil);
+				h.setIBU(calcTinseth(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, h.getMinutes(),
+					h.getAlpha(), ibuHopUtil));
 			else if (ibuCalcMethod.equals("Rager"))
-				ibuTotal += CalcRager(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, h.getMinutes(), h.getAlpha());
+				h.setIBU(CalcRager(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, h.getMinutes(), h.getAlpha()));
 			else
-				ibuTotal += CalcGaretz(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, h.getMinutes(), preBoilVol.getValueAs("gal"), 1, h.getAlpha()); 
-			hopsCostTotal += h.getCostPerU() * h.getAmountAs("oz");
-			hopsOzTotal += h.getAmountAs("oz");
+				h.setIBU(CalcGaretz(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, h.getMinutes(), preBoilVol.getValueAs("gal"), 1, h.getAlpha())); 
+			ibuTotal += h.getIBU();
+			totalHopsCost += h.getCostPerU() * h.getAmountAs("oz");
+			totalHopsOz += h.getAmountAs("oz");
 		}
 
 		ibu = ibuTotal;
@@ -372,11 +377,13 @@ public class Recipe {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
 		sb.append("<STRANGEBREWRECIPE version = \"2.0A\">\n");
+		sb.append("  <DETAILS>\n");
 		sb.append("  <NAME>" + name + "</NAME>\n");
 		sb.append("  <STYLE>" + style.getName() + "</STYLE>\n");
 		sb.append("  <SIZE>" + postBoilVol.getValue() + "</SIZE>\n");
 		sb.append("  <SIZE_UNITS>" + postBoilVol.getUnits() + "</SIZE_UNITS>\n");
 		sb.append("  <YEAST>" + yeast.getName() + "</YEAST>\n");
+		sb.append("  </DETAILS>\n");
 		
 		// fermentables list:
 		sb.append("  <FERMENTABLES>\n");		
@@ -404,7 +411,7 @@ public class Recipe {
 		
 		sb.append(mash.toXml());
 		
-		sb.append("</RECIPE>");
+		sb.append("</STRANGEBREWRECIPE>");
 
 		return sb.toString();
 	}

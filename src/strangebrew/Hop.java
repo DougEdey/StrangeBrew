@@ -1,5 +1,5 @@
 /**
- * $Id: Hop.java,v 1.9 2004/11/12 15:20:00 andrew_avis Exp $
+ * $Id: Hop.java,v 1.10 2004/11/22 18:02:55 andrew_avis Exp $
  * Created on Oct 5, 2004
  *
  * Base class for hops.  This object doesn't do much except hold data and
@@ -47,7 +47,7 @@ public class Hop extends Ingredient{
 	    sb.append( "      <AMOUNT>"+getAmountAs(getUnits())+"</AMOUNT>\n" );
 	    sb.append( "      <UNITS>"+getUnits()+"</UNITS>\n" );
 	    sb.append( "      <ALPHA>"+alpha+"</ALPHA>\n" );
-	    sb.append( "      <DATE>"+getDate()+"</date>\n" );
+	    sb.append( "      <DATE>"+getDate()+"</DATE>\n" );
 	    sb.append( "    </ITEM>\n" );
 	    return sb.toString();
 	}

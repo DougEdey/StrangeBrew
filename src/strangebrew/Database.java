@@ -1,13 +1,14 @@
 package strangebrew;
 import java.io.EOFException;
 import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 import com.mindprod.csv.*;
 
 /**
- * $Id: Database.java,v 1.10 2004/11/16 18:11:16 andrew_avis Exp $
+ * $Id: Database.java,v 1.11 2004/11/22 18:02:54 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -40,8 +41,9 @@ public class Database {
 	public void readFermentables(String dbPath) {
 		// read the fermentables from the csv file
 		try {
+			File maltFile = new File(dbPath, "malts.csv");
 			CSVReader reader = new CSVReader(new FileReader(
-					dbPath + "malts.csv"), ',', '\"', true, false);
+					maltFile), ',', '\"', true, false);
 
 			try {
 				// get the first line and set up the index:
@@ -90,8 +92,9 @@ public class Database {
 	public void readHops(String dbPath) {
 		// read the hops from the csv file
 		try {
+			File hopsFile = new File(dbPath, "hops.csv");
 			CSVReader reader = new CSVReader(new FileReader(
-					dbPath + "hops.csv"), ',', '\"', true, false);
+					hopsFile), ',', '\"', true, false);
 
 			try {
 				// get the first line and set up the index:
@@ -138,8 +141,9 @@ public class Database {
 	public void readYeast(String dbPath) {
 		// read the yeast from the csv file
 		try {
+			File yeastFile = new File(dbPath, "yeast.csv");
 			CSVReader reader = new CSVReader(new FileReader(
-					dbPath + "yeast.csv"), ',', '\"', true, false);
+					yeastFile), ',', '\"', true, false);
 
 			try {
 				// get the first line and set up the index:
@@ -180,8 +184,10 @@ public class Database {
 	public void readStyles(String dbPath){
 			// read the styles from the csv file
 			try {
+				File styleFile = new File(dbPath, "bjcp_styles.csv");
+				System.out.println("path to styles: "+ styleFile.getAbsolutePath());
 				CSVReader reader = new CSVReader(new FileReader(
-						dbPath + "bjcp_styles.csv"), ',', '\"', true, false);
+						styleFile), ',', '\"', true, false);
 
 				try {
 					// get the first line and set up the index:

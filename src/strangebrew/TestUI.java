@@ -8,7 +8,7 @@
 package strangebrew;
 
 /**
- * $Id: TestUI.java,v 1.19 2004/11/15 18:00:07 andrew_avis Exp $
+ * $Id: TestUI.java,v 1.20 2004/11/22 18:02:54 andrew_avis Exp $
  * @author aavis
  *
  *
@@ -33,7 +33,7 @@ public class TestUI {
 		} else if (args[0].equals("--db")) {
 			// test the database loader:
 			Database db = new Database();
-			db.readStyles("C:/Program Files/eclipse/workspace/StrangeBrew/src/strangebrew/data/malts.csv");
+			db.readStyles("src/strangebrew/data");
 		
 		} else {
 			// Import an xml recipe:

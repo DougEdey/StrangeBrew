@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.7 2004/11/19 18:52:03 andrew_avis Exp $
+ * $Id: Quantity.java,v 1.8 2004/11/22 18:02:55 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -114,8 +114,8 @@ public class Quantity {
 	private double getBaseValue(Converter[] u, String n){
 		int i=0;
 		while (i < u.length
-				&& u[i].abrv != n
-				&& u[i].unit != n) {
+				&& !u[i].abrv.equalsIgnoreCase(n)
+				&& !u[i].unit.equalsIgnoreCase(n)) {
 			i++;
 		}
 		if (i >= u.length)
