@@ -29,19 +29,11 @@ public class TestUI {
 			MainController controller = new MainController(view, myRecipe);
 			controller.execute();
 		} else {
-			// this is copied from the ImportXml main method
-			// import an xml file, and write a bunch of stuff about it
-			// Dont't know how to get the recipe returned from this thing, though
-			
-			// Use an instance of the ImportXml as the SAX event handler
+			// Import an xml recipe:
 			ImportXml imp = new ImportXml(args[0]);
-			myRecipe = imp.handler.getRecipe();
-			
-		}
-		
+			myRecipe = imp.handler.getRecipe();			
+		}		
 		myRecipe.testRecipe();		
-
-}
-	
+	}	
 
 }
