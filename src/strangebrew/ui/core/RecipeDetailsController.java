@@ -30,6 +30,7 @@ public class RecipeDetailsController extends Controller {
 		myContents.getAlcoholLabel().set("% Alc:");
 		myContents.getAlcoholPostfix().set("by Volume");
 		myContents.getDateLabel().set("Date:");
+		myContents.getMashLabel().set("Mash?");
 		myView.layout();
 	}
 	
@@ -47,6 +48,9 @@ public class RecipeDetailsController extends Controller {
 		if(myContents.getDate().isUpdated()) {
 			submitDate();
 		}
+		if(myContents.getMash().isUpdated()) {
+			// TODO update this when mash is in Recipe
+		}
 	}
 	
 	private void populateWidgets() {
@@ -59,6 +63,8 @@ public class RecipeDetailsController extends Controller {
 		}
 		SimpleDateFormat df = new SimpleDateFormat();
 		myContents.getDate().set(df.format(myRecipe.created.getTime()));
+		// TODO update Mash checkbox when it is in recipe
+		myContents.getMash().set(true);
 	}
 	
 	public void cleanUp() {

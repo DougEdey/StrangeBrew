@@ -16,7 +16,7 @@ public class SWTMenuItem extends strangebrew.ui.core.widgets.MenuItem {
 	org.eclipse.swt.widgets.MenuItem myWidget;
 	MySelect mySelect;
 	
-	class MySelect extends SWTSelect {
+	class MySelect extends SWTMenuSelect {
 		SWTMenuItem myItem;
 		
 		public MySelect(SWTMenuItem anItem) {

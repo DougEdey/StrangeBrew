@@ -3,19 +3,19 @@
  */
 package strangebrew.ui.swt.widgets;
 
-import org.eclipse.swt.events.*;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.*;
-
 
 /**
  * @author mike
  *
  */
-public abstract class SWTSelect {
+public abstract class SWTButtonSelect {
 	protected ClickListener myListener;
-	protected org.eclipse.swt.widgets.MenuItem myTarget;
+	protected Button myTarget;
 	
-	public SWTSelect(org.eclipse.swt.widgets.MenuItem aTarget) {
+	public SWTButtonSelect(Button aTarget) {
 		myTarget = aTarget;
 		myListener = new ClickListener();
 	    myListener.addTo(this);
@@ -41,10 +41,10 @@ public abstract class SWTSelect {
 	
 	protected class ClickListener implements SelectionListener {
 
-		SWTSelect target;
+		SWTButtonSelect target;
 		boolean suspended = true;
 
-		public void addTo(SWTSelect anSelect) {
+		public void addTo(SWTButtonSelect anSelect) {
 			if (target != null) {
 				target.removeListener(this);
 			}

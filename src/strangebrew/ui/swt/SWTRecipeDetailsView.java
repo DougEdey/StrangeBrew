@@ -28,6 +28,8 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	SWTTextOutput myAlcoholPostfix;
 	SWTTextOutput myDateLabel;
 	SWTTextInput myDate;
+	SWTTextOutput myMashLabel;
+	SWTCheckBox myMash;
 
 	public SWTRecipeDetailsView(Composite container) {
 		myContainer = container;
@@ -52,6 +54,10 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		myDateLabel.init(myContainer);
 		myDate = new SWTTextInput(myController);
 		myDate.init(myContainer);
+		myMashLabel = new SWTTextOutput();
+		myMashLabel.init(myContainer);
+		myMash = new SWTCheckBox(myController);
+		myMash.init(myContainer);
 		
 		myLayout = new FormLayout();
 		myLayout.marginHeight = 3;
@@ -109,7 +115,7 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		setSize(myBrewer, 0, 200);
 		setSize(myAlcohol, 0, 50);
 		setSize(myEfficiency, 0, 50);
-		setSize(myDate, 0, 200);
+		setSize(myDate, 0, 120);
 		
 		align(myBrewerLabel, SWT.LEFT, null, SWT.NONE, 5);
 		align(myBrewerLabel, SWT.TOP, null, SWT.NONE, 5);
@@ -123,6 +129,11 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		align(myDateLabel, SWT.BOTTOM, myDate, SWT.BOTTOM, 0);
 		align(myDate, SWT.TOP, myBrewer, SWT.BOTTOM, 5);
 		align(myDate, SWT.LEFT, myBrewer, SWT.LEFT, 0);
+		align(myMash, SWT.TOP, myBrewer, SWT.BOTTOM, 5);
+		align(myMash, SWT.RIGHT, myBrewer, SWT.RIGHT, 10);
+		align(myMashLabel, SWT.RIGHT, myMash, SWT.LEFT, -10);
+		align(myMashLabel, SWT.BOTTOM, myMash, SWT.BOTTOM, 0);
+		
 		myContainer.layout();
 		myContainer.pack();
 	}
@@ -169,6 +180,14 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	
 	public TextInput getDate() {
 		return myDate;
+	}
+	
+	public CheckBox getMash() {
+		return myMash;
+	}
+	
+	public TextOutput getMashLabel() {
+		return myMashLabel;
 	}
 	
 }

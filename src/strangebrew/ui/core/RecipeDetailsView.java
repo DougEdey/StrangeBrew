@@ -6,9 +6,7 @@
  */
 package strangebrew.ui.core;
 
-import strangebrew.ui.core.widgets.NumberInput;
-import strangebrew.ui.core.widgets.TextInput;
-import strangebrew.ui.core.widgets.TextOutput;
+import strangebrew.ui.core.widgets.*;
 
 public abstract class RecipeDetailsView extends View {
 
@@ -21,4 +19,6 @@ public abstract class RecipeDetailsView extends View {
 	public abstract TextOutput getAlcoholPostfix();
 	public abstract TextOutput getDateLabel();
 	public abstract TextInput getDate();
+	public abstract TextOutput getMashLabel();
+	public abstract CheckBox getMash();
 }
