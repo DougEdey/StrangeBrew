@@ -8,13 +8,14 @@ import org.eclipse.swt.layout.*;
 import org.eclipse.swt.*;
 
 /**
+ * $Id: SWTMainView.java,v 1.7 2004/10/21 01:50:18 tangent_ Exp $
+ * @author mike
+ * @see strangebrew.ui.core.View#run
+ *
  * SWT version of the Controller.
  * This class should only contain functions that are used in the template
  * method run.  Additionally, it may contain functions that are used
  * privately.
- * @author mike
- * @see strangebrew.ui.core.View#run
- *
  */
 public class SWTMainView extends MainView implements ShellListener {
 
