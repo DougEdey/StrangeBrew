@@ -13,6 +13,7 @@ import strangebrew.Recipe;
  */
 public class MainController extends Controller {
 	MainView myContents;
+	MenuController myMenuController;
 	RecipeDetailsController myRecipeDetails;
 	RecipeNavigationController myRecipeNavigation;
 
@@ -23,6 +24,9 @@ public class MainController extends Controller {
 	
 	public void init() {
 		myView.init();
+		MenuView mv = myContents.getMenuView();
+		myMenuController = new MenuController(mv, myRecipe);
+		myMenuController.init();
 		RecipeNavigationView nv = 
 			myContents.getRecipeNavigationView();
 		myRecipeNavigation = 

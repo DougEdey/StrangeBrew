@@ -22,6 +22,7 @@ public class SWTMainView extends MainView {
 	FormLayout myLayout;
 	TabFolder myFolder;
 	Group myRecipeNavigationGroup;
+	Group myMenuGroup;
 
 	public SWTMainView() {
 		myDisplay = new Display();
@@ -32,6 +33,7 @@ public class SWTMainView extends MainView {
 		Display.setAppName("StrangeBrew.StrangeBrew");
 		
 		myShell = new Shell(myDisplay);
+		myShell.setText("StrangeBrew");
 	}
 	
 	public void init() {
@@ -60,8 +62,8 @@ public class SWTMainView extends MainView {
 	}
 	
 	public void layout() {
-		attach(myRecipeNavigationGroup, null, 0, 0, 0);
-		attach(myFolder, myRecipeNavigationGroup, 0, 0, 5);
+//		attach(myRecipeNavigationGroup, null, 0, 0, 0);
+		attach(myFolder, myRecipeNavigationGroup, 0, 0, 0);
 		myRecipeNavigationGroup.pack();
 		myFolder.layout();
 		myFolder.pack();
@@ -87,6 +89,10 @@ public class SWTMainView extends MainView {
 				myDisplay.sleep();
 			}
 		}
+	}
+	
+	public MenuView getMenuView() {
+		return new SWTMenuView(myShell);
 	}
 	
 	public RecipeNavigationView getRecipeNavigationView() {
