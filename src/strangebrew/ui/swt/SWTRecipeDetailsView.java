@@ -35,6 +35,10 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	SWTTextOutput myIBULabel;
 	SWTTextOutput myIBU;
 	SWTTextOutput myIBUPostfix;
+	SWTTextOutput myStyleLabel;
+	SWTTextInput myStyle;
+	SWTTextOutput myOGLabel;
+	SWTNumberInput myOG;
 
 
 	public SWTRecipeDetailsView(Composite container) {
@@ -74,6 +78,14 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		myIBU.init(myContainer);
 		myIBUPostfix = new SWTTextOutput();
 		myIBUPostfix.init(myContainer);
+		myStyleLabel = new SWTTextOutput();
+		myStyleLabel.init(myContainer);
+		myStyle = new SWTTextInput(myController);
+		myStyle.init(myContainer);
+		myOGLabel = new SWTTextOutput();
+		myOGLabel.init(myContainer);
+		myOG = new SWTNumberInput(myController);
+		myOG.init(myContainer);
 		
 		myLayout = new FormLayout();
 		myLayout.marginHeight = 3;
@@ -134,6 +146,8 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		setSize(myDate, 0, 120);
 		setSize(myAttenuation, 0, 50);
 		setSize(myIBU, 0, 50);
+		setSize(myStyle, 0, 200);
+		setSize(myOG, 0, 50);
 		
 		align(myBrewerLabel, SWT.LEFT, null, SWT.NONE, 5);
 		align(myBrewerLabel, SWT.TOP, null, SWT.NONE, 5);
@@ -161,6 +175,15 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		align(myIBU, SWT.LEFT, myAlcohol, SWT.LEFT, 0);
 		align(myIBUPostfix, SWT.LEFT, myAlcoholPostfix, SWT.LEFT, 0);
 		align(myIBUPostfix, SWT.BOTTOM, myIBU, SWT.BOTTOM, 0);
+		align(myStyleLabel, SWT.RIGHT, myStyle, SWT.LEFT, -5);
+		align(myStyleLabel, SWT.BOTTOM, myStyle, SWT.BOTTOM, 0);
+		align(myStyle, SWT.TOP, myDate, SWT.BOTTOM, 5);
+		align(myStyle, SWT.LEFT, myDate, SWT.LEFT, 0);
+		align(myOGLabel, SWT.RIGHT, myAttenuationLabel, SWT.RIGHT, 0);
+		align(myOGLabel, SWT.BOTTOM, myStyle, SWT.BOTTOM, 0);
+		align(myOG, SWT.BOTTOM, myOGLabel, SWT.BOTTOM, 0);
+		align(myOG, SWT.LEFT, myAttenuation, SWT.LEFT, 0);
+
 		
 		myContainer.layout();
 		myContainer.pack();
@@ -237,5 +260,22 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	public TextOutput getIBUPostfix() {
 		return myIBUPostfix;
 	}
+
+	public TextOutput getStyleLabel() {
+		return myStyleLabel;
+	}
+	
+	public TextInput getStyle() {
+		return myStyle;
+	}
+	
+	public TextOutput getOGLabel() {
+		return myOGLabel;
+	}
+
+	public NumberInput getOG() {
+		return myOG;
+	}
+
 
 }

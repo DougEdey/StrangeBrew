@@ -26,5 +26,11 @@ public abstract class RecipeDetailsView extends View {
 	public abstract TextOutput getIBULabel();
 	public abstract TextOutput getIBU();
 	public abstract TextOutput getIBUPostfix();
+	public abstract TextInput getStyle();
+	public abstract TextOutput getStyleLabel();
+	public abstract TextOutput getOGLabel();
+	public abstract NumberInput getOG();
+
+
 
 }

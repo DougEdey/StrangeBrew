@@ -34,6 +34,10 @@ public class RecipeDetailsController extends Controller {
 		myContents.getAttenuationLabel().set("% Atten:");
 		myContents.getIBULabel().set("IBU:");
 		myContents.getIBUPostfix().set("(Rager)");
+		myContents.getStyleLabel().set("Style:");
+		myContents.getOGLabel().set("OG:");
+
+
 		myView.layout();
 	}
 	
@@ -62,6 +66,14 @@ public class RecipeDetailsController extends Controller {
 			submitAttenuation();
 		}
 		
+		if(myContents.getStyle().isUpdated()) {
+			submitStyle();
+		}
+		
+		if(myContents.getOG().isUpdated()) {
+			submitOG();
+		}
+
 	}
 	
 	private void populateWidgets() {
@@ -79,6 +91,8 @@ public class RecipeDetailsController extends Controller {
 		myContents.getAttenuation().set(myRecipe.attenuation);
 		Double ibu = new Double(myRecipe.ibu);
 		myContents.getIBU().set(ibu.toString());
+		myContents.getStyle().set(myRecipe.style);
+		myContents.getOG().set(myRecipe.estOg);
 
 	}
 	
@@ -87,6 +101,8 @@ public class RecipeDetailsController extends Controller {
 		submitEfficiency();
 		submitDate();
 		submitAttenuation();
+		submitStyle();
+		submitOG();
 	}
 
 	public void setRecipe(Recipe aRecipe) {
@@ -122,6 +138,16 @@ public class RecipeDetailsController extends Controller {
 	
 	private void submitAttenuation() {
 		myRecipe.attenuation = myContents.getAttenuation().get();
+	}
+
+	private void submitStyle() {
+		if (myContents.getStyle().get() != null) {
+			myRecipe.brewer = myContents.getStyle().get();
+		}
+	}
+
+	private void submitOG() {
+		myRecipe.estOg = myContents.getOG().get();
 	}
 
 }
