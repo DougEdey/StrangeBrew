@@ -21,29 +21,18 @@ public class SWTNumberInput extends NumberInput {
 
 	Text myWidget;
 	
-	MyTypingListener myListener;
+	MyInput myInput;
 	
-	class MyTypingListener extends SWTInput {
-		SWTNumberInput myTarget;
+	class MyInput extends SWTInput {
+		SWTNumberInput myNumber;
 		
-		public MyTypingListener(SWTNumberInput aTarget) {
-			super();
-			myTarget = aTarget;
-		    myListener.addTo(this);
+		public MyInput(SWTNumberInput aNumber) {
+			super(aNumber.myWidget);
+			myNumber = aNumber;
 		}
 		
-		public void addListener(TypingListener aListener) {
-			myTarget.myWidget.addSelectionListener(aListener);
-			myTarget.myWidget.addFocusListener(aListener);
-		}
-		
-		public void removeListener(TypingListener aListener) {
-			myTarget.myWidget.removeSelectionListener(aListener);
-			myTarget.myWidget.removeFocusListener(aListener);
-		}
-		
-		public void verify() {
-			myTarget.verify();
+		void verify() {
+			myNumber.verify();
 		}
 	}
 	
@@ -53,7 +42,7 @@ public class SWTNumberInput extends NumberInput {
 	
 	public void init(Composite aContainer) {
 		myWidget = new Text(aContainer, SWT.SINGLE);
-		myListener = new MyTypingListener(this);
+		myInput = new MyInput(this);
 	}
 	
 	public void dispose() {

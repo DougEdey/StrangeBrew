@@ -4,6 +4,7 @@
 package strangebrew.ui.swt;
 
 import org.eclipse.swt.events.*;
+import org.eclipse.swt.widgets.*;
 
 /**
  * @author mike
@@ -12,15 +13,26 @@ import org.eclipse.swt.events.*;
 public abstract class SWTInput {
 	
 	protected TypingListener myListener;
+	protected Text myTarget;
 	
-	public SWTInput() {
+	public SWTInput(Text aTarget) {
+		myTarget = aTarget;
 		myListener = new TypingListener();
+	    myListener.addTo(this);
 	}
 	
-	protected abstract void addListener(TypingListener listener);
-	protected abstract void removeListener(TypingListener listener);
-	protected abstract void verify();
+	abstract void verify();
 	
+	public void addListener(TypingListener aListener) {
+		myTarget.addSelectionListener(aListener);
+		myTarget.addFocusListener(aListener);
+	}
+	
+	public void removeListener(TypingListener aListener) {
+		myTarget.removeSelectionListener(aListener);
+		myTarget.removeFocusListener(aListener);
+	}
+		
 	public void suspend() {
 		myListener.suspend();
 	}

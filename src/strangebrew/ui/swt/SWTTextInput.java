@@ -2,6 +2,7 @@ package strangebrew.ui.swt;
 
 import strangebrew.ui.core.*;
 import strangebrew.ui.swt.SWTInput.TypingListener;
+import strangebrew.ui.swt.SWTNumberInput.MyInput;
 
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;
@@ -16,29 +17,18 @@ import org.eclipse.swt.*;
 public class SWTTextInput extends TextInput {
 
 	Text myWidget;
-	MyTypingListener myListener;
+	MyInput myInput;
 	
-	class MyTypingListener extends SWTInput {
-		SWTTextInput myTarget;
+	class MyInput extends SWTInput {
+		SWTTextInput myText;
 		
-		public MyTypingListener(SWTTextInput aTarget) {
-			super();
-			myTarget = aTarget;
-		    myListener.addTo(this);
+		public MyInput(SWTTextInput aText) {
+			super(aText.myWidget);
+			myText = aText;
 		}
 		
-		public void addListener(TypingListener aListener) {
-			myTarget.myWidget.addSelectionListener(aListener);
-			myTarget.myWidget.addFocusListener(aListener);
-		}
-		
-		public void removeListener(TypingListener aListener) {
-			myTarget.myWidget.removeSelectionListener(aListener);
-			myTarget.myWidget.removeFocusListener(aListener);
-		}
-		
-		public void verify() {
-			myTarget.verify();
+		void verify() {
+			myText.verify();
 		}
 	}
 	
@@ -48,7 +38,7 @@ public class SWTTextInput extends TextInput {
 
 	public void init(Composite container) {
 		myWidget = new Text(container, SWT.SINGLE);
-		myListener = new MyTypingListener(this);
+		myInput = new MyInput(this);
 	}
 
 	public void dispose() {
@@ -56,9 +46,9 @@ public class SWTTextInput extends TextInput {
 	}
 
 	public void clear() {
-		myListener.suspend();
+		myInput.suspend();
 		myWidget.setText("");
-		myListener.resume();
+		myInput.resume();
 	}
 
 	public String get() {
