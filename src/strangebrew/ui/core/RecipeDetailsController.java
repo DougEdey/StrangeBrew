@@ -1,5 +1,5 @@
 /*
- * $Id: RecipeDetailsController.java,v 1.18 2004/10/21 01:59:53 tangent_ Exp $
+ * $Id: RecipeDetailsController.java,v 1.19 2004/11/16 18:11:39 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  */
@@ -108,6 +108,7 @@ public class RecipeDetailsController extends Controller {
 		// TODO update Yeast dropdown when it is in recipe
 		// myContents.getYeast().set(myRecipe.???);
 		myContents.getFG().set(myRecipe.getEstFg());
+		myContents.getIBUPostfix().set("("+myRecipe.getIBUMethod()+")");
 	}
 	
 	public void cleanUp() {
@@ -169,5 +170,7 @@ public class RecipeDetailsController extends Controller {
 	private void submitFG() {
 		myRecipe.setEstFg( myContents.getFG().get() );
 	}
+	
+
 	
 }

@@ -1,11 +1,11 @@
 /*
- * $Id: SWTMenuSelect.java,v 1.2 2004/10/21 01:53:32 tangent_ Exp $
+ * $Id: SWTMenuSelect.java,v 1.3 2004/11/16 18:11:48 andrew_avis Exp $
  * Created on Oct 15, 2004
  */
 package strangebrew.ui.swt.widgets;
 
 import org.eclipse.swt.events.*;
-import org.eclipse.swt.widgets.*;
+
 
 
 /**

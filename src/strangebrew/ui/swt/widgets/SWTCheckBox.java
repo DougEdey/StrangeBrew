@@ -1,5 +1,5 @@
 /*
- * $Id: SWTCheckBox.java,v 1.3 2004/10/21 01:56:43 tangent_ Exp $
+ * $Id: SWTCheckBox.java,v 1.4 2004/11/16 18:11:48 andrew_avis Exp $
  * Created on Oct 15, 2004
  */
 package strangebrew.ui.swt.widgets;
@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.*;
 
 import strangebrew.ui.core.Controller;
 import strangebrew.ui.core.widgets.CheckBox;
-import strangebrew.ui.swt.widgets.*;
+
 
 /**
  * @author mike

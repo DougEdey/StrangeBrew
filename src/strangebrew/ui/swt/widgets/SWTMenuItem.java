@@ -1,10 +1,10 @@
 /*
- * $Id: SWTMenuItem.java,v 1.4 2004/10/21 01:54:14 tangent_ Exp $
+ * $Id: SWTMenuItem.java,v 1.5 2004/11/16 18:11:48 andrew_avis Exp $
  * Created on Oct 15, 2004
  */
 package strangebrew.ui.swt.widgets;
 
-import org.eclipse.swt.widgets.*;
+
 import org.eclipse.swt.*;
 import strangebrew.ui.core.*;
 
