@@ -11,12 +11,12 @@ import strangebrew.Recipe;
  *
  *
  */
-public class RecipeDetails extends Controller {
+public class RecipeDetailsController extends Controller {
 	
 	RecipeDetailsView myContents;
 	Recipe myRecipe;
 	
-	public RecipeDetails(RecipeDetailsView aView, Recipe aRecipe) {
+	public RecipeDetailsController(RecipeDetailsView aView, Recipe aRecipe) {
 		super(aView);
 		myContents = aView;
 		myRecipe = aRecipe;

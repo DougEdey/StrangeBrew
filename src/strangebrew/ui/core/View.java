@@ -15,7 +15,6 @@ public abstract class View {
 	public abstract void layout();
 	public abstract void dispose();
 	public abstract void display();
-	public abstract Factory createChildFactory(String aTitle);
 
 	public Factory getFactory() {
 		return myFactory;

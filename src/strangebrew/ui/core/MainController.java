@@ -12,19 +12,20 @@ import strangebrew.Recipe;
  *
  */
 public class MainController extends Controller {
-	RecipeDetails myRecipeDetails;
+	MainView myContents;
+	RecipeDetailsController myRecipeDetails;
 	Recipe myRecipe;
 	
-	public MainController(View aView, Recipe aRecipe) {
+	public MainController(MainView aView, Recipe aRecipe) {
 		super(aView);
+		myContents = aView;
 		myRecipe = aRecipe;
 	}
 	
 	public void init() {
 		myView.init();
-		Factory factory = myView.createChildFactory("Recipe Details");
-		RecipeDetailsView view = factory.newRecipeDetailsView();
-		myRecipeDetails = new RecipeDetails(view, myRecipe);
+		RecipeDetailsView newView = myContents.getRecipeDetailsView();
+		myRecipeDetails = new RecipeDetailsController(newView, myRecipe);
 		myRecipeDetails.init();
 		myView.layout();
 	}

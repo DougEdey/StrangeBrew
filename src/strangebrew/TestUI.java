@@ -25,7 +25,7 @@ public class TestUI {
 			System.err.println("Usage: filename or --gui");
 			System.exit(1);
 		} else if (args[0].equals("--gui")) {
-			View view = new SWTMainView();
+			MainView view = new SWTMainView();
 			view.init();
 			MainController controller = new MainController(view, myRecipe);
 			controller.execute();

@@ -15,7 +15,7 @@ import org.eclipse.swt.*;
  * @see strangebrew.ui.core.View#run
  *
  */
-public class SWTMainView extends View {
+public class SWTMainView extends MainView {
 
 	Display myDisplay;
 	Shell myShell;
@@ -73,13 +73,14 @@ public class SWTMainView extends View {
 		}
 	}
 
-	public Factory createChildFactory(String aTitle) {
+	public RecipeDetailsView getRecipeDetailsView() {
 		TabItem details = new TabItem(myFolder, SWT.NONE);
 		
-		details.setText(aTitle);
+		details.setText("Recipe Details");
 		Group group = new Group(myFolder, SWT.NONE);
 		details.setControl(group);
-		return new SWTFactory(group);
+		SWTFactory factory = new SWTFactory(group);
+		return factory.newRecipeDetailsView();
 	}
 	
 }
