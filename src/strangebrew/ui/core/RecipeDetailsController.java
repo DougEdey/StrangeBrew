@@ -31,6 +31,7 @@ public class RecipeDetailsController extends Controller {
 		myContents.getAlcoholPostfix().set("by Volume");
 		myContents.getDateLabel().set("Date:");
 		myContents.getMashLabel().set("Mash?");
+		myContents.getAttenuationLabel().set("% Atten:");
 		myView.layout();
 	}
 	
@@ -42,15 +43,23 @@ public class RecipeDetailsController extends Controller {
 		if(myContents.getBrewer().isUpdated()) {
 			submitBrewer();
 		}
+		
 		if(myContents.getEfficiency().isUpdated()) {
 			submitEfficiency();
 		}
+		
 		if(myContents.getDate().isUpdated()) {
 			submitDate();
 		}
+		
 		if(myContents.getMash().isUpdated()) {
 			// TODO update this when mash is in Recipe
 		}
+		
+		if(myContents.getAttenuation().isUpdated()) {
+			submitAttenuation();
+		}
+		
 	}
 	
 	private void populateWidgets() {
@@ -65,11 +74,14 @@ public class RecipeDetailsController extends Controller {
 		myContents.getDate().set(df.format(myRecipe.created.getTime()));
 		// TODO update Mash checkbox when it is in recipe
 		myContents.getMash().set(true);
+		myContents.getAttenuation().set(myRecipe.attenuation);
 	}
 	
 	public void cleanUp() {
 		submitBrewer();
 		submitEfficiency();
+		submitDate();
+		submitAttenuation();
 	}
 
 	public void setRecipe(Recipe aRecipe) {
@@ -101,6 +113,10 @@ public class RecipeDetailsController extends Controller {
 				myContents.getDate().set(df.format(myRecipe.created.getTime()));				
 			}
 		}
+	}
+	
+	private void submitAttenuation() {
+		myRecipe.attenuation = myContents.getAttenuation().get();
 	}
 
 }

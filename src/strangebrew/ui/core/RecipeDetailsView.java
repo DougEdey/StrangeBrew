@@ -21,4 +21,6 @@ public abstract class RecipeDetailsView extends View {
 	public abstract TextInput getDate();
 	public abstract TextOutput getMashLabel();
 	public abstract CheckBox getMash();
+	public abstract TextOutput getAttenuationLabel();
+	public abstract NumberInput getAttenuation();
 }

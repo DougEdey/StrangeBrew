@@ -30,6 +30,8 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	SWTTextInput myDate;
 	SWTTextOutput myMashLabel;
 	SWTCheckBox myMash;
+	SWTTextOutput myAttenuationLabel;
+	SWTNumberInput myAttenuation;
 
 	public SWTRecipeDetailsView(Composite container) {
 		myContainer = container;
@@ -58,6 +60,10 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		myMashLabel.init(myContainer);
 		myMash = new SWTCheckBox(myController);
 		myMash.init(myContainer);
+		myAttenuationLabel = new SWTTextOutput();
+		myAttenuationLabel.init(myContainer);
+		myAttenuation = new SWTNumberInput(myController);
+		myAttenuation.init(myContainer);
 		
 		myLayout = new FormLayout();
 		myLayout.marginHeight = 3;
@@ -116,11 +122,12 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		setSize(myAlcohol, 0, 50);
 		setSize(myEfficiency, 0, 50);
 		setSize(myDate, 0, 120);
+		setSize(myAttenuation, 0, 50);
 		
 		align(myBrewerLabel, SWT.LEFT, null, SWT.NONE, 5);
 		align(myBrewerLabel, SWT.TOP, null, SWT.NONE, 5);
 		attach(myBrewer, myBrewerLabel, 5);
-		attach(myEfficiencyLabel, myBrewer, 10);
+		attach(myEfficiencyLabel, myBrewer, 20);
         attach(myEfficiency, myEfficiencyLabel, 5);		
 		attach(myAlcoholLabel, myEfficiency, 10);
         attach(myAlcohol, myAlcoholLabel, 5);		
@@ -133,6 +140,10 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		align(myMash, SWT.RIGHT, myBrewer, SWT.RIGHT, 10);
 		align(myMashLabel, SWT.RIGHT, myMash, SWT.LEFT, -10);
 		align(myMashLabel, SWT.BOTTOM, myMash, SWT.BOTTOM, 0);
+		align(myAttenuationLabel, SWT.RIGHT, myEfficiencyLabel, SWT.RIGHT, 0);
+		align(myAttenuationLabel, SWT.BOTTOM, myMash, SWT.BOTTOM, 0);
+		align(myAttenuation, SWT.BOTTOM, myAttenuationLabel, SWT.BOTTOM, 0);
+		align(myAttenuation, SWT.LEFT, myEfficiency, SWT.LEFT, 0);
 		
 		myContainer.layout();
 		myContainer.pack();
@@ -188,6 +199,14 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	
 	public TextOutput getMashLabel() {
 		return myMashLabel;
+	}
+	
+	public TextOutput getAttenuationLabel() {
+		return myAttenuationLabel;
+	}
+	
+	public NumberInput getAttenuation() {
+		return myAttenuation;
 	}
 	
 }
