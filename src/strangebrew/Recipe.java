@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.21 2004/11/15 18:00:07 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.22 2004/11/16 18:11:16 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -105,7 +105,7 @@ public class Recipe {
 	public void setCreated(Date d) { created.setTime(d); }
 	public void setEfficiency(double e) { efficiency = e; }
 	public void setEstOg(double o) { estOg = o; }
-	public void setEstFg(double f) { estFg = f; }
+	
 	public void setHopsUnits(String h) { hopUnits = h; }
 	public void setMaltUnits(String m) { maltUnits = m; }
 	public void setMashed(boolean m) { mashed = m; }
@@ -119,6 +119,12 @@ public class Recipe {
 	public void setStyle(String s) { style.setName(s); }
 	public void setYeastName(String s) { yeast.setName(s); }
 		
+	// Setters that need to do extra work:
+	public void setEstFg(double f) { 
+		estFg = f;
+		attenuation = 100 - ((f - 1) / (estOg - 1) * 100 );
+		calcAlcohol("Volume");
+		}
 	
 	/**
 	 * Handles a string of the form "d u", where d is a double

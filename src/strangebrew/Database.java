@@ -3,10 +3,11 @@ import java.io.EOFException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+
 import com.mindprod.csv.*;
 
 /**
- * $Id: Database.java,v 1.9 2004/11/15 18:00:07 andrew_avis Exp $
+ * $Id: Database.java,v 1.10 2004/11/16 18:11:16 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -18,32 +19,29 @@ import com.mindprod.csv.*;
  */
 public class Database {
 
-	// this class is just a list of various ingredients
+	// this class is just some lists of various ingredients
 	// read from the csv files.
 	// I suspect that binary files will be faster, and
 	// we might want to move that way in the future.
 	
-	private final static boolean DEBUG = true;
+	private final static boolean DEBUG = false;
 
 	public ArrayList fermDB = new ArrayList();
 	public ArrayList hopsDB = new ArrayList();
 	public ArrayList yeastDB = new ArrayList();
 	public ArrayList styleDB = new ArrayList();
 
-	public void readDB(String maltPath, 
-			String hopsPath,
-			String yeastPath,
-			String stylePath){
-		readFermentables(maltPath);
-		readHops(hopsPath);
-		readYeast(yeastPath);
-		readStyles(stylePath);
+	public void readDB(String dbPath){
+		readFermentables(dbPath);
+		readHops(dbPath);
+		readYeast(dbPath);
+		readStyles(dbPath);
 	}
-	public void readFermentables(String maltPath) {
+	public void readFermentables(String dbPath) {
 		// read the fermentables from the csv file
 		try {
 			CSVReader reader = new CSVReader(new FileReader(
-					maltPath), ',', '\"', true, false);
+					dbPath + "malts.csv"), ',', '\"', true, false);
 
 			try {
 				// get the first line and set up the index:
@@ -84,14 +82,16 @@ public class Database {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
+		ObjComparator sc = new ObjComparator();
+		Collections.sort(styleDB,  sc);
 
 	}
 
-	public void readHops(String hopsPath) {
+	public void readHops(String dbPath) {
 		// read the hops from the csv file
 		try {
 			CSVReader reader = new CSVReader(new FileReader(
-					hopsPath), ',', '\"', true, false);
+					dbPath + "hops.csv"), ',', '\"', true, false);
 
 			try {
 				// get the first line and set up the index:
@@ -129,14 +129,17 @@ public class Database {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
+		// sort:
+		ObjComparator sc = new ObjComparator();
+		Collections.sort(styleDB,  sc);
 
 	}
 
-	public void readYeast(String yeastPath) {
+	public void readYeast(String dbPath) {
 		// read the yeast from the csv file
 		try {
 			CSVReader reader = new CSVReader(new FileReader(
-					yeastPath), ',', '\"', true, false);
+					dbPath + "yeast.csv"), ',', '\"', true, false);
 
 			try {
 				// get the first line and set up the index:
@@ -168,14 +171,17 @@ public class Database {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
+		// sort:
+		ObjComparator sc = new ObjComparator();
+		Collections.sort(styleDB,  sc);
 
 	}
 
-	public void readStyles(String stylePath){
+	public void readStyles(String dbPath){
 			// read the styles from the csv file
 			try {
 				CSVReader reader = new CSVReader(new FileReader(
-						stylePath), ',', '\"', true, false);
+						dbPath + "bjcp_styles.csv"), ',', '\"', true, false);
 
 				try {
 					// get the first line and set up the index:
@@ -214,7 +220,7 @@ public class Database {
 				} catch (EOFException e) {
 				}
 				reader.close();
-				if (true){
+				if (DEBUG){
 					for (int i=0; i<styleDB.size(); i++)
 						System.out.print(((Style) styleDB.get(i)).toXML());
 				}
@@ -223,6 +229,9 @@ public class Database {
 				e.printStackTrace();
 				System.out.println(e.getMessage());
 			}
+			// sort:
+			ObjComparator sc = new ObjComparator();
+			Collections.sort(styleDB,  sc);
 		
 	}
 	
@@ -235,5 +244,27 @@ public class Database {
 			return -1;
 		else
 			return i;
+	}
+
+	public class ObjComparator implements Comparator {
+
+		/* (non-Javadoc)
+		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+		 */
+		public int compare(Object a, Object b) {
+			if (a.getClass().getName().equalsIgnoreCase("strangebrew.Style")) {
+				Style a1 = (Style) a;
+				Style b1 = (Style) b;
+				int result = a1.getName().compareTo(b1.getName());
+				return (result == 0 ? -1 : result);
+			} else if (a.getClass().getName().equalsIgnoreCase("strangebrew.Yeast")) {
+				Yeast a1 = (Yeast) a;
+				Yeast b1 = (Yeast) b;
+				int result = a1.getName().compareTo(b1.getName());
+				return (result == 0 ? -1 : result);
+			}
+			else return 0;
+		}
+
 	}
 }
