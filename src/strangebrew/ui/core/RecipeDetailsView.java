@@ -19,4 +19,6 @@ public abstract class RecipeDetailsView extends View {
 	public abstract TextOutput getAlcoholLabel();
 	public abstract TextOutput getAlcohol();
 	public abstract TextOutput getAlcoholPostfix();
+	public abstract TextOutput getDateLabel();
+	public abstract TextInput getDate();
 }

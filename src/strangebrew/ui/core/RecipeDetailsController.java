@@ -5,6 +5,7 @@
 package strangebrew.ui.core;
 
 import strangebrew.Recipe;
+import java.text.SimpleDateFormat;
 
 /**
  * @author mike
@@ -27,6 +28,7 @@ public class RecipeDetailsController extends Controller {
 		myContents.getEfficiencyLabel().set("% Effic:");
 		myContents.getAlcoholLabel().set("% Alc:");
 		myContents.getAlcoholPostfix().set("by Volume");
+		myContents.getDateLabel().set("Date:");
 		myView.layout();
 	}
 	
@@ -41,6 +43,9 @@ public class RecipeDetailsController extends Controller {
 		if(myContents.getEfficiency().isUpdated()) {
 			submitEfficiency();
 		}
+		if(myContents.getDate().isUpdated()) {
+			submitDate();
+		}
 	}
 	
 	private void populateWidgets() {
@@ -48,6 +53,9 @@ public class RecipeDetailsController extends Controller {
 		myContents.getEfficiency().set(myRecipe.efficiency);
 		Double alc = new Double(myRecipe.alcohol);
 		myContents.getAlcohol().set(alc.toString());
+		if (myRecipe.created != null) {
+			myContents.getDate().set(myRecipe.created.toString());
+		}
 	}
 	
 	public void cleanUp() {
@@ -70,6 +78,15 @@ public class RecipeDetailsController extends Controller {
 		myRecipe.efficiency = myContents.getEfficiency().get();
 	}
 	
-	
+	private void submitDate() {
+		if (myContents.getDate().get() != null) {
+			SimpleDateFormat df = new SimpleDateFormat();
+			try {
+				myRecipe.created.setTime(df.parse(myContents.getDate().get()));
+			} catch (Exception e) {
+				// Oh well, don't do anything
+			}
+		}
+	}
 
 }

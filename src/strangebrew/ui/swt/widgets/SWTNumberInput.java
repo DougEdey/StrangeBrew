@@ -9,6 +9,7 @@ import strangebrew.ui.core.widgets.NumberInput;
 
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.*;
+import org.eclipse.swt.layout.*;
 
 /**
  * @author mike
@@ -16,9 +17,10 @@ import org.eclipse.swt.*;
  * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class SWTNumberInput extends NumberInput {
+public class SWTNumberInput extends NumberInput implements SWTFormWidget {
 
 	Text myWidget;
+	FormData myFormData;
 	
 	MyInput myInput;
 	
@@ -42,6 +44,7 @@ public class SWTNumberInput extends NumberInput {
 	public void init(Composite aContainer) {
 		myWidget = new Text(aContainer, SWT.SINGLE);
 		myInput = new MyInput(this);
+		myFormData = new FormData();
 	}
 	
 	public void dispose() {
@@ -63,6 +66,14 @@ public class SWTNumberInput extends NumberInput {
 	}
 
 	public Text getWidget() {
+		return myWidget;
+	}
+	
+	public FormData getFormData() {
+		return myFormData;
+	}
+	
+	public Control getControl() {
 		return myWidget;
 	}
 }

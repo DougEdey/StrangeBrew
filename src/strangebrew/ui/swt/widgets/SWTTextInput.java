@@ -5,6 +5,7 @@ import strangebrew.ui.core.widgets.TextInput;
 
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.*;
+import org.eclipse.swt.layout.*;
 
 /**
  * Concrete class for SWT TextInput widgets.
@@ -12,10 +13,11 @@ import org.eclipse.swt.*;
  *
  *
  */
-public class SWTTextInput extends TextInput {
+public class SWTTextInput extends TextInput implements SWTFormWidget {
 
 	Text myWidget;
 	MyInput myInput;
+	FormData myFormData;
 	
 	class MyInput extends SWTInput {
 		SWTTextInput myText;
@@ -37,6 +39,7 @@ public class SWTTextInput extends TextInput {
 	public void init(Composite container) {
 		myWidget = new Text(container, SWT.SINGLE);
 		myInput = new MyInput(this);
+		myFormData = new FormData();
 	}
 
 	public void dispose() {
@@ -60,6 +63,14 @@ public class SWTTextInput extends TextInput {
 	}
 	
 	public Text getWidget() {
+		return myWidget;
+	}
+	
+	public FormData getFormData() {
+		return myFormData;
+	}
+	
+	public Control getControl() {
 		return myWidget;
 	}
 }

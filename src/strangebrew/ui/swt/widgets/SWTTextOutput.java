@@ -1,10 +1,10 @@
 package strangebrew.ui.swt.widgets;
 
-import strangebrew.ui.core.*;
 import strangebrew.ui.core.widgets.TextOutput;
 
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.*;
+import org.eclipse.swt.layout.*;
 
 /**
  * Concrete class for an SWT Text Output widget.
@@ -12,27 +12,37 @@ import org.eclipse.swt.*;
  *
  *
  */
-public class SWTTextOutput extends TextOutput {
+public class SWTTextOutput extends TextOutput implements SWTFormWidget {
 
-	Label myLabel;
+	Label myWidget;
+	FormData myFormData;
 
 	public void init(Composite container) {
-		myLabel = new Label(container, SWT.NONE);
+		myWidget = new Label(container, SWT.NONE);
+		myFormData = new FormData();
 	}
 
 	public void set(String aString) {
-		myLabel.setText(aString);
+		myWidget.setText(aString);
 	}
 
 	public String get() {
-		return myLabel.getText();
+		return myWidget.getText();
 	}
 
 	public void dispose() {
-		myLabel.dispose();
+		myWidget.dispose();
 	}
 	
 	public Label getWidget() {
-		return myLabel;
+		return myWidget;
+	}
+	
+	public FormData getFormData() {
+		return myFormData;
+	}
+	
+	public Control getControl() {
+		return myWidget;
 	}
 }
