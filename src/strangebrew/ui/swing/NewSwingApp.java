@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 
 import java.io.*;
@@ -42,6 +43,7 @@ import java.awt.GridLayout;
 import javax.swing.JSlider;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.ItemEvent;
 /**
  * This code was generated using CloudGarden's Jigloo SWT/Swing GUI Builder,
  * which is free for non-commercial use. If Jigloo is being used commercially
@@ -59,8 +61,7 @@ public class NewSwingApp extends javax.swing.JFrame {
 	{
 		//Set Look & Feel
 		try {
-			javax.swing.UIManager
-					.setLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel");
+			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getCrossPlatformLookAndFeelClassName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -436,11 +437,13 @@ public class NewSwingApp extends javax.swing.JFrame {
 							cmbStyle.setModel(cmbStyleModel);
 							cmbStyle.setMaximumSize(new java.awt.Dimension(100,
 									32767));
+							
 							cmbStyle.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									Style s = (Style) cmbStyleModel
-											.getSelectedItem();
-									if (myRecipe != null && s != myRecipe.getStyleObj()) {
+										.getSelectedItem();
+									if (myRecipe != null
+										&& s != myRecipe.getStyleObj()) {
 										myRecipe.setStyle(s);
 									}
 								}
@@ -841,6 +844,33 @@ public class NewSwingApp extends javax.swing.JFrame {
 										column.setPreferredWidth(50);
 									}
 								}*/
+								
+								
+								maltComboBox
+										.addItemListener(new ItemListener() {
+											public void itemStateChanged(
+													ItemEvent evt) {
+												if (evt.getStateChange() == ItemEvent.SELECTED) {
+													Fermentable f = (Fermentable) cmbMaltModel
+															.getSelectedItem();
+													int i = tblMalt
+															.getSelectedRow();
+													if (myRecipe != null) {
+														Fermentable f2 = (Fermentable) myRecipe
+																.getFermentablesList()
+																.get(i);
+														f2.setLov(f.getLov());
+														f2.setPppg(f.getPppg());
+														myRecipe
+																.calcMaltTotals();
+														// displayRecipe();
+													}
+												}
+											}
+										});
+								
+								
+								
 							}
 						}
 						{
@@ -1278,7 +1308,7 @@ public class NewSwingApp extends javax.swing.JFrame {
 	class ComboModel extends AbstractListModel implements ComboBoxModel {
 
 		List list = new ArrayList();
-		Object selected;
+		Object selected = null;
 
 		public void addOrInsert(Object o) {
 
@@ -1311,11 +1341,11 @@ public class NewSwingApp extends javax.swing.JFrame {
 			setSelectedItem(o);
 
 		}
-
+		
 		public Object getSelectedItem() {
 			return selected;
 		}
-
+		
 		public void setSelectedItem(Object item) {
 			if ((selected != null && !selected.equals(item))
 					|| (selected == null && item != null)) {
