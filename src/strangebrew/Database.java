@@ -6,7 +6,7 @@ import java.util.*;
 import com.mindprod.csv.*;
 
 /**
- * $Id: Database.java,v 1.6 2004/10/21 19:40:58 andrew_avis Exp $
+ * $Id: Database.java,v 1.7 2004/10/25 17:08:21 andrew_avis Exp $
  * @author aavis
  *
  * TODO To change the template for this generated type comment go to
@@ -21,10 +21,10 @@ public class Database {
 	
 	private final static boolean DEBUG = true;
 
-	private ArrayList fermDB = new ArrayList();
-	private ArrayList hopsDB = new ArrayList();
-	private ArrayList yeastDB = new ArrayList();
-	private ArrayList styleDB = new ArrayList();
+	public ArrayList fermDB = new ArrayList();
+	public ArrayList hopsDB = new ArrayList();
+	public ArrayList yeastDB = new ArrayList();
+	public ArrayList styleDB = new ArrayList();
 
 	public void readFermentables() {
 		// read the fermentables from the csv file

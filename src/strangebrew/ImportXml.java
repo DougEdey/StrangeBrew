@@ -1,5 +1,5 @@
 /**
- * $Id: ImportXml.java,v 1.5 2004/10/21 01:44:57 tangent_ Exp $
+ * $Id: ImportXml.java,v 1.6 2004/10/25 17:08:21 andrew_avis Exp $
  *
  * This is the "driver" for xml import.  It sets up the parser, catches
  * exceptions, and associates our XmlHandler class with the parser so 
@@ -11,13 +11,15 @@
 
 package strangebrew;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
-import org.xml.sax.*;
-
-import javax.xml.parsers.SAXParserFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 public class ImportXml  {
 	

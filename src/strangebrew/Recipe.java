@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.16 2004/10/21 19:40:58 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.17 2004/10/25 17:08:21 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -17,6 +17,7 @@ public class Recipe {
 	private GregorianCalendar created;
 	private Yeast yeast = new Yeast();
 	private Style style = new Style();
+	private Mash mash = new Mash();
 	private double estOg;
 	private double estFg;
 	private double ibu;
@@ -30,7 +31,7 @@ public class Recipe {
 
 	private String hopUnits;
 	private String maltUnits;
-	private Options opts;
+	// private Options opts;
 	
 	// totals:	
 	private double totalMaltCost;
@@ -47,7 +48,7 @@ public class Recipe {
 	// default constuctor
 	public Recipe() {
 		
-		opts = new Options();
+		Options opts = new Options();
 		name = "My Recipe";
 		created = new GregorianCalendar();
 		efficiency = opts.getDProperty("optEfficiency");
@@ -74,16 +75,15 @@ public class Recipe {
 	public String getStyle(){ return style.getName(); } 
 	public String getHopUnits(){ return hopUnits; }
 	public String getMaltUnits(){ return maltUnits; }
-	public double getMashRatio(){ return opts.getDProperty("optMashRatio"); }
-	public String getMashRatioU(){ return opts.getProperty("optMashRatioU"); }
 	public GregorianCalendar getCreated(){ return created; }
 	public double getAlcohol(){ return alcohol; }
 	public double getTotalMaltCost(){ return totalMaltCost; }
 	public double getTotalMashLbs(){ return totalMashLbs; }
+	/*
 	public String getSProp(String s){ return opts.getProperty(s); }
 	public double getDProp(String s){ return opts.getDProperty(s); }
 	public int getIProp(String s){ return opts.getIProperty(s); }
-
+*/
 	// Set functions:
 	public void setName(String n) {	name = n; }
 	public void setBrewer(String b) { brewer = b; }
@@ -100,8 +100,8 @@ public class Recipe {
 	public void setBoilMinutes(int b) { boilMinutes = b; }
 	public void setHopsUnits(String h) { hopUnits = h; }
 	public void setMaltUnits(String m) { maltUnits = m; }
-	public void setMashRatio(double m) { opts.setDProperty("optMashRatio", m); }
-	public void setMashRatioU(String u) { opts.setProperty("optMashRatioU", u); }
+	public void setMashRatio(double m) { mash.setMashRatio(m); }
+	public void setMashRatioU(String u) { mash.setMashRatioU(u); }
 	public void setCreated(Date d) { created.setTime(d); }
 	public void setEstOg(double o) { estOg = o; }
 	public void setEstFg(double f) { estFg = f; }
@@ -227,6 +227,9 @@ public class Recipe {
 		return Plato;
 	}
 
+	/*
+	 * Hop IBU calculation methods:
+	 */
 	private double calcTinseth(double amount, double size, double sg, double time,
 			double aa, double HopsUtil) {
 		double daautil; // decimal alpha acid utilization
@@ -240,6 +243,53 @@ public class Recipe {
 		daautil = bigness * boil_fact;
 		mgl_aaa = (aa / 100) * amount * 7490 / size;
 		ibu = daautil * mgl_aaa;
+		return ibu;
+	}
+	
+
+	//	 rager method of ibu calculation
+	//	 constant 7962 is corrected to 7490 as per hop faq
+	double CalcRager(double amount, double size, double sg, double time,
+			double AA) {
+		double ibu, utilization, ga;
+		utilization = 18.11 + (13.86 * (Math.tanh((time - 31.32) / 18.27)));
+		ga = sg < 1.050 ? 0.0 : 0.2;
+		ibu = amount * (utilization / 100) * (AA / 100.0) * 7490;
+		ibu /= size * (1 + ga);
+		return ibu;
+	}
+
+	//	 utilization table for average floc yeast
+	int util[] = {0, 0, 0, 0, 0, 0, 1, 1, 1, 3, 4, 5, 5, 6, 7, 9, 11, 13, 11,
+			13, 16, 13, 16, 19, 15, 19, 23, 16, 20, 24, 17, 21, 25};
+
+	double CalcGaretz(double amount, double size, double sg, double time,
+			double start_vol, int yeast_flocc, double AA) {
+//		 iterative value seed - adjust to loop through value
+		double desired_ibu = CalcRager(amount, size, sg, time, AA);
+		int elevation = 500; // elevation in feet - change for user setting
+		double concentration_f = size / start_vol;
+		double boil_gravity = (concentration_f * (sg - 1)) + 1;
+		double gravity_f = ((boil_gravity - 1.050) / 0.2) + 1;
+		double temp_f = (elevation / 550 * 0.02) + 1;
+
+		// iterative loop, uses desired_ibu to define hopping_f, then seeds
+		// itself
+		double hopping_f, utilization, combined_f;
+		double ibu = desired_ibu;
+		int util_index;
+		for (int i = 0; i < 5; i++) { // iterate loop 5 times
+			hopping_f = ((concentration_f * desired_ibu) / 260) + 1;
+			if (time > 50)
+				util_index =  10;
+			else
+				util_index = (int)(time / 5.0);
+			utilization = util[(util_index * 3) + yeast_flocc];
+			combined_f = gravity_f * temp_f * hopping_f;
+			ibu = (utilization * AA * amount * 0.749) / (size * combined_f);
+			desired_ibu = ibu;
+		}
+
 		return ibu;
 	}
 

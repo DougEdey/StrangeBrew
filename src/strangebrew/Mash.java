@@ -1,17 +1,45 @@
 package strangebrew;
 
-import java.util.*;
+import java.util.ArrayList;
 /**
- * $Id: Mash.java,v 1.2 2004/10/20 16:03:00 andrew_avis Exp $
+ * $Id: Mash.java,v 1.3 2004/10/25 17:08:21 andrew_avis Exp $
  * @author aavis
  *
  */
 
 public class Mash {
+	
+	// set this:
 	private double maltWeightLbs;
+	
+	//options:
+	private double mashRatio;
+	private String mashRatioU;
+	private String tempUnits;
+	private String volUnits;
+	private double grainTemp;
+	private String mashTempU;
+	
+	// calculated:
 	private double volQts;
 	private int totalTime;
+	private double absorbedQTS;
+	private double spargeTotalQTS;
+	private double totalWaterQTS;
+	private double chillShrink;
+	
+	// steps:
 	private ArrayList steps = new ArrayList();
+	
+	public Mash(){
+
+		Options opts = new Options("mash");
+		 mashRatio = opts.getDProperty("optMashRatio");
+		 mashRatioU = opts.getProperty("optMashRatioU");;
+		 tempUnits = opts.getProperty("optMashTempU");
+		 volUnits = opts.getProperty("optMashVolU");
+		 grainTemp = opts.getDProperty("optGrainTemp");
+	}
 
 	private class MashStep {
 		private String type;
@@ -58,21 +86,26 @@ public class Mash {
 		maltWeightLbs = mw;
 	}
 
+	public void setMashRatio(double mr){
+		mashRatio = mr;
+	}
+	
+	public void setMashRatioU(String u){
+		mashRatioU = u;
+	}
+	
 	// Introducing: the big huge mash calc method!
 
 	public void calcMashSchedule(Recipe r) {
 		// Generic routine to run through the mash table and calculate values
 
-		double currentTemp = r.getDProp("optGrainTemp");
+		
 		double strikeTemp = 0;
 		double targetTemp = 0;
 		double endTemp = 0;
 		double waterAddedQTS = 0;
 		double waterEquiv = 0;
-		double mashRatio = r.getDProp("optMashRatio");
-		String mashRatioU = r.getSProp("optMashRatioU");
-		String tempUnits = r.getSProp("optMashTempU");
-		String volUnits = r.getSProp("optMashVolU");
+
 		double displTemp = 0;
 		double tunLoss = 0; // figure out a better way to do this, eg: themal mass
 		double decoct = 0;
@@ -91,8 +124,8 @@ public class Mash {
 		}
 
 		// convert CurrentTemp to F
-		if (r.getSProp("optMashTempU") == "C") {
-			currentTemp = cToF(currentTemp);
+		if (mashTempU == "C") {
+			grainTemp = cToF(grainTemp);
 			tunLoss = tunLoss / 1.8;
 		}
 
@@ -103,7 +136,7 @@ public class Mash {
 		MashStep stp = ((MashStep) steps.get(0));
 		targetTemp = stp.startTemp;
 		endTemp = stp.endTemp;
-		strikeTemp = calcStrikeTemp(targetTemp, currentTemp, mashRatio, tunLoss);
+		strikeTemp = calcStrikeTemp(targetTemp, grainTemp, mashRatio, tunLoss);
 		waterAddedQTS = mashRatio * r.getTotalMashLbs();
 		waterEquiv = r.getTotalMashLbs() * (0.192 + mashRatio);
 		mashVolQTS = calcMashVol(r.getTotalMashLbs(), mashRatio);
@@ -127,7 +160,7 @@ public class Mash {
 
 		for (int i = 1; i < steps.size(); i++) {
 			stp = ((MashStep) steps.get(i));
-			currentTemp = targetTemp; // switch
+			grainTemp = targetTemp; // switch
 			targetTemp = stp.startTemp;
 
 			// do calcs
@@ -137,7 +170,7 @@ public class Mash {
 				strikeTemp = 212; // boiling water -- TODO: add from options
 
 				// Updated the water added
-				waterAddedQTS = calcWaterAddition(targetTemp, currentTemp,
+				waterAddedQTS = calcWaterAddition(targetTemp, grainTemp,
 						waterEquiv, 212);
 				waterAddedConv = waterAddedQTS;
 				if (tempUnits == "C")
@@ -157,7 +190,7 @@ public class Mash {
 				strikeTemp = 212; // boiling water
 
 				// Calculate volume (qts) of mash to remove
-				decoct = calcDecoction(targetTemp, currentTemp, waterEquiv, 212);
+				decoct = calcDecoction(targetTemp, grainTemp, waterEquiv, 212);
 
 				// Updated the decoction, convert to right units & make directions
 				double decoctConv = decoct;
@@ -190,80 +223,12 @@ public class Mash {
 		totalTime = totalMashTime;
 
 		// water use stats:
-		 double absorbedQTS = r.getTotalMashLbs() * 0.55; // figure from HBD
-		 double spargeTotalQTS = (r.getPreBoilVol("qt")) - (mashWaterQTS - absorbedQTS);
-		 double totalWaterQTS = spargeTotalQTS + mashWaterQTS;
-		 double size = r.getPostBoilVol("gal");
-		 double chillShrink =  size * 0.03;
+		absorbedQTS = r.getTotalMashLbs() * 0.55; // figure from HBD
+		spargeTotalQTS = (r.getPreBoilVol("qt")) - (mashWaterQTS - absorbedQTS);
+		totalWaterQTS = spargeTotalQTS + mashWaterQTS;
+		chillShrink = r.getPostBoilVol("gal") * 0.03;
 		 
-/*
-		// calculate sparge records:
-		int batches = 5;
-		batchSparge_t batchSparge;
 
-		// update the sparge records:
-
-		if (batches == numSparge) { // we only need to update the records
-
-			// calc steps
-			if (batches == 1) { // fly sparge
-				directions = "Fly sparge with " + spargeTotalQTS + " "
-						+ mashVolU;
-				totalSpargeTime += stp.minutes;
-			} else if (batches > 1) { // batch sparge
-				batchSparge.charges = batches;
-				calcBatchSparge(batchSparge, absorbedQTS, mashWaterQTS,
-						r.getPreBoilVol("qt"));
-
-				for (int i = 0; i < steps.size() && i < batchSparge.charges; i++) {
-					directions = "Batch " + (i + 1) + ": add "
-							+ batchSparge.charge[i] + " " + mashVolU;
-					directions += ". Collect: " + batchSparge.collect[i] + " "
-							+ mashVolU;
-					totalSpargeTime += stp.minutes;
-
-				}
-			}
-		}
-
-		else { // we need to calculate the steps, and update the records
-			// TODO: delete the current sparge records
-
-			// calc steps
-			if (batches == 1) { // fly sparge
-				directions = "Fly sparge with " + spargeTotalQTS + " "
-						+ mashVolU;
-				directions += ". Collect: " + r.getPreBoilVol(r.getSProp("optMashVolU"))
-						+ " " + r.getSProp("optMashVolU");
-				stp.type = "sparge";
-				stp.method = "fly sparge";
-				stp.startTemp = 170;
-				stp.minutes = r.getIProp("optSpargeTime");
-				totalSpargeTime += stp.minutes;
-			}
-
-			else if (batches > 1) { // batch sparge
-				batchSparge.charges = batches;
-				calcBatchSparge(batchSparge, absorbedQTS, mashWaterQTS,
-						r.getPreBoilVol("qt"));
-				// add records
-
-				for (int i = 0; i < batchSparge.charges; i++) {
-					stp = new MashStep();
-					stp.directions = "Batch " + (i + 1) + ": add "
-							+ batchSparge.charge[i] + " " + mashVolU;
-					stp.directions += ". Collect: " + batchSparge.collect[i]
-							+ " " + mashVolU;
-
-					stp.type = "sparge";
-					stp.method = "batch sparge";
-					stp.startTemp = 170;
-					stp.minutes = r.getIProp("optSpargeTime");
-					steps.add(stp);
-					totalSpargeTime += stp.minutes;
-				}
-			} 
-		}*/
 	}
 
 	// private methods:
@@ -359,5 +324,44 @@ public class Mash {
 		// routine to convert Celcius to Farenheit
 		return ((tempC * 9) / 5) + 32;
 	}
+	
+	/*
+	 struct batchSparge_t {
+	    int charges;
+	    float charge[3];
+	    float temp[3];
+	    float collect[3];
+	 };
+
+	 void calc_batch_sparge(batchSparge_t &batch, float absorbedQts, float usedQts, float total_collectQts) {
+	   int i=0;
+	   float collect = total_collectQts / batch.charges;
+
+	   // all units in Qts!!!
+
+	   // is there more in the tun than we need?
+	   if (collect < usedQts - absorbedQts) {
+	     batch.charge[0] = 0;
+	     batch.collect[0] = usedQts - absorbedQts;
+	     total_collectQts = total_collectQts - batch.collect[0];
+	   }
+	   else {
+	     batch.charge[0] = collect - (usedQts - absorbedQts);
+	     batch.collect[0] = collect;
+	     total_collectQts = total_collectQts - batch.collect[0];
+	   }
+
+	   // do we need any more steps?
+	   if (batch.charges == 1) return;
+
+	   collect = total_collectQts / (batch.charges - 1);
+	   for (i=1; i<batch.charges; i++) {
+	     batch.charge[i] = collect;
+	     batch.collect[i] = collect;
+	   }
+
+	   return;
+	 };
+	 */
 
 }

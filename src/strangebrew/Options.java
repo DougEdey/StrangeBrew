@@ -21,8 +21,10 @@ package strangebrew;
  *
  */
 
-import java.util.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.Properties;
 
 public class Options {
 	//	declare global variables, set hard defaults		
@@ -90,24 +92,47 @@ public class Options {
 
 		if (type.equals("strangebrew")) {
 			
-			// Strings:
+			// calculations:
 			d.put("optIBUCalcMethod", "Tinseth");
 			d.put("optAlcCalcMethod", "Volume");
 			d.put("optEvapCalcMethod", "Constant");
+			d.put("optColourMethod", "SRM");
+			d.put("optEfficiency", "75");
+			d.put("optAttenuation", "75");
+			d.put("optEvaporation", "1.5");
+			d.put("optPelletHopsPct", "6");
+			d.put("optDryHopTime", "0");
+			d.put("optFWHTime", "1");
+			d.put("optMashHopTime", "2");
+			d.put("optHopsUtil", "4.15");
+			d.put("optBoilTempF", "212");
+			d.put("optColourEfficiency", "false");
+			
+			// recipe basics:
 			d.put("optSizeU", "gallons US");
 			d.put("optMaltU", "pounds");
 			d.put("optHopsU", "ounces");
-			d.put("optMashVolU", "gallons US");
-			d.put("optMashTempU", "F");
+			d.put("optPostBoilVol", "5");
+			d.put("optPreBoilVol", "6");
+			d.put("optMash", "true");
+
+			// carbonation:
 			d.put("optPrimingSugar", "dextrose");
 			d.put("optSugarU", "grams");
 			d.put("optBottleU", "ml");
 			d.put("optCarbTempU", "F");
-			d.put("optMashRatioU", "qt/lb");
+			d.put("optBottleSize", "341");
+			d.put("optBottleTemp", "68");
+			d.put("optServeTemp", "45");
+			d.put("optVolsCO2", "2.4");
+			d.put("optKegged", "true");
+
+			// water:
 			d.put("optSourceWater", "");
 			d.put("optTargetWater", "");
-			d.put("optFirstScreen", "");
-			d.put("optColourMethod", "SRM");
+			
+			
+			// labels:
 			d.put("optBrewer", "Your Name");
 			d.put("optStreet", "Your Street");
 			d.put("optCity", "Your City");
@@ -117,38 +142,13 @@ public class Options {
 			d.put("optClub", "Your Club");
 			d.put("optCountry", "Your Country");
 			d.put("optEmail", "Your Email");
+			
+			// appearance:
 			d.put("optMaltSortOrder", "By Name");
+			d.put("optFirstScreen", "");
+			
+			// time:
 			d.put("optBrewDayStart", "10:00");
-
-			// Doubles:
-			d.put("optEfficiency", "75");
-			d.put("optAttenuation", "75");
-			d.put("optEvaporation", "1.5");
-			d.put("optPostBoilVol", "5");
-			d.put("optPreBoilVol", "6");
-			d.put("optMashRatio", "1.25");
-			d.put("optGrainTemp", "68");
-			d.put("optPelletHopsPct", "6");
-			d.put("optMiscCost", "5.0");
-			d.put("optBottleSize", "341");
-			d.put("optBottleTemp", "68");
-			d.put("optServeTemp", "45");
-			d.put("optVolsCO2", "2.4");
-			d.put("optBoilTime", "60");
-			d.put("optTunLossF", "3");
-			d.put("optKettleLoss", "1");
-			d.put("optTrubLoss", "1");
-			d.put("optMiscLoss", "1");
-			d.put("optDryHopTime", "");
-			d.put("optFWHTime", "1");
-			d.put("optMashHopTime", "2");
-			d.put("optHopsUtil", "4.15");
-			d.put("optBoilTempF", "212");
-
-			// ints
-			d.put("optRed", "8");
-			d.put("optGreen", "10");
-			d.put("optBlue", "20");
 			d.put("optPrepTime", "31");
 			d.put("optSpargeTime", "60");
 			d.put("optGetToBoilTime", "45");
@@ -156,10 +156,23 @@ public class Options {
 			d.put("optCleanTime", "120");
 			d.put("optBoilTime", "60");
 
-			// boleans:
-			d.put("optMash", "true");
-			d.put("optKegged", "true");
-			d.put("optColourEfficiency", "false");
+			// water use:
+			d.put("optKettleLoss", "1");
+			d.put("optTrubLoss", "1");
+			d.put("optMiscLoss", "1");
+			
+			// cost:
+			d.put("optMiscCost", "5.0");
+			
+		}
+		
+		else if (type.equals("mash")){
+			d.put("optMashVolU", "gallons US");
+			d.put("optMashTempU", "F");
+			d.put("optMashRatioU", "qt/lb");
+			d.put("optMashRatio", "1.25");
+			d.put("optGrainTemp", "68");
+			d.put("optTunLossF", "3");
 		}
 
 	}
