@@ -3,8 +3,7 @@
  */
 package strangebrew.ui.swt;
 
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.*;
 
 /**
  * @author mike
@@ -30,7 +29,7 @@ public abstract class SWTInput {
 		myListener.resume();
 	}
 	
-	protected class TypingListener implements SelectionListener {
+	protected class TypingListener implements SelectionListener, FocusListener {
 
 		SWTInput target;
 		boolean suspended = true;
@@ -74,6 +73,22 @@ public abstract class SWTInput {
 		 */
 		public void widgetSelected(SelectionEvent e) {
 			// Don't really need to do anything here
+		}
+		
+		/**
+		 * Does nothing since we don't care about gaining focus.
+		 */
+		public void focusGained(FocusEvent e) {
+			//Don't really need to do anything here
+		}
+		
+		/**
+		 * Update the widget when the user leaves it.
+		 */
+		public void focusLost(FocusEvent e) {
+			if((target != null)&&(!suspended)) {
+				target.verify();
+			}			
 		}
 
 	}

@@ -1,6 +1,7 @@
 package strangebrew.ui.swt;
 
 import strangebrew.ui.core.*;
+import strangebrew.ui.swt.SWTInput.TypingListener;
 
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;
@@ -14,7 +15,7 @@ import org.eclipse.swt.*;
  */
 public class SWTTextInput extends TextInput {
 
-	Text myText;
+	Text myWidget;
 	MyTypingListener myListener;
 	
 	class MyTypingListener extends SWTInput {
@@ -27,11 +28,13 @@ public class SWTTextInput extends TextInput {
 		}
 		
 		public void addListener(TypingListener aListener) {
-			myTarget.addListener(aListener);
+			myTarget.myWidget.addSelectionListener(aListener);
+			myTarget.myWidget.addFocusListener(aListener);
 		}
 		
 		public void removeListener(TypingListener aListener) {
-			myTarget.removeListener(aListener);
+			myTarget.myWidget.removeSelectionListener(aListener);
+			myTarget.myWidget.removeFocusListener(aListener);
 		}
 		
 		public void verify() {
@@ -43,41 +46,32 @@ public class SWTTextInput extends TextInput {
 		super(aController);
 	}
 
-
-	private void addListener(SelectionListener aListener) {
-		myText.addSelectionListener(aListener);
-	}
-
-	private void removeListener(SelectionListener aListener) {
-		myText.removeSelectionListener(aListener);
-	}
-
 	public void init(Composite container) {
-		myText = new Text(container, SWT.SINGLE);
+		myWidget = new Text(container, SWT.SINGLE);
 		myListener = new MyTypingListener(this);
 	}
 
 	public void dispose() {
-		myText.dispose();
+		myWidget.dispose();
 	}
 
 	public void clear() {
 		myListener.suspend();
-		myText.setText("");
+		myWidget.setText("");
 		myListener.resume();
 	}
 
 	public String get() {
-		return myText.getText();
+		return myWidget.getText();
 	}
 	
 	public void set(String aString) {
 		if(aString != null) {
-			myText.setText(aString);
+			myWidget.setText(aString);
 		}
 	}
 	
 	public Text getWidget() {
-		return myText;
+		return myWidget;
 	}
 }

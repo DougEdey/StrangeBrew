@@ -33,11 +33,13 @@ public class SWTNumberInput extends NumberInput {
 		}
 		
 		public void addListener(TypingListener aListener) {
-			myTarget.addListener(aListener);
+			myTarget.myWidget.addSelectionListener(aListener);
+			myTarget.myWidget.addFocusListener(aListener);
 		}
 		
 		public void removeListener(TypingListener aListener) {
-			myTarget.removeListener(aListener);
+			myTarget.myWidget.removeSelectionListener(aListener);
+			myTarget.myWidget.removeFocusListener(aListener);
 		}
 		
 		public void verify() {
@@ -48,15 +50,6 @@ public class SWTNumberInput extends NumberInput {
 	public SWTNumberInput(Controller aController) {
 		super(aController);
 	}
-
-	private void addListener(SelectionListener aListener) {
-		myWidget.addSelectionListener(aListener);
-	}
-
-	private void removeListener(SelectionListener aListener) {
-		myWidget.removeSelectionListener(aListener);
-	}
-
 	
 	public void init(Composite aContainer) {
 		myWidget = new Text(aContainer, SWT.SINGLE);
