@@ -16,6 +16,7 @@ public class SWTMenuView extends MenuView {
 	Shell myContainer;
 	org.eclipse.swt.widgets.Menu myMenuBar;
 	SWTMenu myFileMenu;
+	SWTMenuItem myQuitItem;
 
 	public SWTMenuView(Shell container) {
 		myContainer = container;
@@ -26,8 +27,9 @@ public class SWTMenuView extends MenuView {
        myContainer.setMenuBar(myMenuBar);
        myFileMenu = new SWTMenu();
        myFileMenu.init(myContainer, myMenuBar);
+       myQuitItem = new SWTMenuItem(myController);
+       myQuitItem.init(myFileMenu.getWidget());
 	}
-	
 	
 	public void layout() {
 		// Nothing to do right now
@@ -46,5 +48,13 @@ public class SWTMenuView extends MenuView {
 	public strangebrew.ui.core.Menu getFileMenu() {
 		return myFileMenu;
 	}
+	
+	public strangebrew.ui.core.MenuItem getQuitItem() {
+		return myQuitItem;
+	}
 
+	public void quit() {
+		myContainer.dispose();
+	}
+	
 }

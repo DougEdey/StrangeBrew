@@ -22,6 +22,7 @@ public class MenuController extends Controller {
 		myView.init();
 
 		myContents.getFileMenu().set("File");
+		myContents.getQuitItem().set("Quit");
 		myView.layout();
 	}
 
@@ -30,7 +31,9 @@ public class MenuController extends Controller {
 	}
 	
 	public void execute() {
-      // Nothing to do right now
+      if (myContents.getQuitItem().isSelected()) {
+      	myContents.quit();
+      }
 	}
 	
 }

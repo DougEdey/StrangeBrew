@@ -10,5 +10,7 @@ package strangebrew.ui.core;
 public abstract class MenuView extends View {
 
 	public abstract Menu getFileMenu();
+	public abstract MenuItem getQuitItem();
+	public abstract void quit();
 	
 }
