@@ -1,5 +1,6 @@
 /**
  * Created on Oct 4, 2004
+ * $Id: Malt.java,v 1.6 2004/10/18 01:16:02 redneckrockets Exp $
  * @author aavis
  *
  * This is the base malt class.  It doesn't do much, except hold data
