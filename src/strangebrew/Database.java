@@ -6,7 +6,7 @@ import java.util.*;
 import com.mindprod.csv.*;
 
 /**
- * $Id: Database.java,v 1.2 2004/10/20 19:34:22 andrew_avis Exp $
+ * $Id: Database.java,v 1.3 2004/10/21 11:30:54 redneckrockets Exp $
  * @author aavis
  *
  * TODO To change the template for this generated type comment go to
@@ -49,8 +49,8 @@ public class Database {
 					f.setLov(Double.parseDouble(fields[lovIdx]));
 					f.setCost(Double.parseDouble(fields[costIdx]));
 					f.setUnits(fields[unitsIdx]);
-					f.setMash(Boolean.parseBoolean(fields[mashIdx]));
-					f.setSteep(Boolean.parseBoolean(fields[steepIdx]));
+					f.setMash(Boolean.valueOf(fields[mashIdx]).booleanValue());
+					f.setSteep(Boolean.valueOf(fields[steepIdx]).booleanValue());
 					if (!fields[stockIdx].equals(""))
 						f.setAmount(Double.parseDouble(fields[stockIdx]));
 					else
