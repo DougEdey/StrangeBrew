@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.25 2004/11/19 14:55:18 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.26 2004/11/19 18:52:03 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -91,6 +91,7 @@ public class Recipe {
 	public Style getStyleObj(){ return style;}
 	public double getTotalMaltCost(){ return totalMaltCost; }
 	public double getTotalMashLbs(){ return totalMashLbs; }
+	public double getTotalMaltLbs(){ return totalMaltLbs; }
 	public String getVolUnits(){ return postBoilVol.getUnits(); }
 	public String getYeast(){ return yeast.getName();}	
 	public Yeast getYeastObj(){ return yeast;}
@@ -215,13 +216,19 @@ public class Recipe {
 			mcu += m.getLov() * m.getAmountAs("lb") / postBoilVol.getValueAs("gal");
 			maltTotalCost += m.getCostPerU() * m.getAmountAs("lb");
 		}
+		
+		// now set the malt % by weight:
+		for (int i = 0; i < fermentables.size(); i++) {
+			Fermentable m = ((Fermentable) fermentables.get(i));
+			m.setPercent((m.getAmountAs("lb")/totalMaltLbs * 100));
+		}
 
 		// set the fields in the object
 		estOg = (maltPoints / 100) + 1;
 		estFg = 1 + ((estOg - 1) * ((100 - attenuation) / 100));
 		srm = calcColour(mcu);
 
-		// Calculate alcohol
+
 		calcAlcohol("Volume");
 
 	}

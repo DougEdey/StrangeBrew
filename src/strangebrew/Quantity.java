@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.6 2004/10/21 01:41:18 tangent_ Exp $
+ * $Id: Quantity.java,v 1.7 2004/11/19 18:52:03 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -101,26 +101,14 @@ public class Quantity {
 	}
 	
 
-	// mutators:
-/*	public void convertTo(String to, String type) {
-		value = getValueAs(to);
-		unit = to;
+	public void add(double v, String u){
+		// convert v from u to current units
+		// then add it
+		Quantity q = new Quantity();
+		q.setQuantity(u, null, v);
+		double v2 = q.getValueAs(getUnits());
+		value += v2;
 	}
-	*/
-	
-	/*
-	public void convertTemp(String to){
-		// if we're already the target temp units, or
-		// if we're not a temp at all, do nothing
-		if (unit == to || type != "temp")
-			return;
-		else if (to == "F")
-			value = cToF(value);
-		else
-			value = fToC(value);		
-	}
-	*/
-	
 	
 	// private functions:	
 	private double getBaseValue(Converter[] u, String n){
