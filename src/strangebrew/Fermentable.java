@@ -1,6 +1,6 @@
 /**
  * Created on Oct 4, 2004
- * $Id: Fermentable.java,v 1.5 2004/11/12 15:20:00 andrew_avis Exp $
+ * $Id: Fermentable.java,v 1.6 2004/11/24 17:41:50 andrew_avis Exp $
  * @author aavis
  *
  * This is the base malt class.  It doesn't do much, except hold data
@@ -70,5 +70,6 @@ public class Fermentable extends Ingredient {
 	    sb.append( "    </ITEM>\n" );
 	    return sb.toString();
 	}
+	
 
 }

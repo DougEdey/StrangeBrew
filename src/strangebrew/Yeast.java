@@ -1,7 +1,7 @@
 package strangebrew;
 
 /**
- * $Id: Yeast.java,v 1.2 2004/11/18 18:06:18 andrew_avis Exp $
+ * $Id: Yeast.java,v 1.3 2004/11/24 17:41:50 andrew_avis Exp $
  * @author aavis
  * Created on Oct 21, 2004
  *
@@ -15,7 +15,4 @@ public class Yeast extends Ingredient {
 		setName("A yeast");
 	}
 	
-	public String toString(){
-		return getName();
-	}
 }

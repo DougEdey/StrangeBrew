@@ -8,7 +8,7 @@
 package strangebrew;
 
 /**
- * $Id: TestUI.java,v 1.20 2004/11/22 18:02:54 andrew_avis Exp $
+ * $Id: TestUI.java,v 1.21 2004/11/24 17:41:50 andrew_avis Exp $
  * @author aavis
  *
  *
@@ -44,10 +44,10 @@ public class TestUI {
 			
 			myRecipe.mash.setMaltWeight(myRecipe.getTotalMashLbs());
 			myRecipe.mash.calcMashSchedule();
-			System.out.print(myRecipe.toXML());
+			System.out.print(myRecipe.toText());
 			
 		}	
-		myRecipe.testRecipe();
+		// myRecipe.testRecipe();
 	
 	}	
 

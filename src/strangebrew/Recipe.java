@@ -1,10 +1,12 @@
 /*
- * $Id: Recipe.java,v 1.28 2004/11/22 22:00:59 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.29 2004/11/24 17:41:50 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
 package strangebrew;
 
+import java.text.DecimalFormat;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -107,6 +109,7 @@ public class Recipe {
 	
 	public void setBoilMinutes(int b) { boilMinutes = b; }
 	public void setBrewer(String b) { brewer = b; }
+	public void setComments(String c) { comments = c; }
 	public void setCreated(Date d) { created.setTime(d); }
 	public void setHopsUnits(String h) { hopUnits = h; }
 	public void setMaltUnits(String m) { maltUnits = m; }
@@ -114,8 +117,6 @@ public class Recipe {
 	public void setMashRatio(double m) { mash.setMashRatio(m); }
 	public void setMashRatioU(String u) { mash.setMashRatioU(u); }
 	public void setName(String n) {	name = n; }
-	public void setPreBoil(double p) { preBoilVol.setQuantity(null, null, p); }
-	public void setPostBoil(double p) { postBoilVol.setQuantity(null, null, p); }
 	public void setPreBoilVolUnits(String v) {	preBoilVol.setQuantity( v, null, -1); }
 	public void setPostBoilVolUnits(String v) {	postBoilVol.setQuantity( v, null, -1); }
 	public void setStyle(String s) { style.setName(s); }
@@ -155,6 +156,18 @@ public class Recipe {
 		}
 		
 	}
+	public void setPreBoil(double p) { 
+		preBoilVol.setQuantity(null, null, p);
+		calcMaltTotals();
+		calcHopsTotals();
+		}
+	
+	public void setPostBoil(double p) {
+		postBoilVol.setQuantity(null, null, p); 
+		calcMaltTotals();
+		calcHopsTotals();
+		}
+	
 	
 	/**
 	 * Handles a string of the form "d u", where d is a double
@@ -444,6 +457,77 @@ public class Recipe {
 		System.out.print("srm: " + srm + "\n");
 		System.out.print("%alc: " + alcohol + "\n");
 		System.out.print("IBUs: " + ibu + "\n");
+	}
+	
+	public static String padLeft(String str, int fullLength, char ch) {
+		return (fullLength > str.length()) 
+		? str.concat(buildString(ch, fullLength - str.length()))
+		: str;
+	}
+	
+	public static String padRight(String str, int fullLength, char ch) {
+		return (fullLength > str.length()) 
+		? buildString(ch, fullLength - str.length()).concat(str)
+		: str;
+	}
+
+	public static String buildString(char ch, int length) {
+		char newStr[] = new char[length];
+		for (int i = 0; i < length; ++i)
+			newStr[i] = ch;
+		return new String(newStr);
+	}
+	
+	public String toText(){
+		DecimalFormat df1 = new DecimalFormat("0.0");
+		DecimalFormat df2 = new DecimalFormat("0.00");
+		MessageFormat mf;
+		StringBuffer sb = new StringBuffer();
+		sb.append("StrangeBrew 2.0 recipe text output\n\n");
+		sb.append("Details:\n");
+		sb.append("Name: " + name + "\n");
+		sb.append("Brewer: " + brewer + "\n");
+		sb.append("Size: " + df1.format(postBoilVol.getValue()) + " " + postBoilVol.getUnits()+"\n");
+		sb.append("Style: " + style.getName() + "\n");
+	    mf = new MessageFormat("OG: {0,number,0.000},\tFG:{1,number,0.000}, \tALC:{2,number,0.0}\n");
+		Object[] objs = {new Double(estOg), new Double(estFg), new Double(alcohol) };
+		sb.append(mf.format( objs ));
+		sb.append("Fermentables:\n");
+		sb.append(padLeft("Name ", 30, ' ') + " amount units  pppg    lov   %\n");
+
+		mf = new MessageFormat("{0} {1} {2} {3,number,0.000} {4} {5,number, 0.0}%\n");
+		for (int i=0; i<fermentables.size(); i++){
+			Fermentable f = (Fermentable)fermentables.get(i);
+			
+			Object[] objf = {padLeft(f.getName(), 30, ' '),
+					padRight(" "+df2.format(f.getAmountAs(f.getUnits())), 6, ' '),
+					f.getUnits(),
+					new Double(f.getPppg()),
+					padRight(" "+df1.format(f.getLov()), 6, ' '),
+					new Double(f.getPercent())};
+			sb.append(mf.format(objf));
+			
+		}
+		
+		sb.append("Hops:\n");
+		sb.append(padLeft("Name ", 20, ' ') + " amount units  Alpha   Min    IBU\n");
+		
+		mf = new MessageFormat("{0} {1} {2} {3} {4} {5}\n");
+		for (int i=0; i<hops.size(); i++){
+			Hop h = (Hop)hops.get(i);
+			
+			Object[] objh = {padLeft(h.getName(), 20, ' '),
+					padRight(" "+df2.format(h.getAmountAs(h.getUnits())), 6, ' '),
+					h.getUnits(),
+					padRight(" "+h.getAlpha(), 5, ' '),
+					padRight(" "+df1.format(h.getMinutes()), 6, ' '),
+					padRight(" "+df1.format(h.getIBU()), 5, ' ')};
+			sb.append(mf.format(objh));
+			
+		}
+
+
+		return sb.toString();
 	}
 	
 

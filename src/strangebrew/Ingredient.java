@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * $Id: Ingredient.java,v 1.2 2004/10/21 17:02:28 andrew_avis Exp $
+ * $Id: Ingredient.java,v 1.3 2004/11/24 17:41:50 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  *
@@ -76,6 +76,11 @@ public class Ingredient {
 	    sb.append( "      <DESCR>"+getDescription()+"</DESCR>\n" );
 	    sb.append( "    </ITEM>\n" );
 	    return sb.toString();
+	}
+	
+	// implement to support comboboxes in Swing:
+	public String toString(){
+		return name;
 	}
 	
 	
