@@ -50,15 +50,16 @@ public class Hop {
 	public void setAdd(String a){ add = a; }
 	public void setCost(double c){ costPerU = c; }
 	public void setDesc(String d){ description = d; }
+	public void setMinutes(int m){ minutes = m; }
 	
 	public String toXML(){
 	    StringBuffer sb = new StringBuffer();
-	    sb.append( "<HOP>\n" );
-	    sb.append( "\t<NAME>"+name+"</NAME>\n" );
-	    sb.append( "\t<AMOUNT>"+amount+"</AMOUNT>\n" );
-	    sb.append( "\t<UNITS>"+units+"</UNITS>\n" );
-	    sb.append( "\t<ALPHA>"+alpha+"</ALPHA>\n" );
-	    sb.append( "</HOP>\n" );
+	    sb.append( "    <ITEM>\n" );
+	    sb.append( "      <HOP>"+name+"</HOP>\n" );
+	    sb.append( "      <AMOUNT>"+amount+"</AMOUNT>\n" );
+	    sb.append( "      <UNITS>"+units+"</UNITS>\n" );
+	    sb.append( "      <ALPHA>"+alpha+"</ALPHA>\n" );
+	    sb.append( "    </ITEM>\n" );
 	    return sb.toString();
 	}
 }
