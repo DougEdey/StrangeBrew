@@ -1,5 +1,5 @@
 /*
- * $ld$
+ * $Id: Recipe.java,v 1.13 2004/10/20 19:34:22 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 

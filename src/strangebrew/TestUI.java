@@ -8,6 +8,7 @@
 package strangebrew;
 
 /**
+ * $Id: TestUI.java,v 1.12 2004/10/20 19:34:22 andrew_avis Exp $
  * @author aavis
  *
  *
@@ -31,7 +32,7 @@ public class TestUI {
 			myRecipe = controller.getRecipe();
 		} else if (args[0].equals("--db")) {
 			Database db = new Database();
-			db.readFermentables();
+			db.readHops();
 		
 		} else {
 			// Import an xml recipe:

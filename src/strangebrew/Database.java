@@ -6,7 +6,7 @@ import java.util.*;
 import com.mindprod.csv.*;
 
 /**
- * $Id: Database.java,v 1.1 2004/10/20 17:27:00 andrew_avis Exp $
+ * $Id: Database.java,v 1.2 2004/10/20 19:34:22 andrew_avis Exp $
  * @author aavis
  *
  * TODO To change the template for this generated type comment go to
@@ -61,9 +61,55 @@ public class Database {
 			} catch (EOFException e) {
 			}
 			reader.close();
-			for (int i=0;i<fermDB.size(); i++){
-				Fermentable f = (Fermentable)(fermDB.get(i));
-				System.out.print(f.toXML());
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+
+	}
+	
+	public void readHops() {
+		// read the hops from the csv file
+		try {
+			CSVReader reader = new CSVReader(new FileReader(
+					"src/strangebrew/data/hops.csv"), ',', '\"', true, false);
+
+			try {
+				// get the first line and set up the index:
+				String[] fields = reader.getAllFieldsInLine();
+				int nameIdx = getIndex(fields, "Name");
+				int alphaIdx = getIndex(fields, "Alpha");
+				int costIdx = getIndex(fields, "Cost");
+				int stockIdx = getIndex(fields, "Stock");
+				int unitsIdx = getIndex(fields, "Units");
+				int descrIdx = getIndex(fields, "Descr");
+				int storeIdx = getIndex(fields, "Storage");
+				int dateIdx = getIndex(fields, "Date");
+
+	
+				while (true) {
+					Hop h = new Hop();
+					fields = reader.getAllFieldsInLine();
+					h.setName(fields[nameIdx]);
+					h.setAlpha(Double.parseDouble(fields[alphaIdx]));
+					if (!fields[costIdx].equals(""))
+						h.setCost(Double.parseDouble(fields[costIdx]));
+					h.setUnits(fields[unitsIdx]);
+					if (!fields[stockIdx].equals(""))
+						h.setAmount(Double.parseDouble(fields[stockIdx]));
+					h.setDesc(fields[descrIdx]);
+					if (!fields[storeIdx].equals(""))
+						h.setStorage(Double.parseDouble(fields[storeIdx]));
+					h.setDate(fields[dateIdx]);
+					hopsDB.add(h);
+				}
+			} catch (EOFException e) {
+			}
+			reader.close();
+			for (int i=0;i<hopsDB.size(); i++){
+				Hop h = (Hop)(hopsDB.get(i));
+				System.out.print(h.toXML());
 			}
 
 		} catch (IOException e) {
