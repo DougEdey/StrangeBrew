@@ -27,10 +27,8 @@ public class SWTRecipeNavigationView extends RecipeNavigationView {
 	}
 
 	public void init() {
-		myRecipeNameLabel = new SWTTextOutput();
-		myRecipeNameLabel.init(myContainer);
-		myRecipeName = new SWTTextInput(myController);
-		myRecipeName.init(myContainer);
+		myRecipeNameLabel = new SWTTextOutput(myContainer);
+		myRecipeName = new SWTTextInput(myController, myContainer);
 		
 		myLayout = new FormLayout();
 		myLayout.marginHeight = 3;

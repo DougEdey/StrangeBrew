@@ -33,11 +33,8 @@ public class SWTCheckBox extends CheckBox implements SWTFormWidget {
 		}
 	}
 
-	public SWTCheckBox(Controller aController) {
+	public SWTCheckBox(Controller aController, Composite container) {
 		super(aController);
-	}
-
-	public void init(Composite container) {
 		myWidget = new Button(container, SWT.CHECK);
 		mySelect = new MySelect(this);
 		myFormData = new FormData();

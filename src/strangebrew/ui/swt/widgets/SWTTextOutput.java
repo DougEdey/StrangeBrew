@@ -17,7 +17,7 @@ public class SWTTextOutput extends TextOutput implements SWTFormWidget {
 	Label myWidget;
 	FormData myFormData;
 
-	public void init(Composite container) {
+	public SWTTextOutput(Composite container) {
 		myWidget = new Label(container, SWT.NONE);
 		myFormData = new FormData();
 	}

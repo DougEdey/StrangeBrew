@@ -36,11 +36,8 @@ public class SWTDropdown extends Dropdown implements SWTFormWidget {
 		}
 	}
 
-	public SWTDropdown(Controller aController) {
+	public SWTDropdown(Controller aController, Composite container) {
 		super(aController);
-	}
-
-	public void init(Composite container) {
 		myWidget = new Combo(container, SWT.SINGLE);
 		mySelect = new MySelect(this);
 		myFormData = new FormData();

@@ -29,11 +29,8 @@ public class SWTMenuItem extends strangebrew.ui.core.widgets.MenuItem {
 		}
 	}
 
-	public SWTMenuItem(Controller aController) {
+	public SWTMenuItem(Controller aController, org.eclipse.swt.widgets.Menu container) {
 		super(aController);
-	}
-
-	public void init(org.eclipse.swt.widgets.Menu container) {
 		myWidget = new org.eclipse.swt.widgets.MenuItem(container, SWT.NONE);
 		mySelect = new MySelect(this);
 	}

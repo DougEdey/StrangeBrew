@@ -37,11 +37,8 @@ public class SWTNumberInput extends NumberInput implements SWTFormWidget {
 		}
 	}
 	
-	public SWTNumberInput(Controller aController) {
+	public SWTNumberInput(Controller aController, Composite aContainer) {
 		super(aController);
-	}
-	
-	public void init(Composite aContainer) {
 		myWidget = new Text(aContainer, SWT.SINGLE);
 		myInput = new MyInput(this);
 		myFormData = new FormData();

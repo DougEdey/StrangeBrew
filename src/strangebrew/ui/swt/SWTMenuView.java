@@ -32,15 +32,10 @@ public class SWTMenuView extends MenuView {
        myMenuBar = new org.eclipse.swt.widgets.Menu(myContainer, SWT.BAR);
        myContainer.setMenuBar(myMenuBar);
        
-       myFileMenu = new SWTMenu();
-       myFileMenu.init(myContainer, myMenuBar);
-       
-       myOpenItem = new SWTMenuItem(myController);
-       myOpenItem.init(myFileMenu.getWidget());
-       
-       myQuitItem = new SWTMenuItem(myController);
-       myQuitItem.init(myFileMenu.getWidget());
-	}
+       myFileMenu = new SWTMenu(myContainer, myMenuBar);      
+       myOpenItem = new SWTMenuItem(myController, myFileMenu.getWidget());       
+       myQuitItem = new SWTMenuItem(myController, myFileMenu.getWidget());
+ 	}
 	
 	public void layout() {
 		// Nothing to do right now

@@ -32,11 +32,8 @@ public class SWTTextInput extends TextInput implements SWTFormWidget {
 		}
 	}
 	
-	public SWTTextInput(Controller aController) {
+	public SWTTextInput(Controller aController, Composite container) {
 		super(aController);
-	}
-
-	public void init(Composite container) {
 		myWidget = new Text(container, SWT.SINGLE);
 		myInput = new MyInput(this);
 		myFormData = new FormData();

@@ -16,7 +16,7 @@ public class SWTMenu extends Menu {
 	org.eclipse.swt.widgets.Menu myWidget;
 	org.eclipse.swt.widgets.MenuItem myItem;
 
-	public void init(Shell container, org.eclipse.swt.widgets.Menu menu) {
+	public SWTMenu(Shell container, org.eclipse.swt.widgets.Menu menu) {
 		myWidget = new org.eclipse.swt.widgets.Menu(container, SWT.DROP_DOWN);
 		myItem = new org.eclipse.swt.widgets.MenuItem(menu, SWT.CASCADE);
 		myItem.setMenu(myWidget);
