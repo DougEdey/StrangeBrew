@@ -40,7 +40,7 @@ public class MenuController extends Controller {
       }
       if (myContents.getOpenItem().isSelected()) {
       	String myFile = myContents.getOpenFilename();
-      	if (myFile != "/") {
+      	if (myFile != null) {
       		ImportXml imp = new ImportXml(myFile);
 			Recipe recipe = imp.handler.getRecipe();
 			myParent.setRecipe(recipe);
