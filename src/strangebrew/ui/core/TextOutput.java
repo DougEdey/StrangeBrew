@@ -7,7 +7,7 @@ package strangebrew.ui.core;
  */
 public abstract class TextOutput {
 
-	public abstract String getText();
+	public abstract String get();
 
 	public abstract void dispose();
 

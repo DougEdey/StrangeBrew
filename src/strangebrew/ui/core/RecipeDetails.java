@@ -26,6 +26,7 @@ public class RecipeDetails extends Controller {
 		myView.init();
 
 		myContents.getBrewerLabel().set("Brewer:");
+		myContents.getEfficiencyLabel().set("% Effic:");
 		populateWidgets();
 		myView.layout();
 	}
@@ -41,11 +42,11 @@ public class RecipeDetails extends Controller {
 	}
 	
 	private void populateWidgets() {
-		myContents.getBrewer().setText(myRecipe.brewer);
+		myContents.getBrewer().set(myRecipe.brewer);
 	}
 
 	private void submitBrewer() {
-			myRecipe.brewer = myContents.getBrewer().getText();
+			myRecipe.brewer = myContents.getBrewer().get();
 	}
 	
 }

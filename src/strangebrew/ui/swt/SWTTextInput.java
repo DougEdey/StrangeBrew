@@ -16,9 +16,9 @@ public class SWTTextInput extends TextInput {
 
 	Text myText;
 	TypingListener myListener;
-
+	
 	public SWTTextInput(Controller aController) {
-		myController = aController;
+		super(aController);
 	}
 
 	class TypingListener implements SelectionListener {
@@ -56,7 +56,7 @@ public class SWTTextInput extends TextInput {
          */
 		public void widgetDefaultSelected(SelectionEvent e) {
 			if((target != null)&&(!suspended)) {
-				target.verifyText();
+				target.verify();
 			}
 		}
 		
@@ -93,11 +93,11 @@ public class SWTTextInput extends TextInput {
 		myListener.resume();
 	}
 
-	public String getText() {
+	public String get() {
 		return myText.getText();
 	}
 	
-	public void setText(String aString) {
+	public void set(String aString) {
 		if(aString != null) {
 			myText.setText(aString);
 		}

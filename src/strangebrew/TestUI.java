@@ -37,7 +37,7 @@ public class TestUI {
 		} else if (args[0].equals("--gui")) {
 			View view = new SWTMainView();
 			view.init();
-			MainController controller = new MainController(view);
+			MainController controller = new MainController(view, myRecipe);
 			controller.execute();
 		} else {
 			// this is copied from the ImportXml main method

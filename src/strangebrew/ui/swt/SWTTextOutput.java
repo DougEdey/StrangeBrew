@@ -23,7 +23,7 @@ public class SWTTextOutput extends TextOutput {
 		myLabel.setText(aString);
 	}
 
-	public String getText() {
+	public String get() {
 		return myLabel.getText();
 	}
 
