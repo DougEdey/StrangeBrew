@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.11 2004/10/21 16:44:24 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.12 2004/10/26 17:06:13 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -33,6 +33,14 @@ public class XmlHandler extends DefaultHandler{
 	private String currentList = null; //current List name
 	private String currentElement = null; // current element name
 	private String importType = null; // the type of recipe we're importing
+	
+	// mash step stuff:
+	private String type;
+	private String method = "infusion";
+	private double startTemp;
+	private double endTemp;
+	private int minutes;
+	private int rampMin;
 
 	public Recipe getRecipe() {return r;}
 	
@@ -161,6 +169,7 @@ public class XmlHandler extends DefaultHandler{
 				misc = new Misc();
 			}
 
+
 		} 
 	}
 
@@ -187,6 +196,12 @@ public class XmlHandler extends DefaultHandler{
 					&& currentList.equalsIgnoreCase("MISC")) {
 				r.addMisc(misc);
 				misc = null;
+			
+			} else if (qName.equalsIgnoreCase("ITEM")
+						&& currentList.equalsIgnoreCase("MASH")) {
+					r.mash.addStep(type, startTemp, endTemp, "F", method, minutes, rampMin);
+									
+				
 			} else if (qName.equalsIgnoreCase("FERMENTABLS")
 					|| qName.equalsIgnoreCase("HOPS")
 					|| qName.equalsIgnoreCase("DETAILS")
@@ -259,11 +274,8 @@ public class XmlHandler extends DefaultHandler{
 		}
 		else if (currentElement.equalsIgnoreCase("style")){
 			r.setStyle(s);
-		}
-
-		
-	}
-	
+		}		
+	}	
 	
 	void sbCharacters(String s){
 		if (currentList.equals("FERMENTABLES")) {
@@ -326,6 +338,21 @@ public class XmlHandler extends DefaultHandler{
 				misc.setStage(s);
 			}
 		}
+		else if (currentList.equalsIgnoreCase("MASH")) {
+			if (currentElement.equalsIgnoreCase("TYPE")) {
+				type = s;
+			} else if (currentElement.equalsIgnoreCase("TEMP")) {
+				startTemp = Double.parseDouble(s);
+			} else if (currentElement.equalsIgnoreCase("METHOD")) {
+				method = s;
+			} else if (currentElement.equalsIgnoreCase("MIN")) {
+				minutes = Integer.parseInt(s);
+			} else if (currentElement.equalsIgnoreCase("END_TEMP")) {
+				endTemp = Double.parseDouble(s);
+			} else if (currentElement.equalsIgnoreCase("RAMP_MIN")) {
+				rampMin = Integer.parseInt(s);
+			}
+		}
 
 		else if (currentList.equalsIgnoreCase("DETAILS")) {
 			if (currentElement.equalsIgnoreCase("NAME")) {
@@ -355,9 +382,13 @@ public class XmlHandler extends DefaultHandler{
 				r.setMashRatioU(s);
 			} else if (currentElement.equalsIgnoreCase("BREWER")) {
 				r.setBrewer(s);
+			} else if (currentElement.equalsIgnoreCase("MASH")) {
+				r.setMashed(Boolean.valueOf(s).booleanValue());
 			}
 
 		}
+		else
+			s = "";
 	}
 
 	public void ignorableWhitespace(char buf[], int offset, int len)

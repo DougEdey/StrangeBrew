@@ -2,7 +2,7 @@ package strangebrew;
 
 import java.util.ArrayList;
 /**
- * $Id: Mash.java,v 1.3 2004/10/25 17:08:21 andrew_avis Exp $
+ * $Id: Mash.java,v 1.4 2004/10/26 17:06:13 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -41,33 +41,35 @@ public class Mash {
 		 grainTemp = opts.getDProperty("optGrainTemp");
 	}
 
-	private class MashStep {
-		private String type;
-		private double startTemp;
-		private double endTemp;
-		private String tempU;
-		private String method;
-		private int minutes;
-		private int rampMin;
-		private String directions;
+	public class MashStep {
+		public String type;
+		public double startTemp;
+		public double endTemp;
+		public String tempU;
+		public String method;
+		public int minutes;
+		public int rampMin;
+		public String directions;
 
-		private double infuseVol;
-		private double decoctVol;
+		public double infuseVol;
+		public double decoctVol;
 
-		private MashStep(double st, double et, String tu, String m, int min,
+		public MashStep(String t, double st, double et, String tu, String m, int min,
 				int rmin) {
+			type = t;
 			startTemp = st;
 			endTemp = et;
-			tempU = m;
+			tempU = tu;
+			method = m;
 			minutes = min;
 			rampMin = rmin;
 		}
 
 		// default constructor:
-		private MashStep() {
+		public MashStep() {
 			rampMin = 0;
-			endTemp = 155;
-			startTemp = 155;
+			endTemp = 152;
+			startTemp = 152;
 			minutes = 60;
 			method = "infusion";
 			type = "alpha";
@@ -75,28 +77,22 @@ public class Mash {
 		}
 	}
 
-	public void addStep(double st, double et, String tu, String m, int min,
+	public void addStep(String t, double st, double et, String tu, String m, int min,
 			int rmin) {
-		MashStep step = new MashStep(st, et, tu, m, min, rmin);
+		MashStep step = new MashStep(t, st, et, tu, m, min, rmin);
 		steps.add(step);
+		calcMashSchedule();
 	}
 
 	// set methods:
-	public void setMaltWeight(double mw) {
-		maltWeightLbs = mw;
-	}
-
-	public void setMashRatio(double mr){
-		mashRatio = mr;
-	}
+	public void setMaltWeight(double mw) {	maltWeightLbs = mw;	}
+	public void setMashRatio(double mr){ mashRatio = mr; }	
+	public void setMashRatioU(String u){ mashRatioU = u;}
 	
-	public void setMashRatioU(String u){
-		mashRatioU = u;
-	}
 	
 	// Introducing: the big huge mash calc method!
 
-	public void calcMashSchedule(Recipe r) {
+	public void calcMashSchedule() {
 		// Generic routine to run through the mash table and calculate values
 
 		
@@ -137,9 +133,9 @@ public class Mash {
 		targetTemp = stp.startTemp;
 		endTemp = stp.endTemp;
 		strikeTemp = calcStrikeTemp(targetTemp, grainTemp, mashRatio, tunLoss);
-		waterAddedQTS = mashRatio * r.getTotalMashLbs();
-		waterEquiv = r.getTotalMashLbs() * (0.192 + mashRatio);
-		mashVolQTS = calcMashVol(r.getTotalMashLbs(), mashRatio);
+		waterAddedQTS = mashRatio * maltWeightLbs;
+		waterEquiv = maltWeightLbs * (0.192 + mashRatio);
+		mashVolQTS = calcMashVol(maltWeightLbs, mashRatio);
 		totalMashTime += stp.minutes;
 		mashWaterQTS += waterAddedQTS;
 		stp.infuseVol = waterAddedQTS;
@@ -223,13 +219,15 @@ public class Mash {
 		totalTime = totalMashTime;
 
 		// water use stats:
-		absorbedQTS = r.getTotalMashLbs() * 0.55; // figure from HBD
-		spargeTotalQTS = (r.getPreBoilVol("qt")) - (mashWaterQTS - absorbedQTS);
+		absorbedQTS = maltWeightLbs * 0.55; // figure from HBD
+		// spargeTotalQTS = (r.getPreBoilVol("qt")) - (mashWaterQTS - absorbedQTS);
 		totalWaterQTS = spargeTotalQTS + mashWaterQTS;
-		chillShrink = r.getPostBoilVol("gal") * 0.03;
-		 
+		// chillShrink = r.getPostBoilVol("gal") * 0.03;
+		
+		// TODO: sparge stuff should get figured here:		 
 
 	}
+	
 
 	// private methods:
 	private String calcStepType(double temp) {
@@ -325,43 +323,62 @@ public class Mash {
 		return ((tempC * 9) / 5) + 32;
 	}
 	
-	/*
-	 struct batchSparge_t {
+	
+	 private class batchSparge {
 	    int charges;
-	    float charge[3];
-	    float temp[3];
-	    float collect[3];
+	    double charge[];
+	    double temp[];
+	    double collect[];
 	 };
 
-	 void calc_batch_sparge(batchSparge_t &batch, float absorbedQts, float usedQts, float total_collectQts) {
+	 void calc_batch_sparge(batchSparge bs, double absorbedQts, double usedQts, double total_collectQts) {
 	   int i=0;
-	   float collect = total_collectQts / batch.charges;
+	   double collect = total_collectQts / bs.charges;
 
 	   // all units in Qts!!!
 
 	   // is there more in the tun than we need?
 	   if (collect < usedQts - absorbedQts) {
-	     batch.charge[0] = 0;
-	     batch.collect[0] = usedQts - absorbedQts;
-	     total_collectQts = total_collectQts - batch.collect[0];
+	     bs.charge[0] = 0;
+	     bs.collect[0] = usedQts - absorbedQts;
+	     total_collectQts = total_collectQts - bs.collect[0];
 	   }
 	   else {
-	     batch.charge[0] = collect - (usedQts - absorbedQts);
-	     batch.collect[0] = collect;
-	     total_collectQts = total_collectQts - batch.collect[0];
+	     bs.charge[0] = collect - (usedQts - absorbedQts);
+	     bs.collect[0] = collect;
+	     total_collectQts = total_collectQts - bs.collect[0];
 	   }
 
 	   // do we need any more steps?
-	   if (batch.charges == 1) return;
+	   if (bs.charges == 1) return;
 
-	   collect = total_collectQts / (batch.charges - 1);
-	   for (i=1; i<batch.charges; i++) {
-	     batch.charge[i] = collect;
-	     batch.collect[i] = collect;
+	   collect = total_collectQts / (bs.charges - 1);
+	   for (i=1; i<bs.charges; i++) {
+	     bs.charge[i] = collect;
+	     bs.collect[i] = collect;
 	   }
 
 	   return;
 	 };
-	 */
+	 
+	 public String toXml() {
+	
+		StringBuffer sb = new StringBuffer();
+		sb.append("    <MASH>\n");
+		for (int i = 0; i < steps.size(); i++) {
+			MashStep st = (MashStep) steps.get(i);
+			sb.append("    <ITEM>\n");
+			sb.append("      <TYPE>" + st.type + "</TYPE>\n");
+			sb.append("      <TEMP>" + st.startTemp + "</TEMP>\n");
+			sb.append("      <END_TEMP>" + st.endTemp + "</END_TEMP>\n");
+			sb.append("      <METHOD>" + st.method + "</METHOD>\n");
+			sb.append("      <DIRECTIONS>" + st.directions + "</DIRECTIONS>\n");
+			sb.append("    </ITEM>\n");
+		}
+
+		sb.append("    </MASH>\n");
+		return sb.toString();
+	}
+	
 
 }

@@ -8,7 +8,7 @@
 package strangebrew;
 
 /**
- * $Id: TestUI.java,v 1.15 2004/10/21 19:40:58 andrew_avis Exp $
+ * $Id: TestUI.java,v 1.16 2004/10/26 17:06:13 andrew_avis Exp $
  * @author aavis
  *
  *
@@ -38,9 +38,12 @@ public class TestUI {
 		} else {
 			// Import an xml recipe:
 			ImportXml imp = new ImportXml(args[0]);
-			myRecipe = imp.handler.getRecipe();			
+			myRecipe = imp.handler.getRecipe();		
+			myRecipe.mash.calcMashSchedule();
+			System.out.print(myRecipe.toXML());
+			
 		}		
-		myRecipe.testRecipe();		
+	
 	}	
 
 }

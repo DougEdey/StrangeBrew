@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.17 2004/10/25 17:08:21 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.18 2004/10/26 17:06:13 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -17,7 +17,7 @@ public class Recipe {
 	private GregorianCalendar created;
 	private Yeast yeast = new Yeast();
 	private Style style = new Style();
-	private Mash mash = new Mash();
+	public Mash mash = new Mash();
 	private double estOg;
 	private double estFg;
 	private double ibu;
@@ -28,6 +28,7 @@ public class Recipe {
 	private double efficiency;
 	private int boilMinutes;
 	private double attenuation;
+	private boolean mashed;
 
 	private String hopUnits;
 	private String maltUnits;
@@ -93,6 +94,7 @@ public class Recipe {
 	public void setPostBoilVolUnits(String v) {	postBoilVol.setQuantity( v, null, -1); }
 	public void setEfficiency(double e) { efficiency = e; }
 	public void setAttenuation(double a) {	attenuation = a; }
+	public void setMashed(boolean m) { mashed = m; }
 	public void addMalt(Fermentable m) { fermentables.add(m);	}
 	public void addHop(Hop h) { hops.add(h); }
 	public void addMisc(Misc m) { misc.add(m); }
@@ -324,6 +326,8 @@ public class Recipe {
 			sb.append(mi.toXML());
 		}
 		sb.append("  </MISC>\n");
+		
+		sb.append(mash.toXml());
 		
 		sb.append("</RECIPE>");
 
