@@ -1,7 +1,7 @@
 package strangebrew;
 
 /**
- * $Id: Style.java,v 1.2 2004/11/15 18:00:07 andrew_avis Exp $
+ * $Id: Style.java,v 1.3 2004/11/18 18:06:18 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  * This is a class to create a style object
@@ -178,6 +178,10 @@ public class Style {
 	    sb.append( "<STYLE>"+getName()+"</STYLE>\n" );
 	    sb.append( "<DESCR>"+getDescription()+"</DESCR>\n" );
 	    return sb.toString();
+	}
+	
+	public String toString(){
+		return getName();
 	}
 	
 	

@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.23 2004/11/17 17:56:16 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.24 2004/11/18 18:06:18 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -88,10 +88,12 @@ public class Recipe {
 	public double getPostBoilVol(String s){ return postBoilVol.getValueAs(s); }
 	public double getSrm(){ return srm; }
 	public String getStyle(){ return style.getName(); } 
+	public Style getStyleObj(){ return style;}
 	public double getTotalMaltCost(){ return totalMaltCost; }
 	public double getTotalMashLbs(){ return totalMashLbs; }
 	public String getVolUnits(){ return postBoilVol.getUnits(); }
 	public String getYeast(){ return yeast.getName();}	
+	public Yeast getYeastObj(){ return yeast;}
 	
 
 	// Set functions:
@@ -113,7 +115,9 @@ public class Recipe {
 	public void setPreBoilVolUnits(String v) {	preBoilVol.setQuantity( v, null, -1); }
 	public void setPostBoilVolUnits(String v) {	postBoilVol.setQuantity( v, null, -1); }
 	public void setStyle(String s) { style.setName(s); }
+	public void setStyle(Style s) { style = s; }
 	public void setYeastName(String s) { yeast.setName(s); }
+	public void setYeast(Yeast y) { yeast = y; }
 		
 	// Setters that need to do extra work:
 	public void setEstFg(double f) {
@@ -358,8 +362,10 @@ public class Recipe {
 		sb.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
 		sb.append("<STRANGEBREWRECIPE version = \"2.0A\">\n");
 		sb.append("  <NAME>" + name + "</NAME>\n");
+		sb.append("  <STYLE>" + style.getName() + "</STYLE>\n");
 		sb.append("  <SIZE>" + postBoilVol.getValue() + "</SIZE>\n");
 		sb.append("  <SIZE_UNITS>" + postBoilVol.getUnits() + "</SIZE_UNITS>\n");
+		sb.append("  <YEAST>" + yeast.getName() + "</YEAST>\n");
 		
 		// fermentables list:
 		sb.append("  <FERMENTABLES>\n");		

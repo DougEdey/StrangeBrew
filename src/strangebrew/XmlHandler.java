@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.15 2004/11/15 18:00:07 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.16 2004/11/18 18:06:18 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -125,10 +125,32 @@ public class XmlHandler extends DefaultHandler{
 		else if (eName.equalsIgnoreCase("HOP")) {
 			// new hop
 			h = new Hop();
+			for (int i = 0; i < currentAttributes.getLength(); i++) {
+				String str = currentAttributes.getLocalName(i); // Attr name
+				if ("".equalsIgnoreCase(str))
+					str = currentAttributes.getQName(i);
+				if (str.equalsIgnoreCase("quantity"))
+					h.setAmountAndUnits(currentAttributes.getValue(i));
+				else if (str.equalsIgnoreCase("time"))
+					h.setMinutes(Integer.parseInt(currentAttributes.getValue(i)));
+				else if (str.equalsIgnoreCase("alpha"))
+					h.setAlpha(Double.parseDouble(currentAttributes.getValue(i)));
+			}
 		}
 		else if (eName.equalsIgnoreCase("GRAIN")) {
 			// new malt
 			m = new Fermentable();
+			for (int i = 0; i < currentAttributes.getLength(); i++) {
+				String str = currentAttributes.getLocalName(i); // Attr name
+				if ("".equalsIgnoreCase(str))
+					str = currentAttributes.getQName(i);
+				if (str.equalsIgnoreCase("quantity"))
+					m.setAmountAndUnits(currentAttributes.getValue(i));
+				else if (str.equalsIgnoreCase("color"))
+					m.setLov(Double.parseDouble(currentAttributes.getValue(i)));
+				else if (str.equalsIgnoreCase("extract"))
+					m.setPppg(Double.parseDouble(currentAttributes.getValue(i)));						
+			}
 		}
 		// we have to do this here, because <batch> is an empty element
 		else if (eName.equalsIgnoreCase("batch")){
@@ -240,31 +262,11 @@ public class XmlHandler extends DefaultHandler{
 	void qbCharacters(String s){
 		if (currentElement.equalsIgnoreCase("GRAIN")){
 			m.setName(s);
-			for (int i = 0; i < currentAttributes.getLength(); i++) {
-				String str = currentAttributes.getLocalName(i); // Attr name
-				if ("".equalsIgnoreCase(str))
-					str = currentAttributes.getQName(i);
-				if (str.equalsIgnoreCase("quantity"))
-					m.setAmountAndUnits(currentAttributes.getValue(i));
-				else if (str.equalsIgnoreCase("color"))
-					m.setLov(Double.parseDouble(currentAttributes.getValue(i)));
-				else if (str.equalsIgnoreCase("extract"))
-					m.setPppg(Double.parseDouble(currentAttributes.getValue(i)));						
-			}
+			
 		}
 		else if (currentElement.equalsIgnoreCase("HOP")){
 			h.setName(s);
-			for (int i = 0; i < currentAttributes.getLength(); i++) {
-				String str = currentAttributes.getLocalName(i); // Attr name
-				if ("".equalsIgnoreCase(str))
-					str = currentAttributes.getQName(i);
-				if (str.equalsIgnoreCase("quantity"))
-					h.setAmountAndUnits(currentAttributes.getValue(i));
-				else if (str.equalsIgnoreCase("time"))
-					h.setMinutes(Integer.parseInt(currentAttributes.getValue(i)));
-				else if (str.equalsIgnoreCase("alpha"))
-					h.setAlpha(Double.parseDouble(currentAttributes.getValue(i)));
-			}
+
 		}
 		else if (currentElement.equalsIgnoreCase("miscingredient")){
 			r.setYeastName(s);
