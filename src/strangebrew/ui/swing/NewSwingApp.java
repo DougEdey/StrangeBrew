@@ -40,6 +40,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JTextArea;
 import java.awt.GridLayout;
 import javax.swing.JSlider;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 /**
  * This code was generated using CloudGarden's Jigloo SWT/Swing GUI Builder,
  * which is free for non-commercial use. If Jigloo is being used commercially
@@ -152,6 +154,8 @@ public class NewSwingApp extends javax.swing.JFrame {
 	private DefaultTableModel tblHopsTotalsModel;
 	private ComboModel cmbYeastModel;
 	private ComboModel cmbStyleModel;
+	private ComboModel cmbMaltModel;
+	private ComboModel cmbHopsModel;
 
 	private Recipe myRecipe;
 	DecimalFormat df1 = new DecimalFormat("####.0");
@@ -175,6 +179,9 @@ public class NewSwingApp extends javax.swing.JFrame {
 
 		cmbStyleModel.setList(db.styleDB);
 		cmbYeastModel.setList(db.yeastDB);
+		cmbMaltModel.setList(db.fermDB);
+		cmbHopsModel.setList(db.hopsDB);
+		
 
 	}
 
@@ -433,7 +440,7 @@ public class NewSwingApp extends javax.swing.JFrame {
 								public void actionPerformed(ActionEvent evt) {
 									Style s = (Style) cmbStyleModel
 											.getSelectedItem();
-									if (s != myRecipe.getStyleObj()) {
+									if (myRecipe != null && s != myRecipe.getStyleObj()) {
 										myRecipe.setStyle(s);
 									}
 								}
@@ -449,11 +456,10 @@ public class NewSwingApp extends javax.swing.JFrame {
 							txtPreBoil.setText("Pre Boil");
 							txtPreBoil.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									System.out
-											.println("txtPreBoil.actionPerformed, event="
-													+ evt);
-									//TODO add your code for
-									// txtPreBoil.actionPerformed
+									myRecipe.setPreBoil(Double
+											.parseDouble(txtPreBoil.getText()
+													.toString()));
+									displayRecipe();
 								}
 							});
 						}
@@ -470,8 +476,10 @@ public class NewSwingApp extends javax.swing.JFrame {
 									System.out
 											.println("txtPostBoil.actionPerformed, event="
 													+ evt);
-									//TODO add your code for
-									// txtPostBoil.actionPerformed
+									myRecipe.setPostBoil(Double
+											.parseDouble(txtPostBoil.getText()
+													.toString()));
+									displayRecipe();
 								}
 							});
 						}
@@ -495,6 +503,7 @@ public class NewSwingApp extends javax.swing.JFrame {
 									GridBagConstraints.HORIZONTAL, new Insets(
 											0, 0, 0, 0), 0, 0));
 							spnEffic.setModel(spnEfficModel);
+							spnEffic.setMaximumSize(new java.awt.Dimension(70, 32767));
 							spnEffic.addChangeListener(new ChangeListener() {
 								public void stateChanged(ChangeEvent evt) {
 									myRecipe.setEfficiency(Double
@@ -605,6 +614,14 @@ public class NewSwingApp extends javax.swing.JFrame {
 								scpComments.setViewportView(txtComments);
 								txtComments.setText("Comments");
 								txtComments.setWrapStyleWord(true);
+								txtComments
+									.addFocusListener(new FocusAdapter() {
+									public void focusLost(FocusEvent evt) {
+										if (!txtComments.getText().equals(myRecipe.getComments())){
+											myRecipe.setComments(txtComments.getText());
+										}
+									}
+									});
 							}
 						}
 						{
@@ -620,7 +637,7 @@ public class NewSwingApp extends javax.swing.JFrame {
 								public void actionPerformed(ActionEvent evt) {
 									Yeast y = (Yeast) cmbYeastModel
 											.getSelectedItem();
-									if (y != myRecipe.getYeastObj()) {
+									if (myRecipe!= null && y != myRecipe.getYeastObj()) {
 										myRecipe.setYeast(y);
 									}
 								}
@@ -806,17 +823,24 @@ public class NewSwingApp extends javax.swing.JFrame {
 								tblMalt.setLayout(tblMaltLayout);
 								tblMalt.setModel(tblMaltModel);
 								TableColumn column = null;
-								//								for (int i = 0; i < tblMalt.getColumnCount();
-								// i++) {
-								//									column = tblMalt.getColumnModel()
-								//										.getColumn(i);
-								//									if (i == 0) {
-								//										column.setPreferredWidth(100); //sport column
-								// is bigger
-								//									} else {
-								//										column.setPreferredWidth(50);
-								//									}
-								//								}
+								TableColumn maltColumn = tblMalt.getColumnModel().getColumn(0);
+								JComboBox maltComboBox = new JComboBox();
+								cmbMaltModel = new ComboModel();
+								maltComboBox.setModel(cmbMaltModel);
+								maltColumn.setCellEditor(new DefaultCellEditor(maltComboBox));
+								
+								
+								/*
+								for (int i = 0; i < tblMalt.getColumnCount(); i++) {
+									column = tblMalt.getColumnModel()
+											.getColumn(i);
+									if (i == 0) {
+										column.setPreferredWidth(100); 	   
+										
+									} else {
+										column.setPreferredWidth(50);
+									}
+								}*/
 							}
 						}
 						{
@@ -862,6 +886,13 @@ public class NewSwingApp extends javax.swing.JFrame {
 								BorderLayout tblHopsLayout = new BorderLayout();
 								tblHops.setLayout(tblHopsLayout);
 								tblHops.setModel(tblHopsModel);
+								TableColumn hopColumn = tblHops.getColumnModel().getColumn(0);
+								JComboBox hopComboBox = new JComboBox();
+								cmbHopsModel = new ComboModel();
+								hopComboBox.setModel(cmbHopsModel);
+								hopColumn.setCellEditor(new DefaultCellEditor(hopComboBox));
+							
+								
 
 							}
 						}
@@ -1117,7 +1148,7 @@ public class NewSwingApp extends javax.swing.JFrame {
 		public boolean isCellEditable(int row, int col) {
 			//Note that the data/cell address is constant,
 			//no matter where the cell appears onscreen.
-			if (col < 2) {
+			if (col < 0) {
 				return false;
 			} else {
 				return true;
@@ -1217,7 +1248,7 @@ public class NewSwingApp extends javax.swing.JFrame {
 		public boolean isCellEditable(int row, int col) {
 			//Note that the data/cell address is constant,
 			//no matter where the cell appears onscreen.
-			if (col < 2) {
+			if (col < 0) {
 				return false;
 			} else {
 				return true;
@@ -1247,7 +1278,6 @@ public class NewSwingApp extends javax.swing.JFrame {
 	class ComboModel extends AbstractListModel implements ComboBoxModel {
 
 		List list = new ArrayList();
-		String last = "X";
 		Object selected;
 
 		public void addOrInsert(Object o) {
@@ -1260,6 +1290,14 @@ public class NewSwingApp extends javax.swing.JFrame {
 					Yeast y = (Yeast) list.get(i);
 					Yeast y2 = (Yeast) o;
 					found = y.getName().equalsIgnoreCase(y2.getName());
+				} else if (o.getClass().getName().toString().equals("strangebrew.Fermentable")) {
+					Fermentable f = (Fermentable) list.get(i);
+					Fermentable f2 = (Fermentable) o;
+					found = f.getName().equalsIgnoreCase(f2.getName());
+				} else if (o.getClass().getName().toString().equals("strangebrew.Hop")) {
+					Hop h = (Hop) list.get(i);
+					Hop h2 = (Hop) o;
+					found = h.getName().equalsIgnoreCase(h2.getName());
 				} else {
 					Style s = (Style) list.get(i);
 					Style s2 = (Style) o;
@@ -1292,12 +1330,6 @@ public class NewSwingApp extends javax.swing.JFrame {
 
 		public Object getElementAt(int index) {
 			return list.get(index);
-		}
-
-		void changeModel() {
-			list.add(last);
-			last = last + "X";
-			fireContentsChanged(this, 0, list.size());
 		}
 
 		public void setList(ArrayList l) {
