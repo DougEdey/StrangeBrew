@@ -1,11 +1,13 @@
 /*
- * $Id: Recipe.java,v 1.15 2004/10/21 17:02:28 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.16 2004/10/21 19:40:58 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
 package strangebrew;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Recipe {
 
@@ -14,6 +16,7 @@ public class Recipe {
 	private String brewer;
 	private GregorianCalendar created;
 	private Yeast yeast = new Yeast();
+	private Style style = new Style();
 	private double estOg;
 	private double estFg;
 	private double ibu;
@@ -24,7 +27,7 @@ public class Recipe {
 	private double efficiency;
 	private int boilMinutes;
 	private double attenuation;
-	private String style; // change to Style object later
+
 	private String hopUnits;
 	private String maltUnits;
 	private Options opts;
@@ -68,7 +71,7 @@ public class Recipe {
 	public double getEfficiency(){ return efficiency; }
 	public int getBoilMinutes(){ return boilMinutes; }
 	public double getAttenuation(){ return attenuation; }
-	public String getStyle(){ return style; } 
+	public String getStyle(){ return style.getName(); } 
 	public String getHopUnits(){ return hopUnits; }
 	public String getMaltUnits(){ return maltUnits; }
 	public double getMashRatio(){ return opts.getDProperty("optMashRatio"); }
@@ -93,7 +96,7 @@ public class Recipe {
 	public void addMalt(Fermentable m) { fermentables.add(m);	}
 	public void addHop(Hop h) { hops.add(h); }
 	public void addMisc(Misc m) { misc.add(m); }
-	public void setStyle(String s) { style = s; }
+	public void setStyle(String s) { style.setName(s); }
 	public void setBoilMinutes(int b) { boilMinutes = b; }
 	public void setHopsUnits(String h) { hopUnits = h; }
 	public void setMaltUnits(String m) { maltUnits = m; }

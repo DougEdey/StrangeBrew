@@ -6,7 +6,7 @@ import java.util.*;
 import com.mindprod.csv.*;
 
 /**
- * $Id: Database.java,v 1.5 2004/10/21 17:02:28 andrew_avis Exp $
+ * $Id: Database.java,v 1.6 2004/10/21 19:40:58 andrew_avis Exp $
  * @author aavis
  *
  * TODO To change the template for this generated type comment go to
@@ -24,6 +24,7 @@ public class Database {
 	private ArrayList fermDB = new ArrayList();
 	private ArrayList hopsDB = new ArrayList();
 	private ArrayList yeastDB = new ArrayList();
+	private ArrayList styleDB = new ArrayList();
 
 	public void readFermentables() {
 		// read the fermentables from the csv file
@@ -145,7 +146,7 @@ public class Database {
 			} catch (EOFException e) {
 			}
 			reader.close();
-			if (true){
+			if (DEBUG){
 				for (int i=0; i<yeastDB.size(); i++)
 					System.out.print(((Yeast) yeastDB.get(i)).toXML());
 			}
@@ -155,6 +156,61 @@ public class Database {
 			System.out.println(e.getMessage());
 		}
 
+	}
+
+	public void readStyles(){
+			// read the styles from the csv file
+			try {
+				CSVReader reader = new CSVReader(new FileReader(
+						"src/strangebrew/data/bjcp_styles.csv"), ',', '\"', true, false);
+
+				try {
+					// get the first line and set up the index:
+					String[] fields = reader.getAllFieldsInLine();
+
+					int nameIdx = getIndex(fields, "Name");
+					int catIdx = getIndex(fields, "Category");
+					int oglowIdx = getIndex(fields, "OG_Low");
+					int oghighIdx = getIndex(fields, "OG_High");
+					int alclowIdx = getIndex(fields, "Alc_Low");
+					int alchighIdx = getIndex(fields, "Alc_High");
+					int ibulowIdx = getIndex(fields, "IBU_Low");
+					int ibuhighIdx = getIndex(fields, "IBU_High");
+					int lovlowIdx = getIndex(fields, "Lov_Low");
+					int lovhighIdx = getIndex(fields, "Lov_High");
+					int commexIdx = getIndex(fields, "Comm_Examples");
+					int descrIdx = getIndex(fields, "Descr");
+
+					while (true) {
+						Style s = new Style();
+						fields = reader.getAllFieldsInLine();
+						s.setName(fields[nameIdx]);
+						s.setCategory(fields[catIdx]);
+						s.setOgLow(Double.parseDouble(fields[oglowIdx]));
+						s.setOgHigh(Double.parseDouble(fields[oghighIdx]));
+						s.setAlcLow(Double.parseDouble(fields[alclowIdx]));
+						s.setAlcHigh(Double.parseDouble(fields[alchighIdx]));
+						s.setIbuLow(Double.parseDouble(fields[ibulowIdx]));
+						s.setIbuHigh(Double.parseDouble(fields[ibuhighIdx]));
+						s.setLovLow(Double.parseDouble(fields[lovlowIdx]));
+						s.setLovHigh(Double.parseDouble(fields[lovhighIdx]));
+						s.setCommercialEx(fields[commexIdx]);
+						s.setDescription(fields[descrIdx]);
+						styleDB.add(s);
+					}
+				} catch (EOFException e) {
+				}
+				reader.close();
+				if (true){
+					for (int i=0; i<styleDB.size(); i++)
+						System.out.print(((Style) styleDB.get(i)).toXML());
+				}
+
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println(e.getMessage());
+			}
+		
 	}
 	
 	private int getIndex(String[] fields, String key) {
