@@ -36,7 +36,7 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	SWTTextOutput myIBU;
 	SWTTextOutput myIBUPostfix;
 	SWTTextOutput myStyleLabel;
-	SWTTextInput myStyle;
+	SWTDropdown myStyle;
 	SWTTextOutput myOGLabel;
 	SWTNumberInput myOG;
 	SWTTextOutput myColourLabel;
@@ -87,7 +87,7 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		myIBUPostfix.init(myContainer);
 		myStyleLabel = new SWTTextOutput();
 		myStyleLabel.init(myContainer);
-		myStyle = new SWTTextInput(myController);
+		myStyle = new SWTDropdown(myController);
 		myStyle.init(myContainer);
 		myOGLabel = new SWTTextOutput();
 		myOGLabel.init(myContainer);
@@ -302,7 +302,7 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		return myStyleLabel;
 	}
 	
-	public TextInput getStyle() {
+	public Dropdown getStyle() {
 		return myStyle;
 	}
 	

@@ -68,7 +68,7 @@ public class RecipeDetailsController extends Controller {
 			submitAttenuation();
 		}
 		
-		if(myContents.getStyle().isUpdated()) {
+		if(myContents.getStyle().isSelected()) {
 			submitStyle();
 		}
 		
@@ -99,7 +99,8 @@ public class RecipeDetailsController extends Controller {
 		myContents.getAttenuation().set(myRecipe.getAttenuation());
 		Double ibu = new Double(myRecipe.getIbu());
 		myContents.getIBU().set(ibu.toString());
-		myContents.getStyle().set(myRecipe.getStyle());
+		// TODO update Style dropdown from database
+		myContents.getStyle().add(myRecipe.getStyle());
 		myContents.getOG().set(myRecipe.getEstOg());
 		Double colour = new Double(myRecipe.getSrm());
 		myContents.getColour().set(colour.toString());
@@ -151,7 +152,7 @@ public class RecipeDetailsController extends Controller {
 	}
 
 	private void submitStyle() {
-		if (myContents.getStyle().get() != null) {
+		if (myContents.getStyle().getItemSelected() != -1) {
 			myRecipe.setBrewer( myContents.getStyle().get() );
 		}
 	}
