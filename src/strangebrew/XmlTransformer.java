@@ -1,5 +1,5 @@
 /**
- * $Id: XmlTransformer.java,v 1.2 2004/11/20 18:32:05 tangent_ Exp $
+ * $Id: XmlTransformer.java,v 1.3 2004/11/22 08:06:48 tangent_ Exp $
  * Created on Nov 19, 2004
  * @author Christopher Cook
  *
@@ -27,7 +27,9 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerConfigurationException;
 
 public class XmlTransformer {
 
@@ -38,18 +40,16 @@ public class XmlTransformer {
 	 * @param xml			the source xml
 	 * @param xslt			the source xslt
 	 * @param output		an output stream (like FileOutputStream)
-	 * @throws Exception
+	 * @throws TransformerConfigurationException
+	 * @throws TransformerException
 	 */
 	public static void writeStream(Source xml, Source xslt,
-			OutputStream output) throws Exception {
+			OutputStream output)
+			throws TransformerConfigurationException, TransformerException {
 		
 		TransformerFactory factory = TransformerFactory.newInstance();
-		try {
-			Transformer transformer = factory.newTransformer(xslt);
-			transformer.transform(xml, new StreamResult(output));
-	    } catch(Exception e) {
-	    	System.out.println(e.getMessage());
-	    }
+		Transformer transformer = factory.newTransformer(xslt);
+		transformer.transform(xml, new StreamResult(output));
 	}
 
 	/**
@@ -60,10 +60,12 @@ public class XmlTransformer {
 	 * @param xmlFile		the file containing the source xml
 	 * @param xsltFile		the file containing the source xslt
 	 * @param output		an output stream (like System.out)
-	 * @throws Exception
+	 * @throws TransformerConfigurationException
+	 * @throws TransformerException
 	 */
 	public static void writeStream (File xmlFile, File xsltFile,
-			OutputStream output) throws Exception {
+			OutputStream output)
+			throws TransformerConfigurationException, TransformerException {
 
 		writeStream(new StreamSource(xmlFile),
 				new StreamSource(xsltFile), output);
@@ -77,12 +79,32 @@ public class XmlTransformer {
 	 * @param xmlFilespec		path to the xml source file
 	 * @param xsltFilespec		path to the xslt source file
 	 * @param output			an output stream (like System.out)
-	 * @throws Exception
+	 * @throws TransformerConfigurationException
+	 * @throws TransformerException
 	 */
 	public static void writeStream (String xmlFilespec, String xsltFilespec,
-			OutputStream output) throws Exception {
+			OutputStream output)
+			throws TransformerConfigurationException, TransformerException {
 		
 		writeStream(new File(xmlFilespec), new File(xsltFilespec), output);
+	}
+
+	/**
+	 * Performs an XSLT transformation and writes the results to the
+	 * specified OutputStream. This overload accepts a mixed set of types
+	 * for the xml and xslt arguments instead of actual StreamSource.
+	 * 
+	 * @param xmlFilespec		path to the xml source file
+	 * @param xsltFilespec		path to the xslt source file
+	 * @param output			an output stream (like System.out)
+	 * @throws TransformerConfigurationException
+	 * @throws TransformerException
+	 */
+	public static void writeStream(Source xml, File xsltFile,
+			OutputStream output)
+			throws TransformerConfigurationException, TransformerException {
+		
+		writeStream(xml, new StreamSource(xsltFile), output);
 	}
 
 }
