@@ -11,8 +11,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 
 public class ImportXml extends DefaultHandler {
+	
+	private String indentString = "    "; // Amount to indent
+	private int indentLevel = 0;
 
-	private Recipe r = null;
+	public Recipe r = null;
 	private Malt m = null; 
 	private Hop h = null;
 
@@ -20,6 +23,8 @@ public class ImportXml extends DefaultHandler {
 	private String currentElement = null; // current element name
 	private String importType = null; // the type of recipe we're importing
 
+	public Recipe getRecipe() {return r;}
+	
 	public static void main(String argv[]) {
 		if (argv.length != 1) {
 			System.err.println("Usage: cmd filename");
@@ -31,8 +36,6 @@ public class ImportXml extends DefaultHandler {
 		// Use the default (non-validating) parser
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		try {
-			// Set up output stream
-			out = new OutputStreamWriter(System.out, "UTF8");
 
 			// Parse the input
 			SAXParser saxParser = factory.newSAXParser();
@@ -70,11 +73,7 @@ public class ImportXml extends DefaultHandler {
 		System.exit(0);
 	}
 
-	static private Writer out;
 
-	private String indentString = "    "; // Amount to indent
-
-	private int indentLevel = 0;
 
 	//===========================================================
 	// SAX DocumentHandler methods
@@ -82,13 +81,10 @@ public class ImportXml extends DefaultHandler {
 
 	public void setDocumentLocator(Locator l) {
 		// Save this to resolve relative URIs or to give diagnostics.
-		try {
-			out.write("LOCATOR");
-			out.write("\n SYS ID: " + l.getSystemId());
-			out.flush();
-		} catch (IOException e) {
-			// Ignore errors
-		}
+			System.out.print("LOCATOR");
+			System.out.print("\n SYS ID: " + l.getSystemId());
+			System.out.flush();
+
 	}
 
 	public void startDocument() throws SAXException {
@@ -97,13 +93,8 @@ public class ImportXml extends DefaultHandler {
 	public void endDocument() throws SAXException {
 		emit(r.toXML());
 		r.testRecipe();
-
-		try {
-			nl();
-			out.flush();
-		} catch (IOException e) {
-			throw new SAXException("I/O error", e);
-		}
+		nl();
+		System.out.flush();
 	}
 
 	public void startElement(String namespaceURI, String lName, // local name
@@ -130,7 +121,7 @@ public class ImportXml extends DefaultHandler {
 		} 
 		else if (eName.equalsIgnoreCase("MISC")) {
 			currentList = "MISC";
-		} else if (eName.equalsIgnoreCase("ITEM")) { // this is an item in a list
+		} else if (eName.equalsIgnoreCase("ITEM") && importType == "STRANGEBREW") { // this is an item in a list
 			if (currentList.equals("FERMENTABLES")) {
 				m = new Malt();
 			} else if (currentList.equals("HOPS")) {
@@ -149,26 +140,27 @@ public class ImportXml extends DefaultHandler {
 	public void endElement(String namespaceURI, String sName, // simple name
 			String qName // qualified name
 	) throws SAXException {
-
-		if (qName.equalsIgnoreCase("ITEM")
-				&& currentList.equalsIgnoreCase("FERMENTABLES")) {
-			r.addMalt(m);
-			m = null;
-		} else if (qName.equalsIgnoreCase("ITEM")
-				&& currentList.equalsIgnoreCase("HOPS")) {
-			r.addHop(h);
-			h = null;
-		} else if (qName.equalsIgnoreCase("FERMENTABLS") ||
-				   qName.equalsIgnoreCase("HOPS") || 
-				   qName.equalsIgnoreCase("DETAILS")) {
-			currentList = null;
+		if (importType == "STRANGEBREW") {
+			if (qName.equalsIgnoreCase("ITEM")
+					&& currentList.equalsIgnoreCase("FERMENTABLES")) {
+				r.addMalt(m);
+				m = null;
+			} else if (qName.equalsIgnoreCase("ITEM")
+					&& currentList.equalsIgnoreCase("HOPS")) {
+				r.addHop(h);
+				h = null;
+			} else if (qName.equalsIgnoreCase("FERMENTABLS")
+					|| qName.equalsIgnoreCase("HOPS")
+					|| qName.equalsIgnoreCase("DETAILS")) {
+				currentList = null;
+			}
 		}
 	}
 
 	public void characters(char buf[], int offset, int len) throws SAXException {
 		String s = new String(buf, offset, len);
 
-		if (!s.trim().equals("")) {
+		if (!s.trim().equals("") && importType == "STRANGEBREW") {
 
 			if (currentList.equals("FERMENTABLES")) {
 				if (currentElement.equalsIgnoreCase("MALT")) {
@@ -280,24 +272,23 @@ public class ImportXml extends DefaultHandler {
 	// Wrap I/O exceptions in SAX exceptions, to
 	// suit handler signature requirements
 	private void emit(String s) throws SAXException {
-		try {
-			out.write(s);
-			out.flush();
-		} catch (IOException e) {
-			throw new SAXException("I/O error", e);
-		}
+			System.out.print(s);
+			System.out.flush();
 	}
 
 	// Start a new line
 	// and indent the next line appropriately
 	private void nl() throws SAXException {
 		String lineEnd = System.getProperty("line.separator");
-		try {
-			out.write(lineEnd);
+		//try {
+			System.out.print(lineEnd);
 			for (int i = 0; i < indentLevel; i++)
-				out.write(indentString);
-		} catch (IOException e) {
-			throw new SAXException("I/O error", e);
-		}
+				System.out.print(indentString);
+		//} 
+		//catch (IOException e) {
+		//	throw new SAXException("I/O error", e);
+		// }
 	}
+	
+	
 }
