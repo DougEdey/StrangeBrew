@@ -32,6 +32,10 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	SWTCheckBox myMash;
 	SWTTextOutput myAttenuationLabel;
 	SWTNumberInput myAttenuation;
+	SWTTextOutput myIBULabel;
+	SWTTextOutput myIBU;
+	SWTTextOutput myIBUPostfix;
+
 
 	public SWTRecipeDetailsView(Composite container) {
 		myContainer = container;
@@ -64,6 +68,12 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		myAttenuationLabel.init(myContainer);
 		myAttenuation = new SWTNumberInput(myController);
 		myAttenuation.init(myContainer);
+		myIBULabel = new SWTTextOutput();
+		myIBULabel.init(myContainer);
+		myIBU = new SWTTextOutput();
+		myIBU.init(myContainer);
+		myIBUPostfix = new SWTTextOutput();
+		myIBUPostfix.init(myContainer);
 		
 		myLayout = new FormLayout();
 		myLayout.marginHeight = 3;
@@ -123,6 +133,7 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		setSize(myEfficiency, 0, 50);
 		setSize(myDate, 0, 120);
 		setSize(myAttenuation, 0, 50);
+		setSize(myIBU, 0, 50);
 		
 		align(myBrewerLabel, SWT.LEFT, null, SWT.NONE, 5);
 		align(myBrewerLabel, SWT.TOP, null, SWT.NONE, 5);
@@ -144,6 +155,12 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		align(myAttenuationLabel, SWT.BOTTOM, myMash, SWT.BOTTOM, 0);
 		align(myAttenuation, SWT.BOTTOM, myAttenuationLabel, SWT.BOTTOM, 0);
 		align(myAttenuation, SWT.LEFT, myEfficiency, SWT.LEFT, 0);
+		align(myIBULabel, SWT.BOTTOM, myAttenuation, SWT.BOTTOM, 0);
+		align(myIBULabel, SWT.RIGHT, myAlcoholLabel, SWT.RIGHT, 0);
+		align(myIBU, SWT.BOTTOM, myIBULabel, SWT.BOTTOM, 0);
+		align(myIBU, SWT.LEFT, myAlcohol, SWT.LEFT, 0);
+		align(myIBUPostfix, SWT.LEFT, myAlcoholPostfix, SWT.LEFT, 0);
+		align(myIBUPostfix, SWT.BOTTOM, myIBU, SWT.BOTTOM, 0);
 		
 		myContainer.layout();
 		myContainer.pack();
@@ -208,5 +225,17 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	public NumberInput getAttenuation() {
 		return myAttenuation;
 	}
-	
+
+	public TextOutput getIBULabel() {
+		return myIBULabel;
+	}
+
+	public TextOutput getIBU() {
+		return myIBU;
+	}
+
+	public TextOutput getIBUPostfix() {
+		return myIBUPostfix;
+	}
+
 }

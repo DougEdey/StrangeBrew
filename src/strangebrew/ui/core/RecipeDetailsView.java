@@ -23,4 +23,8 @@ public abstract class RecipeDetailsView extends View {
 	public abstract CheckBox getMash();
 	public abstract TextOutput getAttenuationLabel();
 	public abstract NumberInput getAttenuation();
+	public abstract TextOutput getIBULabel();
+	public abstract TextOutput getIBU();
+	public abstract TextOutput getIBUPostfix();
+
 }

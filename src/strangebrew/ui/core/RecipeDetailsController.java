@@ -32,6 +32,8 @@ public class RecipeDetailsController extends Controller {
 		myContents.getDateLabel().set("Date:");
 		myContents.getMashLabel().set("Mash?");
 		myContents.getAttenuationLabel().set("% Atten:");
+		myContents.getIBULabel().set("IBU:");
+		myContents.getIBUPostfix().set("(Rager)");
 		myView.layout();
 	}
 	
@@ -75,6 +77,9 @@ public class RecipeDetailsController extends Controller {
 		// TODO update Mash checkbox when it is in recipe
 		myContents.getMash().set(true);
 		myContents.getAttenuation().set(myRecipe.attenuation);
+		Double ibu = new Double(myRecipe.ibu);
+		myContents.getIBU().set(ibu.toString());
+
 	}
 	
 	public void cleanUp() {
