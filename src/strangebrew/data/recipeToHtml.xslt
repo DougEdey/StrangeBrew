@@ -51,7 +51,7 @@
 				<tr>
 					<th>Style</th>
 					<td><xsl:value-of select="STYLE"/></td>
-					<th><abbr title="Internation Bitterness Unit">IBU</abbr></th>
+					<th><abbr title="International Bittering Unit">IBU</abbr></th>
 					<td><xsl:value-of select="IBU"/></td>
 				</tr>
 				<tr>
