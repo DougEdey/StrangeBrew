@@ -39,26 +39,30 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		myLayout.marginWidth = 3;
 		myContainer.setLayout(myLayout);
 		
-		FormData data1 = new FormData();
-		myBrewerLabel.getWidget().setLayoutData(data1);
-
-		FormData data2 = new FormData();
-		data2.width = 200;
-		data2.height = 10;
-		data2.left = new FormAttachment(myBrewerLabel.getWidget(), 5);
-		myBrewer.getWidget().setLayoutData(data2);
-		
-		FormData data3 = new FormData();
-		data3.left = new FormAttachment(myBrewer.getWidget(), 10);
-		myEfficiencyLabel.getWidget().setLayoutData(data3);
-		
-		FormData data4 = new FormData();
-		data4.width = 25;
-		data4.height = 10;
-		data4.left = new FormAttachment(myEfficiencyLabel.getWidget(), 5);
-		myEfficiency.getWidget().setLayoutData(data4);
+		attach(myBrewerLabel.getWidget(), null, 0, 0, 0);
+		attach(myBrewer.getWidget(), myBrewerLabel.getWidget(), 
+				200, 10, 5);
+		attach(myEfficiencyLabel.getWidget(), myBrewer.getWidget(), 
+				0, 0, 10);
+        attach(myEfficiency.getWidget(), myEfficiencyLabel.getWidget(), 
+        		25, 10, 5);		
 	}
 	
+	private void attach(Control control, Control target, 
+			int width, int height, int offset) {
+		FormData data = new FormData();
+		if (width != 0) {
+			data.width = width;
+		}
+		if (height != 0) {
+			data.height = height;
+		}
+		if (target != null) {
+			data.left = new FormAttachment(target, offset);
+		}
+		control.setLayoutData(data);
+	}
+
 	public void layout() {
 		myContainer.layout();
 		myContainer.pack();
