@@ -127,12 +127,6 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		control.getControl().setLayoutData(data);
 	}
 	
-	private void attach(SWTFormWidget control, SWTFormWidget target,
-			int offset) {
-		align(control, SWT.LEFT, target, SWT.RIGHT, offset);
-		align(control, SWT.BOTTOM, target, SWT.BOTTOM, 0);
-	}
-
 	public void layout() {
 		setSize(myBrewer, 0, 200);
 		setSize(myAlcohol, 0, 50);
@@ -146,54 +140,81 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		setSize(myYeast, 0, 200);
 		setSize(myFG, 0, 50);
 		
+		SWTFormWidget rowAnchor;
+		
+		rowAnchor = myBrewer;
+		
 		align(myBrewerLabel, SWT.LEFT, null, SWT.NONE, 5);
-		align(myBrewerLabel, SWT.TOP, null, SWT.NONE, 5);
-		attach(myBrewer, myBrewerLabel, 5);
-		attach(myEfficiencyLabel, myBrewer, 20);
-        attach(myEfficiency, myEfficiencyLabel, 5);		
-		attach(myAlcoholLabel, myEfficiency, 10);
-        attach(myAlcohol, myAlcoholLabel, 5);		
-		attach(myAlcoholPostfix, myAlcohol, 5);
+		align(myBrewerLabel, SWT.BOTTOM, myBrewer, SWT.BOTTOM, 0);
+		align(myBrewer, SWT.LEFT, myBrewerLabel, SWT.RIGHT, 5);
+		align(myBrewer, SWT.TOP, null, SWT.NONE, 5);
+		
+		align(myEfficiencyLabel, SWT.LEFT, myBrewer, SWT.RIGHT, 20);
+		align(myEfficiencyLabel, SWT.BOTTOM, myEfficiency, SWT.BOTTOM, 0);
+		align(myEfficiency, SWT.LEFT, myEfficiencyLabel, SWT.RIGHT, 5);
+        align(myEfficiency, SWT.BOTTOM, rowAnchor, SWT.BOTTOM, 0);
+
+        align(myAlcoholLabel, SWT.LEFT, myEfficiency, SWT.RIGHT, 10);
+		align(myAlcoholLabel, SWT.BOTTOM, myAlcohol, SWT.BOTTOM, 0);
+        align(myAlcohol, SWT.LEFT, myAlcoholLabel, SWT.RIGHT, 5);
+        align(myAlcohol, SWT.BOTTOM, rowAnchor, SWT.BOTTOM, 0);
+		align(myAlcoholPostfix, SWT.LEFT, myAlcohol, SWT.RIGHT, 5);
+		align(myAlcoholPostfix, SWT.BOTTOM, myAlcohol, SWT.BOTTOM, 0);
+
+		rowAnchor = myDate;
+		
 		align(myDateLabel, SWT.RIGHT, myDate, SWT.LEFT, -5);
 		align(myDateLabel, SWT.BOTTOM, myDate, SWT.BOTTOM, 0);
-		align(myDate, SWT.TOP, myBrewer, SWT.BOTTOM, 5);
 		align(myDate, SWT.LEFT, myBrewer, SWT.LEFT, 0);
-		align(myMash, SWT.TOP, myBrewer, SWT.BOTTOM, 5);
-		align(myMash, SWT.RIGHT, myBrewer, SWT.RIGHT, 10);
+		align(myDate, SWT.TOP, myBrewer, SWT.BOTTOM, 5);
+		
 		align(myMashLabel, SWT.RIGHT, myMash, SWT.LEFT, -10);
 		align(myMashLabel, SWT.BOTTOM, myMash, SWT.BOTTOM, 0);
+		align(myMash, SWT.RIGHT, myBrewer, SWT.RIGHT, 10);
+		align(myMash, SWT.BOTTOM, rowAnchor, SWT.BOTTOM, 0);
+
 		align(myAttenuationLabel, SWT.RIGHT, myEfficiencyLabel, SWT.RIGHT, 0);
-		align(myAttenuationLabel, SWT.BOTTOM, myMash, SWT.BOTTOM, 0);
-		align(myAttenuation, SWT.BOTTOM, myAttenuationLabel, SWT.BOTTOM, 0);
+		align(myAttenuationLabel, SWT.BOTTOM, myAttenuation, SWT.BOTTOM, 0);
 		align(myAttenuation, SWT.LEFT, myEfficiency, SWT.LEFT, 0);
-		align(myIBULabel, SWT.BOTTOM, myAttenuation, SWT.BOTTOM, 0);
+		align(myAttenuation, SWT.BOTTOM, rowAnchor, SWT.BOTTOM, 0);
+
 		align(myIBULabel, SWT.RIGHT, myAlcoholLabel, SWT.RIGHT, 0);
-		align(myIBU, SWT.BOTTOM, myIBULabel, SWT.BOTTOM, 0);
+		align(myIBULabel, SWT.BOTTOM, myIBU, SWT.BOTTOM, 0);
 		align(myIBU, SWT.LEFT, myAlcohol, SWT.LEFT, 0);
+		align(myIBU, SWT.BOTTOM, rowAnchor, SWT.BOTTOM, 0);
 		align(myIBUPostfix, SWT.LEFT, myAlcoholPostfix, SWT.LEFT, 0);
 		align(myIBUPostfix, SWT.BOTTOM, myIBU, SWT.BOTTOM, 0);
+
+		rowAnchor = myStyle;
+		
 		align(myStyleLabel, SWT.RIGHT, myStyle, SWT.LEFT, -5);
 		align(myStyleLabel, SWT.BOTTOM, myStyle, SWT.BOTTOM, 0);
-		align(myStyle, SWT.TOP, myDate, SWT.BOTTOM, 5);
 		align(myStyle, SWT.LEFT, myDate, SWT.LEFT, 0);
+		align(myStyle, SWT.TOP, myDate, SWT.BOTTOM, 5);
+
 		align(myOGLabel, SWT.RIGHT, myAttenuationLabel, SWT.RIGHT, 0);
-		align(myOGLabel, SWT.BOTTOM, myStyle, SWT.BOTTOM, 0);
-		align(myOG, SWT.BOTTOM, myOGLabel, SWT.BOTTOM, 0);
+		align(myOGLabel, SWT.BOTTOM, myOG, SWT.BOTTOM, 0);
 		align(myOG, SWT.LEFT, myAttenuation, SWT.LEFT, 0);
-		align(myColourLabel, SWT.BOTTOM, myOG, SWT.BOTTOM, 0);
+		align(myOG, SWT.BOTTOM, rowAnchor, SWT.BOTTOM, 0);
+
 		align(myColourLabel, SWT.RIGHT, myIBULabel, SWT.RIGHT, 0);
-		align(myColour, SWT.BOTTOM, myColourLabel, SWT.BOTTOM, 0);
+		align(myColourLabel, SWT.BOTTOM, myColour, SWT.BOTTOM, 0);
 		align(myColour, SWT.LEFT, myIBU, SWT.LEFT, 0);
+		align(myColour, SWT.BOTTOM, rowAnchor, SWT.BOTTOM, 0);
 		align(myColourPostfix, SWT.LEFT, myIBUPostfix, SWT.LEFT, 0);
 		align(myColourPostfix, SWT.BOTTOM, myColour, SWT.BOTTOM, 0);
+
+		rowAnchor = myYeast;
+		
 		align(myYeastLabel, SWT.RIGHT, myYeast, SWT.LEFT, -5);
 		align(myYeastLabel, SWT.BOTTOM, myYeast, SWT.BOTTOM, 0);
-		align(myYeast, SWT.TOP, myStyle, SWT.BOTTOM, 5);
 		align(myYeast, SWT.LEFT, myStyle, SWT.LEFT, 0);
+		align(myYeast, SWT.TOP, myStyle, SWT.BOTTOM, 5);
+		
 		align(myFGLabel, SWT.RIGHT, myOGLabel, SWT.RIGHT, 0);
-		align(myFGLabel, SWT.BOTTOM, myYeast, SWT.BOTTOM, 0);
-		align(myFG, SWT.BOTTOM, myFGLabel, SWT.BOTTOM, 0);
+		align(myFGLabel, SWT.BOTTOM, myFG, SWT.BOTTOM, 0);
 		align(myFG, SWT.LEFT, myOG, SWT.LEFT, 0);
+		align(myFG, SWT.BOTTOM, rowAnchor, SWT.BOTTOM, 0);
 		
 		myContainer.layout();
 		myContainer.pack();
