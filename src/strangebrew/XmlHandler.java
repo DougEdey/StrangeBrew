@@ -27,6 +27,7 @@ public class XmlHandler extends DefaultHandler{
 	private Recipe r = null;
 	private Fermentable m = null; 
 	private Hop h = null;
+	private Misc misc = null;
 	private Attributes currentAttributes = null;
 
 	private String currentList = null; //current List name
@@ -147,7 +148,7 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentList.equals("HOPS")) {
 				h = new Hop();
 			} else if (currentList.equals("MISC")) {
-				// TODO: new misc object
+				misc = new Misc();
 			}
 
 		} 
@@ -172,9 +173,14 @@ public class XmlHandler extends DefaultHandler{
 					&& currentList.equalsIgnoreCase("HOPS")) {
 				r.addHop(h);
 				h = null;
+			} else if (qName.equalsIgnoreCase("ITEM")
+					&& currentList.equalsIgnoreCase("MISC")) {
+				r.addMisc(misc);
+				misc = null;
 			} else if (qName.equalsIgnoreCase("FERMENTABLS")
 					|| qName.equalsIgnoreCase("HOPS")
-					|| qName.equalsIgnoreCase("DETAILS")) {
+					|| qName.equalsIgnoreCase("DETAILS")
+					|| qName.equalsIgnoreCase("MISC")) {
 				currentList = null;
 			}
 		}
@@ -294,6 +300,28 @@ public class XmlHandler extends DefaultHandler{
 				h.setDesc(s);
 			} else if (currentElement.equalsIgnoreCase("TIME")) {
 				h.setMinutes(Integer.parseInt(s));
+			}
+		}
+		
+		else if (currentList.equalsIgnoreCase("MISC")) {
+			if (currentElement.equalsIgnoreCase("NAME")) {
+				misc.setName(s);
+			} else if (currentElement.equalsIgnoreCase("AMOUNT")) {
+				misc.setAmount(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("UNITS")) {
+				misc.setUnits(s);
+			} else if (currentElement.equalsIgnoreCase("COMMENTS")) {
+				misc.setComments(s);
+			} else if (currentElement.equalsIgnoreCase("COST_PER_U")) {
+				// misc.setCost( Double.parseDouble(s) );
+			} else if (currentElement.equalsIgnoreCase("ADD")) {
+				h.setAdd(s);
+			} else if (currentElement.equalsIgnoreCase("DescrLookup")) {
+				misc.setDescription(s);
+			} else if (currentElement.equalsIgnoreCase("TIME")) {
+				misc.setTime(Integer.parseInt(s));
+			} else if (currentElement.equalsIgnoreCase("STAGE")) {
+				misc.setStage(s);
 			}
 		}
 

@@ -45,6 +45,16 @@ public class Misc {
 	public void setComments(String c){ comments = c; }
 	public void setStage(String s){ stage = s; }
 	public void setTime(int t){ time = t; }
-	
 
+	public String toXML(){
+	    StringBuffer sb = new StringBuffer();
+	    sb.append( "    <ITEM>\n" );
+	    sb.append( "      <NAME>"+name+"</NAME>\n" );
+	    sb.append( "      <AMOUNT>"+amount+"</AMOUNT>\n" );
+	    sb.append( "      <UNITS>"+units+"</UNITS>\n" );
+	    sb.append( "      <STAGE>"+stage+"</STAGE>\n" );
+	    sb.append( "      <TIME>"+time+"</TIME>\n" );
+	    sb.append( "    </ITEM>\n" );
+	    return sb.toString();
+	}
 }

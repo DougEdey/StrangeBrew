@@ -240,19 +240,31 @@ public class Recipe {
 		sb.append("<NAME>" + name + "</NAME>\n");
 		sb.append("<SIZE>" + postBoilVol + "</SIZE>\n");
 		sb.append("<SIZE_UNITS>" + volUnits + "</SIZE_UNITS>\n");
-		sb.append("  <FERMENTABLES>\n");
 		
+		// fermentables list:
+		sb.append("  <FERMENTABLES>\n");		
 		for (int i = 0; i < fermentables.size(); i++) {
 			Fermentable m = (Fermentable) fermentables.get(i);
 			sb.append(m.toXML());
 		}
 		sb.append("  </FERMENTABLES>\n");
+		
+		// hops list:
 		sb.append("  <HOPS>\n");
 		for (int i = 0; i < hops.size(); i++) {
 			Hop h = (Hop) hops.get(i);
 			sb.append(h.toXML());
 		}
 		sb.append("  </HOPS>\n");
+		
+		// misc ingredients list:
+		sb.append("  <MISC>\n");
+		for (int i = 0; i < misc.size(); i++) {
+			Misc mi = (Misc) misc.get(i);
+			sb.append(mi.toXML());
+		}
+		sb.append("  </MISC>\n");
+		
 		sb.append("</RECIPE>");
 
 		return sb.toString();
