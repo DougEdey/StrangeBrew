@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * $Id: Ingredient.java,v 1.1 2004/10/21 16:44:24 andrew_avis Exp $
+ * $Id: Ingredient.java,v 1.2 2004/10/21 17:02:28 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  *
@@ -66,6 +66,17 @@ public class Ingredient {
 		amount.setQuantity(null, u.trim(), Double.parseDouble(d.trim()));
 	}
 	
+	public String toXML(){
+	    StringBuffer sb = new StringBuffer();
+	    sb.append( "    <ITEM>\n" );
+	    sb.append( "      <HOP>"+getName()+"</HOP>\n" );
+	    sb.append( "      <AMOUNT>"+getAmountAs(getUnits())+"</AMOUNT>\n" );
+	    sb.append( "      <UNITS>"+getUnits()+"</UNITS>\n" );
+	    sb.append( "      <DATE>"+getDate()+"</date>\n" );
+	    sb.append( "      <DESCR>"+getDescription()+"</DESCR>\n" );
+	    sb.append( "    </ITEM>\n" );
+	    return sb.toString();
+	}
 	
 	
 

@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.14 2004/10/21 16:44:24 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.15 2004/10/21 17:02:28 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -13,6 +13,7 @@ public class Recipe {
 	private String name;
 	private String brewer;
 	private GregorianCalendar created;
+	private Yeast yeast = new Yeast();
 	private double estOg;
 	private double estFg;
 	private double ibu;
@@ -106,7 +107,7 @@ public class Recipe {
 	 * amount, and u is a string of units.  For importing the
 	 * quantity attribute from QBrew xml.
 	 * @param a
-	 */
+	 */	
 	public void setAmountAndUnits(String a){
 		int i = a.indexOf(" ");
 		String d = a.substring(0,i);
@@ -114,8 +115,7 @@ public class Recipe {
 		postBoilVol.setQuantity( null, u.trim(), Double.parseDouble(d.trim()));
 
 	}
-	
-	
+		
 
 	/**
 	 * Calculate all the malt totals from the array of malt objects 

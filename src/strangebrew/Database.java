@@ -6,7 +6,7 @@ import java.util.*;
 import com.mindprod.csv.*;
 
 /**
- * $Id: Database.java,v 1.4 2004/10/21 16:44:24 andrew_avis Exp $
+ * $Id: Database.java,v 1.5 2004/10/21 17:02:28 andrew_avis Exp $
  * @author aavis
  *
  * TODO To change the template for this generated type comment go to
@@ -23,6 +23,7 @@ public class Database {
 
 	private ArrayList fermDB = new ArrayList();
 	private ArrayList hopsDB = new ArrayList();
+	private ArrayList yeastDB = new ArrayList();
 
 	public void readFermentables() {
 		// read the fermentables from the csv file
@@ -63,10 +64,7 @@ public class Database {
 			} catch (EOFException e) {
 			}
 			reader.close();
-			if (true){
-				for (int i=0; i<fermDB.size(); i++)
-					System.out.print(((Fermentable) fermDB.get(i)).toXML());
-			}
+
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -120,6 +118,45 @@ public class Database {
 
 	}
 
+	public void readYeast() {
+		// read the yeast from the csv file
+		try {
+			CSVReader reader = new CSVReader(new FileReader(
+					"src/strangebrew/data/yeast.csv"), ',', '\"', true, false);
+
+			try {
+				// get the first line and set up the index:
+				String[] fields = reader.getAllFieldsInLine();
+
+				int nameIdx = getIndex(fields, "Name");
+				int costIdx = getIndex(fields, "Cost");
+				int descrIdx = getIndex(fields, "Descr");
+
+				while (true) {
+					Yeast y = new Yeast();
+					fields = reader.getAllFieldsInLine();
+					y.setName(fields[nameIdx]);
+
+					if (!fields[costIdx].equals(""))
+						y.setCost(Double.parseDouble(fields[costIdx]));
+					y.setDescription(fields[descrIdx]);
+					yeastDB.add(y);
+				}
+			} catch (EOFException e) {
+			}
+			reader.close();
+			if (true){
+				for (int i=0; i<yeastDB.size(); i++)
+					System.out.print(((Yeast) yeastDB.get(i)).toXML());
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+
+	}
+	
 	private int getIndex(String[] fields, String key) {
 		int i = 0;
 		while (i < fields.length && !fields[i].equalsIgnoreCase(key)) {
