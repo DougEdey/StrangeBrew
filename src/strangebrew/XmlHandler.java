@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.17 2004/11/22 18:02:54 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.18 2004/11/22 22:00:58 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -177,7 +177,7 @@ public class XmlHandler extends DefaultHandler{
 			currentList = "FERMENTABLES";
 		} else if (eName.equalsIgnoreCase("HOPS")) {
 			currentList = "HOPS";
-		} else if (eName.equalsIgnoreCase("MASH") && currentList == null) {
+		} else if (eName.equalsIgnoreCase("MASH") && currentList.equals("")) {
 			currentList = "MASH";
 		} else if (eName.equalsIgnoreCase("MISC")) {
 			currentList = "MISC";

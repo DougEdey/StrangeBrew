@@ -1,5 +1,5 @@
 /**
- * $Id: Hop.java,v 1.10 2004/11/22 18:02:55 andrew_avis Exp $
+ * $Id: Hop.java,v 1.11 2004/11/22 22:00:59 andrew_avis Exp $
  * Created on Oct 5, 2004
  *
  * Base class for hops.  This object doesn't do much except hold data and
@@ -7,6 +7,7 @@
  */
 
 package strangebrew;
+
 
 public class Hop extends Ingredient{
 	private double alpha;
@@ -45,8 +46,13 @@ public class Hop extends Ingredient{
 	    sb.append( "    <ITEM>\n" );
 	    sb.append( "      <HOP>"+getName()+"</HOP>\n" );
 	    sb.append( "      <AMOUNT>"+getAmountAs(getUnits())+"</AMOUNT>\n" );
+	    sb.append( "      <TIME>"+getMinutes()+"</TIME>\n" );
 	    sb.append( "      <UNITS>"+getUnits()+"</UNITS>\n" );
+	    sb.append( "      <FORM>"+form+"</FORM>\n" );
 	    sb.append( "      <ALPHA>"+alpha+"</ALPHA>\n" );
+	    sb.append( "      <COSTOZ>"+getCostPerU()+"</COSTOZ>\n" );
+	    sb.append( "      <ADD>"+add+"</ADD>\n" );
+	    sb.append( "      <DESCRIPTION>"+getDescription()+"</DESCRIPTION>\n" );
 	    sb.append( "      <DATE>"+getDate()+"</DATE>\n" );
 	    sb.append( "    </ITEM>\n" );
 	    return sb.toString();

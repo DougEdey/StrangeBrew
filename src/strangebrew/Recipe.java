@@ -1,10 +1,11 @@
 /*
- * $Id: Recipe.java,v 1.27 2004/11/22 18:02:55 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.28 2004/11/22 22:00:59 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
 package strangebrew;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -379,10 +380,25 @@ public class Recipe {
 		sb.append("<STRANGEBREWRECIPE version = \"2.0A\">\n");
 		sb.append("  <DETAILS>\n");
 		sb.append("  <NAME>" + name + "</NAME>\n");
+		sb.append("  <NOTES>" + comments + "</NOTES>\n");
+		sb.append("  <EFFICIENCY>" + efficiency + "</EFFICIENCY>\n");
+		sb.append("  <OG>" + estOg + "</OG>\n");
+		sb.append("  <FG>" + estFg + "</FG>\n");
 		sb.append("  <STYLE>" + style.getName() + "</STYLE>\n");
+		sb.append("  <MASH>" + mashed + "</MASH>\n");
+		sb.append("  <LOV>" + srm + "</LOV>\n");
+		sb.append("  <IBU>" + ibu + "</IBU>\n");
+		sb.append("  <ALC>" + alcohol + "</ALC>\n");
+		sb.append("  <BOIL_TIME>" + boilMinutes + "</BOIL_TIME>\n");
+		sb.append("  <PRESIZE>" + preBoilVol.getValue() + "</PRESIZE>\n");
 		sb.append("  <SIZE>" + postBoilVol.getValue() + "</SIZE>\n");
 		sb.append("  <SIZE_UNITS>" + postBoilVol.getUnits() + "</SIZE_UNITS>\n");
+		sb.append("  <MALT_UNITS>" + maltUnits + "</MALT_UNITS>\n");
+		sb.append("  <HOPS_UNITS>" + hopUnits + "</HOPS_UNITS>\n");
 		sb.append("  <YEAST>" + yeast.getName() + "</YEAST>\n");
+		SimpleDateFormat df = new SimpleDateFormat();		
+		sb.append("  <RECIPE_DATE>" + df.format(created.getTime()) + "</RECIPE_DATE>\n");
+		sb.append("  <ATTENUATION>" + attenuation + "</ATTENUATION>\n");
 		sb.append("  </DETAILS>\n");
 		
 		// fermentables list:
