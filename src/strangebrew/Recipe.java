@@ -233,5 +233,7 @@ public class Recipe {
 		System.out.print("%alc: " + alcohol + "\n");
 		System.out.print("IBUs: " + ibu + "\n");
 	}
+	
+
 
 }
