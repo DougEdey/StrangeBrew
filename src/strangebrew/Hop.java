@@ -1,4 +1,5 @@
 /**
+ * $ld$
  * Created on Oct 5, 2004
  *
  * Base class for hops.  This object doesn't do much except hold data and
@@ -8,18 +9,18 @@
 package strangebrew;
 
 public class Hop {
-	public String name;
-	public double alpha;
-	public String country;
-	public String type;
-	public double costPerU;
-	public String form;
-	public String add;
-	public String description;
+	private String name;
+	private double alpha;
+	private String country;
+	private String type;
+	private double costPerU;
+	private String form;
+	private String add;
+	private String description;
 
 	// Recipe-specific values.  Not sure if they should be here.
-	public Quantity amount = new Quantity();
-	public int minutes;
+	private Quantity amount = new Quantity();
+	private int minutes;
 
 	// Constructors:
 	public Hop(String n, double alph, double am, int m) {
@@ -33,6 +34,14 @@ public class Hop {
 		// default constructor
 		// TODO: fill in with preferences
 	}
+	
+	// get methods:
+	public int getMinutes(){ return minutes; }
+	public double getAmountAs(String s){ return amount.getValueAs(s); }
+	public double getAlpha(){ return alpha; }
+	public double getCostPerU(){ return costPerU;
+	}
+	
 	
 	// Setter methods:
 	public void setName(String n){ name = n; }

@@ -1,6 +1,6 @@
 /**
  * Created on Oct 4, 2004
- * $Id: Fermentable.java,v 1.1 2004/10/18 19:11:45 andrew_avis Exp $
+ * $Id: Fermentable.java,v 1.2 2004/10/18 20:34:04 andrew_avis Exp $
  * @author aavis
  *
  * This is the base malt class.  It doesn't do much, except hold data
@@ -11,15 +11,15 @@ package strangebrew;
 
 public class Fermentable {
 	// base data
-	public String name;
-	public double pppg;
-	public double lov;
-	public String maltster;
-	public String country;
-	public String type;
-	public boolean mashed;
-	public double costPerU;
-	public String description;
+	private String name;
+	private double pppg;
+	private double lov;
+	private String maltster;
+	private String country;
+	private String type;
+	private boolean mashed;
+	private double costPerU;
+	private String description;
 
 	/* recipe data
 	* not sure if these should be here, probably not - add to
@@ -53,6 +53,13 @@ public class Fermentable {
 			// myOptions.getProperty("optMaltUnits");
 			
 	}
+	
+	// getter methods:
+	public boolean getMashed(){ return mashed; }
+	public double getPppg(){ return pppg; }
+	public double getLov(){ return lov; }
+	public double getCostPerU(){ return costPerU; }
+	
 	
 	// setter methods:
 	public void setName(String n){ name = n; }

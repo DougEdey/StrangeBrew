@@ -35,8 +35,8 @@ public class Recipe {
 	// ingredients
 	// implement arrayList later
 	private ArrayList hops = new ArrayList();
-
-	private ArrayList malts = new ArrayList();
+	private ArrayList fermentables = new ArrayList();
+	private ArrayList misc = new ArrayList();
 
 	// default constuctor
 	public Recipe() {
@@ -85,8 +85,9 @@ public class Recipe {
 	public void setVolUnits(String v) {	volUnits = v; }
 	public void setEfficiency(double e) { efficiency = e; }
 	public void setAttenuation(double a) {	attenuation = a; }
-	public void addMalt(Fermentable m) { malts.add(m);	}
+	public void addMalt(Fermentable m) { fermentables.add(m);	}
 	public void addHop(Hop h) { hops.add(h); }
+	public void addMisc(Misc m) { misc.add(m); }
 	public void setStyle(String s) { style = s; }
 	public void setBoilMinutes(int b) { boilMinutes = b; }
 	public void setHopsUnits(String h) { hopUnits = h; }
@@ -133,17 +134,17 @@ public class Recipe {
 		double mcu = 0;
 
 		// first figure out the total we're dealing with
-		for (int i = 0; i < malts.size(); i++) {
-			Fermentable m = ((Fermentable) malts.get(i));
+		for (int i = 0; i < fermentables.size(); i++) {
+			Fermentable m = ((Fermentable) fermentables.get(i));
 			maltTotalLbs += (m.amount.getValueAs("lb"));
-			if (m.mashed) // apply efficiencey
-				maltPoints += (m.pppg - 1) * m.amount.getValueAs("lb") * efficiency
+			if (m.getMashed()) // apply efficiencey
+				maltPoints += (m.getPppg() - 1) * m.amount.getValueAs("lb") * efficiency
 						/ postBoilVol;
 			else
-				maltPoints += (m.pppg - 1) * m.amount.getValueAs("lb") * 100 / postBoilVol;
+				maltPoints += (m.getPppg() - 1) * m.amount.getValueAs("lb") * 100 / postBoilVol;
 
-			mcu += m.lov * m.amount.getValueAs("lb") / postBoilVol;
-			maltTotalCost += m.costPerU * m.amount.getValueAs("lb");
+			mcu += m.getLov() * m.amount.getValueAs("lb") / postBoilVol;
+			maltTotalCost += m.getCostPerU() * m.amount.getValueAs("lb");
 		}
 
 		// set the fields in the object
@@ -167,16 +168,16 @@ public class Recipe {
 			// first, the OG at the time of addition:
 			double adjPreSize, aveOg = 0;
 			Hop h = ((Hop) hops.get(i));
-			if (h.minutes > 0)
+			if (h.getMinutes() > 0)
 				adjPreSize = postBoilVol + (preBoilVol - postBoilVol)
-						/ (boilMinutes / h.minutes);
+						/ (boilMinutes / h.getMinutes());
 			else
 				adjPreSize = postBoilVol;
 			aveOg = 1 + (((estOg - 1) + ((estOg - 1) / (adjPreSize / postBoilVol))) / 2);
-			ibuTotal += calcTinseth(h.amount.getValueAs("oz"), postBoilVol, aveOg, h.minutes,
-					h.alpha, 4.15);
-			hopsCostTotal += h.costPerU * h.amount.getValueAs("oz");
-			hopsOzTotal += h.amount.getValueAs("oz");
+			ibuTotal += calcTinseth(h.getAmountAs("oz"), postBoilVol, aveOg, h.getMinutes(),
+					h.getAlpha(), 4.15);
+			hopsCostTotal += h.getCostPerU() * h.getAmountAs("oz");
+			hopsOzTotal += h.getAmountAs("oz");
 		}
 
 		ibu = ibuTotal;
@@ -241,8 +242,8 @@ public class Recipe {
 		sb.append("<SIZE_UNITS>" + volUnits + "</SIZE_UNITS>\n");
 		sb.append("  <FERMENTABLES>\n");
 		
-		for (int i = 0; i < malts.size(); i++) {
-			Fermentable m = (Fermentable) malts.get(i);
+		for (int i = 0; i < fermentables.size(); i++) {
+			Fermentable m = (Fermentable) fermentables.get(i);
 			sb.append(m.toXML());
 		}
 		sb.append("  </FERMENTABLES>\n");
