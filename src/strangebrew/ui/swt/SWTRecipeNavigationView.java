@@ -7,6 +7,10 @@ import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
 import strangebrew.ui.core.*;
+import strangebrew.ui.core.widgets.TextInput;
+import strangebrew.ui.core.widgets.TextOutput;
+import strangebrew.ui.swt.widgets.SWTTextInput;
+import strangebrew.ui.swt.widgets.SWTTextOutput;
 
 /**
  * @author mike

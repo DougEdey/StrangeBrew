@@ -1,4 +1,4 @@
-package strangebrew.ui.core;
+package strangebrew.ui.core.widgets;
 
 /**
  * Abstract class for a text output (like a label).

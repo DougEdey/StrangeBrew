@@ -1,6 +1,7 @@
-package strangebrew.ui.swt;
+package strangebrew.ui.swt.widgets;
 
 import strangebrew.ui.core.*;
+import strangebrew.ui.core.widgets.TextOutput;
 
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.*;

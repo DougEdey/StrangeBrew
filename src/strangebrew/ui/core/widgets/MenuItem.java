@@ -1,7 +1,9 @@
 /*
  * Created on Oct 15, 2004
  */
-package strangebrew.ui.core;
+package strangebrew.ui.core.widgets;
+
+import strangebrew.ui.core.Controller;
 
 /**
  * @author mike

@@ -3,6 +3,9 @@
  */
 package strangebrew.ui.core;
 
+import strangebrew.ui.core.widgets.Menu;
+import strangebrew.ui.core.widgets.MenuItem;
+
 /**
  * @author mike
  *

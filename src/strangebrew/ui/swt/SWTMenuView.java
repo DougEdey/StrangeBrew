@@ -6,6 +6,8 @@ package strangebrew.ui.swt;
 import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
 import strangebrew.ui.core.*;
+import strangebrew.ui.swt.widgets.SWTMenu;
+import strangebrew.ui.swt.widgets.SWTMenuItem;
 
 
 /**
@@ -54,15 +56,15 @@ public class SWTMenuView extends MenuView {
         // @TODO Figure out who should dispose myContainer
 	}
 	
-	public strangebrew.ui.core.Menu getFileMenu() {
+	public strangebrew.ui.core.widgets.Menu getFileMenu() {
 		return myFileMenu;
 	}
 	
-	public strangebrew.ui.core.MenuItem getOpenItem() {
+	public strangebrew.ui.core.widgets.MenuItem getOpenItem() {
 		return myOpenItem;
 	}
 
-	public strangebrew.ui.core.MenuItem getQuitItem() {
+	public strangebrew.ui.core.widgets.MenuItem getQuitItem() {
 		return myQuitItem;
 	}
 	

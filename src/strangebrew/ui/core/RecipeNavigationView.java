@@ -3,6 +3,9 @@
  */
 package strangebrew.ui.core;
 
+import strangebrew.ui.core.widgets.TextInput;
+import strangebrew.ui.core.widgets.TextOutput;
+
 /**
  * @author mike
  *

@@ -1,17 +1,18 @@
-/*
- * Created on Oct 13, 2004
- */
-package strangebrew.ui.core;
+package strangebrew.ui.core.widgets;
+
+import strangebrew.ui.core.Controller;
 
 /**
+ * Abstract class for for a text input widget.
  * @author mike
  *
+ *
  */
-public abstract class NumberInput {
+public abstract class TextInput {
 	protected Controller myController;
 	protected boolean isUpdated = false;
 
-	public NumberInput(Controller aController) {
+	public TextInput(Controller aController) {
 		myController = aController;
 	}
 
@@ -19,9 +20,9 @@ public abstract class NumberInput {
 	
 	public abstract void clear();
 	
-	public abstract double get();
+	public abstract String get();
 	
-	public abstract void set(double aNumber);
+	public abstract void set(String aString);
 
 	public void verify() {
 		isUpdated = true;

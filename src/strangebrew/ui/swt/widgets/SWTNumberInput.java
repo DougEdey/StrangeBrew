@@ -2,10 +2,10 @@
  * Created on Oct 13, 2004
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package strangebrew.ui.swt;
+package strangebrew.ui.swt.widgets;
 
 import strangebrew.ui.core.Controller;
-import strangebrew.ui.core.NumberInput;
+import strangebrew.ui.core.widgets.NumberInput;
 
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.*;

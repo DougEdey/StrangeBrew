@@ -1,12 +1,12 @@
 /*
  * Created on Oct 15, 2004
  */
-package strangebrew.ui.swt;
+package strangebrew.ui.swt.widgets;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.*;
 
-import strangebrew.ui.core.Menu;
+import strangebrew.ui.core.widgets.Menu;
 
 /**
  * @author mike

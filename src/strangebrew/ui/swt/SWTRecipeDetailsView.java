@@ -2,6 +2,12 @@ package strangebrew.ui.swt;
 
 
 import strangebrew.ui.core.*;
+import strangebrew.ui.core.widgets.NumberInput;
+import strangebrew.ui.core.widgets.TextInput;
+import strangebrew.ui.core.widgets.TextOutput;
+import strangebrew.ui.swt.widgets.SWTNumberInput;
+import strangebrew.ui.swt.widgets.SWTTextInput;
+import strangebrew.ui.swt.widgets.SWTTextOutput;
 
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.layout.*;

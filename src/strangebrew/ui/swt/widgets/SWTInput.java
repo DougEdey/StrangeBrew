@@ -1,7 +1,7 @@
 /*
  * Created on Oct 14, 2004
  */
-package strangebrew.ui.swt;
+package strangebrew.ui.swt.widgets;
 
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;

@@ -6,6 +6,10 @@
  */
 package strangebrew.ui.core;
 
+import strangebrew.ui.core.widgets.NumberInput;
+import strangebrew.ui.core.widgets.TextInput;
+import strangebrew.ui.core.widgets.TextOutput;
+
 public abstract class RecipeDetailsView extends View {
 
 	public abstract TextInput getBrewer();

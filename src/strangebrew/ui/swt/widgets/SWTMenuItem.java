@@ -1,7 +1,7 @@
 /*
  * Created on Oct 15, 2004
  */
-package strangebrew.ui.swt;
+package strangebrew.ui.swt.widgets;
 
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.*;
@@ -11,7 +11,7 @@ import strangebrew.ui.core.*;
  * @author mike
  *
  */
-public class SWTMenuItem extends strangebrew.ui.core.MenuItem {
+public class SWTMenuItem extends strangebrew.ui.core.widgets.MenuItem {
 
 	org.eclipse.swt.widgets.MenuItem myWidget;
 	MySelect mySelect;
