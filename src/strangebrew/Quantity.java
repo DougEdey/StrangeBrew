@@ -1,4 +1,5 @@
 /*
+ * $Id: Quantity.java,v 1.6 2004/10/21 01:41:18 tangent_ Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to

@@ -1,5 +1,5 @@
 /*
- * $ld$
+ * $Id: XmlHandler.java,v 1.10 2004/10/21 01:39:47 tangent_ Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.

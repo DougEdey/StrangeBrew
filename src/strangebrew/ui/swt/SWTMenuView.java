@@ -1,4 +1,5 @@
 /*
+ * $Id: SWTMenuView.java,v 1.11 2004/10/21 01:49:05 tangent_ Exp $
  * Created on Oct 15, 2004
  */
 package strangebrew.ui.swt;

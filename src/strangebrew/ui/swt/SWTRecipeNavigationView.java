@@ -1,4 +1,5 @@
 /*
+ * $Id: SWTRecipeNavigationView.java,v 1.5 2004/10/21 01:46:55 tangent_ Exp $
  * Created on Oct 14, 2004
  */
 package strangebrew.ui.swt;

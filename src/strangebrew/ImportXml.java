@@ -1,4 +1,6 @@
 /**
+ * $Id: ImportXml.java,v 1.5 2004/10/21 01:44:57 tangent_ Exp $
+ *
  * This is the "driver" for xml import.  It sets up the parser, catches
  * exceptions, and associates our XmlHandler class with the parser so 
  * it can listen for events.  You create one of these and pass it an xml

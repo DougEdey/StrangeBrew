@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.layout.*;
 
 /**
+ * $Id: SWTRecipeDetailsView.java,v 1.22 2004/10/21 01:48:12 tangent_ Exp $
  * @author mike
  *
  *

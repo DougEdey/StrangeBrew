@@ -1,7 +1,7 @@
 package strangebrew;
 
 /**
- * $ld$
+ * $Id $
  * @author aavis
  *
  * TODO To change the template for this generated type comment go to
