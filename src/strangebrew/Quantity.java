@@ -50,6 +50,7 @@ public class Quantity {
 	Converter weightUnits[] =
 		{
 			new Converter("grams", "gr", 453.59237),
+			new Converter("grams", "g", 453.59237),
 			new Converter("kilograms", "kg", 0.45359237),
 			new Converter("ounces", "oz", 16),
 			new Converter("pounds", "lb", 1),

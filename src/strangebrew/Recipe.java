@@ -15,9 +15,9 @@ public class Recipe {
 	private double estFg;
 	private double ibu;
 	private double srm;
-	private double preBoilVol;
-	private double postBoilVol;
-	private String volUnits;
+	private Quantity preBoilVol = new Quantity();
+	private Quantity postBoilVol = new Quantity();
+	// private String volUnits;
 	private double efficiency;
 	private int boilMinutes;
 	private double attenuation;
@@ -45,13 +45,10 @@ public class Recipe {
 		name = "My Recipe";
 		created = new GregorianCalendar();
 		efficiency = o.getDProperty("optEfficiency");
-		preBoilVol = o.getDProperty("optEfficiency");
-		postBoilVol = o.getDProperty("optEfficiency");
+		preBoilVol.setQuantity(o.getProperty("optVolUnits"), null, o.getDProperty("optPreBoilVol"));
+		postBoilVol.setQuantity(o.getProperty("optVolUnits"), null, o.getDProperty("optPostBoilVol"));
 		attenuation = o.getDProperty("optAttenuation");
 		boilMinutes = o.getIProperty("optBoilTime");
-		preBoilVol = o.getDProperty("optPreBoilVol");;
-		postBoilVol = o.getDProperty("optPostBoilVol");
-		volUnits = o.getProperty("optVolUnits");
 
 	}
 	
@@ -62,9 +59,9 @@ public class Recipe {
 	public double getEstFg(){ return estFg; }	
 	public double getIbu(){ return ibu; }	
 	public double getSrm(){ return srm; }
-	public double getPreBoilVol(){ return preBoilVol; }
-	public double getPostBoilVol(){ return postBoilVol; }
-	public String getVolUnits(){ return volUnits; }
+	public double getPreBoilVol(){ return preBoilVol.getValue(); }
+	public double getPostBoilVol(){ return postBoilVol.getValue(); }
+	public String getVolUnits(){ return postBoilVol.getUnits(); }
 	public double getEfficiency(){ return efficiency; }
 	public int getBoilMinutes(){ return boilMinutes; }
 	public double getAttenuation(){ return attenuation; }
@@ -80,9 +77,10 @@ public class Recipe {
 	// Set functions:
 	public void setName(String n) {	name = n; }
 	public void setBrewer(String b) { brewer = b; }
-	public void setPreBoil(double p) { preBoilVol = p; }
-	public void setPostBoil(double p) { postBoilVol = p; }
-	public void setVolUnits(String v) {	volUnits = v; }
+	public void setPreBoil(double p) { preBoilVol.setQuantity(null, null, p); }
+	public void setPostBoil(double p) { postBoilVol.setQuantity(null, null, p); }
+	public void setPreBoilVolUnits(String v) {	preBoilVol.setQuantity( v, null, 0); }
+	public void setPostBoilVolUnits(String v) {	postBoilVol.setQuantity( v, null, 0); }
 	public void setEfficiency(double e) { efficiency = e; }
 	public void setAttenuation(double a) {	attenuation = a; }
 	public void addMalt(Fermentable m) { fermentables.add(m);	}
@@ -107,8 +105,8 @@ public class Recipe {
 		int i = a.indexOf(" ");
 		String d = a.substring(0,i);
 		String u = a.substring(i);
-		postBoilVol = Double.parseDouble(d.trim());
-		volUnits = u.trim();
+		postBoilVol.setQuantity( null, u.trim(), Double.parseDouble(d.trim()));
+
 	}
 	
 	
@@ -139,11 +137,11 @@ public class Recipe {
 			maltTotalLbs += (m.amount.getValueAs("lb"));
 			if (m.getMashed()) // apply efficiencey
 				maltPoints += (m.getPppg() - 1) * m.amount.getValueAs("lb") * efficiency
-						/ postBoilVol;
+						/ postBoilVol.getValueAs("gal");
 			else
-				maltPoints += (m.getPppg() - 1) * m.amount.getValueAs("lb") * 100 / postBoilVol;
+				maltPoints += (m.getPppg() - 1) * m.amount.getValueAs("lb") * 100 / postBoilVol.getValueAs("gal");
 
-			mcu += m.getLov() * m.amount.getValueAs("lb") / postBoilVol;
+			mcu += m.getLov() * m.amount.getValueAs("lb") / postBoilVol.getValueAs("gal");
 			maltTotalCost += m.getCostPerU() * m.amount.getValueAs("lb");
 		}
 
@@ -169,12 +167,12 @@ public class Recipe {
 			double adjPreSize, aveOg = 0;
 			Hop h = ((Hop) hops.get(i));
 			if (h.getMinutes() > 0)
-				adjPreSize = postBoilVol + (preBoilVol - postBoilVol)
+				adjPreSize = postBoilVol.getValueAs("gal") + (preBoilVol.getValueAs("gal") - postBoilVol.getValueAs("gal"))
 						/ (boilMinutes / h.getMinutes());
 			else
-				adjPreSize = postBoilVol;
-			aveOg = 1 + (((estOg - 1) + ((estOg - 1) / (adjPreSize / postBoilVol))) / 2);
-			ibuTotal += calcTinseth(h.getAmountAs("oz"), postBoilVol, aveOg, h.getMinutes(),
+				adjPreSize = postBoilVol.getValueAs("gal");
+			aveOg = 1 + (((estOg - 1) + ((estOg - 1) / (adjPreSize / postBoilVol.getValueAs("gal")))) / 2);
+			ibuTotal += calcTinseth(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, h.getMinutes(),
 					h.getAlpha(), 4.15);
 			hopsCostTotal += h.getCostPerU() * h.getAmountAs("oz");
 			hopsOzTotal += h.getAmountAs("oz");
@@ -238,8 +236,8 @@ public class Recipe {
 		sb.append("<?xml version=\"1.0\"?>\n");
 		sb.append("<RECIPE>\n\n");
 		sb.append("<NAME>" + name + "</NAME>\n");
-		sb.append("<SIZE>" + postBoilVol + "</SIZE>\n");
-		sb.append("<SIZE_UNITS>" + volUnits + "</SIZE_UNITS>\n");
+		sb.append("<SIZE>" + postBoilVol.getValue() + "</SIZE>\n");
+		sb.append("<SIZE_UNITS>" + postBoilVol.getUnits() + "</SIZE_UNITS>\n");
 		
 		// fermentables list:
 		sb.append("  <FERMENTABLES>\n");		
@@ -274,7 +272,8 @@ public class Recipe {
 		calcMaltTotals();
 		calcHopsTotals();
 		System.out.print("Recipe totals for " + name + ": \n");
-		System.out.print("Vol: " + postBoilVol + "\n");
+		System.out.print("Vol: " + postBoilVol.getValue() + " " +
+				postBoilVol.getUnits() + "\n");
 		System.out.print("Effic: " + efficiency + "\n");
 		System.out.print("estOG: " + estOg + "\n");
 		System.out.print("estFG: " + estFg + "\n");

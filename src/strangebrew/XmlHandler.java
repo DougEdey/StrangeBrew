@@ -122,6 +122,16 @@ public class XmlHandler extends DefaultHandler{
 			// new malt
 			m = new Fermentable();
 		}
+		// we have to do this here, because <batch> is an empty element
+		else if (eName.equalsIgnoreCase("batch")){
+			for (int i = 0; i < currentAttributes.getLength(); i++) {
+				String str = currentAttributes.getLocalName(i); // Attr name
+				if ("".equalsIgnoreCase(str))
+					str = currentAttributes.getQName(i);
+				if (str.equalsIgnoreCase("quantity"))
+					r.setAmountAndUnits(currentAttributes.getValue(i));
+			}
+		}
 		// TODO: handle new misc ingredient
 	}
 	
@@ -250,15 +260,7 @@ public class XmlHandler extends DefaultHandler{
 		else if (currentElement.equalsIgnoreCase("style")){
 			r.setStyle(s);
 		}
-		else if (currentElement.equalsIgnoreCase("batch")){
-			for (int i = 0; i < currentAttributes.getLength(); i++) {
-				String str = currentAttributes.getLocalName(i); // Attr name
-				if ("".equalsIgnoreCase(str))
-					str = currentAttributes.getQName(i);
-				if (str.equalsIgnoreCase("quantity"))
-					r.setAmountAndUnits(currentAttributes.getValue(i));
-			}
-		}
+
 		
 	}
 	
@@ -337,7 +339,8 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentElement.equalsIgnoreCase("SIZE")) {
 				r.setPostBoil(Double.parseDouble(s));
 			} else if (currentElement.equalsIgnoreCase("SIZE_UNITS")) {
-				r.setVolUnits(s);
+				r.setPreBoilVolUnits(s);
+				r.setPostBoilVolUnits(s);
 			} else if (currentElement.equalsIgnoreCase("STYLE")) {
 				r.setStyle(s);
 			} else if (currentElement.equalsIgnoreCase("BOIL_TIME")) {
