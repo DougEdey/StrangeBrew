@@ -47,7 +47,7 @@ public class Hop {
 	public void setName(String n){ name = n; }
 	public void setAmount(double a){ amount.setQuantity(null, null, a); }
 	public void setAlpha(double a){ alpha = a; }
-	public void setUnits(String u){ amount.setQuantity( null, u, 0); }
+	public void setUnits(String u){ amount.setQuantity( null, u, -1); }
 	public void setForm(String f){ form = f; }
 	public void setAdd(String a){ add = a; }
 	public void setCost(double c){ costPerU = c; }

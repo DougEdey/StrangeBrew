@@ -29,6 +29,10 @@ public class TestUI {
 			MainController controller = new MainController(view);
 			controller.execute();
 			myRecipe = controller.getRecipe();
+		} else if (args[0].equals("--db")) {
+			Database db = new Database();
+			db.readFermentables();
+		
 		} else {
 			// Import an xml recipe:
 			ImportXml imp = new ImportXml(args[0]);

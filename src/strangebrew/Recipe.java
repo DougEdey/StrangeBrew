@@ -85,8 +85,8 @@ public class Recipe {
 	public void setBrewer(String b) { brewer = b; }
 	public void setPreBoil(double p) { preBoilVol.setQuantity(null, null, p); }
 	public void setPostBoil(double p) { postBoilVol.setQuantity(null, null, p); }
-	public void setPreBoilVolUnits(String v) {	preBoilVol.setQuantity( v, null, 0); }
-	public void setPostBoilVolUnits(String v) {	postBoilVol.setQuantity( v, null, 0); }
+	public void setPreBoilVolUnits(String v) {	preBoilVol.setQuantity( v, null, -1); }
+	public void setPostBoilVolUnits(String v) {	postBoilVol.setQuantity( v, null, -1); }
 	public void setEfficiency(double e) { efficiency = e; }
 	public void setAttenuation(double a) {	attenuation = a; }
 	public void addMalt(Fermentable m) { fermentables.add(m);	}

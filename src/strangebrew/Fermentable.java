@@ -1,6 +1,6 @@
 /**
  * Created on Oct 4, 2004
- * $Id: Fermentable.java,v 1.2 2004/10/18 20:34:04 andrew_avis Exp $
+ * $Id: Fermentable.java,v 1.3 2004/10/20 17:27:00 andrew_avis Exp $
  * @author aavis
  *
  * This is the base malt class.  It doesn't do much, except hold data
@@ -18,6 +18,7 @@ public class Fermentable {
 	private String country;
 	private String type;
 	private boolean mashed;
+	private boolean steeped;
 	private double costPerU;
 	private String description;
 
@@ -74,7 +75,10 @@ public class Fermentable {
 	}
 	public void setLov(double l){ lov = l; }
 	public void setDesc(String d){ description = d; }
-	public void setUnits(String u){	amount.setQuantity(null, u, 0);	}
+	public void setUnits(String u){	amount.setQuantity(null, u, -1);	}
+	public void setMash(boolean m){ mashed = m; }
+	public void setSteep(boolean s){ steeped = s; }
+	
 	
 	/**
 	 * Handles a string of the form "d u", where d is a double

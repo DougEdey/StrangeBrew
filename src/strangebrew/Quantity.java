@@ -72,7 +72,7 @@ public class Quantity {
 			if (u==null) // gotta set the unit too:
 				unit = getUnitFromAbrv(type, a);
 		}
-		if (am > 0)
+		if (am >= 0)
 			value = am;
 	}
 	
