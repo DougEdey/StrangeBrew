@@ -6,7 +6,7 @@ import java.util.*;
 import com.mindprod.csv.*;
 
 /**
- * $Id: Database.java,v 1.3 2004/10/21 11:30:54 redneckrockets Exp $
+ * $Id: Database.java,v 1.4 2004/10/21 16:44:24 andrew_avis Exp $
  * @author aavis
  *
  * TODO To change the template for this generated type comment go to
@@ -18,6 +18,8 @@ public class Database {
 	// read from the csv files.
 	// I suspect that binary files will be faster, and
 	// we might want to move that way in the future.
+	
+	private final static boolean DEBUG = true;
 
 	private ArrayList fermDB = new ArrayList();
 	private ArrayList hopsDB = new ArrayList();
@@ -40,7 +42,7 @@ public class Database {
 				int mashIdx = getIndex(fields, "Mash");
 				int descrIdx = getIndex(fields, "Descr");
 				int steepIdx = getIndex(fields, "Steep");
-	
+
 				while (true) {
 					Fermentable f = new Fermentable();
 					fields = reader.getAllFieldsInLine();
@@ -55,12 +57,16 @@ public class Database {
 						f.setAmount(Double.parseDouble(fields[stockIdx]));
 					else
 						f.setAmount(0);
-					f.setDesc(fields[descrIdx]);
+					f.setDescription(fields[descrIdx]);
 					fermDB.add(f);
 				}
 			} catch (EOFException e) {
 			}
 			reader.close();
+			if (true){
+				for (int i=0; i<fermDB.size(); i++)
+					System.out.print(((Fermentable) fermDB.get(i)).toXML());
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -68,7 +74,7 @@ public class Database {
 		}
 
 	}
-	
+
 	public void readHops() {
 		// read the hops from the csv file
 		try {
@@ -87,7 +93,6 @@ public class Database {
 				int storeIdx = getIndex(fields, "Storage");
 				int dateIdx = getIndex(fields, "Date");
 
-	
 				while (true) {
 					Hop h = new Hop();
 					fields = reader.getAllFieldsInLine();
@@ -98,7 +103,7 @@ public class Database {
 					h.setUnits(fields[unitsIdx]);
 					if (!fields[stockIdx].equals(""))
 						h.setAmount(Double.parseDouble(fields[stockIdx]));
-					h.setDesc(fields[descrIdx]);
+					h.setDescription(fields[descrIdx]);
 					if (!fields[storeIdx].equals(""))
 						h.setStorage(Double.parseDouble(fields[storeIdx]));
 					h.setDate(fields[dateIdx]);
@@ -107,10 +112,6 @@ public class Database {
 			} catch (EOFException e) {
 			}
 			reader.close();
-			for (int i=0;i<hopsDB.size(); i++){
-				Hop h = (Hop)(hopsDB.get(i));
-				System.out.print(h.toXML());
-			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -118,13 +119,13 @@ public class Database {
 		}
 
 	}
-	
-	private int getIndex(String[] fields, String key){
+
+	private int getIndex(String[] fields, String key) {
 		int i = 0;
-		while (i<fields.length && !fields[i].equalsIgnoreCase(key)){
+		while (i < fields.length && !fields[i].equalsIgnoreCase(key)) {
 			i++;
 		}
-		if (i >= fields.length)  // wasn't found
+		if (i >= fields.length) // wasn't found
 			return -1;
 		else
 			return i;

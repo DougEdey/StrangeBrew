@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.10 2004/10/21 01:39:47 tangent_ Exp $
+ * $Id: XmlHandler.java,v 1.11 2004/10/21 16:44:24 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -280,7 +280,7 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentElement.equalsIgnoreCase("LOV")) {
 				m.setLov(Double.parseDouble(s));
 			} else if (currentElement.equalsIgnoreCase("DescrLookup")) {
-				m.setDesc(s);
+				m.setDescription(s);
 			}
 		}
 		else if (currentList.equalsIgnoreCase("HOPS")) {
@@ -299,7 +299,7 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentElement.equalsIgnoreCase("ADD")) {
 				h.setAdd(s);
 			} else if (currentElement.equalsIgnoreCase("DescrLookup")) {
-				h.setDesc(s);
+				h.setDescription(s);
 			} else if (currentElement.equalsIgnoreCase("TIME")) {
 				h.setMinutes(Integer.parseInt(s));
 			}

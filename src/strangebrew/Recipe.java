@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.13 2004/10/20 19:34:22 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.14 2004/10/21 16:44:24 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -141,17 +141,17 @@ public class Recipe {
 		// first figure out the total we're dealing with
 		for (int i = 0; i < fermentables.size(); i++) {
 			Fermentable m = ((Fermentable) fermentables.get(i));
-			totalMaltLbs += (m.amount.getValueAs("lb"));
+			totalMaltLbs += (m.getAmountAs("lb"));
 			if (m.getMashed()){ // apply efficiency and add to mash weight
-				maltPoints += (m.getPppg() - 1) * m.amount.getValueAs("lb") * efficiency
+				maltPoints += (m.getPppg() - 1) * m.getAmountAs("lb") * efficiency
 						/ postBoilVol.getValueAs("gal");
-				totalMashLbs += (m.amount.getValueAs("lb"));
+				totalMashLbs += (m.getAmountAs("lb"));
 			}
 			else
-				maltPoints += (m.getPppg() - 1) * m.amount.getValueAs("lb") * 100 / postBoilVol.getValueAs("gal");
+				maltPoints += (m.getPppg() - 1) * m.getAmountAs("lb") * 100 / postBoilVol.getValueAs("gal");
 
-			mcu += m.getLov() * m.amount.getValueAs("lb") / postBoilVol.getValueAs("gal");
-			maltTotalCost += m.getCostPerU() * m.amount.getValueAs("lb");
+			mcu += m.getLov() * m.getAmountAs("lb") / postBoilVol.getValueAs("gal");
+			maltTotalCost += m.getCostPerU() * m.getAmountAs("lb");
 		}
 
 		// set the fields in the object
@@ -242,11 +242,11 @@ public class Recipe {
 
 	public String toXML() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("<?xml version=\"1.0\"?>\n");
-		sb.append("<RECIPE>\n\n");
-		sb.append("<NAME>" + name + "</NAME>\n");
-		sb.append("<SIZE>" + postBoilVol.getValue() + "</SIZE>\n");
-		sb.append("<SIZE_UNITS>" + postBoilVol.getUnits() + "</SIZE_UNITS>\n");
+		sb.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+		sb.append("<STRANGEBREWRECIPE version = \"2.0A\">\n");
+		sb.append("  <NAME>" + name + "</NAME>\n");
+		sb.append("  <SIZE>" + postBoilVol.getValue() + "</SIZE>\n");
+		sb.append("  <SIZE_UNITS>" + postBoilVol.getUnits() + "</SIZE_UNITS>\n");
 		
 		// fermentables list:
 		sb.append("  <FERMENTABLES>\n");		
