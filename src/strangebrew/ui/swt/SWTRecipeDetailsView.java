@@ -45,21 +45,7 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		myLayout = new FormLayout();
 		myLayout.marginHeight = 3;
 		myLayout.marginWidth = 3;
-		myContainer.setLayout(myLayout);
-		
-		attach(myBrewerLabel.getWidget(), null, 0, 0, 0);
-		attach(myBrewer.getWidget(), myBrewerLabel.getWidget(), 
-				200, 14, 5);
-		attach(myEfficiencyLabel.getWidget(), myBrewer.getWidget(), 
-				0, 0, 10);
-        attach(myEfficiency.getWidget(), myEfficiencyLabel.getWidget(), 
-        		25, 14, 5);		
-		attach(myAlcoholLabel.getWidget(), myEfficiency.getWidget(), 
-				0, 0, 10);
-        attach(myAlcohol.getWidget(), myAlcoholLabel.getWidget(), 
-        		25, 14, 5);		
-		attach(myAlcoholPostfix.getWidget(), myAlcohol.getWidget(), 
-				0, 0, 5);
+		myContainer.setLayout(myLayout);		
 	}
 	
 	private void attach(Control control, Control target, 
@@ -78,6 +64,19 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	}
 
 	public void layout() {
+		attach(myBrewerLabel.getWidget(), null, 0, 0, 0);
+		attach(myBrewer.getWidget(), myBrewerLabel.getWidget(), 
+				200, 14, 5);
+		attach(myEfficiencyLabel.getWidget(), myBrewer.getWidget(), 
+				0, 0, 10);
+        attach(myEfficiency.getWidget(), myEfficiencyLabel.getWidget(), 
+        		25, 14, 5);		
+		attach(myAlcoholLabel.getWidget(), myEfficiency.getWidget(), 
+				0, 0, 10);
+        attach(myAlcohol.getWidget(), myAlcoholLabel.getWidget(), 
+        		25, 14, 5);		
+		attach(myAlcoholPostfix.getWidget(), myAlcohol.getWidget(), 
+				0, 0, 5);
 		myContainer.layout();
 		myContainer.pack();
 	}

@@ -26,7 +26,6 @@ public class TestUI {
 			System.exit(1);
 		} else if (args[0].equals("--gui")) {
 			MainView view = new SWTMainView();
-			view.init();
 			MainController controller = new MainController(view, myRecipe);
 			controller.execute();
 		} else {

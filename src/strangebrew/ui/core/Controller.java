@@ -1,11 +1,16 @@
 package strangebrew.ui.core;
 
+import strangebrew.Recipe;
+
 public abstract class Controller {
 
-	View myView;
+	protected View myView;
+	protected Recipe myRecipe;
+
 	
-	public Controller(View aView) {
+	public Controller(View aView, Recipe aRecipe) {
 		myView = aView;
+		myRecipe = aRecipe;
 		aView.setController(this);
 	}
 	public abstract void init();

@@ -14,23 +14,29 @@ import strangebrew.Recipe;
 public class MainController extends Controller {
 	MainView myContents;
 	RecipeDetailsController myRecipeDetails;
-	Recipe myRecipe;
-	
+	RecipeNavigationController myRecipeNavigation;
+
 	public MainController(MainView aView, Recipe aRecipe) {
-		super(aView);
+		super(aView, aRecipe);
 		myContents = aView;
-		myRecipe = aRecipe;
 	}
 	
 	public void init() {
 		myView.init();
-		RecipeDetailsView newView = myContents.getRecipeDetailsView();
-		myRecipeDetails = new RecipeDetailsController(newView, myRecipe);
+		RecipeNavigationView nv = 
+			myContents.getRecipeNavigationView();
+		myRecipeNavigation = 
+			new RecipeNavigationController(nv, myRecipe);
+		myRecipeNavigation.init();
+		RecipeDetailsView dv = 
+			myContents.getRecipeDetailsView("Recipe Details");
+		myRecipeDetails = new RecipeDetailsController(dv, myRecipe);
 		myRecipeDetails.init();
 		myView.layout();
 	}
 	
 	public void dispose() {
+		myRecipeNavigation.dispose();
 		myRecipeDetails.dispose();
 		myView.dispose();
 	}

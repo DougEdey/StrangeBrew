@@ -14,12 +14,10 @@ import strangebrew.Recipe;
 public class RecipeDetailsController extends Controller {
 	
 	RecipeDetailsView myContents;
-	Recipe myRecipe;
 	
 	public RecipeDetailsController(RecipeDetailsView aView, Recipe aRecipe) {
-		super(aView);
+		super(aView, aRecipe);
 		myContents = aView;
-		myRecipe = aRecipe;
 	}
 	
 	public void init() {
@@ -59,6 +57,6 @@ public class RecipeDetailsController extends Controller {
 
 	private void submitEfficiency() {
 		myRecipe.efficiency = myContents.getEfficiency().get();
-}
+	}
 
 }

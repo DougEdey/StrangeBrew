@@ -19,8 +19,9 @@ public class SWTMainView extends MainView {
 
 	Display myDisplay;
 	Shell myShell;
-	FillLayout myLayout;
+	FormLayout myLayout;
 	TabFolder myFolder;
+	Group myRecipeNavigationGroup;
 
 	public SWTMainView() {
 		myDisplay = new Display();
@@ -34,20 +35,42 @@ public class SWTMainView extends MainView {
 	}
 	
 	public void init() {
-		myLayout = new FillLayout();
- 		myLayout.type = SWT.VERTICAL;
+		myLayout = new FormLayout();
  		myShell.setLayout(myLayout);
- 		
+
+ 		myRecipeNavigationGroup = new Group(myShell, SWT.NONE);
  		// @TODO Create a separate view/controller for the TabFolder
 		myFolder = new TabFolder(myShell, SWT.NONE);
+		
+	}
+	
+	private void attach(Control control, Control target, 
+			int width, int height, int offset) {
+		FormData data = new FormData();
+		if (width != 0) {
+			data.width = width;
+		}
+		if (height != 0) {
+			data.height = height;
+		}
+		if (target != null) {
+			data.top = new FormAttachment(target, offset);
+		}
+		control.setLayoutData(data);
 	}
 	
 	public void layout() {
+		attach(myRecipeNavigationGroup, null, 0, 0, 0);
+		attach(myFolder, myRecipeNavigationGroup, 0, 0, 5);
+		myRecipeNavigationGroup.pack();
+		myFolder.layout();
+		myFolder.pack();
 		myShell.layout();
 		myShell.pack();
 	}
 
     public void dispose() {
+    	myRecipeNavigationGroup.dispose();
 		myFolder.dispose();	
 		myDisplay.dispose();	
 	}
@@ -65,11 +88,15 @@ public class SWTMainView extends MainView {
 			}
 		}
 	}
+	
+	public RecipeNavigationView getRecipeNavigationView() {
+		return new SWTRecipeNavigationView(myRecipeNavigationGroup);
+	}
 
-	public RecipeDetailsView getRecipeDetailsView() {
+	public RecipeDetailsView getRecipeDetailsView(String title) {
 		TabItem details = new TabItem(myFolder, SWT.NONE);
 		
-		details.setText("Recipe Details");
+		details.setText(title);
 		Group group = new Group(myFolder, SWT.NONE);
 		details.setControl(group);
 		return new SWTRecipeDetailsView(group);
