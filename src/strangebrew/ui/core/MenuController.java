@@ -36,4 +36,7 @@ public class MenuController extends Controller {
       }
 	}
 	
+	public void cleanUp() {
+		// Nothing to do yet
+	}
 }

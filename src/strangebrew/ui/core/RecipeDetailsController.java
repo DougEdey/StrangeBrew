@@ -50,9 +50,16 @@ public class RecipeDetailsController extends Controller {
 		Double alc = new Double(myRecipe.alcohol);
 		myContents.getAlcohol().set(alc.toString());
 	}
+	
+	public void cleanUp() {
+		submitBrewer();
+		submitEfficiency();
+	}
 
 	private void submitBrewer() {
-		myRecipe.brewer = myContents.getBrewer().get();
+		if (myContents.getBrewer().get() != null) {
+			myRecipe.brewer = myContents.getBrewer().get();
+		}
 	}
 
 	private void submitEfficiency() {

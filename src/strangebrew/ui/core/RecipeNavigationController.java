@@ -41,8 +41,14 @@ public class RecipeNavigationController extends Controller {
 		}
 	}
 	
+	public void cleanUp() {
+		submitRecipeName();
+	}
+	
 	public void submitRecipeName() {
-		myRecipe.name = myContents.getRecipeName().get();
+		if (myContents.getRecipeName().get() != null) {
+			myRecipe.name = myContents.getRecipeName().get();
+		}
 	}
 
 }

@@ -2,6 +2,7 @@ package strangebrew.ui.swt;
 
 import strangebrew.ui.core.*;
 
+import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.*;
@@ -15,7 +16,7 @@ import org.eclipse.swt.*;
  * @see strangebrew.ui.core.View#run
  *
  */
-public class SWTMainView extends MainView {
+public class SWTMainView extends MainView implements ShellListener {
 
 	Display myDisplay;
 	Shell myShell;
@@ -34,6 +35,7 @@ public class SWTMainView extends MainView {
 		
 		myShell = new Shell(myDisplay);
 		myShell.setText("StrangeBrew");
+		myShell.addShellListener(this);
 	}
 	
 	public void init() {
@@ -91,6 +93,26 @@ public class SWTMainView extends MainView {
 		}
 	}
 	
+	public void shellClosed(ShellEvent e) {
+		myController.cleanUp();
+	}
+	
+	public void shellActivated(ShellEvent e) {
+		// Nothing to do
+	}
+
+	public void shellDeactivated(ShellEvent e) {
+		// Nothing to do
+	}
+	
+	public void shellDeiconified(ShellEvent e) {
+		// Nothing to do
+	}
+
+	public void shellIconified(ShellEvent e) {
+		// Nothing to do
+	}
+
 	public MenuView getMenuView() {
 		return new SWTMenuView(myShell);
 	}

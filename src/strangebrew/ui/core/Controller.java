@@ -16,5 +16,6 @@ public abstract class Controller {
 	public abstract void init();
 	public abstract void dispose();
 	public abstract void execute();
+	public abstract void cleanUp();
 	
 }

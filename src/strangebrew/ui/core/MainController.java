@@ -24,18 +24,22 @@ public class MainController extends Controller {
 	
 	public void init() {
 		myView.init();
+		
 		MenuView mv = myContents.getMenuView();
 		myMenuController = new MenuController(mv, myRecipe);
 		myMenuController.init();
+		
 		RecipeNavigationView nv = 
 			myContents.getRecipeNavigationView();
 		myRecipeNavigation = 
 			new RecipeNavigationController(nv, myRecipe);
 		myRecipeNavigation.init();
+		
 		RecipeDetailsView dv = 
 			myContents.getRecipeDetailsView("Recipe Details");
 		myRecipeDetails = new RecipeDetailsController(dv, myRecipe);
 		myRecipeDetails.init();
+		
 		myView.layout();
 	}
 	
@@ -51,4 +55,13 @@ public class MainController extends Controller {
 		dispose();
 	}
 
+	/**
+	 * Called before the app exits.
+	 *
+	 */
+	public void cleanUp() {
+		myMenuController.cleanUp();
+		myRecipeNavigation.cleanUp();
+		myRecipeDetails.cleanUp();
+	}
 }

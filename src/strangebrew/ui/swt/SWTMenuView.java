@@ -54,7 +54,7 @@ public class SWTMenuView extends MenuView {
 	}
 
 	public void quit() {
-		myContainer.dispose();
+		myContainer.close();
 	}
 	
 }
