@@ -31,7 +31,7 @@ public class RecipeNavigationController extends Controller {
 	}
 	
 	public void populateWidgets() {
-		myContents.getRecipeName().set(myRecipe.name);
+		myContents.getRecipeName().set(myRecipe.getName());
 	}
 
 	public void execute() {
@@ -51,7 +51,7 @@ public class RecipeNavigationController extends Controller {
 	
 	public void submitRecipeName() {
 		if (myContents.getRecipeName().get() != null) {
-			myRecipe.name = myContents.getRecipeName().get();
+			myRecipe.setName( myContents.getRecipeName().get());
 		}
 	}
 

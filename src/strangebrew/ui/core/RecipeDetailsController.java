@@ -6,7 +6,6 @@ package strangebrew.ui.core;
 
 import strangebrew.Recipe;
 import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
 
 /**
  * @author mike
@@ -88,27 +87,25 @@ public class RecipeDetailsController extends Controller {
 	}
 	
 	private void populateWidgets() {
-		myContents.getBrewer().set(myRecipe.brewer);
-		myContents.getEfficiency().set(myRecipe.efficiency);
-		Double alc = new Double(myRecipe.alcohol);
+		myContents.getBrewer().set(myRecipe.getBrewer());
+		myContents.getEfficiency().set(myRecipe.getEfficiency());
+		Double alc = new Double(myRecipe.getAlcohol());
 		myContents.getAlcohol().set(alc.toString());
-		if (myRecipe.created == null) {
-			myRecipe.created = new GregorianCalendar();
-		}
+
 		SimpleDateFormat df = new SimpleDateFormat();
-		myContents.getDate().set(df.format(myRecipe.created.getTime()));
+		myContents.getDate().set(df.format(myRecipe.getCreated().getTime()));
 		// TODO update Mash checkbox when it is in recipe
 		myContents.getMash().set(true);
-		myContents.getAttenuation().set(myRecipe.attenuation);
-		Double ibu = new Double(myRecipe.ibu);
+		myContents.getAttenuation().set(myRecipe.getAttenuation());
+		Double ibu = new Double(myRecipe.getIbu());
 		myContents.getIBU().set(ibu.toString());
-		myContents.getStyle().set(myRecipe.style);
-		myContents.getOG().set(myRecipe.estOg);
-		Double colour = new Double(myRecipe.srm);
+		myContents.getStyle().set(myRecipe.getStyle());
+		myContents.getOG().set(myRecipe.getEstOg());
+		Double colour = new Double(myRecipe.getSrm());
 		myContents.getColour().set(colour.toString());
 		// TODO update Yeast dropdown when it is in recipe
 		myContents.getYeast().set("");
-		myContents.getFG().set(myRecipe.estFg);
+		myContents.getFG().set(myRecipe.getEstFg());
 	}
 	
 	public void cleanUp() {
@@ -129,42 +126,38 @@ public class RecipeDetailsController extends Controller {
 
 	private void submitBrewer() {
 		if (myContents.getBrewer().get() != null) {
-			myRecipe.brewer = myContents.getBrewer().get();
+			myRecipe.setBrewer( myContents.getBrewer().get() );
 		}
 	}
 
 	private void submitEfficiency() {
-		myRecipe.efficiency = myContents.getEfficiency().get();
+		myRecipe.setEfficiency( myContents.getEfficiency().get() );
 	}
 	
 	private void submitDate() {
-		if (myRecipe.created == null) {
-			// since there is no date, might as well set it
-			myRecipe.created = new GregorianCalendar();
-		}
 		if (myContents.getDate().get() != null) {
 			SimpleDateFormat df = new SimpleDateFormat();
 			try {
-				myRecipe.created.setTime(df.parse(myContents.getDate().get()));
+				myRecipe.setCreated( df.parse(myContents.getDate().get()) );
 			} catch (Exception e) {
 				// The date was invalid, so reset the widget
-				myContents.getDate().set(df.format(myRecipe.created.getTime()));				
+				myContents.getDate().set(df.format(myRecipe.getCreated().getTime()));				
 			}
 		}
 	}
 	
 	private void submitAttenuation() {
-		myRecipe.attenuation = myContents.getAttenuation().get();
+		myRecipe.setAttenuation( myContents.getAttenuation().get() );
 	}
 
 	private void submitStyle() {
 		if (myContents.getStyle().get() != null) {
-			myRecipe.brewer = myContents.getStyle().get();
+			myRecipe.setBrewer( myContents.getStyle().get() );
 		}
 	}
 
 	private void submitOG() {
-		myRecipe.estOg = myContents.getOG().get();
+		myRecipe.setEstOg(  myContents.getOG().get() );
 	}
 
 	private void submitYeast() {
@@ -174,7 +167,7 @@ public class RecipeDetailsController extends Controller {
 	}
 
 	private void submitFG() {
-		myRecipe.estFg = myContents.getFG().get();
+		myRecipe.setEstFg( myContents.getFG().get() );
 	}
 	
 }
