@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="ISO8859-1" ?>
+<?xml-stylesheet type="text/xsl" href="strangebrew18.xsl" ?>
+ <STRANGEBREWRECIPE version = "1.8">
+<DETAILS>
+   <NAME type="1">
+     Sierra Clone I
+   </NAME>
+   <NOTES type="16">
+     
+   </NOTES>
+   <EFFICIENCY type="6">
+     75.0
+   </EFFICIENCY>
+   <OG type="6">
+     1.051
+   </OG>
+   <FG type="6">
+     1.013
+   </FG>
+   <STYLE type="1">
+     American Pale Ale
+   </STYLE>
+   <MASH type="5">
+     True
+   </MASH>
+   <LOV type="6">
+     8.8
+   </LOV>
+   <IBU type="6">
+     41.7
+   </IBU>
+   <ALC type="6">
+     4.98
+   </ALC>
+   <BOIL_TIME type="6">
+     60
+   </BOIL_TIME>
+   <PRESIZE type="6">
+     7.4
+   </PRESIZE>
+   <SIZE type="6">
+     5.8
+   </SIZE>
+   <SIZE_UNITS type="1">
+     gallons US
+   </SIZE_UNITS>
+   <MALT_UNITS type="1">
+     lb
+   </MALT_UNITS>
+   <HOPS_UNITS type="1">
+     oz
+   </HOPS_UNITS>
+   <HOPS_OZS type="6">
+     3.50
+   </HOPS_OZS>
+   <YEAST type="1">
+     Wyeast 1056 American/Chico Ale Yeast
+   </YEAST>
+   <MALT_LBS type="6">
+     10.75
+   </MALT_LBS>
+   <INDEX type="14">
+     153
+   </INDEX>
+   <RECIPE_DATE type="11">
+     6/18/2004
+   </RECIPE_DATE>
+   <ATTENUATION type="6">
+     75.0
+   </ATTENUATION>
+   <MISC_COST type="6">
+     $5.00
+   </MISC_COST>
+   <GRAIN_TMP type="6">
+     60
+   </GRAIN_TMP>
+   <BOTTLE_SIZE type="6">
+     .341
+   </BOTTLE_SIZE>
+   <SUGAR_TYPE type="1">
+     dextrose
+   </SUGAR_TYPE>
+   <KEGGED type="5">
+     False
+   </KEGGED>
+   <SERV_TEMP type="6">
+     38
+   </SERV_TEMP>
+   <BOTTLE_TEMP type="6">
+     68
+   </BOTTLE_TEMP>
+   <VOLS_CO type="6">
+     2.4
+   </VOLS_CO>
+   <MISC_INGR_COST type="6">
+     $0.57
+   </MISC_INGR_COST>
+   <YEAST_COST type="6">
+     $6.00
+   </YEAST_COST>
+   <MASH_LBS type="6">
+     10.75
+   </MASH_LBS>
+   <MASH_RATIO type="6">
+     1.20
+   </MASH_RATIO>
+   <MASH_RATIO_U type="1">
+     qt/lb
+   </MASH_RATIO_U>
+   <MASH_TMP_U type="1">
+     F
+   </MASH_TMP_U>
+   <MASH_VOL_U type="1">
+     quart US
+   </MASH_VOL_U>
+   <CARB_TEMP_U type="1">
+     F
+   </CARB_TEMP_U>
+   <BOTTLE_U type="1">
+     litres
+   </BOTTLE_U>
+   <SUGAR_U type="1">
+     gr
+   </SUGAR_U>
+   <BREWED type="5">
+     False
+   </BREWED>
+   <DATEBREWED type="9">
+     
+   </DATEBREWED>
+   <WL_TRUB type="6">
+     0
+   </WL_TRUB>
+   <WL_KETTLE type="6">
+     0
+   </WL_KETTLE>
+   <BREWER type="1">
+     John Milton-Benoit
+   </BREWER>
+   <DescrLookup type="1">
+     Ferments dry, finish
+   </DescrLookup>
+   <LOCKED type="5">
+     False
+   </LOCKED>
+   <MASH_TIME type="6">
+     60
+   </MASH_TIME>
+   <FINAL_BEER_VOL type="6">
+     
+   </FINAL_BEER_VOL>
+   <FOLDER type="1">
+     
+   </FOLDER>
+   <STARTTIME type="10">
+     9:00:00 AM
+   </STARTTIME>
+   <TIMETOSPARGE type="3">
+     0
+   </TIMETOSPARGE>
+   <TIMETOBOIL type="3">
+     32
+   </TIMETOBOIL>
+   <TIMETOCHILL type="3">
+     17
+   </TIMETOCHILL>
+   <TIMETOCLEAN type="3">
+     32
+   </TIMETOCLEAN>
+   <TIMETOPREP type="3">
+     47
+   </TIMETOPREP>
+   <DILUTED type="5">
+     False
+   </DILUTED>
+   <DILUTE_VOL type="6">
+     0.00
+   </DILUTE_VOL>
+   <DILUTE_TOTAL type="6">
+     5.00
+   </DILUTE_TOTAL>
+   <MASH_TUNLOSS_TEMP type="6">
+     3
+   </MASH_TUNLOSS_TEMP>
+   <WL_MISC type="6">
+     
+   </WL_MISC>
+   <EVAP type="6">
+     22
+   </EVAP>
+   <BATCHES type="3">
+     0
+   </BATCHES>
+</DETAILS>
+ <FERMENTABLES>
+<ITEM>
+   <MALT type="1">
+     American Crystal  60L
+   </MALT>
+   <AMOUNT type="6">
+     1
+   </AMOUNT>
+   <RECIPE type="2">
+     153
+   </RECIPE>
+   <POINTS type="6">
+     1.034
+   </POINTS>
+   <COSTLB type="6">
+     $1.58
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     60
+   </LOV>
+   <DescrLookup type="1">
+     American Crystal  60L: This Crystal malt is well suited to all beer recipes calling for crystal malt and is a good choice if you're not sure which variety to use.  5 to 15% of 60 L Crystal malt will lend a well rounded caramel flavor, color and sweetness to your finest Ales. 
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     American Two-Row
+   </MALT>
+   <AMOUNT type="6">
+     9
+   </AMOUNT>
+   <RECIPE type="2">
+     153
+   </RECIPE>
+   <POINTS type="6">
+     1.037
+   </POINTS>
+   <COSTLB type="6">
+     $0.90
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     1.8
+   </LOV>
+   <DescrLookup type="1">
+     American Two-Row: The basic malt for brewing all grain beers from scratch.  High in diastatic power, well modified and fairly neutral, Klages make an excellent base malt. Best for both American Lager and Ale styles, Klages lends itself well to all beer styles.
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Cara-Pils Dextrine
+   </MALT>
+   <AMOUNT type="6">
+     0.75
+   </AMOUNT>
+   <RECIPE type="2">
+     153
+   </RECIPE>
+   <POINTS type="6">
+     1.033
+   </POINTS>
+   <COSTLB type="6">
+     $0.90
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     1.8
+   </LOV>
+   <DescrLookup type="1">
+     Cara-Pils Dextrine: Dextrins lend body, mouthfeel and palate fullness to beers, as well as foam stability.  Cara Pils must be mashed with pale malt, due to its lack of enzymes. Use 5 to 20% for these properties without adding color or having to mash at higher temperatures.
+   </DescrLookup>
+</ITEM>
+ </FERMENTABLES>
+ <HOPS>
+<ITEM>
+   <HOP type="1">
+     Northern Brewer
+   </HOP>
+   <RECIPE type="2">
+     153
+   </RECIPE>
+   <AMOUNT type="6">
+     1
+   </AMOUNT>
+   <ADDORDER type="3">
+     2
+   </ADDORDER>
+   <TIME type="6">
+     60
+   </TIME>
+   <UNITS type="1">
+     oz
+   </UNITS>
+   <FORM type="1">
+     Leaf
+   </FORM>
+   <ALPHA type="6">
+     7
+   </ALPHA>
+   <COSTOZ type="6">
+     $1.25
+   </COSTOZ>
+   <ADD type="1">
+     Boil
+   </ADD>
+   <DescrLookup type="1">
+     Northern Brewer: Northern Brewer is a versatile bittering hop for Ales, Porters and Stouts. While not considered an aroma hop it can be used to flavor Steam Beer recipes. German grown Northern Brewer will contribute a solid bittering and rich flavor to Ales and Lagers.
+   </DescrLookup>
+   <GUID type="14">
+     414
+   </GUID>
+</ITEM>
+<ITEM>
+   <HOP type="1">
+     Willamette
+   </HOP>
+   <RECIPE type="2">
+     153
+   </RECIPE>
+   <AMOUNT type="6">
+     1
+   </AMOUNT>
+   <ADDORDER type="3">
+     2
+   </ADDORDER>
+   <TIME type="6">
+     30
+   </TIME>
+   <UNITS type="1">
+     oz
+   </UNITS>
+   <FORM type="1">
+     Leaf
+   </FORM>
+   <ALPHA type="6">
+     6.5
+   </ALPHA>
+   <COSTOZ type="6">
+     $1.00
+   </COSTOZ>
+   <ADD type="1">
+     Boil
+   </ADD>
+   <DescrLookup type="1">
+     Willamette: A U.S. Fuggle hybrid with good bittering qualities.  A very versatile hop  with a light, fruity flavor and aroma.  Use it in almost any Ale style.
+   </DescrLookup>
+   <GUID type="14">
+     415
+   </GUID>
+</ITEM>
+<ITEM>
+   <HOP type="1">
+     Cascade
+   </HOP>
+   <RECIPE type="2">
+     153
+   </RECIPE>
+   <AMOUNT type="6">
+     .5
+   </AMOUNT>
+   <ADDORDER type="3">
+     2
+   </ADDORDER>
+   <TIME type="6">
+     15
+   </TIME>
+   <UNITS type="1">
+     oz
+   </UNITS>
+   <FORM type="1">
+     Leaf
+   </FORM>
+   <ALPHA type="6">
+     6.3
+   </ALPHA>
+   <COSTOZ type="6">
+     $1.25
+   </COSTOZ>
+   <ADD type="1">
+     Boil
+   </ADD>
+   <DescrLookup type="1">
+     Cascade: Cascade, while a good bittering hop, is best known for its pronounced, very  distinctive "perfumey" aroma and flavor.  Used by many micro breweries.
+   </DescrLookup>
+   <GUID type="14">
+     416
+   </GUID>
+</ITEM>
+<ITEM>
+   <HOP type="1">
+     Cascade
+   </HOP>
+   <RECIPE type="2">
+     153
+   </RECIPE>
+   <AMOUNT type="6">
+     1
+   </AMOUNT>
+   <ADDORDER type="3">
+     2
+   </ADDORDER>
+   <TIME type="6">
+     0
+   </TIME>
+   <UNITS type="1">
+     oz
+   </UNITS>
+   <FORM type="1">
+     Leaf
+   </FORM>
+   <ALPHA type="6">
+     6.3
+   </ALPHA>
+   <COSTOZ type="6">
+     $1.25
+   </COSTOZ>
+   <ADD type="1">
+     Boil
+   </ADD>
+   <DescrLookup type="1">
+     Cascade: Cascade, while a good bittering hop, is best known for its pronounced, very  distinctive "perfumey" aroma and flavor.  Used by many micro breweries.
+   </DescrLookup>
+   <GUID type="14">
+     417
+   </GUID>
+</ITEM>
+ </HOPS>
+ <MASH>
+<ITEM>
+   <RECIPE type="2">
+     153
+   </RECIPE>
+   <TYPE type="1">
+     alpha
+   </TYPE>
+   <DISPL_TEMP type="6">
+     155.0
+   </DISPL_TEMP>
+   <TEMP type="6">
+     155.0
+   </TEMP>
+   <METHOD type="1">
+     infusion
+   </METHOD>
+   <MIN type="3">
+     60
+   </MIN>
+   <DIRECTIONS type="16">
+     Mash in with 12.9 quart US of water at 173.0 F
+   </DIRECTIONS>
+   <WATER_EQV type="6">
+     17.4
+   </WATER_EQV>
+   <WATER_QTS type="6">
+     12.9
+   </WATER_QTS>
+   <DECOCT_QTS type="6">
+     0.0
+   </DECOCT_QTS>
+   <END_TEMP type="6">
+     155.0
+   </END_TEMP>
+   <RAMP_MIN type="3">
+     0
+   </RAMP_MIN>
+   <DISPL_END_TEMP type="6">
+     155.0
+   </DISPL_END_TEMP>
+</ITEM>
+ </MASH>
+ <MISC>
+<ITEM>
+   <RECIPE type="2">
+     153
+   </RECIPE>
+   <NAME type="1">
+     Polyclar
+   </NAME>
+   <AMOUNT type="6">
+     1
+   </AMOUNT>
+   <UNITS type="1">
+     tsp
+   </UNITS>
+   <COMMENTS type="16">
+     
+   </COMMENTS>
+   <DescrLookup type="1">
+     Plastic in the form of a fine white powder. Add to secondary fermentor > 3 days before racking to aid in clarification.  Helps to flocculate yeast and chill haze.
+   </DescrLookup>
+   <COST_PER_U type="6">
+     $0.20
+   </COST_PER_U>
+   <STAGE type="1">
+     Secondary
+   </STAGE>
+   <TIME type="3">
+     
+   </TIME>
+</ITEM>
+<ITEM>
+   <RECIPE type="2">
+     153
+   </RECIPE>
+   <NAME type="1">
+     Irish Moss
+   </NAME>
+   <AMOUNT type="6">
+     1.5
+   </AMOUNT>
+   <UNITS type="1">
+     tsp
+   </UNITS>
+   <COMMENTS type="16">
+     Added to last bit of boil
+   </COMMENTS>
+   <DescrLookup type="1">
+     A form of seaweed added to the boil (10-20 minutes) to aid in clarification.  Helps to coagulate haze-causing  proteins as hot break.  Use at a rate of 1 tsp per 5 gallons.
+   </DescrLookup>
+   <COST_PER_U type="6">
+     $0.25
+   </COST_PER_U>
+   <STAGE type="1">
+     Boil
+   </STAGE>
+   <TIME type="3">
+     5
+   </TIME>
+</ITEM>
+ </MISC>
+ <NOTES>
+ </NOTES>
+ </STRANGEBREWRECIPE>
