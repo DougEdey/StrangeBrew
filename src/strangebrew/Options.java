@@ -94,16 +94,16 @@ public class Options {
 			d.put("optIBUCalcMethod", "Tinseth");
 			d.put("optAlcCalcMethod", "Volume");
 			d.put("optEvapCalcMethod", "Constant");
-			d.put("optSizeUnits", "gallons US");
-			d.put("optMaltUnits", "pounds");
-			d.put("optHopsUnits", "ounces");
-			d.put("optMashVolUnits", "gallons US");
-			d.put("optMashTempUnits", "F");
+			d.put("optSizeU", "gallons US");
+			d.put("optMaltU", "pounds");
+			d.put("optHopsU", "ounces");
+			d.put("optMashVolU", "gallons US");
+			d.put("optMashTempU", "F");
 			d.put("optPrimingSugar", "dextrose");
-			d.put("optSugarUnits", "grams");
-			d.put("optBottleUnits", "ml");
+			d.put("optSugarU", "grams");
+			d.put("optBottleU", "ml");
 			d.put("optCarbTempU", "F");
-			d.put("optMashRatioUnits", "qt/lb");
+			d.put("optMashRatioU", "qt/lb");
 			d.put("optSourceWater", "");
 			d.put("optTargetWater", "");
 			d.put("optFirstScreen", "");
@@ -164,6 +164,7 @@ public class Options {
 
 	}
 	
+	// get methods:
 	public String getProperty(String key){
 			return props.getProperty(key);
 	}
@@ -171,9 +172,22 @@ public class Options {
 	public double getDProperty(String key){
 		return Double.parseDouble(props.getProperty(key));
 	}
-	
+			
 	public int getIProperty(String key){
 		return Integer.parseInt(props.getProperty(key));
+	}
+	
+	// set methods:	
+	public void setProperty(String key, String value){
+		props.setProperty(key, value);
+	}
+	
+	public void setDProperty(String key, double value){
+		props.setProperty(key, String.valueOf(value));
+	}
+	
+	public void setIProperty(String key, int value){
+		props.setProperty(key, String.valueOf(value));
 	}
 
 }

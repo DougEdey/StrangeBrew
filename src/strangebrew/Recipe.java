@@ -9,31 +9,33 @@ import java.util.*;
 
 public class Recipe {
 
+	// basics:
 	private String name;
 	private String brewer;
+	private GregorianCalendar created;
 	private double estOg;
 	private double estFg;
 	private double ibu;
 	private double srm;
+	private double alcohol;
 	private Quantity preBoilVol = new Quantity();
 	private Quantity postBoilVol = new Quantity();
-	// private String volUnits;
 	private double efficiency;
 	private int boilMinutes;
 	private double attenuation;
 	private String style; // change to Style object later
 	private String hopUnits;
 	private String maltUnits;
-	private double mashRatio;
-	private String mashRatioU;
-
-	// calculated:
-	private GregorianCalendar created;
-	private double alcohol;
+	private Options opts;
+	
+	// totals:	
 	private double totalMaltCost;
+	private double totalHopsCost;
+	private double totalMaltLbs;
+	private double totalHopsOz;
+	private double totalMashLbs;
 
 	// ingredients
-	// implement arrayList later
 	private ArrayList hops = new ArrayList();
 	private ArrayList fermentables = new ArrayList();
 	private ArrayList misc = new ArrayList();
@@ -41,14 +43,14 @@ public class Recipe {
 	// default constuctor
 	public Recipe() {
 		
-		Options o = new Options();
+		opts = new Options();
 		name = "My Recipe";
 		created = new GregorianCalendar();
-		efficiency = o.getDProperty("optEfficiency");
-		preBoilVol.setQuantity(o.getProperty("optVolUnits"), null, o.getDProperty("optPreBoilVol"));
-		postBoilVol.setQuantity(o.getProperty("optVolUnits"), null, o.getDProperty("optPostBoilVol"));
-		attenuation = o.getDProperty("optAttenuation");
-		boilMinutes = o.getIProperty("optBoilTime");
+		efficiency = opts.getDProperty("optEfficiency");
+		preBoilVol.setQuantity(opts.getProperty("optVolUnits"), null, opts.getDProperty("optPreBoilVol"));
+		postBoilVol.setQuantity(opts.getProperty("optVolUnits"), null, opts.getDProperty("optPostBoilVol"));
+		attenuation = opts.getDProperty("optAttenuation");
+		boilMinutes = opts.getIProperty("optBoilTime");
 
 	}
 	
@@ -59,8 +61,8 @@ public class Recipe {
 	public double getEstFg(){ return estFg; }	
 	public double getIbu(){ return ibu; }	
 	public double getSrm(){ return srm; }
-	public double getPreBoilVol(){ return preBoilVol.getValue(); }
-	public double getPostBoilVol(){ return postBoilVol.getValue(); }
+	public double getPreBoilVol(String s){ return preBoilVol.getValueAs(s); }
+	public double getPostBoilVol(String s){ return postBoilVol.getValueAs(s); }
 	public String getVolUnits(){ return postBoilVol.getUnits(); }
 	public double getEfficiency(){ return efficiency; }
 	public int getBoilMinutes(){ return boilMinutes; }
@@ -68,11 +70,15 @@ public class Recipe {
 	public String getStyle(){ return style; } 
 	public String getHopUnits(){ return hopUnits; }
 	public String getMaltUnits(){ return maltUnits; }
-	public double getMashRatio(){ return mashRatio; }
-	public String getMashRatioU(){ return mashRatioU; }
+	public double getMashRatio(){ return opts.getDProperty("optMashRatio"); }
+	public String getMashRatioU(){ return opts.getProperty("optMashRatioU"); }
 	public GregorianCalendar getCreated(){ return created; }
 	public double getAlcohol(){ return alcohol; }
 	public double getTotalMaltCost(){ return totalMaltCost; }
+	public double getTotalMashLbs(){ return totalMashLbs; }
+	public String getSProp(String s){ return opts.getProperty(s); }
+	public double getDProp(String s){ return opts.getDProperty(s); }
+	public int getIProp(String s){ return opts.getIProperty(s); }
 
 	// Set functions:
 	public void setName(String n) {	name = n; }
@@ -90,8 +96,8 @@ public class Recipe {
 	public void setBoilMinutes(int b) { boilMinutes = b; }
 	public void setHopsUnits(String h) { hopUnits = h; }
 	public void setMaltUnits(String m) { maltUnits = m; }
-	public void setMashRatio(double m) { mashRatio = m; }
-	public void setMashRatioU(String u) { mashRatioU = u; }
+	public void setMashRatio(double m) { opts.setDProperty("optMashRatio", m); }
+	public void setMashRatioU(String u) { opts.setProperty("optMashRatioU", u); }
 	public void setCreated(Date d) { created.setTime(d); }
 	public void setEstOg(double o) { estOg = o; }
 	public void setEstFg(double f) { estFg = f; }
@@ -126,18 +132,21 @@ public class Recipe {
 		double og = 0;
 		double fg = 0;
 		double lov = 0;
-		double maltTotalLbs = 0;
 		double maltPoints = 0;
 		double maltTotalCost = 0;
 		double mcu = 0;
+		totalMaltLbs = 0;
+		totalMashLbs = 0;
 
 		// first figure out the total we're dealing with
 		for (int i = 0; i < fermentables.size(); i++) {
 			Fermentable m = ((Fermentable) fermentables.get(i));
-			maltTotalLbs += (m.amount.getValueAs("lb"));
-			if (m.getMashed()) // apply efficiencey
+			totalMaltLbs += (m.amount.getValueAs("lb"));
+			if (m.getMashed()){ // apply efficiency and add to mash weight
 				maltPoints += (m.getPppg() - 1) * m.amount.getValueAs("lb") * efficiency
 						/ postBoilVol.getValueAs("gal");
+				totalMashLbs += (m.amount.getValueAs("lb"));
+			}
 			else
 				maltPoints += (m.getPppg() - 1) * m.amount.getValueAs("lb") * 100 / postBoilVol.getValueAs("gal");
 
