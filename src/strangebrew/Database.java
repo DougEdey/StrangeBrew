@@ -6,11 +6,15 @@ import java.util.*;
 import com.mindprod.csv.*;
 
 /**
- * $Id: Database.java,v 1.7 2004/10/25 17:08:21 andrew_avis Exp $
+ * $Id: Database.java,v 1.8 2004/11/11 18:08:23 andrew_avis Exp $
  * @author aavis
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * This is the Database class that reads in the .csv files and 
+ * creates ArrayLists of ingredient objects.  It uses the 
+ * csv reader from the com.mindprod.csv package.
+ * 
+ * TODO: create methods to add and delete items, detect if the
+ * list had changed, and save the DB to csv.
  */
 public class Database {
 

@@ -1,14 +1,8 @@
-/*
- * $Id $
- * Created on Oct 6, 2004
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
-
 package strangebrew;
 
 /**
+ * $Id: Options.java,v 1.6 2004/11/11 18:08:23 andrew_avis Exp $
+ * Created on Oct 6, 2004
  * @author aavis
  *
  * This is the class that holds the program options, and

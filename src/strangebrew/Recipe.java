@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.18 2004/10/26 17:06:13 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.19 2004/11/11 18:08:23 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -12,27 +12,31 @@ import java.util.GregorianCalendar;
 public class Recipe {
 
 	// basics:
-	private String name;
+	
+	private double alcohol;
+	private double attenuation;
+	private int boilMinutes;
 	private String brewer;
+	private String comments;	
 	private GregorianCalendar created;
-	private Yeast yeast = new Yeast();
-	private Style style = new Style();
-	public Mash mash = new Mash();
+	private double efficiency;
 	private double estOg;
 	private double estFg;
 	private double ibu;
-	private double srm;
-	private double alcohol;
+	public Mash mash = new Mash();	
+	private boolean mashed;
+	private String name;
 	private Quantity preBoilVol = new Quantity();
 	private Quantity postBoilVol = new Quantity();
-	private double efficiency;
-	private int boilMinutes;
-	private double attenuation;
-	private boolean mashed;
+	private double srm;
+	private Style style = new Style();
+	private Yeast yeast = new Yeast();
 
+	// options:
 	private String hopUnits;
 	private String maltUnits;
-	// private Options opts;
+	private String ibuCalcMethod;
+	private double ibuHopUtil;
 	
 	// totals:	
 	private double totalMaltCost;
@@ -57,34 +61,37 @@ public class Recipe {
 		postBoilVol.setQuantity(opts.getProperty("optVolUnits"), null, opts.getDProperty("optPostBoilVol"));
 		attenuation = opts.getDProperty("optAttenuation");
 		boilMinutes = opts.getIProperty("optBoilTime");
+		ibuCalcMethod = opts.getProperty("optIBUCalcMethod");
+		ibuHopUtil = opts.getDProperty("optHopsUtil");
 
 	}
 	
 	// Get functions:
-	public String getName(){ return name; }	
+	
+	public double getAlcohol(){ return alcohol; }
+	public double getAttenuation(){ return attenuation; }
+	public int getBoilMinutes(){ return boilMinutes; }
 	public String getBrewer(){ return brewer; }	
+	public String getComments() { return comments; }
+	public GregorianCalendar getCreated(){ return created; }
+	public double getEfficiency(){ return efficiency; }
 	public double getEstOg(){ return estOg; }	
-	public double getEstFg(){ return estFg; }	
+	public double getEstFg(){ return estFg; }
+	public String getHopUnits(){ return hopUnits; }
 	public double getIbu(){ return ibu; }	
-	public double getSrm(){ return srm; }
+	public String getIBUMethod(){ return ibuCalcMethod; }
+	public String getMaltUnits(){ return maltUnits; }
+	public String getName(){ return name; }		
 	public double getPreBoilVol(String s){ return preBoilVol.getValueAs(s); }
 	public double getPostBoilVol(String s){ return postBoilVol.getValueAs(s); }
-	public String getVolUnits(){ return postBoilVol.getUnits(); }
-	public double getEfficiency(){ return efficiency; }
-	public int getBoilMinutes(){ return boilMinutes; }
-	public double getAttenuation(){ return attenuation; }
+	public double getSrm(){ return srm; }
 	public String getStyle(){ return style.getName(); } 
-	public String getHopUnits(){ return hopUnits; }
-	public String getMaltUnits(){ return maltUnits; }
-	public GregorianCalendar getCreated(){ return created; }
-	public double getAlcohol(){ return alcohol; }
 	public double getTotalMaltCost(){ return totalMaltCost; }
 	public double getTotalMashLbs(){ return totalMashLbs; }
-	/*
-	public String getSProp(String s){ return opts.getProperty(s); }
-	public double getDProp(String s){ return opts.getDProperty(s); }
-	public int getIProp(String s){ return opts.getIProperty(s); }
-*/
+	public String getVolUnits(){ return postBoilVol.getUnits(); }
+	public String getYeast(){ return yeast.getName();}	
+	
+
 	// Set functions:
 	public void setName(String n) {	name = n; }
 	public void setBrewer(String b) { brewer = b; }
@@ -186,8 +193,13 @@ public class Recipe {
 			else
 				adjPreSize = postBoilVol.getValueAs("gal");
 			aveOg = 1 + (((estOg - 1) + ((estOg - 1) / (adjPreSize / postBoilVol.getValueAs("gal")))) / 2);
-			ibuTotal += calcTinseth(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, h.getMinutes(),
-					h.getAlpha(), 4.15);
+			if (ibuCalcMethod.equals("Tinseth"))
+				ibuTotal += calcTinseth(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, h.getMinutes(),
+					h.getAlpha(), ibuHopUtil);
+			else if (ibuCalcMethod.equals("Rager"))
+				ibuTotal += CalcRager(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, h.getMinutes(), h.getAlpha());
+			else
+				ibuTotal += CalcGaretz(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, h.getMinutes(), preBoilVol.getValueAs("gal"), 1, h.getAlpha()); 
 			hopsCostTotal += h.getCostPerU() * h.getAmountAs("oz");
 			hopsOzTotal += h.getAmountAs("oz");
 		}
