@@ -22,8 +22,7 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	SWTTextOutput myAlcohol;
 	SWTTextOutput myAlcoholPostfix;
 
-	public SWTRecipeDetailsView(Factory aFactory, Composite container) {
-		myFactory = aFactory;
+	public SWTRecipeDetailsView(Composite container) {
 		myContainer = container;
 	}
 	
@@ -90,12 +89,7 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	public void dispose() {
         // @TODO Figure out who should dispose myContainer
 	}
-	
-	public Factory createChildFactory(String aTitle) {
-		// This view has no children
-		return null;
-	}
-	
+
 	public TextOutput getBrewerLabel() {
 		return myBrewerLabel;
 	}

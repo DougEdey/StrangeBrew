@@ -8,17 +8,12 @@ package strangebrew.ui.core;
 
 public abstract class View {
 	
-	protected Factory myFactory;
 	protected Controller myController;
 
 	public abstract void init();
 	public abstract void layout();
 	public abstract void dispose();
 	public abstract void display();
-
-	public Factory getFactory() {
-		return myFactory;
-	}
 	
 	public void setController(Controller aController) {
 		myController = aController;

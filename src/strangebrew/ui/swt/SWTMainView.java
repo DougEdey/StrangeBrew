@@ -31,14 +31,8 @@ public class SWTMainView extends MainView {
 		Display.setAppName("StrangeBrew.StrangeBrew");
 		
 		myShell = new Shell(myDisplay);
-		
-		myFactory = new SWTFactory(myShell);	
 	}
 	
-	public SWTMainView(Factory aFactory) {
-		myFactory = aFactory;
-	}
-
 	public void init() {
 		myLayout = new FillLayout();
  		myLayout.type = SWT.VERTICAL;
@@ -54,7 +48,6 @@ public class SWTMainView extends MainView {
 	}
 
     public void dispose() {
-		myFactory = null;  // Must do this since myShell is disposed
 		myFolder.dispose();	
 		myDisplay.dispose();	
 	}
@@ -79,8 +72,7 @@ public class SWTMainView extends MainView {
 		details.setText("Recipe Details");
 		Group group = new Group(myFolder, SWT.NONE);
 		details.setControl(group);
-		SWTFactory factory = new SWTFactory(group);
-		return factory.newRecipeDetailsView();
+		return new SWTRecipeDetailsView(group);
 	}
 	
 }
