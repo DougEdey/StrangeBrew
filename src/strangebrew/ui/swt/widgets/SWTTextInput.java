@@ -8,10 +8,10 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.layout.*;
 
 /**
- * Concrete class for SWT TextInput widgets.
+ * $Id: SWTTextInput.java,v 1.4 2004/10/21 01:52:14 tangent_ Exp $
  * @author mike
  *
- *
+ * Concrete class for SWT TextInput widgets.
  */
 public class SWTTextInput extends TextInput implements SWTFormWidget {
 

@@ -7,10 +7,10 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.layout.*;
 
 /**
- * Concrete class for an SWT Text Output widget.
+ * $Id: SWTTextOutput.java,v 1.4 2004/10/21 01:51:21 tangent_ Exp $
  * @author mike
- *
- *
+ * 
+ * Concrete class for an SWT Text Output widget.
  */
 public class SWTTextOutput extends TextOutput implements SWTFormWidget {
 

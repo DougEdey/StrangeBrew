@@ -3,10 +3,10 @@ package strangebrew.ui.core.widgets;
 import strangebrew.ui.core.Controller;
 
 /**
- * Abstract class for for a text input widget.
+ * $Id: TextInput.java,v 1.2 2004/10/21 02:09:59 tangent_ Exp $
  * @author mike
  *
- *
+ * Abstract class for for a text input widget.
  */
 public abstract class TextInput {
 	protected Controller myController;

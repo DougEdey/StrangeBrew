@@ -1,4 +1,5 @@
 /*
+ * $Id: RecipeNavigationController.java,v 1.6 2004/10/21 01:58:36 tangent_ Exp $
  * Created on Oct 14, 2004
  */
 package strangebrew.ui.core;

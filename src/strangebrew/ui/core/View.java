@@ -1,9 +1,11 @@
 package strangebrew.ui.core;
 
 /**
+ * $Id: View.java,v 1.4 2004/10/21 01:57:42 tangent_ Exp $
+ * @author mike
+ * 
  * Abstract parent class for the controller.
  * This class holds the logic for the UI in the app.
- * @author mike
  **/
 
 public abstract class View {

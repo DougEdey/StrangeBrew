@@ -1,4 +1,5 @@
 /*
+ * $Id: SWTInput.java,v 1.2 2004/10/21 01:54:58 tangent_ Exp $
  * Created on Oct 14, 2004
  */
 package strangebrew.ui.swt.widgets;

@@ -1,4 +1,5 @@
 /*
+ * $Id: MenuView.java,v 1.7 2004/10/21 02:01:23 tangent_ Exp $
  * Created on Oct 15, 2004
  */
 package strangebrew.ui.core;

@@ -1,4 +1,5 @@
 /*
+ * $Id: SWTDropdown.java,v 1.3 2004/10/21 01:55:48 tangent_ Exp $
  * Created on Oct 18, 2004
  */
 package strangebrew.ui.swt.widgets;

@@ -1,4 +1,5 @@
 /*
+ * $Id: Menu.java,v 1.2 2004/10/21 02:11:24 tangent_ Exp $
  * Created on Oct 15, 2004
  */
 package strangebrew.ui.core.widgets;

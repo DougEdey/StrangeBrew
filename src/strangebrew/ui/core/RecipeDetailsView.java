@@ -1,4 +1,5 @@
 /*
+ * $Id: RecipeDetailsView.java,v 1.15 2004/10/21 01:59:27 tangent_ Exp $
  * Created on Oct 12, 2004
  *
  * TODO To change the template for this generated file go to

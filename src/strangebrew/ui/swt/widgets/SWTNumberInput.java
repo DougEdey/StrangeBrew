@@ -1,4 +1,5 @@
 /*
+ * $Id: SWTNumberInput.java,v 1.4 2004/10/21 01:52:53 tangent_ Exp $
  * Created on Oct 13, 2004
  * Window - Preferences - Java - Code Style - Code Templates
  */

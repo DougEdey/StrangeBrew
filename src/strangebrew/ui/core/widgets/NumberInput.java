@@ -1,4 +1,5 @@
 /*
+ * $Id: NumberInput.java,v 1.2 2004/10/21 02:10:25 tangent_ Exp $
  * Created on Oct 13, 2004
  */
 package strangebrew.ui.core.widgets;

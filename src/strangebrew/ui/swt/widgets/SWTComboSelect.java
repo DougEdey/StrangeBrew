@@ -1,4 +1,5 @@
 /*
+ * $Id: SWTComboSelect.java,v 1.2 2004/10/21 01:56:12 tangent_ Exp $
  * Created on Oct 18, 2004
  */
 package strangebrew.ui.swt.widgets;

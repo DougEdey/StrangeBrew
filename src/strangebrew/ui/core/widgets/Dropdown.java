@@ -1,4 +1,5 @@
 /*
+ * $Id: Dropdown.java,v 1.2 2004/10/21 02:11:47 tangent_ Exp $
  * Created on Oct 18, 2004
  */
 package strangebrew.ui.core.widgets;

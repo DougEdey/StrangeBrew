@@ -1,6 +1,8 @@
 /*
+ * $Id: MainView.java,v 1.4 2004/10/21 02:04:28 tangent_ Exp $
  * Created on Oct 14, 2004
  */
+
 package strangebrew.ui.core;
 
 /**

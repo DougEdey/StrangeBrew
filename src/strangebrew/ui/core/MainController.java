@@ -1,4 +1,5 @@
 /*
+ * $Id: MainController.java,v 1.8 2004/10/21 02:05:36 tangent_ Exp $
  * Created on Oct 7, 2004
  *
  */

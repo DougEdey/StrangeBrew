@@ -1,4 +1,5 @@
 /*
+ * $Id: RecipeDetailsController.java,v 1.18 2004/10/21 01:59:53 tangent_ Exp $
  * Created on Oct 7, 2004
  *
  */
