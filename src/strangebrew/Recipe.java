@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.19 2004/11/11 18:08:23 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.20 2004/11/12 15:20:00 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -46,8 +46,8 @@ public class Recipe {
 	private double totalMashLbs;
 
 	// ingredients
-	private ArrayList hops = new ArrayList();
-	private ArrayList fermentables = new ArrayList();
+	public ArrayList hops = new ArrayList();
+	public ArrayList fermentables = new ArrayList();
 	private ArrayList misc = new ArrayList();
 
 	// default constuctor

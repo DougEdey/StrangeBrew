@@ -1,5 +1,5 @@
 /**
- * $Id: Hop.java,v 1.8 2004/10/21 16:44:24 andrew_avis Exp $
+ * $Id: Hop.java,v 1.9 2004/11/12 15:20:00 andrew_avis Exp $
  * Created on Oct 5, 2004
  *
  * Base class for hops.  This object doesn't do much except hold data and
@@ -15,6 +15,7 @@ public class Hop extends Ingredient{
 	private String add;
 	private int minutes;
 	private double storage;
+	private double IBU;
 
 	// Constructors:
 	
@@ -24,14 +25,17 @@ public class Hop extends Ingredient{
 	}
 	
 	// get methods:
-	public int getMinutes(){ return minutes; }
+	public String getAdd(){ return add; }
 	public double getAlpha(){ return alpha; }
+	public double getIBU(){ return IBU; }
+	public int getMinutes(){ return minutes; }
 
 	
 	// Setter methods:
+	public void setAdd(String a){ add = a; }
 	public void setAlpha(double a){ alpha = a; }
 	public void setForm(String f){ form = f; }
-	public void setAdd(String a){ add = a; }
+	public void setIBU(double i){ IBU = i; }
 	public void setMinutes(int m){ minutes = m; }
 	public void setStorage(double s){ storage = s; }	
 

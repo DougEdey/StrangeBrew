@@ -1,6 +1,6 @@
 /**
  * Created on Oct 4, 2004
- * $Id: Fermentable.java,v 1.4 2004/10/21 16:44:24 andrew_avis Exp $
+ * $Id: Fermentable.java,v 1.5 2004/11/12 15:20:00 andrew_avis Exp $
  * @author aavis
  *
  * This is the base malt class.  It doesn't do much, except hold data
@@ -43,15 +43,16 @@ public class Fermentable extends Ingredient {
 	}
 	
 	// getter methods:
-	public boolean getMashed(){ return mashed; }
-	public double getPppg(){ return pppg; }
 	public double getLov(){ return lov; }
-	
-	// setter methods:
-	public void setPppg(double p){ pppg = p; }
-	
+	public boolean getMashed(){ return mashed; }
+	public double getPercent() { return percent; }
+	public double getPppg(){ return pppg; }
+		
+	// setter methods:	
 	public void setLov(double l){ lov = l; }
 	public void setMash(boolean m){ mashed = m; }
+	public void setPercent(double p){ percent = p; }
+	public void setPppg(double p){ pppg = p; }
 	public void setSteep(boolean s){ steeped = s; }
 	
 	
