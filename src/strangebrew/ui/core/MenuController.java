@@ -39,18 +39,11 @@ public class MenuController extends Controller {
       	myContents.quit();
       }
       if (myContents.getOpenItem().isSelected()) {
-		ImportXml imp = new ImportXml(myContents.getOpenFilename());
-
-		try {
+      	String myFile = myContents.getOpenFilename();
+      	if (myFile != "/") {
+      		ImportXml imp = new ImportXml(myFile);
 			Recipe recipe = imp.handler.getRecipe();
-			if (recipe != null) {
-				myParent.setRecipe(recipe);
-			} else {
-				System.out.println("Recipe is null for some reason.");
-			}
-		} catch(Exception e) {
-			System.out.print("Problem loading ");
-			System.out.println(myContents.getOpenFilename());
+			myParent.setRecipe(recipe);
 		}
       }
 	}
