@@ -35,9 +35,7 @@ public abstract class RecipeDetailsView extends View {
 	public abstract TextOutput getColourPostfix();
 	public abstract TextInput getYeast();
 	public abstract TextOutput getYeastLabel();
-
-	
-
-
+	public abstract TextOutput getFGLabel();
+	public abstract NumberInput getFG();
 
 }

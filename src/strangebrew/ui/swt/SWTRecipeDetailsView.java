@@ -44,6 +44,9 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	SWTTextOutput myColourPostfix;
 	SWTTextOutput myYeastLabel;
 	SWTTextInput myYeast;
+	SWTTextOutput myFGLabel;
+	SWTNumberInput myFG;
+
 
 	public SWTRecipeDetailsView(Composite container) {
 		myContainer = container;
@@ -100,6 +103,10 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		myYeastLabel.init(myContainer);
 		myYeast = new SWTTextInput(myController);
 		myYeast.init(myContainer);
+		myFGLabel = new SWTTextOutput();
+		myFGLabel.init(myContainer);
+		myFG = new SWTNumberInput(myController);
+		myFG.init(myContainer);
 		
 		myLayout = new FormLayout();
 		myLayout.marginHeight = 3;
@@ -164,6 +171,7 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		setSize(myOG, 0, 50);
 		setSize(myColour, 0, 50);
 		setSize(myYeast, 0, 200);
+		setSize(myFG, 0, 50);
 		
 		align(myBrewerLabel, SWT.LEFT, null, SWT.NONE, 5);
 		align(myBrewerLabel, SWT.TOP, null, SWT.NONE, 5);
@@ -209,6 +217,10 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		align(myYeastLabel, SWT.BOTTOM, myYeast, SWT.BOTTOM, 0);
 		align(myYeast, SWT.TOP, myStyle, SWT.BOTTOM, 5);
 		align(myYeast, SWT.LEFT, myStyle, SWT.LEFT, 0);
+		align(myFGLabel, SWT.RIGHT, myOGLabel, SWT.RIGHT, 0);
+		align(myFGLabel, SWT.BOTTOM, myYeast, SWT.BOTTOM, 0);
+		align(myFG, SWT.BOTTOM, myFGLabel, SWT.BOTTOM, 0);
+		align(myFG, SWT.LEFT, myOG, SWT.LEFT, 0);
 		
 		myContainer.layout();
 		myContainer.pack();
@@ -320,6 +332,14 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	
 	public TextInput getYeast() {
 		return myYeast;
+	}
+
+	public TextOutput getFGLabel() {
+		return myFGLabel;
+	}
+
+	public NumberInput getFG() {
+		return myFG;
 	}
 
 

@@ -39,6 +39,7 @@ public class RecipeDetailsController extends Controller {
 		myContents.getColourLabel().set("Colour:");
 		myContents.getColourPostfix().set("(SRM)");
 		myContents.getYeastLabel().set("Yeast:");
+		myContents.getFGLabel().set("FG:");
 
 		myView.layout();
 	}
@@ -80,6 +81,10 @@ public class RecipeDetailsController extends Controller {
 			submitYeast();
 		}
 
+		if(myContents.getFG().isUpdated()) {
+			submitFG();
+		}
+		
 	}
 	
 	private void populateWidgets() {
@@ -103,6 +108,7 @@ public class RecipeDetailsController extends Controller {
 		myContents.getColour().set(colour.toString());
 		// TODO update Yeast dropdown when it is in recipe
 		myContents.getYeast().set("");
+		myContents.getFG().set(myRecipe.estFg);
 	}
 	
 	public void cleanUp() {
@@ -113,6 +119,7 @@ public class RecipeDetailsController extends Controller {
 		submitStyle();
 		submitOG();
 		submitYeast();
+		submitFG();
 	}
 
 	public void setRecipe(Recipe aRecipe) {
@@ -166,4 +173,8 @@ public class RecipeDetailsController extends Controller {
 		}
 	}
 
+	private void submitFG() {
+		myRecipe.estFg = myContents.getFG().get();
+	}
+	
 }
