@@ -18,6 +18,9 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	SWTTextInput myBrewer;
 	SWTTextOutput myEfficiencyLabel;
 	SWTNumberInput myEfficiency;
+	SWTTextOutput myAlcoholLabel;
+	SWTTextOutput myAlcohol;
+	SWTTextOutput myAlcoholPostfix;
 
 	public SWTRecipeDetailsView(Factory aFactory, Composite container) {
 		myFactory = aFactory;
@@ -33,6 +36,12 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		myEfficiencyLabel.init(myContainer);
 		myEfficiency = new SWTNumberInput(myController);
 		myEfficiency.init(myContainer);
+		myAlcoholLabel = new SWTTextOutput();
+		myAlcoholLabel.init(myContainer);
+		myAlcohol = new SWTTextOutput();
+		myAlcohol.init(myContainer);
+		myAlcoholPostfix = new SWTTextOutput();
+		myAlcoholPostfix.init(myContainer);
 		
 		myLayout = new FormLayout();
 		myLayout.marginHeight = 3;
@@ -41,11 +50,17 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		
 		attach(myBrewerLabel.getWidget(), null, 0, 0, 0);
 		attach(myBrewer.getWidget(), myBrewerLabel.getWidget(), 
-				200, 10, 5);
+				200, 14, 5);
 		attach(myEfficiencyLabel.getWidget(), myBrewer.getWidget(), 
 				0, 0, 10);
         attach(myEfficiency.getWidget(), myEfficiencyLabel.getWidget(), 
-        		25, 10, 5);		
+        		25, 14, 5);		
+		attach(myAlcoholLabel.getWidget(), myEfficiency.getWidget(), 
+				0, 0, 10);
+        attach(myAlcohol.getWidget(), myAlcoholLabel.getWidget(), 
+        		25, 14, 5);		
+		attach(myAlcoholPostfix.getWidget(), myAlcohol.getWidget(), 
+				0, 0, 5);
 	}
 	
 	private void attach(Control control, Control target, 
@@ -96,5 +111,17 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	public NumberInput getEfficiency() {
 		return myEfficiency;
 	}
+	
+	public TextOutput getAlcoholLabel() {
+		return myAlcoholLabel;
+	}
 
+	public TextOutput getAlcohol() {
+		return myAlcohol;
+	}
+
+	public TextOutput getAlcoholPostfix() {
+		return myAlcoholPostfix;
+	}
+	
 }

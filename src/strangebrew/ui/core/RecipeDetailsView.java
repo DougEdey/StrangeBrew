@@ -12,4 +12,7 @@ public abstract class RecipeDetailsView extends View {
 	public abstract TextOutput getBrewerLabel();
 	public abstract TextOutput getEfficiencyLabel();
 	public abstract NumberInput getEfficiency();
+	public abstract TextOutput getAlcoholLabel();
+	public abstract TextOutput getAlcohol();
+	public abstract TextOutput getAlcoholPostfix();
 }

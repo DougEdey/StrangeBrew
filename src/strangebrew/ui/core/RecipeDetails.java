@@ -27,6 +27,8 @@ public class RecipeDetails extends Controller {
 
 		myContents.getBrewerLabel().set("Brewer:");
 		myContents.getEfficiencyLabel().set("% Effic:");
+		myContents.getAlcoholLabel().set("% Alc:");
+		myContents.getAlcoholPostfix().set("by Volume");
 		populateWidgets();
 		myView.layout();
 	}
@@ -47,6 +49,8 @@ public class RecipeDetails extends Controller {
 	private void populateWidgets() {
 		myContents.getBrewer().set(myRecipe.brewer);
 		myContents.getEfficiency().set(myRecipe.efficiency);
+		Double alc = new Double(myRecipe.alcohol);
+		myContents.getAlcohol().set(alc.toString());
 	}
 
 	private void submitBrewer() {
