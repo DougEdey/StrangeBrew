@@ -17,6 +17,15 @@ package strangebrew;
 import strangebrew.ui.core.*;
 import strangebrew.ui.swt.*;
 
+import org.xml.sax.*;
+import org.xml.sax.helpers.DefaultHandler;
+
+import java.io.*;
+
+import javax.xml.parsers.SAXParserFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+
 public class TestUI {
 
 	public static void main(String[] args) {
