@@ -107,6 +107,7 @@ public class Quantity {
 	}
 	*/
 	
+	/*
 	public void convertTemp(String to){
 		// if we're already the target temp units, or
 		// if we're not a temp at all, do nothing
@@ -117,6 +118,7 @@ public class Quantity {
 		else
 			value = fToC(value);		
 	}
+	*/
 	
 	
 	// private functions:	
@@ -184,15 +186,5 @@ public class Quantity {
 			return "weight";
 		
 	}
-	
 
-	private double fToC(double tempF) {
-		// routine to convert basic F temps to C
-		return (5 * (tempF - 32)) / 9;
-	}
-
-	private double cToF(double tempC) {
-		// routine to convert Celcius to Farenheit
-		return ((tempC * 9) / 5) + 32;
-	}
 }
