@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.24 2004/11/18 18:06:18 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.25 2004/11/19 14:55:18 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -316,7 +316,11 @@ public class Recipe {
 	double CalcRager(double amount, double size, double sg, double time,
 			double AA) {
 		double ibu, utilization, ga;
-		utilization = 18.11 + (13.86 * (Math.tanh((time - 31.32) / 18.27)));
+		// should be tanh:
+		double x = (time - 31.32) / 18.27;
+		// tanh:		
+		double tanhx = (Math.exp(x)-Math.exp(-x))/(Math.exp(x)+Math.exp(-x));
+		utilization = 18.11 + (13.86 * tanhx / 18.27);
 		ga = sg < 1.050 ? 0.0 : 0.2;
 		ibu = amount * (utilization / 100) * (AA / 100.0) * 7490;
 		ibu /= size * (1 + ga);
