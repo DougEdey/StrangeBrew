@@ -8,7 +8,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 
 import java.io.*;
@@ -43,18 +42,6 @@ import java.awt.GridLayout;
 import javax.swing.JSlider;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.ItemEvent;
-/**
- * This code was generated using CloudGarden's Jigloo SWT/Swing GUI Builder,
- * which is free for non-commercial use. If Jigloo is being used commercially
- * (ie, by a corporation, company or business for any purpose whatever) then you
- * should purchase a license for each developer using Jigloo. Please visit
- * www.cloudgarden.com for details. Use of Jigloo implies acceptance of these
- * licensing terms. ************************************* A COMMERCIAL LICENSE
- * HAS NOT BEEN PURCHASED for this machine, so Jigloo or this code cannot be
- * used legally for any corporate or commercial purpose.
- * *************************************
- */
 
 public class NewSwingApp extends javax.swing.JFrame {
 
@@ -162,6 +149,8 @@ public class NewSwingApp extends javax.swing.JFrame {
 	DecimalFormat df1 = new DecimalFormat("####.0");
 	DecimalFormat df2 = new DecimalFormat("#.00");
 	DecimalFormat df3 = new DecimalFormat("0.000");
+	
+	private final static boolean DEBUG = true;
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -824,8 +813,8 @@ public class NewSwingApp extends javax.swing.JFrame {
 								jScrollPane1.setViewportView(tblMalt);
 								BorderLayout tblMaltLayout = new BorderLayout();
 								tblMalt.setLayout(tblMaltLayout);
-								tblMalt.setModel(tblMaltModel);
-								TableColumn column = null;
+								tblMalt.setModel(tblMaltModel);								
+								// TableColumn column = null;
 								TableColumn maltColumn = tblMalt.getColumnModel().getColumn(0);
 								JComboBox maltComboBox = new JComboBox();
 								cmbMaltModel = new ComboModel();
@@ -845,29 +834,26 @@ public class NewSwingApp extends javax.swing.JFrame {
 									}
 								}*/
 								
-								
+										
 								maltComboBox
-										.addItemListener(new ItemListener() {
-											public void itemStateChanged(
-													ItemEvent evt) {
-												if (evt.getStateChange() == ItemEvent.SELECTED) {
-													Fermentable f = (Fermentable) cmbMaltModel
-															.getSelectedItem();
-													int i = tblMalt
-															.getSelectedRow();
-													if (myRecipe != null) {
-														Fermentable f2 = (Fermentable) myRecipe
-																.getFermentablesList()
-																.get(i);
-														f2.setLov(f.getLov());
-														f2.setPppg(f.getPppg());
-														myRecipe
-																.calcMaltTotals();
-														// displayRecipe();
-													}
-												}
+										.addActionListener(new ActionListener() {
+											public void actionPerformed(
+													ActionEvent evt) {
+												Fermentable f = (Fermentable) cmbMaltModel
+														.getSelectedItem();
+												int i = tblMalt
+														.getSelectedRow();
+												if (myRecipe != null) {
+													Fermentable f2 = (Fermentable) myRecipe
+															.getFermentablesList()
+															.get(i);
+													f2.setLov(f.getLov());
+													f2.setPppg(f.getPppg());
+												}						
+
 											}
 										});
+							
 								
 								
 								
@@ -881,7 +867,7 @@ public class NewSwingApp extends javax.swing.JFrame {
 							tblMaltTotals = new JTable();
 							pnlMalt.add(tblMaltTotals, BorderLayout.SOUTH);
 							tblMaltTotals.setModel(tblMaltTotalsModel);
-							tblMaltTotals.getTableHeader().setEnabled(false);
+							tblMaltTotals.getTableHeader().setEnabled(false);							
 
 						}
 					}
@@ -996,7 +982,7 @@ public class NewSwingApp extends javax.swing.JFrame {
 							public void actionPerformed(ActionEvent evt) {
 								// This is just a test right now to see that
 								// stuff is changed.
-								System.out.print(myRecipe.toXML());
+								System.out.print(myRecipe.toText());
 
 							}
 						});
@@ -1196,6 +1182,9 @@ public class NewSwingApp extends javax.swing.JFrame {
 				switch (col) {
 					case 0 :
 						m.setName(value.toString());
+						if (DEBUG){
+							System.out.println("value is:" + value);
+						}
 					case 1 :
 						m.setAmount(Double.parseDouble(value.toString()));
 					case 2 :
@@ -1214,6 +1203,7 @@ public class NewSwingApp extends javax.swing.JFrame {
 			};
 
 			fireTableCellUpdated(row, col);
+			
 		}
 	}
 	class HopsTableModel extends AbstractTableModel {
