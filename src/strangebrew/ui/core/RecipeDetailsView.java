@@ -30,6 +30,10 @@ public abstract class RecipeDetailsView extends View {
 	public abstract TextOutput getStyleLabel();
 	public abstract TextOutput getOGLabel();
 	public abstract NumberInput getOG();
+	public abstract TextOutput getColourLabel();
+	public abstract TextOutput getColour();
+	public abstract TextOutput getColourPostfix();
+	
 
 
 

@@ -36,7 +36,8 @@ public class RecipeDetailsController extends Controller {
 		myContents.getIBUPostfix().set("(Rager)");
 		myContents.getStyleLabel().set("Style:");
 		myContents.getOGLabel().set("OG:");
-
+		myContents.getColourLabel().set("Colour:");
+		myContents.getColourPostfix().set("(SRM)");
 
 		myView.layout();
 	}
@@ -93,7 +94,8 @@ public class RecipeDetailsController extends Controller {
 		myContents.getIBU().set(ibu.toString());
 		myContents.getStyle().set(myRecipe.style);
 		myContents.getOG().set(myRecipe.estOg);
-
+		Double colour = new Double(myRecipe.srm);
+		myContents.getColour().set(colour.toString());
 	}
 	
 	public void cleanUp() {

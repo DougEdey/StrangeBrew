@@ -39,6 +39,10 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 	SWTTextInput myStyle;
 	SWTTextOutput myOGLabel;
 	SWTNumberInput myOG;
+	SWTTextOutput myColourLabel;
+	SWTTextOutput myColour;
+	SWTTextOutput myColourPostfix;
+
 
 
 	public SWTRecipeDetailsView(Composite container) {
@@ -86,6 +90,12 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		myOGLabel.init(myContainer);
 		myOG = new SWTNumberInput(myController);
 		myOG.init(myContainer);
+		myColourLabel = new SWTTextOutput();
+		myColourLabel.init(myContainer);
+		myColour = new SWTTextOutput();
+		myColour.init(myContainer);
+		myColourPostfix = new SWTTextOutput();
+		myColourPostfix.init(myContainer);
 		
 		myLayout = new FormLayout();
 		myLayout.marginHeight = 3;
@@ -148,6 +158,7 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		setSize(myIBU, 0, 50);
 		setSize(myStyle, 0, 200);
 		setSize(myOG, 0, 50);
+		setSize(myColour, 0, 50);
 		
 		align(myBrewerLabel, SWT.LEFT, null, SWT.NONE, 5);
 		align(myBrewerLabel, SWT.TOP, null, SWT.NONE, 5);
@@ -183,6 +194,12 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		align(myOGLabel, SWT.BOTTOM, myStyle, SWT.BOTTOM, 0);
 		align(myOG, SWT.BOTTOM, myOGLabel, SWT.BOTTOM, 0);
 		align(myOG, SWT.LEFT, myAttenuation, SWT.LEFT, 0);
+		align(myColourLabel, SWT.BOTTOM, myOG, SWT.BOTTOM, 0);
+		align(myColourLabel, SWT.RIGHT, myIBULabel, SWT.RIGHT, 0);
+		align(myColour, SWT.BOTTOM, myColourLabel, SWT.BOTTOM, 0);
+		align(myColour, SWT.LEFT, myIBU, SWT.LEFT, 0);
+		align(myColourPostfix, SWT.LEFT, myIBUPostfix, SWT.LEFT, 0);
+		align(myColourPostfix, SWT.BOTTOM, myColour, SWT.BOTTOM, 0);
 
 		
 		myContainer.layout();
@@ -275,6 +292,18 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 
 	public NumberInput getOG() {
 		return myOG;
+	}
+
+	public TextOutput getColourLabel() {
+		return myColourLabel;
+	}
+
+	public TextOutput getColour() {
+		return myColour;
+	}
+
+	public TextOutput getColourPostfix() {
+		return myColourPostfix;
 	}
 
 
