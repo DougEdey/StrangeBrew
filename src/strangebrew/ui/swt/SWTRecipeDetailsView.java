@@ -31,7 +31,7 @@ public class SWTRecipeDetailsView extends RecipeDetailsView {
 		myBrewer.init(myContainer);
 		myEfficiencyLabel = new SWTTextOutput();
 		myEfficiencyLabel.init(myContainer);
-		myEfficiency = new SWTNumberInput();
+		myEfficiency = new SWTNumberInput(myController);
 		myEfficiency.init(myContainer);
 		
 		myLayout = new FormLayout();

@@ -4,24 +4,63 @@
  */
 package strangebrew.ui.swt;
 
+import strangebrew.ui.core.Controller;
 import strangebrew.ui.core.NumberInput;
+
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.*;
-import java.lang.Number.*;
 
 /**
  * @author mike
  *
- * TODO To change the template for this generated type comment go to
+ * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class SWTNumberInput extends NumberInput {
 
 	Text myWidget;
 	
+	MyTypingListener myListener;
+	
+	class MyTypingListener extends SWTInput {
+		SWTNumberInput myTarget;
+		
+		public MyTypingListener(SWTNumberInput aTarget) {
+			super();
+			myTarget = aTarget;
+		    myListener.addTo(this);
+		}
+		
+		public void addListener(TypingListener aListener) {
+			myTarget.addListener(aListener);
+		}
+		
+		public void removeListener(TypingListener aListener) {
+			myTarget.removeListener(aListener);
+		}
+		
+		public void verify() {
+			myTarget.verify();
+		}
+	}
+	
+	public SWTNumberInput(Controller aController) {
+		super(aController);
+	}
+
+	private void addListener(SelectionListener aListener) {
+		myWidget.addSelectionListener(aListener);
+	}
+
+	private void removeListener(SelectionListener aListener) {
+		myWidget.removeSelectionListener(aListener);
+	}
+
+	
 	public void init(Composite aContainer) {
 		myWidget = new Text(aContainer, SWT.SINGLE);
+		myListener = new MyTypingListener(this);
 	}
 	
 	public void dispose() {
@@ -32,13 +71,13 @@ public class SWTNumberInput extends NumberInput {
 		myWidget.setSelection(0);
 	}
 
-	public float get() {
-		Float n = new Float(myWidget.getText());
-		return n.floatValue();
+	public double get() {
+		Double n = new Double(myWidget.getText());
+		return n.doubleValue();
 	}
 
-	public void set(float aNumber) {
-		Float n=new Float(aNumber);
+	public void set(double aNumber) {
+		Double n=new Double(aNumber);
 		myWidget.setText(n.toString());
 	}
 

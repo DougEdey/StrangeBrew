@@ -11,9 +11,6 @@ public abstract class NumberInput {
 	protected Controller myController;
 	protected boolean isUpdated = false;
 
-	public NumberInput() {
-	}
-
 	public NumberInput(Controller aController) {
 		myController = aController;
 	}
@@ -22,9 +19,9 @@ public abstract class NumberInput {
 	
 	public abstract void clear();
 	
-	public abstract float get();
+	public abstract double get();
 	
-	public abstract void set(float aNumber);
+	public abstract void set(double aNumber);
 
 	public void verify() {
 		isUpdated = true;

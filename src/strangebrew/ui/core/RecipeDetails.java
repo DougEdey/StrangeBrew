@@ -39,14 +39,22 @@ public class RecipeDetails extends Controller {
 		if(myContents.getBrewer().isUpdated()) {
 			submitBrewer();
 		}
+		if(myContents.getEfficiency().isUpdated()) {
+			submitEfficiency();
+		}
 	}
 	
 	private void populateWidgets() {
 		myContents.getBrewer().set(myRecipe.brewer);
+		myContents.getEfficiency().set(myRecipe.efficiency);
 	}
 
 	private void submitBrewer() {
 			myRecipe.brewer = myContents.getBrewer().get();
 	}
-	
+
+	private void submitEfficiency() {
+		myRecipe.efficiency = myContents.getEfficiency().get();
+}
+
 }

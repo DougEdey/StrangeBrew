@@ -10,9 +10,6 @@ public abstract class TextInput {
 	protected Controller myController;
 	protected boolean isUpdated = false;
 
-	public TextInput() {
-	}
-
 	public TextInput(Controller aController) {
 		myController = aController;
 	}
