@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.22 2004/11/16 18:11:16 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.23 2004/11/17 17:56:16 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -99,13 +99,9 @@ public class Recipe {
 	public void addHop(Hop h) { hops.add(h); }
 	public void addMisc(Misc m) { misc.add(m); }
 	
-	public void setAttenuation(double a) {	attenuation = a; }
 	public void setBoilMinutes(int b) { boilMinutes = b; }
 	public void setBrewer(String b) { brewer = b; }
 	public void setCreated(Date d) { created.setTime(d); }
-	public void setEfficiency(double e) { efficiency = e; }
-	public void setEstOg(double o) { estOg = o; }
-	
 	public void setHopsUnits(String h) { hopUnits = h; }
 	public void setMaltUnits(String m) { maltUnits = m; }
 	public void setMashed(boolean m) { mashed = m; }
@@ -120,11 +116,37 @@ public class Recipe {
 	public void setYeastName(String s) { yeast.setName(s); }
 		
 	// Setters that need to do extra work:
-	public void setEstFg(double f) { 
-		estFg = f;
-		attenuation = 100 - ((f - 1) / (estOg - 1) * 100 );
-		calcAlcohol("Volume");
+	public void setEstFg(double f) {
+		if (f != estFg && f > 0) {
+			estFg = f;
+			attenuation = 100 - ((estFg - 1) / (estOg - 1) * 100);
+			calcAlcohol("Volume");
 		}
+	}
+
+	public void setEstOg(double o) {
+		if (o != estOg && o > 0) {
+			estOg = o;
+			attenuation = 100 - ((estFg - 1) / (estOg - 1) * 100);
+			calcEfficiency();
+			calcAlcohol("Volume");
+		}
+	}
+	
+	public void setEfficiency(double e) {
+		if (e != efficiency && e > 0){
+		efficiency = e; 
+		calcMaltTotals();		
+		}
+	}
+	
+	public void setAttenuation(double a) {
+		if (a != attenuation && a > 0){
+		attenuation = a; 
+		calcMaltTotals();
+		}
+		
+	}
 	
 	/**
 	 * Handles a string of the form "d u", where d is a double
@@ -151,6 +173,18 @@ public class Recipe {
 	 */
 
 	// Calc functions.  We'll want to hide these soon.
+	
+	private void calcEfficiency() {
+		double possiblePoints=0;
+		for (int i = 0; i < fermentables.size(); i++) {
+			Fermentable m = ((Fermentable) fermentables.get(i));
+			possiblePoints += (m.getPppg() - 1) * m.getAmountAs("lb") / postBoilVol.getValueAs("gal");
+		}
+		efficiency =  (estOg - 1) / possiblePoints * 100;
+	}
+	
+	
+	
 	public void calcMaltTotals() {
 
 		double og = 0;
