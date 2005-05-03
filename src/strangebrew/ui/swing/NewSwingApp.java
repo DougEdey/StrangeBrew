@@ -43,6 +43,8 @@ import javax.swing.JSlider;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
+
+
 public class NewSwingApp extends javax.swing.JFrame {
 
 	{
@@ -808,7 +810,7 @@ public class NewSwingApp extends javax.swing.JFrame {
 							jScrollPane1 = new JScrollPane();
 							pnlMalt.add(jScrollPane1, BorderLayout.CENTER);
 							{
-								tblMaltModel = new MaltTableModel();
+								tblMaltModel = new MaltTableModel(this);
 								tblMalt = new JTable();
 								jScrollPane1.setViewportView(tblMalt);
 								BorderLayout tblMaltLayout = new BorderLayout();
@@ -896,7 +898,7 @@ public class NewSwingApp extends javax.swing.JFrame {
 							jScrollPane2 = new JScrollPane();
 							pnlHops.add(jScrollPane2, BorderLayout.CENTER);
 							{
-								tblHopsModel = new HopsTableModel();
+								tblHopsModel = new HopsTableModel(this);
 								tblHops = new JTable();
 								jScrollPane2.setViewportView(tblHops);
 								BorderLayout tblHopsLayout = new BorderLayout();
@@ -1093,270 +1095,6 @@ public class NewSwingApp extends javax.swing.JFrame {
 		});
 	}
 
-	class MaltTableModel extends AbstractTableModel {
-		private String[] columnNames = {"Malt", "Amount", "Units", "Points",
-				"Lov", "Cost/U", "%"};
-
-		private ArrayList data = null;
-
-		public MaltTableModel() {
-			data = new ArrayList();
-		}
-
-		public void addRow(Fermentable m) {
-			data.add(m);
-		}
-
-		public void setData(ArrayList d) {
-			data = d;
-		}
-
-		public int getColumnCount() {
-			return columnNames.length;
-		}
-
-		public int getRowCount() {
-			return data.size();
-		}
-
-		public String getColumnName(int col) {
-			return columnNames[col];
-		}
-
-		public Object getValueAt(int row, int col) {
-			Fermentable m = (Fermentable) data.get(row);
-			try {
-				switch (col) {
-					case 0 :
-						return m.getName();
-					case 1 :
-						return new Double(df1.format(m
-								.getAmountAs(m.getUnits())));
-					case 2 :
-						return m.getUnits();
-					case 3 :
-						return new Double(m.getPppg());
-					case 4 :
-						return new Double(m.getLov());
-					case 5 :
-						return new Double(m.getCostPerU());
-					case 6 :
-						return df1.format(new Double(m.getPercent()));
-
-				}
-			} catch (Exception e) {
-			};
-			return "";
-		}
-
-		/*
-		 * JTable uses this method to determine the default renderer/ editor for
-		 * each cell. If we didn't implement this method, then the last column
-		 * would contain text ("true"/"false"), rather than a check box.
-		 */
-		public Class getColumnClass(int c) {
-			return getValueAt(0, c).getClass();
-		}
-
-		/*
-		 * Don't need to implement this method unless your table's editable.
-		 */
-		public boolean isCellEditable(int row, int col) {
-			//Note that the data/cell address is constant,
-			//no matter where the cell appears onscreen.
-			if (col < 0) {
-				return false;
-			} else {
-				return true;
-			}
-		}
-
-		/*
-		 * Don't need to implement this method unless your table's data can
-		 * change.
-		 */
-		public void setValueAt(Object value, int row, int col) {
-
-			Fermentable m = (Fermentable) data.get(row);
-			try {
-				switch (col) {
-					case 0 :
-						m.setName(value.toString());
-						if (DEBUG){
-							System.out.println("value is:" + value);
-						}
-					case 1 :
-						m.setAmount(Double.parseDouble(value.toString()));
-					case 2 :
-						m.setUnits(value.toString());
-					case 3 :
-						m.setPppg(Double.parseDouble(value.toString()));
-					case 4 :
-						m.setLov(Double.parseDouble(value.toString()));
-					case 5 :
-						m.setCost(Double.parseDouble(value.toString()));
-					case 6 :
-						m.setPercent(Double.parseDouble(value.toString()));
-
-				}
-			} catch (Exception e) {
-			};
-
-			fireTableCellUpdated(row, col);
-			
-		}
-	}
-	class HopsTableModel extends AbstractTableModel {
-		private String[] columnNames = {"Hop", "Type", "Alpha", "Amount",
-				"Units", "Add", "Min", "IBU", "Cost/u"};
-
-		private ArrayList data = null;
-
-		public HopsTableModel() {
-			data = new ArrayList();
-		}
-
-		public void addRow(Hop h) {
-			data.add(h);
-		}
-
-		public void setData(ArrayList d) {
-			data = d;
-		}
-
-		public int getColumnCount() {
-			return columnNames.length;
-		}
-
-		public int getRowCount() {
-			return data.size();
-		}
-
-		public String getColumnName(int col) {
-			return columnNames[col];
-		}
-
-		public Object getValueAt(int row, int col) {
-			Hop h = (Hop) data.get(row);
-			try {
-				switch (col) {
-					case 0 :
-						return h.getName();
-					case 1 :
-						return h.getType();
-					case 2 :
-						return new Double(h.getAlpha());
-					case 3 :
-						return new Double(h.getAmountAs(h.getUnits()));
-					case 4 :
-						return new Double(h.getUnits());
-					case 5 :
-						return new Double(h.getAdd());
-					case 6 :
-						return new Double(h.getMinutes());
-					case 7 :
-						return new Double(df1.format(h.getIBU()));
-					case 8 :
-						return new Double(h.getCostPerU());
-
-				}
-			} catch (Exception e) {
-			};
-			return "";
-		}
-
-		public boolean isCellEditable(int row, int col) {
-			//Note that the data/cell address is constant,
-			//no matter where the cell appears onscreen.
-			if (col < 0) {
-				return false;
-			} else {
-				return true;
-			}
-		}
-
-		/*
-		 * Don't need to implement this method unless your table's data can
-		 * change.
-		 */
-		/*
-		 * public void setValueAt(Object value, int row, int col) {
-		 * 
-		 * Hop h = (Hop)data.get(row); try { switch (col){ case 0 :
-		 * h.setName(value.toString()); case 1 : return h.getType(); case 2 :
-		 * return new Double(h.getAlpha()); case 3 : return new
-		 * Double(h.getAmountAs(h.getUnits())); case 4 : return new
-		 * Double(h.getUnits()); case 5 : return new Double(h.getAdd()); case 6 :
-		 * return new Double(h.getMinutes()); case 7 : return new
-		 * Double(h.getIBU()); case 8 : return new Double(h.getCostPerU()); } }
-		 * catch (Exception e){};
-		 * 
-		 * fireTableCellUpdated(row, col); }
-		 */
-	}
-
-	class ComboModel extends AbstractListModel implements ComboBoxModel {
-
-		List list = new ArrayList();
-		Object selected = null;
-
-		public void addOrInsert(Object o) {
-
-			int i = 0;
-			boolean found = false;
-			while (i < list.size() && !found) {
-				if (o.getClass().getName().toString().equals(
-						"strangebrew.Yeast")) {
-					Yeast y = (Yeast) list.get(i);
-					Yeast y2 = (Yeast) o;
-					found = y.getName().equalsIgnoreCase(y2.getName());
-				} else if (o.getClass().getName().toString().equals("strangebrew.Fermentable")) {
-					Fermentable f = (Fermentable) list.get(i);
-					Fermentable f2 = (Fermentable) o;
-					found = f.getName().equalsIgnoreCase(f2.getName());
-				} else if (o.getClass().getName().toString().equals("strangebrew.Hop")) {
-					Hop h = (Hop) list.get(i);
-					Hop h2 = (Hop) o;
-					found = h.getName().equalsIgnoreCase(h2.getName());
-				} else {
-					Style s = (Style) list.get(i);
-					Style s2 = (Style) o;
-					found = s.getName().equalsIgnoreCase(s2.getName());
-				}
-				i++;
-			}
-			if (!found) {
-				list.add(o);
-			}
-			setSelectedItem(o);
-
-		}
-		
-		public Object getSelectedItem() {
-			return selected;
-		}
-		
-		public void setSelectedItem(Object item) {
-			if ((selected != null && !selected.equals(item))
-					|| (selected == null && item != null)) {
-				selected = item;
-				fireContentsChanged(this, -1, -1);
-			}
-		}
-
-		public int getSize() {
-			return list.size();
-		}
-
-		public Object getElementAt(int index) {
-			return list.get(index);
-		}
-
-		public void setList(ArrayList l) {
-			list = l;
-		}
-	}
-	
 	public void saveAsHTML() throws Exception{
 			// save file as xml, then transform it to html
 			File tmp = new File("tmp.xml");
