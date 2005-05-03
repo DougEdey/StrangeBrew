@@ -105,9 +105,9 @@ class MaltTableModel extends AbstractTableModel {
 			switch (col) {
 				case 0 :
 					m.setName(value.toString());
-					if (NewSwingApp.DEBUG){
+					/* if (NewSwingApp.DEBUG){
 						System.out.println("value is:" + value);
-					}
+					}*/
 				case 1 :
 					m.setAmount(Double.parseDouble(value.toString()));
 				case 2 :

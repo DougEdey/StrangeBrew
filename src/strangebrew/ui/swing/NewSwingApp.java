@@ -1,6 +1,5 @@
 package strangebrew.ui.swing;
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -13,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.io.*;
 import java.io.FileWriter;
 import java.text.DecimalFormat;
-import java.util.*;
 
 import strangebrew.*;
 
@@ -47,14 +45,14 @@ import java.awt.event.FocusEvent;
 
 public class NewSwingApp extends javax.swing.JFrame {
 
-	{
+	/*{
 		//Set Look & Feel
 		try {
 			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getCrossPlatformLookAndFeelClassName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	private JMenuItem helpMenuItem;
 	private JMenu jMenu5;
