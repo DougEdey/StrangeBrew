@@ -7,9 +7,7 @@
 package strangebrew.ui.swing;
 
 import java.util.ArrayList;
-
 import javax.swing.table.AbstractTableModel;
-
 import strangebrew.Fermentable;
 
 
@@ -77,9 +75,10 @@ class MaltTableModel extends AbstractTableModel {
 	 * each cell. If we didn't implement this method, then the last column
 	 * would contain text ("true"/"false"), rather than a check box.
 	 */
-	public Class getColumnClass(int c) {
+	
+	/*public Class getColumnClass(int c) {
 		return getValueAt(0, c).getClass();
-	}
+	}*/
 
 	/*
 	 * Don't need to implement this method unless your table's editable.
@@ -109,23 +108,32 @@ class MaltTableModel extends AbstractTableModel {
 						System.out.println("value is:" + value);
 					}*/
 				case 1 :
-					m.setAmount(Double.parseDouble(value.toString()));
+					m.setAmount(Double.parseDouble(value.toString()));					
+					break;
 				case 2 :
 					m.setUnits(value.toString());
+					break;
 				case 3 :
 					m.setPppg(Double.parseDouble(value.toString()));
+					break;
 				case 4 :
 					m.setLov(Double.parseDouble(value.toString()));
+					break;
 				case 5 :
 					m.setCost(Double.parseDouble(value.toString()));
+					break;
 				case 6 :
 					m.setPercent(Double.parseDouble(value.toString()));
+					break;
 
 			}
 		} catch (Exception e) {
 		};
-
 		fireTableCellUpdated(row, col);
+		fireTableDataChanged();
+		app.myRecipe.calcMaltTotals();
+		app.displayRecipe();
+		
 		
 	}
 }

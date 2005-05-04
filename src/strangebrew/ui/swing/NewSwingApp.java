@@ -145,7 +145,7 @@ public class NewSwingApp extends javax.swing.JFrame {
 	private ComboModel cmbMaltModel;
 	private ComboModel cmbHopsModel;
 
-	private Recipe myRecipe;
+	public Recipe myRecipe;
 	DecimalFormat df1 = new DecimalFormat("####.0");
 	DecimalFormat df2 = new DecimalFormat("#.00");
 	DecimalFormat df3 = new DecimalFormat("0.000");
@@ -175,7 +175,7 @@ public class NewSwingApp extends javax.swing.JFrame {
 
 	}
 
-	private void displayRecipe() {
+	public void displayRecipe() {
 		if (myRecipe == null)
 			return;
 		txtName.setText(myRecipe.getName());
