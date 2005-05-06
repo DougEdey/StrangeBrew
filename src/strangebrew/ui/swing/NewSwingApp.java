@@ -1,58 +1,75 @@
 package strangebrew.ui.swing;
-import javax.swing.*;
-import javax.swing.table.TableColumn;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import java.io.*;
-import java.io.FileWriter;
-import java.text.DecimalFormat;
-
-import strangebrew.*;
-
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.JScrollPane;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLabel;
-import javax.swing.ComboBoxModel;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowAdapter;
-import javax.swing.border.LineBorder;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-
-import javax.swing.JTextArea;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import javax.swing.JSlider;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.text.DecimalFormat;
+import java.util.EventObject;
 
+import javax.swing.AbstractCellEditor;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JSlider;
+import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
 
+import strangebrew.Database;
+import strangebrew.Fermentable;
+import strangebrew.ImportXml;
+import strangebrew.Recipe;
+import strangebrew.Style;
+import strangebrew.XmlTransformer;
+import strangebrew.Yeast;
 
 public class NewSwingApp extends javax.swing.JFrame {
 
-	/*{
+	{
 		//Set Look & Feel
 		try {
-			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getCrossPlatformLookAndFeelClassName());
-		} catch (Exception e) {
+			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
+
+
 
 	private JMenuItem helpMenuItem;
 	private JMenu jMenu5;
@@ -210,6 +227,8 @@ public class NewSwingApp extends javax.swing.JFrame {
 				"" + df1.format(myRecipe.getIbu()),
 				"$" + df2.format(myRecipe.getTotalHopsCost())}}, new String[]{
 				"", "", "", "", "", "", "", "", ""});
+		tblMalt.updateUI();
+		tblHops.updateUI();
 
 	}
 
@@ -811,8 +830,6 @@ public class NewSwingApp extends javax.swing.JFrame {
 								tblMaltModel = new MaltTableModel(this);
 								tblMalt = new JTable();
 								jScrollPane1.setViewportView(tblMalt);
-								BorderLayout tblMaltLayout = new BorderLayout();
-								tblMalt.setLayout(tblMaltLayout);
 								tblMalt.setModel(tblMaltModel);								
 								// TableColumn column = null;
 								TableColumn maltColumn = tblMalt.getColumnModel().getColumn(0);
@@ -821,9 +838,14 @@ public class NewSwingApp extends javax.swing.JFrame {
 								maltComboBox.setModel(cmbMaltModel);
 								maltColumn.setCellEditor(new DefaultCellEditor(maltComboBox));
 								
+								// set up spin editor for amount
+								maltColumn = tblMalt.getColumnModel().getColumn(1);
+								JSpinner maltSpin = new JSpinner();
+								maltColumn.setCellEditor(new SpinnerEditor());						
 								
-								/*
+								
 								for (int i = 0; i < tblMalt.getColumnCount(); i++) {
+									TableColumn column;
 									column = tblMalt.getColumnModel()
 											.getColumn(i);
 									if (i == 0) {
@@ -832,7 +854,7 @@ public class NewSwingApp extends javax.swing.JFrame {
 									} else {
 										column.setPreferredWidth(50);
 									}
-								}*/
+								}
 								
 										
 								maltComboBox
@@ -1105,6 +1127,37 @@ public class NewSwingApp extends javax.swing.JFrame {
 			XmlTransformer.writeStream("tmp.xml",
 					"src/strangebrew/data/recipeToHtml.xslt", output);
 
+	}
+	
+	public class SpinnerEditor extends AbstractCellEditor
+			implements
+				TableCellEditor {
+		final JSpinner spinner = new JSpinner();
+
+		// Initializes the spinner.
+		public SpinnerEditor() {
+
+		}
+
+		// Prepares the spinner component and returns it.
+		public Component getTableCellEditorComponent(JTable table,
+				Object value, boolean isSelected, int row, int column) {
+			spinner.setValue(value);
+			return spinner;
+		}
+
+		// Enables the editor only for double-clicks.
+		public boolean isCellEditable(EventObject evt) {
+			if (evt instanceof MouseEvent) {
+				return ((MouseEvent) evt).getClickCount() >= 2;
+			}
+			return true;
+		}
+
+		// Returns the spinners current value.
+		public Object getCellEditorValue() {
+			return spinner.getValue();
+		}
 	}
 
 }

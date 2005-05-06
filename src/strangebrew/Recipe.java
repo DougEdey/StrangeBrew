@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.29 2004/11/24 17:41:50 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.30 2005/05/06 18:58:34 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -123,6 +123,7 @@ public class Recipe {
 	public void setStyle(Style s) { style = s; }
 	public void setYeastName(String s) { yeast.setName(s); }
 	public void setYeast(Yeast y) { yeast = y; }
+	
 		
 	// Setters that need to do extra work:
 	public void setEstFg(double f) {
