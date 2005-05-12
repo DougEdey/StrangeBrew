@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * $Id: Ingredient.java,v 1.3 2004/11/24 17:41:50 andrew_avis Exp $
+ * $Id: Ingredient.java,v 1.4 2005/05/12 17:46:21 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  *
@@ -44,7 +44,7 @@ public class Ingredient {
 	}
 	
 	public void setDescription(String d){ description = d; }
-	public void setTupe(String t){ type = t; }
+	public void setType(String t){ type = t; }
 	public void setDate(String d){ 
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		try{

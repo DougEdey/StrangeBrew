@@ -60,14 +60,14 @@ import strangebrew.Yeast;
 
 public class NewSwingApp extends javax.swing.JFrame {
 
-	{
+/*	{
 		//Set Look & Feel
 		try {
 			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 
 
@@ -840,8 +840,9 @@ public class NewSwingApp extends javax.swing.JFrame {
 								
 								// set up spin editor for amount
 								maltColumn = tblMalt.getColumnModel().getColumn(1);
-								JSpinner maltSpin = new JSpinner();
-								maltColumn.setCellEditor(new SpinnerEditor());						
+								SpinnerNumberModel spnMaltAmntModel = new SpinnerNumberModel(1.00,0.00,9999.00,0.25 );
+																
+								maltColumn.setCellEditor(new SpinnerEditor(spnMaltAmntModel));						
 								
 								
 								for (int i = 0; i < tblMalt.getColumnCount(); i++) {
@@ -921,8 +922,6 @@ public class NewSwingApp extends javax.swing.JFrame {
 								tblHopsModel = new HopsTableModel(this);
 								tblHops = new JTable();
 								jScrollPane2.setViewportView(tblHops);
-								BorderLayout tblHopsLayout = new BorderLayout();
-								tblHops.setLayout(tblHopsLayout);
 								tblHops.setModel(tblHopsModel);
 								TableColumn hopColumn = tblHops.getColumnModel().getColumn(0);
 								JComboBox hopComboBox = new JComboBox();
@@ -1137,6 +1136,10 @@ public class NewSwingApp extends javax.swing.JFrame {
 		// Initializes the spinner.
 		public SpinnerEditor() {
 
+		}
+		
+		public SpinnerEditor(SpinnerNumberModel model) {
+			spinner.setModel(model);
 		}
 
 		// Prepares the spinner component and returns it.

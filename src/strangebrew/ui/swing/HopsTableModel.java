@@ -89,18 +89,47 @@ class HopsTableModel extends AbstractTableModel {
 	 * Don't need to implement this method unless your table's data can
 	 * change.
 	 */
-	/*
-	 * public void setValueAt(Object value, int row, int col) {
-	 * 
-	 * Hop h = (Hop)data.get(row); try { switch (col){ case 0 :
-	 * h.setName(value.toString()); case 1 : return h.getType(); case 2 :
-	 * return new Double(h.getAlpha()); case 3 : return new
-	 * Double(h.getAmountAs(h.getUnits())); case 4 : return new
-	 * Double(h.getUnits()); case 5 : return new Double(h.getAdd()); case 6 :
-	 * return new Double(h.getMinutes()); case 7 : return new
-	 * Double(h.getIBU()); case 8 : return new Double(h.getCostPerU()); } }
-	 * catch (Exception e){};
-	 * 
-	 * fireTableCellUpdated(row, col); }
-	 */
+	
+	  public void setValueAt(Object value, int row, int col) {
+
+		Hop h = (Hop) data.get(row);
+		try {
+			switch (col) {
+			case 0:
+				h.setName(value.toString());
+				break;
+			case 1:
+				h.setType(value.toString());
+				break;
+			case 2:
+				h.setAlpha(Double.parseDouble(value.toString()));
+				break;
+			case 3:
+				h.setAmount(Double.parseDouble(value.toString()));
+				break;
+			case 4:
+				h.setUnits(value.toString());
+				break;
+			case 5:
+				h.setAdd(value.toString());
+				break;
+			case 6:
+				h.setMinutes(Integer.parseInt(value.toString()));
+				break;
+			case 7:
+				break;
+			case 8:
+				h.setCost(value.toString());
+				break;
+			}
+		} catch (Exception e) {
+		}
+		;
+
+		fireTableCellUpdated(row, col);
+		fireTableDataChanged();
+		app.myRecipe.calcHopsTotals();
+		app.displayRecipe();
+	}
+	 
 }

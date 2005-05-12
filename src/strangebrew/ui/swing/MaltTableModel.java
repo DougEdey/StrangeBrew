@@ -120,7 +120,7 @@ class MaltTableModel extends AbstractTableModel {
 					m.setLov(Double.parseDouble(value.toString()));
 					break;
 				case 5 :
-					m.setCost(Double.parseDouble(value.toString()));
+					m.setCost(value.toString());
 					break;
 				case 6 :
 					m.setPercent(Double.parseDouble(value.toString()));
