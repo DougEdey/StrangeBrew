@@ -12,14 +12,14 @@ import strangebrew.Fermentable;
 
 
 class MaltTableModel extends AbstractTableModel {
-	private final NewSwingApp app;
+	private final StrangeSwing app;
 
 	private String[] columnNames = {"Malt", "Amount", "Units", "Points",
 			"Lov", "Cost/U", "%"};
 
 	private ArrayList data = null;
 
-	public MaltTableModel(NewSwingApp app) {
+	public MaltTableModel(StrangeSwing app) {
 		data = new ArrayList();
 		this.app = app;
 	}

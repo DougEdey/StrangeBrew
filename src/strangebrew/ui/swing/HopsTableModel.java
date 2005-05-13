@@ -14,14 +14,14 @@ import strangebrew.Hop;
 
 
 class HopsTableModel extends AbstractTableModel {
-	private final NewSwingApp app;
+	private final StrangeSwing app;
 
 	private String[] columnNames = {"Hop", "Type", "Alpha", "Amount",
 			"Units", "Add", "Min", "IBU", "Cost/u"};
 
 	private ArrayList data = null;
 
-	public HopsTableModel(NewSwingApp app) {
+	public HopsTableModel(StrangeSwing app) {
 		data = new ArrayList();
 		this.app = app;
 	}

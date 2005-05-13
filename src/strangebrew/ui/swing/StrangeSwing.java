@@ -31,6 +31,8 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JButton;
+import javax.swing.JToolBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -58,16 +60,19 @@ import strangebrew.Style;
 import strangebrew.XmlTransformer;
 import strangebrew.Yeast;
 
-public class NewSwingApp extends javax.swing.JFrame {
 
-/*	{
+
+
+public class StrangeSwing extends javax.swing.JFrame {
+
+	{
 		//Set Look & Feel
 		try {
-			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+			javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 
 
 
@@ -90,6 +95,14 @@ public class NewSwingApp extends javax.swing.JFrame {
 	private JMenuItem exitMenuItem;
 	private JSeparator jSeparator2;
 	private JLabel lblAlc;
+	private JButton btnDelHop;
+	private JButton btnAddHop;
+	private JToolBar tlbHops;
+	private JPanel pnlHopsButtons;
+	private JButton btnDelMalt;
+	private JButton bntAddMalt;
+	private JToolBar tlbMalt;
+	private JPanel pnlMaltButtons;
 	private JSlider sldMatch;
 	private JLabel jLabel7;
 	private JLabel jLabel6;
@@ -173,11 +186,11 @@ public class NewSwingApp extends javax.swing.JFrame {
 	 * Auto-generated main method to display this JFrame
 	 */
 	public static void main(String[] args) {
-		NewSwingApp inst = new NewSwingApp();
+		StrangeSwing inst = new StrangeSwing();
 		inst.setVisible(true);
 	}
 
-	public NewSwingApp() {
+	public StrangeSwing() {
 		super();
 		initGUI();
 		// There has *got* to be a better way to do this:
@@ -895,6 +908,29 @@ public class NewSwingApp extends javax.swing.JFrame {
 						}
 					}
 					{
+						pnlMaltButtons = new JPanel();
+						FlowLayout pnlMaltButtonsLayout = new FlowLayout();
+						pnlMaltButtonsLayout.setAlignment(FlowLayout.LEFT);
+						pnlMaltButtons.setLayout(pnlMaltButtonsLayout);
+						pnlTables.add(pnlMaltButtons);
+						{
+							tlbMalt = new JToolBar();
+							pnlMaltButtons.add(tlbMalt);
+							tlbMalt.setPreferredSize(new java.awt.Dimension(140, 20));
+							tlbMalt.setFloatable(false);
+							{
+								bntAddMalt = new JButton();
+								tlbMalt.add(bntAddMalt);
+								bntAddMalt.setText("+");
+							}
+							{
+								btnDelMalt = new JButton();
+								tlbMalt.add(btnDelMalt);
+								btnDelMalt.setText("-");
+							}
+						}
+					}
+					{
 						pnlHops = new JPanel();
 						BorderLayout pnlHopsLayout = new BorderLayout();
 						pnlHops
@@ -931,6 +967,31 @@ public class NewSwingApp extends javax.swing.JFrame {
 							
 								
 
+							}
+						}
+					}
+					{
+						pnlHopsButtons = new JPanel();
+						FlowLayout pnlHopsButtonsLayout = new FlowLayout();
+						pnlHopsButtonsLayout.setAlignment(FlowLayout.LEFT);
+						pnlHopsButtons.setLayout(pnlHopsButtonsLayout);
+						pnlTables.add(pnlHopsButtons);
+						{
+							tlbHops = new JToolBar();
+							pnlHopsButtons.add(tlbHops);
+							tlbHops.setPreferredSize(new java.awt.Dimension(
+								70,
+								19));
+							tlbHops.setFloatable(false);
+							{
+								btnAddHop = new JButton();
+								tlbHops.add(btnAddHop);
+								btnAddHop.setText("+");
+							}
+							{
+								btnDelHop = new JButton();
+								tlbHops.add(btnDelHop);
+								btnDelHop.setText("-");
 							}
 						}
 					}
