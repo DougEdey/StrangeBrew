@@ -54,11 +54,13 @@ import javax.swing.table.TableColumn;
 
 import strangebrew.Database;
 import strangebrew.Fermentable;
+import strangebrew.Hop;
 import strangebrew.ImportXml;
 import strangebrew.Recipe;
 import strangebrew.Style;
 import strangebrew.XmlTransformer;
 import strangebrew.Yeast;
+
 
 
 
@@ -909,10 +911,10 @@ public class StrangeSwing extends javax.swing.JFrame {
 					}
 					{
 						pnlMaltButtons = new JPanel();
+						pnlTables.add(pnlMaltButtons);
 						FlowLayout pnlMaltButtonsLayout = new FlowLayout();
 						pnlMaltButtonsLayout.setAlignment(FlowLayout.LEFT);
 						pnlMaltButtons.setLayout(pnlMaltButtonsLayout);
-						pnlTables.add(pnlMaltButtons);
 						{
 							tlbMalt = new JToolBar();
 							pnlMaltButtons.add(tlbMalt);
@@ -922,11 +924,32 @@ public class StrangeSwing extends javax.swing.JFrame {
 								bntAddMalt = new JButton();
 								tlbMalt.add(bntAddMalt);
 								bntAddMalt.setText("+");
+								bntAddMalt
+									.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										if (myRecipe != null){
+											Fermentable f = new Fermentable();
+											myRecipe.addMalt(f);
+											displayRecipe();
+										}
+									}
+									});
 							}
 							{
 								btnDelMalt = new JButton();
 								tlbMalt.add(btnDelMalt);
 								btnDelMalt.setText("-");
+								btnDelMalt
+									.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										if (myRecipe != null){
+											int i = tblMalt.getSelectedRow();
+											myRecipe.delMalt(i);
+											displayRecipe();
+										}
+										
+									}
+									});
 							}
 						}
 					}
@@ -976,6 +999,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 						pnlHopsButtonsLayout.setAlignment(FlowLayout.LEFT);
 						pnlHopsButtons.setLayout(pnlHopsButtonsLayout);
 						pnlTables.add(pnlHopsButtons);
+						pnlHopsButtons.setPreferredSize(new java.awt.Dimension(512, 16));
 						{
 							tlbHops = new JToolBar();
 							pnlHopsButtons.add(tlbHops);
@@ -987,11 +1011,32 @@ public class StrangeSwing extends javax.swing.JFrame {
 								btnAddHop = new JButton();
 								tlbHops.add(btnAddHop);
 								btnAddHop.setText("+");
+								btnAddHop
+									.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										if (myRecipe != null){
+											Hop h = new Hop();
+											myRecipe.addHop(h);
+											displayRecipe();
+											
+										}
+									}
+									});
 							}
 							{
 								btnDelHop = new JButton();
 								tlbHops.add(btnDelHop);
 								btnDelHop.setText("-");
+								btnDelHop
+									.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										if (myRecipe != null){
+											int i = tblHops.getSelectedRow();
+											myRecipe.delHop(i);
+											displayRecipe();
+										}
+									}
+									});
 							}
 						}
 					}

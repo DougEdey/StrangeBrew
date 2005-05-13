@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.30 2005/05/06 18:58:34 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.31 2005/05/13 18:55:34 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -103,10 +103,7 @@ public class Recipe {
 	
 
 	// Set functions:
-	public void addMalt(Fermentable m) { fermentables.add(m);	}
-	public void addHop(Hop h) { hops.add(h); }
-	public void addMisc(Misc m) { misc.add(m); }
-	
+
 	public void setBoilMinutes(int b) { boilMinutes = b; }
 	public void setBrewer(String b) { brewer = b; }
 	public void setComments(String c) { comments = c; }
@@ -168,7 +165,26 @@ public class Recipe {
 		calcMaltTotals();
 		calcHopsTotals();
 		}
-	
+	/*
+	 * Functions that add/remove from ingredient lists
+	 */
+	public void addMalt(Fermentable m) { 
+		fermentables.add(m);
+		calcMaltTotals();
+		}
+	public void delMalt(int i) { 
+		fermentables.remove(i);
+		calcMaltTotals();
+		}
+	public void addHop(Hop h) { 
+		hops.add(h);
+		calcHopsTotals();
+		}
+	public void delHop(int i){
+		hops.remove(i);
+		calcHopsTotals();
+	}
+	public void addMisc(Misc m) { misc.add(m); }
 	
 	/**
 	 * Handles a string of the form "d u", where d is a double
@@ -194,7 +210,7 @@ public class Recipe {
 	 * @return
 	 */
 
-	// Calc functions.  We'll want to hide these soon.
+	// Calc functions.  
 	
 	private void calcEfficiency() {
 		double possiblePoints=0;
