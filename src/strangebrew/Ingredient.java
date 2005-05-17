@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * $Id: Ingredient.java,v 1.4 2005/05/12 17:46:21 andrew_avis Exp $
+ * $Id: Ingredient.java,v 1.5 2005/05/17 20:20:06 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  *
@@ -33,7 +33,8 @@ public class Ingredient {
 	// Setter methods:
 	public void setName(String n){ name = n; }
 	public void setAmount(double a){ amount.setQuantity(null, null, a); }
-	public void setUnits(String u){ amount.setQuantity( null, u, -1); }
+	public void setUnits(String a){ amount.setQuantity( null, a, -1); }
+	public void setUnitsFull(String u){ amount.setQuantity( u, null, -1); }
 	public void setCost(double c){ costPerU = c; }
 	
 	public void setCost(String c){

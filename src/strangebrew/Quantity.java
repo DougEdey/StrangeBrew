@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.8 2004/11/22 18:02:55 andrew_avis Exp $
+ * $Id: Quantity.java,v 1.9 2005/05/17 20:20:06 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -7,6 +7,8 @@
  */
 
 package strangebrew;
+
+import java.util.ArrayList;
 
 /**
  * @author aavis
@@ -110,6 +112,26 @@ public class Quantity {
 		value += v2;
 	}
 	
+//	 implement to support comboboxes in Swing:
+	public String getName(){
+		return unit;
+	}
+	
+	public ArrayList getListofUnits(String type) {
+		ArrayList list = new ArrayList();
+		int i = 0;
+		if (type.equals("weight")) {
+			for (i = 0; i < weightUnits.length; i++) 
+				list.add(weightUnits[i].unit);
+		}
+		else {
+			for (i = 0; i < volUnits.length; i++) 
+				list.add(volUnits[i].unit);
+		}			
+
+		return list;
+	}
+	
 	// private functions:	
 	private double getBaseValue(Converter[] u, String n){
 		int i=0;
@@ -175,5 +197,7 @@ public class Quantity {
 			return "weight";
 		
 	}
+	
+
 
 }

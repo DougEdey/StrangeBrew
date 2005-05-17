@@ -76,7 +76,7 @@ class MaltTableModel extends AbstractTableModel {
 	 * would contain text ("true"/"false"), rather than a check box.
 	 */
 	
-	/*public Class getColumnClass(int c) {
+/*	public Class getColumnClass(int c) {
 		return getValueAt(0, c).getClass();
 	}*/
 
@@ -104,14 +104,11 @@ class MaltTableModel extends AbstractTableModel {
 			switch (col) {
 				case 0 :
 					m.setName(value.toString());
-					/* if (NewSwingApp.DEBUG){
-						System.out.println("value is:" + value);
-					}*/
 				case 1 :
 					m.setAmount(Double.parseDouble(value.toString()));					
 					break;
 				case 2 :
-					m.setUnits(value.toString());
+					// m.setUnits(value.toString());
 					break;
 				case 3 :
 					m.setPppg(Double.parseDouble(value.toString()));

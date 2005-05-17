@@ -1,5 +1,5 @@
 /**
- * $Id: Hop.java,v 1.11 2004/11/22 22:00:59 andrew_avis Exp $
+ * $Id: Hop.java,v 1.12 2005/05/17 20:20:06 andrew_avis Exp $
  * Created on Oct 5, 2004
  *
  * Base class for hops.  This object doesn't do much except hold data and
@@ -12,7 +12,7 @@ package strangebrew;
 public class Hop extends Ingredient{
 	private double alpha;
 	private String country;
-	private String form;
+	// private String form;
 	private String add;
 	private int minutes;
 	private double storage;
@@ -23,6 +23,8 @@ public class Hop extends Ingredient{
 	public Hop(){
 		// default constructor
 		// TODO: fill in with preferences
+		setType("Leaf");
+		setAdd("Boil");
 	}
 	
 	// get methods:
@@ -35,7 +37,7 @@ public class Hop extends Ingredient{
 	// Setter methods:
 	public void setAdd(String a){ add = a; }
 	public void setAlpha(double a){ alpha = a; }
-	public void setForm(String f){ form = f; }
+	// public void setForm(String f){ form = f; }
 	public void setIBU(double i){ IBU = i; }
 	public void setMinutes(int m){ minutes = m; }
 	public void setStorage(double s){ storage = s; }	
@@ -48,7 +50,7 @@ public class Hop extends Ingredient{
 	    sb.append( "      <AMOUNT>"+getAmountAs(getUnits())+"</AMOUNT>\n" );
 	    sb.append( "      <TIME>"+getMinutes()+"</TIME>\n" );
 	    sb.append( "      <UNITS>"+getUnits()+"</UNITS>\n" );
-	    sb.append( "      <FORM>"+form+"</FORM>\n" );
+	    sb.append( "      <FORM>"+getType()+"</FORM>\n" );
 	    sb.append( "      <ALPHA>"+alpha+"</ALPHA>\n" );
 	    sb.append( "      <COSTOZ>"+getCostPerU()+"</COSTOZ>\n" );
 	    sb.append( "      <ADD>"+add+"</ADD>\n" );

@@ -1,7 +1,7 @@
 package strangebrew;
 
 /**
- * $Id: Style.java,v 1.3 2004/11/18 18:06:18 andrew_avis Exp $
+ * $Id: Style.java,v 1.4 2005/05/17 20:20:06 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  * This is a class to create a style object
@@ -27,7 +27,11 @@ public class Style {
 	
 	
 	// get methods:
-	public String getName(){ return name; }
+	public String getName(){ 
+		if (name != null)
+			return name;
+		else
+			return "";}
 		
 	/**
 	 * @return Returns the alcHigh.

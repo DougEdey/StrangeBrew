@@ -17,8 +17,9 @@ import strangebrew.Hop;
 import strangebrew.Style;
 import strangebrew.Yeast;
 
-
 class ComboModel extends AbstractListModel implements ComboBoxModel {
+	
+	private final static boolean DEBUG = false;
 
 	List list = new ArrayList();
 	Object selected = null;
@@ -28,6 +29,7 @@ class ComboModel extends AbstractListModel implements ComboBoxModel {
 		int i = 0;
 		boolean found = false;
 		while (i < list.size() && !found) {
+			if (DEBUG) System.out.println(o.getClass().getName().toString());
 			if (o.getClass().getName().toString().equals(
 					"strangebrew.Yeast")) {
 				Yeast y = (Yeast) list.get(i);
@@ -41,10 +43,14 @@ class ComboModel extends AbstractListModel implements ComboBoxModel {
 				Hop h = (Hop) list.get(i);
 				Hop h2 = (Hop) o;
 				found = h.getName().equalsIgnoreCase(h2.getName());
-			} else {
+			} else if (o.getClass().getName().toString().equals("strangebrew.Style")) {
 				Style s = (Style) list.get(i);
 				Style s2 = (Style) o;
 				found = s.getName().equalsIgnoreCase(s2.getName());
+			} else if (o.getClass().getName().toString().equals("java.lang.String")) {
+				String q = (String) list.get(i);
+				String q2 = (String) o;
+				found = q.equalsIgnoreCase(q2);
 			}
 			i++;
 		}

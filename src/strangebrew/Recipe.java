@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.31 2005/05/13 18:55:34 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.32 2005/05/17 20:20:06 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -60,12 +60,12 @@ public class Recipe {
 		name = "My Recipe";
 		created = new GregorianCalendar();
 		efficiency = opts.getDProperty("optEfficiency");
-		preBoilVol.setQuantity(opts.getProperty("optVolUnits"), null, opts.getDProperty("optPreBoilVol"));
-		postBoilVol.setQuantity(opts.getProperty("optVolUnits"), null, opts.getDProperty("optPostBoilVol"));
+		preBoilVol.setQuantity(opts.getProperty("optSizeU"), null, opts.getDProperty("optPreBoilVol"));
+		postBoilVol.setQuantity(opts.getProperty("optSizeU"), null, opts.getDProperty("optPostBoilVol"));
 		attenuation = opts.getDProperty("optAttenuation");
 		boilMinutes = opts.getIProperty("optBoilTime");
 		ibuCalcMethod = opts.getProperty("optIBUCalcMethod");
-		ibuHopUtil = opts.getDProperty("optHopsUtil");
+		ibuHopUtil = opts.getDProperty("optHopsUtil");		
 
 	}
 	
@@ -114,15 +114,30 @@ public class Recipe {
 	public void setMashRatio(double m) { mash.setMashRatio(m); }
 	public void setMashRatioU(String u) { mash.setMashRatioU(u); }
 	public void setName(String n) {	name = n; }
-	public void setPreBoilVolUnits(String v) {	preBoilVol.setQuantity( v, null, -1); }
-	public void setPostBoilVolUnits(String v) {	postBoilVol.setQuantity( v, null, -1); }
 	public void setStyle(String s) { style.setName(s); }
 	public void setStyle(Style s) { style = s; }
 	public void setYeastName(String s) { yeast.setName(s); }
 	public void setYeast(Yeast y) { yeast = y; }
 	
-		
+
+	
+	
 	// Setters that need to do extra work:
+	
+	public void setPreBoilVolUnits(String v) {
+		preBoilVol.setQuantity( v, null, -1);
+		postBoilVol.setQuantity( v, null, -1);
+		calcMaltTotals();
+		calcHopsTotals();
+		
+	}
+	public void setPostBoilVolUnits(String v) {
+		postBoilVol.setQuantity( v, null, -1); 
+		preBoilVol.setQuantity( v, null, -1);
+		calcMaltTotals();
+		calcHopsTotals();
+	}
+	
 	public void setEstFg(double f) {
 		if (f != estFg && f > 0) {
 			estFg = f;

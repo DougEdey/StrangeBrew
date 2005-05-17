@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.18 2004/11/22 22:00:58 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.19 2005/05/17 20:20:06 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -312,7 +312,7 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentElement.equalsIgnoreCase("UNITS")) {
 				h.setUnits(s);
 			} else if (currentElement.equalsIgnoreCase("FORM")) {
-				h.setForm(s);
+				h.setType(s);
 			} else if (currentElement.equalsIgnoreCase("COSTOZ")) {
 				h.setCost( s );
 			} else if (currentElement.equalsIgnoreCase("ADD")) {

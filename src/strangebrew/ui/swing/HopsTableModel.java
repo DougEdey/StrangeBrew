@@ -16,7 +16,7 @@ import strangebrew.Hop;
 class HopsTableModel extends AbstractTableModel {
 	private final StrangeSwing app;
 
-	private String[] columnNames = {"Hop", "Type", "Alpha", "Amount",
+	private String[] columnNames = {"Hop", "Form", "Alpha", "Amount",
 			"Units", "Add", "Min", "IBU", "Cost/u"};
 
 	private ArrayList data = null;
@@ -59,9 +59,9 @@ class HopsTableModel extends AbstractTableModel {
 				case 3 :
 					return new Double(h.getAmountAs(h.getUnits()));
 				case 4 :
-					return new Double(h.getUnits());
+					return h.getUnits();
 				case 5 :
-					return new Double(h.getAdd());
+					return h.getAdd();
 				case 6 :
 					return new Double(h.getMinutes());
 				case 7 :
@@ -108,7 +108,7 @@ class HopsTableModel extends AbstractTableModel {
 				h.setAmount(Double.parseDouble(value.toString()));
 				break;
 			case 4:
-				h.setUnits(value.toString());
+				// h.setUnits(value.toString());
 				break;
 			case 5:
 				h.setAdd(value.toString());
