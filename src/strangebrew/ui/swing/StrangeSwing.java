@@ -68,8 +68,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 	{
 		//Set Look & Feel
 		try {
-			javax.swing.UIManager
-					.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+			javax.swing.UIManager.setLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -222,12 +221,10 @@ public class StrangeSwing extends javax.swing.JFrame {
 		txtBrewer.setText(myRecipe.getBrewer());
 		cmbStyleModel.addOrInsert(myRecipe.getStyleObj());
 		cmbYeastModel.addOrInsert(myRecipe.getYeastObj());
-		txtPreBoil.setValue(new Double(myRecipe.getPreBoilVol(myRecipe
-				.getVolUnits())));
+		txtPreBoil.setValue(new Double(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));
 		cmbSizeUnitsModel.addOrInsert(myRecipe.getVolUnits());
 		lblSizeUnits.setText(myRecipe.getVolUnits());
-		txtPostBoil.setValue(new Double(myRecipe.getPostBoilVol(myRecipe
-				.getVolUnits())));
+		txtPostBoil.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
 		spnEffic.setValue(new Double(myRecipe.getEfficiency()));
 		spnAtten.setValue(new Double(myRecipe.getAttenuation()));
 		spnOG.setValue(new Double(myRecipe.getEstOg()));
@@ -240,18 +237,16 @@ public class StrangeSwing extends javax.swing.JFrame {
 		tblMaltModel.setData(myRecipe.getFermentablesList());
 		tblHopsModel.setData(myRecipe.getHopsList());
 		tblMaltTotalsModel.setDataVector(new String[][]{{"Totals:",
-				"" + df1.format(myRecipe.getTotalMaltLbs()),
-				myRecipe.getMaltUnits(), "" + df3.format(myRecipe.getEstOg()),
-				"" + df1.format(myRecipe.getSrm()),
-				"$" + df2.format(myRecipe.getTotalMaltCost()), "100"}},
-				new String[]{"", "", "", "", "", "", ""});
+				"" + df1.format(myRecipe.getTotalMaltLbs()), myRecipe.getMaltUnits(),
+				"" + df3.format(myRecipe.getEstOg()), "" + df1.format(myRecipe.getSrm()),
+				"$" + df2.format(myRecipe.getTotalMaltCost()), "100"}}, new String[]{"", "", "",
+				"", "", "", ""});
 
-		tblHopsTotalsModel.setDataVector(new String[][]{{"Totals:", "", "",
-				"" + df1.format(myRecipe.getTotalHopsOz()),
-				myRecipe.getHopUnits(), "", "",
-				"" + df1.format(myRecipe.getIbu()),
-				"$" + df2.format(myRecipe.getTotalHopsCost())}}, new String[]{
-				"", "", "", "", "", "", "", "", ""});
+		tblHopsTotalsModel.setDataVector(
+				new String[][]{{"Totals:", "", "", "" + df1.format(myRecipe.getTotalHopsOz()),
+						myRecipe.getHopUnits(), "", "", "" + df1.format(myRecipe.getIbu()),
+						"$" + df2.format(myRecipe.getTotalHopsCost())}}, new String[]{"", "", "",
+						"", "", "", "", "", ""});
 		tblMalt.updateUI();
 		tblHops.updateUI();
 
@@ -277,10 +272,9 @@ public class StrangeSwing extends javax.swing.JFrame {
 				this.getContentPane().add(pnlMain, BorderLayout.CENTER);
 				{
 					jPanel1 = new JPanel();
-					pnlMain.add(jPanel1, new GridBagConstraints(0, 0, 1, 1,
-							0.0, 0.0, GridBagConstraints.WEST,
-							GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0,
-									0), 0, 0));
+					pnlMain.add(jPanel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+							GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,
+									0, 0, 0), 0, 0));
 					FlowLayout jPanel1Layout = new FlowLayout();
 					jPanel1Layout.setAlignment(FlowLayout.LEFT);
 					jPanel1.setLayout(jPanel1Layout);
@@ -293,9 +287,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 						txtName = new JTextField();
 						jPanel1.add(txtName);
 						txtName.setText("Name");
-						txtName
-								.setPreferredSize(new java.awt.Dimension(179,
-										20));
+						txtName.setPreferredSize(new java.awt.Dimension(179, 20));
 						txtName.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
 								myRecipe.setName(txtName.getText());
@@ -305,38 +297,32 @@ public class StrangeSwing extends javax.swing.JFrame {
 				}
 				{
 					jTabbedPane1 = new JTabbedPane();
-					pnlMain.add(jTabbedPane1, new GridBagConstraints(0, 1, 1,
-							1, 0.1, 0.1, GridBagConstraints.CENTER,
-							GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
-							0));
+					pnlMain.add(jTabbedPane1, new GridBagConstraints(0, 1, 1, 1, 0.1, 0.1,
+							GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0,
+									0), 0, 0));
 					{
 						pnlDetails = new JPanel();
 						GridBagLayout pnlDetailsLayout = new GridBagLayout();
-						pnlDetailsLayout.columnWeights = new double[]{0.1, 0.1,
-								0.1, 0.1, 0.1, 0.1, 0.1};
-						pnlDetailsLayout.columnWidths = new int[]{7, 7, 7, 7,
-								7, 7, 7};
-						pnlDetailsLayout.rowWeights = new double[]{0.1, 0.1,
-								0.1, 0.1, 0.1, 0.1, 0.1};
-						pnlDetailsLayout.rowHeights = new int[]{7, 7, 7, 7, 7,
-								7, 7};
+						pnlDetailsLayout.columnWeights = new double[]{0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+								0.1};
+						pnlDetailsLayout.columnWidths = new int[]{7, 7, 7, 7, 7, 7, 7};
+						pnlDetailsLayout.rowWeights = new double[]{0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+								0.1};
+						pnlDetailsLayout.rowHeights = new int[]{7, 7, 7, 7, 7, 7, 7};
 						pnlDetails.setLayout(pnlDetailsLayout);
 						jTabbedPane1.addTab("Details", null, pnlDetails, null);
 						{
 							lblBrewer = new JLabel();
-							pnlDetails.add(lblBrewer, new GridBagConstraints(0,
-									0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblBrewer, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
+											0, 0, 0), 0, 0));
 							lblBrewer.setText("Brewer:");
 						}
 						{
 							txtBrewer = new JTextField();
-							pnlDetails.add(txtBrewer, new GridBagConstraints(1,
-									0, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER,
-									GridBagConstraints.HORIZONTAL, new Insets(
-											0, 0, 0, 0), 0, 0));
+							pnlDetails.add(txtBrewer, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+									new Insets(0, 0, 0, 0), 0, 0));
 							txtBrewer.setText("Brewer");
 							txtBrewer.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -346,137 +332,115 @@ public class StrangeSwing extends javax.swing.JFrame {
 						}
 						{
 							lblDate = new JLabel();
-							pnlDetails.add(lblDate, new GridBagConstraints(0,
-									1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblDate, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
+											0, 0, 0), 0, 0));
 							lblDate.setText("Date:");
 						}
 						{
 							lblStyle = new JLabel();
-							pnlDetails.add(lblStyle, new GridBagConstraints(0,
-									2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblStyle, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
+											0, 0, 0), 0, 0));
 							lblStyle.setText("Style:");
 						}
 						{
 							lblYeast = new JLabel();
-							pnlDetails.add(lblYeast, new GridBagConstraints(0,
-									3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblYeast, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
+									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
+											0, 0, 0), 0, 0));
 							lblYeast.setText("Yeast:");
 						}
 						{
 							lblPreBoil = new JLabel();
-							pnlDetails.add(lblPreBoil, new GridBagConstraints(
-									0, 4, 1, 1, 0.0, 0.0,
-									GridBagConstraints.EAST,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblPreBoil, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
+											0, 0, 0), 0, 0));
 							lblPreBoil.setText("Pre boil:");
 						}
 						{
 							lblPostBoil = new JLabel();
-							pnlDetails.add(lblPostBoil, new GridBagConstraints(
-									0, 5, 1, 1, 0.0, 0.0,
-									GridBagConstraints.EAST,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblPostBoil, new GridBagConstraints(0, 5, 1, 1, 0.0,
+									0.0, GridBagConstraints.EAST, GridBagConstraints.NONE,
+									new Insets(0, 0, 0, 0), 0, 0));
 							lblPostBoil.setText("Post boil:");
 						}
 						{
 							lblMash = new JLabel();
-							pnlDetails.add(lblMash, new GridBagConstraints(0,
-									6, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblMash, new GridBagConstraints(0, 6, 1, 1, 0.0, 0.0,
+									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
+											0, 0, 0), 0, 0));
 							lblMash.setText("Mash:");
 						}
 						{
 							lblEffic = new JLabel();
-							pnlDetails.add(lblEffic, new GridBagConstraints(3,
-									0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblEffic, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
+											0, 0, 0), 0, 0));
 							lblEffic.setText("Effic:");
 						}
 						{
 							lblAtten = new JLabel();
-							pnlDetails.add(lblAtten, new GridBagConstraints(3,
-									1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblAtten, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0,
+									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
+											0, 0, 0), 0, 0));
 							lblAtten.setText("Atten:");
 						}
 						{
 							lblOG = new JLabel();
-							pnlDetails.add(lblOG, new GridBagConstraints(3, 2,
-									1, 1, 0.0, 0.0, GridBagConstraints.EAST,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblOG, new GridBagConstraints(3, 2, 1, 1, 0.0, 0.0,
+									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
+											0, 0, 0), 0, 0));
 							lblOG.setText("OG:");
 						}
 						{
 							lblFG = new JLabel();
-							pnlDetails.add(lblFG, new GridBagConstraints(3, 3,
-									1, 1, 0.0, 0.0, GridBagConstraints.EAST,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblFG, new GridBagConstraints(3, 3, 1, 1, 0.0, 0.0,
+									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
+											0, 0, 0), 0, 0));
 							lblFG.setText("FG:");
 						}
 						{
 							lblIBU = new JLabel();
-							pnlDetails.add(lblIBU, new GridBagConstraints(5, 0,
-									1, 1, 0.0, 0.0, GridBagConstraints.EAST,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblIBU, new GridBagConstraints(5, 0, 1, 1, 0.0, 0.0,
+									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
+											0, 0, 0), 0, 0));
 							lblIBU.setText("IBU:");
 						}
 						{
 							lblAlc = new JLabel();
-							pnlDetails.add(lblAlc, new GridBagConstraints(5, 2,
-									1, 1, 0.0, 0.0, GridBagConstraints.EAST,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblAlc, new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0,
+									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
+											0, 0, 0), 0, 0));
 							lblAlc.setText("%Alc:");
 						}
 						{
 							lblColour = new JLabel();
-							pnlDetails.add(lblColour, new GridBagConstraints(5,
-									1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblColour, new GridBagConstraints(5, 1, 1, 1, 0.0, 0.0,
+									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
+											0, 0, 0), 0, 0));
 							lblColour.setText("Colour:");
 						}
 						{
 							txtDate = new JTextField();
-							pnlDetails.add(txtDate, new GridBagConstraints(1,
-									1, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER,
-									GridBagConstraints.HORIZONTAL, new Insets(
-											0, 0, 0, 0), 0, 0));
+							pnlDetails.add(txtDate, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+									new Insets(0, 0, 0, 0), 0, 0));
 							txtDate.setText("Date");
 						}
 						{
 							cmbStyleModel = new ComboModel();
 							cmbStyle = new JComboBox();
-							pnlDetails.add(cmbStyle, new GridBagConstraints(1,
-									2, 2, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER,
-									GridBagConstraints.HORIZONTAL, new Insets(
-											0, 0, 0, 0), 0, 0));
+							pnlDetails.add(cmbStyle, new GridBagConstraints(1, 2, 2, 1, 0.0, 0.0,
+									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+									new Insets(0, 0, 0, 0), 0, 0));
 							cmbStyle.setModel(cmbStyleModel);
-							cmbStyle.setMaximumSize(new java.awt.Dimension(100,
-									32767));
+							cmbStyle.setMaximumSize(new java.awt.Dimension(100, 32767));
 
 							cmbStyle.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									Style s = (Style) cmbStyleModel
-											.getSelectedItem();
-									if (myRecipe != null
-											&& s != myRecipe.getStyleObj()) {
+									Style s = (Style) cmbStyleModel.getSelectedItem();
+									if (myRecipe != null && s != myRecipe.getStyleObj()) {
 										myRecipe.setStyle(s);
 									}
 								}
@@ -484,204 +448,162 @@ public class StrangeSwing extends javax.swing.JFrame {
 						}
 						{
 							txtPreBoil = new JFormattedTextField();
-							pnlDetails.add(txtPreBoil, new GridBagConstraints(
-									1, 4, 1, 1, 0.0, 0.0,
-									GridBagConstraints.WEST,
-									GridBagConstraints.HORIZONTAL, new Insets(
-											0, 0, 0, 0), 0, 0));
+							pnlDetails.add(txtPreBoil, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
+									GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL,
+									new Insets(0, 0, 0, 0), 0, 0));
 							txtPreBoil.setText("Pre Boil");
 							txtPreBoil.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									myRecipe.setPreBoil(Double
-											.parseDouble(txtPreBoil.getText()
-													.toString()));
+									myRecipe.setPreBoil(Double.parseDouble(txtPreBoil.getText()
+											.toString()));
 									displayRecipe();
 								}
 							});
 						}
 						{
 							txtPostBoil = new JFormattedTextField();
-							pnlDetails.add(txtPostBoil, new GridBagConstraints(
-									1, 5, 1, 1, 0.0, 0.0,
-									GridBagConstraints.WEST,
-									GridBagConstraints.HORIZONTAL, new Insets(
-											0, 0, 0, 0), 0, 0));
+							pnlDetails.add(txtPostBoil, new GridBagConstraints(1, 5, 1, 1, 0.0,
+									0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL,
+									new Insets(0, 0, 0, 0), 0, 0));
 							txtPostBoil.setText("Post Boil");
 							txtPostBoil.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									System.out
-											.println("txtPostBoil.actionPerformed, event="
-													+ evt);
-									myRecipe.setPostBoil(Double
-											.parseDouble(txtPostBoil.getText()
-													.toString()));
+									System.out.println("txtPostBoil.actionPerformed, event=" + evt);
+									myRecipe.setPostBoil(Double.parseDouble(txtPostBoil.getText()
+											.toString()));
 									displayRecipe();
 								}
 							});
 						}
 						{
 							lblComments = new JLabel();
-							pnlDetails.add(lblComments, new GridBagConstraints(
-									3, 4, 1, 1, 0.0, 0.0,
-									GridBagConstraints.EAST,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblComments, new GridBagConstraints(3, 4, 1, 1, 0.0,
+									0.0, GridBagConstraints.EAST, GridBagConstraints.NONE,
+									new Insets(0, 0, 0, 0), 0, 0));
 							lblComments.setText("Comments:");
 						}
 
 						{
-							SpinnerNumberModel spnEfficModel = new SpinnerNumberModel(
-									75.0, 0.0, 100.0, 1.0);
+							SpinnerNumberModel spnEfficModel = new SpinnerNumberModel(75.0, 0.0,
+									100.0, 1.0);
 							spnEffic = new JSpinner();
-							pnlDetails.add(spnEffic, new GridBagConstraints(4,
-									0, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER,
-									GridBagConstraints.HORIZONTAL, new Insets(
-											0, 0, 0, 0), 0, 0));
+							pnlDetails.add(spnEffic, new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0,
+									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+									new Insets(0, 0, 0, 0), 0, 0));
 							spnEffic.setModel(spnEfficModel);
-							spnEffic.setMaximumSize(new java.awt.Dimension(70,
-									32767));
+							spnEffic.setMaximumSize(new java.awt.Dimension(70, 32767));
 							spnEffic.addChangeListener(new ChangeListener() {
 								public void stateChanged(ChangeEvent evt) {
-									myRecipe.setEfficiency(Double
-											.parseDouble(spnEffic.getValue()
-													.toString()));
+									myRecipe.setEfficiency(Double.parseDouble(spnEffic.getValue()
+											.toString()));
 									displayRecipe();
 								}
 							});
-							spnEffic.setEditor(new JSpinner.NumberEditor(
-									spnEffic, "00.#"));
+							spnEffic.setEditor(new JSpinner.NumberEditor(spnEffic, "00.#"));
 						}
 						{
-							SpinnerNumberModel spnAttenModel = new SpinnerNumberModel(
-									75.0, 0.0, 100.0, 1.0);
+							SpinnerNumberModel spnAttenModel = new SpinnerNumberModel(75.0, 0.0,
+									100.0, 1.0);
 							spnAtten = new JSpinner();
-							pnlDetails.add(spnAtten, new GridBagConstraints(4,
-									1, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER,
-									GridBagConstraints.HORIZONTAL, new Insets(
-											0, 0, 0, 0), 0, 0));
+							pnlDetails.add(spnAtten, new GridBagConstraints(4, 1, 1, 1, 0.0, 0.0,
+									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+									new Insets(0, 0, 0, 0), 0, 0));
 							spnAtten.setModel(spnAttenModel);
 							spnAtten.addChangeListener(new ChangeListener() {
 								public void stateChanged(ChangeEvent evt) {
-									myRecipe.setAttenuation(Double
-											.parseDouble(spnAtten.getValue()
-													.toString()));
+									myRecipe.setAttenuation(Double.parseDouble(spnAtten.getValue()
+											.toString()));
 									displayRecipe();
 								}
 							});
-							spnAtten.setEditor(new JSpinner.NumberEditor(
-									spnAtten, "00.#"));
+							spnAtten.setEditor(new JSpinner.NumberEditor(spnAtten, "00.#"));
 						}
 						{
-							SpinnerNumberModel spnOgModel = new SpinnerNumberModel(
-									1.000, 0.900, 2.000, 0.001);
+							SpinnerNumberModel spnOgModel = new SpinnerNumberModel(1.000, 0.900,
+									2.000, 0.001);
 							spnOG = new JSpinner();
-							pnlDetails.add(spnOG, new GridBagConstraints(4, 2,
-									1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
-									GridBagConstraints.HORIZONTAL, new Insets(
-											0, 0, 0, 0), 0, 0));
+							pnlDetails.add(spnOG, new GridBagConstraints(4, 2, 1, 1, 0.0, 0.0,
+									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+									new Insets(0, 0, 0, 0), 0, 0));
 							spnOG.setModel(spnOgModel);
 							spnOG.addChangeListener(new ChangeListener() {
 								public void stateChanged(ChangeEvent evt) {
-									myRecipe.setEstOg(Double.parseDouble(spnOG
-											.getValue().toString()));
+									myRecipe.setEstOg(Double.parseDouble(spnOG.getValue()
+											.toString()));
 									displayRecipe();
 								}
 							});
-							spnOG.setEditor(new JSpinner.NumberEditor(spnOG,
-									"0.000"));
+							spnOG.setEditor(new JSpinner.NumberEditor(spnOG, "0.000"));
 						}
 						{
-							SpinnerNumberModel spnFgModel = new SpinnerNumberModel(
-									1.000, 0.900, 2.000, 0.001);
+							SpinnerNumberModel spnFgModel = new SpinnerNumberModel(1.000, 0.900,
+									2.000, 0.001);
 							spnFG = new JSpinner();
-							pnlDetails.add(spnFG, new GridBagConstraints(4, 3,
-									1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
-									GridBagConstraints.HORIZONTAL, new Insets(
-											0, 0, 0, 0), 0, 0));
+							pnlDetails.add(spnFG, new GridBagConstraints(4, 3, 1, 1, 0.0, 0.0,
+									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+									new Insets(0, 0, 0, 0), 0, 0));
 							spnFG.setModel(spnFgModel);
-							spnFG.setEditor(new JSpinner.NumberEditor(spnFG,
-									"0.000"));
+							spnFG.setEditor(new JSpinner.NumberEditor(spnFG, "0.000"));
 							spnFG.addChangeListener(new ChangeListener() {
 								public void stateChanged(ChangeEvent evt) {
 									// set the new FG, and update alc:
-									myRecipe.setEstFg(Double.parseDouble(spnFG
-											.getValue().toString()));
+									myRecipe.setEstFg(Double.parseDouble(spnFG.getValue()
+											.toString()));
 									displayRecipe();
 								}
 							});
 						}
 						{
 							lblIBUvalue = new JLabel();
-							pnlDetails.add(lblIBUvalue, new GridBagConstraints(
-									6, 0, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblIBUvalue, new GridBagConstraints(6, 0, 1, 1, 0.0,
+									0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE,
+									new Insets(0, 0, 0, 0), 0, 0));
 							lblIBUvalue.setText("IBUs");
 						}
 						{
 							lblColourValue = new JLabel();
-							pnlDetails.add(lblColourValue,
-									new GridBagConstraints(6, 1, 1, 1, 0.0,
-											0.0, GridBagConstraints.CENTER,
-											GridBagConstraints.NONE,
-											new Insets(0, 0, 0, 0), 0, 0));
+							pnlDetails.add(lblColourValue, new GridBagConstraints(6, 1, 1, 1, 0.0,
+									0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE,
+									new Insets(0, 0, 0, 0), 0, 0));
 							lblColourValue.setText("Colour");
 						}
 						{
 							lblAlcValue = new JLabel();
-							pnlDetails.add(lblAlcValue, new GridBagConstraints(
-									6, 2, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER,
-									GridBagConstraints.NONE, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(lblAlcValue, new GridBagConstraints(6, 2, 1, 1, 0.0,
+									0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE,
+									new Insets(0, 0, 0, 0), 0, 0));
 							lblAlcValue.setText("Alc");
 						}
 						{
 							scpComments = new JScrollPane();
-							pnlDetails.add(scpComments, new GridBagConstraints(
-									3, 5, 4, 2, 0.0, 0.0,
-									GridBagConstraints.CENTER,
-									GridBagConstraints.BOTH, new Insets(0, 0,
-											0, 0), 0, 0));
+							pnlDetails.add(scpComments, new GridBagConstraints(3, 5, 4, 2, 0.0,
+									0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+									new Insets(0, 0, 0, 0), 0, 0));
 							{
 								txtComments = new JTextArea();
 								scpComments.setViewportView(txtComments);
 								txtComments.setText("Comments");
 								txtComments.setWrapStyleWord(true);
-								txtComments
-										.addFocusListener(new FocusAdapter() {
-											public void focusLost(FocusEvent evt) {
-												if (!txtComments
-														.getText()
-														.equals(
-																myRecipe
-																		.getComments())) {
-													myRecipe
-															.setComments(txtComments
-																	.getText());
-												}
-											}
-										});
+								txtComments.addFocusListener(new FocusAdapter() {
+									public void focusLost(FocusEvent evt) {
+										if (!txtComments.getText().equals(myRecipe.getComments())) {
+											myRecipe.setComments(txtComments.getText());
+										}
+									}
+								});
 							}
 						}
 						{
 							cmbYeastModel = new ComboModel();
 							cmbYeast = new JComboBox();
-							pnlDetails.add(cmbYeast, new GridBagConstraints(1,
-									3, 2, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER,
-									GridBagConstraints.HORIZONTAL, new Insets(
-											0, 0, 0, 0), 0, 0));
+							pnlDetails.add(cmbYeast, new GridBagConstraints(1, 3, 2, 1, 0.0, 0.0,
+									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+									new Insets(0, 0, 0, 0), 0, 0));
 							cmbYeast.setModel(cmbYeastModel);
 							cmbYeast.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									Yeast y = (Yeast) cmbYeastModel
-											.getSelectedItem();
-									if (myRecipe != null
-											&& y != myRecipe.getYeastObj()) {
+									Yeast y = (Yeast) cmbYeastModel.getSelectedItem();
+									if (myRecipe != null && y != myRecipe.getYeastObj()) {
 										myRecipe.setYeast(y);
 									}
 								}
@@ -690,34 +612,25 @@ public class StrangeSwing extends javax.swing.JFrame {
 						{
 							cmbSizeUnitsModel = new ComboModel();
 							cmbSizeUnits = new JComboBox();
-							pnlDetails.add(cmbSizeUnits,
-									new GridBagConstraints(2, 4, 1, 1, 0.0,
-											0.0, GridBagConstraints.CENTER,
-											GridBagConstraints.NONE,
-											new Insets(0, 0, 0, 0), 0, 0));
+							pnlDetails.add(cmbSizeUnits, new GridBagConstraints(2, 4, 1, 1, 0.0,
+									0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE,
+									new Insets(0, 0, 0, 0), 0, 0));
 							cmbSizeUnits.setModel(cmbSizeUnitsModel);
-							cmbSizeUnits
-									.addActionListener(new ActionListener() {
-										public void actionPerformed(
-												ActionEvent evt) {
-											String q = (String) cmbSizeUnits
-													.getSelectedItem();
-											if (myRecipe != null
-													&& q != myRecipe
-															.getVolUnits()) {
-												myRecipe.setPostBoilVolUnits(q);
-												displayRecipe();
-											}
-										}
-									});
+							cmbSizeUnits.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									String q = (String) cmbSizeUnits.getSelectedItem();
+									if (myRecipe != null && q != myRecipe.getVolUnits()) {
+										myRecipe.setPostBoilVolUnits(q);
+										displayRecipe();
+									}
+								}
+							});
 						}
 						{
 							lblSizeUnits = new JLabel();
-							pnlDetails.add(lblSizeUnits,
-									new GridBagConstraints(2, 5, 1, 1, 0.0,
-											0.0, GridBagConstraints.CENTER,
-											GridBagConstraints.NONE,
-											new Insets(0, 0, 0, 0), 0, 0));
+							pnlDetails.add(lblSizeUnits, new GridBagConstraints(2, 5, 1, 1, 0.0,
+									0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE,
+									new Insets(0, 0, 0, 0), 0, 0));
 							lblSizeUnits.setText("Size Units");
 						}
 					}
@@ -732,8 +645,8 @@ public class StrangeSwing extends javax.swing.JFrame {
 							lblStyle2.setText("Style:");
 						}
 						{
-							ComboBoxModel cmbStyle2Model = new DefaultComboBoxModel(
-									new String[]{"Item One", "Item Two"});
+							ComboBoxModel cmbStyle2Model = new DefaultComboBoxModel(new String[]{
+									"Item One", "Item Two"});
 							cmbStyle2 = new JComboBox();
 							pnlStyle.add(cmbStyle2);
 							cmbStyle2.setModel(cmbStyle2Model);
@@ -741,87 +654,67 @@ public class StrangeSwing extends javax.swing.JFrame {
 						{
 							jPanel2 = new JPanel();
 							GridBagLayout jPanel2Layout1 = new GridBagLayout();
-							jPanel2Layout1.columnWeights = new double[]{0.1,
-									0.1, 0.1, 0.1};
+							jPanel2Layout1.columnWeights = new double[]{0.1, 0.1, 0.1, 0.1};
 							jPanel2Layout1.columnWidths = new int[]{7, 7, 7, 7};
-							jPanel2Layout1.rowWeights = new double[]{0.1, 0.1,
-									0.1, 0.1, 0.1, 0.1};
-							jPanel2Layout1.rowHeights = new int[]{7, 7, 7, 7,
-									7, 7};
-							jPanel2.setPreferredSize(new java.awt.Dimension(
-									179, 120));
+							jPanel2Layout1.rowWeights = new double[]{0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+							jPanel2Layout1.rowHeights = new int[]{7, 7, 7, 7, 7, 7};
+							jPanel2.setPreferredSize(new java.awt.Dimension(179, 120));
 							jPanel2.setLayout(jPanel2Layout1);
 							pnlStyle.add(jPanel2);
-							jPanel2.setBorder(BorderFactory.createTitledBorder(
-									new LineBorder(new java.awt.Color(0, 0, 0),
-											1, false), "Recipe Conformance:",
-									TitledBorder.LEADING, TitledBorder.TOP,
-									new java.awt.Font("Dialog", 0, 12),
-									new java.awt.Color(0, 0, 0)));
+							jPanel2.setBorder(BorderFactory.createTitledBorder(new LineBorder(
+									new java.awt.Color(0, 0, 0), 1, false), "Recipe Conformance:",
+									TitledBorder.LEADING, TitledBorder.TOP, new java.awt.Font(
+											"Dialog", 0, 12), new java.awt.Color(0, 0, 0)));
 							{
 								jLabel5 = new JLabel();
-								jPanel2.add(jLabel5, new GridBagConstraints(0,
-										4, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST,
-										GridBagConstraints.NONE, new Insets(0,
-												0, 0, 0), 0, 0));
+								jPanel2.add(jLabel5, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+										GridBagConstraints.EAST, GridBagConstraints.NONE,
+										new Insets(0, 0, 0, 0), 0, 0));
 								jLabel5.setText("OG:");
 								jLabel5.setBounds(74, 3, 60, 30);
 							}
 							{
 								jLabel1 = new JLabel();
-								jPanel2.add(jLabel1, new GridBagConstraints(1,
-										0, 1, 1, 0.0, 0.0,
-										GridBagConstraints.CENTER,
-										GridBagConstraints.NONE, new Insets(0,
-												0, 0, 0), 0, 0));
+								jPanel2.add(jLabel1, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+										GridBagConstraints.CENTER, GridBagConstraints.NONE,
+										new Insets(0, 0, 0, 0), 0, 0));
 								GridLayout jLabel1Layout = new GridLayout(1, 1);
 								jLabel1.setLayout(jLabel1Layout);
 								jLabel1.setText("Low:");
 							}
 							{
 								jLabel2 = new JLabel();
-								jPanel2.add(jLabel2, new GridBagConstraints(2,
-										0, 1, 1, 0.0, 0.0,
-										GridBagConstraints.CENTER,
-										GridBagConstraints.NONE, new Insets(0,
-												0, 0, 0), 0, 0));
+								jPanel2.add(jLabel2, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+										GridBagConstraints.CENTER, GridBagConstraints.NONE,
+										new Insets(0, 0, 0, 0), 0, 0));
 								jLabel2.setText("Recipe:");
 							}
 							{
 								jLabel3 = new JLabel();
-								jPanel2.add(jLabel3, new GridBagConstraints(3,
-										0, 1, 1, 0.0, 0.0,
-										GridBagConstraints.CENTER,
-										GridBagConstraints.NONE, new Insets(0,
-												0, 0, 0), 0, 0));
+								jPanel2.add(jLabel3, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+										GridBagConstraints.CENTER, GridBagConstraints.NONE,
+										new Insets(0, 0, 0, 0), 0, 0));
 								jLabel3.setText("High:");
 							}
 							{
 								jLabel4 = new JLabel();
-								jPanel2.add(jLabel4, new GridBagConstraints(0,
-										1, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST,
-										GridBagConstraints.NONE, new Insets(0,
-												0, 0, 0), 0, 0));
+								jPanel2.add(jLabel4, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+										GridBagConstraints.EAST, GridBagConstraints.NONE,
+										new Insets(0, 0, 0, 0), 0, 0));
 								jLabel4.setText("IBU:");
 							}
 							{
 								jLabel6 = new JLabel();
-								jPanel2.add(jLabel6, new GridBagConstraints(0,
-										2, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST,
-										GridBagConstraints.NONE, new Insets(0,
-												0, 0, 0), 0, 0));
+								jPanel2.add(jLabel6, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+										GridBagConstraints.EAST, GridBagConstraints.NONE,
+										new Insets(0, 0, 0, 0), 0, 0));
 								jLabel6.setText("Colour:");
 							}
 							{
 								jLabel7 = new JLabel();
-								jPanel2.add(jLabel7, new GridBagConstraints(0,
-										3, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST,
-										GridBagConstraints.NONE, new Insets(0,
-												0, 0, 0), 0, 0));
+								jPanel2.add(jLabel7, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
+										GridBagConstraints.EAST, GridBagConstraints.NONE,
+										new Insets(0, 0, 0, 0), 0, 0));
 								jLabel7.setText("ABV:");
 							}
 						}
@@ -844,10 +737,9 @@ public class StrangeSwing extends javax.swing.JFrame {
 					pnlTables = new JPanel();
 					BoxLayout pnlMaltsLayout = new BoxLayout(pnlTables,
 							javax.swing.BoxLayout.Y_AXIS);
-					pnlMain.add(pnlTables, new GridBagConstraints(0, 2, 1, 1,
-							0.5, 0.5, GridBagConstraints.CENTER,
-							GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
-							0));
+					pnlMain.add(pnlTables, new GridBagConstraints(0, 2, 1, 1, 0.5, 0.5,
+							GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0,
+									0), 0, 0));
 
 					pnlTables.setLayout(pnlMaltsLayout);
 					{
@@ -855,12 +747,10 @@ public class StrangeSwing extends javax.swing.JFrame {
 						pnlTables.add(pnlMalt);
 						BorderLayout pnlMaltLayout1 = new BorderLayout();
 						FlowLayout pnlMaltLayout = new FlowLayout();
-						pnlMalt.setBorder(BorderFactory.createTitledBorder(
-								new LineBorder(new java.awt.Color(0, 0, 0), 1,
-										false), "Fermentables",
-								TitledBorder.LEADING, TitledBorder.TOP,
-								new java.awt.Font("Dialog", 1, 12),
-								new java.awt.Color(51, 51, 51)));
+						pnlMalt.setBorder(BorderFactory.createTitledBorder(new LineBorder(
+								new java.awt.Color(0, 0, 0), 1, false), "Fermentables",
+								TitledBorder.LEADING, TitledBorder.TOP, new java.awt.Font("Dialog",
+										1, 12), new java.awt.Color(51, 51, 51)));
 						pnlMalt.setLayout(pnlMaltLayout1);
 						{
 							jScrollPane1 = new JScrollPane();
@@ -870,61 +760,48 @@ public class StrangeSwing extends javax.swing.JFrame {
 								tblMalt = new JTable();
 								jScrollPane1.setViewportView(tblMalt);
 								tblMalt.setModel(tblMaltModel);
-								TableColumn maltColumn = tblMalt
-										.getColumnModel().getColumn(0);
+								TableColumn maltColumn = tblMalt.getColumnModel().getColumn(0);
 
 								// set up malt list combo
 								JComboBox maltComboBox = new JComboBox();
 								cmbMaltModel = new ComboModel();
 								maltComboBox.setModel(cmbMaltModel);
-								maltColumn.setCellEditor(new DefaultCellEditor(
-										maltComboBox));
-								maltComboBox
-										.addActionListener(new ActionListener() {
-											public void actionPerformed(
-													ActionEvent evt) {
-												Fermentable f = (Fermentable) cmbMaltModel
-														.getSelectedItem();
-												int i = tblMalt
-														.getSelectedRow();
-												if (myRecipe != null && i != -1) {
-													Fermentable f2 = (Fermentable) myRecipe
-															.getFermentablesList()
-															.get(i);
-													f2.setLov(f.getLov());
-													f2.setPppg(f.getPppg());
-												}
+								maltColumn.setCellEditor(new DefaultCellEditor(maltComboBox));
+								maltComboBox.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										Fermentable f = (Fermentable) cmbMaltModel
+												.getSelectedItem();
+										int i = tblMalt.getSelectedRow();
+										if (myRecipe != null && i != -1) {
+											Fermentable f2 = (Fermentable) myRecipe
+													.getFermentablesList().get(i);
+											f2.setLov(f.getLov());
+											f2.setPppg(f.getPppg());
+										}
 
-											}
-										});
+									}
+								});
 
 								// set up malt units combo
 								JComboBox maltUnitsComboBox = new JComboBox();
 								cmbMaltUnitsModel = new ComboModel();
 								maltUnitsComboBox.setModel(cmbMaltUnitsModel);
-								maltColumn = tblMalt.getColumnModel()
-										.getColumn(2);
-								maltColumn.setCellEditor(new DefaultCellEditor(
-										maltUnitsComboBox));
-								maltUnitsComboBox
-										.addActionListener(new ActionListener() {
-											public void actionPerformed(
-													ActionEvent evt) {
-												String u = (String) cmbMaltUnitsModel
-														.getSelectedItem();
-												int i = tblMalt
-														.getSelectedRow();
-												if (myRecipe != null && i != -1) {
-													Fermentable f2 = (Fermentable) myRecipe
-															.getFermentablesList()
-															.get(i);
-													f2.setUnitsFull(u);
-													myRecipe.calcMaltTotals();
-													displayRecipe();
-												}
+								maltColumn = tblMalt.getColumnModel().getColumn(2);
+								maltColumn.setCellEditor(new DefaultCellEditor(maltUnitsComboBox));
+								maltUnitsComboBox.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										String u = (String) cmbMaltUnitsModel.getSelectedItem();
+										int i = tblMalt.getSelectedRow();
+										if (myRecipe != null && i != -1) {
+											Fermentable f2 = (Fermentable) myRecipe
+													.getFermentablesList().get(i);
+											f2.setUnitsFull(u);
+											myRecipe.calcMaltTotals();
+											displayRecipe();
+										}
 
-											}
-										});
+									}
+								});
 
 								// set up spin editor for amount
 								/*
@@ -938,8 +815,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 
 								for (int i = 0; i < tblMalt.getColumnCount(); i++) {
 									TableColumn column;
-									column = tblMalt.getColumnModel()
-											.getColumn(i);
+									column = tblMalt.getColumnModel().getColumn(i);
 									if (i == 0) {
 										column.setPreferredWidth(100);
 									} else {
@@ -950,9 +826,8 @@ public class StrangeSwing extends javax.swing.JFrame {
 							}
 						}
 						{
-							tblMaltTotalsModel = new DefaultTableModel(
-									new String[][]{{""}}, new String[]{"Malt",
-											"Amount", "Units", "Points", "Lov",
+							tblMaltTotalsModel = new DefaultTableModel(new String[][]{{""}},
+									new String[]{"Malt", "Amount", "Units", "Points", "Lov",
 											"Cost/U", "%"});
 							tblMaltTotals = new JTable();
 							pnlMalt.add(tblMaltTotals, BorderLayout.SOUTH);
@@ -960,8 +835,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 							tblMaltTotals.getTableHeader().setEnabled(false);
 							for (int i = 0; i < tblMaltTotals.getColumnCount(); i++) {
 								TableColumn column;
-								column = tblMaltTotals.getColumnModel()
-										.getColumn(i);
+								column = tblMaltTotals.getColumnModel().getColumn(i);
 								if (i == 0) {
 									column.setPreferredWidth(100);
 								} else {
@@ -980,61 +854,51 @@ public class StrangeSwing extends javax.swing.JFrame {
 						{
 							tlbMalt = new JToolBar();
 							pnlMaltButtons.add(tlbMalt);
-							tlbMalt.setPreferredSize(new java.awt.Dimension(
-									140, 20));
+							tlbMalt.setPreferredSize(new java.awt.Dimension(140, 20));
 							tlbMalt.setFloatable(false);
 							{
 								bntAddMalt = new JButton();
 								tlbMalt.add(bntAddMalt);
 								bntAddMalt.setText("+");
-								bntAddMalt
-										.addActionListener(new ActionListener() {
-											public void actionPerformed(
-													ActionEvent evt) {
-												if (myRecipe != null) {
-													Fermentable f = new Fermentable();
-													myRecipe.addMalt(f);
-													displayRecipe();
-												}
-											}
-										});
+								bntAddMalt.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										if (myRecipe != null) {
+											Fermentable f = new Fermentable();
+											myRecipe.addMalt(f);
+											displayRecipe();
+										}
+									}
+								});
 							}
 							{
 								btnDelMalt = new JButton();
 								tlbMalt.add(btnDelMalt);
 								btnDelMalt.setText("-");
-								btnDelMalt
-										.addActionListener(new ActionListener() {
-											public void actionPerformed(
-													ActionEvent evt) {
-												if (myRecipe != null) {
-													int i = tblMalt
-															.getSelectedRow();
-													myRecipe.delMalt(i);
-													displayRecipe();
-												}
+								btnDelMalt.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										if (myRecipe != null) {
+											int i = tblMalt.getSelectedRow();
+											myRecipe.delMalt(i);
+											displayRecipe();
+										}
 
-											}
-										});
+									}
+								});
 							}
 						}
 					}
 					{
 						pnlHops = new JPanel();
 						BorderLayout pnlHopsLayout = new BorderLayout();
-						pnlHops
-								.setBorder(BorderFactory.createTitledBorder(
-										new LineBorder(new java.awt.Color(0, 0,
-												0), 1, false), "Hops",
-										TitledBorder.LEADING, TitledBorder.TOP,
-										new java.awt.Font("Dialog", 1, 12),
-										new java.awt.Color(51, 51, 51)));
+						pnlHops.setBorder(BorderFactory.createTitledBorder(new LineBorder(
+								new java.awt.Color(0, 0, 0), 1, false), "Hops",
+								TitledBorder.LEADING, TitledBorder.TOP, new java.awt.Font("Dialog",
+										1, 12), new java.awt.Color(51, 51, 51)));
 						pnlHops.setLayout(pnlHopsLayout);
 						pnlTables.add(pnlHops);
 						{
-							tblHopsTotalsModel = new DefaultTableModel(
-									new String[][]{{""}}, new String[]{
-											"Column 1", "Column 2"});
+							tblHopsTotalsModel = new DefaultTableModel(new String[][]{{""}},
+									new String[]{"Column 1", "Column 2"});
 							tblHopsTotals = new JTable();
 							pnlHops.add(tblHopsTotals, BorderLayout.SOUTH);
 							tblHopsTotals.setModel(tblHopsTotalsModel);
@@ -1048,58 +912,48 @@ public class StrangeSwing extends javax.swing.JFrame {
 								tblHops = new JTable();
 								jScrollPane2.setViewportView(tblHops);
 								tblHops.setModel(tblHopsModel);
-								TableColumn hopColumn = tblHops
-										.getColumnModel().getColumn(0);
+								TableColumn hopColumn = tblHops.getColumnModel().getColumn(0);
 								JComboBox hopComboBox = new JComboBox();
 								cmbHopsModel = new ComboModel();
 								hopComboBox.setModel(cmbHopsModel);
-								hopColumn.setCellEditor(new DefaultCellEditor(
-										hopComboBox));
-								hopComboBox
-										.addActionListener(new ActionListener() {
-											public void actionPerformed(
-													ActionEvent evt) {
-												Hop h = (Hop) cmbHopsModel
-														.getSelectedItem();
-												int i = tblHops
-														.getSelectedRow();
-												if (myRecipe != null && i != -1) {
-													Hop h2 = (Hop) myRecipe
-															.getHopsList().get(
-																	i);
-													h2.setAlpha(h.getAlpha());
-												}
+								hopColumn.setCellEditor(new DefaultCellEditor(hopComboBox));
+								hopComboBox.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										Hop h = (Hop) cmbHopsModel.getSelectedItem();
+										int i = tblHops.getSelectedRow();
+										if (myRecipe != null && i != -1) {
+											Hop h2 = (Hop) myRecipe.getHopsList().get(i);
+											h2.setAlpha(h.getAlpha());
+										}
 
-											}
-										});
+									}
+								});
 
-								// set up malt units combo
+								// set up hop units combo
 								JComboBox hopsUnitsComboBox = new JComboBox();
 								cmbHopsUnitsModel = new ComboModel();
 								hopsUnitsComboBox.setModel(cmbHopsUnitsModel);
-								hopColumn = tblHops.getColumnModel().getColumn(
-										4);
-								hopColumn.setCellEditor(new DefaultCellEditor(
-										hopsUnitsComboBox));
-								hopsUnitsComboBox
-										.addActionListener(new ActionListener() {
-											public void actionPerformed(
-													ActionEvent evt) {
-												String u = (String) cmbHopsUnitsModel
-														.getSelectedItem();
-												int i = tblHops
-														.getSelectedRow();
-												if (myRecipe != null && i != -1) {
-													Hop h = (Hop) myRecipe
-															.getHopsList().get(
-																	i);
-													h.setUnitsFull(u);
-													myRecipe.calcHopsTotals();
-													displayRecipe();
-												}
+								hopColumn = tblHops.getColumnModel().getColumn(4);
+								hopColumn.setCellEditor(new DefaultCellEditor(hopsUnitsComboBox));
+								hopsUnitsComboBox.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										String u = (String) cmbHopsUnitsModel.getSelectedItem();
+										int i = tblHops.getSelectedRow();
+										if (myRecipe != null && i != -1) {
+											Hop h = (Hop) myRecipe.getHopsList().get(i);
+											h.setUnitsFull(u);
+											myRecipe.calcHopsTotals();
+											displayRecipe();
+										}
 
-											}
-										});
+									}
+								});
+								
+								// set up hop type combo
+								String [] forms = {"Leaf","Pellet","Plug"};
+								JComboBox hopsFormComboBox = new JComboBox(forms);
+								hopColumn = tblHops.getColumnModel().getColumn(1);
+								hopColumn.setCellEditor(new DefaultCellEditor(hopsFormComboBox));
 
 							}
 						}
@@ -1110,47 +964,40 @@ public class StrangeSwing extends javax.swing.JFrame {
 						pnlHopsButtonsLayout.setAlignment(FlowLayout.LEFT);
 						pnlHopsButtons.setLayout(pnlHopsButtonsLayout);
 						pnlTables.add(pnlHopsButtons);
-						pnlHopsButtons.setPreferredSize(new java.awt.Dimension(
-								512, 16));
+						pnlHopsButtons.setPreferredSize(new java.awt.Dimension(512, 16));
 						{
 							tlbHops = new JToolBar();
 							pnlHopsButtons.add(tlbHops);
-							tlbHops.setPreferredSize(new java.awt.Dimension(70,
-									19));
+							tlbHops.setPreferredSize(new java.awt.Dimension(70, 19));
 							tlbHops.setFloatable(false);
 							{
 								btnAddHop = new JButton();
 								tlbHops.add(btnAddHop);
 								btnAddHop.setText("+");
-								btnAddHop
-										.addActionListener(new ActionListener() {
-											public void actionPerformed(
-													ActionEvent evt) {
-												if (myRecipe != null) {
-													Hop h = new Hop();
-													myRecipe.addHop(h);
-													displayRecipe();
+								btnAddHop.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										if (myRecipe != null) {
+											Hop h = new Hop();
+											myRecipe.addHop(h);
+											displayRecipe();
 
-												}
-											}
-										});
+										}
+									}
+								});
 							}
 							{
 								btnDelHop = new JButton();
 								tlbHops.add(btnDelHop);
 								btnDelHop.setText("-");
-								btnDelHop
-										.addActionListener(new ActionListener() {
-											public void actionPerformed(
-													ActionEvent evt) {
-												if (myRecipe != null) {
-													int i = tblHops
-															.getSelectedRow();
-													myRecipe.delHop(i);
-													displayRecipe();
-												}
-											}
-										});
+								btnDelHop.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										if (myRecipe != null) {
+											int i = tblHops.getSelectedRow();
+											myRecipe.delHop(i);
+											displayRecipe();
+										}
+									}
+								});
 							}
 						}
 					}
@@ -1182,42 +1029,33 @@ public class StrangeSwing extends javax.swing.JFrame {
 						openFileMenuItem = new JMenuItem();
 						jMenu3.add(openFileMenuItem);
 						openFileMenuItem.setText("Open");
-						openFileMenuItem
-								.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent evt) {
-										String path = getClass()
-												.getProtectionDomain()
-												.getCodeSource().getLocation()
-												.toString().substring(6)
-												+ "\\";
-										JFileChooser fc = new JFileChooser(path);
+						openFileMenuItem.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								String path = getClass().getProtectionDomain().getCodeSource()
+										.getLocation().toString().substring(6)
+										+ "\\";
+								JFileChooser fc = new JFileChooser(path);
 
-										// Show open dialog; this method does
-										// not return until the dialog is closed
-										int returnVal = fc
-												.showOpenDialog(jMenuBar1);
-										if (returnVal == JFileChooser.APPROVE_OPTION) {
-											File file = fc.getSelectedFile();
+								// Show open dialog; this method does
+								// not return until the dialog is closed
+								int returnVal = fc.showOpenDialog(jMenuBar1);
+								if (returnVal == JFileChooser.APPROVE_OPTION) {
+									File file = fc.getSelectedFile();
 
-											System.out.print("Opening: "
-													+ file.getName() + ".\n");
-											ImportXml imp = new ImportXml(file
-													.toString());
-											myRecipe = imp.handler.getRecipe();
-											myRecipe.calcMaltTotals();
-											myRecipe.calcHopsTotals();
-											myRecipe.mash
-													.setMaltWeight(myRecipe
-															.getTotalMashLbs());
-											myRecipe.mash.calcMashSchedule();
-											displayRecipe();
-										} else {
-											System.out
-													.print("Open command cancelled by user.\n");
-										}
+									System.out.print("Opening: " + file.getName() + ".\n");
+									ImportXml imp = new ImportXml(file.toString());
+									myRecipe = imp.handler.getRecipe();
+									myRecipe.calcMaltTotals();
+									myRecipe.calcHopsTotals();
+									myRecipe.mash.setMaltWeight(myRecipe.getTotalMashLbs());
+									myRecipe.mash.calcMashSchedule();
+									displayRecipe();
+								} else {
+									System.out.print("Open command cancelled by user.\n");
+								}
 
-									}
-								});
+							}
+						});
 					}
 					{
 						saveMenuItem = new JMenuItem();
@@ -1245,19 +1083,17 @@ public class StrangeSwing extends javax.swing.JFrame {
 							exportHTMLmenu = new JMenuItem();
 							exportMenu.add(exportHTMLmenu);
 							exportHTMLmenu.setText("HTML");
-							exportHTMLmenu
-									.addActionListener(new ActionListener() {
-										public void actionPerformed(
-												ActionEvent evt) {
+							exportHTMLmenu.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
 
-											try {
-												saveAsHTML();
-											} catch (Exception e) {
+									try {
+										saveAsHTML();
+									} catch (Exception e) {
 
-											}
+									}
 
-										}
-									});
+								}
+							});
 						}
 					}
 					{
@@ -1352,14 +1188,11 @@ public class StrangeSwing extends javax.swing.JFrame {
 		String htmlFileName = myRecipe.getName() + ".html";
 		File htmlFile = new File(htmlFileName);
 		FileOutputStream output = new java.io.FileOutputStream(htmlFile);
-		XmlTransformer.writeStream("tmp.xml",
-				"src/strangebrew/data/recipeToHtml.xslt", output);
+		XmlTransformer.writeStream("tmp.xml", "src/strangebrew/data/recipeToHtml.xslt", output);
 
 	}
 
-	public class SpinnerEditor extends AbstractCellEditor
-			implements
-				TableCellEditor {
+	public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor {
 		final JSpinner spinner = new JSpinner();
 
 		// Initializes the spinner.
@@ -1372,8 +1205,8 @@ public class StrangeSwing extends javax.swing.JFrame {
 		}
 
 		// Prepares the spinner component and returns it.
-		public Component getTableCellEditorComponent(JTable table,
-				Object value, boolean isSelected, int row, int column) {
+		public Component getTableCellEditorComponent(JTable table, Object value,
+				boolean isSelected, int row, int column) {
 			spinner.setValue(value);
 			return spinner;
 		}
