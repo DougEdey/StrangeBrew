@@ -65,7 +65,7 @@ import strangebrew.Yeast;
 
 public class StrangeSwing extends javax.swing.JFrame {
 
-	{
+/*	{
 		//Set Look & Feel
 		try {
 			javax.swing.UIManager.setLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel");
@@ -73,7 +73,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 			e.printStackTrace();
 		}
 	}
-
+*/
 	private JMenuItem helpMenuItem;
 	private JMenu jMenu5;
 	private JMenuItem deleteMenuItem;
@@ -98,7 +98,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 	private JToolBar tlbHops;
 	private JPanel pnlHopsButtons;
 	private JButton btnDelMalt;
-	private JButton bntAddMalt;
+	private JButton btnAddMalt;
 	private JToolBar tlbMalt;
 	private JPanel pnlMaltButtons;
 	private JSlider sldMatch;
@@ -177,6 +177,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 	private ComboModel cmbHopsUnitsModel;
 	private ArrayList weightList;
 	private ArrayList volList;
+	private JFileChooser fc;
 
 	public Recipe myRecipe;
 	DecimalFormat df1 = new DecimalFormat("####.0");
@@ -193,13 +194,20 @@ public class StrangeSwing extends javax.swing.JFrame {
 		inst.setVisible(true);
 	}
 
-	public StrangeSwing() {
+	public StrangeSwing()  {
 		super();
 		initGUI();
 		// There has *got* to be a better way to do this:
 		Database db = new Database();
-		db.readDB("src/strangebrew/data");
-
+		String path="";
+		try {
+			path = new File(".").getCanonicalPath() + "\\src\\strangebrew\\data";
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		db.readDB(path);
+		
 		cmbStyleModel.setList(db.styleDB);
 		cmbYeastModel.setList(db.yeastDB);
 		cmbMaltModel.setList(db.fermDB);
@@ -211,6 +219,11 @@ public class StrangeSwing extends javax.swing.JFrame {
 		cmbSizeUnitsModel.setList(volList);
 		cmbMaltUnitsModel.setList(weightList);
 		cmbHopsUnitsModel.setList(weightList);
+		
+		fc = new JFileChooser();
+		String fcpath = getClass().getProtectionDomain().getCodeSource()
+		.getLocation().toString().substring(6) + "\\";
+		fc.setCurrentDirectory(new File(path));
 
 	}
 
@@ -247,8 +260,8 @@ public class StrangeSwing extends javax.swing.JFrame {
 						myRecipe.getHopUnits(), "", "", "" + df1.format(myRecipe.getIbu()),
 						"$" + df2.format(myRecipe.getTotalHopsCost())}}, new String[]{"", "", "",
 						"", "", "", "", "", ""});
-		tblMalt.updateUI();
-		tblHops.updateUI();
+		// tblMalt.updateUI();
+		// tblHops.updateUI();
 
 	}
 
@@ -857,15 +870,16 @@ public class StrangeSwing extends javax.swing.JFrame {
 							tlbMalt.setPreferredSize(new java.awt.Dimension(140, 20));
 							tlbMalt.setFloatable(false);
 							{
-								bntAddMalt = new JButton();
-								tlbMalt.add(bntAddMalt);
-								bntAddMalt.setText("+");
-								bntAddMalt.addActionListener(new ActionListener() {
+								btnAddMalt = new JButton();
+								tlbMalt.add(btnAddMalt);
+								btnAddMalt.setText("+");
+								btnAddMalt.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
 										if (myRecipe != null) {
-											Fermentable f = new Fermentable();
+											Fermentable f = new Fermentable(myRecipe.getMaltUnits());
 											myRecipe.addMalt(f);
 											displayRecipe();
+											tblMalt.updateUI();
 										}
 									}
 								});
@@ -944,6 +958,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 											h.setUnitsFull(u);
 											myRecipe.calcHopsTotals();
 											displayRecipe();
+											tblHops.updateUI();
 										}
 
 									}
@@ -977,7 +992,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 								btnAddHop.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
 										if (myRecipe != null) {
-											Hop h = new Hop();
+											Hop h = new Hop(myRecipe.getHopUnits());
 											myRecipe.addHop(h);
 											displayRecipe();
 
@@ -1030,11 +1045,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 						jMenu3.add(openFileMenuItem);
 						openFileMenuItem.setText("Open");
 						openFileMenuItem.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {
-								String path = getClass().getProtectionDomain().getCodeSource()
-										.getLocation().toString().substring(6)
-										+ "\\";
-								JFileChooser fc = new JFileChooser(path);
+							public void actionPerformed(ActionEvent evt) {								
 
 								// Show open dialog; this method does
 								// not return until the dialog is closed
@@ -1067,10 +1078,27 @@ public class StrangeSwing extends javax.swing.JFrame {
 						jMenu3.add(saveAsMenuItem);
 						saveAsMenuItem.setText("Save As ...");
 						saveAsMenuItem.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {
+							public void actionPerformed(ActionEvent evt)  {
 								// This is just a test right now to see that
 								// stuff is changed.
 								System.out.print(myRecipe.toXML());
+								
+								// Show save dialog; this method does
+								// not return until the dialog is closed
+								int returnVal = fc.showSaveDialog(jMenuBar1);
+								if (returnVal == JFileChooser.APPROVE_OPTION) {
+					                File file = fc.getSelectedFile();
+					                //This is where a real application would save the file.
+					                try {
+					                	FileWriter out = new FileWriter(file);
+					                	out.write(myRecipe.toXML());
+					                	out.close();
+					                } catch (Exception e){
+					                // TODO: handle io exception
+					                }
+					            } else {
+					            	System.out.print("Save command cancelled by user.\n");
+					            }
 
 							}
 						});
