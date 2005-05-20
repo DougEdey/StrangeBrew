@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.32 2005/05/17 20:20:06 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.33 2005/05/20 17:38:53 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -66,6 +66,8 @@ public class Recipe {
 		boilMinutes = opts.getIProperty("optBoilTime");
 		ibuCalcMethod = opts.getProperty("optIBUCalcMethod");
 		ibuHopUtil = opts.getDProperty("optHopsUtil");		
+		hopUnits = opts.getProperty("optHopsU");
+		maltUnits = opts.getProperty("optMaltU");
 
 	}
 	
@@ -187,17 +189,21 @@ public class Recipe {
 		fermentables.add(m);
 		calcMaltTotals();
 		}
-	public void delMalt(int i) { 
-		fermentables.remove(i);
-		calcMaltTotals();
+	public void delMalt(int i) {
+		if (!fermentables.isEmpty()){
+			fermentables.remove(i);
+			calcMaltTotals();
+		}
 		}
 	public void addHop(Hop h) { 
 		hops.add(h);
 		calcHopsTotals();
 		}
 	public void delHop(int i){
-		hops.remove(i);
-		calcHopsTotals();
+		if (!hops.isEmpty()){
+			hops.remove(i);
+			calcHopsTotals();
+		}
 	}
 	public void addMisc(Misc m) { misc.add(m); }
 	

@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * $Id: Ingredient.java,v 1.5 2005/05/17 20:20:06 andrew_avis Exp $
+ * $Id: Ingredient.java,v 1.6 2005/05/20 17:38:37 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  *
@@ -13,7 +13,7 @@ import java.util.Date;
  * in the first place.
  */
 public class Ingredient {
-	private String name;
+	private String name="";
 	private double costPerU;
 	private String description;
 	private Quantity amount = new Quantity();
@@ -26,6 +26,7 @@ public class Ingredient {
 	public String getDescription(){ return description; }
 	public double getAmountAs(String s){ return amount.getValueAs(s); }
 	public String getUnits(){ return amount.getUnits(); }
+	public String getUnitsAbrv(){ return amount.getAbrv(); }
 	public Date getDate(){ return dateBought; }
 	public String getType(){ return type; }
 	

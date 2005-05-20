@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.9 2005/05/17 20:20:06 andrew_avis Exp $
+ * $Id: Quantity.java,v 1.10 2005/05/20 17:38:53 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -81,6 +81,7 @@ public class Quantity {
 	
 	public double getValue(){ return value;	}
 	public String getUnits(){ return unit; }
+	public String getAbrv(){ return abrv; }
 	public double getValueAs(String to){
 		double fromBase = 0;
 		double toBase = 0;

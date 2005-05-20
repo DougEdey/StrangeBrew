@@ -1,5 +1,5 @@
 /**
- * $Id: Hop.java,v 1.12 2005/05/17 20:20:06 andrew_avis Exp $
+ * $Id: Hop.java,v 1.13 2005/05/20 17:38:53 andrew_avis Exp $
  * Created on Oct 5, 2004
  *
  * Base class for hops.  This object doesn't do much except hold data and
@@ -27,6 +27,12 @@ public class Hop extends Ingredient{
 		setAdd("Boil");
 	}
 	
+	public Hop(String u){
+		setUnitsFull(u);
+		setType("Leaf");
+		setAdd("Boil");
+	}
+	
 	// get methods:
 	public String getAdd(){ return add; }
 	public double getAlpha(){ return alpha; }
@@ -49,7 +55,7 @@ public class Hop extends Ingredient{
 	    sb.append( "      <HOP>"+getName()+"</HOP>\n" );
 	    sb.append( "      <AMOUNT>"+getAmountAs(getUnits())+"</AMOUNT>\n" );
 	    sb.append( "      <TIME>"+getMinutes()+"</TIME>\n" );
-	    sb.append( "      <UNITS>"+getUnits()+"</UNITS>\n" );
+	    sb.append( "      <UNITS>"+getUnitsAbrv()+"</UNITS>\n" );
 	    sb.append( "      <FORM>"+getType()+"</FORM>\n" );
 	    sb.append( "      <ALPHA>"+alpha+"</ALPHA>\n" );
 	    sb.append( "      <COSTOZ>"+getCostPerU()+"</COSTOZ>\n" );

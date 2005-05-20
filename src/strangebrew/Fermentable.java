@@ -1,6 +1,6 @@
 /**
  * Created on Oct 4, 2004
- * $Id: Fermentable.java,v 1.6 2004/11/24 17:41:50 andrew_avis Exp $
+ * $Id: Fermentable.java,v 1.7 2005/05/20 17:38:53 andrew_avis Exp $
  * @author aavis
  *
  * This is the base malt class.  It doesn't do much, except hold data
@@ -28,9 +28,13 @@ public class Fermentable extends Ingredient {
 		mashed = true;
 	}
 	
+	public Fermentable(String u) {
+		setUnitsFull(u);		
+	}
+	
 	public Fermentable(){
 		// default constructor
-		setName("Malt");
+		setName("");
 		pppg = 0;
 		lov = 0;
 		setAmount(1.0);
@@ -63,10 +67,12 @@ public class Fermentable extends Ingredient {
 	    sb.append( "    <ITEM>\n" );
 	    sb.append( "      <MALT>"+getName()+"</MALT>\n" );
 	    sb.append( "      <AMOUNT>"+getAmountAs(getUnits())+"</AMOUNT>\n" );
-	    sb.append( "      <UNITS>"+getUnits()+"</UNITS>\n" );
+	    sb.append( "      <UNITS>"+getUnitsAbrv()+"</UNITS>\n" );
 	    sb.append( "      <POINTS>"+pppg+"</POINTS>\n" );
+	    sb.append( "      <LOV>"+lov+"</LOV>\n" );
 	    sb.append( "      <MASHED>"+mashed+"</MASHED>\n" );
 	    sb.append( "      <STEEPED>"+steeped+"</STEEPED>\n" );
+	    sb.append( "      <DESCRIPTION>"+getDescription()+"</DESCRIPTION>\n" );
 	    sb.append( "    </ITEM>\n" );
 	    return sb.toString();
 	}
