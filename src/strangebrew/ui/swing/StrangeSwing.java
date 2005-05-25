@@ -1,3 +1,22 @@
+/**
+ *  StrangeBrew Java - a homebrew recipe calculator
+    Copyright (C) 2005  Drew Avis
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
 package strangebrew.ui.swing;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -74,6 +93,9 @@ public class StrangeSwing extends javax.swing.JFrame {
 		}
 	}
 */
+	{
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
 	private JMenuItem helpMenuItem;
 	private JMenu jMenu5;
 	private JMenuItem deleteMenuItem;
@@ -99,6 +121,8 @@ public class StrangeSwing extends javax.swing.JFrame {
 	private JPanel pnlHopsButtons;
 	private JButton btnDelMalt;
 	private JButton btnAddMalt;
+	private JMenuItem mashManagerMenuItem;
+	private JMenu mnuView;
 	private JToolBar tlbMalt;
 	private JPanel pnlMaltButtons;
 	private JSlider sldMatch;
@@ -156,7 +180,6 @@ public class StrangeSwing extends javax.swing.JFrame {
 	private JLabel lblPreBoil;
 	private JLabel lblYeast;
 	private JLabel lblStyle;
-	private JMenuItem closeFileMenuItem;
 	private JMenuItem saveAsMenuItem;
 	private JMenuItem saveMenuItem;
 	private JMenuItem openFileMenuItem;
@@ -178,6 +201,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 	private ArrayList weightList;
 	private ArrayList volList;
 	private JFileChooser fc;
+	private MashManager mashMgr;
 
 	public Recipe myRecipe;
 	DecimalFormat df1 = new DecimalFormat("####.0");
@@ -274,6 +298,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 					System.exit(1);
 				}
 			});
+			
 			{
 				pnlMain = new JPanel();
 				GridBagLayout jPanel2Layout = new GridBagLayout();
@@ -1125,11 +1150,6 @@ public class StrangeSwing extends javax.swing.JFrame {
 						}
 					}
 					{
-						closeFileMenuItem = new JMenuItem();
-						jMenu3.add(closeFileMenuItem);
-						closeFileMenuItem.setText("Close");
-					}
-					{
 						jSeparator2 = new JSeparator();
 						jMenu3.add(jSeparator2);
 					}
@@ -1139,7 +1159,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 						exitMenuItem.setText("Exit");
 						exitMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
-								// exit program
+								// exit program								
 								System.exit(0);
 							}
 						});
@@ -1172,6 +1192,26 @@ public class StrangeSwing extends javax.swing.JFrame {
 						deleteMenuItem = new JMenuItem();
 						jMenu4.add(deleteMenuItem);
 						deleteMenuItem.setText("Delete");
+					}
+				}
+				{
+					mnuView = new JMenu();
+					jMenuBar1.add(mnuView);
+					mnuView.setText("View");
+					{
+						mashManagerMenuItem = new JMenuItem();
+						mnuView.add(mashManagerMenuItem);
+						mashManagerMenuItem.setText("Mash Manager...");
+						mashManagerMenuItem.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								System.out.println("mashManagerMenuItem.actionPerformed, event="
+									+ evt);
+								//TODO add your code for mashManagerMenuItem.actionPerformed
+								mashMgr = new MashManager();
+								mashMgr.show();
+								
+							}
+						});
 					}
 				}
 				{
