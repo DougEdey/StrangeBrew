@@ -1,3 +1,5 @@
 bin
-.classpath
 .settings
+.fatjar
+StrangeBrew_fat.jar
+settings.fatjar
