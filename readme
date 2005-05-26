@@ -1,0 +1,70 @@
+README
+StrangeBrew Java - Early Alpha
+
+This is an early alpha release of StrangeBrew Java, which means it's
+buggy, and doesn't have many features.  At this point it's a proof-of-
+concept and snapshot into current development for anyone who's curious
+about the software.
+
+StrangeBrew Java is a Java port of the popular Windows homebrewing
+software, StrangeBrew (www.strangebrew.ca).
+
+Running StrangeBrew:
+
+- Unzip the sbjar_alpha1a.zip file.
+- The file contains the data directory (src/strangebrew/data/) and the
+StrangeBrew java archive (StrangeBrew_fat.jar).
+- Type "java -jar StrangeBrew_fat.jar" at the command line.  Under Windows,
+you can right-click this file, select "Open With > " and select a Java
+installation. There's probably a Mac way to do this, but I don't know
+what it is.
+
+You require a Java Runtime Environment (JRE) on your system to run
+StrangeBrew.  It should run with versions 1.4 and up; I'm using
+1.5.02. (See http://java.sun.com/j2se/1.5.0/index.jsp).
+
+Current Features:
+
+Here's what you can do:
+- open StrangeBrew xml recipes
+- open QBrew .qbrew recipes (there are sample recipes in the data
+directory)
+- save StrangeBrewJ xml recipes (these are not compatible with the
+Windows version of StrangeBrew)
+- save recipes as html
+- create a new, empty recipe
+
+Other basic features like setting options, the mash manager, cost
+tracking, database editing, etc, are all in development.
+
+Comments or questions should be directed to drew.avis@gmail.com.
+
+Contributors:
+The following people have contributed to the development of this 
+program:
+Mike Charlton - SWT gui development / Java consulting
+Chris Cook - xslt development
+Andy Davison - testing
+Mike Gibson - testing
+Don Kelly - Promash recipe format decoding
+Colin Kilburn - testing / bug fixes
+
+
+License:
+	Copyright (C) 2005  Drew Avis
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+    
+    See the gpl.txt file for more information.
