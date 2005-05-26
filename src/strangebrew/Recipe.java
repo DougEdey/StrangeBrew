@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.34 2005/05/25 18:57:10 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.35 2005/05/26 18:14:58 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -103,6 +103,7 @@ public class Recipe {
 	public double getEstFg(){ return estFg; }
 	public ArrayList getFermentablesList() { return fermentables; }
 	public ArrayList getHopsList() { return hops; }
+	public Mash getMash() { return mash; }
 	public String getHopUnits(){ return hopUnits; }
 	public double getIbu(){ return ibu; }	
 	public String getIBUMethod(){ return ibuCalcMethod; }

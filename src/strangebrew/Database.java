@@ -8,7 +8,7 @@ import java.util.*;
 import com.mindprod.csv.*;
 
 /**
- * $Id: Database.java,v 1.11 2004/11/22 18:02:54 andrew_avis Exp $
+ * $Id: Database.java,v 1.12 2005/05/26 18:14:58 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -184,8 +184,7 @@ public class Database {
 	public void readStyles(String dbPath){
 			// read the styles from the csv file
 			try {
-				File styleFile = new File(dbPath, "bjcp_styles.csv");
-				System.out.println("path to styles: "+ styleFile.getAbsolutePath());
+				File styleFile = new File(dbPath, "bjcp_styles.csv");				
 				CSVReader reader = new CSVReader(new FileReader(
 						styleFile), ',', '\"', true, false);
 

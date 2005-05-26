@@ -2,7 +2,7 @@ package strangebrew;
 
 import java.util.ArrayList;
 /**
- * $Id: Mash.java,v 1.5 2004/10/26 18:00:29 andrew_avis Exp $
+ * $Id: Mash.java,v 1.6 2005/05/26 18:14:58 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -42,14 +42,14 @@ public class Mash {
 	}
 
 	public class MashStep {
-		public String type;
-		public double startTemp;
-		public double endTemp;
-		public String tempU;
-		public String method;
-		public int minutes;
-		public int rampMin;
-		public String directions;
+		private String type;
+		private double startTemp;
+		private double endTemp;
+		private String tempU;
+		private String method;
+		private int minutes;
+		private int rampMin;
+		private String directions;
 
 		public Quantity infuseVol = new Quantity();
 		public Quantity decoctVol = new Quantity();
@@ -75,11 +75,89 @@ public class Mash {
 			type = "alpha";
 
 		}
+	
+		// getter/setter methods	
+		
+		public Quantity getDecoctVol() {
+			return decoctVol;
+		}
+
+		public void setDecoctVol(Quantity decoctVol) {
+			this.decoctVol = decoctVol;
+		}
+	
+		public String getDirections() {
+			return directions;
+		}
+
+		public void setDirections(String directions) {
+			this.directions = directions;
+		}
+
+		public double getEndTemp() {
+			return endTemp;
+		}
+
+		public void setEndTemp(double endTemp) {
+			this.endTemp = endTemp;
+		}
+
+		public Quantity getInfuseVol() {
+			return infuseVol;
+		}
+
+		public void setInfuseVol(Quantity infuseVol) {
+			this.infuseVol = infuseVol;
+		}
+
+		public String getMethod() {
+			return method;
+		}
+
+		public void setMethod(String method) {
+			this.method = method;
+		}
+
+		public int getMinutes() {
+			return minutes;
+		}
+
+		public void setMinutes(int minutes) {
+			this.minutes = minutes;
+		}
+
+		public int getRampMin() {
+			return rampMin;
+		}
+
+		public void setRampMin(int rampMin) {
+			this.rampMin = rampMin;
+		}
+
+		public double getStartTemp() {
+			return startTemp;
+		}
+
+		public void setStartTemp(double startTemp) {
+			this.startTemp = startTemp;
+		}
+
+		public String getType() {
+			return type;
+		}
+		
+		public void setType(String s){ type = s; }
 	}
 
 	public void addStep(String t, double st, double et, String tu, String m, int min,
 			int rmin) {
 		MashStep step = new MashStep(t, st, et, tu, m, min, rmin);
+		steps.add(step);
+		calcMashSchedule();
+	}
+	
+	public void addStep(){
+		MashStep step = new MashStep();
 		steps.add(step);
 		calcMashSchedule();
 	}
@@ -89,6 +167,77 @@ public class Mash {
 	public void setMashRatio(double mr){ mashRatio = mr; }	
 	public void setMashRatioU(String u){ mashRatioU = u;}
 	
+	// mash step methods:
+	public int setStepType(int i, String t){
+		if (steps.size() < i || steps.isEmpty())
+			return -1;
+		MashStep ms = (MashStep)steps.get(i);
+		ms.setType(t);
+		return 0;
+	}
+	
+	public String getStepType(int i) {
+		if (steps.size() < i || steps.isEmpty())
+			return "";
+		MashStep ms = (MashStep)steps.get(i);
+		return ms.getType();		
+	}
+	
+	
+	public void setStepMethod(int i, String m){
+		((MashStep)steps.get(i)).setMethod(m);
+	}
+	
+	public String getStepMethod(int i) {
+		return ((MashStep)steps.get(i)).getMethod();	
+	}
+	
+	public void setStepStartTemp(int i, int t){
+		((MashStep)steps.get(i)).setStartTemp(t);
+	}
+	
+	public double getStepStartTemp(int i) {
+		return ((MashStep)steps.get(i)).getStartTemp();	
+	}
+	
+	public void setStepEndTemp(int i, int t){
+		((MashStep)steps.get(i)).setEndTemp(t);
+	}
+	
+	public double getStepEndTemp(int i) {
+		return ((MashStep)steps.get(i)).getEndTemp();	
+	}
+	
+	public void setStepRampMin(int i, int m){
+		((MashStep)steps.get(i)).setRampMin(m);
+	}
+	
+	public int getStepRampMin(int i) {
+		return ((MashStep)steps.get(i)).getRampMin();	
+	}
+	
+	public void setStepMin(int i, int m){
+		((MashStep)steps.get(i)).setMinutes(m);
+	}
+	
+	public int getStepMin(int i) {
+		return ((MashStep)steps.get(i)).getMinutes();	
+	}
+
+	public double getStepInfuseVol(int i) {
+		return ((MashStep)steps.get(i)).getInfuseVol().getValue();	
+	}
+	
+	public double getStepDecoctVol(int i) {
+		return ((MashStep)steps.get(i)).getDecoctVol().getValue();	
+	}
+	
+	
+	
+	
+	public int getStepSize(){
+		return steps.size();
+	}
 	
 	// Introducing: the big huge mash calc method!
 
