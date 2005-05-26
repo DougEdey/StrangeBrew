@@ -200,7 +200,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 	private ComboModel cmbHopsUnitsModel;
 	private ArrayList weightList;
 	private ArrayList volList;
-	private JFileChooser fc;
+	private JFileChooser fileChooser;
 	private MashManager mashMgr;
 
 	public Recipe myRecipe;
@@ -224,8 +224,10 @@ public class StrangeSwing extends javax.swing.JFrame {
 		// There has *got* to be a better way to do this:
 		Database db = new Database();
 		String path="";
+		String slash = System.getProperty("file.separator"); 
 		try {
-			path = new File(".").getCanonicalPath() + "\\src\\strangebrew\\data";
+			 path = new File(".").getCanonicalPath() + slash + "src" + slash 
+			 + "strangebrew" + slash + "data";
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -244,10 +246,13 @@ public class StrangeSwing extends javax.swing.JFrame {
 		cmbMaltUnitsModel.setList(weightList);
 		cmbHopsUnitsModel.setList(weightList);
 		
-		fc = new JFileChooser();
+		fileChooser = new JFileChooser();
 		String fcpath = getClass().getProtectionDomain().getCodeSource()
-		.getLocation().toString().substring(6) + "\\";
-		fc.setCurrentDirectory(new File(path));
+		.getLocation().toString().substring(6) + slash;
+		fileChooser.setCurrentDirectory(new File(path));
+		
+		myRecipe = new Recipe();
+		displayRecipe();
 
 	}
 
@@ -1074,9 +1079,9 @@ public class StrangeSwing extends javax.swing.JFrame {
 
 								// Show open dialog; this method does
 								// not return until the dialog is closed
-								int returnVal = fc.showOpenDialog(jMenuBar1);
+								int returnVal = fileChooser.showOpenDialog(jMenuBar1);
 								if (returnVal == JFileChooser.APPROVE_OPTION) {
-									File file = fc.getSelectedFile();
+									File file = fileChooser.getSelectedFile();
 
 									System.out.print("Opening: " + file.getName() + ".\n");
 									ImportXml imp = new ImportXml(file.toString());
@@ -1110,9 +1115,9 @@ public class StrangeSwing extends javax.swing.JFrame {
 								
 								// Show save dialog; this method does
 								// not return until the dialog is closed
-								int returnVal = fc.showSaveDialog(jMenuBar1);
+								int returnVal = fileChooser.showSaveDialog(jMenuBar1);
 								if (returnVal == JFileChooser.APPROVE_OPTION) {
-					                File file = fc.getSelectedFile();
+					                File file = fileChooser.getSelectedFile();
 					                //This is where a real application would save the file.
 					                try {
 					                	FileWriter out = new FileWriter(file);
@@ -1207,8 +1212,8 @@ public class StrangeSwing extends javax.swing.JFrame {
 								System.out.println("mashManagerMenuItem.actionPerformed, event="
 									+ evt);
 								//TODO add your code for mashManagerMenuItem.actionPerformed
-								mashMgr = new MashManager();
-								mashMgr.show();
+								mashMgr = new MashManager(myRecipe);
+								mashMgr.setVisible(true);
 								
 							}
 						});

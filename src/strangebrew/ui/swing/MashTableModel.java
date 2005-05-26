@@ -1,34 +1,41 @@
 /*
- * Created on May 3, 2005
+ * Created on May 26, 2005
  *
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
 package strangebrew.ui.swing;
 
-import java.util.ArrayList;
+/**
+ * @author aavis
+ *
+ * TODO To change the template for this generated type comment go to
+ * Window - Preferences - Java - Code Style - Code Templates
+ */
 import javax.swing.table.AbstractTableModel;
-import strangebrew.Fermentable;
+import strangebrew.Mash.MashStep;
+import strangebrew.Mash;
 
 
-class MaltTableModel extends AbstractTableModel {
-	private final StrangeSwing app;
 
-	private String[] columnNames = {"Malt", "Amount", "Units", "Points",
-			"Lov", "Cost/U", "%"};
+class MashTableModel extends AbstractTableModel {
+	// private final StrangeSwing app;
 
-	private ArrayList data = null;
+	private String[] columnNames = {"Type", "Method", "Start Temp", "End Temp",
+			"Ramp Min", "Step Min", "Infuse", "Decoct"};
 
-	public MaltTableModel(StrangeSwing app) {
-		data = new ArrayList();
-		this.app = app;
+	private Mash data = null;
+
+	public MashTableModel() {
+		// data = new ArrayList();
+		// this.app = app;
 	}
 
-	public void addRow(Fermentable m) {
-		data.add(m);
+	public void addRow(MashStep step) {
+		data.addStep();
 	}
 
-	public void setData(ArrayList d) {
+	public void setData(Mash d) {
 		data = d;
 	}
 
@@ -37,7 +44,10 @@ class MaltTableModel extends AbstractTableModel {
 	}
 
 	public int getRowCount() {
-		return data.size();
+		if (data != null)
+			return data.getStepSize();
+		else
+			return 0;
 	}
 
 	public String getColumnName(int col) {
@@ -45,24 +55,25 @@ class MaltTableModel extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int row, int col) {
-		Fermentable m = (Fermentable) data.get(row);
+		
 		try {
 			switch (col) {
 				case 0 :
-					return m.getName();
+					return data.getStepType(row);
 				case 1 :
-					return new Double(this.app.df1.format(m
-							.getAmountAs(m.getUnits())));
+					return data.getStepMethod(row);
 				case 2 :
-					return m.getUnits();
+					return new Double(data.getStepStartTemp(row));
 				case 3 :
-					return new Double(m.getPppg());
+					return new Double(data.getStepEndTemp(row));
 				case 4 :
-					return new Double(m.getLov());
+					return new Double(data.getStepRampMin(row));
 				case 5 :
-					return new Double(m.getCostPerU());
+					return new Double(data.getStepMin(row));
 				case 6 :
-					return this.app.df1.format(new Double(m.getPercent()));
+					return new Double(data.getStepInfuseVol(row));
+				case 7 :
+					return new Double(data.getStepDecoctVol(row));
 
 			}
 		} catch (Exception e) {
@@ -99,29 +110,30 @@ class MaltTableModel extends AbstractTableModel {
 	 */
 	public void setValueAt(Object value, int row, int col) {
 
-		Fermentable m = (Fermentable) data.get(row);
+		
 		try {
 			switch (col) {
 				case 0 :
-					m.setName(value.toString());
+					data.setStepType(row, value.toString());
 					break;
 				case 1 :
-					m.setAmount(Double.parseDouble(value.toString()));					
+					data.setStepMethod(row, value.toString());					
 					break;
 				case 2 :
-					// m.setUnits(value.toString());
+					data.setStepStartTemp(row, Integer.parseInt(value.toString()));
 					break;
 				case 3 :
-					m.setPppg(Double.parseDouble(value.toString()));
+					data.setStepEndTemp(row, Integer.parseInt(value.toString()));
 					break;
 				case 4 :
-					m.setLov(Double.parseDouble(value.toString()));
+					data.setStepRampMin(row, Integer.parseInt(value.toString()));
 					break;
 				case 5 :
-					m.setCost(value.toString());
+					data.setStepMin(row, Integer.parseInt(value.toString()));
 					break;
 				case 6 :
-					m.setPercent(Double.parseDouble(value.toString()));
+					break;
+				case 7 :
 					break;
 
 			}
@@ -129,8 +141,6 @@ class MaltTableModel extends AbstractTableModel {
 		};
 		fireTableCellUpdated(row, col);
 		fireTableDataChanged();
-		app.myRecipe.calcMaltTotals();
-		app.displayRecipe();
 		
 		
 	}

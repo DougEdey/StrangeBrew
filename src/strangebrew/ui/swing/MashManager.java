@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.1 2005/05/25 18:57:32 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.2 2005/05/26 18:15:21 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -28,20 +28,18 @@ package strangebrew.ui.swing;
 import java.awt.GridBagLayout;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
-import javax.swing.border.BevelBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.border.TitledBorder;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.JTable;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
+
+import strangebrew.Recipe;
 
 public class MashManager extends javax.swing.JFrame implements ActionListener{
 	private JScrollPane jScrollPane1;
@@ -49,18 +47,26 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
 	private JPanel pnlButtons;
 	private JButton btnOk;
 	private JPanel pnlTable;
+	
+	private Recipe myRecipe;
+	private MashTableModel mashModel;
 
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		MashManager inst = new MashManager();
 		inst.setVisible(true);
-	}
+	}*/
 	
-	public MashManager() {
+	public MashManager(Recipe r) {
 		super();
 		initGUI();
+		myRecipe = r;
+		if (myRecipe != null){
+    		mashModel.setData(myRecipe.getMash());   		
+    		
+    	}
 	}
 	
 	private void initGUI() {
@@ -97,12 +103,10 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
 					jScrollPane1 = new JScrollPane();
 					pnlTable.add(jScrollPane1);
 					{
-						TableModel tblMashModel = new DefaultTableModel(new String[][] {
-								{ "One", "Two" }, { "Three", "Four" } }, new String[] { "Column 1",
-								"Column 2" });
+						mashModel = new MashTableModel();
 						tblMash = new JTable();
 						jScrollPane1.setViewportView(tblMash);
-						tblMash.setModel(tblMashModel);
+						tblMash.setModel(mashModel);
 					}
 				}
 			}
@@ -139,11 +143,19 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
 		}
 	}
 	
+	
 	//	Make the button do the same thing as the default close operation
     //(DISPOSE_ON_CLOSE).
     public void actionPerformed(ActionEvent e) {
         setVisible(false);
         dispose();
+    }
+    
+    public void displayMash() {
+    	if (myRecipe != null){
+    		mashModel.setData(myRecipe.getMash());   		
+    		
+    	}
     }
 
 }
