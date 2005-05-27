@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.19 2005/05/17 20:20:06 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.20 2005/05/27 20:26:28 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -33,6 +33,7 @@ public class XmlHandler extends DefaultHandler{
 	private String currentList = null; //current List name
 	private String currentElement = null; // current element name
 	private String importType = null; // the type of recipe we're importing
+	private String descrBuf = ""; // buffer to hold long descriptions
 	
 	// mash step stuff:
 	private String type;
@@ -212,6 +213,8 @@ public class XmlHandler extends DefaultHandler{
 				m = null;
 			} else if (qName.equalsIgnoreCase("ITEM")
 					&& currentList.equalsIgnoreCase("HOPS")) {
+				h.setDescription(descrBuf);
+				descrBuf = "";
 				r.addHop(h);
 				h = null;
 			} else if (qName.equalsIgnoreCase("ITEM")
@@ -318,7 +321,7 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentElement.equalsIgnoreCase("ADD")) {
 				h.setAdd(s);
 			} else if (currentElement.equalsIgnoreCase("DescrLookup")) {
-				h.setDescription(s);
+				descrBuf = descrBuf + s;
 			} else if (currentElement.equalsIgnoreCase("TIME")) {
 				h.setMinutes(Integer.parseInt(s));
 			}
