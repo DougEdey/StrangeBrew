@@ -6,9 +6,9 @@
  */
 package strangebrew.ui.swing;
 
-import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 import strangebrew.Fermentable;
+import strangebrew.Recipe;
 
 
 class MaltTableModel extends AbstractTableModel {
@@ -17,18 +17,18 @@ class MaltTableModel extends AbstractTableModel {
 	private String[] columnNames = {"Malt", "Amount", "Units", "Points",
 			"Lov", "Cost/U", "%"};
 
-	private ArrayList data = null;
+	private Recipe data = null;
 
 	public MaltTableModel(StrangeSwing app) {
-		data = new ArrayList();
+		data = app.myRecipe;
 		this.app = app;
 	}
 
 	public void addRow(Fermentable m) {
-		data.add(m);
+		data.addMalt(m);
 	}
 
-	public void setData(ArrayList d) {
+	public void setData(Recipe d) {
 		data = d;
 	}
 
@@ -37,7 +37,10 @@ class MaltTableModel extends AbstractTableModel {
 	}
 
 	public int getRowCount() {
-		return data.size();
+		if (data != null)
+			return data.getMaltListSize();
+		else
+			return 0;
 	}
 
 	public String getColumnName(int col) {
@@ -45,24 +48,24 @@ class MaltTableModel extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int row, int col) {
-		Fermentable m = (Fermentable) data.get(row);
+		// Fermentable m = (Fermentable) data.get(row);
 		try {
 			switch (col) {
 				case 0 :
-					return m.getName();
+					return data.getMaltName(row);
 				case 1 :
-					return new Double(this.app.df1.format(m
-							.getAmountAs(m.getUnits())));
+					return new Double(data.df1.format(data
+							.getMaltAmountAs(row, data.getMaltUnits(row))));
 				case 2 :
-					return m.getUnits();
+					return data.getMaltUnits(row);
 				case 3 :
-					return new Double(m.getPppg());
+					return new Double(data.getMaltPppg(row));
 				case 4 :
-					return new Double(m.getLov());
+					return new Double(data.getMaltLov(row));
 				case 5 :
-					return new Double(m.getCostPerU());
+					return new Double(data.getMaltCostPerU(row));
 				case 6 :
-					return this.app.df1.format(new Double(m.getPercent()));
+					return data.df1.format(new Double(data.getMaltPercent(row)));
 
 			}
 		} catch (Exception e) {
@@ -99,37 +102,37 @@ class MaltTableModel extends AbstractTableModel {
 	 */
 	public void setValueAt(Object value, int row, int col) {
 
-		Fermentable m = (Fermentable) data.get(row);
+		// Fermentable m = (Fermentable) data.get(row);
 		try {
 			switch (col) {
 				case 0 :
-					m.setName(value.toString());
+					data.setMaltName(row, value.toString());
 					break;
 				case 1 :
-					m.setAmount(Double.parseDouble(value.toString()));					
+					data.setMaltAmount(row, Double.parseDouble(value.toString()));					
 					break;
 				case 2 :
 					// m.setUnits(value.toString());
 					break;
 				case 3 :
-					m.setPppg(Double.parseDouble(value.toString()));
+					data.setMaltPppg(row, Double.parseDouble(value.toString()));
 					break;
 				case 4 :
-					m.setLov(Double.parseDouble(value.toString()));
+					data.setMaltLov(row, Double.parseDouble(value.toString()));
 					break;
 				case 5 :
-					m.setCost(value.toString());
+					data.setMaltCost(row, value.toString());
 					break;
 				case 6 :
-					m.setPercent(Double.parseDouble(value.toString()));
+					// data.setMaltPercent(row, Double.parseDouble(value.toString()));
 					break;
 
 			}
 		} catch (Exception e) {
 		};
-		fireTableCellUpdated(row, col);
-		fireTableDataChanged();
 		app.myRecipe.calcMaltTotals();
+		fireTableCellUpdated(row, col);
+		fireTableDataChanged();		
 		app.displayRecipe();
 		
 		

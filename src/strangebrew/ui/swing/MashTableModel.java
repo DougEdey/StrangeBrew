@@ -16,8 +16,6 @@ import javax.swing.table.AbstractTableModel;
 import strangebrew.Mash.MashStep;
 import strangebrew.Mash;
 
-
-
 class MashTableModel extends AbstractTableModel {
 	// private final StrangeSwing app;
 
@@ -139,6 +137,7 @@ class MashTableModel extends AbstractTableModel {
 			}
 		} catch (Exception e) {
 		};
+		data.calcMashSchedule();
 		fireTableCellUpdated(row, col);
 		fireTableDataChanged();
 		

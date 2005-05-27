@@ -6,10 +6,9 @@
  */
 package strangebrew.ui.swing;
 
-import java.util.ArrayList;
-
 import javax.swing.table.AbstractTableModel;
 
+import strangebrew.Recipe;
 import strangebrew.Hop;
 
 
@@ -19,18 +18,18 @@ class HopsTableModel extends AbstractTableModel {
 	private String[] columnNames = {"Hop", "Form", "Alpha", "Amount",
 			"Units", "Add", "Min", "IBU", "Cost/u"};
 
-	private ArrayList data = null;
+	private Recipe data = null;
 
 	public HopsTableModel(StrangeSwing app) {
-		data = new ArrayList();
+		data = app.myRecipe;
 		this.app = app;
 	}
 
 	public void addRow(Hop h) {
-		data.add(h);
+		data.addHop(h);
 	}
 
-	public void setData(ArrayList d) {
+	public void setData(Recipe d) {
 		data = d;
 	}
 
@@ -39,7 +38,10 @@ class HopsTableModel extends AbstractTableModel {
 	}
 
 	public int getRowCount() {
-		return data.size();
+		if (data != null)
+			return data.getHopsListSize();
+		else
+			return 0;
 	}
 
 	public String getColumnName(int col) {
@@ -47,27 +49,27 @@ class HopsTableModel extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int row, int col) {
-		Hop h = (Hop) data.get(row);
+		// Hop h = (Hop) data.get(row);
 		try {
 			switch (col) {
 				case 0 :
-					return h.getName();
+					return data.getHopName(row);
 				case 1 :
-					return h.getType();
+					return data.getHopType(row);
 				case 2 :
-					return new Double(h.getAlpha());
+					return new Double(data.getHopAlpha(row));
 				case 3 :
-					return new Double(h.getAmountAs(h.getUnits()));
+					return new Double(data.getHopAmountAs(row, data.getHopUnits(row)));
 				case 4 :
-					return h.getUnits();
+					return data.getHopUnits(row);
 				case 5 :
-					return h.getAdd();
+					return data.getHopAdd(row);
 				case 6 :
-					return new Double(h.getMinutes());
+					return new Double(data.getHopMinutes(row));
 				case 7 :
-					return new Double(this.app.df1.format(h.getIBU()));
+					return new Double(data.df1.format(data.getHopIBU(row)));
 				case 8 :
-					return new Double(h.getCostPerU());
+					return new Double(data.getHopCostPerU(row));
 
 			}
 		} catch (Exception e) {
@@ -92,43 +94,43 @@ class HopsTableModel extends AbstractTableModel {
 	
 	  public void setValueAt(Object value, int row, int col) {
 
-		Hop h = (Hop) data.get(row);
+		// Hop h = (Hop) data.get(row);
 		try {
 			switch (col) {
 			case 0:
-				h.setName(value.toString());
+				data.setHopName(row, value.toString());
 				break;
 			case 1:
-				h.setType(value.toString());
+				data.setHopType(row, value.toString());
 				break;
 			case 2:
-				h.setAlpha(Double.parseDouble(value.toString()));
+				data.setHopAlpha(row, Double.parseDouble(value.toString()));
 				break;
 			case 3:
-				h.setAmount(Double.parseDouble(value.toString()));
+				data.setHopAmount(row, Double.parseDouble(value.toString()));
 				break;
 			case 4:
 				// h.setUnits(value.toString());
 				break;
 			case 5:
-				h.setAdd(value.toString());
+				data.setHopAdd(row, value.toString());
 				break;
 			case 6:
-				h.setMinutes(Integer.parseInt(value.toString()));
+				data.setHopMinutes(row, Integer.parseInt(value.toString()));
 				break;
 			case 7:
 				break;
 			case 8:
-				h.setCost(value.toString());
+				data.setHopCost(row, value.toString());
 				break;
 			}
 		} catch (Exception e) {
 		}
 		;
 
-		fireTableCellUpdated(row, col);
-		fireTableDataChanged();
 		app.myRecipe.calcHopsTotals();
+		fireTableCellUpdated(row, col);
+		fireTableDataChanged();		
 		app.displayRecipe();
 	}
 	 

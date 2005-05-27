@@ -35,7 +35,6 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.EventObject;
 
@@ -204,9 +203,6 @@ public class StrangeSwing extends javax.swing.JFrame {
 	private MashManager mashMgr;
 
 	public Recipe myRecipe;
-	DecimalFormat df1 = new DecimalFormat("####.0");
-	DecimalFormat df2 = new DecimalFormat("#.00");
-	DecimalFormat df3 = new DecimalFormat("0.000");
 
 	private final static boolean DEBUG = true;
 
@@ -273,21 +269,21 @@ public class StrangeSwing extends javax.swing.JFrame {
 		spnFG.setValue(new Double(myRecipe.getEstFg()));
 		txtComments.setText(myRecipe.getComments());
 
-		lblIBUvalue.setText(df1.format(myRecipe.getIbu()));
-		lblColourValue.setText(df1.format(myRecipe.getSrm()));
-		lblAlcValue.setText(df1.format(myRecipe.getAlcohol()));
-		tblMaltModel.setData(myRecipe.getFermentablesList());
-		tblHopsModel.setData(myRecipe.getHopsList());
+		lblIBUvalue.setText(myRecipe.df1.format(myRecipe.getIbu()));
+		lblColourValue.setText(myRecipe.df1.format(myRecipe.getSrm()));
+		lblAlcValue.setText(myRecipe.df1.format(myRecipe.getAlcohol()));
+		tblMaltModel.setData(myRecipe);
+		tblHopsModel.setData(myRecipe);
 		tblMaltTotalsModel.setDataVector(new String[][]{{"Totals:",
-				"" + df1.format(myRecipe.getTotalMaltLbs()), myRecipe.getMaltUnits(),
-				"" + df3.format(myRecipe.getEstOg()), "" + df1.format(myRecipe.getSrm()),
-				"$" + df2.format(myRecipe.getTotalMaltCost()), "100"}}, new String[]{"", "", "",
+				"" + myRecipe.df1.format(myRecipe.getTotalMaltLbs()), myRecipe.getMaltUnits(),
+				"" + myRecipe.df3.format(myRecipe.getEstOg()), "" + myRecipe.df1.format(myRecipe.getSrm()),
+				"$" + myRecipe.df2.format(myRecipe.getTotalMaltCost()), "100"}}, new String[]{"", "", "",
 				"", "", "", ""});
 
 		tblHopsTotalsModel.setDataVector(
-				new String[][]{{"Totals:", "", "", "" + df1.format(myRecipe.getTotalHopsOz()),
-						myRecipe.getHopUnits(), "", "", "" + df1.format(myRecipe.getIbu()),
-						"$" + df2.format(myRecipe.getTotalHopsCost())}}, new String[]{"", "", "",
+				new String[][]{{"Totals:", "", "", "" + myRecipe.df1.format(myRecipe.getTotalHopsOz()),
+						myRecipe.getHopUnits(), "", "", "" + myRecipe.df1.format(myRecipe.getIbu()),
+						"$" + myRecipe.df2.format(myRecipe.getTotalHopsCost())}}, new String[]{"", "", "",
 						"", "", "", "", "", ""});
 		// tblMalt.updateUI();
 		// tblHops.updateUI();
@@ -1208,10 +1204,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 						mnuView.add(mashManagerMenuItem);
 						mashManagerMenuItem.setText("Mash Manager...");
 						mashManagerMenuItem.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {
-								System.out.println("mashManagerMenuItem.actionPerformed, event="
-									+ evt);
-								//TODO add your code for mashManagerMenuItem.actionPerformed
+							public void actionPerformed(ActionEvent evt) {														
 								mashMgr = new MashManager(myRecipe);
 								mashMgr.setVisible(true);
 								
