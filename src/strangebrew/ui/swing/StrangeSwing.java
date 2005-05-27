@@ -52,6 +52,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
+import javax.swing.border.BevelBorder;
+import java.awt.event.MouseAdapter;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -120,6 +122,9 @@ public class StrangeSwing extends javax.swing.JFrame {
 	private JPanel pnlHopsButtons;
 	private JButton btnDelMalt;
 	private JButton btnAddMalt;
+	private JTextArea descriptionTextArea;
+	private JScrollPane jScrollPane4;
+	private JPanel descriptionPanel;
 	private JMenuItem mashManagerMenuItem;
 	private JMenu mnuView;
 	private JToolBar tlbMalt;
@@ -305,8 +310,8 @@ public class StrangeSwing extends javax.swing.JFrame {
 				GridBagLayout jPanel2Layout = new GridBagLayout();
 				jPanel2Layout.columnWeights = new double[]{0.1};
 				jPanel2Layout.columnWidths = new int[]{7};
-				jPanel2Layout.rowWeights = new double[]{0.1, 0.1, 0.1};
-				jPanel2Layout.rowHeights = new int[]{7, 7, 7};
+				jPanel2Layout.rowWeights = new double[] {0.1,0.1,0.1,0.1};
+				jPanel2Layout.rowHeights = new int[] {7,7,7,7};
 				pnlMain.setLayout(jPanel2Layout);
 				this.getContentPane().add(pnlMain, BorderLayout.CENTER);
 				{
@@ -799,6 +804,13 @@ public class StrangeSwing extends javax.swing.JFrame {
 								tblMalt = new JTable();
 								jScrollPane1.setViewportView(tblMalt);
 								tblMalt.setModel(tblMaltModel);
+								tblMalt.addMouseListener(new MouseAdapter() {
+									public void mouseClicked(MouseEvent evt) {
+										System.out.println("tblMalt.mouseClicked, event=" + evt);
+										int i = tblMalt.getSelectedRow();
+										descriptionTextArea.setText(myRecipe.getMaltDescription(i));
+									}
+								});
 								TableColumn maltColumn = tblMalt.getColumnModel().getColumn(0);
 
 								// set up malt list combo
@@ -952,6 +964,12 @@ public class StrangeSwing extends javax.swing.JFrame {
 								tblHops = new JTable();
 								jScrollPane2.setViewportView(tblHops);
 								tblHops.setModel(tblHopsModel);
+								tblHops.addMouseListener(new MouseAdapter() {
+									public void mouseClicked(MouseEvent evt) {										
+										int i = tblHops.getSelectedRow();
+										descriptionTextArea.setText(myRecipe.getHopDescription(i));
+									}
+								});
 								TableColumn hopColumn = tblHops.getColumnModel().getColumn(0);
 								JComboBox hopComboBox = new JComboBox();
 								cmbHopsModel = new ComboModel();
@@ -1043,6 +1061,36 @@ public class StrangeSwing extends javax.swing.JFrame {
 						}
 					}
 
+				}
+				{
+					descriptionPanel = new JPanel();
+					BoxLayout descriptionPanelLayout = new BoxLayout(descriptionPanel, javax.swing.BoxLayout.X_AXIS);
+					descriptionPanel.setLayout(descriptionPanelLayout);
+					pnlMain.add(descriptionPanel, new GridBagConstraints(
+						0,
+						3,
+						1,
+						1,
+						0.0,
+						0.0,
+						GridBagConstraints.CENTER,
+						GridBagConstraints.HORIZONTAL,
+						new Insets(0, 0, 0, 0),
+						0,
+						0));
+					descriptionPanel.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
+					{
+						jScrollPane4 = new JScrollPane();
+						descriptionPanel.add(jScrollPane4);
+						jScrollPane4.setPreferredSize(new java.awt.Dimension(496, 20));
+						{
+							descriptionTextArea = new JTextArea();
+							jScrollPane4.setViewportView(descriptionTextArea);
+							descriptionTextArea.setText("Description");
+							descriptionTextArea.setLineWrap(true);
+							descriptionTextArea.setFont(new java.awt.Font("Dialog",0,10));
+						}
+					}
 				}
 			}
 			{

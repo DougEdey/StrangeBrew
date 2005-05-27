@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.3 2005/05/27 16:21:19 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.4 2005/05/27 20:26:54 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -44,9 +44,11 @@ import javax.swing.JRadioButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JTextArea;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
 import strangebrew.Recipe;
-
 
 public class MashManager extends javax.swing.JFrame implements ActionListener{
 	private JScrollPane jScrollPane1;
@@ -57,6 +59,8 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
 	private JButton addStepButton;
 	private JLabel recipeNameLabel;
 	private JLabel titleLabel;
+	private JPanel directionsPanel;
+	private JTextArea directionsTextArea;
 	private ButtonGroup tempUnitsButtonGroup;
 	private JComboBox volUnitsCombo;
 	private JPanel volUnitsPanel;
@@ -162,6 +166,12 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
 						tblMash = new JTable();
 						jScrollPane1.setViewportView(tblMash);
 						tblMash.setModel(mashModel);
+						tblMash.addMouseListener(new MouseAdapter() {
+							public void mouseClicked(MouseEvent evt) {
+								int i = tblMash.getSelectedRow();
+								directionsTextArea.setText(myRecipe.mash.getStepDirections(i));
+							}
+						});
 					}
 				}
 				{
@@ -242,6 +252,22 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
 						volUnitsCombo.setModel(volUnitsComboModel);
 					}
 				}
+				{
+					directionsPanel = new JPanel();
+					settingsPanel.add(directionsPanel);
+					BorderLayout directionsPanelLayout = new BorderLayout();
+					directionsPanel.setLayout(directionsPanelLayout);
+					directionsPanel.setBorder(BorderFactory.createTitledBorder("Directions"));
+					directionsPanel.setPreferredSize(new java.awt.Dimension(181, 75));
+					{
+						directionsTextArea = new JTextArea();
+						directionsPanel.add(directionsTextArea, BorderLayout.CENTER);
+						directionsTextArea.setText("Directions");
+						directionsTextArea.setPreferredSize(new java.awt.Dimension(171, 38));
+						directionsTextArea.setEditable(false);
+						directionsTextArea.setLineWrap(true);
+					}
+				}
 			}
 			{
 				pnlButtons = new JPanel();
@@ -285,19 +311,25 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
     }
     
     public void displayMash() {
-    	if (myRecipe != null){
-    		mashModel.setData(myRecipe.getMash());   		
+    	if (myRecipe != null){    		
+    		recipeNameLabel.setText(myRecipe.getName());
+    		mashModel.setData(myRecipe.getMash()); 
+    		tblMash.updateUI();
+    		
     		
     	}
     }
     
     private void addStepButtonActionPerformed(ActionEvent evt) {
-		myRecipe.mash.addStep();		
+		myRecipe.mash.addStep();	
+		tblMash.updateUI();
 		
 	}
 	
 	private void delStepButtonActionPerformed(ActionEvent evt) {
-		// myRecipe.mash.de
+		int i = tblMash.getSelectedRow();
+		myRecipe.mash.delStep(i);
+		tblMash.updateUI();
 		
 	}
 
