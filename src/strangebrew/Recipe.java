@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.36 2005/05/27 16:21:02 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.37 2005/05/27 20:26:41 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -138,6 +138,7 @@ public class Recipe {
 	public double getHopIBU(int i){ return ((Hop)hops.get(i)).getIBU(); }
 	public double getHopCostPerU(int i){ return ((Hop)hops.get(i)).getCostPerU(); }
 	public double getHopAmountAs(int i, String s ){ return ((Hop)hops.get(i)).getAmountAs(s); }
+	public String getHopDescription(int i){ return ((Hop)hops.get(i)).getDescription(); }
 	
 	// hop list set functions
 	public void setHopUnits(int i, String u) { ((Hop)hops.get(i)).setUnits(u); }
@@ -159,6 +160,7 @@ public class Recipe {
 	public double getMaltCostPerU(int i){ return ((Fermentable)fermentables.get(i)).getCostPerU(); }
 	public double getMaltPercent(int i){ return ((Fermentable)fermentables.get(i)).getPercent(); }
 	public double getMaltAmountAs(int i, String s){ return ((Fermentable)fermentables.get(i)).getAmountAs(s); }
+	public String getMaltDescription(int i){ return ((Fermentable)fermentables.get(i)).getDescription(); }
 	
 	// fermentable set methods
 	public void setMaltName(int i, String n) {((Fermentable)fermentables.get(i)).setName(n); }

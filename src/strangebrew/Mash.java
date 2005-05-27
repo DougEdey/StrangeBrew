@@ -3,7 +3,7 @@ package strangebrew;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 /**
- * $Id: Mash.java,v 1.7 2005/05/27 16:21:02 andrew_avis Exp $
+ * $Id: Mash.java,v 1.8 2005/05/27 20:26:41 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -33,7 +33,7 @@ public class Mash {
 	private ArrayList steps = new ArrayList();
 	
 	// format:
-	public DecimalFormat df1 = new DecimalFormat("#.0");
+	public DecimalFormat df1 = new DecimalFormat("#####0.0");
 	
 	public Mash(){
 
@@ -165,6 +165,13 @@ public class Mash {
 		steps.add(step);
 		calcMashSchedule();
 	}
+	
+	public void delStep(int i){
+		if (steps.size()>i && !steps.isEmpty()){			
+			steps.remove(i);
+		}
+			
+	}
 
 	// set methods:
 	public void setMaltWeight(double mw) {	maltWeightLbs = mw;	}
@@ -188,6 +195,10 @@ public class Mash {
 	}
 	
 	
+	public String getStepDirections(int i){
+		return ((MashStep)steps.get(i)).getDirections();
+	}
+	
 	public void setStepMethod(int i, String m){
 		((MashStep)steps.get(i)).setMethod(m);
 	}
@@ -198,6 +209,7 @@ public class Mash {
 	
 	public void setStepStartTemp(int i, int t){
 		((MashStep)steps.get(i)).setStartTemp(t);
+		((MashStep)steps.get(i)).setType(calcStepType(t));
 	}
 	
 	public double getStepStartTemp(int i) {
@@ -325,8 +337,8 @@ public class Mash {
 				stp.infuseVol.setQuantity(null, "qt", waterAddedQTS);
 				if (tempUnits == "C")
 					strikeTemp = 100;
-				stp.directions = "Add " + stp.infuseVol.getValueAs(volUnits) + " " + volUnits
-						+ " of water at " + strikeTemp + " " + tempUnits;
+				stp.directions = "Add " + df1.format(stp.infuseVol.getValueAs(volUnits)) + " " + volUnits
+						+ " of water at " + df1.format(strikeTemp) + " " + tempUnits;
 
 				mashWaterQTS += waterAddedQTS;
 				mashVolQTS += waterAddedQTS;
@@ -344,7 +356,7 @@ public class Mash {
 
 				// Updated the decoction, convert to right units & make directions
 				double decoctConv = decoct;
-				stp.directions = "Remove " + decoctConv + " " + volUnits
+				stp.directions = "Remove " + df1.format(decoctConv) + " " + volUnits
 						+ " of mash, boil, and return to mash.";
 
 			} else if (stp.method.equals("direct")) { // calculate a direct heat step
@@ -387,22 +399,22 @@ public class Mash {
 		String stepType = "none";
 		// less than 90, none
 		// 90 - 103 - acid
-		if (temp > 90)
+		if (temp > 89 && temp < 104)
 			stepType = "acid";
 		// 103 - 110 - gluten
-		else if (temp > 103)
+		else if (temp < 111)
 			stepType = "gluten";
 		// 110 - 135 protein
-		else if (temp > 110)
+		else if (temp < 136)
 			stepType = "protein";
 		// 135 - 149 beta
-		else if (temp > 135)
+		else if (temp < 150)
 			stepType = "beta";
 		// 150-160 alpha
-		else if (temp > 150)
+		else if (temp < 161)
 			stepType = "alpha";
 		// 160-169, mashout
-		else if (temp > 160)
+		else if (temp < 170)
 			stepType = "mashout";
 		// over 170, sparge
 		else if (temp >= 170)
