@@ -1,8 +1,9 @@
 package strangebrew;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 /**
- * $Id: Mash.java,v 1.6 2005/05/26 18:14:58 andrew_avis Exp $
+ * $Id: Mash.java,v 1.7 2005/05/27 16:21:02 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -30,6 +31,9 @@ public class Mash {
 	
 	// steps:
 	private ArrayList steps = new ArrayList();
+	
+	// format:
+	public DecimalFormat df1 = new DecimalFormat("#.0");
 	
 	public Mash(){
 
@@ -298,8 +302,8 @@ public class Mash {
 
 		if (tempUnits == "C")
 			strikeTemp = fToC(strikeTemp);
-		stp.directions = "Mash in with " + stp.infuseVol.getValueAs(volUnits) + " " + volUnits
-				+ " of water at " + strikeTemp + " " + tempUnits;
+		stp.directions = "Mash in with " + df1.format(stp.infuseVol.getValueAs(volUnits)) + " " + volUnits
+				+ " of water at " + df1.format(strikeTemp) + " " + tempUnits;
 
 		// set TargetTemp to the end temp
 		targetTemp = stp.endTemp;

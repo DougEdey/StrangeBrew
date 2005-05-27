@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.35 2005/05/26 18:14:58 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.36 2005/05/27 16:21:02 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -71,6 +71,11 @@ public class Recipe {
 	private ArrayList hops = new ArrayList();
 	private ArrayList fermentables = new ArrayList();
 	private ArrayList misc = new ArrayList();
+	
+	// formats
+	public DecimalFormat df1 = new DecimalFormat("####.0");
+	public DecimalFormat df2 = new DecimalFormat("#.00");
+	public DecimalFormat df3 = new DecimalFormat("0.000");
 
 	// default constuctor
 	public Recipe() {
@@ -101,10 +106,7 @@ public class Recipe {
 	public double getEfficiency(){ return efficiency; }
 	public double getEstOg(){ return estOg; }	
 	public double getEstFg(){ return estFg; }
-	public ArrayList getFermentablesList() { return fermentables; }
-	public ArrayList getHopsList() { return hops; }
-	public Mash getMash() { return mash; }
-	public String getHopUnits(){ return hopUnits; }
+	public Mash getMash() { return mash; }	
 	public double getIbu(){ return ibu; }	
 	public String getIBUMethod(){ return ibuCalcMethod; }
 	public String getMaltUnits(){ return maltUnits; }
@@ -123,7 +125,49 @@ public class Recipe {
 	public String getYeast(){ return yeast.getName();}	
 	public Yeast getYeastObj(){ return yeast;}
 	
-
+	// hop list get functions:
+	public String getHopUnits(){ return hopUnits; }
+	public ArrayList getHopsList() { return hops; }
+	public int getHopsListSize() { return hops.size(); }
+	public String getHopName(int i){ return ((Hop)hops.get(i)).getName(); }
+	public String getHopType(int i){ return ((Hop)hops.get(i)).getType(); }
+	public double getHopAlpha(int i){ return ((Hop)hops.get(i)).getAlpha(); }
+	public String getHopUnits(int i){ return ((Hop)hops.get(i)).getUnits(); }
+	public String getHopAdd(int i){ return ((Hop)hops.get(i)).getAdd(); }
+	public int getHopMinutes(int i){ return ((Hop)hops.get(i)).getMinutes(); }
+	public double getHopIBU(int i){ return ((Hop)hops.get(i)).getIBU(); }
+	public double getHopCostPerU(int i){ return ((Hop)hops.get(i)).getCostPerU(); }
+	public double getHopAmountAs(int i, String s ){ return ((Hop)hops.get(i)).getAmountAs(s); }
+	
+	// hop list set functions
+	public void setHopUnits(int i, String u) { ((Hop)hops.get(i)).setUnits(u); }
+	public void setHopName(int i, String n) { ((Hop)hops.get(i)).setName(n); }
+	public void setHopType(int i, String t) { ((Hop)hops.get(i)).setType(t); }
+	public void setHopAdd(int i, String a) { ((Hop)hops.get(i)).setAdd(a); }
+	public void setHopAlpha(int i, double a) { ((Hop)hops.get(i)).setAlpha(a); }
+	public void setHopMinutes(int i, int m) { ((Hop)hops.get(i)).setMinutes(m); }
+	public void setHopCost(int i, String c) { ((Hop)hops.get(i)).setCost(c); }
+	public void setHopAmount(int i, double a) { ((Hop)hops.get(i)).setAmount(a); }
+	
+	// fermentable get methods
+	public ArrayList getFermentablesList() { return fermentables; }
+	public int getMaltListSize() { return fermentables.size(); }
+	public String getMaltName(int i){ return ((Fermentable)fermentables.get(i)).getName(); }
+	public String getMaltUnits(int i){ return ((Fermentable)fermentables.get(i)).getUnits(); }
+	public double getMaltPppg(int i){ return ((Fermentable)fermentables.get(i)).getPppg(); }
+	public double getMaltLov(int i){ return ((Fermentable)fermentables.get(i)).getLov(); }
+	public double getMaltCostPerU(int i){ return ((Fermentable)fermentables.get(i)).getCostPerU(); }
+	public double getMaltPercent(int i){ return ((Fermentable)fermentables.get(i)).getPercent(); }
+	public double getMaltAmountAs(int i, String s){ return ((Fermentable)fermentables.get(i)).getAmountAs(s); }
+	
+	// fermentable set methods
+	public void setMaltName(int i, String n) {((Fermentable)fermentables.get(i)).setName(n); }
+	public void setMaltUnits(int i, String u) {((Fermentable)fermentables.get(i)).setUnits(u); }
+	public void setMaltAmount(int i, double a) {((Fermentable)fermentables.get(i)).setAmount(a); }
+	public void setMaltPppg(int i, double p) {((Fermentable)fermentables.get(i)).setPppg(p); }
+	public void setMaltLov(int i, double l) {((Fermentable)fermentables.get(i)).setLov(l); }
+	public void setMaltCost(int i, String c) {((Fermentable)fermentables.get(i)).setCost(c); }
+	
 	// Set functions:
 
 	public void setBoilMinutes(int b) { boilMinutes = b; }
@@ -140,8 +184,6 @@ public class Recipe {
 	public void setStyle(Style s) { style = s; }
 	public void setYeastName(String s) { yeast.setName(s); }
 	public void setYeast(Yeast y) { yeast = y; }
-	
-
 	
 	
 	// Setters that need to do extra work:
@@ -453,13 +495,13 @@ public class Recipe {
 		sb.append("  <NAME>" + name + "</NAME>\n");
 		sb.append("  <NOTES>" + comments + "</NOTES>\n");
 		sb.append("  <EFFICIENCY>" + efficiency + "</EFFICIENCY>\n");
-		sb.append("  <OG>" + estOg + "</OG>\n");
-		sb.append("  <FG>" + estFg + "</FG>\n");
+		sb.append("  <OG>" + df3.format(estOg) + "</OG>\n");
+		sb.append("  <FG>" + df3.format(estFg) + "</FG>\n");
 		sb.append("  <STYLE>" + style.getName() + "</STYLE>\n");
 		sb.append("  <MASH>" + mashed + "</MASH>\n");
-		sb.append("  <LOV>" + srm + "</LOV>\n");
-		sb.append("  <IBU>" + ibu + "</IBU>\n");
-		sb.append("  <ALC>" + alcohol + "</ALC>\n");
+		sb.append("  <LOV>" + df1.format(srm) + "</LOV>\n");
+		sb.append("  <IBU>" + df1.format(ibu) + "</IBU>\n");
+		sb.append("  <ALC>" + df1.format(alcohol) + "</ALC>\n");
 		sb.append("  <BOIL_TIME>" + boilMinutes + "</BOIL_TIME>\n");
 		sb.append("  <PRESIZE>" + preBoilVol.getValue() + "</PRESIZE>\n");
 		sb.append("  <SIZE>" + postBoilVol.getValue() + "</SIZE>\n");
