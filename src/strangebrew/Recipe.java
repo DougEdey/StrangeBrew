@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.37 2005/05/27 20:26:41 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.38 2005/05/30 17:24:48 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -28,6 +28,8 @@ import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -146,7 +148,11 @@ public class Recipe {
 	public void setHopType(int i, String t) { ((Hop)hops.get(i)).setType(t); }
 	public void setHopAdd(int i, String a) { ((Hop)hops.get(i)).setAdd(a); }
 	public void setHopAlpha(int i, double a) { ((Hop)hops.get(i)).setAlpha(a); }
-	public void setHopMinutes(int i, int m) { ((Hop)hops.get(i)).setMinutes(m); }
+	public void setHopMinutes(int i, int m) { 
+		// have to re-sort hops
+		((Hop)hops.get(i)).setMinutes(m); 
+		Collections.sort(hops, new ingrComparator());
+		}
 	public void setHopCost(int i, String c) { ((Hop)hops.get(i)).setCost(c); }
 	public void setHopAmount(int i, double a) { ((Hop)hops.get(i)).setAmount(a); }
 	
@@ -163,7 +169,11 @@ public class Recipe {
 	public String getMaltDescription(int i){ return ((Fermentable)fermentables.get(i)).getDescription(); }
 	
 	// fermentable set methods
-	public void setMaltName(int i, String n) {((Fermentable)fermentables.get(i)).setName(n); }
+	public void setMaltName(int i, String n) {
+		// have to re-sort
+		((Fermentable)fermentables.get(i)).setName(n); 
+		Collections.sort(fermentables, new ingrComparator());
+		}
 	public void setMaltUnits(int i, String u) {((Fermentable)fermentables.get(i)).setUnits(u); }
 	public void setMaltAmount(int i, double a) {((Fermentable)fermentables.get(i)).setAmount(a); }
 	public void setMaltPppg(int i, double p) {((Fermentable)fermentables.get(i)).setPppg(p); }
@@ -251,6 +261,7 @@ public class Recipe {
 	 */
 	public void addMalt(Fermentable m) { 
 		fermentables.add(m);
+		Collections.sort(fermentables, new ingrComparator());
 		calcMaltTotals();
 		}
 	public void delMalt(int i) {
@@ -261,6 +272,7 @@ public class Recipe {
 		}
 	public void addHop(Hop h) { 
 		hops.add(h);
+		Collections.sort(hops, new ingrComparator());
 		calcHopsTotals();
 		}
 	public void delHop(int i){
@@ -630,6 +642,34 @@ public class Recipe {
 
 
 		return sb.toString();
+	}
+	
+	/**
+	 * 
+	 * @author aavis
+	 *
+	 * ingredient comparator to help sort lists of malts / hops
+	 * 
+	 */
+	public class ingrComparator implements Comparator {
+
+		
+		public int compare(Object a, Object b) {
+			if (a.getClass().getName().equalsIgnoreCase("strangebrew.Fermentable")) {
+				// sort malts by name, default
+				// TODO: read sort order option to sort by other parameters
+				int result = ((Fermentable)a).getName().compareTo(((Fermentable)b).getName());
+				return (result == 0 ? -1 : result);
+			} else if (a.getClass().getName().equalsIgnoreCase("strangebrew.Hop")) {
+				// sort hop additions by minutes
+				Integer a1 = new Integer(((Hop)a).getMinutes());
+				Integer b1 = new Integer(((Hop)b).getMinutes());				
+				int result = a1.compareTo(b1);
+				return (result == 0 ? -1 : result);
+			}
+			else return 0;
+		}
+
 	}
 	
 
