@@ -190,6 +190,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 	private JMenuItem newFileMenuItem;
 	private JMenu jMenu3;
 	private JMenuBar jMenuBar1;
+	private JMenuItem exportTextMenuItem;
 
 	private MaltTableModel tblMaltModel;
 	private DefaultTableModel tblMaltTotalsModel;
@@ -238,8 +239,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 		cmbStyleModel.setList(db.styleDB);
 		cmbYeastModel.setList(db.yeastDB);
 		cmbMaltModel.setList(db.fermDB);
-		cmbHopsModel.setList(db.hopsDB);
-		// myRecipe = new Recipe();
+		cmbHopsModel.setList(db.hopsDB);		
 		Quantity q = new Quantity();
 		weightList = new ArrayList(q.getListofUnits("weight"));
 		volList = new ArrayList(q.getListofUnits("vol"));
@@ -253,19 +253,30 @@ public class StrangeSwing extends javax.swing.JFrame {
 		fileChooser.setCurrentDirectory(new File(path));
 		
 		myRecipe = new Recipe();
+		attachRecipeData();
 		displayRecipe();
 
 	}
 
+	public void attachRecipeData(){
+		// this method attaches data from the recipe to the tables 
+		// and comboboxes
+		// use whenever the Recipe changes
+		cmbStyleModel.addOrInsert(myRecipe.getStyleObj());
+		cmbYeastModel.addOrInsert(myRecipe.getYeastObj());
+		cmbSizeUnitsModel.addOrInsert(myRecipe.getVolUnits());
+		tblMaltModel.setData(myRecipe);
+		tblHopsModel.setData(myRecipe);
+		tblMalt.updateUI();
+		tblHops.updateUI();		
+	}
+	
 	public void displayRecipe() {
 		if (myRecipe == null)
 			return;
 		txtName.setText(myRecipe.getName());
-		txtBrewer.setText(myRecipe.getBrewer());
-		cmbStyleModel.addOrInsert(myRecipe.getStyleObj());
-		cmbYeastModel.addOrInsert(myRecipe.getYeastObj());
-		txtPreBoil.setValue(new Double(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));
-		cmbSizeUnitsModel.addOrInsert(myRecipe.getVolUnits());
+		txtBrewer.setText(myRecipe.getBrewer());		
+		txtPreBoil.setValue(new Double(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));		
 		lblSizeUnits.setText(myRecipe.getVolUnits());
 		txtPostBoil.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
 		spnEffic.setValue(new Double(myRecipe.getEfficiency()));
@@ -273,25 +284,20 @@ public class StrangeSwing extends javax.swing.JFrame {
 		spnOG.setValue(new Double(myRecipe.getEstOg()));
 		spnFG.setValue(new Double(myRecipe.getEstFg()));
 		txtComments.setText(myRecipe.getComments());
-
 		lblIBUvalue.setText(myRecipe.df1.format(myRecipe.getIbu()));
 		lblColourValue.setText(myRecipe.df1.format(myRecipe.getSrm()));
 		lblAlcValue.setText(myRecipe.df1.format(myRecipe.getAlcohol()));
-		tblMaltModel.setData(myRecipe);
-		tblHopsModel.setData(myRecipe);
 		tblMaltTotalsModel.setDataVector(new String[][]{{"Totals:",
-				"" + myRecipe.df1.format(myRecipe.getTotalMaltLbs()), myRecipe.getMaltUnits(),
-				"" + myRecipe.df3.format(myRecipe.getEstOg()), "" + myRecipe.df1.format(myRecipe.getSrm()),
-				"$" + myRecipe.df2.format(myRecipe.getTotalMaltCost()), "100"}}, new String[]{"", "", "",
-				"", "", "", ""});
+			"" + myRecipe.df1.format(myRecipe.getTotalMaltLbs()), myRecipe.getMaltUnits(),
+			"" + myRecipe.df3.format(myRecipe.getEstOg()), "" + myRecipe.df1.format(myRecipe.getSrm()),
+			"$" + myRecipe.df2.format(myRecipe.getTotalMaltCost()), "100"}}, new String[]{"", "", "",
+			"", "", "", ""});
 
 		tblHopsTotalsModel.setDataVector(
-				new String[][]{{"Totals:", "", "", "" + myRecipe.df1.format(myRecipe.getTotalHopsOz()),
-						myRecipe.getHopUnits(), "", "", "" + myRecipe.df1.format(myRecipe.getIbu()),
-						"$" + myRecipe.df2.format(myRecipe.getTotalHopsCost())}}, new String[]{"", "", "",
-						"", "", "", "", "", ""});
-		// tblMalt.updateUI();
-		// tblHops.updateUI();
+			new String[][]{{"Totals:", "", "", "" + myRecipe.df1.format(myRecipe.getTotalHopsOz()),
+					myRecipe.getHopUnits(), "", "", "" + myRecipe.df1.format(myRecipe.getIbu()),
+					"$" + myRecipe.df2.format(myRecipe.getTotalHopsCost())}}, new String[]{"", "", "",
+					"", "", "", "", "", ""});
 
 	}
 
@@ -512,7 +518,6 @@ public class StrangeSwing extends javax.swing.JFrame {
 							txtPostBoil.setText("Post Boil");
 							txtPostBoil.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									System.out.println("txtPostBoil.actionPerformed, event=" + evt);
 									myRecipe.setPostBoil(Double.parseDouble(txtPostBoil.getText()
 											.toString()));
 									displayRecipe();
@@ -805,8 +810,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 								jScrollPane1.setViewportView(tblMalt);
 								tblMalt.setModel(tblMaltModel);
 								tblMalt.addMouseListener(new MouseAdapter() {
-									public void mouseClicked(MouseEvent evt) {
-										System.out.println("tblMalt.mouseClicked, event=" + evt);
+									public void mouseClicked(MouseEvent evt) {										
 										int i = tblMalt.getSelectedRow();
 										descriptionTextArea.setText(myRecipe.getMaltDescription(i));
 									}
@@ -915,9 +919,9 @@ public class StrangeSwing extends javax.swing.JFrame {
 									public void actionPerformed(ActionEvent evt) {
 										if (myRecipe != null) {
 											Fermentable f = new Fermentable(myRecipe.getMaltUnits());
-											myRecipe.addMalt(f);
-											displayRecipe();
+											myRecipe.addMalt(f);											
 											tblMalt.updateUI();
+											displayRecipe();
 										}
 									}
 								});
@@ -931,6 +935,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 										if (myRecipe != null) {
 											int i = tblMalt.getSelectedRow();
 											myRecipe.delMalt(i);
+											tblMalt.updateUI();
 											displayRecipe();
 										}
 
@@ -1038,6 +1043,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 										if (myRecipe != null) {
 											Hop h = new Hop(myRecipe.getHopUnits());
 											myRecipe.addHop(h);
+											tblHops.updateUI();
 											displayRecipe();
 
 										}
@@ -1053,6 +1059,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 										if (myRecipe != null) {
 											int i = tblHops.getSelectedRow();
 											myRecipe.delHop(i);
+											tblHops.updateUI();
 											displayRecipe();
 										}
 									}
@@ -1109,6 +1116,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 								// This is just a test right now to see that
 								// stuff is changed.
 								myRecipe = new Recipe();
+								attachRecipeData();
 								displayRecipe();
 
 							}
@@ -1134,6 +1142,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 									myRecipe.calcHopsTotals();
 									myRecipe.mash.setMaltWeight(myRecipe.getTotalMashLbs());
 									myRecipe.mash.calcMashSchedule();
+									attachRecipeData();
 									displayRecipe();
 								} else {
 									System.out.print("Open command cancelled by user.\n");
@@ -1153,9 +1162,11 @@ public class StrangeSwing extends javax.swing.JFrame {
 						saveAsMenuItem.setText("Save As ...");
 						saveAsMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt)  {
-								// This is just a test right now to see that
-								// stuff is changed.
-								System.out.print(myRecipe.toXML());
+								if (DEBUG){
+									// This is just a test right now to see that
+									// stuff is changed.
+									System.out.print(myRecipe.toXML());
+								}
 								
 								// Show save dialog; this method does
 								// not return until the dialog is closed
@@ -1187,12 +1198,48 @@ public class StrangeSwing extends javax.swing.JFrame {
 							exportHTMLmenu.setText("HTML");
 							exportHTMLmenu.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
+									// Show save dialog; this method does
+									// not return until the dialog is closed	
+									fileChooser.setSelectedFile(new File(myRecipe.getName()+".html"));
+									
+									int returnVal = fileChooser.showSaveDialog(jMenuBar1);
+									if (returnVal == JFileChooser.APPROVE_OPTION) {
+						                File file = fileChooser.getSelectedFile();						                
+						                //This is where a real application would save the file.
+						                try {
+						                	saveAsHTML(file);
+						                } catch (Exception e){
+						                // TODO: handle io exception
+						                }
+						            } else {
+						            	System.out.print("Save command cancelled by user.\n");
+						            }			
 
-									try {
-										saveAsHTML();
-									} catch (Exception e) {
-
-									}
+								}
+							});
+							
+							exportTextMenuItem = new JMenuItem();
+							exportMenu.add(exportTextMenuItem);
+							exportTextMenuItem.setText("Text");
+							exportTextMenuItem.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									// Show save dialog; this method does
+									// not return until the dialog is closed
+									fileChooser.setSelectedFile(new File(myRecipe.getName()+".txt"));
+									int returnVal = fileChooser.showSaveDialog(jMenuBar1);
+									if (returnVal == JFileChooser.APPROVE_OPTION) {
+						                File file = fileChooser.getSelectedFile();
+						                //This is where a real application would save the file.
+						                try {
+						                	FileWriter out = new FileWriter(file);
+						                	out.write(myRecipe.toText());
+						                	out.close();
+						                } catch (Exception e){
+						                // TODO: handle io exception
+						                }
+						            } else {
+						            	System.out.print("Export text command cancelled by user.\n");
+						            }			
 
 								}
 							});
@@ -1293,16 +1340,16 @@ public class StrangeSwing extends javax.swing.JFrame {
 		});
 	}
 
-	public void saveAsHTML() throws Exception {
+	public void saveAsHTML(File f) throws Exception {
 		// save file as xml, then transform it to html
 		File tmp = new File("tmp.xml");
 		FileWriter out = new FileWriter(tmp);
 		out.write(myRecipe.toXML());
 		out.close();
-		String htmlFileName = myRecipe.getName() + ".html";
-		File htmlFile = new File(htmlFileName);
-		FileOutputStream output = new java.io.FileOutputStream(htmlFile);
+		String htmlFileName = myRecipe.getName() + ".html";		
+		FileOutputStream output = new java.io.FileOutputStream(f);
 		XmlTransformer.writeStream("tmp.xml", "src/strangebrew/data/recipeToHtml.xslt", output);
+		tmp.delete();
 
 	}
 
