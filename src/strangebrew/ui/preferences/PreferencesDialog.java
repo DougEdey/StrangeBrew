@@ -34,7 +34,7 @@ public class PreferencesDialog extends JDialog
 		layoutUi();
 	}
 
-	PreferencesDialog(Frame owner, Options settings)
+	public PreferencesDialog(Frame owner, Options settings)
 	{
 		super(owner, "Recipe Preferences", true);
 		layoutUi();
