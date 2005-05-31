@@ -2,8 +2,11 @@ package strangebrew;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Collections;
+
 /**
- * $Id: Mash.java,v 1.8 2005/05/27 20:26:41 andrew_avis Exp $
+ * $Id: Mash.java,v 1.9 2005/05/31 18:05:58 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -156,7 +159,7 @@ public class Mash {
 	public void addStep(String t, double st, double et, String tu, String m, int min,
 			int rmin) {
 		MashStep step = new MashStep(t, st, et, tu, m, min, rmin);
-		steps.add(step);
+		steps.add(step);		
 		calcMashSchedule();
 	}
 	
@@ -169,6 +172,7 @@ public class Mash {
 	public void delStep(int i){
 		if (steps.size()>i && !steps.isEmpty()){			
 			steps.remove(i);
+			calcMashSchedule();
 		}
 			
 	}
@@ -177,6 +181,15 @@ public class Mash {
 	public void setMaltWeight(double mw) {	maltWeightLbs = mw;	}
 	public void setMashRatio(double mr){ mashRatio = mr; }	
 	public void setMashRatioU(String u){ mashRatioU = u;}
+	public void setMashVolUnits(String u){ 
+		volUnits = u;
+		calcMashSchedule();
+	}
+	
+	public void setMashTempUnits(String t){
+		tempUnits = t;
+		calcMashSchedule();
+	}
 	
 	// mash step methods:
 	public int setStepType(int i, String t){
@@ -184,6 +197,8 @@ public class Mash {
 			return -1;
 		MashStep ms = (MashStep)steps.get(i);
 		ms.setType(t);
+		ms.setStartTemp(calcStepTemp(t));
+		ms.setEndTemp(calcStepTemp(t));
 		return 0;
 	}
 	
@@ -201,6 +216,7 @@ public class Mash {
 	
 	public void setStepMethod(int i, String m){
 		((MashStep)steps.get(i)).setMethod(m);
+		calcMashSchedule();
 	}
 	
 	public String getStepMethod(int i) {
@@ -209,7 +225,10 @@ public class Mash {
 	
 	public void setStepStartTemp(int i, int t){
 		((MashStep)steps.get(i)).setStartTemp(t);
-		((MashStep)steps.get(i)).setType(calcStepType(t));
+		((MashStep)steps.get(i)).setEndTemp(t);
+		((MashStep)steps.get(i)).setType(calcStepType(t));		
+		calcMashSchedule();
+		
 	}
 	
 	public double getStepStartTemp(int i) {
@@ -294,6 +313,9 @@ public class Mash {
 		// perform calcs on first record	  
 		if (steps.isEmpty())
 			return;
+		
+		// sort the list
+		Collections.sort(steps, new stepComparator());
 
 		MashStep stp = ((MashStep) steps.get(0));
 		targetTemp = stp.startTemp;
@@ -545,5 +567,21 @@ public class Mash {
 		return sb.toString();
 	}
 	
+	 /**
+		 * 
+		 * @author aavis
+		 *
+		 * step comparator to help sort mash steps
+		 * 
+		 */
+		public class stepComparator implements Comparator {			
+			public int compare(Object a, Object b) {
+				Double a1 = new Double(((MashStep)a).getStartTemp());
+				Double b1 = new Double(((MashStep)b).getStartTemp());				
+				int result = a1.compareTo(b1);
+				return (result == 0 ? -1 : result);
+				
+			}
+		}
 
 }

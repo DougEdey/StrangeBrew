@@ -8,7 +8,7 @@ import java.util.*;
 import com.mindprod.csv.*;
 
 /**
- * $Id: Database.java,v 1.12 2005/05/26 18:14:58 andrew_avis Exp $
+ * $Id: Database.java,v 1.13 2005/05/31 18:05:57 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -66,7 +66,7 @@ public class Database {
 					f.setLov(Double.parseDouble(fields[lovIdx]));
 					f.setCost(Double.parseDouble(fields[costIdx]));
 					f.setUnits(fields[unitsIdx]);
-					f.setMash(Boolean.valueOf(fields[mashIdx]).booleanValue());
+					f.setMashed(Boolean.valueOf(fields[mashIdx]).booleanValue());
 					f.setSteep(Boolean.valueOf(fields[steepIdx]).booleanValue());
 					if (!fields[stockIdx].equals(""))
 						f.setAmount(Double.parseDouble(fields[stockIdx]));
