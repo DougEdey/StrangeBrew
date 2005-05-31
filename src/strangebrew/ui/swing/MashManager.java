@@ -1,26 +1,26 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.4 2005/05/27 20:26:54 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.5 2005/05/31 18:06:36 andrew_avis Exp $
  *  @author aavis 
  */
 
 /**
  *  StrangeBrew Java - a homebrew recipe calculator
-    Copyright (C) 2005 Drew Avis
+ Copyright (C) 2005 Drew Avis
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 package strangebrew.ui.swing;
@@ -33,6 +33,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
 import javax.swing.JScrollPane;
@@ -40,17 +41,19 @@ import javax.swing.WindowConstants;
 
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
+
+import javax.swing.DefaultCellEditor;
 import javax.swing.JRadioButton;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.ButtonGroup;
 import strangebrew.Recipe;
+import strangebrew.Quantity;
 
-public class MashManager extends javax.swing.JFrame implements ActionListener{
+public class MashManager extends javax.swing.JFrame implements ActionListener {
 	private JScrollPane jScrollPane1;
 	private JTable tblMash;
 	private JPanel pnlButtons;
@@ -63,6 +66,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
 	private JTextArea directionsTextArea;
 	private ButtonGroup tempUnitsButtonGroup;
 	private JComboBox volUnitsCombo;
+	private ComboModel volUnitsComboModel;
 	private JPanel volUnitsPanel;
 	private JRadioButton tempCrb;
 	private JRadioButton tempFrb;
@@ -71,65 +75,55 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
 	private JPanel titlePanel;
 	private JButton btnOk;
 	private JPanel pnlTable;
-	
+
 	private Recipe myRecipe;
 	private MashTableModel mashModel;
 
 	/**
-	* Auto-generated main method to display this JFrame
-	*/
-/*	public static void main(String[] args) {
-		MashManager inst = new MashManager();
-		inst.setVisible(true);
-	}*/
-	
+	 * Auto-generated main method to display this JFrame
+	 */
+	/*	public static void main(String[] args) {
+	 MashManager inst = new MashManager();
+	 inst.setVisible(true);
+	 }*/
+
 	public MashManager(Recipe r) {
 		super();
 		initGUI();
 		myRecipe = r;
-		if (myRecipe != null){
-    		mashModel.setData(myRecipe.getMash());   		
-    		
-    	}
+		if (myRecipe != null) {
+			mashModel.setData(myRecipe.getMash());
+
+		}
 	}
-	
+
 	private void initGUI() {
 		try {
 			GridBagLayout thisLayout = new GridBagLayout();
-			thisLayout.columnWeights = new double[] {0.1,0.1};
-			thisLayout.columnWidths = new int[] {7,7};
-			thisLayout.rowWeights = new double[] {0.1,0.9,0.1,0.1,0.1};
-			thisLayout.rowHeights = new int[] {7,7,7,7,7};
+			thisLayout.columnWeights = new double[]{0.1, 0.1};
+			thisLayout.columnWidths = new int[]{7, 7};
+			thisLayout.rowWeights = new double[]{0.1, 0.9, 0.1, 0.1, 0.1};
+			thisLayout.rowHeights = new int[]{7, 7, 7, 7, 7};
 			this.getContentPane().setLayout(thisLayout);
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setTitle("Mash Manager");
 			{
 				{
-					
+
 				}
 				titlePanel = new JPanel();
 				FlowLayout titlePanelLayout = new FlowLayout();
 				titlePanelLayout.setAlignment(FlowLayout.LEFT);
 				titlePanel.setLayout(titlePanelLayout);
 				this.getContentPane().add(
-					titlePanel,
-					new GridBagConstraints(
-						0,
-						0,
-						2,
-						1,
-						0.0,
-						0.0,
-						GridBagConstraints.NORTH,
-						GridBagConstraints.HORIZONTAL,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
+						titlePanel,
+						new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0, GridBagConstraints.NORTH,
+								GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 				{
 					titleLabel = new JLabel();
 					titlePanel.add(titleLabel);
 					titleLabel.setText("Mash schedule for:");
-					titleLabel.setFont(new java.awt.Font("Dialog",0,12));
+					titleLabel.setFont(new java.awt.Font("Dialog", 0, 12));
 				}
 				{
 					recipeNameLabel = new JLabel();
@@ -142,19 +136,9 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
 				BorderLayout pnlTableLayout = new BorderLayout();
 				pnlTable.setLayout(pnlTableLayout);
 				this.getContentPane().add(
-					pnlTable,
-					new GridBagConstraints(
-						0,
-						1,
-						2,
-						1,
-						0.0,
-						0.0,
-						GridBagConstraints.CENTER,
-						GridBagConstraints.BOTH,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
+						pnlTable,
+						new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER,
+								GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 				pnlTable.setName("");
 				pnlTable.setBorder(BorderFactory.createTitledBorder("Mash Steps"));
 				{
@@ -172,6 +156,18 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
 								directionsTextArea.setText(myRecipe.mash.getStepDirections(i));
 							}
 						});
+						
+						// set up type combo
+						String [] types = {"acid","gluten","protein","beta","alpha","mashout"};
+						JComboBox typesComboBox = new JComboBox(types);
+						TableColumn mashColumn = tblMash.getColumnModel().getColumn(0);
+						mashColumn.setCellEditor(new DefaultCellEditor(typesComboBox));
+						
+						// set up method combo
+						String [] methods = {"infusion","decoction","direct"};
+						JComboBox methodComboBox = new JComboBox(methods);
+						mashColumn = tblMash.getColumnModel().getColumn(1);
+						mashColumn.setCellEditor(new DefaultCellEditor(methodComboBox));
 					}
 				}
 				{
@@ -180,9 +176,9 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
 					buttonsPanelLayout.setAlignment(FlowLayout.LEFT);
 					buttonsPanel.setLayout(buttonsPanelLayout);
 					pnlTable.add(buttonsPanel, BorderLayout.SOUTH);
-					{						
+					{
 						addStepButton = new JButton();
-						buttonsPanel.add(addStepButton);						
+						buttonsPanel.add(addStepButton);
 						addStepButton.setText("+");
 						addStepButton.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
@@ -208,19 +204,9 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
 				settingsPanelLayout.setAlignment(FlowLayout.LEFT);
 				settingsPanel.setLayout(settingsPanelLayout);
 				this.getContentPane().add(
-					settingsPanel,
-					new GridBagConstraints(
-						0,
-						2,
-						2,
-						1,
-						0.0,
-						0.0,
-						GridBagConstraints.CENTER,
-						GridBagConstraints.HORIZONTAL,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
+						settingsPanel,
+						new GridBagConstraints(0, 2, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER,
+								GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 				{
 					tempPanel = new JPanel();
 					settingsPanel.add(tempPanel);
@@ -229,27 +215,49 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
 						tempFrb = new JRadioButton();
 						tempPanel.add(tempFrb);
 						tempFrb.setText("F");
+						tempFrb.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {								
+								myRecipe.mash.setMashTempUnits("F");
+								myRecipe.mash.calcMashSchedule();
+							}
+						});
 					}
 					{
 						tempCrb = new JRadioButton();
 						tempPanel.add(tempCrb);
 						tempCrb.setText("C");
+						tempCrb.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								myRecipe.mash.setMashTempUnits("C");
+								myRecipe.mash.calcMashSchedule();
+							}
+						});
+						
 					}
 					tempUnitsButtonGroup = new ButtonGroup();
 					tempUnitsButtonGroup.add(tempFrb);
-					tempUnitsButtonGroup.add(tempCrb);
-					
+					tempUnitsButtonGroup.add(tempCrb);					
+
 				}
 				{
 					volUnitsPanel = new JPanel();
 					settingsPanel.add(volUnitsPanel);
 					volUnitsPanel.setBorder(BorderFactory.createTitledBorder("Vol Units"));
 					{
-						ComboBoxModel volUnitsComboModel = new DefaultComboBoxModel(new String[] {
-								"Item One", "Item Two" });
+						// volList = new ArrayList(q.getListofUnits("vol"));
+						
+						
+						volUnitsComboModel = new ComboModel();						
+						volUnitsComboModel.setList(new Quantity().getListofUnits("vol"));
 						volUnitsCombo = new JComboBox();
 						volUnitsPanel.add(volUnitsCombo);
 						volUnitsCombo.setModel(volUnitsComboModel);
+						volUnitsCombo.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								String s = (String)volUnitsComboModel.getSelectedItem();
+								myRecipe.mash.setMashVolUnits(s);
+							}
+						});
 					}
 				}
 				{
@@ -275,19 +283,9 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
 				pnlButtonsLayout.setAlignment(FlowLayout.RIGHT);
 				pnlButtons.setLayout(pnlButtonsLayout);
 				this.getContentPane().add(
-					pnlButtons,
-					new GridBagConstraints(
-						0,
-						4,
-						2,
-						1,
-						0.0,
-						0.0,
-						GridBagConstraints.SOUTH,
-						GridBagConstraints.HORIZONTAL,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
+						pnlButtons,
+						new GridBagConstraints(0, 4, 2, 1, 0.0, 0.0, GridBagConstraints.SOUTH,
+								GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 				{
 					btnOk = new JButton();
 					pnlButtons.add(btnOk);
@@ -301,36 +299,34 @@ public class MashManager extends javax.swing.JFrame implements ActionListener{
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	//	Make the button do the same thing as the default close operation
-    //(DISPOSE_ON_CLOSE).
-    public void actionPerformed(ActionEvent e) {    	
-    	setVisible(false);
-        dispose();
-    }
-    
-    public void displayMash() {
-    	if (myRecipe != null){    		
-    		recipeNameLabel.setText(myRecipe.getName());
-    		mashModel.setData(myRecipe.getMash()); 
-    		tblMash.updateUI();
-    		
-    		
-    	}
-    }
-    
-    private void addStepButtonActionPerformed(ActionEvent evt) {
-		myRecipe.mash.addStep();	
-		tblMash.updateUI();
-		
+	//(DISPOSE_ON_CLOSE).
+	public void actionPerformed(ActionEvent e) {
+		setVisible(false);
+		dispose();
 	}
-	
+
+	public void displayMash() {
+		if (myRecipe != null) {
+			recipeNameLabel.setText(myRecipe.getName());
+			mashModel.setData(myRecipe.getMash());
+			tblMash.updateUI();
+
+		}
+	}
+
+	private void addStepButtonActionPerformed(ActionEvent evt) {
+		myRecipe.mash.addStep();
+		tblMash.updateUI();
+
+	}
+
 	private void delStepButtonActionPerformed(ActionEvent evt) {
 		int i = tblMash.getSelectedRow();
 		myRecipe.mash.delStep(i);
 		tblMash.updateUI();
-		
+
 	}
 
 }

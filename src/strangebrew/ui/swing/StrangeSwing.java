@@ -47,6 +47,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -82,6 +83,8 @@ import strangebrew.Recipe;
 import strangebrew.Style;
 import strangebrew.XmlTransformer;
 import strangebrew.Yeast;
+import strangebrew.Options;
+import strangebrew.ui.preferences.PreferencesDialog;
 
 public class StrangeSwing extends javax.swing.JFrame {
 
@@ -191,6 +194,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 	private JMenu jMenu3;
 	private JMenuBar jMenuBar1;
 	private JMenuItem exportTextMenuItem;
+	private JMenuItem editPrefsMenuItem;
 
 	private MaltTableModel tblMaltModel;
 	private DefaultTableModel tblMaltTotalsModel;
@@ -207,6 +211,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 	private ArrayList volList;
 	private JFileChooser fileChooser;
 	private MashManager mashMgr;
+	
 
 	public Recipe myRecipe;
 
@@ -239,13 +244,10 @@ public class StrangeSwing extends javax.swing.JFrame {
 		cmbStyleModel.setList(db.styleDB);
 		cmbYeastModel.setList(db.yeastDB);
 		cmbMaltModel.setList(db.fermDB);
-		cmbHopsModel.setList(db.hopsDB);		
-		Quantity q = new Quantity();
-		weightList = new ArrayList(q.getListofUnits("weight"));
-		volList = new ArrayList(q.getListofUnits("vol"));
-		cmbSizeUnitsModel.setList(volList);
-		cmbMaltUnitsModel.setList(weightList);
-		cmbHopsUnitsModel.setList(weightList);
+		cmbHopsModel.setList(db.hopsDB);
+		cmbSizeUnitsModel.setList(new Quantity().getListofUnits("vol"));
+		cmbMaltUnitsModel.setList(new Quantity().getListofUnits("weight"));
+		cmbHopsUnitsModel.setList(new Quantity().getListofUnits("weight"));
 		
 		fileChooser = new JFileChooser();
 		String fcpath = getClass().getProtectionDomain().getCodeSource()
@@ -832,6 +834,9 @@ public class StrangeSwing extends javax.swing.JFrame {
 													.getFermentablesList().get(i);
 											f2.setLov(f.getLov());
 											f2.setPppg(f.getPppg());
+											f2.setDescription(f.getDescription());
+											f2.setMashed(f.getMashed());
+											f2.setSteep(f.getSteep());
 										}
 
 									}
@@ -987,6 +992,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 										if (myRecipe != null && i != -1) {
 											Hop h2 = (Hop) myRecipe.getHopsList().get(i);
 											h2.setAlpha(h.getAlpha());
+											h2.setDescription(h.getDescription());
 										}
 
 									}
@@ -1006,8 +1012,9 @@ public class StrangeSwing extends javax.swing.JFrame {
 											Hop h = (Hop) myRecipe.getHopsList().get(i);
 											h.setUnitsFull(u);
 											myRecipe.calcHopsTotals();
+											// tblHops.updateUI();
 											displayRecipe();
-											tblHops.updateUI();
+											
 										}
 
 									}
@@ -1265,6 +1272,21 @@ public class StrangeSwing extends javax.swing.JFrame {
 					jMenu4 = new JMenu();
 					jMenuBar1.add(jMenu4);
 					jMenu4.setText("Edit");
+					{
+						editPrefsMenuItem = new JMenuItem();
+						jMenu4.add(editPrefsMenuItem);
+						editPrefsMenuItem.setText("Preferences...");
+						editPrefsMenuItem.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								JFrame frame = new JFrame();
+								Options preferences = new Options();
+							    PreferencesDialog d = new PreferencesDialog(frame, preferences);
+							    d.showPreferences();
+							}
+						});
+						
+						
+					}
 					{
 						cutMenuItem = new JMenuItem();
 						jMenu4.add(cutMenuItem);
