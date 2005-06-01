@@ -1,7 +1,7 @@
 package strangebrew;
 
 /**
- * $Id: Options.java,v 1.6 2004/11/11 18:08:23 andrew_avis Exp $
+ * $Id: Options.java,v 1.7 2005/06/01 06:07:33 zymurgist Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -28,11 +28,7 @@ public class Options {
 	
 	// default constructor, create options for a recipe
 	public Options(){
-		type = "strangebrew";
-		Properties d = new Properties();
-		setDefaults(d);
-		props = new Properties(d);
-		loadProperties();
+		this("strangebrew");
 	}
 	
 	// constructor for other option types
