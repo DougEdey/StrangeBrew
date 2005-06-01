@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Collections;
 
 /**
- * $Id: Mash.java,v 1.9 2005/05/31 18:05:58 andrew_avis Exp $
+ * $Id: Mash.java,v 1.10 2005/06/01 17:13:45 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -179,8 +179,16 @@ public class Mash {
 
 	// set methods:
 	public void setMaltWeight(double mw) {	maltWeightLbs = mw;	}
-	public void setMashRatio(double mr){ mashRatio = mr; }	
-	public void setMashRatioU(String u){ mashRatioU = u;}
+	public void setMashRatio(double mr){ 
+		mashRatio = mr; 
+		calcMashSchedule();
+	}	
+	
+	public void setMashRatioU(String u){ 
+		mashRatioU = u;
+		calcMashSchedule();
+	}
+	
 	public void setMashVolUnits(String u){ 
 		volUnits = u;
 		calcMashSchedule();
@@ -190,6 +198,11 @@ public class Mash {
 		tempUnits = t;
 		calcMashSchedule();
 	}
+	
+	// get methods:
+	public String getMashVolUnits(){ return volUnits; }
+	public String getMashTempUnits(){ return tempUnits; }
+	
 	
 	// mash step methods:
 	public int setStepType(int i, String t){
@@ -223,24 +236,39 @@ public class Mash {
 		return ((MashStep)steps.get(i)).getMethod();	
 	}
 	
-	public void setStepStartTemp(int i, int t){
+	public void setStepStartTemp(int i, double t){		
+		if (tempUnits.equals("C")){
+			t = cToF(t);			
+		}				
 		((MashStep)steps.get(i)).setStartTemp(t);
 		((MashStep)steps.get(i)).setEndTemp(t);
-		((MashStep)steps.get(i)).setType(calcStepType(t));		
+		((MashStep)steps.get(i)).setType(calcStepType(t));
+		
 		calcMashSchedule();
 		
 	}
 	
 	public double getStepStartTemp(int i) {
-		return ((MashStep)steps.get(i)).getStartTemp();	
+		if (tempUnits.equals("C"))
+			return fToC(((MashStep)steps.get(i)).getStartTemp());
+		else
+			return ((MashStep)steps.get(i)).getStartTemp();	
 	}
 	
 	public void setStepEndTemp(int i, int t){
-		((MashStep)steps.get(i)).setEndTemp(t);
+		if (tempUnits.equals("C"))
+			((MashStep)steps.get(i)).setEndTemp(cToF(t));
+		else
+			((MashStep)steps.get(i)).setEndTemp(t);
+		calcMashSchedule();
 	}
 	
 	public double getStepEndTemp(int i) {
-		return ((MashStep)steps.get(i)).getEndTemp();	
+		if (tempUnits.equals("C"))
+			return fToC(((MashStep)steps.get(i)).getEndTemp());
+		else
+			return ((MashStep)steps.get(i)).getEndTemp();	
+		
 	}
 	
 	public void setStepRampMin(int i, int m){

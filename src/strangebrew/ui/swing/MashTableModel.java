@@ -61,9 +61,9 @@ class MashTableModel extends AbstractTableModel {
 				case 1 :
 					return data.getStepMethod(row);
 				case 2 :
-					return new Double(data.getStepStartTemp(row));
+					return data.df1.format( new Double(data.getStepStartTemp(row)) );
 				case 3 :
-					return new Double(data.getStepEndTemp(row));
+					return data.df1.format( new Double(data.getStepEndTemp(row)) );
 				case 4 :
 					return new Double(data.getStepRampMin(row));
 				case 5 :

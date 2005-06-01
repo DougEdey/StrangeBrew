@@ -86,6 +86,7 @@ import strangebrew.Yeast;
 import strangebrew.Options;
 import strangebrew.ui.preferences.PreferencesDialog;
 
+
 public class StrangeSwing extends javax.swing.JFrame {
 
 /*	{
@@ -125,8 +126,8 @@ public class StrangeSwing extends javax.swing.JFrame {
 	private JPanel pnlHopsButtons;
 	private JButton btnDelMalt;
 	private JButton btnAddMalt;
+	private JPanel statusPanel;
 	private JTextArea descriptionTextArea;
-	private JScrollPane jScrollPane4;
 	private JPanel descriptionPanel;
 	private JMenuItem mashManagerMenuItem;
 	private JMenu mnuView;
@@ -317,8 +318,8 @@ public class StrangeSwing extends javax.swing.JFrame {
 			{
 				pnlMain = new JPanel();
 				GridBagLayout jPanel2Layout = new GridBagLayout();
-				jPanel2Layout.columnWeights = new double[]{0.1};
-				jPanel2Layout.columnWidths = new int[]{7};
+				jPanel2Layout.columnWeights = new double[] {0.1,0.1};
+				jPanel2Layout.columnWidths = new int[] {7,7};
 				jPanel2Layout.rowWeights = new double[] {0.1,0.1,0.1,0.1};
 				jPanel2Layout.rowHeights = new int[] {7,7,7,7};
 				pnlMain.setLayout(jPanel2Layout);
@@ -496,6 +497,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 									if (myRecipe != null && s != myRecipe.getStyleObj()) {
 										myRecipe.setStyle(s);
 									}
+									descriptionTextArea.setText(s.getDescription());
 								}
 							});
 						}
@@ -658,6 +660,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 									if (myRecipe != null && y != myRecipe.getYeastObj()) {
 										myRecipe.setYeast(y);
 									}
+									descriptionTextArea.setText(y.getDescription());
 								}
 							});
 						}
@@ -1026,6 +1029,12 @@ public class StrangeSwing extends javax.swing.JFrame {
 								JComboBox hopsFormComboBox = new JComboBox(forms);
 								hopColumn = tblHops.getColumnModel().getColumn(1);
 								hopColumn.setCellEditor(new DefaultCellEditor(hopsFormComboBox));
+								
+//								 set up hop add combo
+								String [] add = {"Boil","FWH","Dry", "Mash"};
+								JComboBox hopsAddComboBox = new JComboBox(add);
+								hopColumn = tblHops.getColumnModel().getColumn(5);
+								hopColumn.setCellEditor(new DefaultCellEditor(hopsAddComboBox));
 
 							}
 						}
@@ -1079,12 +1088,38 @@ public class StrangeSwing extends javax.swing.JFrame {
 				}
 				{
 					descriptionPanel = new JPanel();
-					BoxLayout descriptionPanelLayout = new BoxLayout(descriptionPanel, javax.swing.BoxLayout.X_AXIS);
+					FlowLayout descriptionPanelLayout = new FlowLayout();
 					descriptionPanel.setLayout(descriptionPanelLayout);
 					pnlMain.add(descriptionPanel, new GridBagConstraints(
+						1,
+						0,
+						1,
+						3,
+						0.0,
+						0.0,
+						GridBagConstraints.NORTH,
+						GridBagConstraints.VERTICAL,
+						new Insets(0, 0, 0, 0),
+						0,
+						0));
+					descriptionPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+					{
+						descriptionTextArea = new JTextArea();
+						descriptionPanel.add(descriptionTextArea);
+						descriptionTextArea.setText("Description");
+						descriptionTextArea.setFont(new java.awt.Font("Dialog", 0, 10));
+						descriptionTextArea.setEditable(false);
+						descriptionTextArea.setFocusable(false);
+						descriptionTextArea.setLineWrap(true);
+						descriptionTextArea.setWrapStyleWord(true);
+					}
+				}
+				{
+					statusPanel = new JPanel();
+					pnlMain.add(statusPanel, new GridBagConstraints(
 						0,
 						3,
-						1,
+						2,
 						1,
 						0.0,
 						0.0,
@@ -1093,19 +1128,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 						new Insets(0, 0, 0, 0),
 						0,
 						0));
-					descriptionPanel.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
-					{
-						jScrollPane4 = new JScrollPane();
-						descriptionPanel.add(jScrollPane4);
-						jScrollPane4.setPreferredSize(new java.awt.Dimension(496, 20));
-						{
-							descriptionTextArea = new JTextArea();
-							jScrollPane4.setViewportView(descriptionTextArea);
-							descriptionTextArea.setText("Description");
-							descriptionTextArea.setLineWrap(true);
-							descriptionTextArea.setFont(new java.awt.Font("Dialog",0,10));
-						}
-					}
+					statusPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 				}
 			}
 			{
@@ -1147,8 +1170,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 									ImportXml imp = new ImportXml(file.toString());
 									myRecipe = imp.handler.getRecipe();
 									myRecipe.calcMaltTotals();
-									myRecipe.calcHopsTotals();
-									myRecipe.mash.setMaltWeight(myRecipe.getTotalMashLbs());
+									myRecipe.calcHopsTotals();									
 									myRecipe.mash.calcMashSchedule();
 									attachRecipeData();
 									displayRecipe();

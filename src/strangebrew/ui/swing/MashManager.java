@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.5 2005/05/31 18:06:36 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.6 2005/06/01 17:14:09 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -49,8 +49,11 @@ import javax.swing.JTextArea;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ButtonGroup;
 import strangebrew.Recipe;
+import javax.swing.JTextField;
 import strangebrew.Quantity;
 
 public class MashManager extends javax.swing.JFrame implements ActionListener {
@@ -63,6 +66,12 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 	private JLabel recipeNameLabel;
 	private JLabel titleLabel;
 	private JPanel directionsPanel;
+	private JComboBox ratioUnitsCombo;
+	private JLabel totalMashLabel;
+	private JPanel statsPanel;
+	private JTextField ratioText;
+	private JLabel ratioLabel;
+	private JPanel ratioPanel;
 	private JTextArea directionsTextArea;
 	private ButtonGroup tempUnitsButtonGroup;
 	private JComboBox volUnitsCombo;
@@ -95,6 +104,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 			mashModel.setData(myRecipe.getMash());
 
 		}
+		displayMash();
 	}
 
 	private void initGUI() {
@@ -196,6 +206,21 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 							}
 						});
 					}
+					{
+						statsPanel = new JPanel();
+						FlowLayout statsPanelLayout = new FlowLayout();
+						statsPanelLayout.setAlignment(FlowLayout.LEFT);
+						statsPanel.setLayout(statsPanelLayout);
+						buttonsPanel.add(statsPanel);
+						statsPanel.setBorder(BorderFactory.createTitledBorder("Total Mash Weight"));
+						statsPanel.setPreferredSize(new java.awt.Dimension(135, 45));
+						{
+							totalMashLabel = new JLabel();
+							statsPanel.add(totalMashLabel);
+							totalMashLabel.setPreferredSize(new java.awt.Dimension(118, 13));
+							totalMashLabel.setText("total");
+						}
+					}
 				}
 			}
 			{
@@ -219,6 +244,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 							public void actionPerformed(ActionEvent evt) {								
 								myRecipe.mash.setMashTempUnits("F");
 								myRecipe.mash.calcMashSchedule();
+								tblMash.updateUI();
 							}
 						});
 					}
@@ -230,6 +256,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 							public void actionPerformed(ActionEvent evt) {
 								myRecipe.mash.setMashTempUnits("C");
 								myRecipe.mash.calcMashSchedule();
+								tblMash.updateUI();
 							}
 						});
 						
@@ -256,24 +283,42 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 							public void actionPerformed(ActionEvent evt) {
 								String s = (String)volUnitsComboModel.getSelectedItem();
 								myRecipe.mash.setMashVolUnits(s);
+								tblMash.updateUI();
 							}
 						});
 					}
 				}
 				{
-					directionsPanel = new JPanel();
-					settingsPanel.add(directionsPanel);
-					BorderLayout directionsPanelLayout = new BorderLayout();
-					directionsPanel.setLayout(directionsPanelLayout);
-					directionsPanel.setBorder(BorderFactory.createTitledBorder("Directions"));
-					directionsPanel.setPreferredSize(new java.awt.Dimension(181, 75));
+					ratioPanel = new JPanel();
+					settingsPanel.add(ratioPanel);
+					ratioPanel.setBorder(BorderFactory.createTitledBorder("Mash Ratio"));
 					{
-						directionsTextArea = new JTextArea();
-						directionsPanel.add(directionsTextArea, BorderLayout.CENTER);
-						directionsTextArea.setText("Directions");
-						directionsTextArea.setPreferredSize(new java.awt.Dimension(171, 38));
-						directionsTextArea.setEditable(false);
-						directionsTextArea.setLineWrap(true);
+						ratioLabel = new JLabel();
+						ratioPanel.add(ratioLabel);
+						ratioLabel.setText("1:");
+					}
+					{
+						ratioText = new JTextField();
+						ratioPanel.add(ratioText);
+						ratioText.setText("1.25");
+						ratioText.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								myRecipe.mash.setMashRatio(Double.parseDouble(ratioText.getText()));
+							}
+						});
+					}
+					{
+						ComboBoxModel ratioUnitsComboModel = new DefaultComboBoxModel(new String[] {
+								"qt/lb", "l/kg" });
+						ratioUnitsCombo = new JComboBox();
+						ratioPanel.add(ratioUnitsCombo);
+						ratioUnitsCombo.setModel(ratioUnitsComboModel);
+						ratioUnitsCombo.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								String s = (String)ratioUnitsCombo.getSelectedItem();
+								myRecipe.mash.setMashRatioU(s);
+							}
+						});
 					}
 				}
 			}
@@ -291,6 +336,35 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 					pnlButtons.add(btnOk);
 					btnOk.setText("OK");
 					btnOk.addActionListener(this);
+				}
+			}
+			{
+				directionsPanel = new JPanel();
+				this.getContentPane().add(
+					directionsPanel,
+					new GridBagConstraints(
+						0,
+						3,
+						GridBagConstraints.RELATIVE,
+						GridBagConstraints.RELATIVE,
+						0.0,
+						0.0,
+						GridBagConstraints.CENTER,
+						GridBagConstraints.HORIZONTAL,
+						new Insets(0, 0, 0, 0),
+						0,
+						0));
+				BorderLayout directionsPanelLayout = new BorderLayout();
+				directionsPanel.setLayout(directionsPanelLayout);
+				directionsPanel.setBorder(BorderFactory.createTitledBorder("Directions"));
+				directionsPanel.setPreferredSize(new java.awt.Dimension(181, 75));
+				{
+					directionsTextArea = new JTextArea();
+					directionsPanel.add(directionsTextArea, BorderLayout.CENTER);
+					directionsTextArea.setText("Directions");
+					directionsTextArea.setPreferredSize(new java.awt.Dimension(171, 38));
+					directionsTextArea.setEditable(false);
+					directionsTextArea.setLineWrap(true);
 				}
 			}
 			pack();
@@ -312,6 +386,15 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 			recipeNameLabel.setText(myRecipe.getName());
 			mashModel.setData(myRecipe.getMash());
 			tblMash.updateUI();
+			volUnitsComboModel.addOrInsert(myRecipe.mash.getMashVolUnits());
+			if (myRecipe.mash.getMashTempUnits().equals("F"))
+				tempFrb.setSelected(true);
+			else
+				tempCrb.setSelected(true);
+			
+			String mashTotal = myRecipe.df1.format(myRecipe.getTotalMash()) 
+				+ " " + myRecipe.getMaltUnits();
+			totalMashLabel.setText(mashTotal);
 
 		}
 	}
