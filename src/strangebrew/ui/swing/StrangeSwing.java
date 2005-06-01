@@ -214,6 +214,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 	
 
 	public Recipe myRecipe;
+	private Options preferences = new Options();
 
 	private final static boolean DEBUG = true;
 
@@ -1273,14 +1274,13 @@ public class StrangeSwing extends javax.swing.JFrame {
 					jMenuBar1.add(jMenu4);
 					jMenu4.setText("Edit");
 					{
+						final JFrame owner = this;
 						editPrefsMenuItem = new JMenuItem();
 						jMenu4.add(editPrefsMenuItem);
 						editPrefsMenuItem.setText("Preferences...");
 						editPrefsMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
-								JFrame frame = new JFrame();
-								Options preferences = new Options();
-							    PreferencesDialog d = new PreferencesDialog(frame, preferences);
+							    PreferencesDialog d = new PreferencesDialog(owner, preferences);
 							    d.showPreferences();
 							}
 						});
