@@ -17,13 +17,6 @@ public class PrefTest
     	JFrame frame = new JFrame();
     	Options preferences = new Options();
     	PreferencesDialog d = new PreferencesDialog(frame, preferences);
-    	if (d.showPreferences())
-    	{
-    		System.out.println("Save Settings");
-    	}
-    	else
-    	{
-    		System.out.println("Don't save");
-    	}
+    	d.showPreferences();
     }
 }
