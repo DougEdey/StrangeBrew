@@ -50,6 +50,7 @@ public class PreferencesDialog extends JDialog
 	private boolean m_savePreferences = false;
 	private Options m_preferences = null;
 	private TimePanel m_time = null;
+	private BrewerPanel m_brewer = null;
 	
 	public PreferencesDialog(Dialog owner, Options preferences)
 	{
@@ -70,9 +71,11 @@ public class PreferencesDialog extends JDialog
 	private void layoutUi()
 	{
 		m_time = initializeTimePanel();
+		m_brewer = initializeBrewerPanel();
 		
 		tabs = new JTabbedPane();
 		tabs.addTab("Time", m_time);
+		tabs.addTab("Brewer", m_brewer);
 		
 		JPanel buttons = new JPanel();
 		JButton okButton = new JButton("OK");
@@ -92,6 +95,7 @@ public class PreferencesDialog extends JDialog
 			public void actionPerformed(ActionEvent arg0)
 			{
 				updateTime();
+				updateBrewer();
 				m_preferences.saveProperties();
 				hide();
 			}
@@ -131,13 +135,32 @@ public class PreferencesDialog extends JDialog
 		m_preferences.setProperty("optCleanTime", m_time.getCleanup());
 	}
 	
-	public void show()
+	private BrewerPanel initializeBrewerPanel()
 	{
-		throw new RuntimeException("Call showPreferences() instead.");
+		BrewerPanel brewer = new BrewerPanel();
+		brewer.setName(m_preferences.getProperty("optBrewer"));
+		brewer.setStreet(m_preferences.getProperty("optStreet"));
+		brewer.setCity(m_preferences.getProperty("optCity"));
+		brewer.setState(m_preferences.getProperty("optProv"));
+		brewer.setPostalCode(m_preferences.getProperty("optCode"));
+		brewer.setPhoneNumber(m_preferences.getProperty("optPhone"));
+		brewer.setClubName(m_preferences.getProperty("optClub"));
+		brewer.setCountry(m_preferences.getProperty("optCountry"));
+		brewer.setEmail(m_preferences.getProperty("optEmail"));
+		
+		return brewer;		
 	}
 	
-	public void showPreferences()
+	private void updateBrewer()
 	{
-		super.show();
+		m_preferences.setProperty("optBrewer", m_brewer.getName());
+		m_preferences.setProperty("optStreet", m_brewer.getStreet());
+		m_preferences.setProperty("optCity", m_brewer.getCity());
+		m_preferences.setProperty("optProv", m_brewer.getState());
+		m_preferences.setProperty("optCode", m_brewer.getPostalCode());
+		m_preferences.setProperty("optPhone", m_brewer.getPhoneNumber());
+		m_preferences.setProperty("optClub", m_brewer.getClubName());
+		m_preferences.setProperty("optCountry", m_brewer.getCountry());
+		m_preferences.setProperty("optEmail", m_brewer.getEmail());
 	}
 }

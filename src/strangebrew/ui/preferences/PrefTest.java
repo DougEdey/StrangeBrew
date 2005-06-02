@@ -17,6 +17,6 @@ public class PrefTest
     	JFrame frame = new JFrame();
     	Options preferences = new Options();
     	PreferencesDialog d = new PreferencesDialog(frame, preferences);
-    	d.showPreferences();
+    	d.show();
     }
 }
