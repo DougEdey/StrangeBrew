@@ -37,6 +37,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.Enumeration;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
@@ -55,6 +56,8 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 import javax.swing.border.BevelBorder;
 import java.awt.event.MouseAdapter;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -73,6 +76,10 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import javax.swing.event.TableColumnModelListener;
+import javax.swing.event.TableColumnModelEvent;
+import javax.swing.event.ListSelectionEvent;
 
 import strangebrew.Database;
 import strangebrew.Fermentable;
@@ -85,7 +92,6 @@ import strangebrew.XmlTransformer;
 import strangebrew.Yeast;
 import strangebrew.Options;
 import strangebrew.ui.preferences.PreferencesDialog;
-
 
 public class StrangeSwing extends javax.swing.JFrame {
 
@@ -171,7 +177,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 	private JSpinner spnEffic;
 	private JTextArea txtComments;
 	private JLabel lblComments;
-	private JFormattedTextField txtPostBoil;
+	private JFormattedTextField postBoilText;
 	private JFormattedTextField txtPreBoil;
 	private JComboBox cmbYeast;
 	private JComboBox cmbStyle;
@@ -256,6 +262,8 @@ public class StrangeSwing extends javax.swing.JFrame {
 		.getLocation().toString().substring(6) + slash;
 		fileChooser.setCurrentDirectory(new File(path));
 		
+		// link malt table and totals:
+		addColumnStateSupport();				
 		myRecipe = new Recipe();
 		attachRecipeData();
 		displayRecipe();
@@ -273,6 +281,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 		tblHopsModel.setData(myRecipe);
 		tblMalt.updateUI();
 		tblHops.updateUI();		
+
 	}
 	
 	public void displayRecipe() {
@@ -282,7 +291,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 		txtBrewer.setText(myRecipe.getBrewer());		
 		txtPreBoil.setValue(new Double(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));		
 		lblSizeUnits.setText(myRecipe.getVolUnits());
-		txtPostBoil.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
+		postBoilText.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
 		spnEffic.setValue(new Double(myRecipe.getEfficiency()));
 		spnAtten.setValue(new Double(myRecipe.getAttenuation()));
 		spnOG.setValue(new Double(myRecipe.getEstOg()));
@@ -295,7 +304,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 			"" + myRecipe.df1.format(myRecipe.getTotalMaltLbs()), myRecipe.getMaltUnits(),
 			"" + myRecipe.df3.format(myRecipe.getEstOg()), "" + myRecipe.df1.format(myRecipe.getSrm()),
 			"$" + myRecipe.df2.format(myRecipe.getTotalMaltCost()), "100"}}, new String[]{"", "", "",
-			"", "", "", ""});
+			"", "", "", ""}); 
 
 		tblHopsTotalsModel.setDataVector(
 			new String[][]{{"Totals:", "", "", "" + myRecipe.df1.format(myRecipe.getTotalHopsOz()),
@@ -378,6 +387,12 @@ public class StrangeSwing extends javax.swing.JFrame {
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
 							txtBrewer.setText("Brewer");
+							txtBrewer.addFocusListener(new FocusAdapter() {
+								public void focusLost(FocusEvent evt) {
+									System.out.println("txtBrewer.focusLost, event=" + evt);
+									//TODO add your code for txtBrewer.focusLost
+								}
+							});
 							txtBrewer.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									myRecipe.setBrewer(txtBrewer.getText());
@@ -516,15 +531,22 @@ public class StrangeSwing extends javax.swing.JFrame {
 							});
 						}
 						{
-							txtPostBoil = new JFormattedTextField();
-							pnlDetails.add(txtPostBoil, new GridBagConstraints(1, 5, 1, 1, 0.0,
+							postBoilText = new JFormattedTextField();
+							pnlDetails.add(postBoilText, new GridBagConstraints(1, 5, 1, 1, 0.0,
 									0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
-							txtPostBoil.setText("Post Boil");
-							txtPostBoil.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									myRecipe.setPostBoil(Double.parseDouble(txtPostBoil.getText()
+							postBoilText.setText("Post Boil");
+							postBoilText.addFocusListener(new FocusAdapter() {
+								public void focusLost(FocusEvent evt) {
+									myRecipe.setPostBoil(Double.parseDouble(postBoilText.getText()
 											.toString()));
+										displayRecipe();
+								}
+							});
+							postBoilText.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									myRecipe.setPostBoil(Double.parseDouble(postBoilText.getText()
+										.toString()));
 									displayRecipe();
 								}
 							});
@@ -815,8 +837,9 @@ public class StrangeSwing extends javax.swing.JFrame {
 								tblMalt = new JTable();
 								jScrollPane1.setViewportView(tblMalt);
 								tblMalt.setModel(tblMaltModel);
+								tblMalt.setAutoCreateColumnsFromModel(false);
 								tblMalt.addMouseListener(new MouseAdapter() {
-									public void mouseClicked(MouseEvent evt) {										
+									public void mouseClicked(MouseEvent evt) {
 										int i = tblMalt.getSelectedRow();
 										descriptionTextArea.setText(myRecipe.getMaltDescription(i));
 									}
@@ -867,26 +890,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 									}
 								});
 
-								// set up spin editor for amount
-								/*
-								 * maltColumn =
-								 * tblMalt.getColumnModel().getColumn(1);
-								 * SpinnerNumberModel spnMaltAmntModel = new
-								 * SpinnerNumberModel(1.00,0.00,9999.00,0.25 );
-								 * maltColumn.setCellEditor(new
-								 * SpinnerEditor(spnMaltAmntModel));
-								 */
-
-								for (int i = 0; i < tblMalt.getColumnCount(); i++) {
-									TableColumn column;
-									column = tblMalt.getColumnModel().getColumn(i);
-									if (i == 0) {
-										column.setPreferredWidth(100);
-									} else {
-										column.setPreferredWidth(50);
-									}
-								}
-
+								
 							}
 						}
 						{
@@ -897,15 +901,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 							pnlMalt.add(tblMaltTotals, BorderLayout.SOUTH);
 							tblMaltTotals.setModel(tblMaltTotalsModel);
 							tblMaltTotals.getTableHeader().setEnabled(false);
-							for (int i = 0; i < tblMaltTotals.getColumnCount(); i++) {
-								TableColumn column;
-								column = tblMaltTotals.getColumnModel().getColumn(i);
-								if (i == 0) {
-									column.setPreferredWidth(100);
-								} else {
-									column.setPreferredWidth(50);
-								}
-							}
+							tblMaltTotals.setAutoCreateColumnsFromModel(false);
 
 						}
 					}
@@ -964,10 +960,11 @@ public class StrangeSwing extends javax.swing.JFrame {
 						pnlTables.add(pnlHops);
 						{
 							tblHopsTotalsModel = new DefaultTableModel(new String[][]{{""}},
-									new String[]{"Column 1", "Column 2"});
+									new String[]{"1", "2","3","4","5","6","7","8","9"});
 							tblHopsTotals = new JTable();
 							pnlHops.add(tblHopsTotals, BorderLayout.SOUTH);
 							tblHopsTotals.setModel(tblHopsTotalsModel);
+							tblHopsTotals.setAutoCreateColumnsFromModel(false);
 
 						}
 						{
@@ -1396,6 +1393,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 		tmp.delete();
 
 	}
+	
 
 	public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor {
 		final JSpinner spinner = new JSpinner();
@@ -1430,4 +1428,70 @@ public class StrangeSwing extends javax.swing.JFrame {
 		}
 	}
 
+	private void addColumnStateSupport()
+	   {
+	     TableColumnModel mtcm = tblMalt.getColumnModel();
+	     TableColumnModel htcm = tblHops.getColumnModel();
+
+
+	     //: listener that watches the width of a column
+	     PropertyChangeListener mpcl = new PropertyChangeListener()
+	     {
+	       private int columnCount = tblMalt.getColumnCount();
+	       private int[] width = new int[columnCount];
+
+	       public void propertyChange(PropertyChangeEvent evt)
+	       {	       	
+	         if (evt.getPropertyName().equals("preferredWidth"))
+	         {	      	         	
+	         	TableColumnModel tcm = tblMalt.getColumnModel();
+	         	TableColumnModel tcmt = tblMaltTotals.getColumnModel();
+	         	int columnCount = tcm.getColumnCount();
+
+	         	// for each column, get its width
+		        for (int i = 0; i < columnCount; i++)
+		        {
+		         	tcmt.getColumn(i).setPreferredWidth(tcm.getColumn(i).getPreferredWidth());
+		        }          	
+	         }
+	       }
+	     };
+	     
+	     //: listener that watches the width of a column
+	     PropertyChangeListener hpcl = new PropertyChangeListener()
+	     {
+	       private int columnCount = tblHops.getColumnCount();
+	       private int[] width = new int[columnCount];
+
+	       public void propertyChange(PropertyChangeEvent evt)
+	       {	       	
+	         if (evt.getPropertyName().equals("preferredWidth"))
+	         {	      	         	
+	         	TableColumnModel tcm = tblHops.getColumnModel();
+	         	TableColumnModel tcmt = tblHopsTotals.getColumnModel();
+	         	int columnCount = tcm.getColumnCount();
+
+	         	// for each column, get its width
+		        for (int i = 0; i < columnCount; i++)
+		        {
+		         	tcmt.getColumn(i).setPreferredWidth(tcm.getColumn(i).getPreferredWidth());
+		        }          	
+	         }
+	       }
+	     };
+
+	     //: add the column width lister to each column
+	     for (Enumeration e = mtcm.getColumns(); e.hasMoreElements();)
+	     {
+	       TableColumn tc = (TableColumn) e.nextElement();
+	       tc.addPropertyChangeListener(mpcl);
+	     }
+	     
+	     //: add the column width lister to each column
+	     for (Enumeration e = htcm.getColumns(); e.hasMoreElements();)
+	     {
+	       TableColumn tc = (TableColumn) e.nextElement();
+	       tc.addPropertyChangeListener(hpcl);
+	     }
+	   } 
 }
