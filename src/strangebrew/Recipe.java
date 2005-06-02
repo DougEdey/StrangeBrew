@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.39 2005/06/01 17:13:45 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.40 2005/06/02 19:14:30 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -94,6 +94,7 @@ public class Recipe {
 		ibuHopUtil = opts.getDProperty("optHopsUtil");		
 		hopUnits = opts.getProperty("optHopsU");
 		maltUnits = opts.getProperty("optMaltU");
+		brewer = opts.getProperty("optBrewer");
 
 	}
 	
