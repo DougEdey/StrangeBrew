@@ -1303,7 +1303,7 @@ public class StrangeSwing extends javax.swing.JFrame {
 						editPrefsMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
 							    PreferencesDialog d = new PreferencesDialog(owner, preferences);
-							    d.showPreferences();
+							    d.show();
 							}
 						});
 						
