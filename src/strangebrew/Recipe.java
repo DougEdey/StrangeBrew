@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.41 2005/06/03 18:06:37 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.42 2005/06/03 20:15:44 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -46,6 +46,7 @@ public class Recipe {
 	private double efficiency;
 	private double estOg;
 	private double estFg;
+	private double evap;
 	private double ibu;
 	public Mash mash = new Mash();	
 	private boolean mashed;
@@ -61,6 +62,7 @@ public class Recipe {
 	private String maltUnits;
 	private String ibuCalcMethod;
 	private double ibuHopUtil;
+	private String evapMethod;
 	
 	// totals:	
 	private double totalMaltCost;
@@ -95,6 +97,8 @@ public class Recipe {
 		hopUnits = opts.getProperty("optHopsU");
 		maltUnits = opts.getProperty("optMaltU");
 		brewer = opts.getProperty("optBrewer");
+		evapMethod = opts.getProperty("optEvapCalcMethod");
+		evap = opts.getDProperty("optEvaporation");
 
 	}
 	
@@ -109,6 +113,7 @@ public class Recipe {
 	public double getEfficiency(){ return efficiency; }
 	public double getEstOg(){ return estOg; }	
 	public double getEstFg(){ return estFg; }
+	public double getEvap(){ return evap; }
 	public Mash getMash() { return mash; }	
 	public double getIbu(){ return ibu; }	
 	public String getIBUMethod(){ return ibuCalcMethod; }
@@ -192,6 +197,7 @@ public class Recipe {
 	public void setBrewer(String b) { brewer = b; }
 	public void setComments(String c) { comments = c; }
 	public void setCreated(Date d) { created.setTime(d); }
+	public void setEvap(double e) { evap = e; }
 	public void setHopsUnits(String h) { hopUnits = h; }
 	public void setMaltUnits(String m) { maltUnits = m; }
 	public void setMashed(boolean m) { mashed = m; }
@@ -254,12 +260,18 @@ public class Recipe {
 	}
 	public void setPreBoil(double p) { 
 		preBoilVol.setQuantity(null, null, p);
+		// TODO: implement % as well as constant
+		double post = p - (evap * boilMinutes / 60);
+		postBoilVol.setQuantity(null, null, post);
 		calcMaltTotals();
 		calcHopsTotals();
 		}
 	
 	public void setPostBoil(double p) {
 		postBoilVol.setQuantity(null, null, p); 
+		// TODO: implement % as well as constant 
+		double pre = p + (evap * boilMinutes / 60);
+		preBoilVol.setQuantity(null, null, pre);
 		calcMaltTotals();
 		calcHopsTotals();
 		}
