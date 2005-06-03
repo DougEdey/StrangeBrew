@@ -297,6 +297,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		txtPreBoil.setValue(new Double(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));		
 		lblSizeUnits.setText(myRecipe.getVolUnits());
 		postBoilText.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
+		boilMinText.setText(myRecipe.df1.format(myRecipe.getBoilMinutes()));
+		evapText.setText(myRecipe.df1.format(myRecipe.getEvap()));
 		spnEffic.setValue(new Double(myRecipe.getEfficiency()));
 		spnAtten.setValue(new Double(myRecipe.getAttenuation()));
 		spnOG.setValue(new Double(myRecipe.getEstOg()));
@@ -335,7 +337,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				GridBagLayout jPanel2Layout = new GridBagLayout();
 				jPanel2Layout.columnWeights = new double[] {0.1,0.1};
 				jPanel2Layout.columnWidths = new int[] {7,7};
-				jPanel2Layout.rowWeights = new double[] {0.1,0.1,0.1,0.1};
+				jPanel2Layout.rowWeights = new double[] {0.1,0.1,0.9,0.1};
 				jPanel2Layout.rowHeights = new int[] {7,7,7,7};
 				pnlMain.setLayout(jPanel2Layout);
 				this.getContentPane().add(pnlMain, BorderLayout.CENTER);
@@ -998,6 +1000,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								0,
 								0));
 							boilMinText.setText("60");
+							boilMinText.addFocusListener(this);
+							boilMinText.addActionListener(this);
 						}
 						{
 							evapText = new JTextField();
@@ -1014,6 +1018,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								0,
 								0));
 							evapText.setText("4");
+							evapText.addFocusListener(this);
+							evapText.addActionListener(this);
 						}
 					}
 					{
@@ -1215,7 +1221,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						pnlTables.add(pnlMaltButtons);
 						FlowLayout pnlMaltButtonsLayout = new FlowLayout();
 						pnlMaltButtonsLayout.setAlignment(FlowLayout.LEFT);
+						pnlMaltButtonsLayout.setVgap(0);
 						pnlMaltButtons.setLayout(pnlMaltButtonsLayout);
+						pnlMaltButtons.setPreferredSize(new java.awt.Dimension(390, 34));
 						{
 							tlbMalt = new JToolBar();
 							pnlMaltButtons.add(tlbMalt);
@@ -1345,6 +1353,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						pnlHopsButtons = new JPanel();
 						FlowLayout pnlHopsButtonsLayout = new FlowLayout();
 						pnlHopsButtonsLayout.setAlignment(FlowLayout.LEFT);
+						pnlHopsButtonsLayout.setVgap(0);
 						pnlHopsButtons.setLayout(pnlHopsButtonsLayout);
 						pnlTables.add(pnlHopsButtons);
 						pnlHopsButtons.setPreferredSize(new java.awt.Dimension(512, 16));
@@ -1816,6 +1825,14 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		else if (o == postBoilText){
 			myRecipe.setPostBoil(Double.parseDouble(s));
 				displayRecipe();
+		}
+		else if (o == evapText){
+			myRecipe.setEvap(Double.parseDouble(s));
+			displayRecipe();
+		}
+		else if (o == boilMinText){
+			myRecipe.setBoilMinutes(Integer.parseInt(s));
+			displayRecipe();
 		}
 
 	}	
