@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.20 2005/05/27 20:26:28 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.21 2005/06/03 18:06:37 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -14,6 +14,8 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
+import java.text.*;
+import java.util.*;
 
 /**
  * @author aavis
@@ -396,6 +398,16 @@ public class XmlHandler extends DefaultHandler{
 				r.setMashed(Boolean.valueOf(s).booleanValue());
 			} else if (currentElement.equalsIgnoreCase("YEAST")) {
 				r.setYeastName(s);
+			} else if (currentElement.equalsIgnoreCase("RECIPE_DATE")) {
+				DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+			      try {
+			         Date d = df.parse(s);
+			         r.setCreated(d);
+			      }
+			      catch(ParseException e) {
+			         System.out.println("Unable to parse " + s);
+			      }
+				
 			}
 
 		}

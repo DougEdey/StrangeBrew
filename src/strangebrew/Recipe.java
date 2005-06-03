@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.40 2005/06/02 19:14:30 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.41 2005/06/03 18:06:37 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -202,6 +202,7 @@ public class Recipe {
 	public void setStyle(Style s) { style = s; }
 	public void setYeastName(String s) { yeast.setName(s); }
 	public void setYeast(Yeast y) { yeast = y; }
+	
 	
 	
 	// Setters that need to do extra work:
@@ -529,7 +530,7 @@ public class Recipe {
 		sb.append("  <MALT_UNITS>" + maltUnits + "</MALT_UNITS>\n");
 		sb.append("  <HOPS_UNITS>" + hopUnits + "</HOPS_UNITS>\n");
 		sb.append("  <YEAST>" + yeast.getName() + "</YEAST>\n");
-		SimpleDateFormat df = new SimpleDateFormat();		
+		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");		
 		sb.append("  <RECIPE_DATE>" + df.format(created.getTime()) + "</RECIPE_DATE>\n");
 		sb.append("  <ATTENUATION>" + attenuation + "</ATTENUATION>\n");
 		sb.append("  </DETAILS>\n");
@@ -563,20 +564,6 @@ public class Recipe {
 		sb.append("</STRANGEBREWRECIPE>");
 
 		return sb.toString();
-	}
-
-	public void testRecipe() {
-		calcMaltTotals();
-		calcHopsTotals();
-		System.out.print("Recipe totals for " + name + ": \n");
-		System.out.print("Vol: " + postBoilVol.getValue() + " " +
-				postBoilVol.getUnits() + "\n");
-		System.out.print("Effic: " + efficiency + "\n");
-		System.out.print("estOG: " + estOg + "\n");
-		System.out.print("estFG: " + estFg + "\n");
-		System.out.print("srm: " + srm + "\n");
-		System.out.print("%alc: " + alcohol + "\n");
-		System.out.print("IBUs: " + ibu + "\n");
 	}
 	
 	public static String padLeft(String str, int fullLength, char ch) {
