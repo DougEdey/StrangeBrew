@@ -66,12 +66,14 @@ Kris Henderson (Zymurgist) - preferences coding
 Don Kelly - Promash recipe format decoding
 Colin Kilburn - testing / bug fixes
 
+Parts of this program are copyright by:
+	Copyright (C) 2002-2004 Roedy Green 
+	(CSVReader and CSVWriter classes)
+	Copyright (C) Copyright (c) 2003-2004 Werner Randelshofer
+	(Splash and SplashWindow classes)
 
 License:
 	Copyright (C) 2005  Drew Avis
-	Parts of this program are:
-	Copyright (C) 2005 Kris Henderson, 
-	Copyright (C) 2002-2004 Roedy Green
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
