@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.21 2005/06/03 18:06:37 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.22 2005/06/06 20:06:32 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -221,6 +221,8 @@ public class XmlHandler extends DefaultHandler{
 				h = null;
 			} else if (qName.equalsIgnoreCase("ITEM")
 					&& currentList.equalsIgnoreCase("MISC")) {
+				misc.setDescription(descrBuf);
+				descrBuf = "";
 				r.addMisc(misc);
 				misc = null;
 			
@@ -343,7 +345,7 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentElement.equalsIgnoreCase("ADD")) {
 				h.setAdd(s);
 			} else if (currentElement.equalsIgnoreCase("DescrLookup")) {
-				misc.setDescription(s);
+				descrBuf = descrBuf + s;
 			} else if (currentElement.equalsIgnoreCase("TIME")) {
 				misc.setTime(Integer.parseInt(s));
 			} else if (currentElement.equalsIgnoreCase("STAGE")) {

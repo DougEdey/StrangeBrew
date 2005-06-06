@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.42 2005/06/03 20:15:44 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.43 2005/06/06 20:06:33 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -191,6 +191,27 @@ public class Recipe {
 	public void setMaltLov(int i, double l) {((Fermentable)fermentables.get(i)).setLov(l); }
 	public void setMaltCost(int i, String c) {((Fermentable)fermentables.get(i)).setCost(c); }
 	
+	
+	// misc get/set functions
+	public int getMiscListSize(){ return misc.size(); }
+	public String getMiscName(int i) { return ((Misc)misc.get(i)).getName();}
+	public void setMiscName(int i, String n) {((Misc)misc.get(i)).setName(n);}
+	public double getMiscAmount(int i) { 
+		Misc m = ((Misc)misc.get(i));
+		return m.getAmountAs(m.getUnits());		
+	}
+	public void setMiscAmount(int i, double a) {((Misc)misc.get(i)).setAmount(a); }
+	public String getMiscUnits(int i) { return ((Misc)misc.get(i)).getUnits();}
+	public void setMiscUnits(int i, String u) {((Misc)misc.get(i)).setUnits(u); }
+	public double getMiscCost(int i) { return ((Misc)misc.get(i)).getCostPerU();}
+	public void setMiscCost(int i, double c) {((Misc)misc.get(i)).setCost(c); }
+	public String getMiscStage(int i) { return ((Misc)misc.get(i)).getStage();}
+	public void setMiscStage(int i, String s) {((Misc)misc.get(i)).setStage(s);}
+	public int getMiscTime(int i) { return ((Misc)misc.get(i)).getTime();}
+	public void setMiscTime(int i, int t) {((Misc)misc.get(i)).setTime(t);}
+	public String getMiscDescription(int i) { return ((Misc)misc.get(i)).getDescription();}
+	
+	
 	// Set functions:
 
 	public void setBoilMinutes(int b) { boilMinutes = b; }
@@ -301,6 +322,12 @@ public class Recipe {
 		}
 	}
 	public void addMisc(Misc m) { misc.add(m); }
+	
+	public void delMisc(int i){
+		if (!misc.isEmpty()){
+			misc.remove(i);
+		}
+	}
 	
 	/**
 	 * Handles a string of the form "d u", where d is a double

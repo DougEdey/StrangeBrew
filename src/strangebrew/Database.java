@@ -8,7 +8,7 @@ import java.util.*;
 import com.mindprod.csv.*;
 
 /**
- * $Id: Database.java,v 1.13 2005/05/31 18:05:57 andrew_avis Exp $
+ * $Id: Database.java,v 1.14 2005/06/06 20:06:33 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -31,12 +31,14 @@ public class Database {
 	public ArrayList hopsDB = new ArrayList();
 	public ArrayList yeastDB = new ArrayList();
 	public ArrayList styleDB = new ArrayList();
+	public ArrayList miscDB = new ArrayList();
 
 	public void readDB(String dbPath){
 		readFermentables(dbPath);
 		readHops(dbPath);
 		readYeast(dbPath);
 		readStyles(dbPath);
+		readMisc(dbPath);
 	}
 	public void readFermentables(String dbPath) {
 		// read the fermentables from the csv file
@@ -240,6 +242,50 @@ public class Database {
 		
 	}
 	
+	public void readMisc(String dbPath) {
+		// read the yeast from the csv file
+		try {
+			File miscFile = new File(dbPath, "misc_ingr.csv");
+			CSVReader reader = new CSVReader(new FileReader(
+					miscFile), ',', '\"', true, false);
+
+			try {
+				// get the first line and set up the index:
+				String[] fields = reader.getAllFieldsInLine();
+
+				int nameIdx = getIndex(fields, "NAME");
+				int costIdx = getIndex(fields, "COST");
+				int descrIdx = getIndex(fields, "DESCR");
+				int unitsIdx = getIndex(fields, "UNITS");
+				int stockIdx = getIndex(fields, "STOCK");
+				int stageIdx = getIndex(fields, "STAGE");
+
+				while (true) {
+					Misc m = new Misc();
+					fields = reader.getAllFieldsInLine();
+					m.setName(fields[nameIdx]);
+
+					if (!fields[costIdx].equals(""))
+						m.setCost(Double.parseDouble(fields[costIdx]));
+					m.setDescription(fields[descrIdx]);
+					m.setUnits(fields[unitsIdx]);
+					m.setStage(fields[stageIdx]);					
+					miscDB.add(m);
+				}
+			} catch (EOFException e) {
+			}
+			reader.close();			
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		// sort:
+		ObjComparator sc = new ObjComparator();
+		Collections.sort(styleDB,  sc);
+
+	}
+	
 	private int getIndex(String[] fields, String key) {
 		int i = 0;
 		while (i < fields.length && !fields[i].equalsIgnoreCase(key)) {
@@ -267,7 +313,13 @@ public class Database {
 				Yeast b1 = (Yeast) b;
 				int result = a1.getName().compareTo(b1.getName());
 				return (result == 0 ? -1 : result);
+			} else if (a.getClass().getName().equalsIgnoreCase("strangebrew.Misc")) {
+				Misc a1 = (Misc) a;
+				Misc b1 = (Misc) b;
+				int result = a1.getName().compareTo(b1.getName());
+				return (result == 0 ? -1 : result);
 			}
+			
 			else return 0;
 		}
 
