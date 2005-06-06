@@ -110,7 +110,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JMenu jMenu5;
 	private JMenuItem deleteMenuItem;
 	private JSeparator jSeparator1;
-	private JMenuItem pasteMenuItem;
 	private JLabel lblDate;
 	private JTextField txtBrewer;
 	private JLabel lblBrewer;
@@ -119,8 +118,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JPanel pnlDetails;
 	private JTabbedPane jTabbedPane1;
 	private JPanel jPanel1;
-	private JMenuItem copyMenuItem;
-	private JMenuItem cutMenuItem;
 	private JMenu jMenu4;
 	private JMenuItem exitMenuItem;
 	private JSeparator jSeparator2;
@@ -131,6 +128,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JPanel pnlHopsButtons;
 	private JButton btnDelMalt;
 	private JButton btnAddMalt;
+	private MiscPanel miscPanel;
+	private JMenuItem aboutMenuItem;
 	private JTextField evapText;
 	private JTextField boilMinText;
 	private JLabel evapLabel;
@@ -220,6 +219,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private ArrayList volList;
 	private JFileChooser fileChooser;
 	private MashManager mashMgr;
+	private AboutDialog aboutDlg;
 	
 	private DateFormat dateFormat1 = DateFormat.getDateInstance(DateFormat.SHORT);
 	
@@ -257,6 +257,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		cmbYeastModel.setList(db.yeastDB);
 		cmbMaltModel.setList(db.fermDB);
 		cmbHopsModel.setList(db.hopsDB);
+		miscPanel.setList(db.miscDB);
 		cmbSizeUnitsModel.setList(new Quantity().getListofUnits("vol"));
 		cmbMaltUnitsModel.setList(new Quantity().getListofUnits("weight"));
 		cmbHopsUnitsModel.setList(new Quantity().getListofUnits("weight"));
@@ -283,7 +284,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		cmbYeastModel.addOrInsert(myRecipe.getYeastObj());
 		cmbSizeUnitsModel.addOrInsert(myRecipe.getVolUnits());
 		tblMaltModel.setData(myRecipe);
-		tblHopsModel.setData(myRecipe);
+		tblHopsModel.setData(myRecipe);		
+		miscPanel.setData(myRecipe);
 		tblMalt.updateUI();
 		tblHops.updateUI();		
 
@@ -1120,6 +1122,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							pnlStyle.add(sldMatch);
 						}
 					}
+					{
+						miscPanel = new MiscPanel(myRecipe);
+						jTabbedPane1.addTab("Misc", null, miscPanel, null);
+					}
 				}
 				{
 					pnlTables = new JPanel();
@@ -1621,21 +1627,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						
 					}
 					{
-						cutMenuItem = new JMenuItem();
-						jMenu4.add(cutMenuItem);
-						cutMenuItem.setText("Cut");
-					}
-					{
-						copyMenuItem = new JMenuItem();
-						jMenu4.add(copyMenuItem);
-						copyMenuItem.setText("Copy");
-					}
-					{
-						pasteMenuItem = new JMenuItem();
-						jMenu4.add(pasteMenuItem);
-						pasteMenuItem.setText("Paste");
-					}
-					{
 						jSeparator1 = new JSeparator();
 						jMenu4.add(jSeparator1);
 					}
@@ -1643,6 +1634,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						deleteMenuItem = new JMenuItem();
 						jMenu4.add(deleteMenuItem);
 						deleteMenuItem.setText("Delete");
+						deleteMenuItem.setEnabled(false);
 					}
 				}
 				{
@@ -1670,6 +1662,19 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						helpMenuItem = new JMenuItem();
 						jMenu5.add(helpMenuItem);
 						helpMenuItem.setText("Help");
+					}
+					{
+						aboutMenuItem = new JMenuItem();
+						jMenu5.add(aboutMenuItem);
+						aboutMenuItem.setText("About...");
+						final JFrame owner = this;
+						aboutMenuItem.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {								
+								aboutDlg = new AboutDialog(owner);
+								aboutDlg.setVisible(true);
+								
+							}
+						});
 					}
 				}
 			}
