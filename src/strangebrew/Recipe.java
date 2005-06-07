@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.43 2005/06/06 20:06:33 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.44 2005/06/07 19:25:42 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -140,7 +140,8 @@ public class Recipe {
 	
 	// hop list get functions:
 	public String getHopUnits(){ return hopUnits; }
-	public ArrayList getHopsList() { return hops; }
+	// public ArrayList getHopsList() { return hops; }
+	public Hop getHop(int i) { return (Hop)hops.get(i); }
 	public int getHopsListSize() { return hops.size(); }
 	public String getHopName(int i){ return ((Hop)hops.get(i)).getName(); }
 	public String getHopType(int i){ return ((Hop)hops.get(i)).getType(); }
@@ -168,7 +169,8 @@ public class Recipe {
 	public void setHopAmount(int i, double a) { ((Hop)hops.get(i)).setAmount(a); }
 	
 	// fermentable get methods
-	public ArrayList getFermentablesList() { return fermentables; }
+	// public ArrayList getFermentablesList() { return fermentables; }
+	public Fermentable getFermentable(int i) { return (Fermentable)fermentables.get(i); }
 	public int getMaltListSize() { return fermentables.size(); }
 	public String getMaltName(int i){ return ((Fermentable)fermentables.get(i)).getName(); }
 	public String getMaltUnits(int i){ return ((Fermentable)fermentables.get(i)).getUnits(); }
@@ -194,6 +196,7 @@ public class Recipe {
 	
 	// misc get/set functions
 	public int getMiscListSize(){ return misc.size(); }
+	public Misc getMisc(int i){ return (Misc)misc.get(i); }
 	public String getMiscName(int i) { return ((Misc)misc.get(i)).getName();}
 	public void setMiscName(int i, String n) {((Misc)misc.get(i)).setName(n);}
 	public double getMiscAmount(int i) { 
@@ -210,6 +213,8 @@ public class Recipe {
 	public int getMiscTime(int i) { return ((Misc)misc.get(i)).getTime();}
 	public void setMiscTime(int i, int t) {((Misc)misc.get(i)).setTime(t);}
 	public String getMiscDescription(int i) { return ((Misc)misc.get(i)).getDescription();}
+	public void setMiscComments(int i, String c) {((Misc)misc.get(i)).setComments(c); }
+	public String getMiscComments(int i) { return ((Misc)misc.get(i)).getComments();}
 	
 	
 	// Set functions:

@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.10 2005/05/20 17:38:53 andrew_avis Exp $
+ * $Id: Quantity.java,v 1.11 2005/06/07 19:25:42 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -74,6 +74,9 @@ public class Quantity {
 			type = getTypeFromUnit(a);
 			if (u==null) // gotta set the unit too:
 				unit = getUnitFromAbrv(type, a);
+			if (unit==null) // this is not a recognized unit because the above call failed
+						 // just set unit = a
+				unit = a;
 		}
 		if (am >= 0)
 			value = am;
