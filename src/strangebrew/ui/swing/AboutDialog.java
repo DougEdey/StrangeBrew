@@ -183,7 +183,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 					okButton.addActionListener(this);
 				}
 			}
-			setSize(600, 300);
+			setSize(500, 350);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

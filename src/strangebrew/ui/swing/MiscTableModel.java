@@ -106,8 +106,7 @@ class MiscTableModel extends AbstractTableModel {
 	 * change.
 	 */
 	public void setValueAt(Object value, int row, int col) {
-
-		// Fermentable m = (Fermentable) data.get(row);
+		
 		try {
 			switch (col) {
 				case 0 :
@@ -117,7 +116,7 @@ class MiscTableModel extends AbstractTableModel {
 					data.setMiscAmount(row, Double.parseDouble(value.toString()));					
 					break;
 				case 2 :
-					// m.setUnits(value.toString());
+					data.setMiscUnits(row, value.toString());
 					break;
 				case 3 :
 					data.setMiscCost(row, Double.parseDouble(value.toString()));
