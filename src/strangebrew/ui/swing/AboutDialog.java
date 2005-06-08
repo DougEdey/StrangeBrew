@@ -29,8 +29,6 @@ import javax.swing.JTextArea;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.Image;
-import com.cloudgarden.layout.AnchorConstraint;
-import com.cloudgarden.layout.AnchorLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;

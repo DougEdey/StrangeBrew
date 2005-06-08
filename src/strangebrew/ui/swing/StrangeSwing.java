@@ -131,6 +131,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JButton btnAddMalt;
 	private JLabel fileNameLabel;
 	private MiscPanel miscPanel;
+	private NotesPanel notesPanel;
 	private JMenuItem aboutMenuItem;
 	private JTextField evapText;
 	private JTextField boilMinText;
@@ -273,9 +274,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// link malt table and totals:
 		addColumnWidthListeners();		
 		
-		// set up misc tab:
+		// set up tabs:
 		miscPanel.setList(db.miscDB);
 		miscPanel.setDescrArea(descriptionTextArea);
+		
 		
 		myRecipe = new Recipe();
 		attachRecipeData();
@@ -293,6 +295,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		tblMaltModel.setData(myRecipe);
 		tblHopsModel.setData(myRecipe);		
 		miscPanel.setData(myRecipe);
+		notesPanel.setData(myRecipe);
 		tblMalt.updateUI();
 		tblHops.updateUI();		
 
@@ -1132,6 +1135,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					{
 						miscPanel = new MiscPanel(myRecipe);
 						jTabbedPane1.addTab("Misc", null, miscPanel, null);
+					}
+					{
+						notesPanel = new NotesPanel();
+						jTabbedPane1.addTab("Notes", null, notesPanel, null);
 					}
 				}
 				{

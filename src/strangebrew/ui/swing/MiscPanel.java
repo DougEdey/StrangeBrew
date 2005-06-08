@@ -31,7 +31,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.table.TableColumn;
-import javax.swing.text.Document; 
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -39,12 +38,10 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+
 
 import java.util.ArrayList;
 
-import strangebrew.Fermentable;
 import strangebrew.Misc;
 import javax.swing.BorderFactory;
 import javax.swing.border.LineBorder;
@@ -52,22 +49,6 @@ import javax.swing.border.TitledBorder;
 import strangebrew.Recipe;
 
 
-
-
-/**
-* This code was generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* *************************************
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED
-* for this machine, so Jigloo or this code cannot be used legally
-* for any corporate or commercial purpose.
-* *************************************
-*/
 public class MiscPanel extends javax.swing.JPanel {
 	private JTable miscTable;
 	private JScrollPane jScrollPane1;
