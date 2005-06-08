@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.22 2005/06/06 20:06:32 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.23 2005/06/08 18:29:24 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -17,6 +17,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.text.*;
 import java.util.*;
 
+
 /**
  * @author aavis
  *
@@ -30,6 +31,7 @@ public class XmlHandler extends DefaultHandler{
 	private Fermentable m = null; 
 	private Hop h = null;
 	private Misc misc = null;
+	private Note note = new Note();
 	private Attributes currentAttributes = null;
 
 	private String currentList = null; //current List name
@@ -184,7 +186,10 @@ public class XmlHandler extends DefaultHandler{
 			currentList = "MASH";
 		} else if (eName.equalsIgnoreCase("MISC")) {
 			currentList = "MISC";
-		} else if (eName.equalsIgnoreCase("ITEM")) { // this is an item in a
+		} else if (eName.equalsIgnoreCase("NOTES")) {
+			currentList = "NOTES";
+		} 
+		else if (eName.equalsIgnoreCase("ITEM")) { // this is an item in a
 			// list
 			if (currentList.equals("FERMENTABLES")) {
 				m = new Fermentable();
@@ -192,6 +197,9 @@ public class XmlHandler extends DefaultHandler{
 				h = new Hop();
 			} else if (currentList.equals("MISC")) {
 				misc = new Misc();
+			}
+			else if (currentList.equals("NOTES")) {				
+				note = new Note();
 			}
 
 
@@ -227,6 +235,11 @@ public class XmlHandler extends DefaultHandler{
 				misc = null;
 			
 			} else if (qName.equalsIgnoreCase("ITEM")
+					&& currentList.equalsIgnoreCase("NOTES")) {
+				r.addNote(note);
+				note = null;
+			
+			} else if (qName.equalsIgnoreCase("ITEM")
 						&& currentList.equalsIgnoreCase("MASH")) {
 					r.mash.addStep(type, startTemp, endTemp, "F", method, minutes, rampMin);
 									
@@ -234,7 +247,8 @@ public class XmlHandler extends DefaultHandler{
 			} else if (qName.equalsIgnoreCase("FERMENTABLS")
 					|| qName.equalsIgnoreCase("HOPS")
 					|| qName.equalsIgnoreCase("DETAILS")
-					|| qName.equalsIgnoreCase("MISC")) {
+					|| qName.equalsIgnoreCase("MISC")
+					|| qName.equalsIgnoreCase("NOTES")) {
 				currentList = "";
 			}
 		}
@@ -351,6 +365,22 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentElement.equalsIgnoreCase("STAGE")) {
 				misc.setStage(s);
 			}
+		}
+		else if (currentList.equalsIgnoreCase("NOTES")) {
+			if (currentElement.equalsIgnoreCase("DATE")) {
+				DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+			      try {
+			         Date d = df.parse(s);
+			         note.setDate(d);
+			      }
+			      catch(ParseException e) {
+			         System.out.println("Unable to parse " + s);
+			      }				
+			} else if (currentElement.equalsIgnoreCase("TYPE")) {
+				note.setType(s);
+			} else if (currentElement.equalsIgnoreCase("NOTE")) {
+				note.setNote(s);
+			} 
 		}
 		else if (currentList.equalsIgnoreCase("MASH")) {
 			if (currentElement.equalsIgnoreCase("TYPE")) {

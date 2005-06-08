@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.44 2005/06/07 19:25:42 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.45 2005/06/08 18:29:24 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -47,8 +47,7 @@ public class Recipe {
 	private double estOg;
 	private double estFg;
 	private double evap;
-	private double ibu;
-	public Mash mash = new Mash();	
+	private double ibu;	
 	private boolean mashed;
 	private String name;
 	private Quantity preBoilVol = new Quantity();
@@ -56,6 +55,8 @@ public class Recipe {
 	private double srm;
 	private Style style = new Style();
 	private Yeast yeast = new Yeast();
+	
+	public Mash mash = new Mash();	
 
 	// options:
 	private String hopUnits;
@@ -75,6 +76,9 @@ public class Recipe {
 	private ArrayList hops = new ArrayList();
 	private ArrayList fermentables = new ArrayList();
 	private ArrayList misc = new ArrayList();
+	
+	// notes
+	private ArrayList notes = new ArrayList();
 	
 	// formats
 	public DecimalFormat df1 = new DecimalFormat("####.0");
@@ -102,8 +106,7 @@ public class Recipe {
 
 	}
 	
-	// Get functions:
-	
+	// Getters:	
 	public double getAlcohol(){ return alcohol; }
 	public double getAttenuation(){ return attenuation; }
 	public int getBoilMinutes(){ return boilMinutes; }
@@ -138,9 +141,26 @@ public class Recipe {
 	public String getYeast(){ return yeast.getName();}	
 	public Yeast getYeastObj(){ return yeast;}
 	
+	// Setters:
+	public void setBoilMinutes(int b) { boilMinutes = b; }
+	public void setBrewer(String b) { brewer = b; }
+	public void setComments(String c) { comments = c; }
+	public void setCreated(Date d) { created.setTime(d); }
+	public void setEvap(double e) { evap = e; }
+	public void setHopsUnits(String h) { hopUnits = h; }
+	public void setMaltUnits(String m) { maltUnits = m; }
+	public void setMashed(boolean m) { mashed = m; }
+	public void setMashRatio(double m) { mash.setMashRatio(m); }
+	public void setMashRatioU(String u) { mash.setMashRatioU(u); }
+	public void setName(String n) {	name = n; }
+	public void setStyle(String s) { style.setName(s); }
+	public void setStyle(Style s) { style = s; }
+	public void setYeastName(String s) { yeast.setName(s); }
+	public void setYeast(Yeast y) { yeast = y; }
+
+	
 	// hop list get functions:
 	public String getHopUnits(){ return hopUnits; }
-	// public ArrayList getHopsList() { return hops; }
 	public Hop getHop(int i) { return (Hop)hops.get(i); }
 	public int getHopsListSize() { return hops.size(); }
 	public String getHopName(int i){ return ((Hop)hops.get(i)).getName(); }
@@ -216,24 +236,15 @@ public class Recipe {
 	public void setMiscComments(int i, String c) {((Misc)misc.get(i)).setComments(c); }
 	public String getMiscComments(int i) { return ((Misc)misc.get(i)).getComments();}
 	
-	
-	// Set functions:
+	// notes get/set methods
+	public int getNotesListSize() { return notes.size(); }
+	public Date getNoteDate(int i) { return ((Note)notes.get(i)).getDate(); }
+	public void setNoteDate(int i, Date d) { ((Note)notes.get(i)).setDate(d); }
+	public String getNoteType(int i) { return ((Note)notes.get(i)).getType(); }
+	public void setNoteType(int i, String t) { ((Note)notes.get(i)).setType(t); }
+	public String getNoteNote(int i) { return ((Note)notes.get(i)).getNote(); }
+	public void setNoteNote(int i, String n) { ((Note)notes.get(i)).setNote(n); }
 
-	public void setBoilMinutes(int b) { boilMinutes = b; }
-	public void setBrewer(String b) { brewer = b; }
-	public void setComments(String c) { comments = c; }
-	public void setCreated(Date d) { created.setTime(d); }
-	public void setEvap(double e) { evap = e; }
-	public void setHopsUnits(String h) { hopUnits = h; }
-	public void setMaltUnits(String m) { maltUnits = m; }
-	public void setMashed(boolean m) { mashed = m; }
-	public void setMashRatio(double m) { mash.setMashRatio(m); }
-	public void setMashRatioU(String u) { mash.setMashRatioU(u); }
-	public void setName(String n) {	name = n; }
-	public void setStyle(String s) { style.setName(s); }
-	public void setStyle(Style s) { style = s; }
-	public void setYeastName(String s) { yeast.setName(s); }
-	public void setYeast(Yeast y) { yeast = y; }
 	
 	
 	
@@ -331,6 +342,14 @@ public class Recipe {
 	public void delMisc(int i){
 		if (!misc.isEmpty()){
 			misc.remove(i);
+		}
+	}
+	
+	public void addNote(Note n) { notes.add(n); }
+	
+	public void delNote(int i){
+		if (!notes.isEmpty()){
+			notes.remove(i);
 		}
 	}
 	
@@ -605,6 +624,13 @@ public class Recipe {
 		
 		sb.append(mash.toXml());
 		
+		// notes list:
+		sb.append("  <NOTES>\n");
+		for (int i = 0; i < notes.size(); i++) {
+			sb.append(((Note) notes.get(i)).toXML());
+		}
+		sb.append("  </NOTES>\n");
+		
 		sb.append("</STRANGEBREWRECIPE>");
 
 		return sb.toString();
@@ -688,7 +714,7 @@ public class Recipe {
 	 * ingredient comparator to help sort lists of malts / hops
 	 * 
 	 */
-	public class ingrComparator implements Comparator {
+	private class ingrComparator implements Comparator {
 
 		
 		public int compare(Object a, Object b) {
@@ -708,7 +734,4 @@ public class Recipe {
 		}
 
 	}
-	
-
-
 }
