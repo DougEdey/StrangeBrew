@@ -18,15 +18,15 @@ import strangebrew.Mash;
 
 class MashTableModel extends AbstractTableModel {
 	// private final StrangeSwing app;
+	private final MashManager mashManager;
 
 	private String[] columnNames = {"Type", "Method", "Start Temp", "End Temp",
-			"Ramp Min", "Step Min", "Infuse", "Decoct"};
+			"Ramp Min", "Step Min"};
 
 	private Mash data = null;
 
-	public MashTableModel() {
-		// data = new ArrayList();
-		// this.app = app;
+	public MashTableModel(MashManager m) {
+		mashManager = m;
 	}
 
 	public void addRow(MashStep step) {
@@ -68,10 +68,6 @@ class MashTableModel extends AbstractTableModel {
 					return new Double(data.getStepRampMin(row));
 				case 5 :
 					return new Double(data.getStepMin(row));
-				case 6 :
-					return new Double(data.getStepInfuseVol(row));
-				case 7 :
-					return new Double(data.getStepDecoctVol(row));
 
 			}
 		} catch (Exception e) {
@@ -129,10 +125,7 @@ class MashTableModel extends AbstractTableModel {
 				case 5 :
 					data.setStepMin(row, Integer.parseInt(value.toString()));
 					break;
-				case 6 :
-					break;
-				case 7 :
-					break;
+
 
 			}
 		} catch (Exception e) {
@@ -140,6 +133,7 @@ class MashTableModel extends AbstractTableModel {
 		data.calcMashSchedule();
 		fireTableCellUpdated(row, col);
 		fireTableDataChanged();
+		mashManager.displayMash();
 		
 		
 	}

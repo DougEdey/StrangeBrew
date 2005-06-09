@@ -1646,7 +1646,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						editPrefsMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
 							    PreferencesDialog d = new PreferencesDialog(owner, preferences);
-							    d.show();
+							    d.setVisible(true);
 							}
 						});
 						

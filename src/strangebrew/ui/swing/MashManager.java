@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.6 2005/06/01 17:14:09 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.7 2005/06/09 17:41:27 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -30,6 +30,9 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -51,12 +54,29 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import strangebrew.Recipe;
 import javax.swing.JTextField;
 import strangebrew.Quantity;
 
-public class MashManager extends javax.swing.JFrame implements ActionListener {
+
+
+/**
+* This code was generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* *************************************
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED
+* for this machine, so Jigloo or this code cannot be used legally
+* for any corporate or commercial purpose.
+* *************************************
+*/
+public class MashManager extends javax.swing.JFrame implements ActionListener, FocusListener {
 	private JScrollPane jScrollPane1;
 	private JTable tblMash;
 	private JPanel pnlButtons;
@@ -66,9 +86,20 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 	private JLabel recipeNameLabel;
 	private JLabel titleLabel;
 	private JPanel directionsPanel;
+	private JLabel tempLostULabel;
+	private JTextField tempLostText;
+	private JPanel tempLostPanel;
+	private JLabel grainTempULabel;
+	private JTextField grainTempText;
+	private JPanel grainTempPanel;
+	private JLabel volLabel;
+	private JPanel volPanel;
+	private JPanel moreSettingsPanel;
+	private JLabel totalTimeLabel;
+	private JPanel timePanel;
 	private JComboBox ratioUnitsCombo;
 	private JLabel totalMashLabel;
-	private JPanel statsPanel;
+	private JPanel weightPanel;
 	private JTextField ratioText;
 	private JLabel ratioLabel;
 	private JPanel ratioPanel;
@@ -83,7 +114,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 	private JPanel settingsPanel;
 	private JPanel titlePanel;
 	private JButton btnOk;
-	private JPanel pnlTable;
+	private JPanel tablePanel;
 
 	private Recipe myRecipe;
 	private MashTableModel mashModel;
@@ -112,8 +143,8 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 			GridBagLayout thisLayout = new GridBagLayout();
 			thisLayout.columnWeights = new double[]{0.1, 0.1};
 			thisLayout.columnWidths = new int[]{7, 7};
-			thisLayout.rowWeights = new double[]{0.1, 0.9, 0.1, 0.1, 0.1};
-			thisLayout.rowHeights = new int[]{7, 7, 7, 7, 7};
+			thisLayout.rowWeights = new double[] {0.1,0.8,0.1,0.1,0.1};
+			thisLayout.rowHeights = new int[] {7,7,7,7,7};
 			this.getContentPane().setLayout(thisLayout);
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setTitle("Mash Manager");
@@ -142,21 +173,21 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 				}
 			}
 			{
-				pnlTable = new JPanel();
+				tablePanel = new JPanel();
 				BorderLayout pnlTableLayout = new BorderLayout();
-				pnlTable.setLayout(pnlTableLayout);
+				tablePanel.setLayout(pnlTableLayout);
 				this.getContentPane().add(
-						pnlTable,
+						tablePanel,
 						new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER,
 								GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-				pnlTable.setName("");
-				pnlTable.setBorder(BorderFactory.createTitledBorder("Mash Steps"));
+				tablePanel.setName("");
+				tablePanel.setBorder(BorderFactory.createTitledBorder("Mash Steps"));
 				{
 					jScrollPane1 = new JScrollPane();
-					pnlTable.add(jScrollPane1, BorderLayout.CENTER);
-					jScrollPane1.setPreferredSize(new java.awt.Dimension(382, 343));
+					tablePanel.add(jScrollPane1, BorderLayout.CENTER);
+					jScrollPane1.setPreferredSize(new java.awt.Dimension(424, -32));
 					{
-						mashModel = new MashTableModel();
+						mashModel = new MashTableModel(this);
 						tblMash = new JTable();
 						jScrollPane1.setViewportView(tblMash);
 						tblMash.setModel(mashModel);
@@ -185,7 +216,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 					FlowLayout buttonsPanelLayout = new FlowLayout();
 					buttonsPanelLayout.setAlignment(FlowLayout.LEFT);
 					buttonsPanel.setLayout(buttonsPanelLayout);
-					pnlTable.add(buttonsPanel, BorderLayout.SOUTH);
+					tablePanel.add(buttonsPanel, BorderLayout.SOUTH);
 					{
 						addStepButton = new JButton();
 						buttonsPanel.add(addStepButton);
@@ -207,18 +238,44 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 						});
 					}
 					{
-						statsPanel = new JPanel();
-						FlowLayout statsPanelLayout = new FlowLayout();
-						statsPanelLayout.setAlignment(FlowLayout.LEFT);
-						statsPanel.setLayout(statsPanelLayout);
-						buttonsPanel.add(statsPanel);
-						statsPanel.setBorder(BorderFactory.createTitledBorder("Total Mash Weight"));
-						statsPanel.setPreferredSize(new java.awt.Dimension(135, 45));
+						weightPanel = new JPanel();
+						BoxLayout statsPanelLayout = new BoxLayout(weightPanel, javax.swing.BoxLayout.X_AXIS);
+						weightPanel.setLayout(statsPanelLayout);
+						buttonsPanel.add(weightPanel);
+						weightPanel.setBorder(BorderFactory.createTitledBorder("Total Weight"));
+						weightPanel.setPreferredSize(new java.awt.Dimension(98, 39));
 						{
 							totalMashLabel = new JLabel();
-							statsPanel.add(totalMashLabel);
+							weightPanel.add(totalMashLabel);
 							totalMashLabel.setPreferredSize(new java.awt.Dimension(118, 13));
 							totalMashLabel.setText("total");
+						}
+					}
+					{
+						timePanel = new JPanel();
+						BoxLayout timePanelLayout = new BoxLayout(timePanel, javax.swing.BoxLayout.X_AXIS);
+						timePanel.setLayout(timePanelLayout);
+						buttonsPanel.add(timePanel);
+						timePanel.setBorder(BorderFactory.createTitledBorder("Total Min"));
+						timePanel.setPreferredSize(new java.awt.Dimension(79, 43));
+						{
+							totalTimeLabel = new JLabel();
+							timePanel.add(totalTimeLabel);
+							totalTimeLabel.setText("Time");
+							totalTimeLabel.setPreferredSize(new java.awt.Dimension(111, 17));
+						}
+					}
+					{
+						volPanel = new JPanel();
+						BoxLayout volPanelLayout = new BoxLayout(volPanel, javax.swing.BoxLayout.X_AXIS);
+						volPanel.setLayout(volPanelLayout);
+						buttonsPanel.add(volPanel);
+						volPanel.setBorder(BorderFactory.createTitledBorder("Total Vol"));
+						volPanel.setPreferredSize(new java.awt.Dimension(117, 42));
+						{
+							volLabel = new JLabel();
+							volPanel.add(volLabel);
+							volLabel.setText("10");
 						}
 					}
 				}
@@ -240,25 +297,13 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 						tempFrb = new JRadioButton();
 						tempPanel.add(tempFrb);
 						tempFrb.setText("F");
-						tempFrb.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {								
-								myRecipe.mash.setMashTempUnits("F");
-								myRecipe.mash.calcMashSchedule();
-								tblMash.updateUI();
-							}
-						});
+						tempFrb.addActionListener(this);
 					}
 					{
 						tempCrb = new JRadioButton();
 						tempPanel.add(tempCrb);
 						tempCrb.setText("C");
-						tempCrb.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {
-								myRecipe.mash.setMashTempUnits("C");
-								myRecipe.mash.calcMashSchedule();
-								tblMash.updateUI();
-							}
-						});
+						tempCrb.addActionListener(this);
 						
 					}
 					tempUnitsButtonGroup = new ButtonGroup();
@@ -279,13 +324,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 						volUnitsCombo = new JComboBox();
 						volUnitsPanel.add(volUnitsCombo);
 						volUnitsCombo.setModel(volUnitsComboModel);
-						volUnitsCombo.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {
-								String s = (String)volUnitsComboModel.getSelectedItem();
-								myRecipe.mash.setMashVolUnits(s);
-								tblMash.updateUI();
-							}
-						});
+						volUnitsCombo.addActionListener(this);
 					}
 				}
 				{
@@ -301,11 +340,8 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 						ratioText = new JTextField();
 						ratioPanel.add(ratioText);
 						ratioText.setText("1.25");
-						ratioText.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {
-								myRecipe.mash.setMashRatio(Double.parseDouble(ratioText.getText()));
-							}
-						});
+						ratioText.addFocusListener(this);
+						ratioText.addActionListener(this); 
 					}
 					{
 						ComboBoxModel ratioUnitsComboModel = new DefaultComboBoxModel(new String[] {
@@ -313,29 +349,8 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 						ratioUnitsCombo = new JComboBox();
 						ratioPanel.add(ratioUnitsCombo);
 						ratioUnitsCombo.setModel(ratioUnitsComboModel);
-						ratioUnitsCombo.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {
-								String s = (String)ratioUnitsCombo.getSelectedItem();
-								myRecipe.mash.setMashRatioU(s);
-							}
-						});
+						ratioUnitsCombo.addActionListener(this);
 					}
-				}
-			}
-			{
-				pnlButtons = new JPanel();
-				FlowLayout pnlButtonsLayout = new FlowLayout();
-				pnlButtonsLayout.setAlignment(FlowLayout.RIGHT);
-				pnlButtons.setLayout(pnlButtonsLayout);
-				this.getContentPane().add(
-						pnlButtons,
-						new GridBagConstraints(0, 4, 2, 1, 0.0, 0.0, GridBagConstraints.SOUTH,
-								GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-				{
-					btnOk = new JButton();
-					pnlButtons.add(btnOk);
-					btnOk.setText("OK");
-					btnOk.addActionListener(this);
 				}
 			}
 			{
@@ -345,8 +360,8 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 					new GridBagConstraints(
 						0,
 						3,
-						GridBagConstraints.RELATIVE,
-						GridBagConstraints.RELATIVE,
+						1,
+						1,
 						0.0,
 						0.0,
 						GridBagConstraints.CENTER,
@@ -367,19 +382,102 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 					directionsTextArea.setLineWrap(true);
 				}
 			}
+			{
+				pnlButtons = new JPanel();
+				FlowLayout pnlButtonsLayout = new FlowLayout();
+				pnlButtonsLayout.setAlignment(FlowLayout.RIGHT);
+				pnlButtons.setLayout(pnlButtonsLayout);
+				this.getContentPane().add(
+					pnlButtons,
+					new GridBagConstraints(
+						0,
+						4,
+						2,
+						1,
+						0.0,
+						0.0,
+						GridBagConstraints.SOUTH,
+						GridBagConstraints.HORIZONTAL,
+						new Insets(0, 0, 0, 0),
+						0,
+						0));
+				{
+					btnOk = new JButton();
+					pnlButtons.add(btnOk);
+					btnOk.setText("OK");
+					btnOk.addActionListener(this);
+				}
+			}
+			{
+				moreSettingsPanel = new JPanel();
+				FlowLayout moreSettingsPanelLayout = new FlowLayout();
+				moreSettingsPanelLayout.setAlignment(FlowLayout.LEFT);
+				moreSettingsPanel.setLayout(moreSettingsPanelLayout);
+				this.getContentPane().add(
+					moreSettingsPanel,
+					new GridBagConstraints(
+						1,
+						3,
+						1,
+						1,
+						0.0,
+						0.0,
+						GridBagConstraints.CENTER,
+						GridBagConstraints.HORIZONTAL,
+						new Insets(0, 0, 0, 0),
+						0,
+						0));
+				{
+					grainTempPanel = new JPanel();
+					BoxLayout grainTempPanelLayout = new BoxLayout(grainTempPanel, javax.swing.BoxLayout.X_AXIS);
+					grainTempPanel.setLayout(grainTempPanelLayout);
+					moreSettingsPanel.add(grainTempPanel);
+					grainTempPanel.setBorder(BorderFactory.createTitledBorder("Grain Temp"));
+					grainTempPanel.setPreferredSize(new java.awt.Dimension(94, 45));
+					{
+						grainTempText = new JTextField();
+						grainTempPanel.add(grainTempText);
+						grainTempText.setText("10");
+						grainTempText.setPreferredSize(new java.awt.Dimension(67, 15));
+						grainTempText.addFocusListener(this);
+						grainTempText.addActionListener(this);
+					}
+					{
+						grainTempULabel = new JLabel();
+						grainTempPanel.add(grainTempULabel);
+						grainTempULabel.setText("F");
+					}
+				}
+				{
+					tempLostPanel = new JPanel();
+					BoxLayout tempLostPanelLayout = new BoxLayout(tempLostPanel, javax.swing.BoxLayout.X_AXIS);
+					tempLostPanel.setLayout(tempLostPanelLayout);
+					moreSettingsPanel.add(tempLostPanel);
+					tempLostPanel.setPreferredSize(new java.awt.Dimension(104, 45));
+					tempLostPanel.setBorder(BorderFactory.createTitledBorder("Tun Temp Lost"));
+					{
+						tempLostText = new JTextField();
+						tempLostPanel.add(tempLostText);
+						tempLostText.setText("3");
+						tempLostText.setEditable(false);
+						tempLostText.addFocusListener(this);
+						tempLostText.addActionListener(this);
+					}
+					{
+						tempLostULabel = new JLabel();
+						tempLostPanel.add(tempLostULabel);
+						tempLostULabel.setText("F");
+					}
+				}
+			}
 			pack();
-			setSize(400, 300);
+			this.setSize(468, 400);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	//	Make the button do the same thing as the default close operation
-	//(DISPOSE_ON_CLOSE).
-	public void actionPerformed(ActionEvent e) {
-		setVisible(false);
-		dispose();
-	}
+	
 
 	public void displayMash() {
 		if (myRecipe != null) {
@@ -387,21 +485,35 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 			mashModel.setData(myRecipe.getMash());
 			tblMash.updateUI();
 			volUnitsComboModel.addOrInsert(myRecipe.mash.getMashVolUnits());
+			
+			// temp units:
 			if (myRecipe.mash.getMashTempUnits().equals("F"))
 				tempFrb.setSelected(true);
 			else
-				tempCrb.setSelected(true);
+				tempCrb.setSelected(true);						
+			grainTempULabel.setText(myRecipe.mash.getMashTempUnits());
+			tempLostULabel.setText(myRecipe.mash.getMashTempUnits());
 			
-			String mashTotal = myRecipe.df1.format(myRecipe.getTotalMash()) 
+			// set totals:
+			String mashWeightTotal = myRecipe.df1.format(myRecipe.getTotalMash()) 
 				+ " " + myRecipe.getMaltUnits();
-			totalMashLabel.setText(mashTotal);
-
+			totalMashLabel.setText(mashWeightTotal);
+			totalTimeLabel.setText(new Integer(myRecipe.mash.getMashTotalTime()).toString());
+			volLabel.setText(myRecipe.mash.getMashTotalVol());
+			grainTempText.setText(new Double(myRecipe.mash.getGrainTemp()).toString());			
+			
+			int i = tblMash.getSelectedRow();
+			if (i>-1){
+				directionsTextArea.setText(myRecipe.mash.getStepDirections(i));
+			}
+			
 		}
 	}
 
 	private void addStepButtonActionPerformed(ActionEvent evt) {
 		myRecipe.mash.addStep();
 		tblMash.updateUI();
+		displayMash();
 
 	}
 
@@ -409,7 +521,61 @@ public class MashManager extends javax.swing.JFrame implements ActionListener {
 		int i = tblMash.getSelectedRow();
 		myRecipe.mash.delStep(i);
 		tblMash.updateUI();
+		displayMash();
 
+	}
+	
+//	Make the button do the same thing as the default close operation
+	//(DISPOSE_ON_CLOSE).
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		if (o == btnOk) {
+			setVisible(false);
+			dispose();	
+			return;
+		}
+		else if (o == ratioText) {
+			double d = Double.parseDouble(ratioText.getText());
+			myRecipe.mash.setMashRatio(d);			
+		}
+		else if (o == volUnitsCombo){
+			String s = (String)volUnitsComboModel.getSelectedItem();
+			myRecipe.mash.setMashVolUnits(s);
+						
+		}
+		else if (o == ratioUnitsCombo) {
+			String s = (String)ratioUnitsCombo.getSelectedItem();
+			myRecipe.mash.setMashRatioU(s);			
+		}
+		else if (o == tempFrb) {
+			myRecipe.mash.setMashTempUnits("F");
+			myRecipe.mash.calcMashSchedule();					
+		}
+		else if (o == tempCrb) {
+			myRecipe.mash.setMashTempUnits("C");
+			myRecipe.mash.calcMashSchedule();
+						
+		}		
+		else if (o == grainTempText) {
+			String s = grainTempText.getText();
+			myRecipe.mash.setGrainTemp(Double.parseDouble(s));
+		}
+		
+		tblMash.updateUI();
+		displayMash();	
+		
+	}
+	
+	
+	
+	public void focusLost(FocusEvent e) {		
+		Object o = e.getSource();
+		ActionEvent evt = new ActionEvent(o, 1, "");
+		actionPerformed(evt);		
+	}
+	
+	public void focusGained(FocusEvent e) {
+		// do nothing, we don't need this event
 	}
 
 }
