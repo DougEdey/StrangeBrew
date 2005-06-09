@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Collections;
 
 /**
- * $Id: Mash.java,v 1.10 2005/06/01 17:13:45 andrew_avis Exp $
+ * $Id: Mash.java,v 1.11 2005/06/09 17:41:10 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -31,6 +31,7 @@ public class Mash {
 	private double spargeTotalQTS;
 	private double totalWaterQTS;
 	private double chillShrink;
+	
 	
 	// steps:
 	private ArrayList steps = new ArrayList();
@@ -199,9 +200,25 @@ public class Mash {
 		calcMashSchedule();
 	}
 	
+	public void setGrainTemp(double t){
+		grainTemp = t;
+		calcMashSchedule();
+	}
+
+	
 	// get methods:
 	public String getMashVolUnits(){ return volUnits; }
 	public String getMashTempUnits(){ return tempUnits; }
+	public int getMashTotalTime(){ return totalTime; }
+	public double getGrainTemp() { return grainTemp; }
+	public String getMashTotalVol() {
+		Quantity q = new Quantity();
+		q.setQuantity(null, "qt", volQts);
+		double d = q.getValueAs(volUnits);
+		String s = df1.format(d).toString() + " " + volUnits;
+		return s;
+	
+	}
 	
 	
 	// mash step methods:
@@ -305,7 +322,7 @@ public class Mash {
 	// Introducing: the big huge mash calc method!
 
 	public void calcMashSchedule() {
-		// Generic routine to run through the mash table and calculate values
+		// Method to run through the mash table and calculate values
 
 		
 		double strikeTemp = 0;
@@ -432,6 +449,7 @@ public class Mash {
 
 		waterEquiv += waterAddedQTS; // add previous addition to get WE
 		totalTime = totalMashTime;
+		volQts = mashVolQTS;
 
 		// water use stats:
 		absorbedQTS = maltWeightLbs * 0.55; // figure from HBD
