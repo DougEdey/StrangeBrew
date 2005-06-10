@@ -644,6 +644,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 										myRecipe.setStyle(s);
 									}
 									descriptionTextArea.setText(s.getDescription());
+									cmbStyle.setToolTipText(multiLineToolTip(50,s.getDescription()));
+									
 								}
 							});
 						}
@@ -918,8 +920,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									Yeast y = (Yeast) cmbYeastModel.getSelectedItem();
 									if (myRecipe != null && y != myRecipe.getYeastObj()) {
 										myRecipe.setYeast(y);
-									}
-									descriptionTextArea.setText(y.getDescription());
+									}									
+									cmbYeast.setToolTipText(multiLineToolTip(40,y.getDescription()));
 								}
 							});
 						}
@@ -1165,14 +1167,25 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							pnlMalt.add(jScrollPane1, BorderLayout.CENTER);
 							{
 								tblMaltModel = new MaltTableModel(this);
-								tblMalt = new JTable();
+								tblMalt = new JTable(){
+									public String getToolTipText(MouseEvent e) {
+										String tip = null;
+								        java.awt.Point p = e.getPoint();
+								        int rowIndex = rowAtPoint(p);								        
+								        tip = multiLineToolTip(40,tblMaltModel.getDescriptionAt(rowIndex));
+								        
+								        return tip;
+									}
+								};
+								
+								
 								jScrollPane1.setViewportView(tblMalt);
 								tblMalt.setModel(tblMaltModel);
 								tblMalt.setAutoCreateColumnsFromModel(false);
 								tblMalt.addMouseListener(new MouseAdapter() {
 									public void mouseClicked(MouseEvent evt) {
 										int i = tblMalt.getSelectedRow();
-										descriptionTextArea.setText(myRecipe.getMaltDescription(i));
+										// descriptionTextArea.setText(myRecipe.getMaltDescription(i));
 									}
 								});
 								TableColumn maltColumn = tblMalt.getColumnModel().getColumn(0);
@@ -1193,7 +1206,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 											f2.setPppg(f.getPppg());
 											f2.setDescription(f.getDescription());
 											f2.setMashed(f.getMashed());
-											f2.setSteep(f.getSteep());
+											f2.setSteep(f.getSteep());											
 										}
 
 									}
@@ -1218,6 +1231,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 									}
 								});
+								
+								
 
 								
 							}
@@ -1876,6 +1891,28 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	
 	public void focusGained(FocusEvent e) {
 		// do nothing, we don't need this event
+	}
+	
+	private String multiLineToolTip(int len, String input){
+		String s = "";
+		int length = len;
+		if (input == null || input.length() < length)
+			return "";
+		
+		int i = 0;
+		int lastSpace = 0;
+		
+		while (i+length < input.length()){		
+			String temp = input.substring(i, i+length);
+			lastSpace = temp.lastIndexOf(" ");
+			s += temp.substring(0,lastSpace) + "<br>";
+			i+=lastSpace+1;
+		}
+		s += input.substring(i,input.length());
+
+		s = "<html>"+s+"</html>";
+		
+		return s;
 	}
 	
 	

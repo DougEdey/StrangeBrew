@@ -46,6 +46,12 @@ class MaltTableModel extends AbstractTableModel {
 	public String getColumnName(int col) {
 		return columnNames[col];
 	}
+	
+	public String getDescriptionAt(int row) {
+		if (row < 0)
+			return "";
+		return data.getMaltDescription(row);
+	}
 
 	public Object getValueAt(int row, int col) {
 		// Fermentable m = (Fermentable) data.get(row);
