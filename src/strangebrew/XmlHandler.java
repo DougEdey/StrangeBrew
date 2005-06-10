@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.23 2005/06/08 18:29:24 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.24 2005/06/10 20:47:03 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -38,6 +38,7 @@ public class XmlHandler extends DefaultHandler{
 	private String currentElement = null; // current element name
 	private String importType = null; // the type of recipe we're importing
 	private String descrBuf = ""; // buffer to hold long descriptions
+	private String buffer = ""; // buffer 
 	
 	// mash step stuff:
 	private String type;
@@ -261,6 +262,10 @@ public class XmlHandler extends DefaultHandler{
 				r.addHop(h);
 				h = null;
 			} 
+			else if (qName.equalsIgnoreCase("title")){
+				r.setName(buffer);
+				buffer = "";				
+			}
 		}
 	}
 
@@ -295,7 +300,8 @@ public class XmlHandler extends DefaultHandler{
 			// figure out how to get the yeast, and parse the other data.
 		}
 		else if (currentElement.equalsIgnoreCase("title")){
-			r.setName(s);
+			buffer = buffer + s;
+			// r.setName(s);
 		}
 		else if (currentElement.equalsIgnoreCase("brewer")){
 			r.setBrewer(s);

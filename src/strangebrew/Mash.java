@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Collections;
 
 /**
- * $Id: Mash.java,v 1.11 2005/06/09 17:41:10 andrew_avis Exp $
+ * $Id: Mash.java,v 1.12 2005/06/10 20:47:03 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -597,7 +597,7 @@ public class Mash {
 	 public String toXml() {
 	
 		StringBuffer sb = new StringBuffer();
-		sb.append("    <MASH>\n");
+		sb.append("  <MASH>\n");
 		for (int i = 0; i < steps.size(); i++) {
 			MashStep st = (MashStep) steps.get(i);
 			sb.append("    <ITEM>\n");
@@ -609,7 +609,7 @@ public class Mash {
 			sb.append("    </ITEM>\n");
 		}
 
-		sb.append("    </MASH>\n");
+		sb.append("  </MASH>\n");
 		return sb.toString();
 	}
 	

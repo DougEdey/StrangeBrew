@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.45 2005/06/08 18:29:24 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.46 2005/06/10 20:47:03 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -576,8 +576,9 @@ public class Recipe {
 		sb.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
 		sb.append("<STRANGEBREWRECIPE version = \"2.0A\">\n");
 		sb.append("  <DETAILS>\n");
-		sb.append("  <NAME>" + name + "</NAME>\n");
-		sb.append("  <NOTES>" + comments + "</NOTES>\n");
+		sb.append("  <NAME>" + subEntities(name) + "</NAME>\n");
+		sb.append("  <BREWER>" + subEntities(brewer) + "</BREWER>\n");
+		sb.append("  <NOTES>" + subEntities(comments) + "</NOTES>\n");
 		sb.append("  <EFFICIENCY>" + efficiency + "</EFFICIENCY>\n");
 		sb.append("  <OG>" + df3.format(estOg) + "</OG>\n");
 		sb.append("  <FG>" + df3.format(estFg) + "</FG>\n");
@@ -705,6 +706,30 @@ public class Recipe {
 
 
 		return sb.toString();
+	}
+	
+	private String subEntities(String input){
+			
+		String sub [][] = { {"&", "&amp;"},
+							{"<", "&lt;"},
+							{">", "&gt;"},
+							{"'", "&apos;"},
+							{"\"", "&quot;"}
+							};
+		String output = input;
+		int index = 0;		
+		if (input == null)
+			return "";
+		for (int i = 0; i<sub.length; i++){
+			while (output.indexOf(sub[i][0],index) != -1){
+				index = output.indexOf(sub[i][0],index);
+				output = output.substring(0, index) + sub[i][1] +
+		           output.substring(index+sub[i][0].length());		
+				index=index+sub[i][0].length();			
+			}
+		}
+		
+		return output;
 	}
 	
 	/**
