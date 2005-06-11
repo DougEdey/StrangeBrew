@@ -213,6 +213,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private DefaultTableModel tblHopsTotalsModel;
 	private ComboModel cmbYeastModel;
 	private ComboModel cmbStyleModel;
+	private ComboModel cmbStyle2Model;
 	private ComboModel cmbMaltModel;
 	private ComboModel cmbHopsModel;
 	private ComboModel cmbSizeUnitsModel;
@@ -258,6 +259,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		db.readDB(path);
 		
 		cmbStyleModel.setList(db.styleDB);
+		cmbStyle2Model.setList(db.styleDB);
 		cmbYeastModel.setList(db.yeastDB);
 		cmbMaltModel.setList(db.fermDB);
 		cmbHopsModel.setList(db.hopsDB);
@@ -290,6 +292,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// and comboboxes
 		// use whenever the Recipe changes
 		cmbStyleModel.addOrInsert(myRecipe.getStyleObj());
+		cmbStyle2Model.addOrInsert(myRecipe.getStyleObj());
 		cmbYeastModel.addOrInsert(myRecipe.getYeastObj());
 		cmbSizeUnitsModel.addOrInsert(myRecipe.getVolUnits());
 		tblMaltModel.setData(myRecipe);
@@ -1047,11 +1050,33 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							lblStyle2.setText("Style:");
 						}
 						{
-							ComboBoxModel cmbStyle2Model = new DefaultComboBoxModel(new String[]{
-									"Item One", "Item Two"});
+							cmbStyle2Model = new ComboModel();
 							cmbStyle2 = new JComboBox();
-							pnlStyle.add(cmbStyle2);
+							pnlStyle.add(cmbStyle2, new GridBagConstraints(
+								1,
+								2,
+								5,
+								1,
+								0.0,
+								0.0,
+								GridBagConstraints.CENTER,
+								GridBagConstraints.HORIZONTAL,
+								new Insets(0, 0, 0, 0),
+								0,
+								0));
 							cmbStyle2.setModel(cmbStyle2Model);
+							cmbStyle2.setMaximumSize(new java.awt.Dimension(100, 32767));
+
+							cmbStyle2.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									Style s = (Style) cmbStyle2Model.getSelectedItem();
+
+									descriptionTextArea.setText(s.getDescription());
+									cmbStyle2.setToolTipText(multiLineToolTip(50,s.getDescription()));
+									
+								}
+							});
+
 						}
 						{
 							jPanel2 = new JPanel();
