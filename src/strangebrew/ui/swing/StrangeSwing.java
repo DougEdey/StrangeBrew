@@ -655,6 +655,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							cmbStyle.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									Style s = (Style) cmbStyleModel.getSelectedItem();
+									cmbStyle2Model.setSelectedItem(s);
 									if (myRecipe != null && s != myRecipe.getStyleObj()) {
 										myRecipe.setStyle(s);
 									}
