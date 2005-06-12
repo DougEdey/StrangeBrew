@@ -157,14 +157,18 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JPanel jPanel2;
 	private JComboBox cmbStyle2;
 	private JLabel lblStyle2;
-	private JLabel lblLowOG;
-	private JLabel lblHighOG;
-	private JLabel lblLowABV;
-	private JLabel lblHighABV;
-	private JLabel lblLowIBU;
-	private JLabel lblHighIBU;
-	private JLabel lblLowColour;
-	private JLabel lblHighColour;
+	private JLabel stlLowOG;
+	private JLabel stlHighOG;
+	private JLabel stlLowABV;
+	private JLabel stlHighABV;
+	private JLabel stlLowIBU;
+	private JLabel stlHighIBU;
+	private JLabel stlLowColour;
+	private JLabel stlHighColour;
+	private JLabel stlRcpOG;
+	private JLabel stlRcpABV;
+	private JLabel stlRcpIBU;
+	private JLabel stlRcpColour;
 	private JPanel pnlStyle;
 	private JMenuItem exportHTMLmenu;
 	private JMenu exportMenu;
@@ -1081,14 +1085,18 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 									descriptionTextArea.setText(s.getDescription());
 									cmbStyle2.setToolTipText(multiLineToolTip(50,s.getDescription()));
-									lblLowOG.setText(myRecipe.df1.format(s.ogLow * 1000));
-									lblHighOG.setText(myRecipe.df1.format(s.ogHigh * 1000));
-									lblLowABV.setText(myRecipe.df1.format(s.alcLow));
-									lblHighABV.setText(myRecipe.df1.format(s.alcHigh));
-									lblLowColour.setText(myRecipe.df1.format(s.lovLow));
-									lblHighColour.setText(myRecipe.df1.format(s.lovHigh));
-									lblLowIBU.setText(myRecipe.df1.format(s.ibuLow));
-									lblHighIBU.setText(myRecipe.df1.format(s.ibuHigh));
+									stlLowOG.setText(myRecipe.df3.format(s.ogLow));
+									stlRcpOG.setText(myRecipe.df3.format(myRecipe.getEstOg()));
+									stlHighOG.setText(myRecipe.df3.format(s.ogHigh));
+									stlLowABV.setText(myRecipe.df1.format(s.alcLow));
+									stlRcpABV.setText(myRecipe.df1.format(myRecipe.getAlcohol()));
+									stlHighABV.setText(myRecipe.df1.format(s.alcHigh));
+									stlLowColour.setText(myRecipe.df1.format(s.lovLow));
+									stlRcpColour.setText(myRecipe.df1.format(myRecipe.getSrm()));
+									stlHighColour.setText(myRecipe.df1.format(s.lovHigh));
+									stlLowIBU.setText(myRecipe.df1.format(s.ibuLow));
+									stlRcpIBU.setText(myRecipe.df1.format(myRecipe.getIbu()));
+									stlHighIBU.setText(myRecipe.df1.format(s.ibuHigh));
 								}
 							});
 
@@ -1160,60 +1168,88 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								jLabel7.setText("ABV:");
 							}
 							{
-								lblLowOG = new JLabel();
-								jPanel2.add(lblLowOG, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
+								stlLowOG = new JLabel();
+								jPanel2.add(stlLowOG, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
 										GridBagConstraints.EAST, GridBagConstraints.NONE,
 										new Insets(0, 0, 0, 0), 0, 0));
-								lblLowOG.setText("0");
+								stlLowOG.setText("0");
 							}
 							{
-								lblHighOG = new JLabel();
-								jPanel2.add(lblHighOG, new GridBagConstraints(3, 4, 1, 1, 0.0, 0.0,
+								stlRcpOG = new JLabel();
+								jPanel2.add(stlRcpOG, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
 										GridBagConstraints.EAST, GridBagConstraints.NONE,
 										new Insets(0, 0, 0, 0), 0, 0));
-								lblHighOG.setText("0");
+								stlRcpOG.setText("0");
 							}
 							{
-								lblLowABV = new JLabel();
-								jPanel2.add(lblLowABV, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
+								stlHighOG = new JLabel();
+								jPanel2.add(stlHighOG, new GridBagConstraints(3, 4, 1, 1, 0.0, 0.0,
 										GridBagConstraints.EAST, GridBagConstraints.NONE,
 										new Insets(0, 0, 0, 0), 0, 0));
-								lblLowABV.setText("0");
+								stlHighOG.setText("0");
 							}
 							{
-								lblHighABV = new JLabel();
-								jPanel2.add(lblHighABV, new GridBagConstraints(3, 3, 1, 1, 0.0, 0.0,
+								stlLowABV = new JLabel();
+								jPanel2.add(stlLowABV, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
 										GridBagConstraints.EAST, GridBagConstraints.NONE,
 										new Insets(0, 0, 0, 0), 0, 0));
-								lblHighABV.setText("0");
+								stlLowABV.setText("0");
 							}
 							{
-								lblLowColour = new JLabel();
-								jPanel2.add(lblLowColour, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
+								stlRcpABV = new JLabel();
+								jPanel2.add(stlRcpABV, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0,
 										GridBagConstraints.EAST, GridBagConstraints.NONE,
 										new Insets(0, 0, 0, 0), 0, 0));
-								lblLowColour.setText("0");
+								stlRcpABV.setText("0");
 							}
 							{
-								lblHighColour = new JLabel();
-								jPanel2.add(lblHighColour, new GridBagConstraints(3, 2, 1, 1, 0.0, 0.0,
+								stlHighABV = new JLabel();
+								jPanel2.add(stlHighABV, new GridBagConstraints(3, 3, 1, 1, 0.0, 0.0,
 										GridBagConstraints.EAST, GridBagConstraints.NONE,
 										new Insets(0, 0, 0, 0), 0, 0));
-								lblHighColour.setText("0");
+								stlHighABV.setText("0");
 							}
 							{
-								lblLowIBU = new JLabel();
-								jPanel2.add(lblLowIBU, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+								stlLowColour = new JLabel();
+								jPanel2.add(stlLowColour, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
 										GridBagConstraints.EAST, GridBagConstraints.NONE,
 										new Insets(0, 0, 0, 0), 0, 0));
-								lblLowIBU.setText("0");
+								stlLowColour.setText("0");
 							}
 							{
-								lblHighIBU = new JLabel();
-								jPanel2.add(lblHighIBU, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0,
+								stlRcpColour = new JLabel();
+								jPanel2.add(stlRcpColour, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
 										GridBagConstraints.EAST, GridBagConstraints.NONE,
 										new Insets(0, 0, 0, 0), 0, 0));
-								lblHighIBU.setText("0");
+								stlRcpColour.setText("0");
+							}
+							{
+								stlHighColour = new JLabel();
+								jPanel2.add(stlHighColour, new GridBagConstraints(3, 2, 1, 1, 0.0, 0.0,
+										GridBagConstraints.EAST, GridBagConstraints.NONE,
+										new Insets(0, 0, 0, 0), 0, 0));
+								stlHighColour.setText("0");
+							}
+							{
+								stlLowIBU = new JLabel();
+								jPanel2.add(stlLowIBU, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+										GridBagConstraints.EAST, GridBagConstraints.NONE,
+										new Insets(0, 0, 0, 0), 0, 0));
+								stlLowIBU.setText("0");
+							}
+							{
+								stlRcpIBU = new JLabel();
+								jPanel2.add(stlRcpIBU, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0,
+										GridBagConstraints.EAST, GridBagConstraints.NONE,
+										new Insets(0, 0, 0, 0), 0, 0));
+								stlRcpIBU.setText("0");
+							}
+							{
+								stlHighIBU = new JLabel();
+								jPanel2.add(stlHighIBU, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0,
+										GridBagConstraints.EAST, GridBagConstraints.NONE,
+										new Insets(0, 0, 0, 0), 0, 0));
+								stlHighIBU.setText("0");
 							}
 						}
 						{
