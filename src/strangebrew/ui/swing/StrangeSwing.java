@@ -23,30 +23,31 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.EventObject;
-import java.util.Enumeration;
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.EventObject;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
@@ -54,23 +55,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JButton;
-import javax.swing.JToolBar;
-import javax.swing.border.BevelBorder;
-import java.awt.event.MouseAdapter;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JToolBar;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
@@ -80,16 +76,18 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import ca.strangebrew.SBStringUtils;
+
 import strangebrew.Database;
 import strangebrew.Fermentable;
 import strangebrew.Hop;
 import strangebrew.ImportXml;
+import strangebrew.Options;
 import strangebrew.Quantity;
 import strangebrew.Recipe;
 import strangebrew.Style;
 import strangebrew.XmlTransformer;
 import strangebrew.Yeast;
-import strangebrew.Options;
 import strangebrew.ui.preferences.PreferencesDialog;
 
 
@@ -144,32 +142,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JMenu mnuView;
 	private JToolBar tlbMalt;
 	private JPanel pnlMaltButtons;
-	private JSlider sldMatch;
-	private JLabel jLabel7;
-	private JLabel jLabel6;
-	private JLabel jLabel5;
-	private JLabel jLabel4;
-	private JLabel jLabel3;
-	private JLabel jLabel2;
-	private JLabel jLabel1;
-	private JTextArea txaStyles;
-	private JScrollPane jScrollPane3;
-	private JPanel jPanel2;
-	private JComboBox cmbStyle2;
-	private JLabel lblStyle2;
-	private JLabel stlLowOG;
-	private JLabel stlHighOG;
-	private JLabel stlLowABV;
-	private JLabel stlHighABV;
-	private JLabel stlLowIBU;
-	private JLabel stlHighIBU;
-	private JLabel stlLowColour;
-	private JLabel stlHighColour;
-	private JLabel stlRcpOG;
-	private JLabel stlRcpABV;
-	private JLabel stlRcpIBU;
-	private JLabel stlRcpColour;
-	private JPanel pnlStyle;
+	private StylePanel stylePanel;
 	private JMenuItem exportHTMLmenu;
 	private JMenu exportMenu;
 	private JScrollPane jScrollPane2;
@@ -224,8 +197,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private HopsTableModel tblHopsModel;
 	private DefaultTableModel tblHopsTotalsModel;
 	private ComboModel cmbYeastModel;
-	private ComboModel cmbStyleModel;
-	private ComboModel cmbStyle2Model;
+	private ComboModel cmbStyleModel;	
 	private ComboModel cmbMaltModel;
 	private ComboModel cmbHopsModel;
 	private ComboModel cmbSizeUnitsModel;
@@ -270,8 +242,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		}
 		db.readDB(path);
 		
-		cmbStyleModel.setList(db.styleDB);
-		cmbStyle2Model.setList(db.styleDB);
+		cmbStyleModel.setList(db.styleDB);		
 		cmbYeastModel.setList(db.yeastDB);
 		cmbMaltModel.setList(db.fermDB);
 		cmbHopsModel.setList(db.hopsDB);
@@ -291,6 +262,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// set up tabs:
 		miscPanel.setList(db.miscDB);
 		miscPanel.setDescrArea(descriptionTextArea);
+		stylePanel.setList(db.styleDB);
 		
 		
 		myRecipe = new Recipe();
@@ -304,13 +276,14 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// and comboboxes
 		// use whenever the Recipe changes
 		cmbStyleModel.addOrInsert(myRecipe.getStyleObj());
-		cmbStyle2Model.addOrInsert(myRecipe.getStyleObj());
+		// cmbStyle2Model.addOrInsert(myRecipe.getStyleObj());
 		cmbYeastModel.addOrInsert(myRecipe.getYeastObj());
 		cmbSizeUnitsModel.addOrInsert(myRecipe.getVolUnits());
 		tblMaltModel.setData(myRecipe);
 		tblHopsModel.setData(myRecipe);		
 		miscPanel.setData(myRecipe);
 		notesPanel.setData(myRecipe);
+		stylePanel.setData(myRecipe);
 		tblMalt.updateUI();
 		tblHops.updateUI();		
 
@@ -655,12 +628,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							cmbStyle.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									Style s = (Style) cmbStyleModel.getSelectedItem();
-									cmbStyle2Model.setSelectedItem(s);
+									// cmbStyle2Model.setSelectedItem(s);
 									if (myRecipe != null && s != myRecipe.getStyleObj()) {
 										myRecipe.setStyle(s);
 									}
 									descriptionTextArea.setText(s.getDescription());
-									cmbStyle.setToolTipText(multiLineToolTip(50,s.getDescription()));
+									SBStringUtils sb = new SBStringUtils();
+									cmbStyle.setToolTipText(sb.multiLineToolTip(50,s.getDescription()));
 									
 								}
 							});
@@ -936,8 +910,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									Yeast y = (Yeast) cmbYeastModel.getSelectedItem();
 									if (myRecipe != null && y != myRecipe.getYeastObj()) {
 										myRecipe.setYeast(y);
-									}									
-									cmbYeast.setToolTipText(multiLineToolTip(40,y.getDescription()));
+									}				
+									SBStringUtils sb = new SBStringUtils();
+									cmbYeast.setToolTipText(sb.multiLineToolTip(40,y.getDescription()));
 								}
 							});
 						}
@@ -1053,219 +1028,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						}
 					}
 					{
-						pnlStyle = new JPanel();
-						FlowLayout pnlStyleLayout = new FlowLayout();
-						pnlStyle.setLayout(pnlStyleLayout);
-						jTabbedPane1.addTab("Style", null, pnlStyle, null);
-						{
-							lblStyle2 = new JLabel();
-							pnlStyle.add(lblStyle2);
-							lblStyle2.setText("Style:");
-						}
-						{
-							cmbStyle2Model = new ComboModel();
-							cmbStyle2 = new JComboBox();
-							pnlStyle.add(cmbStyle2, new GridBagConstraints(
-								1,
-								2,
-								5,
-								1,
-								0.0,
-								0.0,
-								GridBagConstraints.CENTER,
-								GridBagConstraints.HORIZONTAL,
-								new Insets(0, 0, 0, 0),
-								0,
-								0));
-							cmbStyle2.setModel(cmbStyle2Model);
-							cmbStyle2.setMaximumSize(new java.awt.Dimension(100, 32767));
-
-							cmbStyle2.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									Style s = (Style) cmbStyle2Model.getSelectedItem();
-
-									descriptionTextArea.setText(s.getDescription());
-									cmbStyle2.setToolTipText(multiLineToolTip(50,s.getDescription()));
-									stlLowOG.setText(myRecipe.df3.format(s.ogLow));
-									stlRcpOG.setText(myRecipe.df3.format(myRecipe.getEstOg()));
-									stlHighOG.setText(myRecipe.df3.format(s.ogHigh));
-									stlLowABV.setText(myRecipe.df1.format(s.alcLow));
-									stlRcpABV.setText(myRecipe.df1.format(myRecipe.getAlcohol()));
-									stlHighABV.setText(myRecipe.df1.format(s.alcHigh));
-									stlLowColour.setText(myRecipe.df1.format(s.lovLow));
-									stlRcpColour.setText(myRecipe.df1.format(myRecipe.getSrm()));
-									stlHighColour.setText(myRecipe.df1.format(s.lovHigh));
-									stlLowIBU.setText(myRecipe.df1.format(s.ibuLow));
-									stlRcpIBU.setText(myRecipe.df1.format(myRecipe.getIbu()));
-									stlHighIBU.setText(myRecipe.df1.format(s.ibuHigh));
-								}
-							});
-
-						}
-						{
-							jPanel2 = new JPanel();
-							GridBagLayout jPanel2Layout1 = new GridBagLayout();
-							jPanel2Layout1.columnWeights = new double[]{0.1, 0.1, 0.1, 0.1};
-							jPanel2Layout1.columnWidths = new int[]{7, 7, 7, 7};
-							jPanel2Layout1.rowWeights = new double[]{0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
-							jPanel2Layout1.rowHeights = new int[]{7, 7, 7, 7, 7, 7};
-							jPanel2.setPreferredSize(new java.awt.Dimension(179, 120));
-							jPanel2.setLayout(jPanel2Layout1);
-							pnlStyle.add(jPanel2);
-							jPanel2.setBorder(BorderFactory.createTitledBorder(new LineBorder(
-									new java.awt.Color(0, 0, 0), 1, false), "Recipe Conformance:",
-									TitledBorder.LEADING, TitledBorder.TOP, new java.awt.Font(
-											"Dialog", 0, 12), new java.awt.Color(0, 0, 0)));
-							{
-								jLabel5 = new JLabel();
-								jPanel2.add(jLabel5, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								jLabel5.setText("OG:");
-								jLabel5.setBounds(74, 3, 60, 30);
-							}
-							{
-								jLabel1 = new JLabel();
-								jPanel2.add(jLabel1, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-										GridBagConstraints.CENTER, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								GridLayout jLabel1Layout = new GridLayout(1, 1);
-								jLabel1.setLayout(jLabel1Layout);
-								jLabel1.setText("Low:");
-							}
-							{
-								jLabel2 = new JLabel();
-								jPanel2.add(jLabel2, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-										GridBagConstraints.CENTER, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								jLabel2.setText("Recipe:");
-							}
-							{
-								jLabel3 = new JLabel();
-								jPanel2.add(jLabel3, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
-										GridBagConstraints.CENTER, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								jLabel3.setText("High:");
-							}
-							{
-								jLabel4 = new JLabel();
-								jPanel2.add(jLabel4, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								jLabel4.setText("IBU:");
-							}
-							{
-								jLabel6 = new JLabel();
-								jPanel2.add(jLabel6, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								jLabel6.setText("Colour:");
-							}
-							{
-								jLabel7 = new JLabel();
-								jPanel2.add(jLabel7, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								jLabel7.setText("ABV:");
-							}
-							{
-								stlLowOG = new JLabel();
-								jPanel2.add(stlLowOG, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								stlLowOG.setText("0");
-							}
-							{
-								stlRcpOG = new JLabel();
-								jPanel2.add(stlRcpOG, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								stlRcpOG.setText("0");
-							}
-							{
-								stlHighOG = new JLabel();
-								jPanel2.add(stlHighOG, new GridBagConstraints(3, 4, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								stlHighOG.setText("0");
-							}
-							{
-								stlLowABV = new JLabel();
-								jPanel2.add(stlLowABV, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								stlLowABV.setText("0");
-							}
-							{
-								stlRcpABV = new JLabel();
-								jPanel2.add(stlRcpABV, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								stlRcpABV.setText("0");
-							}
-							{
-								stlHighABV = new JLabel();
-								jPanel2.add(stlHighABV, new GridBagConstraints(3, 3, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								stlHighABV.setText("0");
-							}
-							{
-								stlLowColour = new JLabel();
-								jPanel2.add(stlLowColour, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								stlLowColour.setText("0");
-							}
-							{
-								stlRcpColour = new JLabel();
-								jPanel2.add(stlRcpColour, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								stlRcpColour.setText("0");
-							}
-							{
-								stlHighColour = new JLabel();
-								jPanel2.add(stlHighColour, new GridBagConstraints(3, 2, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								stlHighColour.setText("0");
-							}
-							{
-								stlLowIBU = new JLabel();
-								jPanel2.add(stlLowIBU, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								stlLowIBU.setText("0");
-							}
-							{
-								stlRcpIBU = new JLabel();
-								jPanel2.add(stlRcpIBU, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								stlRcpIBU.setText("0");
-							}
-							{
-								stlHighIBU = new JLabel();
-								jPanel2.add(stlHighIBU, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0,
-										GridBagConstraints.EAST, GridBagConstraints.NONE,
-										new Insets(0, 0, 0, 0), 0, 0));
-								stlHighIBU.setText("0");
-							}
-						}
-						{
-							jScrollPane3 = new JScrollPane();
-							pnlStyle.add(jScrollPane3);
-							{
-								txaStyles = new JTextArea();
-								jScrollPane3.setViewportView(txaStyles);
-								txaStyles.setText("Matched Styles");
-							}
-						}
-						{
-							sldMatch = new JSlider();
-							pnlStyle.add(sldMatch);
-						}
+						stylePanel = new StylePanel();						
+						jTabbedPane1.addTab("Style", null, stylePanel, null);
+						
 					}
 					{
 						miscPanel = new MiscPanel(myRecipe);
@@ -1304,8 +1069,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									public String getToolTipText(MouseEvent e) {
 										String tip = null;
 								        java.awt.Point p = e.getPoint();
-								        int rowIndex = rowAtPoint(p);								        
-								        tip = multiLineToolTip(40,tblMaltModel.getDescriptionAt(rowIndex));
+								        int rowIndex = rowAtPoint(p);
+								        SBStringUtils sb = new SBStringUtils();
+								        tip = sb.multiLineToolTip(40,tblMaltModel.getDescriptionAt(rowIndex));
 								        
 								        return tip;
 									}
@@ -2026,27 +1792,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// do nothing, we don't need this event
 	}
 	
-	private String multiLineToolTip(int len, String input){
-		String s = "";
-		int length = len;
-		if (input == null || input.length() < length)
-			return "";
-		
-		int i = 0;
-		int lastSpace = 0;
-		
-		while (i+length < input.length()){		
-			String temp = input.substring(i, i+length);
-			lastSpace = temp.lastIndexOf(" ");
-			s += temp.substring(0,lastSpace) + "<br>";
-			i+=lastSpace+1;
-		}
-		s += input.substring(i,input.length());
-
-		s = "<html>"+s+"</html>";
-		
-		return s;
-	}
 	
 	
 
