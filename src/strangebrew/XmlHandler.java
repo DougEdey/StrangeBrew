@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.24 2005/06/10 20:47:03 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.25 2005/06/13 19:56:19 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -187,7 +187,9 @@ public class XmlHandler extends DefaultHandler{
 			currentList = "MASH";
 		} else if (eName.equalsIgnoreCase("MISC")) {
 			currentList = "MISC";
-		} else if (eName.equalsIgnoreCase("NOTES")) {
+		} else if (eName.equalsIgnoreCase("NOTES") && !currentList.equals("DETAILS")) {
+			// two freaking elments named NOTES - make sure we're not looking at the 
+			// recipe notes in <DETAILS>
 			currentList = "NOTES";
 		} 
 		else if (eName.equalsIgnoreCase("ITEM")) { // this is an item in a
@@ -242,14 +244,15 @@ public class XmlHandler extends DefaultHandler{
 			
 			} else if (qName.equalsIgnoreCase("ITEM")
 						&& currentList.equalsIgnoreCase("MASH")) {
-					r.mash.addStep(type, startTemp, endTemp, "F", method, minutes, rampMin);
-									
+					r.mash.addStep(type, startTemp, endTemp, "F", method, minutes, rampMin);				
 				
-			} else if (qName.equalsIgnoreCase("FERMENTABLS")
+			} // there's a problem with having two elements named "NOTES" : 
+			  else if (qName.equalsIgnoreCase("FERMENTABLS")
 					|| qName.equalsIgnoreCase("HOPS")
 					|| qName.equalsIgnoreCase("DETAILS")
 					|| qName.equalsIgnoreCase("MISC")
-					|| qName.equalsIgnoreCase("NOTES")) {
+					|| (qName.equalsIgnoreCase("NOTES") && !currentList.equalsIgnoreCase("DETAILS"))
+					) {
 				currentList = "";
 			}
 		}
