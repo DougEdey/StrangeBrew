@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.46 2005/06/10 20:47:03 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.47 2005/06/13 16:30:53 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -32,6 +32,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import ca.strangebrew.SBStringUtils;
 
 public class Recipe {
 
@@ -573,12 +575,13 @@ public class Recipe {
 
 	public String toXML() {
 		StringBuffer sb = new StringBuffer();
+		SBStringUtils sbStringU = new SBStringUtils();
 		sb.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
 		sb.append("<STRANGEBREWRECIPE version = \"2.0A\">\n");
 		sb.append("  <DETAILS>\n");
-		sb.append("  <NAME>" + subEntities(name) + "</NAME>\n");
-		sb.append("  <BREWER>" + subEntities(brewer) + "</BREWER>\n");
-		sb.append("  <NOTES>" + subEntities(comments) + "</NOTES>\n");
+		sb.append("  <NAME>" + sbStringU.subEntities(name) + "</NAME>\n");
+		sb.append("  <BREWER>" + sbStringU.subEntities(brewer) + "</BREWER>\n");
+		sb.append("  <NOTES>" + sbStringU.subEntities(comments) + "</NOTES>\n");
 		sb.append("  <EFFICIENCY>" + efficiency + "</EFFICIENCY>\n");
 		sb.append("  <OG>" + df3.format(estOg) + "</OG>\n");
 		sb.append("  <FG>" + df3.format(estFg) + "</FG>\n");
@@ -706,31 +709,8 @@ public class Recipe {
 
 
 		return sb.toString();
-	}
+	}	
 	
-	private String subEntities(String input){
-			
-		String sub [][] = { {"&", "&amp;"},
-							{"<", "&lt;"},
-							{">", "&gt;"},
-							{"'", "&apos;"},
-							{"\"", "&quot;"}
-							};
-		String output = input;
-		int index = 0;		
-		if (input == null)
-			return "";
-		for (int i = 0; i<sub.length; i++){
-			while (output.indexOf(sub[i][0],index) != -1){
-				index = output.indexOf(sub[i][0],index);
-				output = output.substring(0, index) + sub[i][1] +
-		           output.substring(index+sub[i][0].length());		
-				index=index+sub[i][0].length();			
-			}
-		}
-		
-		return output;
-	}
 	
 	/**
 	 * 
