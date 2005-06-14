@@ -19,7 +19,7 @@ public class SBStringUtils  {
 	 * @param input	the input String.
 	 * @return the new multi-lined string.
 	 */
-	public String multiLineToolTip(int len, String input){
+	public static String multiLineToolTip(int len, String input){
 		String s = "";
 		int length = len;
 		if (input == null || input.length() < length)
@@ -48,7 +48,7 @@ public class SBStringUtils  {
 	 * in
 	 * @return a string with valid xml entites
 	 */
-	public String subEntities(String input){
+	public static String subEntities(String input){
 		
 	String sub [][] = { {"&", "&amp;"},
 						{"<", "&lt;"},
