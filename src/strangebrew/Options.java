@@ -1,7 +1,7 @@
 package strangebrew;
 
 /**
- * $Id: Options.java,v 1.7 2005/06/01 06:07:33 zymurgist Exp $
+ * $Id: Options.java,v 1.8 2005/06/14 16:22:26 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -22,7 +22,7 @@ import java.util.Properties;
 
 public class Options {
 	//	declare global variables, set hard defaults		
-	final boolean DEBUG = true;
+	final boolean DEBUG = false;
 	private Properties props;
 	private String type;
 	

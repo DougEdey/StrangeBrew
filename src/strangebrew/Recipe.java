@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.47 2005/06/13 16:30:53 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.48 2005/06/14 16:22:26 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -66,6 +66,7 @@ public class Recipe {
 	private String ibuCalcMethod;
 	private double ibuHopUtil;
 	private String evapMethod;
+	private String alcCalcMethod;
 	
 	// totals:	
 	private double totalMaltCost;
@@ -105,11 +106,13 @@ public class Recipe {
 		brewer = opts.getProperty("optBrewer");
 		evapMethod = opts.getProperty("optEvapCalcMethod");
 		evap = opts.getDProperty("optEvaporation");
+		alcCalcMethod = opts.getProperty("optAlcCalcMethod");
 
 	}
 	
 	// Getters:	
 	public double getAlcohol(){ return alcohol; }
+	public String getAlcMethod(){ return alcCalcMethod; }
 	public double getAttenuation(){ return attenuation; }
 	public int getBoilMinutes(){ return boilMinutes; }
 	public String getBrewer(){ return brewer; }	
@@ -270,7 +273,7 @@ public class Recipe {
 		if (f != estFg && f > 0) {
 			estFg = f;
 			attenuation = 100 - ((estFg - 1) / (estOg - 1) * 100);
-			calcAlcohol("Volume");
+			calcAlcohol(alcCalcMethod);
 		}
 	}
 
@@ -664,7 +667,7 @@ public class Recipe {
 		DecimalFormat df2 = new DecimalFormat("0.00");
 		MessageFormat mf;
 		StringBuffer sb = new StringBuffer();
-		sb.append("StrangeBrew 2.0 recipe text output\n\n");
+		sb.append("StrangeBrew J1.0 recipe text output\n\n");
 		sb.append("Details:\n");
 		sb.append("Name: " + name + "\n");
 		sb.append("Brewer: " + brewer + "\n");
@@ -704,6 +707,22 @@ public class Recipe {
 					padRight(" "+df1.format(h.getMinutes()), 6, ' '),
 					padRight(" "+df1.format(h.getIBU()), 5, ' ')};
 			sb.append(mf.format(objh));
+			
+		}
+		
+		sb.append("Mash:\n");
+		sb.append(padLeft("Step ", 10, ' ') + "  Temp   End    Ramp    Min\n");
+		
+		mf = new MessageFormat("{0} {1} {2} {3} {4}\n");
+		for (int i=0; i<mash.getStepSize(); i++){			 
+			
+			Object[] objm = {padLeft(mash.getStepType(i), 10, ' '),
+					padRight(" " + mash.getStepStartTemp(i), 6, ' '),
+					padRight(" " + mash.getStepEndTemp(i), 6, ' '),
+					padRight(" "+mash.getStepRampMin(i), 4, ' '),
+					padRight(" "+mash.getStepMin(i), 6, ' ')};					
+			sb.append(mf.format(objm));
+			
 			
 		}
 
