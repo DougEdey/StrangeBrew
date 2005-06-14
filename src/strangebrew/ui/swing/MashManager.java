@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.7 2005/06/09 17:41:27 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.8 2005/06/14 18:41:35 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -61,21 +61,6 @@ import javax.swing.JTextField;
 import strangebrew.Quantity;
 
 
-
-/**
-* This code was generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* *************************************
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED
-* for this machine, so Jigloo or this code cannot be used legally
-* for any corporate or commercial purpose.
-* *************************************
-*/
 public class MashManager extends javax.swing.JFrame implements ActionListener, FocusListener {
 	private JScrollPane jScrollPane1;
 	private JTable tblMash;
@@ -525,7 +510,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 
 	}
 	
-//	Make the button do the same thing as the default close operation
+	//	Make the button do the same thing as the default close operation
 	//(DISPOSE_ON_CLOSE).
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();

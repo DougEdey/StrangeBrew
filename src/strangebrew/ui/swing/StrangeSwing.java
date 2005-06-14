@@ -192,7 +192,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JMenuItem saveMenuItem;
 	private JMenuItem openFileMenuItem;
 	private JMenuItem newFileMenuItem;
-	private JMenu jMenu3;
+	private JMenuItem findFileMenuItem;
+	private JMenu fileMenu;
 	private JMenuBar jMenuBar1;
 	private JMenuItem exportTextMenuItem;
 	private JMenuItem editPrefsMenuItem;
@@ -1401,12 +1402,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				jMenuBar1 = new JMenuBar();
 				setJMenuBar(jMenuBar1);
 				{
-					jMenu3 = new JMenu();
-					jMenuBar1.add(jMenu3);
-					jMenu3.setText("File");
+					fileMenu = new JMenu();
+					jMenuBar1.add(fileMenu);
+					fileMenu.setText("File");
 					{
 						newFileMenuItem = new JMenuItem();
-						jMenu3.add(newFileMenuItem);
+						fileMenu.add(newFileMenuItem);
 						newFileMenuItem.setText("New");
 						newFileMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
@@ -1422,12 +1423,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 					{
 						openFileMenuItem = new JMenuItem();
-						jMenu3.add(openFileMenuItem);
+						fileMenu.add(openFileMenuItem);
 						openFileMenuItem.setText("Open");
 						openFileMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {								
 								
-//								 Show open dialog; this method does
+								// Show open dialog; this method does
 								// not return until the dialog is closed
 								String [] ext = {"xml", "qbrew"};
 								sbFileFilter saveFileFilter = new sbFileFilter(ext);
@@ -1452,11 +1453,26 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								
 
 							}
+						});						
+						
+					}
+					{
+						findFileMenuItem = new JMenuItem();
+						findFileMenuItem.setText("Find");
+						fileMenu.add(findFileMenuItem);						
+						final JFrame owner = this;						
+						findFileMenuItem.addActionListener(new ActionListener() {							
+							public void actionPerformed(ActionEvent evt) {
+								// open the find dialog
+								FindDialog fd = new FindDialog(owner);
+								fd.setVisible(true);					
+
+							}
 						});
 					}
 					{
 						saveMenuItem = new JMenuItem();
-						jMenu3.add(saveMenuItem);
+						fileMenu.add(saveMenuItem);
 						saveMenuItem.setText("Save");
 						
 						saveMenuItem.addActionListener(new ActionListener() {
@@ -1499,7 +1515,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 					{
 						saveAsMenuItem = new JMenuItem();
-						jMenu3.add(saveAsMenuItem);
+						fileMenu.add(saveAsMenuItem);
 						saveAsMenuItem.setText("Save As ...");
 						saveAsMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt)  {
@@ -1515,7 +1531,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 					{
 						exportMenu = new JMenu();
-						jMenu3.add(exportMenu);
+						fileMenu.add(exportMenu);
 						exportMenu.setText("Export");
 						{
 							exportHTMLmenu = new JMenuItem();
@@ -1578,11 +1594,11 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 					{
 						jSeparator2 = new JSeparator();
-						jMenu3.add(jSeparator2);
+						fileMenu.add(jSeparator2);
 					}
 					{
 						exitMenuItem = new JMenuItem();
-						jMenu3.add(exitMenuItem);
+						fileMenu.add(exitMenuItem);
 						exitMenuItem.setText("Exit");
 						exitMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
