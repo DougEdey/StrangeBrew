@@ -43,6 +43,12 @@ class HopsTableModel extends AbstractTableModel {
 		else
 			return 0;
 	}
+	
+	public String getDescriptionAt(int row) {
+		if (row < 0)
+			return "";
+		return data.getHopDescription(row);
+	}
 
 	public String getColumnName(int col) {
 		return columnNames[col];

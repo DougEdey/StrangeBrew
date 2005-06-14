@@ -49,6 +49,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -56,6 +57,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -71,6 +73,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
@@ -89,7 +92,6 @@ import strangebrew.Style;
 import strangebrew.XmlTransformer;
 import strangebrew.Yeast;
 import strangebrew.ui.preferences.PreferencesDialog;
-
 
 public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener{
 
@@ -110,7 +112,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JMenuItem deleteMenuItem;
 	private JSeparator jSeparator1;
 	private JLabel lblDate;
-	private JTextField txtBrewer;
+	private JTextField brewerNameText;
 	private JLabel lblBrewer;
 	private JTextField txtName;
 	private JLabel lblName;
@@ -127,6 +129,11 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JPanel pnlHopsButtons;
 	private JButton btnDelMalt;
 	private JButton btnAddMalt;
+	private JLabel alcMethodLabel;
+	private JPanel alcMethodPanel;
+	private JLabel ibuMethodLabel;
+	private JPanel ibuMethodPanel;
+	private JPanel fileNamePanel;
 	private JLabel fileNameLabel;
 	private MiscPanel miscPanel;
 	private NotesPanel notesPanel;
@@ -136,8 +143,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JLabel evapLabel;
 	private JLabel boilTimeLable;
 	private JPanel statusPanel;
-	private JTextArea descriptionTextArea;
-	private JPanel descriptionPanel;
 	private JMenuItem mashManagerMenuItem;
 	private JMenu mnuView;
 	private JToolBar tlbMalt;
@@ -155,9 +160,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JComboBox cmbSizeUnits;
 	private JScrollPane scrMalts;
 	private JPanel pnlMain;
-	private JTable tblHops;
+	private JTable hopsTable;
 	private JScrollPane scpComments;
-	private JTable tblMalt;
+	private JTable maltTable;
 	private JLabel lblAlcValue;
 	private JLabel lblColourValue;
 	private JLabel lblIBUvalue;
@@ -192,9 +197,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JMenuItem exportTextMenuItem;
 	private JMenuItem editPrefsMenuItem;
 
-	private MaltTableModel tblMaltModel;
+	private MaltTableModel maltTableModel;
 	private DefaultTableModel tblMaltTotalsModel;
-	private HopsTableModel tblHopsModel;
+	private HopsTableModel hopsTableModel;
 	private DefaultTableModel tblHopsTotalsModel;
 	private ComboModel cmbYeastModel;
 	private ComboModel cmbStyleModel;	
@@ -214,7 +219,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private Options preferences = new Options();
 	public Recipe myRecipe;
 	
-	private String fileName;
+	private File currentFile;
 
 	private final static boolean DEBUG = true;
 
@@ -260,12 +265,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		addColumnWidthListeners();		
 		
 		// set up tabs:
-		miscPanel.setList(db.miscDB);
-		miscPanel.setDescrArea(descriptionTextArea);
+		miscPanel.setList(db.miscDB);		
 		stylePanel.setList(db.styleDB);
 		
 		
 		myRecipe = new Recipe();
+		currentFile = null;
 		attachRecipeData();
 		displayRecipe();
 
@@ -279,13 +284,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// cmbStyle2Model.addOrInsert(myRecipe.getStyleObj());
 		cmbYeastModel.addOrInsert(myRecipe.getYeastObj());
 		cmbSizeUnitsModel.addOrInsert(myRecipe.getVolUnits());
-		tblMaltModel.setData(myRecipe);
-		tblHopsModel.setData(myRecipe);		
+		maltTableModel.setData(myRecipe);
+		hopsTableModel.setData(myRecipe);		
 		miscPanel.setData(myRecipe);
 		notesPanel.setData(myRecipe);
 		stylePanel.setData(myRecipe);
-		tblMalt.updateUI();
-		tblHops.updateUI();		
+		maltTable.updateUI();
+		hopsTable.updateUI();		
 
 	}
 	
@@ -293,7 +298,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		if (myRecipe == null)
 			return;
 		txtName.setText(myRecipe.getName());
-		txtBrewer.setText(myRecipe.getBrewer());		
+		brewerNameText.setText(myRecipe.getBrewer());		
 		txtPreBoil.setValue(new Double(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));		
 		lblSizeUnits.setText(myRecipe.getVolUnits());
 		postBoilText.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
@@ -319,6 +324,14 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					myRecipe.getHopUnits(), "", "", "" + myRecipe.df1.format(myRecipe.getIbu()),
 					"$" + myRecipe.df2.format(myRecipe.getTotalHopsCost())}}, new String[]{"", "", "",
 					"", "", "", "", "", ""});
+		
+		String fileName = "not saved";
+		if (currentFile != null){
+			fileName = currentFile.getName();
+		}
+		fileNameLabel.setText("File: " + fileName);
+		ibuMethodLabel.setText("IBU method: " + myRecipe.getIBUMethod());
+		alcMethodLabel.setText("Alc method: " + myRecipe.getAlcMethod());
 
 	}
 
@@ -335,8 +348,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			{
 				pnlMain = new JPanel();
 				GridBagLayout jPanel2Layout = new GridBagLayout();
-				jPanel2Layout.columnWeights = new double[] {0.1,0.1};
-				jPanel2Layout.columnWidths = new int[] {7,7};
+				jPanel2Layout.columnWeights = new double[] {0.1};
+				jPanel2Layout.columnWidths = new int[] {7};
 				jPanel2Layout.rowWeights = new double[] {0.1,0.1,0.9,0.1};
 				jPanel2Layout.rowHeights = new int[] {7,7,7,7};
 				pnlMain.setLayout(jPanel2Layout);
@@ -388,8 +401,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							lblBrewer.setText("Brewer:");
 						}
 						{
-							txtBrewer = new JTextField();
-							pnlDetails.add(txtBrewer, new GridBagConstraints(
+							brewerNameText = new JTextField();
+							pnlDetails.add(brewerNameText, new GridBagConstraints(
 								1,
 								0,
 								2,
@@ -401,9 +414,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								new Insets(0, 0, 0, 0),
 								0,
 								0));			
-							txtBrewer.addFocusListener(this);
-							txtBrewer.addActionListener(this);
-							txtBrewer.setText("Brewer");
+							brewerNameText.addFocusListener(this);
+							brewerNameText.addActionListener(this);
+							brewerNameText.setText("Brewer");
 							
 						}
 						{
@@ -631,10 +644,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									// cmbStyle2Model.setSelectedItem(s);
 									if (myRecipe != null && s != myRecipe.getStyleObj()) {
 										myRecipe.setStyle(s);
-									}
-									descriptionTextArea.setText(s.getDescription());
-									SBStringUtils sb = new SBStringUtils();
-									cmbStyle.setToolTipText(sb.multiLineToolTip(50,s.getDescription()));
+									}									
+									
+									cmbStyle.setToolTipText(SBStringUtils.multiLineToolTip(50,s.getDescription()));
 									
 								}
 							});
@@ -911,8 +923,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									if (myRecipe != null && y != myRecipe.getYeastObj()) {
 										myRecipe.setYeast(y);
 									}				
-									SBStringUtils sb = new SBStringUtils();
-									cmbYeast.setToolTipText(sb.multiLineToolTip(40,y.getDescription()));
+									
+									cmbYeast.setToolTipText(SBStringUtils.multiLineToolTip(40,y.getDescription()));
 								}
 							});
 						}
@@ -1064,30 +1076,28 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							jScrollPane1 = new JScrollPane();
 							pnlMalt.add(jScrollPane1, BorderLayout.CENTER);
 							{
-								tblMaltModel = new MaltTableModel(this);
-								tblMalt = new JTable(){
+								maltTableModel = new MaltTableModel(this);
+								maltTable = new JTable(){
 									public String getToolTipText(MouseEvent e) {
-										String tip = null;
-								        java.awt.Point p = e.getPoint();
-								        int rowIndex = rowAtPoint(p);
-								        SBStringUtils sb = new SBStringUtils();
-								        tip = sb.multiLineToolTip(40,tblMaltModel.getDescriptionAt(rowIndex));
+										java.awt.Point p = e.getPoint();
+								        int rowIndex = rowAtPoint(p);								       
+								        return SBStringUtils.multiLineToolTip(40,maltTableModel.getDescriptionAt(rowIndex));
 								        
-								        return tip;
 									}
 								};
 								
 								
-								jScrollPane1.setViewportView(tblMalt);
-								tblMalt.setModel(tblMaltModel);
-								tblMalt.setAutoCreateColumnsFromModel(false);
-								tblMalt.addMouseListener(new MouseAdapter() {
+								jScrollPane1.setViewportView(maltTable);
+								maltTable.setModel(maltTableModel);
+								maltTable.setAutoCreateColumnsFromModel(false);
+								maltTable.getTableHeader().setReorderingAllowed (false);
+								maltTable.addMouseListener(new MouseAdapter() {
 									public void mouseClicked(MouseEvent evt) {
-										int i = tblMalt.getSelectedRow();
+										int i = maltTable.getSelectedRow();
 										// descriptionTextArea.setText(myRecipe.getMaltDescription(i));
 									}
 								});
-								TableColumn maltColumn = tblMalt.getColumnModel().getColumn(0);
+								TableColumn maltColumn = maltTable.getColumnModel().getColumn(0);
 
 								// set up malt list combo
 								JComboBox maltComboBox = new JComboBox();
@@ -1098,7 +1108,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									public void actionPerformed(ActionEvent evt) {
 										Fermentable f = (Fermentable) cmbMaltModel
 												.getSelectedItem();
-										int i = tblMalt.getSelectedRow();
+										int i = maltTable.getSelectedRow();
 										if (myRecipe != null && i != -1) {
 											Fermentable f2 = myRecipe.getFermentable(i);
 											f2.setLov(f.getLov());
@@ -1115,12 +1125,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								JComboBox maltUnitsComboBox = new JComboBox();
 								cmbMaltUnitsModel = new ComboModel();
 								maltUnitsComboBox.setModel(cmbMaltUnitsModel);
-								maltColumn = tblMalt.getColumnModel().getColumn(2);
+								maltColumn = maltTable.getColumnModel().getColumn(2);
 								maltColumn.setCellEditor(new DefaultCellEditor(maltUnitsComboBox));
 								maltUnitsComboBox.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
 										String u = (String) cmbMaltUnitsModel.getSelectedItem();
-										int i = tblMalt.getSelectedRow();
+										int i = maltTable.getSelectedRow();
 										if (myRecipe != null && i != -1) {
 											Fermentable f2 = myRecipe.getFermentable(i);
 											f2.setUnitsFull(u);
@@ -1170,7 +1180,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 										if (myRecipe != null) {
 											Fermentable f = new Fermentable(myRecipe.getMaltUnits());
 											myRecipe.addMalt(f);											
-											tblMalt.updateUI();
+											maltTable.updateUI();
 											displayRecipe();
 										}
 									}
@@ -1183,9 +1193,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								btnDelMalt.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
 										if (myRecipe != null) {
-											int i = tblMalt.getSelectedRow();
+											int i = maltTable.getSelectedRow();
 											myRecipe.delMalt(i);
-											tblMalt.updateUI();
+											maltTable.updateUI();
 											displayRecipe();
 										}
 
@@ -1210,23 +1220,27 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							pnlHops.add(tblHopsTotals, BorderLayout.SOUTH);
 							tblHopsTotals.setModel(tblHopsTotalsModel);
 							tblHopsTotals.setAutoCreateColumnsFromModel(false);
+							
 
 						}
 						{
 							jScrollPane2 = new JScrollPane();
 							pnlHops.add(jScrollPane2, BorderLayout.CENTER);
 							{
-								tblHopsModel = new HopsTableModel(this);
-								tblHops = new JTable();
-								jScrollPane2.setViewportView(tblHops);
-								tblHops.setModel(tblHopsModel);
-								tblHops.addMouseListener(new MouseAdapter() {
-									public void mouseClicked(MouseEvent evt) {										
-										int i = tblHops.getSelectedRow();
-										descriptionTextArea.setText(myRecipe.getHopDescription(i));
+								hopsTableModel = new HopsTableModel(this);
+								hopsTable = new JTable(){
+									public String getToolTipText(MouseEvent e) {										
+								        java.awt.Point p = e.getPoint();
+								        int rowIndex = rowAtPoint(p);								        
+								        return SBStringUtils.multiLineToolTip(40,hopsTableModel.getDescriptionAt(rowIndex));
+								        								        
 									}
-								});
-								TableColumn hopColumn = tblHops.getColumnModel().getColumn(0);
+								};
+								jScrollPane2.setViewportView(hopsTable);
+								hopsTable.setModel(hopsTableModel);
+								hopsTable.getTableHeader().setReorderingAllowed (false);
+																
+								TableColumn hopColumn = hopsTable.getColumnModel().getColumn(0);
 								JComboBox hopComboBox = new JComboBox();
 								cmbHopsModel = new ComboModel();
 								hopComboBox.setModel(cmbHopsModel);
@@ -1234,7 +1248,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								hopComboBox.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
 										Hop h = (Hop) cmbHopsModel.getSelectedItem();
-										int i = tblHops.getSelectedRow();
+										int i = hopsTable.getSelectedRow();
 										if (myRecipe != null && i != -1) {
 											Hop h2 = (Hop) myRecipe.getHop(i);
 											h2.setAlpha(h.getAlpha());
@@ -1248,12 +1262,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								JComboBox hopsUnitsComboBox = new JComboBox();
 								cmbHopsUnitsModel = new ComboModel();
 								hopsUnitsComboBox.setModel(cmbHopsUnitsModel);
-								hopColumn = tblHops.getColumnModel().getColumn(4);
+								hopColumn = hopsTable.getColumnModel().getColumn(4);
 								hopColumn.setCellEditor(new DefaultCellEditor(hopsUnitsComboBox));
 								hopsUnitsComboBox.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
 										String u = (String) cmbHopsUnitsModel.getSelectedItem();
-										int i = tblHops.getSelectedRow();
+										int i = hopsTable.getSelectedRow();
 										if (myRecipe != null && i != -1) {
 											Hop h = (Hop) myRecipe.getHop(i);
 											h.setUnitsFull(u);
@@ -1269,13 +1283,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								// set up hop type combo
 								String [] forms = {"Leaf","Pellet","Plug"};
 								JComboBox hopsFormComboBox = new JComboBox(forms);
-								hopColumn = tblHops.getColumnModel().getColumn(1);
+								hopColumn = hopsTable.getColumnModel().getColumn(1);
 								hopColumn.setCellEditor(new DefaultCellEditor(hopsFormComboBox));
 								
 //								 set up hop add combo
 								String [] add = {"Boil","FWH","Dry", "Mash"};
 								JComboBox hopsAddComboBox = new JComboBox(add);
-								hopColumn = tblHops.getColumnModel().getColumn(5);
+								hopColumn = hopsTable.getColumnModel().getColumn(5);
 								hopColumn.setCellEditor(new DefaultCellEditor(hopsAddComboBox));
 
 							}
@@ -1303,7 +1317,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 										if (myRecipe != null) {
 											Hop h = new Hop(myRecipe.getHopUnits());
 											myRecipe.addHop(h);
-											tblHops.updateUI();
+											hopsTable.updateUI();
 											displayRecipe();
 
 										}
@@ -1317,9 +1331,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								btnDelHop.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
 										if (myRecipe != null) {
-											int i = tblHops.getSelectedRow();
+											int i = hopsTable.getSelectedRow();
 											myRecipe.delHop(i);
-											tblHops.updateUI();
+											hopsTable.updateUI();
 											displayRecipe();
 										}
 									}
@@ -1330,42 +1344,16 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 				}
 				{
-					descriptionPanel = new JPanel();
-					FlowLayout descriptionPanelLayout = new FlowLayout();
-					descriptionPanel.setLayout(descriptionPanelLayout);
-					pnlMain.add(descriptionPanel, new GridBagConstraints(
-						1,
-						0,
-						1,
-						3,
-						0.0,
-						0.0,
-						GridBagConstraints.NORTH,
-						GridBagConstraints.VERTICAL,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
-					descriptionPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-					{
-						descriptionTextArea = new JTextArea();
-						descriptionPanel.add(descriptionTextArea);
-						descriptionTextArea.setText("Description");
-						descriptionTextArea.setFont(new java.awt.Font("Dialog", 0, 10));
-						descriptionTextArea.setEditable(false);
-						descriptionTextArea.setFocusable(false);
-						descriptionTextArea.setLineWrap(true);
-						descriptionTextArea.setWrapStyleWord(true);
-					}
-				}
-				{
 					statusPanel = new JPanel();
 					FlowLayout statusPanelLayout = new FlowLayout();
 					statusPanelLayout.setAlignment(FlowLayout.LEFT);
+					statusPanelLayout.setHgap(2);
+					statusPanelLayout.setVgap(2);
 					statusPanel.setLayout(statusPanelLayout);
 					pnlMain.add(statusPanel, new GridBagConstraints(
 						0,
 						3,
-						2,
+						1,
 						1,
 						0.0,
 						0.0,
@@ -1374,12 +1362,38 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						new Insets(0, 0, 0, 0),
 						0,
 						0));
-					statusPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 					{
-						fileNameLabel = new JLabel();
-						statusPanel.add(fileNameLabel);
-						fileNameLabel.setText("File Name");
-						fileNameLabel.setFont(new java.awt.Font("Dialog",1,10));
+						fileNamePanel = new JPanel();
+						statusPanel.add(fileNamePanel);
+						fileNamePanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+						{
+							fileNameLabel = new JLabel();
+							fileNamePanel.add(fileNameLabel);
+							fileNameLabel.setText("File Name");
+							fileNameLabel.setFont(new java.awt.Font("Dialog", 1, 10));
+						}
+					}
+					{
+						ibuMethodPanel = new JPanel();
+						statusPanel.add(ibuMethodPanel);
+						ibuMethodPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+						{
+							ibuMethodLabel = new JLabel();
+							ibuMethodPanel.add(ibuMethodLabel);
+							ibuMethodLabel.setText("IBU Method:");
+							ibuMethodLabel.setFont(new java.awt.Font("Dialog",1,10));
+						}
+					}
+					{
+						alcMethodPanel = new JPanel();
+						statusPanel.add(alcMethodPanel);
+						alcMethodPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+						{
+							alcMethodLabel = new JLabel();
+							alcMethodPanel.add(alcMethodLabel);
+							alcMethodLabel.setText("Alc Method:");
+							alcMethodLabel.setFont(new java.awt.Font("Dialog",1,10));
+						}
 					}
 				}
 			}
@@ -1399,6 +1413,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								// This is just a test right now to see that
 								// stuff is changed.
 								myRecipe = new Recipe();
+								currentFile = null;
 								attachRecipeData();
 								displayRecipe();
 
@@ -1411,9 +1426,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						openFileMenuItem.setText("Open");
 						openFileMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {								
-
-								// Show open dialog; this method does
+								
+//								 Show open dialog; this method does
 								// not return until the dialog is closed
+								String [] ext = {"xml", "qbrew"};
+								sbFileFilter saveFileFilter = new sbFileFilter(ext);
+								fileChooser.setFileFilter(saveFileFilter);
+								
 								int returnVal = fileChooser.showOpenDialog(jMenuBar1);
 								if (returnVal == JFileChooser.APPROVE_OPTION) {
 									File file = fileChooser.getSelectedFile();
@@ -1424,16 +1443,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									myRecipe.calcHopsTotals();									
 									myRecipe.mash.calcMashSchedule();
 									attachRecipeData();
-									displayRecipe();
-									
-									// show true file name
-									fileName = file.getName();
-									fileNameLabel.setText(fileName);
-									
+									currentFile = file;									
+									displayRecipe();									
 								
 								} else {
 									System.out.print("Open command cancelled by user.\n");
 								}
+								
 
 							}
 						});
@@ -1442,6 +1458,44 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						saveMenuItem = new JMenuItem();
 						jMenu3.add(saveMenuItem);
 						saveMenuItem.setText("Save");
+						
+						saveMenuItem.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt)  {		
+								
+								int choice = 1;
+								
+								if (currentFile != null){
+									File file = currentFile;
+					                //This is where a real application would save the file.
+					                try {
+					                	FileWriter out = new FileWriter(file);
+					                	out.write(myRecipe.toXML());
+					                	out.close();
+					                	if (DEBUG){
+					                		System.out.println("Saved: " + file.getAbsoluteFile());
+					                	}
+					                } catch (Exception e){
+					                // TODO: handle io exception
+					                }
+									
+								}
+								// prompt to save if not already saved
+								else {
+									JDialog warning = new JDialog();
+									choice = JOptionPane.showConfirmDialog(null,
+								            "File not saved.  Do you wish to save it?", 
+											"File note saved", JOptionPane.YES_NO_OPTION);					
+									
+								}
+								
+								if (choice == 0) {	
+									// same as save as:
+									saveAs();									
+								}							
+								
+
+							}
+						});
 					}
 					{
 						saveAsMenuItem = new JMenuItem();
@@ -1453,24 +1507,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									// This is just a test right now to see that
 									// stuff is changed.
 									System.out.print(myRecipe.toXML());
-								}
-								
-								// Show save dialog; this method does
-								// not return until the dialog is closed
-								int returnVal = fileChooser.showSaveDialog(jMenuBar1);
-								if (returnVal == JFileChooser.APPROVE_OPTION) {
-					                File file = fileChooser.getSelectedFile();
-					                //This is where a real application would save the file.
-					                try {
-					                	FileWriter out = new FileWriter(file);
-					                	out.write(myRecipe.toXML());
-					                	out.close();
-					                } catch (Exception e){
-					                // TODO: handle io exception
-					                }
-					            } else {
-					            	System.out.print("Save command cancelled by user.\n");
-					            }
+								}								
+								saveAs();
 
 							}
 						});
@@ -1487,6 +1525,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								public void actionPerformed(ActionEvent evt) {
 									// Show save dialog; this method does
 									// not return until the dialog is closed	
+									String [] ext = {"html","htm"};
+									sbFileFilter saveFileFilter = new sbFileFilter(ext);
+									fileChooser.setFileFilter(saveFileFilter);
 									fileChooser.setSelectedFile(new File(myRecipe.getName()+".html"));
 									
 									int returnVal = fileChooser.showSaveDialog(jMenuBar1);
@@ -1512,6 +1553,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								public void actionPerformed(ActionEvent evt) {
 									// Show save dialog; this method does
 									// not return until the dialog is closed
+									String [] ext = {"txt"};
+									sbFileFilter saveFileFilter = new sbFileFilter(ext);
+									fileChooser.setFileFilter(saveFileFilter);
 									fileChooser.setSelectedFile(new File(myRecipe.getName()+".txt"));
 									int returnVal = fileChooser.showSaveDialog(jMenuBar1);
 									if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -1689,21 +1733,21 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 	private void addColumnWidthListeners()
 	   {
-	     TableColumnModel mtcm = tblMalt.getColumnModel();
-	     TableColumnModel htcm = tblHops.getColumnModel();
+	     TableColumnModel mtcm = maltTable.getColumnModel();
+	     TableColumnModel htcm = hopsTable.getColumnModel();
 
 
 	     //: listener that watches the width of a column
 	     PropertyChangeListener mpcl = new PropertyChangeListener()
 	     {
-	       private int columnCount = tblMalt.getColumnCount();
+	       private int columnCount = maltTable.getColumnCount();
 	       private int[] width = new int[columnCount];
 
 	       public void propertyChange(PropertyChangeEvent evt)
 	       {	       	
 	         if (evt.getPropertyName().equals("preferredWidth"))
 	         {	      	         	
-	         	TableColumnModel tcm = tblMalt.getColumnModel();
+	         	TableColumnModel tcm = maltTable.getColumnModel();
 	         	TableColumnModel tcmt = tblMaltTotals.getColumnModel();
 	         	int columnCount = tcm.getColumnCount();
 
@@ -1719,14 +1763,14 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	     //: listener that watches the width of a column
 	     PropertyChangeListener hpcl = new PropertyChangeListener()
 	     {
-	       private int columnCount = tblHops.getColumnCount();
+	       private int columnCount = hopsTable.getColumnCount();
 	       private int[] width = new int[columnCount];
 
 	       public void propertyChange(PropertyChangeEvent evt)
 	       {	       	
 	         if (evt.getPropertyName().equals("preferredWidth"))
 	         {	      	         	
-	         	TableColumnModel tcm = tblHops.getColumnModel();
+	         	TableColumnModel tcm = hopsTable.getColumnModel();
 	         	TableColumnModel tcmt = tblHopsTotals.getColumnModel();
 	         	int columnCount = tcm.getColumnCount();
 
@@ -1761,7 +1805,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 		if (o == txtName)
 			myRecipe.setName(s);
-		else if (o == txtBrewer)
+		else if (o == brewerNameText)
 			myRecipe.setBrewer(s);
 		else if (o == txtPreBoil) {
 			myRecipe.setPreBoil(Double.parseDouble(s));
@@ -1790,6 +1834,68 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	
 	public void focusGained(FocusEvent e) {
 		// do nothing, we don't need this event
+	}
+	
+	private void saveAs(){
+		// Show save dialog; this method does
+		// not return until the dialog is closed
+		String [] ext = {"xml"};
+		sbFileFilter saveFileFilter = new sbFileFilter(ext);
+		fileChooser.setFileFilter(saveFileFilter);
+		
+		int returnVal = fileChooser.showSaveDialog(jMenuBar1);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            
+            //This is where a real application would save the file.
+            try {
+            	FileWriter out = new FileWriter(file);
+            	out.write(myRecipe.toXML());
+            	out.close();
+            } catch (Exception e){
+            // TODO: handle io exception
+            }
+        } else {
+        	System.out.print("Save command cancelled by user.\n");
+        }
+	}
+	
+	private class sbFileFilter extends FileFilter {
+		
+		private String [] extensions = {"xml"};
+		private String description = "";
+			
+		
+		public sbFileFilter(String [] s){
+			extensions = s;
+		}
+		
+		public boolean accept(File f){
+			String ext = null;
+	        String s = f.getName();
+	        int i = s.lastIndexOf('.');
+
+	        if (i > 0 &&  i < s.length() - 1) {
+	            ext = s.substring(i+1).toLowerCase();
+	        }
+		    if (ext == null) {
+		    	return false;
+		    } 
+		    else {
+		    	i = 0;
+		    	while (i < extensions.length) {
+		    		if (ext.equals(extensions[i])) {
+		    			return true;
+		    		} 
+		    		i ++;		    		
+		    	}
+		    	return false;
+		   }			
+		}	
+		
+		public String getDescription() {
+			return description;
+		}
 	}
 	
 	

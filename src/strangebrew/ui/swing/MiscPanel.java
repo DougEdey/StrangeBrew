@@ -94,11 +94,8 @@ public class MiscPanel extends javax.swing.JPanel {
 	public void setList(ArrayList miscList){
 		miscComboModel.setList(miscList);
 	}
-	
-	public void setDescrArea(JTextArea t){
-		miscDescrTextArea = t;
-	}
-	
+
+
 	private void initGUI() {
 		try {
 			BoxLayout thisLayout = new BoxLayout(this, javax.swing.BoxLayout.X_AXIS);
