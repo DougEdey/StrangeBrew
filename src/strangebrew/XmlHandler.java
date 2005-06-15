@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.25 2005/06/13 19:56:19 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.26 2005/06/15 16:45:54 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -449,6 +449,13 @@ public class XmlHandler extends DefaultHandler{
 			         System.out.println("Unable to parse " + s);
 			      }
 				
+			// These are SBJ1.0 Extensions:      
+			} else if (currentElement.equalsIgnoreCase("ALC_METHOD")) {
+				r.setAlcMethod(s);
+			} else if (currentElement.equalsIgnoreCase("IBU_METHOD")) {
+				r.setIBUMethod(s);
+			} else if (currentElement.equalsIgnoreCase("COLOUR_METHOD")) {
+				r.setColourMethod(s);
 			}
 
 		}

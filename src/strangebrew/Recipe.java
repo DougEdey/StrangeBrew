@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.48 2005/06/14 16:22:26 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.49 2005/06/15 16:45:55 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -61,12 +61,13 @@ public class Recipe {
 	public Mash mash = new Mash();	
 
 	// options:
+	private String colourMethod;
 	private String hopUnits;
 	private String maltUnits;
 	private String ibuCalcMethod;
 	private double ibuHopUtil;
 	private String evapMethod;
-	private String alcCalcMethod;
+	private String alcMethod;
 	
 	// totals:	
 	private double totalMaltCost;
@@ -106,17 +107,19 @@ public class Recipe {
 		brewer = opts.getProperty("optBrewer");
 		evapMethod = opts.getProperty("optEvapCalcMethod");
 		evap = opts.getDProperty("optEvaporation");
-		alcCalcMethod = opts.getProperty("optAlcCalcMethod");
+		alcMethod = opts.getProperty("optAlcCalcMethod");
+		colourMethod = opts.getProperty("optColourMethod");
 
 	}
 	
 	// Getters:	
 	public double getAlcohol(){ return alcohol; }
-	public String getAlcMethod(){ return alcCalcMethod; }
+	public String getAlcMethod(){ return alcMethod; }
 	public double getAttenuation(){ return attenuation; }
 	public int getBoilMinutes(){ return boilMinutes; }
 	public String getBrewer(){ return brewer; }	
 	public String getComments() { return comments; }
+	public String getColourMethod() { return ""; }
 	public GregorianCalendar getCreated(){ return created; }
 	public double getEfficiency(){ return efficiency; }
 	public double getEstOg(){ return estOg; }	
@@ -147,12 +150,24 @@ public class Recipe {
 	public Yeast getYeastObj(){ return yeast;}
 	
 	// Setters:
+	public void setAlcMethod(String s) {
+		alcMethod = s;
+		calcAlcohol(alcMethod);
+	}
 	public void setBoilMinutes(int b) { boilMinutes = b; }
 	public void setBrewer(String b) { brewer = b; }
 	public void setComments(String c) { comments = c; }
+	public void setColourMethod(String c) { 
+		colourMethod = c; 
+		calcMaltTotals();
+	}
 	public void setCreated(Date d) { created.setTime(d); }
 	public void setEvap(double e) { evap = e; }
 	public void setHopsUnits(String h) { hopUnits = h; }
+	public void setIBUMethod(String s) {
+		ibuCalcMethod = s;
+		calcHopsTotals();
+	}	
 	public void setMaltUnits(String m) { maltUnits = m; }
 	public void setMashed(boolean m) { mashed = m; }
 	public void setMashRatio(double m) { mash.setMashRatio(m); }
@@ -273,7 +288,7 @@ public class Recipe {
 		if (f != estFg && f > 0) {
 			estFg = f;
 			attenuation = 100 - ((estFg - 1) / (estOg - 1) * 100);
-			calcAlcohol(alcCalcMethod);
+			calcAlcohol(alcMethod);
 		}
 	}
 
@@ -475,12 +490,19 @@ public class Recipe {
 
 	// private calculation functions:
 	private double calcColour(double lov) {
-		// calculates SRM based on MCU (degrees LOV)
 		double colour = 0;
-		if (lov > 0)
-			colour = 1.4922 * Math.pow(lov, 0.6859);
-		else
-			colour = 0;
+		
+		if (colourMethod.equals("EBC")){
+			// From Greg Noonan's article at http://brewingtechniques.com/bmg/noonan.html
+			colour = (lov * 2.65) - 1.2;
+		} else {
+			// calculates SRM based on MCU (degrees LOV)			
+			if (lov > 0)
+				colour = 1.4922 * Math.pow(lov, 0.6859);
+			else
+				colour = 0;
+		}
+		  
 		return colour;
 
 	}
@@ -490,8 +512,9 @@ public class Recipe {
 		double fPlato = sGToPlato(estFg);
 		double q = 0.22 + 0.001 * oPlato;
 		double re = (q * oPlato + fPlato) / (1.0 + q);
+		// calculate by weight:
 		alcohol = (oPlato - re) / (2.0665 - 0.010665 * oPlato);
-		if (method == "Volume") // by volume
+		if (method == "Volume") // convert to by volume
 			alcohol = alcohol * estFg / 0.794;
 
 	}
@@ -577,14 +600,13 @@ public class Recipe {
 	}
 
 	public String toXML() {
-		StringBuffer sb = new StringBuffer();
-		SBStringUtils sbStringU = new SBStringUtils();
+		StringBuffer sb = new StringBuffer();		
 		sb.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
-		sb.append("<STRANGEBREWRECIPE version = \"2.0A\">\n");
+		sb.append("<STRANGEBREWRECIPE version = \"J1.0\">\n");
 		sb.append("  <DETAILS>\n");
-		sb.append("  <NAME>" + sbStringU.subEntities(name) + "</NAME>\n");
-		sb.append("  <BREWER>" + sbStringU.subEntities(brewer) + "</BREWER>\n");
-		sb.append("  <NOTES>" + sbStringU.subEntities(comments) + "</NOTES>\n");
+		sb.append("  <NAME>" + SBStringUtils.subEntities(name) + "</NAME>\n");
+		sb.append("  <BREWER>" + SBStringUtils.subEntities(brewer) + "</BREWER>\n");
+		sb.append("  <NOTES>" + SBStringUtils.subEntities(comments) + "</NOTES>\n");
 		sb.append("  <EFFICIENCY>" + efficiency + "</EFFICIENCY>\n");
 		sb.append("  <OG>" + df3.format(estOg) + "</OG>\n");
 		sb.append("  <FG>" + df3.format(estFg) + "</FG>\n");
@@ -603,6 +625,11 @@ public class Recipe {
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");		
 		sb.append("  <RECIPE_DATE>" + df.format(created.getTime()) + "</RECIPE_DATE>\n");
 		sb.append("  <ATTENUATION>" + attenuation + "</ATTENUATION>\n");
+		sb.append("  <!-- SBJ1.0 Extensions: -->\n");
+		sb.append("  <ALC_METHOD>" + alcMethod + "</ALC_METHOD>\n");
+		sb.append("  <IBU_METHOD>" + ibuCalcMethod + "</IBU_METHOD>\n");
+		sb.append("  <COLOUR_METHOD>" + colourMethod + "</COLOUR_METHOD>\n");
+		sb.append("  <!-- END SBJ1.0 Extensions -->\n");
 		sb.append("  </DETAILS>\n");
 		
 		// fermentables list:
