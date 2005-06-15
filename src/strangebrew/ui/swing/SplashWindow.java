@@ -11,7 +11,6 @@ package strangebrew.ui.swing;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
-import java.io.*;
 
 /**
  * A Splash window.

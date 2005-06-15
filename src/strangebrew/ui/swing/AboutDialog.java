@@ -96,7 +96,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 					{
 						versionLabel = new JLabel();
 						aboutPanel.add(versionLabel);
-						versionLabel.setText("Version: alpha 3");
+						versionLabel.setText("Version: alpha 4");
 					}
 					{
 						emailLabel = new JLabel();

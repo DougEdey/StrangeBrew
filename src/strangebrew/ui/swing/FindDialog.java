@@ -1,3 +1,27 @@
+/*
+ * $Id: FindDialog.java,v 1.2 2005/06/15 16:47:06 andrew_avis Exp $ 
+ * Created on June 15, 2005 @author aavis find recipe window class
+ */
+
+/**
+ *  StrangeBrew Java - a homebrew recipe calculator
+    Copyright (C) 2005  Drew Avis
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
 package strangebrew.ui.swing;
 
 import java.awt.Component;
@@ -21,7 +45,9 @@ import javax.swing.BoxLayout;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
+import java.awt.BorderLayout;
 import strangebrew.Recipe;
+import ca.strangebrew.Debug;
 
 public class FindDialog extends javax.swing.JDialog implements ActionListener {
 	private JPanel findPanel;
@@ -36,21 +62,28 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 	private FindTableModel recipeTableModel;
 	
 	private ArrayList recipes;	
+	private ArrayList files;
 	private File currentDir;
+	private StrangeSwing inst;
 
 	/**
 	* Auto-generated main method to display this JDialog
 	*/
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		FindDialog inst = new FindDialog(frame);
-		inst.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		JFrame frame = new JFrame();
+//		FindDialog inst = new FindDialog(frame);
+//		inst.setVisible(true);
+//	}
 	
 	public FindDialog(JFrame frame) {
 		super(frame);
 		recipes = new ArrayList();
+		files = new ArrayList();
+		inst = (StrangeSwing)frame;
+		currentDir = new java.io.File(".");
 		initGUI();
+		dirLocationText.setText(currentDir.getAbsolutePath());
+		loadRecipes(currentDir);
 	}
 	
 	private void initGUI() {
@@ -109,38 +142,36 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 						new Insets(0, 0, 0, 0),
 						0,
 						0));
-				FlowLayout browsePanelLayout = new FlowLayout();
-				browsePanelLayout.setAlignment(FlowLayout.LEFT);
+				BorderLayout browsePanelLayout = new BorderLayout();
 				browsePanel.setLayout(browsePanelLayout);
 				browsePanel.setBorder(BorderFactory.createTitledBorder("Directory"));
 				browsePanel.setPreferredSize(new java.awt.Dimension(392,244));
 				{
 					dirLocationText = new JTextField();
-					browsePanel.add(dirLocationText);
+					browsePanel.add(dirLocationText, BorderLayout.CENTER);
 					dirLocationText.setText("jTextField1");
 				}
 				{
 					browseButton = new JButton();
-					browsePanel.add(browseButton);
+					browsePanel.add(browseButton, BorderLayout.EAST);
 					browseButton.setText("Browse...");
 					browseButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
-							Component owner = browseButton;
-							System.out.println("browseButton.actionPerformed, event=" + evt);
-							//TODO add your code for browseButton.actionPerformed
+							Component owner = browseButton;							
 							JFileChooser chooser = new JFileChooser();
 							chooser.setCurrentDirectory(new java.io.File("."));
 							chooser.setDialogTitle("Select directory");
 							chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 							if (chooser.showOpenDialog(owner) == JFileChooser.APPROVE_OPTION) {
-								System.out.println("getCurrentDirectory(): "
+								Debug.print("getCurrentDirectory(): "
 									+ chooser.getCurrentDirectory());
-								System.out.println("getSelectedFile() : "
+								Debug.print("getSelectedFile() : "
 									+ chooser.getSelectedFile());
 								currentDir = chooser.getSelectedFile();
+								dirLocationText.setText(currentDir.getAbsolutePath());
 								loadRecipes(currentDir);
 							} else {
-								System.out.println("No Selection ");
+								Debug.print("No Selection ");
 							}
 						}
 					});
@@ -187,16 +218,19 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 	private void loadRecipes(File dir) {
 
 		recipes.clear();
+		files.clear();
 
 		for (int i = 0; i < dir.list().length; i++) {
 			File file = new File(dir.list()[i]);
 			if (file.getName().endsWith("xml") || file.getName().endsWith("qbrew")) {
-				System.out.print("Opening: " + file.getName() + ".\n");
-				// file.getAbsolutePath doesn't work here
+				Debug.print("Opening: " + file.getName() + ".\n");
+				// file.getAbsolutePath doesn't work here for some reason,
+				// so we have to build it ourselves
 				String fileName = dir.getAbsolutePath() + System.getProperty("file.separator") + file.getName();
 				ImportXml imp = new ImportXml(fileName);				
 				Recipe r = imp.handler.getRecipe();
 				recipes.add(r);
+				files.add(file);
 
 			}
 		}
@@ -213,10 +247,15 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 			return;
 		}
 		else if (o == openButton) {
-						
+			int i = recipeTable.getSelectedRow();
+			if (i > -1){
+				inst.setRecipe((Recipe)recipes.get(i), (File)files.get(i));
+			}
+			
+			setVisible(false);
+			dispose();	
+			return;								
 		}		
-
-		
 	}
 	
 	class FindTableModel extends AbstractTableModel {
