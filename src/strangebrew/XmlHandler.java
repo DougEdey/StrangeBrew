@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.26 2005/06/15 16:45:54 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.27 2005/06/22 17:52:59 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -255,6 +255,13 @@ public class XmlHandler extends DefaultHandler{
 					) {
 				currentList = "";
 			}
+			
+			  else if (qName.equalsIgnoreCase("NAME")
+						&& currentList.equalsIgnoreCase("DETAILS")) {
+					r.setName(buffer);
+					buffer="";
+				
+			}
 		}
 		else if (importType == "QBREW"){
 			if (qName.equalsIgnoreCase("GRAIN")){
@@ -409,7 +416,8 @@ public class XmlHandler extends DefaultHandler{
 
 		else if (currentList.equalsIgnoreCase("DETAILS")) {
 			if (currentElement.equalsIgnoreCase("NAME")) {
-				r.setName(s);
+				// r.setName(s);
+				buffer = buffer + s;
 			} else if (currentElement.equalsIgnoreCase("EFFICIENCY")) {
 				r.setEfficiency(Double.parseDouble(s));
 			} else if (currentElement.equalsIgnoreCase("ATTENUATION")) {
