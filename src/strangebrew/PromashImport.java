@@ -1,5 +1,5 @@
 /*
- * $Id: PromashImport.java,v 1.2 2005/06/16 16:07:23 andrew_avis Exp $ Created on Jun 15, 2005
+ * $Id: PromashImport.java,v 1.3 2005/06/24 17:35:43 andrew_avis Exp $ Created on Jun 15, 2005
  * by aavis
  * A Promash .rec file importer, based on specs provided by Don Kelly
  */
@@ -25,14 +25,17 @@ public class PromashImport {
 //			System.exit(1);
 //		}		
 		String path = new String("C:\\QNX630\\workspace2\\StrangeBrew\\src\\strangebrew\\data\\");
+		String path2 = new String("C:\\Program Files\\ProMash\\recipes\\");
 		String angry = new String("Angry American (911) Ale.rec");
 		String mule = new String("Mule Kick Bitter.rec");
-		String filen = new String("Bass Ale.rec");
-		File f = new File (path + angry);
+		String filen = new String("Company1_Red.rec");
+		File f = new File (path2 + filen);
 		FileInputStream in = new FileInputStream(f); 
         		                
         String s = "";
-        byte b[] = new byte[82];        
+        byte b[] = new byte[1024];    
+        long l;
+        float fl;              
         
         // read in the name - 82 bytes
         s = readString(in,82);               
@@ -41,14 +44,23 @@ public class PromashImport {
         // get the various sizes
         long hopCount = readLong(in);        
         Debug.print("Hop count: " + hopCount);         
-        long l = readLong(in);       
+        l = readLong(in);       
         Debug.print("Malt count: " + l);
         l = readLong(in);    
         Debug.print("Extra count: " + l);
+        fl = readFloat(in);
+        in.skip(3);
+        Debug.print("Batch size: " + fl);
+        fl = readFloat(in);
+        Debug.print("Wort size: " + fl);
+        in.skip(8);
+        fl = readFloat(in);
+        Debug.print("%effic: " + fl);        
+        Debug.print("Boil time: " + readInt(in));        
         
         // let's skip to start of hops
-        // we're at 94, want to go to 1158
-        in.skip(1063);
+        // wwant to go to 1158
+        in.skip(1039);
         
         // lets try to read the hops
         for (int i=0; i<hopCount; i++){
@@ -56,25 +68,10 @@ public class PromashImport {
         	Debug.print("");
             Debug.print("Hop name: " + s);
             
-            float fl = readFloat(in);
-            Debug.print("Alpha: " + fl);
             fl = readFloat(in);
-            Debug.print("Beta: " + fl);
-            int k = readInt(in);
-            Debug.print("IsNobel: " + k);
-            fl = readFloat(in);
-            Debug.print("Cohomulone: " + fl);
-            fl = readFloat(in);
-            Debug.print("Myrcene: " + fl);
-            fl = readFloat(in);
-            Debug.print("Humulene: " + fl);
-            fl = readFloat(in);
-            Debug.print("Carophyllene: " + fl);
-                    
-            
-            in.skip(6);
-            
-            
+            Debug.print("Alpha: " + fl); 
+
+            in.skip(27);
             
             s = readString(in, 155);
             Debug.print("Descr: " + s);
@@ -84,11 +81,13 @@ public class PromashImport {
             Debug.print("Use: " + s);
             s = readString(in, 165);
             Debug.print("Substitutes: " + s);
+
+            in.skip(9);
+            
             fl = readFloat(in);
-            Debug.print("Always 20: " + fl);
-            fl = readFloat(in);
-            Debug.print("Next fl, probably alpha again: " + fl);
-            in.skip(11);           
+            Debug.print("Amount: " + fl);
+            
+            in.skip(6);           
         	
         }       
 
@@ -119,6 +118,15 @@ public class PromashImport {
         l = unsignedIntToLong(buffer);
 		
 		return l;
+	}
+	
+	public static int readShort(FileInputStream fs) throws Exception {
+		int s = 0;
+		byte buffer[] = new byte[2];
+		fs.read(buffer, 0, 2);
+        s = unsignedShortToInt(buffer);
+		
+		return s;
 	}
 	
 	public static float readFloat(FileInputStream fs) throws Exception {
