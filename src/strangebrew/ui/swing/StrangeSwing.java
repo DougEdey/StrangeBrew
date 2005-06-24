@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.30 2005/06/15 16:47:06 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.31 2005/06/24 17:36:18 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -34,7 +34,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -54,7 +53,6 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -100,20 +98,6 @@ import strangebrew.XmlTransformer;
 import strangebrew.Yeast;
 import strangebrew.ui.preferences.PreferencesDialog;
 
-/**
- * This code was generated using CloudGarden's Jigloo
- * SWT/Swing GUI Builder, which is free for non-commercial
- * use. If Jigloo is being used commercially (ie, by a corporation,
- * company or business for any purpose whatever) then you
- * should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details.
- * Use of Jigloo implies acceptance of these licensing terms.
- * *************************************
- * A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED
- * for this machine, so Jigloo or this code cannot be used legally
- * for any corporate or commercial purpose.
- * *************************************
- */
 public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener {
 
 	/*	{
@@ -161,6 +145,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JLabel fileNameLabel;
 	private MiscPanel miscPanel;
 	private NotesPanel notesPanel;
+	private DilutionPanel dilutionPanel;
 	private JMenuItem aboutMenuItem;
 	private JTextField evapText;
 	private JTextField boilMinText;
@@ -283,9 +268,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		cmbHopsUnitsModel.setList(new Quantity().getListofUnits("weight"));
 
 		fileChooser = new JFileChooser();
-		String fcpath = getClass().getProtectionDomain().getCodeSource().getLocation().toString()
-				.substring(6)
-				+ slash;
+		
 		fileChooser.setCurrentDirectory(new File(path));
 
 		// link malt table and totals:
@@ -692,15 +675,25 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						}
 						{
 							scpComments = new JScrollPane();
-							pnlDetails.add(scpComments, new GridBagConstraints(6, 4, 4, 2, 0.0,
-									0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-									new Insets(0, 0, 0, 0), 0, 0));
+							pnlDetails.add(scpComments, new GridBagConstraints(
+								6,
+								4,
+								4,
+								2,
+								0.0,
+								0.0,
+								GridBagConstraints.EAST,
+								GridBagConstraints.BOTH,
+								new Insets(0, 0, 0, 0),
+								0,
+								0));
 							{
 								txtComments = new JTextArea();
 								scpComments.setViewportView(txtComments);
 								txtComments.setText("Comments");
 								txtComments.setWrapStyleWord(true);
-								txtComments.setPreferredSize(new java.awt.Dimension(117, 42));
+								// txtComments.setPreferredSize(new java.awt.Dimension(117, 42));
+								txtComments.setLineWrap(true);
 								txtComments.addFocusListener(new FocusAdapter() {
 									public void focusLost(FocusEvent evt) {
 										if (!txtComments.getText().equals(myRecipe.getComments())) {
@@ -837,6 +830,11 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						notesPanel = new NotesPanel();
 						jTabbedPane1.addTab("Notes", null, notesPanel, null);
 					}
+					{
+						dilutionPanel = new DilutionPanel();
+						jTabbedPane1.addTab("Dilution", null, dilutionPanel, null);
+						
+					}
 				}
 				{
 					pnlTables = new JPanel();
@@ -851,7 +849,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						pnlMalt = new JPanel();
 						pnlTables.add(pnlMalt);
 						BorderLayout pnlMaltLayout1 = new BorderLayout();
-						FlowLayout pnlMaltLayout = new FlowLayout();
 						pnlMalt.setBorder(BorderFactory.createTitledBorder(new LineBorder(
 								new java.awt.Color(0, 0, 0), 1, false), "Fermentables",
 								TitledBorder.LEADING, TitledBorder.TOP, new java.awt.Font("Dialog",
@@ -876,12 +873,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								maltTable.setModel(maltTableModel);
 								maltTable.setAutoCreateColumnsFromModel(false);
 								maltTable.getTableHeader().setReorderingAllowed(false);
-								maltTable.addMouseListener(new MouseAdapter() {
-									public void mouseClicked(MouseEvent evt) {
-										int i = maltTable.getSelectedRow();
-										// descriptionTextArea.setText(myRecipe.getMaltDescription(i));
-									}
-								});
+								
 								TableColumn maltColumn = maltTable.getColumnModel().getColumn(0);
 
 								// set up malt list combo
@@ -1032,7 +1024,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 										Hop h = (Hop) cmbHopsModel.getSelectedItem();
 										int i = hopsTable.getSelectedRow();
 										if (myRecipe != null && i != -1) {
-											Hop h2 = (Hop) myRecipe.getHop(i);
+											Hop h2 = myRecipe.getHop(i);
 											h2.setAlpha(h.getAlpha());
 											h2.setDescription(h.getDescription());
 										}
@@ -1051,7 +1043,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 										String u = (String) cmbHopsUnitsModel.getSelectedItem();
 										int i = hopsTable.getSelectedRow();
 										if (myRecipe != null && i != -1) {
-											Hop h = (Hop) myRecipe.getHop(i);
+											Hop h = myRecipe.getHop(i);
 											h.setUnitsFull(u);
 											myRecipe.calcHopsTotals();
 											// tblHops.updateUI();
@@ -1262,6 +1254,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 										out.write(myRecipe.toXML());
 										out.close();										
 										Debug.print("Saved: " + file.getAbsoluteFile());
+										currentFile = file;
 										
 									} catch (Exception e) {
 										// TODO: handle io exception
@@ -1270,7 +1263,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								}
 								// prompt to save if not already saved
 								else {
-									JDialog warning = new JDialog();
+									
 									choice = JOptionPane.showConfirmDialog(null,
 											"File not saved.  Do you wish to save it?",
 											"File note saved", JOptionPane.YES_NO_OPTION);
@@ -1479,7 +1472,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		FileWriter out = new FileWriter(tmp);
 		out.write(myRecipe.toXML());
 		out.close();
-		String htmlFileName = myRecipe.getName() + ".html";
 		FileOutputStream output = new java.io.FileOutputStream(f);
 		XmlTransformer.writeStream("tmp.xml", "src/strangebrew/data/recipeToHtml.xslt", output);
 		tmp.delete();
@@ -1487,6 +1479,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	}
 
 	public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor {
+		/**
+		 * 
+		 */
+		
 		final JSpinner spinner = new JSpinner();
 
 		// Initializes the spinner.
@@ -1532,10 +1528,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				if (evt.getPropertyName().equals("preferredWidth")) {
 					TableColumnModel tcm = maltTable.getColumnModel();
 					TableColumnModel tcmt = tblMaltTotals.getColumnModel();
-					int columnCount = tcm.getColumnCount();
+					int colCount = tcm.getColumnCount();
 
 					// for each column, get its width
-					for (int i = 0; i < columnCount; i++) {
+					for (int i = 0; i < colCount; i++) {
 						tcmt.getColumn(i).setPreferredWidth(tcm.getColumn(i).getPreferredWidth());
 					}
 				}
@@ -1625,6 +1621,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				FileWriter out = new FileWriter(file);
 				out.write(myRecipe.toXML());
 				out.close();
+				currentFile = file;
+				displayRecipe();
+				
 			} catch (Exception e) {
 				// TODO: handle io exception
 			}

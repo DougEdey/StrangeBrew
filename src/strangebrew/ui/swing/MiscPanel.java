@@ -135,7 +135,7 @@ public class MiscPanel extends javax.swing.JPanel {
 								Misc m = (Misc) miscComboModel.getSelectedItem();
 								int i = miscTable.getSelectedRow();
 								if (myRecipe != null && i != -1) {
-									Misc m2 = (Misc) myRecipe.getMisc(i);
+									Misc m2 = myRecipe.getMisc(i);
 									m2.setStage(m.getStage());									
 									m2.setDescription(m.getDescription());
 									m2.setCost(m.getCostPerU());									
