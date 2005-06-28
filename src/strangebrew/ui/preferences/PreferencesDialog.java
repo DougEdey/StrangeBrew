@@ -51,6 +51,7 @@ public class PreferencesDialog extends JDialog
 	private Options m_preferences = null;
 	private TimePanel m_time = null;
 	private BrewerPanel m_brewer = null;
+	private CostPanel m_cost = null;
 	
 	public PreferencesDialog(Dialog owner, Options preferences)
 	{
@@ -72,10 +73,12 @@ public class PreferencesDialog extends JDialog
 	{
 		m_time = initializeTimePanel();
 		m_brewer = initializeBrewerPanel();
+		m_cost = initializeCostPanel();
 		
 		tabs = new JTabbedPane();
 		tabs.addTab("Time", m_time);
 		tabs.addTab("Brewer", m_brewer);
+		tabs.addTab("Cost", m_cost);
 		
 		JPanel buttons = new JPanel();
 		JButton okButton = new JButton("OK");
@@ -96,6 +99,7 @@ public class PreferencesDialog extends JDialog
 			{
 				updateTime();
 				updateBrewer();
+				updateCost();
 				m_preferences.saveProperties();
 				hide();
 			}
@@ -162,5 +166,19 @@ public class PreferencesDialog extends JDialog
 		m_preferences.setProperty("optClub", m_brewer.getClubName());
 		m_preferences.setProperty("optCountry", m_brewer.getCountry());
 		m_preferences.setProperty("optEmail", m_brewer.getEmail());
+	}
+	
+	private CostPanel initializeCostPanel()
+	{
+		CostPanel cost = new CostPanel();
+		
+		cost.setOtherCost(m_preferences.getProperty("optMiscCost"));
+		
+		return cost;
+	}
+	
+	private void updateCost()
+	{
+		m_preferences.setProperty("optMiscCost", m_cost.getOtherCost());
 	}
 }

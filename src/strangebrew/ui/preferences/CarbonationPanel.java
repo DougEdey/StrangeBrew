@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 /**
  * @author zymurgist
  */
-public class CostCarbDefaultsPanel extends JPanel
+public class CarbonationPanel extends JPanel
 {
 
 }
