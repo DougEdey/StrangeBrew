@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.49 2005/06/15 16:45:55 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.50 2005/11/15 19:02:40 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -59,6 +59,10 @@ public class Recipe {
 	private Yeast yeast = new Yeast();
 	
 	public Mash mash = new Mash();	
+	
+	// dilution:
+	public DilutedRecipe dilution;
+
 
 	// options:
 	private String colourMethod;
@@ -109,6 +113,8 @@ public class Recipe {
 		evap = opts.getDProperty("optEvaporation");
 		alcMethod = opts.getProperty("optAlcCalcMethod");
 		colourMethod = opts.getProperty("optColourMethod");
+		
+		dilution = new DilutedRecipe();
 
 	}
 	
@@ -382,8 +388,11 @@ public class Recipe {
 	public void setAmountAndUnits(String a){
 		int i = a.indexOf(" ");
 		String d = a.substring(0,i);
-		String u = a.substring(i);
+		String u = a.substring(i);		
+		preBoilVol.setQuantity( null, u.trim(), Double.parseDouble(d.trim()));
 		postBoilVol.setQuantity( null, u.trim(), Double.parseDouble(d.trim()));
+		// this seems redundant, but we need to re-calc pre-boil vol:
+		setPostBoil(Double.parseDouble(d.trim()));
 
 	}
 		
@@ -412,9 +421,6 @@ public class Recipe {
 	
 	public void calcMaltTotals() {
 
-		double og = 0;
-		double fg = 0;
-		double lov = 0;
 		double maltPoints = 0;
 		double mcu = 0;
 		totalMaltLbs = 0;
@@ -494,7 +500,9 @@ public class Recipe {
 		
 		if (colourMethod.equals("EBC")){
 			// From Greg Noonan's article at http://brewingtechniques.com/bmg/noonan.html
-			colour = (lov * 2.65) - 1.2;
+			colour = 1.4922 * Math.pow(lov, 0.6859);    // SRM
+            // EBC is apr. SRM * 2.65 - 1.2
+            colour = (colour * 2.65) - 1.2;
 		} else {
 			// calculates SRM based on MCU (degrees LOV)			
 			if (lov > 0)
@@ -690,8 +698,6 @@ public class Recipe {
 	}
 	
 	public String toText(){
-		DecimalFormat df1 = new DecimalFormat("0.0");
-		DecimalFormat df2 = new DecimalFormat("0.00");
 		MessageFormat mf;
 		StringBuffer sb = new StringBuffer();
 		sb.append("StrangeBrew J1.0 recipe text output\n\n");
@@ -785,4 +791,76 @@ public class Recipe {
 		}
 
 	}
+
+	public class DilutedRecipe {
+		private double dilOG;
+		private double dilIbu;
+		private double dilAlc;
+		private Quantity dilVol;
+		private Quantity addVol;
+		
+		// constructor
+		public DilutedRecipe(){
+			
+		}
+
+		public Quantity getAddVol() {
+			return addVol;
+		}
+
+		public void setAddVol(Quantity addVol) {
+			this.addVol = addVol;
+			dilVol.setQuantity(null, null, postBoilVol.getValue() + addVol.getValue());
+			calcDilution();			
+		}
+
+		public double getDilAlc() {
+			return dilAlc;
+		}
+
+		public void setDilAlc(double dilAlc) {
+			this.dilAlc = dilAlc;
+		}
+
+		public double getDilIbu() {
+			return dilIbu;
+		}
+
+		public void setDilIbu(double dilIbu) {
+			this.dilIbu = dilIbu;
+		}
+
+		public double getDilOG() {
+			return dilOG;
+		}
+
+		public void setDilOG(double dilOG) {
+			this.dilOG = dilOG;
+		}
+
+		public Quantity getDilVol() {
+			return dilVol;
+		}
+
+		public void setDilVol(Quantity dilVol) {
+			this.dilVol = dilVol;
+			addVol.setQuantity(null, null, dilVol.getValue() - postBoilVol.getValue() );
+			calcDilution();	
+		}
+		
+		/*
+		 * Calculates the diluted values, assuming that the
+		 * diluted volume has been set
+		 */
+		private void calcDilution(){
+			double dilutionFactor = dilVol.getValue() / postBoilVol.getValue();
+			dilIbu = ibu / dilutionFactor;
+			dilAlc = alcohol / dilutionFactor;
+			dilOG = ((dilOG - 1) / dilutionFactor) + 1;
+			
+		}
+		
+		
+	}
+
 }
