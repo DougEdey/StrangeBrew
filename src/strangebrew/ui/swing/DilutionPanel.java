@@ -1,5 +1,5 @@
 /*
- * $Id: DilutionPanel.java,v 1.1 2005/06/24 17:36:18 andrew_avis Exp $
+ * $Id: DilutionPanel.java,v 1.2 2005/12/14 17:53:38 andrew_avis Exp $
  * Created on June 4, 2005
  * Dilution panel to help you figure out the results of diluting
  * your wort with water post-boil.
@@ -34,12 +34,12 @@ import javax.swing.JLabel;
 import javax.swing.SpinnerNumberModel;
 
 import java.awt.GridLayout;
-import javax.swing.SpinnerListModel;
 import java.awt.FlowLayout;
 import javax.swing.JCheckBox;
 import javax.swing.WindowConstants;
 import javax.swing.JFrame;
 
+import strangebrew.Recipe;
 
 public class DilutionPanel extends javax.swing.JPanel {
 	private JPanel infoPanel;
@@ -79,6 +79,8 @@ public class DilutionPanel extends javax.swing.JPanel {
 	private JSpinner diluteWithText;
 	private JSpinner postBoilText;
 	private JCheckBox dilutedCheckBox;
+	
+	private Recipe myRecipe;
 
 	/**
 	* Auto-generated main method to display this 
@@ -92,9 +94,26 @@ public class DilutionPanel extends javax.swing.JPanel {
 		frame.setVisible(true);
 	}
 	
+	public DilutionPanel(Recipe r){
+		super();
+		myRecipe = r;
+		initGUI();
+		// displayDilution();
+	}
+		
 	public DilutionPanel() {
 		super();
 		initGUI();
+	}
+	
+	public void setData(Recipe r){
+		myRecipe = r;
+	}
+	
+	private void displayDilution(){
+		postBoilText.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
+		diluteWithText.setValue(new Double(myRecipe.dilution.getAddVol().getValue()));
+		
 	}
 	
 	private void initGUI() {
@@ -126,6 +145,7 @@ public class DilutionPanel extends javax.swing.JPanel {
 					{
 						postBoilText = new JSpinner();
 						postBoilPanel.add(postBoilText);
+						postBoilText.setPreferredSize(new java.awt.Dimension(85, 20));
 					}
 				}
 				{
@@ -142,6 +162,7 @@ public class DilutionPanel extends javax.swing.JPanel {
 					{
 						diluteWithText = new JSpinner();
 						diluteWithPanel.add(diluteWithText);
+						diluteWithText.setPreferredSize(new java.awt.Dimension(79, 20));
 					}
 				}
 				{

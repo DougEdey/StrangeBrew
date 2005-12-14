@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.50 2005/11/15 19:02:40 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.51 2005/12/14 17:54:12 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -92,6 +92,7 @@ public class Recipe {
 	public DecimalFormat df1 = new DecimalFormat("####.0");
 	public DecimalFormat df2 = new DecimalFormat("#.00");
 	public DecimalFormat df3 = new DecimalFormat("0.000");
+        public DecimalFormat df4 = new DecimalFormat("#0");
 
 	// default constuctor
 	public Recipe() {
@@ -160,7 +161,14 @@ public class Recipe {
 		alcMethod = s;
 		calcAlcohol(alcMethod);
 	}
-	public void setBoilMinutes(int b) { boilMinutes = b; }
+	public void setBoilMinutes(int b) {
+            boilMinutes = b; 
+            // JvH changing the boiltime, changes the post boil volume (NOT the pre boil)
+            double post = preBoilVol.getValue() - (evap * boilMinutes / 60);
+            postBoilVol.setQuantity(null, null, post);
+            calcMaltTotals();
+            calcHopsTotals();
+        }
 	public void setBrewer(String b) { brewer = b; }
 	public void setComments(String c) { comments = c; }
 	public void setColourMethod(String c) { 
@@ -168,7 +176,14 @@ public class Recipe {
 		calcMaltTotals();
 	}
 	public void setCreated(Date d) { created.setTime(d); }
-	public void setEvap(double e) { evap = e; }
+	public void setEvap(double e) { 
+            evap = e; 
+            // JvH changing the evaporation, changes the post boil volume (NOT the pre boil)
+            double post = preBoilVol.getValue() - (evap * boilMinutes / 60);
+            postBoilVol.setQuantity(null, null, post);
+            calcMaltTotals();
+            calcHopsTotals();
+        }
 	public void setHopsUnits(String h) { hopUnits = h; }
 	public void setIBUMethod(String s) {
 		ibuCalcMethod = s;

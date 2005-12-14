@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.31 2005/06/24 17:36:18 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.32 2005/12/14 17:53:38 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -43,6 +43,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.EventObject;
@@ -226,6 +227,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 	private DateFormat dateFormat1 = DateFormat.getDateInstance(DateFormat.SHORT);
 
+        private NumberFormat myNF = NumberFormat.getCurrencyInstance(); // Use the country currency
+        private String Costs;
+        
 	private Options preferences = new Options();
 	public Recipe myRecipe;
 
@@ -298,6 +302,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		miscPanel.setData(myRecipe);
 		notesPanel.setData(myRecipe);
 		stylePanel.setData(myRecipe);
+		dilutionPanel.setData(myRecipe);
 		maltTable.updateUI();
 		hopsTable.updateUI();
 		
@@ -327,17 +332,19 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		lblColourValue.setText(myRecipe.df1.format(myRecipe.getSrm()));
 		lblAlcValue.setText(myRecipe.df1.format(myRecipe.getAlcohol()));
 		txtDate.setText(dateFormat1.format(myRecipe.getCreated().getTime()));
+                Costs = myNF.format(myRecipe.getTotalMaltCost());
 		tblMaltTotalsModel.setDataVector(new String[][]{{"Totals:",
 				"" + myRecipe.df1.format(myRecipe.getTotalMaltLbs()), myRecipe.getMaltUnits(),
 				"" + myRecipe.df3.format(myRecipe.getEstOg()),
 				"" + myRecipe.df1.format(myRecipe.getSrm()),
-				"$" + myRecipe.df2.format(myRecipe.getTotalMaltCost()), "100"}}, new String[]{"",
+				Costs, "100"}}, new String[]{"",
 				"", "", "", "", "", ""});
 
+                Costs = myNF.format(myRecipe.getTotalHopsCost());
 		tblHopsTotalsModel.setDataVector(new String[][]{{"Totals:", "", "",
 				"" + myRecipe.df1.format(myRecipe.getTotalHopsOz()), myRecipe.getHopUnits(), "",
 				"", "" + myRecipe.df1.format(myRecipe.getIbu()),
-				"$" + myRecipe.df2.format(myRecipe.getTotalHopsCost())}}, new String[]{"", "", "",
+				Costs}}, new String[]{"", "", "",
 				"", "", "", "", "", ""});
 
 		String fileName = "not saved";
@@ -734,6 +741,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									String q = (String) cmbSizeUnits.getSelectedItem();
 									if (myRecipe != null && q != myRecipe.getVolUnits()) {
 										myRecipe.setPostBoilVolUnits(q);
+										myRecipe.setPreBoilVolUnits(q);
 										displayRecipe();
 									}
 								}
@@ -1573,23 +1581,31 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		String s = "";
+                String t = "";
+                Integer k;
+                
 		s = ((JTextField) o).getText();
+                t = s.replace(',','.'); // accept also european decimal komma
 
 		if (o == txtName)
 			myRecipe.setName(s);
 		else if (o == brewerNameText)
 			myRecipe.setBrewer(s);
 		else if (o == txtPreBoil) {
-			myRecipe.setPreBoil(Double.parseDouble(s));
+			myRecipe.setPreBoil(Double.parseDouble(t));
 			displayRecipe();
 		} else if (o == postBoilText) {
-			myRecipe.setPostBoil(Double.parseDouble(s));
+			myRecipe.setPostBoil(Double.parseDouble(t));
 			displayRecipe();
 		} else if (o == evapText) {
-			myRecipe.setEvap(Double.parseDouble(s));
+			myRecipe.setEvap(Double.parseDouble(t));
 			displayRecipe();
 		} else if (o == boilMinText) {
-			myRecipe.setBoilMinutes(Integer.parseInt(s));
+                        if( t.indexOf('.') > 0)
+                        {   // parseInt doesn't like '.' or ',', so trim the string
+                            t = s.substring(0,t.indexOf('.'));
+                        }
+			myRecipe.setBoilMinutes(Integer.parseInt(t));
 			displayRecipe();
 		}
 
