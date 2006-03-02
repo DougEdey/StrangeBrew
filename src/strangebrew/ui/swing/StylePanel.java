@@ -1,5 +1,6 @@
 package strangebrew.ui.swing;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -77,12 +78,81 @@ public class StylePanel extends javax.swing.JPanel {
 	
 	public void setData(Recipe r) {
 		myRecipe = r;
+		cmbStyle2Model.addOrInsert(myRecipe.getStyleObj());
+		setStyleData();
 	}
 	
 	public void setList(ArrayList styleList){
 		cmbStyle2Model.setList(styleList);
 	}
 	
+	public void checkStyleConformance(){
+		Style s = (Style) cmbStyle2Model.getSelectedItem();
+		if (myRecipe.getEstOg() < s.ogLow || 
+				myRecipe.getEstOg() > s.ogHigh)
+			stlRcpOG.setForeground(Color.red);
+		else
+			stlRcpOG.setForeground(Color.black);
+		
+		if (myRecipe.getAlcohol() < s.alcLow ||
+				myRecipe.getAlcohol() > s.alcHigh)
+			stlRcpABV.setForeground(Color.red);
+		else
+			stlRcpABV.setForeground(Color.black);
+		
+		if (myRecipe.getSrm() < s.lovLow ||
+				myRecipe.getSrm() > s.lovHigh)
+			stlRcpColour.setForeground(Color.red);
+		else
+			stlRcpColour.setForeground(Color.black);
+		
+		if (myRecipe.getIbu() < s.ibuLow ||
+				myRecipe.getIbu() > s.ibuHigh)
+			stlRcpIBU.setForeground(Color.red);
+		else
+			stlRcpIBU.setForeground(Color.black);		
+	}
+	
+	public void setStyleData(){
+		Style s = (Style) cmbStyle2Model.getSelectedItem();
+
+		// descriptionTextArea.setText(s.getDescription());
+		// cmbStyle2.setToolTipText(multiLineToolTip(50,s.getDescription()));
+		stlLowOG.setText(myRecipe.df3.format(s.ogLow));
+		stlRcpOG.setText(myRecipe.df3.format(myRecipe.getEstOg()));
+		stlHighOG.setText(myRecipe.df3.format(s.ogHigh));
+		stlLowABV.setText(myRecipe.df1.format(s.alcLow));
+		stlRcpABV.setText(myRecipe.df1.format(myRecipe.getAlcohol()));
+		stlHighABV.setText(myRecipe.df1.format(s.alcHigh));
+		stlLowColour.setText(myRecipe.df1.format(s.lovLow));
+		stlRcpColour.setText(myRecipe.df1.format(myRecipe.getSrm()));
+		stlHighColour.setText(myRecipe.df1.format(s.lovHigh));
+		stlLowIBU.setText(myRecipe.df1.format(s.ibuLow));
+		stlRcpIBU.setText(myRecipe.df1.format(myRecipe.getIbu()));
+		stlHighIBU.setText(myRecipe.df1.format(s.ibuHigh));
+		
+		checkStyleConformance();
+		txaStyles.setText(getStyleMatches());
+	}
+	
+	public String getStyleMatches(){
+		
+		String styles="";
+		Style s;
+
+		for (int i=0; i<cmbStyle2Model.getSize(); i++){
+			s = (Style) cmbStyle2Model.list.get(i);
+			if (	myRecipe.getEstOg() > s.ogLow && myRecipe.getEstOg() < s.ogHigh &&
+					myRecipe.getAlcohol() > s.alcLow && myRecipe.getAlcohol() < s.alcHigh &&
+					myRecipe.getSrm() > s.lovLow && myRecipe.getSrm() < s.lovHigh &&
+					myRecipe.getIbu() > s.ibuLow && myRecipe.getIbu() < s.ibuHigh ) {
+				styles = styles.concat(s.name + "\n");
+			}
+			
+		}
+		
+		return styles;
+	}
 	private void initGUI() {
 		try {
 			FlowLayout pnlStyleLayout = new FlowLayout();
@@ -105,22 +175,7 @@ public class StylePanel extends javax.swing.JPanel {
 
 					cmbStyle2.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
-							Style s = (Style) cmbStyle2Model.getSelectedItem();
-
-							// descriptionTextArea.setText(s.getDescription());
-							// cmbStyle2.setToolTipText(multiLineToolTip(50,s.getDescription()));
-							stlLowOG.setText(myRecipe.df3.format(s.ogLow));
-							stlRcpOG.setText(myRecipe.df3.format(myRecipe.getEstOg()));
-							stlHighOG.setText(myRecipe.df3.format(s.ogHigh));
-							stlLowABV.setText(myRecipe.df1.format(s.alcLow));
-							stlRcpABV.setText(myRecipe.df1.format(myRecipe.getAlcohol()));
-							stlHighABV.setText(myRecipe.df1.format(s.alcHigh));
-							stlLowColour.setText(myRecipe.df1.format(s.lovLow));
-							stlRcpColour.setText(myRecipe.df1.format(myRecipe.getSrm()));
-							stlHighColour.setText(myRecipe.df1.format(s.lovHigh));
-							stlLowIBU.setText(myRecipe.df1.format(s.ibuLow));
-							stlRcpIBU.setText(myRecipe.df1.format(myRecipe.getIbu()));
-							stlHighIBU.setText(myRecipe.df1.format(s.ibuHigh));
+							setStyleData();
 						}
 					});
 

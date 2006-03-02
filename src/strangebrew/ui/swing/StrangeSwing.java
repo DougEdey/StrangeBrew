@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.32 2005/12/14 17:53:38 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.33 2006/03/02 18:27:47 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -723,9 +723,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									if (myRecipe != null && y != myRecipe.getYeastObj()) {
 										myRecipe.setYeast(y);
 									}
+									String st = SBStringUtils.multiLineToolTip(40, y
+											.getDescription());
 
-									cmbYeast.setToolTipText(SBStringUtils.multiLineToolTip(40, y
-											.getDescription()));
+									cmbYeast.setToolTipText(st);
 								}
 							});
 						}
@@ -1581,11 +1582,11 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		String s = "";
-                String t = "";
-                Integer k;
+        String t = "";
+        Integer k;
                 
 		s = ((JTextField) o).getText();
-                t = s.replace(',','.'); // accept also european decimal komma
+        // t = s.replace(',','.'); // accept also european decimal komma
 
 		if (o == txtName)
 			myRecipe.setName(s);
@@ -1605,7 +1606,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
                         {   // parseInt doesn't like '.' or ',', so trim the string
                             t = s.substring(0,t.indexOf('.'));
                         }
-			myRecipe.setBoilMinutes(Integer.parseInt(t));
+			myRecipe.setBoilMinutes(Integer.parseInt(s));
 			displayRecipe();
 		}
 
