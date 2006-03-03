@@ -1,8 +1,7 @@
 package strangebrew.ui.swing;
-
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -13,19 +12,30 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
-import javax.swing.JFrame;
-import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import strangebrew.Recipe;
 import strangebrew.Style;
 
+
+/**
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
 public class StylePanel extends javax.swing.JPanel {
 	private JLabel jLabel1;
 	private JLabel lblStyle2;
@@ -44,11 +54,11 @@ public class StylePanel extends javax.swing.JPanel {
 	private JPanel stylePanel;
 	private ComboModel cmbStyle2Model;
 	private JComboBox cmbStyle2;
-	private JSlider sldMatch;
 	private JLabel jLabel7;
 	private JLabel jLabel6;
 	private JLabel jLabel5;
 	private JLabel jLabel4;
+	private JPanel jPanel3;
 	private JPanel jPanel1;
 	private JLabel jLabel3;
 	private JLabel jLabel2;	
@@ -86,6 +96,28 @@ public class StylePanel extends javax.swing.JPanel {
 		cmbStyle2Model.setList(styleList);
 	}
 	
+	public void setStyleData(){
+		Style s = (Style) cmbStyle2Model.getSelectedItem();
+
+		// descriptionTextArea.setText(s.getDescription());
+		// cmbStyle2.setToolTipText(multiLineToolTip(50,s.getDescription()));
+		stlLowOG.setText(myRecipe.df3.format(s.ogLow));
+		stlRcpOG.setText(myRecipe.df3.format(myRecipe.getEstOg()));
+		stlHighOG.setText(myRecipe.df3.format(s.ogHigh));
+		stlLowABV.setText(myRecipe.df1.format(s.alcLow));
+		stlRcpABV.setText(myRecipe.df1.format(myRecipe.getAlcohol()));
+		stlHighABV.setText(myRecipe.df1.format(s.alcHigh));
+		stlLowColour.setText(myRecipe.df1.format(s.lovLow));
+		stlRcpColour.setText(myRecipe.df1.format(myRecipe.getSrm()));
+		stlHighColour.setText(myRecipe.df1.format(s.lovHigh));
+		stlLowIBU.setText(myRecipe.df1.format(s.ibuLow));
+		stlRcpIBU.setText(myRecipe.df1.format(myRecipe.getIbu()));
+		stlHighIBU.setText(myRecipe.df1.format(s.ibuHigh));
+		
+		checkStyleConformance();
+		txaStyles.setText(getStyleMatches());
+	}
+	
 	public void checkStyleConformance(){
 		Style s = (Style) cmbStyle2Model.getSelectedItem();
 		if (myRecipe.getEstOg() < s.ogLow || 
@@ -113,27 +145,7 @@ public class StylePanel extends javax.swing.JPanel {
 			stlRcpIBU.setForeground(Color.black);		
 	}
 	
-	public void setStyleData(){
-		Style s = (Style) cmbStyle2Model.getSelectedItem();
-
-		// descriptionTextArea.setText(s.getDescription());
-		// cmbStyle2.setToolTipText(multiLineToolTip(50,s.getDescription()));
-		stlLowOG.setText(myRecipe.df3.format(s.ogLow));
-		stlRcpOG.setText(myRecipe.df3.format(myRecipe.getEstOg()));
-		stlHighOG.setText(myRecipe.df3.format(s.ogHigh));
-		stlLowABV.setText(myRecipe.df1.format(s.alcLow));
-		stlRcpABV.setText(myRecipe.df1.format(myRecipe.getAlcohol()));
-		stlHighABV.setText(myRecipe.df1.format(s.alcHigh));
-		stlLowColour.setText(myRecipe.df1.format(s.lovLow));
-		stlRcpColour.setText(myRecipe.df1.format(myRecipe.getSrm()));
-		stlHighColour.setText(myRecipe.df1.format(s.lovHigh));
-		stlLowIBU.setText(myRecipe.df1.format(s.ibuLow));
-		stlRcpIBU.setText(myRecipe.df1.format(myRecipe.getIbu()));
-		stlHighIBU.setText(myRecipe.df1.format(s.ibuHigh));
-		
-		checkStyleConformance();
-		txaStyles.setText(getStyleMatches());
-	}
+	
 	
 	public String getStyleMatches(){
 		
@@ -153,14 +165,19 @@ public class StylePanel extends javax.swing.JPanel {
 		
 		return styles;
 	}
+	
 	private void initGUI() {
 		try {
-			FlowLayout pnlStyleLayout = new FlowLayout();
+			GridBagLayout pnlStyleLayout = new GridBagLayout();
+			pnlStyleLayout.rowWeights = new double[] {0.1,0.1};
+			pnlStyleLayout.rowHeights = new int[] {7,7};
+			pnlStyleLayout.columnWeights = new double[] {0.1,0.1};
+			pnlStyleLayout.columnWidths = new int[] {7,7};
 			this.setLayout(pnlStyleLayout);
 			setPreferredSize(new Dimension(400, 300));
 			{
 				jPanel1 = new JPanel();
-				this.add(jPanel1);
+				this.add(jPanel1, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 				{
 					lblStyle2 = new JLabel();
 					jPanel1.add(lblStyle2);
@@ -190,11 +207,8 @@ public class StylePanel extends javax.swing.JPanel {
 				jPanel2Layout1.rowHeights = new int[]{7, 7, 7, 7, 7, 7};
 				jPanel2.setPreferredSize(new java.awt.Dimension(179, 120));
 				jPanel2.setLayout(jPanel2Layout1);
-				this.add(jPanel2);
-				jPanel2.setBorder(BorderFactory.createTitledBorder(new LineBorder(
-						new java.awt.Color(0, 0, 0), 1, false), "Recipe Conformance:",
-						TitledBorder.LEADING, TitledBorder.TOP, new java.awt.Font(
-								"Dialog", 0, 12), new java.awt.Color(0, 0, 0)));
+				this.add(jPanel2, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+				jPanel2.setBorder(BorderFactory.createTitledBorder(null, "Recipe Conformance:", TitledBorder.LEADING, TitledBorder.TOP));
 				{
 					jLabel5 = new JLabel();
 					jPanel2.add(jLabel5, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
@@ -333,17 +347,21 @@ public class StylePanel extends javax.swing.JPanel {
 				}
 			}
 			{
-				jScrollPane3 = new JScrollPane();
-				this.add(jScrollPane3);
+				jPanel3 = new JPanel();
+				BorderLayout jPanel3Layout = new BorderLayout();
+				jPanel3.setLayout(jPanel3Layout);
+				this.add(jPanel3, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+				jPanel3.setBorder(BorderFactory.createTitledBorder("Matched Styles:"));
 				{
-					txaStyles = new JTextArea();
-					jScrollPane3.setViewportView(txaStyles);
-					txaStyles.setText("Matched Styles");
+					jScrollPane3 = new JScrollPane();
+					jPanel3.add(jScrollPane3, BorderLayout.CENTER);
+					
+					{
+						txaStyles = new JTextArea();
+						jScrollPane3.setViewportView(txaStyles);
+						txaStyles.setText("Matched Styles");
+					}
 				}
-			}
-			{
-				sldMatch = new JSlider();
-				this.add(sldMatch);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

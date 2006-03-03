@@ -52,12 +52,18 @@ class ComboModel extends AbstractListModel implements ComboBoxModel {
 				String q2 = (String) o;
 				found = q.equalsIgnoreCase(q2);
 			}
+			 
 			i++;
 		}
+		
+		// if it's not found, add it to the list, otherwise, set the found
+		// index to the selected index
+		
 		if (!found) {
 			list.add(o);
 		}
-		setSelectedItem(o);
+		
+		else selected = list.get(i-1);
 
 	}
 	
@@ -72,6 +78,7 @@ class ComboModel extends AbstractListModel implements ComboBoxModel {
 			fireContentsChanged(this, -1, -1);
 		}
 	}
+	
 
 	public int getSize() {
 		return list.size();

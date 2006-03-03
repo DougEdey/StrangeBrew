@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.33 2006/03/02 18:27:47 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.34 2006/03/03 18:17:55 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -1583,7 +1583,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		Object o = e.getSource();
 		String s = "";
         String t = "";
-        Integer k;
+        
                 
 		s = ((JTextField) o).getText();
         // t = s.replace(',','.'); // accept also european decimal komma
