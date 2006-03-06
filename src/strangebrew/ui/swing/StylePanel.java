@@ -1,6 +1,7 @@
 package strangebrew.ui.swing;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -24,18 +25,6 @@ import strangebrew.Recipe;
 import strangebrew.Style;
 
 
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
 public class StylePanel extends javax.swing.JPanel {
 	private JLabel jLabel1;
 	private JLabel lblStyle2;
@@ -67,6 +56,9 @@ public class StylePanel extends javax.swing.JPanel {
 	private JScrollPane jScrollPane3;
 	
 	private Recipe myRecipe;
+	private StrangeSwing.SBNotifier sbn;
+	
+
 	
 
 	/**
@@ -86,6 +78,12 @@ public class StylePanel extends javax.swing.JPanel {
 		initGUI();
 	}
 	
+	public StylePanel(StrangeSwing.SBNotifier sb) {
+		super();
+		sbn = sb;		
+		initGUI();
+	}
+	
 	public void setData(Recipe r) {
 		myRecipe = r;
 		cmbStyle2Model.addOrInsert(myRecipe.getStyleObj());
@@ -94,6 +92,11 @@ public class StylePanel extends javax.swing.JPanel {
 	
 	public void setList(ArrayList styleList){
 		cmbStyle2Model.setList(styleList);
+	}
+	
+	public void setStyle(Style s){
+		cmbStyle2Model.addOrInsert(s);
+		setStyleData();
 	}
 	
 	public void setStyleData(){
@@ -192,7 +195,14 @@ public class StylePanel extends javax.swing.JPanel {
 
 					cmbStyle2.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
+							Style s = (Style) cmbStyle2Model.getSelectedItem();
+							if (myRecipe != null && s != myRecipe.getStyleObj()) {
+								myRecipe.setStyle(s);
+								if (!sbn.equals(null))
+									sbn.setStyle(s);								
+							}
 							setStyleData();
+							
 						}
 					});
 

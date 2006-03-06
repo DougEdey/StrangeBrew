@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.34 2006/03/03 18:17:55 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.35 2006/03/06 18:12:32 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -227,8 +227,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 	private DateFormat dateFormat1 = DateFormat.getDateInstance(DateFormat.SHORT);
 
-        private NumberFormat myNF = NumberFormat.getCurrencyInstance(); // Use the country currency
-        private String Costs;
+    private NumberFormat myNF = NumberFormat.getCurrencyInstance(); // Use the country currency
+    private String Costs;
         
 	private Options preferences = new Options();
 	public Recipe myRecipe;
@@ -294,7 +294,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// and comboboxes
 		// use whenever the Recipe changes
 		cmbStyleModel.addOrInsert(myRecipe.getStyleObj());
-		// cmbStyle2Model.addOrInsert(myRecipe.getStyleObj());
 		cmbYeastModel.addOrInsert(myRecipe.getYeastObj());
 		cmbSizeUnitsModel.addOrInsert(myRecipe.getVolUnits());
 		maltTableModel.setData(myRecipe);
@@ -537,10 +536,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 							cmbStyle.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									Style s = (Style) cmbStyleModel.getSelectedItem();
-									// cmbStyle2Model.setSelectedItem(s);
+									Style s = (Style) cmbStyleModel.getSelectedItem();									
 									if (myRecipe != null && s != myRecipe.getStyleObj()) {
 										myRecipe.setStyle(s);
+										stylePanel.setStyle(s);
 									}
 
 									cmbStyle.setToolTipText(SBStringUtils.multiLineToolTip(50, s
@@ -827,7 +826,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						}
 					}
 					{
-						stylePanel = new StylePanel();
+						SBNotifier sbn = new SBNotifier();
+						stylePanel = new StylePanel(sbn);
 						jTabbedPane1.addTab("Style", null, stylePanel, null);
 
 					}
@@ -1704,5 +1704,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			myRecipe.setColourMethod(s);
 
 		displayRecipe();
+	}
+	
+	// an object that you give to other gui objects so that they can set things on the main SB GUI
+	public class SBNotifier {
+		public void setStyle(Style s){
+			cmbStyleModel.addOrInsert(s);
+		}
 	}
 }
