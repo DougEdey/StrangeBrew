@@ -33,7 +33,7 @@ import javax.swing.JTabbedPane;
 import strangebrew.Options;
 
 /**
- * @author zymurgist
+ * @author aavis
  * 
  * This class creates a tabbed dialog box with all the preferences
  * used by the application.  The constructor will initialize all the
@@ -52,6 +52,7 @@ public class PreferencesDialog extends JDialog
 	private TimePanel m_time = null;
 	private BrewerPanel m_brewer = null;
 	private CostPanel m_cost = null;
+	private CalculationsPanel m_calc = null;
 	
 	public PreferencesDialog(Dialog owner, Options preferences)
 	{
@@ -74,11 +75,13 @@ public class PreferencesDialog extends JDialog
 		m_time = initializeTimePanel();
 		m_brewer = initializeBrewerPanel();
 		m_cost = initializeCostPanel();
+		m_calc = new CalculationsPanel();
 		
 		tabs = new JTabbedPane();
 		tabs.addTab("Time", m_time);
 		tabs.addTab("Brewer", m_brewer);
 		tabs.addTab("Cost", m_cost);
+		tabs.addTab("Calculations", m_calc);
 		
 		JPanel buttons = new JPanel();
 		JButton okButton = new JButton("OK");

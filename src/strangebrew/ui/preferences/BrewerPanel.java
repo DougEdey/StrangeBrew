@@ -26,29 +26,86 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+
+
 /**
  * @author zymurgist
  */
 public class BrewerPanel extends JPanel
 {
-	private JTextField m_name = null;
-	private JTextField m_phoneNumber = null;
-	private JTextField m_clubName = null;
-	private JTextField m_email = null;
-	private JTextField m_street = null;
-	private JTextField m_city = null;
-	private JTextField m_state = null;
-	private JTextField m_postalCode = null;
-	private JTextField m_country = null;
+	private JTextField m_name;
+	private JTextField m_phoneNumber;
+	private JTextField m_clubName;
+	private JTextField m_email;
+	private JTextField m_street;
+	private JTextField m_city;
+	private JTextField m_state;
+	private JTextField m_postalCode;
+	private JTextField m_country;
+	
+
 	
 	public BrewerPanel()
 	{	
+		// super(frame);
+		initGUI();
+		
+//		JPanel components = new JPanel();
+//		components.setLayout(new BorderLayout(5, 5));
+//		components.add(BorderLayout.WEST, layoutLabels());
+//		components.add(BorderLayout.CENTER, layoutFields());
+//
+//		setLayout(new BorderLayout());
+//		add(BorderLayout.NORTH, components);
+	}
+	
+	private void initGUI(){
 		JPanel components = new JPanel();
 		components.setLayout(new BorderLayout(5, 5));
-		components.add(BorderLayout.WEST, layoutLabels());
-		components.add(BorderLayout.CENTER, layoutFields());
+		{
+			JPanel labels = new JPanel();
+			labels.setLayout(new GridLayout(9, 1, 5, 5));	
+			labels.add(new JLabel("Club Name:"));
+			labels.add(new JLabel("Brewer Name:"));		
+			labels.add(new JLabel("Phone Number:"));				
+			labels.add(new JLabel("Email:"));		
+			labels.add(new JLabel("Street:"));		
+			labels.add(new JLabel("City:"));		
+			labels.add(new JLabel("State/Province:"));				
+			labels.add(new JLabel("Postal Code:"));			
+			labels.add(new JLabel("Country:"));
+			
+			components.add(BorderLayout.WEST, labels);
+		}
+		{
+			m_name = new JTextField(20);
+			m_phoneNumber = new JTextField(20);
+			m_clubName = new JTextField(20);
+			m_email = new JTextField(20);
+			m_street = new JTextField(20);
+			m_city = new JTextField(20);
+			m_state = new JTextField(20);
+			m_postalCode = new JTextField(20);
+			m_country = new JTextField(20);
+	
+			JPanel fields = new JPanel();
+			fields.setLayout(new GridLayout(9, 1, 5, 5));
+			
+			fields.add(m_clubName);
+			fields.add(m_name);
+			fields.add(m_phoneNumber);
+			fields.add(m_email);
+			fields.add(m_street);
+			fields.add(m_city);
+			fields.add(m_state);
+			fields.add(m_postalCode);
+			fields.add(m_country);
+			
+			components.add(BorderLayout.CENTER, fields);
+		}
 
 		setLayout(new BorderLayout());
+		this.setPreferredSize(new java.awt.Dimension(462, 178));
 		add(BorderLayout.NORTH, components);
 	}
 	
