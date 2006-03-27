@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.35 2006/03/06 18:12:32 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.36 2006/03/27 18:34:43 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -1207,8 +1207,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								// Show open dialog; this method does
 								// not return until the dialog is closed
 								String[] ext = {"xml", "qbrew"};
-								sbFileFilter saveFileFilter = new sbFileFilter(ext);
+								String desc = "StrangBrew and QBrew recipes";
+								sbFileFilter saveFileFilter = new sbFileFilter(ext, desc);
+								
+								// fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 								fileChooser.setFileFilter(saveFileFilter);
+								
 
 								int returnVal = fileChooser.showOpenDialog(jMenuBar1);
 								if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -1315,7 +1319,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									// Show save dialog; this method does
 									// not return until the dialog is closed	
 									String[] ext = {"html", "htm"};
-									sbFileFilter saveFileFilter = new sbFileFilter(ext);
+									sbFileFilter saveFileFilter = new sbFileFilter(ext, "HTML");
 									fileChooser.setFileFilter(saveFileFilter);
 									fileChooser.setSelectedFile(new File(myRecipe.getName()
 											+ ".html"));
@@ -1344,7 +1348,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									// Show save dialog; this method does
 									// not return until the dialog is closed
 									String[] ext = {"txt"};
-									sbFileFilter saveFileFilter = new sbFileFilter(ext);
+									sbFileFilter saveFileFilter = new sbFileFilter(ext, "Text");
 									fileChooser.setFileFilter(saveFileFilter);
 									fileChooser.setSelectedFile(new File(myRecipe.getName()
 											+ ".txt"));
@@ -1626,7 +1630,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// Show save dialog; this method does
 		// not return until the dialog is closed
 		String[] ext = {"xml"};
-		sbFileFilter saveFileFilter = new sbFileFilter(ext);
+		sbFileFilter saveFileFilter = new sbFileFilter(ext, "XML");
 		fileChooser.setFileFilter(saveFileFilter);
 
 		int returnVal = fileChooser.showSaveDialog(jMenuBar1);
@@ -1654,8 +1658,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		private String[] extensions = {"xml"};
 		private String description = "";
 
-		public sbFileFilter(String[] s) {
+		public sbFileFilter(String[] s, String desc) {
 			extensions = s;
+			description = desc;
 		}
 
 		public boolean accept(File f) {
@@ -1663,11 +1668,14 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			String s = f.getName();
 			int i = s.lastIndexOf('.');
 
+			if (f.isDirectory())
+				return true;
+			
 			if (i > 0 && i < s.length() - 1) {
 				ext = s.substring(i + 1).toLowerCase();
 			}
 			if (ext == null) {
-				return false;
+				return false;				
 			} else {
 				i = 0;
 				while (i < extensions.length) {
@@ -1682,6 +1690,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 		public String getDescription() {
 			return description;
+		}
+		public void setDescription(String d) {
+			description = d;
 		}
 	}
 
