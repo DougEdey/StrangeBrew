@@ -1,7 +1,7 @@
 package strangebrew;
 
 /**
- * $Id: Options.java,v 1.8 2005/06/14 16:22:26 andrew_avis Exp $
+ * $Id: Options.java,v 1.9 2006/04/06 17:46:21 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -26,6 +26,80 @@ public class Options {
 	private Properties props;
 	private String type;
 	
+	private String optionString[][] = { 
+			// calculations:
+			{"optIBUCalcMethod", "Tinseth"},
+			{"optAlcCalcMethod", "Volume"},
+			{"optEvapCalcMethod", "Constant"},
+			{"optColourMethod", "SRM"},
+			{"optEfficiency", "75"},
+			{"optAttenuation", "75"},
+			{"optEvaporation", "1.5"},
+			{"optPelletHopsPct", "6"},
+			{"optDryHopTime", "0"},
+			{"optFWHTime", "1"},
+			{"optMashHopTime", "2"},
+			{"optHopsUtil", "4.15"},
+			{"optBoilTempF", "212"},
+			{"optColourEfficiency", "false"},
+			
+			// recipe basics:
+			{"optSizeU", "gallons US"},
+			{"optMaltU", "pounds"},
+			{"optHopsU", "ounces"},
+			{"optPostBoilVol", "5"},
+			{"optPreBoilVol", "6"},
+			{"optMash", "true"},
+
+			// carbonation:
+			{"optPrimingSugar", "dextrose"},
+			{"optSugarU", "grams"},
+			{"optBottleU", "ml"},
+			{"optCarbTempU", "F"},
+			{"optBottleSize", "341"},
+			{"optBottleTemp", "68"},
+			{"optServeTemp", "45"},
+			{"optVolsCO2", "2.4"},
+			{"optKegged", "true"},
+
+			// water:
+			{"optSourceWater", ""},
+			{"optTargetWater", ""},
+			
+			
+			// labels:
+			{"optBrewer", "Your Name"},
+			{"optStreet", "Your Street"},
+			{"optCity", "Your City"},
+			{"optProv", "Your State/Prov"},
+			{"optCode", "Your zip/postal code"},
+			{"optPhone", "Your Phone"},
+			{"optClub", "Your Club"},
+			{"optCountry", "Your Country"},
+			{"optEmail", "Your Email"},
+			
+			// appearance:
+			{"optMaltSortOrder", "By Name"},
+			{"optFirstScreen", ""},
+			
+			// time:
+			{"optBrewDayStart", "10:00"},
+			{"optPrepTime", "31"},
+			{"optSpargeTime", "60"},
+			{"optGetToBoilTime", "45"},
+			{"optChillTime", "45"},
+			{"optCleanTime", "120"},
+			{"optBoilTime", "60"},
+
+			// water use:
+			{"optKettleLoss", "1"},
+			{"optTrubLoss", "1"},
+			{"optMiscLoss", "1"},
+			
+			// cost:
+			{"optMiscCost", "5.0"},
+	};
+	
 	// default constructor, create options for a recipe
 	public Options(){
 		this("strangebrew");
@@ -36,7 +110,7 @@ public class Options {
 		type = t;
 		Properties d = new Properties();
 		setDefaults(d);
-		props = new Properties(d);
+		props = new Properties(d);		
 		loadProperties();
 	}
 	
@@ -71,7 +145,7 @@ public class Options {
 					  .toString()
 					  .substring(6);
 		  FileOutputStream out = new FileOutputStream(path + "\\" + type +".ini");
-		  props.store(out, "/* properties updated */");
+		  props.save(out, "/* properties updated */");
 		  }
 		catch (Exception e) {
 		  System.out.println(e);
@@ -82,7 +156,11 @@ public class Options {
 
 		if (type.equals("strangebrew")) {
 			
-			// calculations:
+			for (int i = 0; i<optionString.length; i++) {
+				d.put(optionString[i][0], optionString[i][1]);
+			}
+			
+/*			// calculations:
 			d.put("optIBUCalcMethod", "Tinseth");
 			d.put("optAlcCalcMethod", "Volume");
 			d.put("optEvapCalcMethod", "Constant");
@@ -154,7 +232,10 @@ public class Options {
 			// cost:
 			d.put("optMiscCost", "5.0");
 			
-		}
+			
+			*/
+			
+		} 
 		
 		else if (type.equals("mash")){
 			d.put("optMashVolU", "gallons US");

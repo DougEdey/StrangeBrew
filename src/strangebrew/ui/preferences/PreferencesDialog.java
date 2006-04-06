@@ -32,11 +32,8 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -44,10 +41,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import ca.strangebrew.Debug;
+
 import strangebrew.Options;
 import strangebrew.Quantity;
 import strangebrew.ui.swing.ComboModel;
-
 
 
 
@@ -75,22 +73,17 @@ import strangebrew.ui.swing.ComboModel;
  * the user.  If the dialog box is closed any other way then no changes will
  * be made to the Options object.
  */
-public class PreferencesDialog extends JDialog 
+public class PreferencesDialog extends javax.swing.JDialog implements ActionListener
 {
+
 	private boolean m_savePreferences = false;
 	private Options opts = null;
 
 	private JPanel pnlBrewer;
+
 	private JTextField txtBottleSize;
-	private ButtonGroup bgIBU;
-	private JRadioButton rbConstant;
-	private JRadioButton rbPercent;
-	private JPanel pnlEvaporation;
-	private JRadioButton rbEBC;
-	private JRadioButton rbSRM;
-	private JPanel pnlColourOptions;
-	private JButton btnCancel;
-	private JButton btnOK;
+
+	private JButton okButton;
 	private JPanel pnlButtons;
 	private JLabel jLabel8;
 	private JPanel pnlSortOrder;
@@ -117,9 +110,27 @@ public class PreferencesDialog extends JDialog
 	
 	// calcs panel:
 	private JPanel pnlHopsCalc;
-	private ButtonGroup bgHopsCalc;
+	private ButtonGroup bgHopsCalc = new ButtonGroup();
 	private JRadioButton rbTinseth;
 	private JRadioButton rbGaretz;
+	private JRadioButton rbRager;
+	
+	private JPanel pnlAlc;	
+	private ButtonGroup bgAlc = new ButtonGroup();
+	private JRadioButton rbABW;
+	private JRadioButton rbABV;
+
+	private JPanel pnlEvaporation;
+	private ButtonGroup bgEvap = new ButtonGroup();
+	private JRadioButton rbConstant;
+	private JRadioButton rbPercent;
+
+	private JPanel pnlColourOptions;
+	private ButtonGroup bgColour = new ButtonGroup();
+	private JRadioButton rbEBC;
+	private JRadioButton rbSRM;
+	
+	
 	private JPanel pnlHops;
 	private JTextField txtPellet;
 	private JLabel jLabelc2;
@@ -139,15 +150,13 @@ public class PreferencesDialog extends JDialog
 	private JTextField txtDryHopTime;
 	private JLabel jLabelc3;
 	private JPanel pnlHopTimes;
-	private JRadioButton rbABW;
-	private JRadioButton rbABV;
-	private JPanel pnlAlc;
+
 	private JLabel jLabelc1;
-	private JRadioButton rbHBU;
-	private JRadioButton rbRager;
+
 	private JPanel pnlDefaultDB = null;
 	private JTextField txtDBLocation = null;
 	private JButton btnBrowse = null;
+
 	
 
 	
@@ -171,20 +180,96 @@ public class PreferencesDialog extends JDialog
 
 	
 	private void setOptions(){
+		// cost tab:
 		txtOtherCost.setText(opts.getProperty("optMiscCost"));
 		txtBottleSize.setText(opts.getProperty("optBottleSize"));
 		cmbBottleSizeModel.addOrInsert(opts.getProperty("optBottleU"));
 		
+		// brewer tab:
+		txtBrewerName.setText(opts.getProperty("optBrewer"));
+		txtPhone.setText(opts.getProperty("optPhone"));
+		txtClubName.setText(opts.getProperty("optClub"));
+		txtEmail.setText(opts.getProperty("optEmail"));
 		
+		// calculations tab:
+		rbTinseth.setSelected(opts.getProperty("optIBUCalcMethod").equalsIgnoreCase("Tinseth"));
+		rbRager.setSelected(opts.getProperty("optIBUCalcMethod").equalsIgnoreCase("Rager"));
+		rbGaretz.setSelected(opts.getProperty("optIBUCalcMethod").equalsIgnoreCase("Garetz"));
+		
+		rbABV.setSelected((opts.getProperty("optAlcCalcMethod").equalsIgnoreCase("Volume")));
+		rbABW.setSelected((opts.getProperty("optAlcCalcMethod").equalsIgnoreCase("Weight")));
+		
+		rbSRM.setSelected((opts.getProperty("optColourMethod").equalsIgnoreCase("SRM")));
+		rbEBC.setSelected((opts.getProperty("optColourMethod").equalsIgnoreCase("EBC")));
+		
+		rbPercent.setSelected((opts.getProperty("optEvapCalcMethod").equalsIgnoreCase("Percent")));
+		rbConstant.setSelected((opts.getProperty("optEvapCalcMethod").equalsIgnoreCase("Constant")));
+		
+		txtPellet.setText(opts.getProperty("optPelletHopsPct"));
+		txtTinsethUtil.setText(opts.getProperty("optHopsUtil"));
+		txtDryHopTime.setText(opts.getProperty("optDryHopTime"));
+		txtFWHTime.setText(opts.getProperty("optFWHTime"));
+		txtMashHopTime.setText(opts.getProperty("optMashHopTime"));
+		txtLeftInKettle.setText(opts.getProperty("optKettleLoss"));
+		txtMiscLosses.setText(opts.getProperty("optMiscLoss"));
+		txtLostInTrub.setText(opts.getProperty("optTrubLoss"));
 	}
 	
+	private void saveOptions(){
+		// cost tab:
+		opts.setProperty("optMiscCost", txtOtherCost.getText());
+		opts.setProperty("optBottleSize", txtBottleSize.getText());
+		opts.setProperty("optBottleU", (String)cmbBottleSize.getSelectedItem());
+		
+		// Brewer tab:
+		opts.setProperty("optBrewer", txtBrewerName.getText());
+		opts.setProperty("optPhone", txtPhone.getText());
+		opts.setProperty("optClub", txtClubName.getText());
+		opts.setProperty("optEmail", txtEmail.getText());
+		
+		// calculations tab:
+		if (rbTinseth.isSelected())
+			opts.setProperty("optIBUCalcMethod", "Tinseth");
+		if (rbRager.isSelected())
+			opts.setProperty("optIBUCalcMethod", "Rager");
+		if (rbGaretz.isSelected())
+			opts.setProperty("optIBUCalcMethod", "Garetz");
+		
+		if (rbABV.isSelected())
+			opts.setProperty("optAlcCalcMethod", "Volume");
+		if (rbABW.isSelected())
+			opts.setProperty("optAlcCalcMethod", "Weight");
+		
+		if (rbSRM.isSelected())
+			opts.setProperty("optColourMethod", "SRM");
+		if (rbEBC.isSelected())
+			opts.setProperty("optColourMethod", "EBC");
+		
+		if (rbPercent.isSelected())
+			opts.setProperty("optEvapCalcMethod", "Percent");
+		if (rbConstant.isSelected())
+			opts.setProperty("optEvapCalcMethod", "Constant");
+		
+		opts.setProperty("optPelletHopsPct", txtPellet.getText());
+		opts.setProperty("optHopsUtil", txtTinsethUtil.getText());
+		opts.setProperty("optDryHopTime", txtDryHopTime.getText());
+		opts.setProperty("optFWHTime", txtFWHTime.getText());
+		opts.setProperty("optMashHopTime", txtMashHopTime.getText());
+		opts.setProperty("optKettleLoss", txtLeftInKettle.getText());
+		opts.setProperty("optMiscLoss", txtMiscLosses.getText());
+		opts.setProperty("optTrubLoss", txtLostInTrub.getText());
+
+		
+	}
 	
 	private void layoutUi()
 	{
 		
 		JPanel buttons = new JPanel();
-		JButton okButton = new JButton("OK");
+		okButton = new JButton("OK");
+		okButton.addActionListener(this);
 		JButton cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(this);
 		buttons.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		buttons.add(cancelButton);
 		buttons.add(okButton);
@@ -194,7 +279,236 @@ public class PreferencesDialog extends JDialog
 		{
 			jTabbedPane1 = new JTabbedPane();
 			getContentPane().add(jTabbedPane1, BorderLayout.CENTER);
-			getContentPane().add(getPnlButtons(), BorderLayout.SOUTH);
+			jTabbedPane1.setTabPlacement(JTabbedPane.LEFT);
+			{
+				pnlCalculations = new JPanel();
+				jTabbedPane1.addTab("Calculations", null, pnlCalculations, null);
+				{
+					try {
+						{
+							GridBagLayout thisLayout = new GridBagLayout();
+							thisLayout.rowWeights = new double[] { 0.1, 0.1, 0.1, 0.1 };
+							thisLayout.rowHeights = new int[] { 7, 7, 7, 7 };
+							thisLayout.columnWeights = new double[] { 0.1, 0.2 };
+							thisLayout.columnWidths = new int[] { 7, 7 };
+							pnlCalculations.setLayout(thisLayout);
+							pnlCalculations.setPreferredSize(new java.awt.Dimension(524, 372));
+							{
+								{
+									bgHopsCalc = new ButtonGroup();
+									{
+										pnlHops = new JPanel();
+										GridLayout pnlHopsLayout = new GridLayout(2, 2);
+										pnlHopsLayout.setColumns(2);
+										pnlHopsLayout.setHgap(5);
+										pnlHopsLayout.setVgap(5);
+										pnlHopsLayout.setRows(2);
+										pnlHops.setLayout(pnlHopsLayout);
+										pnlCalculations.add(pnlHops, new GridBagConstraints(
+											1,
+											0,
+											1,
+											1,
+											0.0,
+											0.0,
+											GridBagConstraints.NORTHWEST,
+											GridBagConstraints.HORIZONTAL,
+											new Insets(0, 0, 0, 0),
+											0,
+											0));
+										pnlHops
+											.setBorder(BorderFactory.createTitledBorder("Hops:"));
+										{
+											jLabelc1 = new JLabel();
+											pnlHops.add(jLabelc1);
+											jLabelc1.setText("Pellet Hops +%");
+										}
+										{
+											txtPellet = new JTextField();
+											pnlHops.add(txtPellet);
+											txtPellet.setPreferredSize(new java.awt.Dimension(
+												20,
+												20));
+										}
+										{
+											jLabelc2 = new JLabel();
+											pnlHops.add(jLabelc2);
+											jLabelc2.setText("Tinseth Utilization Factor");
+										}
+										{
+											txtTinsethUtil = new JTextField();
+											pnlHops.add(txtTinsethUtil);
+											txtTinsethUtil.setText("4.15");
+										}
+									}
+									{
+										pnlAlc = new JPanel();
+										BoxLayout pnlAlcLayout = new BoxLayout(
+											pnlAlc,
+											javax.swing.BoxLayout.Y_AXIS);
+										pnlAlc.setLayout(pnlAlcLayout);
+										pnlCalculations.add(pnlAlc, new GridBagConstraints(
+											0,
+											1,
+											1,
+											1,
+											0.0,
+											0.0,
+											GridBagConstraints.NORTH,
+											GridBagConstraints.HORIZONTAL,
+											new Insets(0, 0, 0, 0),
+											0,
+											0));
+										pnlAlc.setBorder(BorderFactory
+											.createTitledBorder("Alcohol By:"));
+										{
+											rbABV = new JRadioButton();
+											pnlAlc.add(rbABV);
+											bgAlc.add(rbABV);
+											rbABV.setText("Volume");
+										}
+										{
+											rbABW = new JRadioButton();
+											pnlAlc.add(rbABW);
+											bgAlc.add(rbABW);
+											rbABW.setText("Weight");
+										}
+									}
+									{
+										pnlHopTimes = new JPanel();
+										GridLayout pnlHopTimesLayout = new GridLayout(3, 2);
+										pnlHopTimesLayout.setColumns(2);
+										pnlHopTimesLayout.setHgap(5);
+										pnlHopTimesLayout.setVgap(5);
+										pnlHopTimesLayout.setRows(3);
+										pnlHopTimes.setLayout(pnlHopTimesLayout);
+										pnlCalculations.add(pnlHopTimes, new GridBagConstraints(
+											1,
+											1,
+											1,
+											1,
+											0.0,
+											0.0,
+											GridBagConstraints.NORTHWEST,
+											GridBagConstraints.HORIZONTAL,
+											new Insets(0, 0, 0, 0),
+											0,
+											0));
+										pnlHopTimes.setBorder(BorderFactory
+											.createTitledBorder("Hop Times:"));
+										{
+											jLabelc3 = new JLabel();
+											pnlHopTimes.add(jLabelc3);
+											jLabelc3.setText("Dry (min):");
+										}
+										{
+											txtDryHopTime = new JTextField();
+											pnlHopTimes.add(txtDryHopTime);
+											txtDryHopTime.setText("0.0");
+										}
+										{
+											jLabelc4 = new JLabel();
+											pnlHopTimes.add(jLabelc4);
+											jLabelc4.setText("FWH, boil minus (min):");
+										}
+										{
+											txtFWHTime = new JTextField();
+											pnlHopTimes.add(txtFWHTime);
+											txtFWHTime.setText("20.0");
+										}
+										{
+											jLabelc5 = new JLabel();
+											pnlHopTimes.add(jLabelc5);
+											jLabelc5.setText("Mash Hop (min):");
+										}
+										{
+											txtMashHopTime = new JTextField();
+											pnlHopTimes.add(txtMashHopTime);
+											txtMashHopTime.setText("2.0");
+										}
+									}
+								}
+								pnlHopsCalc = new JPanel();
+								BoxLayout pnlHopsCalcLayout = new BoxLayout(
+									pnlHopsCalc,
+									javax.swing.BoxLayout.Y_AXIS);
+								pnlHopsCalc.setLayout(pnlHopsCalcLayout);
+								pnlCalculations.add(pnlHopsCalc, new GridBagConstraints(
+									0,
+									0,
+									1,
+									1,
+									0.0,
+									0.0,
+									GridBagConstraints.NORTH,
+									GridBagConstraints.HORIZONTAL,
+									new Insets(0, 0, 0, 0),
+									0,
+									0));
+								pnlCalculations.add(getPnlWaterUsage(), new GridBagConstraints(
+									1,
+									2,
+									1,
+									2,
+									0.0,
+									0.0,
+									GridBagConstraints.NORTHWEST,
+									GridBagConstraints.HORIZONTAL,
+									new Insets(0, 0, 0, 0),
+									0,
+									0));
+								pnlCalculations.add(getPnlColourOptions(), new GridBagConstraints(
+									0,
+									2,
+									1,
+									1,
+									0.0,
+									0.0,
+									GridBagConstraints.NORTH,
+									GridBagConstraints.HORIZONTAL,
+									new Insets(0, 0, 0, 0),
+									0,
+									0));
+								pnlCalculations.add(getPnlEvaporation(), new GridBagConstraints(
+									0,
+									3,
+									1,
+									1,
+									0.0,
+									0.0,
+									GridBagConstraints.NORTH,
+									GridBagConstraints.HORIZONTAL,
+									new Insets(0, 0, 0, 0),
+									0,
+									0));
+								pnlHopsCalc.setPreferredSize(new java.awt.Dimension(117, 107));
+								pnlHopsCalc.setBorder(BorderFactory
+									.createTitledBorder("IBU Calc Method:"));
+								{
+									rbTinseth = new JRadioButton();
+									pnlHopsCalc.add(rbTinseth);
+									rbTinseth.setText("Tinseth");
+									bgHopsCalc.add(rbTinseth);
+								}
+								{
+									rbRager = new JRadioButton();
+									pnlHopsCalc.add(rbRager);
+									rbRager.setText("Rager");
+									bgHopsCalc.add(rbRager);
+								}
+								{
+									rbGaretz = new JRadioButton();
+									pnlHopsCalc.add(rbGaretz);
+									rbGaretz.setText("Garetz");
+									bgHopsCalc.add(rbGaretz);
+								}
+							}
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
 
 			{
 				costCarbPanel = new JPanel();
@@ -305,152 +619,6 @@ public class PreferencesDialog extends JDialog
 				}
 			}
 			{
-				pnlCalculations = new JPanel();
-				jTabbedPane1.addTab("Calculations", null, pnlCalculations, null);
-				{
-					try {
-						{
-							GridBagLayout thisLayout = new GridBagLayout();
-							thisLayout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1};
-							thisLayout.rowHeights = new int[] {7, 7, 7, 7};
-							thisLayout.columnWeights = new double[] {0.1, 0.2};
-							thisLayout.columnWidths = new int[] {7, 7};
-							pnlCalculations.setLayout(thisLayout);
-							pnlCalculations.setPreferredSize(new java.awt.Dimension(524, 372));
-							{
-								{
-									bgHopsCalc = new ButtonGroup();
-									{
-										pnlHops = new JPanel();
-										GridLayout pnlHopsLayout = new GridLayout(2, 2);
-										pnlHopsLayout.setColumns(2);
-										pnlHopsLayout.setHgap(5);
-										pnlHopsLayout.setVgap(5);
-										pnlHopsLayout.setRows(2);
-										pnlHops.setLayout(pnlHopsLayout);
-										pnlCalculations.add(pnlHops, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-										pnlHops.setBorder(BorderFactory.createTitledBorder("Hops:"));
-										{
-											jLabelc1 = new JLabel();
-											pnlHops.add(jLabelc1);
-											jLabelc1.setText("Pellet Hops +%");
-										}
-										{
-											txtPellet = new JTextField();
-											pnlHops.add(txtPellet);
-											txtPellet.setPreferredSize(new java.awt.Dimension(20, 20));
-										}
-										{
-											jLabelc2 = new JLabel();
-											pnlHops.add(jLabelc2);
-											jLabelc2.setText("Tinseth Utilization Factor");
-										}
-										{
-											txtTinsethUtil = new JTextField();
-											pnlHops.add(txtTinsethUtil);
-											txtTinsethUtil.setText("4.15");
-										}
-									}
-									{
-										pnlAlc = new JPanel();
-										BoxLayout pnlAlcLayout = new BoxLayout(
-											pnlAlc,
-											javax.swing.BoxLayout.Y_AXIS);
-										pnlAlc.setLayout(pnlAlcLayout);
-										pnlCalculations.add(pnlAlc, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-										pnlAlc.setBorder(BorderFactory.createTitledBorder("Alcohol By:"));
-										{
-											rbABV = new JRadioButton();
-											pnlAlc.add(rbABV);
-											rbABV.setText("Volume");
-										}
-										{
-											rbABW = new JRadioButton();
-											pnlAlc.add(rbABW);
-											rbABW.setText("Weight");
-										}
-									}
-									{
-										pnlHopTimes = new JPanel();
-										GridLayout pnlHopTimesLayout = new GridLayout(3, 2);
-										pnlHopTimesLayout.setColumns(2);
-										pnlHopTimesLayout.setHgap(5);
-										pnlHopTimesLayout.setVgap(5);
-										pnlHopTimesLayout.setRows(3);
-										pnlHopTimes.setLayout(pnlHopTimesLayout);
-										pnlCalculations.add(pnlHopTimes, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-										pnlHopTimes.setBorder(BorderFactory.createTitledBorder("Hop Times:"));
-										{
-											jLabelc3 = new JLabel();
-											pnlHopTimes.add(jLabelc3);
-											jLabelc3.setText("Dry (min):");
-										}
-										{
-											txtDryHopTime = new JTextField();
-											pnlHopTimes.add(txtDryHopTime);
-											txtDryHopTime.setText("0.0");
-										}
-										{
-											jLabelc4 = new JLabel();
-											pnlHopTimes.add(jLabelc4);
-											jLabelc4.setText("FWH, boil minus (min):");
-										}
-										{
-											txtFWHTime = new JTextField();
-											pnlHopTimes.add(txtFWHTime);
-											txtFWHTime.setText("20.0");
-										}
-										{
-											jLabelc5 = new JLabel();
-											pnlHopTimes.add(jLabelc5);
-											jLabelc5.setText("Mash Hop (min):");
-										}
-										{
-											txtMashHopTime = new JTextField();
-											pnlHopTimes.add(txtMashHopTime);
-											txtMashHopTime.setText("2.0");
-										}
-									}
-								}
-								pnlHopsCalc = new JPanel();
-								BoxLayout pnlHopsCalcLayout = new BoxLayout(
-									pnlHopsCalc,
-									javax.swing.BoxLayout.Y_AXIS);
-								pnlHopsCalc.setLayout(pnlHopsCalcLayout);
-								pnlCalculations.add(pnlHopsCalc, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-								pnlCalculations.add(getPnlWaterUsage(), new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-								pnlCalculations.add(getPnlColourOptions(), new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-								pnlCalculations.add(getPnlEvaporation(), new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-								pnlHopsCalc.setPreferredSize(new java.awt.Dimension(117, 107));
-								pnlHopsCalc.setBorder(BorderFactory.createTitledBorder("IBU Calc Method:"));
-								{
-									rbTinseth = new JRadioButton();
-									pnlHopsCalc.add(rbTinseth);
-									rbTinseth.setText("Tinseth");
-								}
-								{
-									rbRager = new JRadioButton();
-									pnlHopsCalc.add(rbRager);
-									rbRager.setText("Rager");
-								}
-								{
-									rbGaretz = new JRadioButton();
-									pnlHopsCalc.add(rbGaretz);
-									rbGaretz.setText("Garetz");
-								}
-								{
-									rbHBU = new JRadioButton();
-									pnlHopsCalc.add(rbHBU);
-									// rbHBU.setText("HBU");
-								}
-							}
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			{
 				pnlDatabase = new JPanel();
 				BorderLayout pnlDatabaseLayout = new BorderLayout();
 				pnlDatabase.setLayout(pnlDatabaseLayout);
@@ -529,43 +697,7 @@ public class PreferencesDialog extends JDialog
 		}
 		return jLabel8;
 	}
-	
-	private JPanel getPnlButtons() {
-		if (pnlButtons == null) {
-			pnlButtons = new JPanel();
-			FlowLayout pnlButtonsLayout = new FlowLayout();
-			pnlButtonsLayout.setAlignment(FlowLayout.RIGHT);
-			pnlButtons.setLayout(pnlButtonsLayout);
-			pnlButtons.add(getBtnCancel());
-			pnlButtons.add(getBtnOK());
-		}
-		return pnlButtons;
-	}
-	
-	private JButton getBtnOK() {
-		if (btnOK == null) {
-			btnOK = new JButton();
-			btnOK.setText("OK");
-			btnOK.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					System.out.print("button pressed \n");
-					setVisible(false);
-					dispose();
-				}
-			});
-		}
-		return btnOK;
-	}
-	
 
-	
-	private JButton getBtnCancel() {
-		if (btnCancel == null) {
-			btnCancel = new JButton();
-			btnCancel.setText("Cancel");
-		}
-		return btnCancel;
-	}
 	
 	private JPanel getPnlWaterUsage() {
 		if (pnlWaterUsage == null) {
@@ -645,6 +777,8 @@ public class PreferencesDialog extends JDialog
 			pnlColourOptions.setBorder(BorderFactory.createTitledBorder("Colour Method:"));
 			pnlColourOptions.add(getRbSRM());
 			pnlColourOptions.add(getRbEBC());
+			bgColour.add(rbSRM);
+			bgColour.add(rbEBC);
 		}
 		return pnlColourOptions;
 	}
@@ -675,6 +809,8 @@ public class PreferencesDialog extends JDialog
 			pnlEvaporation.setBorder(BorderFactory.createTitledBorder("Evaporation:"));
 			pnlEvaporation.add(getRbPercent());
 			pnlEvaporation.add(getRbConstant());
+			bgEvap.add(rbPercent);
+			bgEvap.add(rbConstant);
 		}
 		return pnlEvaporation;
 	}
@@ -695,12 +831,6 @@ public class PreferencesDialog extends JDialog
 		return rbConstant;
 	}
 	
-	private ButtonGroup getBgIBU() {
-		if (bgIBU == null) {
-			bgIBU = new ButtonGroup();
-		}
-		return bgIBU;
-	}
 	
 	private JTextField getTxtBottleSize() {
 		if (txtBottleSize == null) {
@@ -709,5 +839,16 @@ public class PreferencesDialog extends JDialog
 		}
 		return txtBottleSize;
 	}
+	
+	
+	//	Make the button do the same thing as the default close operation
+	// (DISPOSE_ON_CLOSE).
+	public void actionPerformed(ActionEvent e) {
+		saveOptions();
+		opts.saveProperties();
+		setVisible(false);
+		dispose();
+	}
+	
 
 }

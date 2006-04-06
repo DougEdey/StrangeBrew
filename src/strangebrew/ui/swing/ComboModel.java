@@ -17,7 +17,7 @@ import strangebrew.Hop;
 import strangebrew.Style;
 import strangebrew.Yeast;
 
-class ComboModel extends AbstractListModel implements ComboBoxModel {
+public class ComboModel extends AbstractListModel implements ComboBoxModel {
 	
 	private final static boolean DEBUG = false;
 
@@ -56,11 +56,12 @@ class ComboModel extends AbstractListModel implements ComboBoxModel {
 			i++;
 		}
 		
-		// if it's not found, add it to the list, otherwise, set the found
-		// index to the selected index
+		// if it's not found, add it to the list & select it, 
+		// otherwise, set the found index to the selected index
 		
 		if (!found) {
 			list.add(o);
+			selected = o;
 		}
 		
 		else selected = list.get(i-1);

@@ -19,24 +19,26 @@
 
 package strangebrew.ui.swing;
 
-import javax.swing.JTabbedPane;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.BoxLayout;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import java.awt.FlowLayout;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.BufferedReader;
 
-import javax.swing.JFrame;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+
+import ca.strangebrew.Debug;
 
 
 public class AboutDialog extends javax.swing.JDialog implements ActionListener {
@@ -174,17 +176,23 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 				jPanel1Layout.setAlignment(FlowLayout.RIGHT);
 				buttonPanel.setLayout(jPanel1Layout);
 				this.getContentPane().add(buttonPanel);				
-				{
-					okButton = new JButton();
-					buttonPanel.add(okButton);
-					okButton.setText("OK");
-					okButton.addActionListener(this);
-				}
+				buttonPanel.add(getOkButton());				
 			}
 			setSize(500, 350);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private JButton getOkButton () {
+		if (okButton == null){
+		okButton = new JButton();
+		buttonPanel.add(okButton);
+		okButton.setText("OK");
+		okButton.addActionListener(this);
+		
+		}
+		return okButton;
 	}
 	
 //	Make the button do the same thing as the default close operation

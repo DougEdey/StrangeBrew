@@ -1,441 +1,108 @@
-<?xml version="1.0" encoding="ISO8859-1" ?>
-<?xml-stylesheet type="text/xsl" href="strangebrew18.xsl" ?>
- <STRANGEBREWRECIPE version = "1.8">
-<DETAILS>
-   <NAME type="1">
-     30A DunklePorter
-   </NAME>
-   <NOTES type="16">
-     
-   </NOTES>
-   <EFFICIENCY type="6">
-     76.0
-   </EFFICIENCY>
-   <OG type="6">
-     1.072
-   </OG>
-   <FG type="6">
-     1.017
-   </FG>
-   <STYLE type="1">
-     Schwarzbier
-   </STYLE>
-   <MASH type="5">
-     True
-   </MASH>
-   <LOV type="6">
-     36.4
-   </LOV>
-   <IBU type="6">
-     30.5
-   </IBU>
-   <ALC type="6">
-     7.22
-   </ALC>
-   <BOIL_TIME type="6">
-     75
-   </BOIL_TIME>
-   <PRESIZE type="6">
-     12.9
-   </PRESIZE>
-   <SIZE type="6">
-     11
-   </SIZE>
-   <SIZE_UNITS type="1">
-     gallons US
-   </SIZE_UNITS>
-   <MALT_UNITS type="1">
-     lb
-   </MALT_UNITS>
-   <HOPS_UNITS type="1">
-     oz
-   </HOPS_UNITS>
-   <HOPS_OZS type="6">
-     7.00
-   </HOPS_OZS>
-   <YEAST type="1">
-     Safale S-04
-   </YEAST>
-   <MALT_LBS type="6">
-     28.00
-   </MALT_LBS>
-   <INDEX type="14">
-     171
-   </INDEX>
-   <RECIPE_DATE type="11">
-     10/9/2004
-   </RECIPE_DATE>
-   <ATTENUATION type="6">
-     76.0
-   </ATTENUATION>
-   <MISC_COST type="6">
-     $1.00
-   </MISC_COST>
-   <GRAIN_TMP type="6">
-     65
-   </GRAIN_TMP>
-   <BOTTLE_SIZE type="6">
-     .341
-   </BOTTLE_SIZE>
-   <SUGAR_TYPE type="1">
-     dextrose
-   </SUGAR_TYPE>
-   <KEGGED type="5">
-     False
-   </KEGGED>
-   <SERV_TEMP type="6">
-     38
-   </SERV_TEMP>
-   <BOTTLE_TEMP type="6">
-     68
-   </BOTTLE_TEMP>
-   <VOLS_CO type="6">
-     2.4
-   </VOLS_CO>
-   <MISC_INGR_COST type="6">
-     
-   </MISC_INGR_COST>
-   <YEAST_COST type="6">
-     $0.75
-   </YEAST_COST>
-   <MASH_LBS type="6">
-     28.00
-   </MASH_LBS>
-   <MASH_RATIO type="6">
-     1.25
-   </MASH_RATIO>
-   <MASH_RATIO_U type="1">
-     qt/lb
-   </MASH_RATIO_U>
-   <MASH_TMP_U type="1">
-     F
-   </MASH_TMP_U>
-   <MASH_VOL_U type="1">
-     gallons US
-   </MASH_VOL_U>
-   <CARB_TEMP_U type="1">
-     F
-   </CARB_TEMP_U>
-   <BOTTLE_U type="1">
-     
-   </BOTTLE_U>
-   <SUGAR_U type="1">
-     
-   </SUGAR_U>
-   <BREWED type="5">
-     False
-   </BREWED>
-   <DATEBREWED type="9">
-     
-   </DATEBREWED>
-   <WL_TRUB type="6">
-     1
-   </WL_TRUB>
-   <WL_KETTLE type="6">
-     1
-   </WL_KETTLE>
-   <BREWER type="1">
-     Drew
-   </BREWER>
-   <DescrLookup type="1">
-     A well-known, bottom
-   </DescrLookup>
-   <LOCKED type="5">
-     False
-   </LOCKED>
-   <MASH_TIME type="6">
-     120
-   </MASH_TIME>
-   <FINAL_BEER_VOL type="6">
-     
-   </FINAL_BEER_VOL>
-   <FOLDER type="1">
-     
-   </FOLDER>
-   <STARTTIME type="10">
-     8:00:00 AM
-   </STARTTIME>
-   <TIMETOSPARGE type="3">
-     61
-   </TIMETOSPARGE>
-   <TIMETOBOIL type="3">
-     31
-   </TIMETOBOIL>
-   <TIMETOCHILL type="3">
-     31
-   </TIMETOCHILL>
-   <TIMETOCLEAN type="3">
-     16
-   </TIMETOCLEAN>
-   <TIMETOPREP type="3">
-     31
-   </TIMETOPREP>
-   <DILUTED type="5">
-     True
-   </DILUTED>
-   <DILUTE_VOL type="6">
-     4.00
-   </DILUTE_VOL>
-   <DILUTE_TOTAL type="6">
-     15.00
-   </DILUTE_TOTAL>
-   <MASH_TUNLOSS_TEMP type="6">
-     3
-   </MASH_TUNLOSS_TEMP>
-   <WL_MISC type="6">
-     1
-   </WL_MISC>
-   <EVAP type="6">
-     1.5
-   </EVAP>
-   <BATCHES type="3">
-     1
-   </BATCHES>
-</DETAILS>
- <FERMENTABLES>
-<ITEM>
-   <MALT type="1">
-     British Carastan
-   </MALT>
-   <AMOUNT type="6">
-     2
-   </AMOUNT>
-   <RECIPE type="2">
-     171
-   </RECIPE>
-   <POINTS type="6">
-     1.035
-   </POINTS>
-   <COSTLB type="6">
-     $0.90
-   </COSTLB>
-   <UNITS type="1">
-     lb
-   </UNITS>
-   <LOV type="6">
-     34
-   </LOV>
-   <DescrLookup type="1">
-     British Carastan: Also known as CaraStan, use 5 to 20% of English Crystal to add color and a full, toffee/sweet flavor to Bitters, Pale Ales and Porters.
-   </DescrLookup>
-</ITEM>
-<ITEM>
-   <MALT type="1">
-     German Carafa Chocolate
-   </MALT>
-   <AMOUNT type="6">
-     2
-   </AMOUNT>
-   <RECIPE type="2">
-     171
-   </RECIPE>
-   <POINTS type="6">
-     1.030
-   </POINTS>
-   <COSTLB type="6">
-     $0.90
-   </COSTLB>
-   <UNITS type="1">
-     lb
-   </UNITS>
-   <LOV type="6">
-     525
-   </LOV>
-   <DescrLookup type="1">
-     German Carafa Chocolate - very smooth version of chocolate malt.
-   </DescrLookup>
-</ITEM>
-<ITEM>
-   <MALT type="1">
-     German Pilsener
-   </MALT>
-   <AMOUNT type="6">
-     24
-   </AMOUNT>
-   <RECIPE type="2">
-     171
-   </RECIPE>
-   <POINTS type="6">
-     1.038
-   </POINTS>
-   <COSTLB type="6">
-     $0.90
-   </COSTLB>
-   <UNITS type="1">
-     lb
-   </UNITS>
-   <LOV type="6">
-     1.6
-   </LOV>
-   <DescrLookup type="1">
-     German Pilsener - usually a moravian malt, very light in colour, perfect for decoction mashes and as a base for lighter lagers.
-   </DescrLookup>
-</ITEM>
- </FERMENTABLES>
- <HOPS>
-<ITEM>
-   <HOP type="1">
-     Saaz
-   </HOP>
-   <RECIPE type="2">
-     171
-   </RECIPE>
-   <AMOUNT type="6">
-     5
-   </AMOUNT>
-   <ADDORDER type="3">
-     2
-   </ADDORDER>
-   <TIME type="6">
-     60
-   </TIME>
-   <UNITS type="1">
-     oz
-   </UNITS>
-   <FORM type="1">
-     Leaf
-   </FORM>
-   <ALPHA type="6">
-     3.5
-   </ALPHA>
-   <COSTOZ type="6">
-     $1.25
-   </COSTOZ>
-   <ADD type="1">
-     Boil
-   </ADD>
-   <DescrLookup type="1">
-     Saaz: Having mild bittering power, it's the spicy, earthy, flavor and aroma that makes Saaz one of the worlds most prized Pilsner and Lager hops.
-   </DescrLookup>
-   <GUID type="14">
-     462
-   </GUID>
-</ITEM>
-<ITEM>
-   <HOP type="1">
-     Saaz
-   </HOP>
-   <RECIPE type="2">
-     171
-   </RECIPE>
-   <AMOUNT type="6">
-     2
-   </AMOUNT>
-   <ADDORDER type="3">
-     2
-   </ADDORDER>
-   <TIME type="6">
-     30
-   </TIME>
-   <UNITS type="1">
-     oz
-   </UNITS>
-   <FORM type="1">
-     Leaf
-   </FORM>
-   <ALPHA type="6">
-     3.5
-   </ALPHA>
-   <COSTOZ type="6">
-     $1.25
-   </COSTOZ>
-   <ADD type="1">
-     Boil
-   </ADD>
-   <DescrLookup type="1">
-     Saaz: Having mild bittering power, it's the spicy, earthy, flavor and aroma that makes Saaz one of the worlds most prized Pilsner and Lager hops.
-   </DescrLookup>
-   <GUID type="14">
-     463
-   </GUID>
-</ITEM>
- </HOPS>
- <MASH>
-<ITEM>
-   <RECIPE type="2">
-     171
-   </RECIPE>
-   <TYPE type="1">
-     alpha
-   </TYPE>
-   <DISPL_TEMP type="6">
-     155.0
-   </DISPL_TEMP>
-   <TEMP type="6">
-     155.0
-   </TEMP>
-   <METHOD type="1">
-     infusion
-   </METHOD>
-   <MIN type="3">
-     60
-   </MIN>
-   <DIRECTIONS type="16">
-     Mash in with 8.8 gallons US of water at 172.0 F
-   </DIRECTIONS>
-   <WATER_EQV type="6">
-     46.8
-   </WATER_EQV>
-   <WATER_QTS type="6">
-     35.0
-   </WATER_QTS>
-   <DECOCT_QTS type="6">
-     0.0
-   </DECOCT_QTS>
-   <END_TEMP type="6">
-     155.0
-   </END_TEMP>
-   <RAMP_MIN type="3">
-     0
-   </RAMP_MIN>
-   <DISPL_END_TEMP type="6">
-     155.0
-   </DISPL_END_TEMP>
-</ITEM>
-<ITEM>
-   <RECIPE type="2">
-     171
-   </RECIPE>
-   <TYPE type="1">
-     mashout
-   </TYPE>
-   <DISPL_TEMP type="6">
-     168.0
-   </DISPL_TEMP>
-   <TEMP type="6">
-     168.0
-   </TEMP>
-   <METHOD type="1">
-     infusion
-   </METHOD>
-   <MIN type="3">
-     60
-   </MIN>
-   <DIRECTIONS type="16">
-     Add 3.0 gallons US of water at 212.0 F
-   </DIRECTIONS>
-   <WATER_EQV type="6">
-     40.4
-   </WATER_EQV>
-   <WATER_QTS type="6">
-     11.9
-   </WATER_QTS>
-   <DECOCT_QTS type="6">
-     0.0
-   </DECOCT_QTS>
-   <END_TEMP type="6">
-     168.0
-   </END_TEMP>
-   <RAMP_MIN type="3">
-     0
-   </RAMP_MIN>
-   <DISPL_END_TEMP type="6">
-     168.0
-   </DISPL_END_TEMP>
-</ITEM>
- </MASH>
- <MISC>
- </MISC>
- <NOTES>
- </NOTES>
- </STRANGEBREWRECIPE>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "J1.0">
+  <DETAILS>
+  <NAME>30A DunklePorter</NAME>
+  <BREWER>Drew</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>76.0</EFFICIENCY>
+  <OG>1.072</OG>
+  <FG>1.017</FG>
+  <STYLE>Schwarzbier</STYLE>
+  <MASH>true</MASH>
+  <LOV>36.4</LOV>
+  <IBU>30.8</IBU>
+  <ALC>5.6</ALC>
+  <BOIL_TIME>75</BOIL_TIME>
+  <PRESIZE>12.875</PRESIZE>
+  <SIZE>11.0</SIZE>
+  <SIZE_UNITS>gallons US</SIZE_UNITS>
+  <MALT_UNITS>lb</MALT_UNITS>
+  <HOPS_UNITS>oz</HOPS_UNITS>
+  <YEAST>Safale S-04</YEAST>
+  <RECIPE_DATE>10/09/2004</RECIPE_DATE>
+  <ATTENUATION>76.0</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Weight</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>SRM</COLOUR_METHOD>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <ITEM>
+      <MALT>British Carastan</MALT>
+      <AMOUNT>2.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.035</POINTS>
+      <LOV>34.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <DESCRIPTION>British Carastan: Also known as CaraStan, use 5 to 20% of English Crystal to add color and a full, toffee/sweet flavor to Bitters, Pale Ales and Porters.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>German Carafa Chocolate</MALT>
+      <AMOUNT>2.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.03</POINTS>
+      <LOV>525.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <DESCRIPTION>German Carafa Chocolate - very smooth version of chocolate malt.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>German Pilsener</MALT>
+      <AMOUNT>24.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.038</POINTS>
+      <LOV>1.6</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <DESCRIPTION>German Pilsener - usually a moravian malt, very light in colour, perfect for decoction mashes and as a base for lighter lagers.</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <ITEM>
+      <HOP>Saaz</HOP>
+      <AMOUNT>2.0</AMOUNT>
+      <TIME>30</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>3.5</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Saaz: Having mild bittering power, it's the spicy, earthy, flavor and aroma that makes Saaz one of the worlds most prized Pilsner and Lager hops.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Saaz</HOP>
+      <AMOUNT>5.0</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>3.5</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Saaz: Having mild bittering power, it's the spicy, earthy, flavor and aroma that makes Saaz one of the worlds most prized Pilsner and Lager hops.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+  </MISC>
+  <MASH>
+    <ITEM>
+      <TYPE>alpha</TYPE>
+      <TEMP>155.0</TEMP>
+      <END_TEMP>155.0</END_TEMP>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Mash in with 8.8 gallons US of water at 168.4 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>mashout</TYPE>
+      <TEMP>168.0</TEMP>
+      <END_TEMP>168.0</END_TEMP>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Add 3.0 gallons US of water at 212.0 F</DIRECTIONS>
+    </ITEM>
+  </MASH>
+  <NOTES>
+  </NOTES>
+</STRANGEBREWRECIPE>

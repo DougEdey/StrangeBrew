@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.36 2006/03/27 18:34:43 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.37 2006/04/06 17:46:21 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -98,6 +98,7 @@ import strangebrew.Style;
 import strangebrew.XmlTransformer;
 import strangebrew.Yeast;
 import strangebrew.ui.preferences.PreferencesDialog;
+
 
 public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener {
 
