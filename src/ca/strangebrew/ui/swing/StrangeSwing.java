@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.1 2006/04/07 13:59:14 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.2 2006/04/07 17:59:32 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -895,13 +895,15 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 										Fermentable f = (Fermentable) cmbMaltModel
 												.getSelectedItem();
 										int i = maltTable.getSelectedRow();
-										if (myRecipe != null && i != -1) {
+										if (myRecipe != null && i != -1 ) {
 											Fermentable f2 = myRecipe.getFermentable(i);
-											f2.setLov(f.getLov());
-											f2.setPppg(f.getPppg());
-											f2.setDescription(f.getDescription());
-											f2.setMashed(f.getMashed());
-											f2.setSteep(f.getSteep());
+											if (f2 != null){
+												f2.setLov(f.getLov());
+												f2.setPppg(f.getPppg());
+												f2.setDescription(f.getDescription());
+												f2.setMashed(f.getMashed());
+												f2.setSteep(f.getSteep());
+											}
 										}
 
 									}
@@ -919,9 +921,11 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 										int i = maltTable.getSelectedRow();
 										if (myRecipe != null && i != -1) {
 											Fermentable f2 = myRecipe.getFermentable(i);
-											f2.setUnitsFull(u);
-											myRecipe.calcMaltTotals();
-											displayRecipe();
+											if (f2 != null){
+												f2.setUnitsFull(u);
+												myRecipe.calcMaltTotals();
+												displayRecipe();
+											}
 										}
 
 									}
