@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.1 2006/04/07 13:59:14 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.2 2006/04/07 17:59:13 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -235,7 +235,12 @@ public class Recipe {
 	
 	// fermentable get methods
 	// public ArrayList getFermentablesList() { return fermentables; }
-	public Fermentable getFermentable(int i) { return (Fermentable)fermentables.get(i); }
+	public Fermentable getFermentable(int i) { 
+		if (i < fermentables.size())
+			return (Fermentable)fermentables.get(i); 
+		else
+			return null;
+		}
 	public int getMaltListSize() { return fermentables.size(); }
 	public String getMaltName(int i){ return ((Fermentable)fermentables.get(i)).getName(); }
 	public String getMaltUnits(int i){ return ((Fermentable)fermentables.get(i)).getUnits(); }
@@ -366,7 +371,7 @@ public class Recipe {
 		calcMaltTotals();
 		}
 	public void delMalt(int i) {
-		if (!fermentables.isEmpty()){
+		if (!fermentables.isEmpty() && i > -1){
 			fermentables.remove(i);
 			calcMaltTotals();
 		}

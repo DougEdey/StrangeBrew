@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.1 2006/04/07 13:59:14 andrew_avis Exp $
+ * $Id: Options.java,v 1.2 2006/04/07 17:59:13 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -116,6 +116,19 @@ public class Options {
 	}
 	
 	private String getPath(){
+		
+		
+		String path = "";
+		String slash = System.getProperty("file.separator");
+		try {
+			path = new File(".").getCanonicalPath();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		Debug.print(path);
+		
+		/*
 		String path =
 			  this.getClass()
 				  .getProtectionDomain()
@@ -128,6 +141,8 @@ public class Options {
 		int i = path.indexOf("StrangeBrew_fat.jar");
 		if (i>0)
 			path = path.substring(4, i);
+		*/
+		
 		
 		return path;
 	}
