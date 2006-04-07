@@ -1,5 +1,6 @@
 README
 StrangeBrew Java - Beta 1
+(c)2000-2006 Drew Avis - drew.avis@gmail.com
 
 Thank you for downloading and trying StrangeBrew Java.
 
@@ -34,19 +35,7 @@ What's new in:
 Beta 1:
 - New dilution panel to manage wort dilution
 - New style panel to check style conformance
-
-Alpha 4:
-- Mash Manager is now fully functional (except for mash tun thermal mass)
-- Recipe import is fixed
-- Find recipe dialog lets you search for a particular recipe in a directory
-- File save now works
-- File information appears at the bottom of the main screen
-- You can now set the recipe's IBU, alcohol, and colour calculation methods
-
-Alpha 3:
-- misc ingredient tab
-- recipe notes tab
-- funky splash screen
+- New Preferences dialog to set defaults and preferences
 
 
 Implemented Features:
@@ -59,12 +48,15 @@ Implemented Features:
 - recipe dilution
 
 Soon-to-be Implemented Features:
-- set preferences / defaults
 - edit ingredient databases
 - track costs
 - water usage
+- mash tun thermal mass
+- recipe resize / unit conversion
+- evaporation calculated as a %
 
-When-we-get-to-it Features:
+
+StrangeBrew Java Pro Features:
 - water profiling
 - carbonation
 - refractometer utilities
@@ -93,7 +85,7 @@ Parts of this program are copyright by:
         (Splash and SplashWindow classes)
 
 License:
-        Copyright (C) 2005  Drew Avis
+        Copyright (C) 2006  Drew Avis
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
