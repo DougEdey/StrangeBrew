@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Collections;
 
 /**
- * $Id: Mash.java,v 1.1 2006/04/07 13:59:14 andrew_avis Exp $
+ * $Id: Mash.java,v 1.2 2006/04/10 20:29:14 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -32,6 +32,9 @@ public class Mash {
 	private double totalWaterQTS;
 	private double chillShrink;
 	
+	// owner recipe:
+	private Recipe myRecipe;
+	
 	
 	// steps:
 	private ArrayList steps = new ArrayList();
@@ -39,7 +42,7 @@ public class Mash {
 	// format:
 	public DecimalFormat df1 = new DecimalFormat("#####0.0");
 	
-	public Mash(){
+	public Mash(Recipe r){
 
 		Options opts = new Options("mash");
 		 mashRatio = opts.getDProperty("optMashRatio");
@@ -47,6 +50,7 @@ public class Mash {
 		 tempUnits = opts.getProperty("optMashTempU");
 		 volUnits = opts.getProperty("optMashVolU");
 		 grainTemp = opts.getDProperty("optGrainTemp");
+		 myRecipe = r;
 	}
 
 	public class MashStep {
@@ -206,19 +210,50 @@ public class Mash {
 	}
 
 	
+	/**
+	 * 
+	 * @param val Value to convert to a string
+	 * @return Val converted to the mash vol, formated to 1 decimal
+	 */
+	private String getVolConverted(double val){
+		Quantity q = new Quantity();
+		q.setQuantity(null, "qt", val);
+		double d = q.getValueAs(volUnits);
+		String s = df1.format(d).toString();
+		return s;
+	}
+		
 	// get methods:
 	public String getMashVolUnits(){ return volUnits; }
 	public String getMashTempUnits(){ return tempUnits; }
 	public int getMashTotalTime(){ return totalTime; }
 	public double getGrainTemp() { return grainTemp; }
+	
+	/**
+	 * 
+	 * @return A string, which is the total converted to the mash units
+	 * + the units.
+	 */
 	public String getMashTotalVol() {
 		Quantity q = new Quantity();
 		q.setQuantity(null, "qt", volQts);
 		double d = q.getValueAs(volUnits);
 		String s = df1.format(d).toString() + " " + volUnits;
-		return s;
-	
+		return s;	
+	}	
+	public String getAbsorbedVol() {
+		return getVolConverted(absorbedQTS);
 	}
+	public String getSpargeVol() {
+		return getVolConverted(spargeTotalQTS);
+	}
+	public String getTotalWater() {
+		return getVolConverted(totalWaterQTS);
+	}
+	public String getChillShrink() {
+		return getVolConverted(chillShrink);
+	}
+	
 	
 	
 	// mash step methods:
@@ -453,9 +488,10 @@ public class Mash {
 
 		// water use stats:
 		absorbedQTS = maltWeightLbs * 0.55; // figure from HBD
-		// spargeTotalQTS = (r.getPreBoilVol("qt")) - (mashWaterQTS - absorbedQTS);
+		
+		spargeTotalQTS = (myRecipe.getPreBoilVol("qt")) - (mashWaterQTS - absorbedQTS);
 		totalWaterQTS = spargeTotalQTS + mashWaterQTS;
-		// chillShrink = r.getPostBoilVol("gal") * 0.03;
+		chillShrink = myRecipe.getPostBoilVol("gal") * 0.03;
 		
 		// TODO: sparge stuff should get figured here:		 
 

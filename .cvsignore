@@ -3,3 +3,7 @@ bin
 .fatjar
 StrangeBrew_fat.jar
 settings.fatjar
+.externalToolBuilders
+.gcjbuilder
+*.zip
+strangebrew.ini

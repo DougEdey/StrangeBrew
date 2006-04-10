@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.2 2006/04/07 17:59:13 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.3 2006/04/10 20:29:14 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -57,7 +57,7 @@ public class Recipe {
 	private Style style = new Style();
 	private Yeast yeast = new Yeast();
 	
-	public Mash mash = new Mash();	
+	public Mash mash = new Mash(this);	
 	
 	// dilution:
 	public DilutedRecipe dilution;

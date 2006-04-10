@@ -1,5 +1,5 @@
 README
-StrangeBrew Java - Beta 1
+StrangeBrew Java - Beta 0.2
 (c)2000-2006 Drew Avis - drew.avis@gmail.com
 
 Thank you for downloading and trying StrangeBrew Java.
@@ -23,7 +23,8 @@ what it is.
 
 You require a Java Runtime Environment (JRE) on your system to run
 StrangeBrew.  It should run with versions 1.4 and up; I'm using
-1.5.02. (See http://java.sun.com/j2se/1.5.0/index.jsp).
+1.5.02. (See http://java.sun.com/j2se/1.5.0/index.jsp).  StrangeBrew has
+been tested and runs on Linux, MacOS-X, and Windows.
 
 Bugs:
 We're using the Sourceforge tracking feature to track bugs.  Please go to 
@@ -64,6 +65,9 @@ StrangeBrew Java Pro Features:
 - brewday timeline generation
 - brew sessions (vs recipes)
 
+(StrangeBrew Java will be released under a "dual-license": a free 
+Open Source version and a commercial "Pro" version that will 
+include some additional functionality.)
 
 Comments or questions should be directed to drew.avis@gmail.com.
 
