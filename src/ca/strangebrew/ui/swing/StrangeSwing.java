@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.2 2006/04/07 17:59:32 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.3 2006/04/11 17:22:33 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -320,29 +320,29 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		txtPreBoil.setValue(new Double(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));
 		lblSizeUnits.setText(myRecipe.getVolUnits());
 		postBoilText.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
-		boilMinText.setText(myRecipe.df0.format(myRecipe.getBoilMinutes()));
-		evapText.setText(myRecipe.df1.format(myRecipe.getEvap()));
+		boilMinText.setText(SBStringUtils.df0.format(myRecipe.getBoilMinutes()));
+		evapText.setText(SBStringUtils.df1.format(myRecipe.getEvap()));
 		spnEffic.setValue(new Double(myRecipe.getEfficiency()));
 		spnAtten.setValue(new Double(myRecipe.getAttenuation()));
 		spnOG.setValue(new Double(myRecipe.getEstOg()));
 		spnFG.setValue(new Double(myRecipe.getEstFg()));
 		txtComments.setText(myRecipe.getComments());
-		lblIBUvalue.setText(myRecipe.df1.format(myRecipe.getIbu()));
-		lblColourValue.setText(myRecipe.df1.format(myRecipe.getSrm()));
-		lblAlcValue.setText(myRecipe.df1.format(myRecipe.getAlcohol()));
+		lblIBUvalue.setText(SBStringUtils.df1.format(myRecipe.getIbu()));
+		lblColourValue.setText(SBStringUtils.df1.format(myRecipe.getSrm()));
+		lblAlcValue.setText(SBStringUtils.df1.format(myRecipe.getAlcohol()));
 		txtDate.setText(dateFormat1.format(myRecipe.getCreated().getTime()));
                 Costs = myNF.format(myRecipe.getTotalMaltCost());
 		tblMaltTotalsModel.setDataVector(new String[][]{{"Totals:",
-				"" + myRecipe.df1.format(myRecipe.getTotalMaltLbs()), myRecipe.getMaltUnits(),
-				"" + myRecipe.df3.format(myRecipe.getEstOg()),
-				"" + myRecipe.df1.format(myRecipe.getSrm()),
+				"" + SBStringUtils.df1.format(myRecipe.getTotalMaltLbs()), myRecipe.getMaltUnits(),
+				"" + SBStringUtils.df3.format(myRecipe.getEstOg()),
+				"" + SBStringUtils.df1.format(myRecipe.getSrm()),
 				Costs, "100"}}, new String[]{"",
 				"", "", "", "", "", ""});
 
                 Costs = myNF.format(myRecipe.getTotalHopsCost());
 		tblHopsTotalsModel.setDataVector(new String[][]{{"Totals:", "", "",
-				"" + myRecipe.df1.format(myRecipe.getTotalHopsOz()), myRecipe.getHopUnits(), "",
-				"", "" + myRecipe.df1.format(myRecipe.getIbu()),
+				"" + SBStringUtils.df1.format(myRecipe.getTotalHopsOz()), myRecipe.getHopUnits(), "",
+				"", "" + SBStringUtils.df1.format(myRecipe.getIbu()),
 				Costs}}, new String[]{"", "", "",
 				"", "", "", "", "", ""});
 

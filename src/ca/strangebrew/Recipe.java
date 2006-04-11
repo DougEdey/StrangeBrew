@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.3 2006/04/10 20:29:14 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.4 2006/04/11 17:22:32 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -55,9 +55,16 @@ public class Recipe {
 	private Quantity postBoilVol = new Quantity();
 	private double srm;
 	private Style style = new Style();
-	private Yeast yeast = new Yeast();
+	private Yeast yeast = new Yeast();	
+	public Mash mash = new Mash();
 	
-	public Mash mash = new Mash(this);	
+	// water use:
+	private double chillShrinkQTS;
+	private double kettleLoss;
+	private double trubLoss;
+	private double miscLoss;
+	private double spargeQTS;
+	private double totalWaterQTS;
 	
 	// dilution:
 	public DilutedRecipe dilution;
@@ -87,12 +94,6 @@ public class Recipe {
 	// notes
 	private ArrayList notes = new ArrayList();
 	
-	// formats
-	public DecimalFormat df1 = new DecimalFormat("####.0");
-	public DecimalFormat df2 = new DecimalFormat("#.00");
-	public DecimalFormat df3 = new DecimalFormat("0.000");
-    public DecimalFormat df0 = new DecimalFormat("#0");
-
 	// default constuctor
 	public Recipe() {
 		
@@ -114,6 +115,10 @@ public class Recipe {
 		alcMethod = opts.getProperty("optAlcCalcMethod");
 		colourMethod = opts.getProperty("optColourMethod");
 		
+		kettleLoss = opts.getDProperty("optKettleLoss");
+		trubLoss = opts.getDProperty("optTrubLoss");
+		miscLoss = opts.getDProperty("optMiscLoss");
+		
 		dilution = new DilutedRecipe();
 
 	}
@@ -131,10 +136,12 @@ public class Recipe {
 	public double getEstOg(){ return estOg; }	
 	public double getEstFg(){ return estFg; }
 	public double getEvap(){ return evap; }
+	public double getKettleLoss() { return kettleLoss; }
 	public Mash getMash() { return mash; }	
 	public double getIbu(){ return ibu; }	
 	public String getIBUMethod(){ return ibuCalcMethod; }
 	public String getMaltUnits(){ return maltUnits; }
+	public double getMiscLoss() { return miscLoss; }
 	public String getName(){ return name; }		
 	public double getPreBoilVol(String s){ return preBoilVol.getValueAs(s); }
 	public double getPostBoilVol(String s){ return postBoilVol.getValueAs(s); }
@@ -151,9 +158,29 @@ public class Recipe {
 		return q.getValueAs(mash.getMashVolUnits());
 	}
 	public double getTotalMaltLbs(){ return totalMaltLbs; }
+	public double getTrubLoss() { return trubLoss; }
 	public String getVolUnits(){ return postBoilVol.getUnits(); }
 	public String getYeast(){ return yeast.getName();}	
 	public Yeast getYeastObj(){ return yeast;}
+	
+	// water
+	private String getVolConverted(double val){
+		Quantity q = new Quantity();
+		q.setQuantity(null, "qt", val);
+		double d = q.getValueAs(getVolUnits());
+		String s = SBStringUtils.df1.format(d).toString();
+		return s;
+	}
+	
+	public String getTotalWater() {
+		return (getVolConverted(totalWaterQTS));
+	}
+	public String getChillShrink() {
+		return (getVolConverted(chillShrinkQTS));
+	}
+	public String getSparge() {
+		return (getVolConverted(spargeQTS));
+	}
 	
 	// Setters:
 	public void setAlcMethod(String s) {
@@ -358,7 +385,7 @@ public class Recipe {
 		postBoilVol.setQuantity(null, null, p); 
 		// TODO: implement % as well as constant 
 		double pre = p + (evap * boilMinutes / 60);
-		preBoilVol.setQuantity(null, null, pre);
+		preBoilVol.setQuantity(null, null, pre);		
 		calcMaltTotals();
 		calcHopsTotals();
 		}
@@ -479,7 +506,12 @@ public class Recipe {
 		estFg = 1 + ((estOg - 1) * ((100 - attenuation) / 100));
 		srm = calcColour(mcu);
 		mash.setMaltWeight(totalMashLbs);
-
+		
+		// do the water calcs w/ the updated mash:
+		chillShrinkQTS = getPostBoilVol("qt") * 0.03;
+		spargeQTS = getPreBoilVol("qt") - (mash.getTotalWaterQts() - mash.getAbsorbedQts());
+		totalWaterQTS = mash.getTotalWaterQts() + spargeQTS;
+		
 
 		calcAlcohol("Volume");
 
@@ -640,13 +672,13 @@ public class Recipe {
 		sb.append("  <BREWER>" + SBStringUtils.subEntities(brewer) + "</BREWER>\n");
 		sb.append("  <NOTES>" + SBStringUtils.subEntities(comments) + "</NOTES>\n");
 		sb.append("  <EFFICIENCY>" + efficiency + "</EFFICIENCY>\n");
-		sb.append("  <OG>" + df3.format(estOg) + "</OG>\n");
-		sb.append("  <FG>" + df3.format(estFg) + "</FG>\n");
+		sb.append("  <OG>" + SBStringUtils.df3.format(estOg) + "</OG>\n");
+		sb.append("  <FG>" + SBStringUtils.df3.format(estFg) + "</FG>\n");
 		sb.append("  <STYLE>" + style.getName() + "</STYLE>\n");
 		sb.append("  <MASH>" + mashed + "</MASH>\n");
-		sb.append("  <LOV>" + df1.format(srm) + "</LOV>\n");
-		sb.append("  <IBU>" + df1.format(ibu) + "</IBU>\n");
-		sb.append("  <ALC>" + df1.format(alcohol) + "</ALC>\n");
+		sb.append("  <LOV>" + SBStringUtils.df1.format(srm) + "</LOV>\n");
+		sb.append("  <IBU>" + SBStringUtils.df1.format(ibu) + "</IBU>\n");
+		sb.append("  <ALC>" + SBStringUtils.df1.format(alcohol) + "</ALC>\n");
 		sb.append("  <BOIL_TIME>" + boilMinutes + "</BOIL_TIME>\n");
 		sb.append("  <PRESIZE>" + preBoilVol.getValue() + "</PRESIZE>\n");
 		sb.append("  <SIZE>" + postBoilVol.getValue() + "</SIZE>\n");
@@ -730,7 +762,7 @@ public class Recipe {
 		sb.append("Details:\n");
 		sb.append("Name: " + name + "\n");
 		sb.append("Brewer: " + brewer + "\n");
-		sb.append("Size: " + df1.format(postBoilVol.getValue()) + " " + postBoilVol.getUnits()+"\n");
+		sb.append("Size: " + SBStringUtils.df1.format(postBoilVol.getValue()) + " " + postBoilVol.getUnits()+"\n");
 		sb.append("Style: " + style.getName() + "\n");
 	    mf = new MessageFormat("OG: {0,number,0.000},\tFG:{1,number,0.000}, \tALC:{2,number,0.0}\n");
 		Object[] objs = {new Double(estOg), new Double(estFg), new Double(alcohol) };
@@ -743,10 +775,10 @@ public class Recipe {
 			Fermentable f = (Fermentable)fermentables.get(i);
 			
 			Object[] objf = {padLeft(f.getName(), 30, ' '),
-					padRight(" "+df2.format(f.getAmountAs(f.getUnits())), 6, ' '),
+					padRight(" "+SBStringUtils.df2.format(f.getAmountAs(f.getUnits())), 6, ' '),
 					f.getUnits(),
 					new Double(f.getPppg()),
-					padRight(" "+df1.format(f.getLov()), 6, ' '),
+					padRight(" "+SBStringUtils.df1.format(f.getLov()), 6, ' '),
 					new Double(f.getPercent())};
 			sb.append(mf.format(objf));
 			
@@ -760,11 +792,11 @@ public class Recipe {
 			Hop h = (Hop)hops.get(i);
 			
 			Object[] objh = {padLeft(h.getName(), 20, ' '),
-					padRight(" "+df2.format(h.getAmountAs(h.getUnits())), 6, ' '),
+					padRight(" "+SBStringUtils.df2.format(h.getAmountAs(h.getUnits())), 6, ' '),
 					h.getUnits(),
 					padRight(" "+h.getAlpha(), 5, ' '),
-					padRight(" "+df1.format(h.getMinutes()), 6, ' '),
-					padRight(" "+df1.format(h.getIBU()), 5, ' ')};
+					padRight(" "+SBStringUtils.df1.format(h.getMinutes()), 6, ' '),
+					padRight(" "+SBStringUtils.df1.format(h.getIBU()), 5, ' ')};
 			sb.append(mf.format(objh));
 			
 		}

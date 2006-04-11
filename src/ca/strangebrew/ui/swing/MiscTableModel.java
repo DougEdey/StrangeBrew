@@ -16,6 +16,7 @@ import javax.swing.table.AbstractTableModel;
 
 import ca.strangebrew.Misc;
 import ca.strangebrew.Recipe;
+import ca.strangebrew.SBStringUtils;
 
 
 
@@ -68,7 +69,7 @@ class MiscTableModel extends AbstractTableModel {
 				case 0 :
 					return data.getMiscName(row);
 				case 1 :
-					return new Double(data.df1.format(data
+					return new Double(SBStringUtils.df1.format(data
 							.getMiscAmount(row)));
 				case 2 :
 					return data.getMiscUnits(row);

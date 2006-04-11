@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.2 2006/04/10 20:29:15 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.3 2006/04/11 17:22:33 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -61,21 +61,10 @@ import javax.swing.JTextField;
 
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
+import ca.strangebrew.SBStringUtils;
 
 
 
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
 public class MashManager extends javax.swing.JFrame implements ActionListener, FocusListener {
 	private JScrollPane jScrollPane1;
 	private JTable tblMash;
@@ -713,7 +702,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 			tempLostULabel.setText(myRecipe.mash.getMashTempUnits());
 			
 			// set totals:
-			String mashWeightTotal = myRecipe.df1.format(myRecipe.getTotalMash()) 
+			String mashWeightTotal = SBStringUtils.df1.format(myRecipe.getTotalMash()) 
 				+ " " + myRecipe.getMaltUnits();
 			totalMashLabel.setText(mashWeightTotal);
 			totalTimeLabel.setText(new Integer(myRecipe.mash.getMashTotalTime()).toString());
@@ -731,13 +720,16 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 	}
 	
 	public void displayWater(){
-		absorbedLbl.setText(myRecipe.mash.getAbsorbedVol());
+		absorbedLbl.setText(myRecipe.mash.getAbsorbedStr());
 		absorbedUnitsLbl.setText(myRecipe.mash.getMashVolUnits());
-		spargeWithLbl.setText(myRecipe.mash.getSpargeVol());
+		spargeWithLbl.setText(myRecipe.getSparge());
 		spargeUnitsLbl.setText(myRecipe.mash.getMashVolUnits());
-		usedMashLbl.setText(myRecipe.mash.getTotalWater());
+		usedMashLbl.setText(myRecipe.mash.getTotalWaterStr());
 		usedInMashUnitsLbl.setText(myRecipe.mash.getMashVolUnits());
-		chillShrinkLbl.setText(myRecipe.mash.getChillShrink());
+		chillShrinkLbl.setText(myRecipe.getChillShrink());
+		kettleTxt.setText(SBStringUtils.df1.format(myRecipe.getKettleLoss()).toString());
+		trubLossTxt.setText(SBStringUtils.df1.format(myRecipe.getTrubLoss()).toString());
+		miscLossTxt.setText(SBStringUtils.df1.format(myRecipe.getMiscLoss()).toString());
 		
 	}
 

@@ -10,6 +10,7 @@ import javax.swing.table.AbstractTableModel;
 
 import ca.strangebrew.Hop;
 import ca.strangebrew.Recipe;
+import ca.strangebrew.SBStringUtils;
 
 
 
@@ -74,7 +75,7 @@ class HopsTableModel extends AbstractTableModel {
 				case 6 :
 					return new Double(data.getHopMinutes(row));
 				case 7 :
-					return new Double(data.df1.format(data.getHopIBU(row)));
+					return new Double(SBStringUtils.df1.format(data.getHopIBU(row)));
 				case 8 :
 					return new Double(data.getHopCostPerU(row));
 

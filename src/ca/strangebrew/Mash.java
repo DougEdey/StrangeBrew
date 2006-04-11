@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Collections;
 
 /**
- * $Id: Mash.java,v 1.2 2006/04/10 20:29:14 andrew_avis Exp $
+ * $Id: Mash.java,v 1.3 2006/04/11 17:22:32 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -28,12 +28,9 @@ public class Mash {
 	private double volQts;
 	private int totalTime;
 	private double absorbedQTS;
-	private double spargeTotalQTS;
 	private double totalWaterQTS;
-	private double chillShrink;
+
 	
-	// owner recipe:
-	private Recipe myRecipe;
 	
 	
 	// steps:
@@ -42,7 +39,7 @@ public class Mash {
 	// format:
 	public DecimalFormat df1 = new DecimalFormat("#####0.0");
 	
-	public Mash(Recipe r){
+	public Mash(){
 
 		Options opts = new Options("mash");
 		 mashRatio = opts.getDProperty("optMashRatio");
@@ -50,7 +47,6 @@ public class Mash {
 		 tempUnits = opts.getProperty("optMashTempU");
 		 volUnits = opts.getProperty("optMashVolU");
 		 grainTemp = opts.getDProperty("optGrainTemp");
-		 myRecipe = r;
 	}
 
 	public class MashStep {
@@ -241,18 +237,21 @@ public class Mash {
 		String s = df1.format(d).toString() + " " + volUnits;
 		return s;	
 	}	
-	public String getAbsorbedVol() {
+	
+	public String getAbsorbedStr() {
 		return getVolConverted(absorbedQTS);
 	}
-	public String getSpargeVol() {
-		return getVolConverted(spargeTotalQTS);
+	public double getAbsorbedQts() {
+		return absorbedQTS;
 	}
-	public String getTotalWater() {
+
+	public String getTotalWaterStr() {
 		return getVolConverted(totalWaterQTS);
 	}
-	public String getChillShrink() {
-		return getVolConverted(chillShrink);
+	public double getTotalWaterQts() {
+		return totalWaterQTS;
 	}
+
 	
 	
 	
@@ -489,10 +488,9 @@ public class Mash {
 		// water use stats:
 		absorbedQTS = maltWeightLbs * 0.55; // figure from HBD
 		
-		spargeTotalQTS = (myRecipe.getPreBoilVol("qt")) - (mashWaterQTS - absorbedQTS);
-		totalWaterQTS = spargeTotalQTS + mashWaterQTS;
-		chillShrink = myRecipe.getPostBoilVol("gal") * 0.03;
-		
+		// spargeTotalQTS = (myRecipe.getPreBoilVol("qt")) - (mashWaterQTS - absorbedQTS);
+		totalWaterQTS = mashWaterQTS;
+				
 		// TODO: sparge stuff should get figured here:		 
 
 	}

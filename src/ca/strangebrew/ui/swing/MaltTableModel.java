@@ -10,6 +10,7 @@ import javax.swing.table.AbstractTableModel;
 
 import ca.strangebrew.Fermentable;
 import ca.strangebrew.Recipe;
+import ca.strangebrew.SBStringUtils;
 
 
 class MaltTableModel extends AbstractTableModel {
@@ -61,7 +62,7 @@ class MaltTableModel extends AbstractTableModel {
 				case 0 :
 					return data.getMaltName(row);
 				case 1 :
-					return new Double(data.df1.format(data
+					return new Double(SBStringUtils.df1.format(data
 							.getMaltAmountAs(row, data.getMaltUnits(row))));
 				case 2 :
 					return data.getMaltUnits(row);
@@ -72,7 +73,7 @@ class MaltTableModel extends AbstractTableModel {
 				case 5 :
 					return new Double(data.getMaltCostPerU(row));
 				case 6 :
-					return data.df1.format(new Double(data.getMaltPercent(row)));
+					return SBStringUtils.df1.format(new Double(data.getMaltPercent(row)));
 
 			}
 		} catch (Exception e) {

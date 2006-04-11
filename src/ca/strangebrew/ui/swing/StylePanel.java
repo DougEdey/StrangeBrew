@@ -21,6 +21,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
 import ca.strangebrew.Recipe;
+import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.Style;
 
 
@@ -104,18 +105,18 @@ public class StylePanel extends javax.swing.JPanel {
 
 		// descriptionTextArea.setText(s.getDescription());
 		// cmbStyle2.setToolTipText(multiLineToolTip(50,s.getDescription()));
-		stlLowOG.setText(myRecipe.df3.format(s.ogLow));
-		stlRcpOG.setText(myRecipe.df3.format(myRecipe.getEstOg()));
-		stlHighOG.setText(myRecipe.df3.format(s.ogHigh));
-		stlLowABV.setText(myRecipe.df1.format(s.alcLow));
-		stlRcpABV.setText(myRecipe.df1.format(myRecipe.getAlcohol()));
-		stlHighABV.setText(myRecipe.df1.format(s.alcHigh));
-		stlLowColour.setText(myRecipe.df1.format(s.lovLow));
-		stlRcpColour.setText(myRecipe.df1.format(myRecipe.getSrm()));
-		stlHighColour.setText(myRecipe.df1.format(s.lovHigh));
-		stlLowIBU.setText(myRecipe.df1.format(s.ibuLow));
-		stlRcpIBU.setText(myRecipe.df1.format(myRecipe.getIbu()));
-		stlHighIBU.setText(myRecipe.df1.format(s.ibuHigh));
+		stlLowOG.setText(SBStringUtils.df3.format(s.ogLow));
+		stlRcpOG.setText(SBStringUtils.df3.format(myRecipe.getEstOg()));
+		stlHighOG.setText(SBStringUtils.df3.format(s.ogHigh));
+		stlLowABV.setText(SBStringUtils.df1.format(s.alcLow));
+		stlRcpABV.setText(SBStringUtils.df1.format(myRecipe.getAlcohol()));
+		stlHighABV.setText(SBStringUtils.df1.format(s.alcHigh));
+		stlLowColour.setText(SBStringUtils.df1.format(s.lovLow));
+		stlRcpColour.setText(SBStringUtils.df1.format(myRecipe.getSrm()));
+		stlHighColour.setText(SBStringUtils.df1.format(s.lovHigh));
+		stlLowIBU.setText(SBStringUtils.df1.format(s.ibuLow));
+		stlRcpIBU.setText(SBStringUtils.df1.format(myRecipe.getIbu()));
+		stlHighIBU.setText(SBStringUtils.df1.format(s.ibuHigh));
 		
 		checkStyleConformance();
 		txaStyles.setText(getStyleMatches());
