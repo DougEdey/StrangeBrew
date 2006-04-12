@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.4 2006/04/11 17:22:32 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.5 2006/04/12 16:18:14 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -24,7 +24,6 @@
 
 package ca.strangebrew;
 
-import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,6 +64,7 @@ public class Recipe {
 	private double miscLoss;
 	private double spargeQTS;
 	private double totalWaterQTS;
+	private double finalWortVolQTS;
 	
 	// dilution:
 	public DilutedRecipe dilution;
@@ -181,6 +181,9 @@ public class Recipe {
 	public String getSparge() {
 		return (getVolConverted(spargeQTS));
 	}
+	public String getFinalWortVol() {
+		return (getVolConverted(finalWortVolQTS));
+	}
 	
 	// Setters:
 	public void setAlcMethod(String s) {
@@ -220,13 +223,25 @@ public class Recipe {
 		ibuCalcMethod = s;
 		calcHopsTotals();
 	}	
+	public void setKettleLoss(double k) {
+		kettleLoss = k;
+		calcMaltTotals();
+		}
 	public void setMaltUnits(String m) { maltUnits = m; }
 	public void setMashed(boolean m) { mashed = m; }
 	public void setMashRatio(double m) { mash.setMashRatio(m); }
 	public void setMashRatioU(String u) { mash.setMashRatioU(u); }
+	public void setMiscLoss(double m) { 
+		miscLoss = m;
+		calcMaltTotals();
+		}
 	public void setName(String n) {	name = n; }
 	public void setStyle(String s) { style.setName(s); }
 	public void setStyle(Style s) { style = s; }
+	public void setTrubLoss(double t) { 
+		trubLoss = t;
+		calcMaltTotals();
+		}
 	public void setYeastName(String s) { yeast.setName(s); }
 	public void setYeast(Yeast y) { yeast = y; }
 
@@ -389,6 +404,21 @@ public class Recipe {
 		calcMaltTotals();
 		calcHopsTotals();
 		}
+	
+	public void setFinalWortVol(double p) {
+		// convert to QTS and set the final vol
+		finalWortVolQTS = Quantity.convertUnit(getVolUnits(),"qt",p);
+		// now add in all the losses, and set the post-boil to force
+		// a recalc:
+		double d = finalWortVolQTS 
+				+ Quantity.convertUnit(getVolUnits(), "qt", kettleLoss)  
+				+ Quantity.convertUnit(getVolUnits(), "qt", trubLoss)
+				+ Quantity.convertUnit(getVolUnits(), "qt",miscLoss);
+		// add in chill shrink:
+		d = d * 1.03;
+		setPostBoil(Quantity.convertUnit("qt", getVolUnits(), d));
+		}
+	
 	/*
 	 * Functions that add/remove from ingredient lists
 	 */
@@ -511,6 +541,12 @@ public class Recipe {
 		chillShrinkQTS = getPostBoilVol("qt") * 0.03;
 		spargeQTS = getPreBoilVol("qt") - (mash.getTotalWaterQts() - mash.getAbsorbedQts());
 		totalWaterQTS = mash.getTotalWaterQts() + spargeQTS;
+		
+		finalWortVolQTS = postBoilVol.getValueAs("qt") - ( 
+				chillShrinkQTS 
+				+ Quantity.convertUnit(getVolUnits(), "qt", kettleLoss)  
+				+ Quantity.convertUnit(getVolUnits(), "qt", trubLoss)
+				+ Quantity.convertUnit(getVolUnits(), "qt",miscLoss)); 
 		
 
 		calcAlcohol("Volume");
@@ -695,6 +731,9 @@ public class Recipe {
 		sb.append("  <COLOUR_METHOD>" + colourMethod + "</COLOUR_METHOD>\n");
 		sb.append("	 <EVAP>" + evap + "</EVAP>\n");
 		sb.append("	 <EVAP_METHOD>" + evapMethod + "</EVAP_METHOD>\n");
+		sb.append("	 <KETTLE_LOSS>" + kettleLoss + "</KETTLE_LOSS>\n");
+		sb.append("	 <TRUB_LOSS>" + trubLoss + "</TRUB_LOSS>\n");
+		sb.append("	 <MISC_LOSS>" + miscLoss + "</MISC_LOSS>\n");
 		sb.append("  <!-- END SBJ1.0 Extensions -->\n");
 		sb.append("  </DETAILS>\n");
 		

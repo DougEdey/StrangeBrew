@@ -264,7 +264,6 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		{
 			jTabbedPane1 = new JTabbedPane();
 			getContentPane().add(jTabbedPane1, BorderLayout.CENTER);
-			jTabbedPane1.setTabPlacement(JTabbedPane.LEFT);
 			{
 				pnlCalculations = new JPanel();
 				jTabbedPane1.addTab("Calculations", null, pnlCalculations, null);
@@ -610,6 +609,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				pnlDatabase.add(getPnlDefaultDB(), BorderLayout.NORTH);
 				pnlDatabase.add(getPnlSortOrder(), BorderLayout.WEST);
 				jTabbedPane1.addTab("Database", null, pnlDatabase, null);
+				pnlDatabase.setVisible(false);
 			}
 
 		}

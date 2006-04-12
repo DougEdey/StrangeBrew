@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.3 2006/04/11 17:22:33 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.4 2006/04/12 16:18:14 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -25,40 +25,39 @@
 
 package ca.strangebrew.ui.swing;
 
-import java.awt.GridBagLayout;
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.table.TableColumn;
-import java.awt.Insets;
-import java.awt.GridBagConstraints;
-import javax.swing.JScrollPane;
-import javax.swing.WindowConstants;
-import javax.swing.border.TitledBorder;
-
-import javax.swing.JLabel;
-import java.awt.BorderLayout;
-
-import javax.swing.DefaultCellEditor;
-import javax.swing.JRadioButton;
-import javax.swing.JComboBox;
-import javax.swing.JTextArea;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.TableColumn;
 
+import ca.strangebrew.Debug;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
@@ -76,15 +75,15 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 	private JLabel titleLabel;
 	private JLabel finalUnitsLbl;
 	private JLabel miscLosUnitsLbl;
-	private JLabel lostUnitsLbl;
-	private JTextField finalVolTxt;
-	private JTextField miscLossTxt;
-	private JTextField trubLossTxt;
+	private JLabel trubLossUnitsLbl;
+	private JFormattedTextField finalVolTxt;
+	private JFormattedTextField miscLossTxt;
+	private JFormattedTextField trubLossTxt;
 	private JLabel kettleUnitsLbl;
-	private JTextField kettleTxt;
+	private JFormattedTextField kettleTxt;
 	private JLabel chillShrinkLbl;
-	private JTextField postBoilTxt;
-	private JTextField collectTxt;
+	private JFormattedTextField postBoilTxt;
+	private JFormattedTextField collectTxt;
 	private JLabel postBoilUnitsLbl;
 	private JLabel totalUnitsLbl;
 	private JLabel usedInMashUnitsLbl;
@@ -515,120 +514,112 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 					waterUsePanel.add(spargeWithLbl, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
 									0), 0, 0));
-					spargeWithLbl.setText("absorbedUnitsLbl");
+					spargeWithLbl.setText("l");
 				}
 				{
 					collectUnitsLbl = new JLabel();
-					waterUsePanel.add(collectUnitsLbl, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
-									0), 0, 0));
-					collectUnitsLbl.setText("absorbedUnitsLbl");
+					waterUsePanel.add(collectUnitsLbl, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+					collectUnitsLbl.setText("l");
 				}
 				{
 					spargeUnitsLbl = new JLabel();
-					waterUsePanel.add(spargeUnitsLbl, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
-									0), 0, 0));
-					spargeUnitsLbl.setText("absorbedUnitsLbl");
+					waterUsePanel.add(spargeUnitsLbl, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+					spargeUnitsLbl.setText("l");
 				}
 				{
 					absorbedUnitsLbl = new JLabel();
-					waterUsePanel.add(absorbedUnitsLbl, new GridBagConstraints(2, 2, 1, 1, 0.0,
-							0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,
-									0, 0, 0), 0, 0));
-					absorbedUnitsLbl.setText("absorbedUnitsLbl");
+					waterUsePanel.add(absorbedUnitsLbl, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+					absorbedUnitsLbl.setText("l");
 				}
 				{
 					usedInMashUnitsLbl = new JLabel();
-					waterUsePanel.add(usedInMashUnitsLbl, new GridBagConstraints(2, 1, 1, 1, 0.0,
-							0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,
-									0, 0, 0), 0, 0));
-					usedInMashUnitsLbl.setText("jLabel13");
+					waterUsePanel.add(usedInMashUnitsLbl, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+					usedInMashUnitsLbl.setText("l");
 				}
 				{
 					totalUnitsLbl = new JLabel();
-					waterUsePanel.add(totalUnitsLbl, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
-									0), 0, 0));
-					totalUnitsLbl.setText("jLabel13");
+					waterUsePanel.add(totalUnitsLbl, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+					totalUnitsLbl.setText("l");
 				}
 				{
 					postBoilUnitsLbl = new JLabel();
-					waterUsePanel.add(postBoilUnitsLbl, new GridBagConstraints(2, 5, 1, 1, 0.0,
-							0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,
-									0, 0, 0), 0, 0));
-					postBoilUnitsLbl.setText("jLabel12");
+					waterUsePanel.add(postBoilUnitsLbl, new GridBagConstraints(2, 5, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+					postBoilUnitsLbl.setText("l");
 				}
 				{
-					collectTxt = new JTextField();
+					collectTxt = new JFormattedTextField();
+					collectTxt.addFocusListener(this);
+					collectTxt.addActionListener(this);
 					waterUsePanel.add(collectTxt, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
-					collectTxt.setText("jTextField1");
+					collectTxt.setText("l");
 				}
 				{
-					postBoilTxt = new JTextField();
+					postBoilTxt = new JFormattedTextField();
+					postBoilTxt.addFocusListener(this);
+					postBoilTxt.addActionListener(this);
 					waterUsePanel.add(postBoilTxt, new GridBagConstraints(1, 5, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
-					postBoilTxt.setText("jTextField1");
+					postBoilTxt.setText("l");
 				}
 				{
 					chillShrinkLbl = new JLabel();
 					waterUsePanel.add(chillShrinkLbl, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
 									0), 0, 0));
-					chillShrinkLbl.setText("jLabel12");
+					chillShrinkLbl.setText("l");
 				}
 				{
-					kettleTxt = new JTextField();
+					kettleTxt = new JFormattedTextField();
+					kettleTxt.addFocusListener(this);
+					kettleTxt.addActionListener(this);
 					waterUsePanel.add(kettleTxt, new GridBagConstraints(1, 7, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
-					kettleTxt.setText("jTextField1");
+					kettleTxt.setText("1");
 				}
 				{
 					kettleUnitsLbl = new JLabel();
-					waterUsePanel.add(kettleUnitsLbl, new GridBagConstraints(2, 7, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
-									0), 0, 0));
-					kettleUnitsLbl.setText("jLabel12");
+					waterUsePanel.add(kettleUnitsLbl, new GridBagConstraints(2, 7, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+					kettleUnitsLbl.setText("l");
 				}
 				{
-					trubLossTxt = new JTextField();
+					trubLossTxt = new JFormattedTextField();
+					trubLossTxt.addFocusListener(this);
+					trubLossTxt.addActionListener(this);
 					waterUsePanel.add(trubLossTxt, new GridBagConstraints(1, 8, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 					trubLossTxt.setText("jTextField1");
 				}
 				{
-					miscLossTxt = new JTextField();
+					miscLossTxt = new JFormattedTextField();
+					miscLossTxt.addFocusListener(this);
+					miscLossTxt.addActionListener(this);
 					waterUsePanel.add(miscLossTxt, new GridBagConstraints(1, 9, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 					miscLossTxt.setText("jTextField1");
 				}
 				{
-					finalVolTxt = new JTextField();
+					finalVolTxt = new JFormattedTextField();
+					finalVolTxt.addFocusListener(this);
+					finalVolTxt.addActionListener(this);
 					waterUsePanel.add(finalVolTxt, new GridBagConstraints(1, 10, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 					finalVolTxt.setText("jTextField1");
 				}
 				{
-					lostUnitsLbl = new JLabel();
-					waterUsePanel.add(lostUnitsLbl, new GridBagConstraints(2, 8, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
-									0), 0, 0));
-					lostUnitsLbl.setText("jLabel12");
+					trubLossUnitsLbl = new JLabel();
+					waterUsePanel.add(trubLossUnitsLbl, new GridBagConstraints(2, 8, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+					trubLossUnitsLbl.setText("l");
 				}
 				{
 					miscLosUnitsLbl = new JLabel();
-					waterUsePanel.add(miscLosUnitsLbl, new GridBagConstraints(2, 9, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
-									0), 0, 0));
-					miscLosUnitsLbl.setText("jLabel12");
+					waterUsePanel.add(miscLosUnitsLbl, new GridBagConstraints(2, 9, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+					miscLosUnitsLbl.setText("l");
 				}
 				{
 					finalUnitsLbl = new JLabel();
-					waterUsePanel.add(finalUnitsLbl, new GridBagConstraints(2, 10, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
-									0), 0, 0));
-					finalUnitsLbl.setText("jLabel12");
+					waterUsePanel.add(finalUnitsLbl, new GridBagConstraints(2, 10, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+					finalUnitsLbl.setText("l");
 				}
 			}
 			{
@@ -720,16 +711,34 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 	}
 	
 	public void displayWater(){
-		absorbedLbl.setText(myRecipe.mash.getAbsorbedStr());
-		absorbedUnitsLbl.setText(myRecipe.mash.getMashVolUnits());
-		spargeWithLbl.setText(myRecipe.getSparge());
-		spargeUnitsLbl.setText(myRecipe.mash.getMashVolUnits());
+		
+		String recipeUnitsAbrv = new Quantity().getVolAbrv(myRecipe.getVolUnits());
+		String mashUnitsAbrv = new Quantity().getVolAbrv(myRecipe.mash.getMashVolUnits());
+
+		totalUnitsLbl.setText(recipeUnitsAbrv);
+		
 		usedMashLbl.setText(myRecipe.mash.getTotalWaterStr());
-		usedInMashUnitsLbl.setText(myRecipe.mash.getMashVolUnits());
+		usedInMashUnitsLbl.setText(mashUnitsAbrv);		
+		absorbedLbl.setText(myRecipe.mash.getAbsorbedStr());
+		absorbedUnitsLbl.setText(mashUnitsAbrv);
+		spargeWithLbl.setText(myRecipe.getSparge());
+		spargeUnitsLbl.setText(mashUnitsAbrv);
+		
+		collectTxt.setValue(new Double(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));
+		collectUnitsLbl.setText(recipeUnitsAbrv);
+		postBoilTxt.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
+		postBoilUnitsLbl.setText(recipeUnitsAbrv);
+		
 		chillShrinkLbl.setText(myRecipe.getChillShrink());
-		kettleTxt.setText(SBStringUtils.df1.format(myRecipe.getKettleLoss()).toString());
-		trubLossTxt.setText(SBStringUtils.df1.format(myRecipe.getTrubLoss()).toString());
-		miscLossTxt.setText(SBStringUtils.df1.format(myRecipe.getMiscLoss()).toString());
+		kettleTxt.setValue(new Double(myRecipe.getKettleLoss()));
+		kettleUnitsLbl.setText(recipeUnitsAbrv);
+		trubLossTxt.setValue(new Double(myRecipe.getTrubLoss()));
+		trubLossUnitsLbl.setText(recipeUnitsAbrv);
+		miscLossTxt.setValue(new Double(myRecipe.getMiscLoss()));
+		miscLosUnitsLbl.setText(recipeUnitsAbrv);
+		
+		finalVolTxt.setValue(new Double(myRecipe.getFinalWortVol()));
+		finalUnitsLbl.setText(recipeUnitsAbrv);
 		
 	}
 
@@ -782,7 +791,36 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 		else if (o == grainTempText) {
 			String s = grainTempText.getText();
 			myRecipe.mash.setGrainTemp(Double.parseDouble(s));
+		}		
+		
+		// water use stuff:
+		else if (o == kettleTxt) {
+			String s = kettleTxt.getText();
+			myRecipe.setKettleLoss(Double.parseDouble(s));
 		}
+		else if (o == miscLossTxt) {
+			String s = miscLossTxt.getText();
+			myRecipe.setMiscLoss(Double.parseDouble(s));
+		}
+		else if (o == trubLossTxt) {
+			String s = trubLossTxt.getText();
+			myRecipe.setTrubLoss(Double.parseDouble(s));
+		}
+		else if (o == collectTxt) {
+			String s = collectTxt.getText();
+			myRecipe.setPreBoil(Double.parseDouble(s));
+
+		} else if (o == postBoilTxt) {
+			String s = postBoilTxt.getText();
+			myRecipe.setPostBoil(Double.parseDouble(s));
+
+		} else if (o == finalVolTxt) {
+			String s = finalVolTxt.getText();
+			myRecipe.setFinalWortVol(Double.parseDouble(s));
+
+		}
+		
+		
 		
 		tblMash.updateUI();
 		displayMash();	

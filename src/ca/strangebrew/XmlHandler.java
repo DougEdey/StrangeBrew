@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.1 2006/04/07 13:59:14 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.2 2006/04/12 16:18:14 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -468,6 +468,15 @@ public class XmlHandler extends DefaultHandler{
 				r.setEvap(Double.parseDouble(s));
 			} else if (currentElement.equalsIgnoreCase("EVAP_METHOD")) {
 				r.setEvapMethod(s);
+			}
+			else if (currentElement.equalsIgnoreCase("KETTLE_LOSS")) {
+				r.setKettleLoss(Double.parseDouble(s));
+			}
+			else if (currentElement.equalsIgnoreCase("MISC_LOSS")) {
+				r.setMiscLoss(Double.parseDouble(s));
+			}
+			else if (currentElement.equalsIgnoreCase("TRUB_LOSS")) {
+				r.setTrubLoss(Double.parseDouble(s));
 			}
 
 		}

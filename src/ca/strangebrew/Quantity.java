@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.1 2006/04/07 13:59:14 andrew_avis Exp $
+ * $Id: Quantity.java,v 1.2 2006/04/12 16:18:14 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -85,6 +85,7 @@ public class Quantity {
 	public double getValue(){ return value;	}
 	public String getUnits(){ return unit; }
 	public String getAbrv(){ return abrv; }
+
 	public double getValueAs(String to){
 		double fromBase = 0;
 		double toBase = 0;
@@ -121,20 +122,7 @@ public class Quantity {
 		return unit;
 	}
 	
-	public ArrayList getListofUnits(String type) {
-		ArrayList list = new ArrayList();
-		int i = 0;
-		if (type.equals("weight")) {
-			for (i = 0; i < weightUnits.length; i++) 
-				list.add(weightUnits[i].unit);
-		}
-		else {
-			for (i = 0; i < volUnits.length; i++) 
-				list.add(volUnits[i].unit);
-		}			
 
-		return list;
-	}
 	
 	// private functions:	
 	private double getBaseValue(Converter[] u, String n){
@@ -154,7 +142,7 @@ public class Quantity {
 		int i=0;
 		Converter[] u;
 		
-		if (type == "vol")
+		if (t == "vol")
 		  u = volUnits;
 		else // assume weight
 		  u = weightUnits;
@@ -173,7 +161,7 @@ public class Quantity {
 		int i=0;	
 		Converter[] u;
 		
-		if (type == "vol")
+		if (t == "vol")
 		  u = volUnits;
 		else // assume weight
 		  u = weightUnits;
@@ -202,6 +190,35 @@ public class Quantity {
 		
 	}
 	
+	/*
+	 * These are "generic" functions you can call on any quantity object (or just
+	 * create a new one).  TODO: Move to a static class.
+	 */
+	
+	public ArrayList getListofUnits(String type) {
+		ArrayList list = new ArrayList();
+		int i = 0;
+		if (type.equals("weight")) {
+			for (i = 0; i < weightUnits.length; i++) 
+				list.add(weightUnits[i].unit);
+		}
+		else {
+			for (i = 0; i < volUnits.length; i++) 
+				list.add(volUnits[i].unit);
+		}			
 
+		return list;
+	}
+
+	public String getVolAbrv(String unit) {
+		return getAbrvFromUnit(getTypeFromUnit(unit), unit);
+	}
+	
+	// let's just convert a unit from something to something else
+	public static double convertUnit(String from, String to, double value){
+		Quantity q = new Quantity();
+		q.setQuantity(null,from,value);		
+		return q.getValueAs(to);
+	}
 
 }
