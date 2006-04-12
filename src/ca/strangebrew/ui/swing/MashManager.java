@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.4 2006/04/12 16:18:14 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.5 2006/04/12 18:44:18 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -209,9 +209,11 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 					jScrollPane1.setPreferredSize(new java.awt.Dimension(424, -32));
 					{
 						mashModel = new MashTableModel(this);
-						tblMash = new JTable();
+						tblMash = new JTable();						
 						jScrollPane1.setViewportView(tblMash);
 						tblMash.setModel(mashModel);
+						tblMash.setAutoCreateColumnsFromModel(false);
+						tblMash.getTableHeader().setReorderingAllowed(false);
 						tblMash.addMouseListener(new MouseAdapter() {
 							public void mouseClicked(MouseEvent evt) {
 								int i = tblMash.getSelectedRow();
@@ -680,8 +682,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 	public void displayMash() {
 		if (myRecipe != null) {
 			recipeNameLabel.setText(myRecipe.getName());
-			mashModel.setData(myRecipe.getMash());
-			tblMash.updateUI();
+			
 			volUnitsComboModel.addOrInsert(myRecipe.mash.getMashVolUnits());
 			
 			// temp units:
@@ -818,9 +819,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 			String s = finalVolTxt.getText();
 			myRecipe.setFinalWortVol(Double.parseDouble(s));
 
-		}
-		
-		
+		}		
 		
 		tblMash.updateUI();
 		displayMash();	

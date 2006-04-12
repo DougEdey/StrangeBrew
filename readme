@@ -33,25 +33,18 @@ of reported bugs.  If you've found one that's not there, please report it!
 
 What's new in:
 
+Beta 02:
+- New water usage stats on the Mash Manager dialog
+
 Beta 1:
 - New dilution panel to manage wort dilution
 - New style panel to check style conformance
 - New Preferences dialog to set defaults and preferences
 
 
-Implemented Features:
-- open recipes (StrangeBrew 1.8 xml, QBrew, and StrangeBrew Java recipes)
-- save recipes (these are not compatible with the Windows version of StrangeBrew)
-- save recipes as html and text
-- create a new, empty recipe
-- design a mash schedule
-- track misc ingredients and recipe notes
-- recipe dilution
-
 Soon-to-be Implemented Features:
 - edit ingredient databases
 - track costs
-- water usage
 - mash tun thermal mass
 - recipe resize / unit conversion
 - evaporation calculated as a %

@@ -14,6 +14,7 @@ package ca.strangebrew.ui.swing;
  */
 import javax.swing.table.AbstractTableModel;
 
+import ca.strangebrew.Debug;
 import ca.strangebrew.Mash;
 import ca.strangebrew.Mash.MashStep;
 
@@ -61,17 +62,18 @@ class MashTableModel extends AbstractTableModel {
 					return data.getStepType(row);
 				case 1 :
 					return data.getStepMethod(row);
-				case 2 :
-					return data.df1.format( new Double(data.getStepStartTemp(row)) );
+				case 2 :					
+					return new Double(data.getStepStartTemp(row)) ;
 				case 3 :
-					return data.df1.format( new Double(data.getStepEndTemp(row)) );
+					return new Double(data.getStepEndTemp(row)) ;
 				case 4 :
-					return new Double(data.getStepRampMin(row));
+					return new Integer(data.getStepRampMin(row));
 				case 5 :
-					return new Double(data.getStepMin(row));
+					return new Integer(data.getStepMin(row));
 
 			}
 		} catch (Exception e) {
+			Debug.print(e.toString());
 		};
 		return "";
 	}
@@ -115,10 +117,10 @@ class MashTableModel extends AbstractTableModel {
 					data.setStepMethod(row, value.toString());					
 					break;
 				case 2 :
-					data.setStepStartTemp(row, Integer.parseInt(value.toString()));
+					data.setStepStartTemp(row, Double.parseDouble(value.toString()));
 					break;
 				case 3 :
-					data.setStepEndTemp(row, Integer.parseInt(value.toString()));
+					data.setStepEndTemp(row, Double.parseDouble(value.toString()));
 					break;
 				case 4 :
 					data.setStepRampMin(row, Integer.parseInt(value.toString()));
@@ -130,10 +132,11 @@ class MashTableModel extends AbstractTableModel {
 
 			}
 		} catch (Exception e) {
+			Debug.print(e.toString());
 		};
 		data.calcMashSchedule();
 		fireTableCellUpdated(row, col);
-		fireTableDataChanged();
+		fireTableDataChanged();		
 		mashManager.displayMash();
 		
 		

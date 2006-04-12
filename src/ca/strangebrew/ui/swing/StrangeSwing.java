@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.4 2006/04/12 16:18:14 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.5 2006/04/12 18:44:18 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -740,7 +740,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								public void actionPerformed(ActionEvent evt) {
 									String q = (String) cmbSizeUnits.getSelectedItem();
 									if (myRecipe != null && q != myRecipe.getVolUnits()) {
-										myRecipe.setPostBoilVolUnits(q);
+										// also sets postboil units:
 										myRecipe.setPreBoilVolUnits(q);
 										displayRecipe();
 									}
@@ -880,7 +880,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 								jScrollPane1.setViewportView(maltTable);
 								maltTable.setModel(maltTableModel);
-								maltTable.setAutoCreateColumnsFromModel(false);
+								// maltTable.setAutoCreateColumnsFromModel(false);
 								maltTable.getTableHeader().setReorderingAllowed(false);
 								
 								TableColumn maltColumn = maltTable.getColumnModel().getColumn(0);

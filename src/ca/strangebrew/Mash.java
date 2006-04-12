@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Collections;
 
 /**
- * $Id: Mash.java,v 1.3 2006/04/11 17:22:32 andrew_avis Exp $
+ * $Id: Mash.java,v 1.4 2006/04/12 18:44:17 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -306,7 +306,7 @@ public class Mash {
 			return ((MashStep)steps.get(i)).getStartTemp();	
 	}
 	
-	public void setStepEndTemp(int i, int t){
+	public void setStepEndTemp(int i, double t){
 		if (tempUnits.equals("C"))
 			((MashStep)steps.get(i)).setEndTemp(cToF(t));
 		else

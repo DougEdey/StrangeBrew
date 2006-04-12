@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.5 2006/04/12 16:18:14 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.6 2006/04/12 18:44:17 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -348,12 +348,6 @@ public class Recipe {
 		calcMaltTotals();
 		calcHopsTotals();
 		
-	}
-	public void setPostBoilVolUnits(String v) {
-		postBoilVol.setQuantity( v, null, -1); 
-		preBoilVol.setQuantity( v, null, -1);
-		calcMaltTotals();
-		calcHopsTotals();
 	}
 	
 	public void setEstFg(double f) {
