@@ -142,16 +142,6 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private JTextField txtDBLocation = null;
 	private JButton btnBrowse = null;
 
-	
-
-	
-//	public PreferencesDialog(Dialog owner, Options preferences)
-//	{
-//		super(owner, "Recipe Preferences", true);
-//		m_preferences = preferences;
-//		layoutUi();
-//		setLocation(owner.getLocation());
-//	}
 
 	public PreferencesDialog(Frame owner, Options preferences)
 	{

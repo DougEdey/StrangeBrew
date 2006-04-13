@@ -1,5 +1,5 @@
 /*
- * $Id: DilutionPanel.java,v 1.2 2006/04/13 17:44:11 andrew_avis Exp $
+ * $Id: DilutionPanel.java,v 1.3 2006/04/13 20:00:50 andrew_avis Exp $
  * Created on June 4, 2005
  * Dilution panel to help you figure out the results of diluting
  * your wort with water post-boil.
@@ -45,20 +45,6 @@ import ca.strangebrew.Style;
 
 
 
-
-
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
 public class DilutionPanel extends javax.swing.JPanel implements ChangeListener {
 	private JPanel infoPanel;
 	private JPanel stylePanel;
@@ -204,7 +190,7 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 						diluteWithLabel.setText("Dilute With:");
 					}
 					{
-						SpinnerNumberModel diluteWithTextSpinnerModel = new SpinnerNumberModel(0.0, 0.0,
+						SpinnerNumberModel diluteWithTextSpinnerModel = new SpinnerNumberModel(0.0, -999.9,
 								999.9, 0.5);
 						diluteWithText = new JSpinner();
 						diluteWithText.setModel(diluteWithTextSpinnerModel);
@@ -392,11 +378,24 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 			displayDilution();
 		}
 		 
-//		if (o == postBoilText) {
-//			myRecipe.setPostBoil(Double.parseDouble(postBoilText.getValue().toString()));
-//			displayDilution();
-//		}
+		if (o == postBoilText) {
+			myRecipe.setPostBoil(Double.parseDouble(postBoilText.getValue().toString()));
+			displayDilution();
+		}
 		
+		if (o == totalVolumeSpinner){
+			myRecipe.dilution.setDilVol(Double.parseDouble(totalVolumeSpinner.getValue().toString()));
+			displayDilution();
+		}
+		
+		if (o == ibuDilutedSpin){
+			myRecipe.dilution.setDilIbu(Double.parseDouble(ibuDilutedSpin.getValue().toString()));
+			displayDilution();
+		}
+		if (o == ogDilutedSpin){
+			myRecipe.dilution.setDilOG(Double.parseDouble(ogDilutedSpin.getValue().toString()));
+			displayDilution();
+		}
 	}
 
 }

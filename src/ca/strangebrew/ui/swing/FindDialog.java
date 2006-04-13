@@ -1,25 +1,25 @@
 /*
- * $Id: FindDialog.java,v 1.1 2006/04/07 13:59:14 andrew_avis Exp $ 
+ * $Id: FindDialog.java,v 1.2 2006/04/13 20:00:50 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis find recipe window class
  */
 
 /**
  *  StrangeBrew Java - a homebrew recipe calculator
-    Copyright (C) 2005  Drew Avis
+ Copyright (C) 2005  Drew Avis
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 package ca.strangebrew.ui.swing;
@@ -60,59 +60,40 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 	private JTable recipeTable;
 	private JScrollPane recipeScrollPane;
 	private FindTableModel recipeTableModel;
-	
-	private ArrayList recipes;	
+
+	private ArrayList recipes;
 	private ArrayList files;
 	private File currentDir;
 	private StrangeSwing inst;
 
-	/**
-	* Auto-generated main method to display this JDialog
-	*/
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		FindDialog inst = new FindDialog(frame);
-//		inst.setVisible(true);
-//	}
-	
 	public FindDialog(JFrame frame) {
 		super(frame);
 		recipes = new ArrayList();
 		files = new ArrayList();
-		inst = (StrangeSwing)frame;
+		inst = (StrangeSwing) frame;
 		currentDir = new java.io.File(".");
 		initGUI();
 		dirLocationText.setText(currentDir.getAbsolutePath());
 		loadRecipes(currentDir);
 	}
-	
+
 	private void initGUI() {
 		try {
 			GridBagLayout thisLayout = new GridBagLayout();
-			thisLayout.columnWeights = new double[] {0.1};
-			thisLayout.columnWidths = new int[] {7};
-			thisLayout.rowWeights = new double[] {0.7,0.1,0.1};
-			thisLayout.rowHeights = new int[] {7,7,7};
+			thisLayout.columnWeights = new double[]{0.1};
+			thisLayout.columnWidths = new int[]{7};
+			thisLayout.rowWeights = new double[]{0.7, 0.1, 0.1};
+			thisLayout.rowHeights = new int[]{7, 7, 7};
 			this.getContentPane().setLayout(thisLayout);
 			{
 				findPanel = new JPanel();
 				this.getContentPane().add(
-					findPanel,
-					new GridBagConstraints(
-						0,
-						0,
-						1,
-						1,
-						0.0,
-						0.0,
-						GridBagConstraints.NORTH,
-						GridBagConstraints.BOTH,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
+						findPanel,
+						new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.NORTH,
+								GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 				BoxLayout findPanelLayout = new BoxLayout(findPanel, javax.swing.BoxLayout.X_AXIS);
 				findPanel.setLayout(findPanelLayout);
-				findPanel.setPreferredSize(new java.awt.Dimension(392,269));
+				findPanel.setPreferredSize(new java.awt.Dimension(392, 269));
 				{
 					recipeScrollPane = new JScrollPane();
 					findPanel.add(recipeScrollPane);
@@ -129,23 +110,13 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 			{
 				browsePanel = new JPanel();
 				this.getContentPane().add(
-					browsePanel,
-					new GridBagConstraints(
-						0,
-						1,
-						1,
-						1,
-						0.0,
-						0.0,
-						GridBagConstraints.CENTER,
-						GridBagConstraints.HORIZONTAL,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
+						browsePanel,
+						new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
+								GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 				BorderLayout browsePanelLayout = new BorderLayout();
 				browsePanel.setLayout(browsePanelLayout);
 				browsePanel.setBorder(BorderFactory.createTitledBorder("Directory"));
-				browsePanel.setPreferredSize(new java.awt.Dimension(392,244));
+				browsePanel.setPreferredSize(new java.awt.Dimension(392, 244));
 				{
 					dirLocationText = new JTextField();
 					browsePanel.add(dirLocationText, BorderLayout.CENTER);
@@ -157,16 +128,15 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 					browseButton.setText("Browse...");
 					browseButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
-							Component owner = browseButton;							
+							Component owner = browseButton;
 							JFileChooser chooser = new JFileChooser();
 							chooser.setCurrentDirectory(new java.io.File("."));
 							chooser.setDialogTitle("Select directory");
 							chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 							if (chooser.showOpenDialog(owner) == JFileChooser.APPROVE_OPTION) {
 								Debug.print("getCurrentDirectory(): "
-									+ chooser.getCurrentDirectory());
-								Debug.print("getSelectedFile() : "
-									+ chooser.getSelectedFile());
+										+ chooser.getCurrentDirectory());
+								Debug.print("getSelectedFile() : " + chooser.getSelectedFile());
 								currentDir = chooser.getSelectedFile();
 								dirLocationText.setText(currentDir.getAbsolutePath());
 								loadRecipes(currentDir);
@@ -180,19 +150,9 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 			{
 				buttonPanel = new JPanel();
 				this.getContentPane().add(
-					buttonPanel,
-					new GridBagConstraints(
-						0,
-						2,
-						1,
-						1,
-						0.0,
-						0.0,
-						GridBagConstraints.CENTER,
-						GridBagConstraints.HORIZONTAL,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
+						buttonPanel,
+						new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
+								GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 				FlowLayout buttonPanelLayout = new FlowLayout();
 				buttonPanelLayout.setAlignment(FlowLayout.RIGHT);
 				buttonPanel.setLayout(buttonPanelLayout);
@@ -214,7 +174,7 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void loadRecipes(File dir) {
 
 		recipes.clear();
@@ -226,8 +186,9 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 				Debug.print("Opening: " + file.getName() + ".\n");
 				// file.getAbsolutePath doesn't work here for some reason,
 				// so we have to build it ourselves
-				String fileName = dir.getAbsolutePath() + System.getProperty("file.separator") + file.getName();
-				ImportXml imp = new ImportXml(fileName);				
+				String fileName = dir.getAbsolutePath() + System.getProperty("file.separator")
+						+ file.getName();
+				ImportXml imp = new ImportXml(fileName);
 				Recipe r = imp.handler.getRecipe();
 				recipes.add(r);
 				files.add(file);
@@ -238,28 +199,26 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 		recipeTable.updateUI();
 
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o == cancelButton) {
 			setVisible(false);
-			dispose();	
+			dispose();
+			return;
+		} else if (o == openButton) {
+			int i = recipeTable.getSelectedRow();
+			if (i > -1) {
+				inst.setRecipe((Recipe) recipes.get(i), (File) files.get(i));
+			}
+
+			setVisible(false);
+			dispose();
 			return;
 		}
-		else if (o == openButton) {
-			int i = recipeTable.getSelectedRow();
-			if (i > -1){
-				inst.setRecipe((Recipe)recipes.get(i), (File)files.get(i));
-			}
-			
-			setVisible(false);
-			dispose();	
-			return;								
-		}		
 	}
-	
+
 	class FindTableModel extends AbstractTableModel {
-		
 
 		private String[] columnNames = {"Recipe", "Style", "Brewer", "Date"};
 
@@ -267,7 +226,7 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 
 		public FindTableModel() {
 			// data = new ArrayList();
-		}		
+		}
 
 		public void setData(ArrayList l) {
 			data = l;
@@ -289,9 +248,9 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 		}
 
 		public Object getValueAt(int row, int col) {
-			
+
 			try {
-				Recipe r = (Recipe)data.get(row);
+				Recipe r = (Recipe) data.get(row);
 				switch (col) {
 					case 0 :
 						return r.getName();
@@ -301,7 +260,7 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 						return r.getBrewer();
 					case 3 :
 						return "";
-						
+
 					default :
 						return "";
 
@@ -316,13 +275,11 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 		 * each cell. If we didn't implement this method, then the last column
 		 * would contain text ("true"/"false"), rather than a check box.
 		 */
-		
-//		public Class getColumnClass(int c) {
-//			return getValueAt(0, c).getClass();
-//		}
 
-		
-		
+		//		public Class getColumnClass(int c) {
+		//			return getValueAt(0, c).getClass();
+		//		}
+
 	}
 
 }

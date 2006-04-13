@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.7 2006/04/13 17:44:10 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.8 2006/04/13 20:00:49 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -302,9 +302,11 @@ public class Recipe {
 		}
 	public void setMaltUnits(int i, String u) {((Fermentable)fermentables.get(i)).setUnits(u); }
 	public void setMaltAmount(int i, double a) {((Fermentable)fermentables.get(i)).setAmount(a); }
+	public void setMaltAmountAs(int i, double a, String u) {((Ingredient)fermentables.get(i)).setAmountAs(a,u); }
 	public void setMaltPppg(int i, double p) {((Fermentable)fermentables.get(i)).setPppg(p); }
 	public void setMaltLov(int i, double l) {((Fermentable)fermentables.get(i)).setLov(l); }
 	public void setMaltCost(int i, String c) {((Fermentable)fermentables.get(i)).setCost(c); }
+	public void setMaltPercent(int i, double p) {((Fermentable)fermentables.get(i)).setPercent(p); }
 	
 	
 	// misc get/set functions
@@ -934,16 +936,19 @@ public class Recipe {
 			return dilIbu;
 		}
 
-		public void setDilIbu(double dilIbu) {
-			this.dilIbu = dilIbu;
+		public void setDilIbu(double d) {
+			double dilutionFactor = d / ibu;
+			setDilVol(postBoilVol.getValue() / dilutionFactor);
+
 		}
 
 		public double getDilOG() {
 			return dilOG;
 		}
 
-		public void setDilOG(double dilOG) {
-			this.dilOG = dilOG;
+		public void setDilOG(double d) {
+			double dilutionFactor = (d - 1) / (estOg - 1);
+			setDilVol(postBoilVol.getValue() / dilutionFactor);
 		}
 
 		public double getDilVol() {

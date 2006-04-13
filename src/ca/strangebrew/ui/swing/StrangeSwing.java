@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.6 2006/04/13 17:44:11 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.7 2006/04/13 20:00:50 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -154,7 +154,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JLabel boilTimeLable;
 	private JPanel statusPanel;
 	private JMenuItem mashManagerMenuItem;
-	private JMenu mnuView;
+	private JMenu mnuTools;
 	private JToolBar tlbMalt;
 	private JPanel pnlMaltButtons;
 	private StylePanel stylePanel;
@@ -1422,18 +1422,29 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 				}
 				{
-					mnuView = new JMenu();
-					jMenuBar1.add(mnuView);
-					mnuView.setText("View");
+					mnuTools = new JMenu();
+					jMenuBar1.add(mnuTools);
+					mnuTools.setText("Tools");
 					{
 						mashManagerMenuItem = new JMenuItem();
-						mnuView.add(mashManagerMenuItem);
+						mnuTools.add(mashManagerMenuItem);
 						mashManagerMenuItem.setText("Mash Manager...");
 						mashManagerMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
 								mashMgr = new MashManager(myRecipe);
 								mashMgr.setVisible(true);
 
+							}
+						});
+						
+						JMenuItem maltPercentMenuItem = new JMenuItem();
+						mnuTools.add(maltPercentMenuItem);
+						maltPercentMenuItem.setText("Malt Percent...");
+						final JFrame owner = this;
+						maltPercentMenuItem.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								MaltPercentDialog maltPercent = new MaltPercentDialog(owner);
+								maltPercent.setVisible(true);
 							}
 						});
 					}
