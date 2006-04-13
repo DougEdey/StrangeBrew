@@ -1,5 +1,5 @@
 /*
- * $Id: DilutionPanel.java,v 1.1 2006/04/07 13:59:14 andrew_avis Exp $
+ * $Id: DilutionPanel.java,v 1.2 2006/04/13 17:44:11 andrew_avis Exp $
  * Created on June 4, 2005
  * Dilution panel to help you figure out the results of diluting
  * your wort with water post-boil.
@@ -26,23 +26,40 @@
 package ca.strangebrew.ui.swing;
 
 
-import javax.swing.JPanel;
-import javax.swing.BoxLayout;
-import javax.swing.BorderFactory;
-import javax.swing.JSpinner;
-import javax.swing.JLabel;
-import javax.swing.SpinnerNumberModel;
-
-import java.awt.GridLayout;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
-import javax.swing.WindowConstants;
-import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import ca.strangebrew.Recipe;
+import ca.strangebrew.SBStringUtils;
+import ca.strangebrew.Style;
 
 
-public class DilutionPanel extends javax.swing.JPanel {
+
+
+
+/**
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
+public class DilutionPanel extends javax.swing.JPanel implements ChangeListener {
 	private JPanel infoPanel;
 	private JPanel stylePanel;
 	private JLabel colourLowLabel;
@@ -87,20 +104,20 @@ public class DilutionPanel extends javax.swing.JPanel {
 	* Auto-generated main method to display this 
 	* JPanel inside a new JFrame.
 	*/
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(new DilutionPanel());
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		JFrame frame = new JFrame();
+//		frame.getContentPane().add(new DilutionPanel());
+//		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+//		frame.pack();
+//		frame.setVisible(true);
+//	}
 	
-	public DilutionPanel(Recipe r){
-		super();
-		myRecipe = r;
-		initGUI();
-		// displayDilution();
-	}
+//	public DilutionPanel(Recipe r){
+//		super();
+//		myRecipe = r;
+//		initGUI();
+//		displayDilution();
+//	}
 		
 	public DilutionPanel() {
 		super();
@@ -109,11 +126,36 @@ public class DilutionPanel extends javax.swing.JPanel {
 	
 	public void setData(Recipe r){
 		myRecipe = r;
+		displayDilution();
 	}
 	
 	private void displayDilution(){
 		postBoilText.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
-		diluteWithText.setValue(new Double(myRecipe.dilution.getAddVol().getValue()));
+		diluteWithText.setValue(new Double(myRecipe.dilution.getAddVol()));
+		totalVolumeSpinner.setValue(new Double(myRecipe.dilution.getDilVol()));
+		
+		ibuDilutedSpin.setValue(new Double(myRecipe.dilution.getDilIbu()));
+		colourDilutedLabel.setText(SBStringUtils.df0.format(myRecipe.dilution.getDilSrm()));
+		abvDilutedLabel.setText(SBStringUtils.df1.format(myRecipe.dilution.getDilAlc()));
+		ogDilutedSpin.setValue(new Double(myRecipe.dilution.getDilOG()));
+		
+		
+		// recipe values:
+		ibuRecipeLabel.setText(SBStringUtils.df1.format(myRecipe.getIbu()));
+		colourRecipeLabel.setText(SBStringUtils.df1.format(myRecipe.getSrm()));
+		abvRecipeLabel.setText(SBStringUtils.df1.format(myRecipe.getAlcohol()));
+		ogRecipeLabel.setText(SBStringUtils.df3.format(myRecipe.getEstOg()));
+		
+		// style values
+		Style s = myRecipe.getStyleObj();		
+		ogLowLabel.setText(SBStringUtils.df3.format(s.getOgLow()));		
+		ogHighLabel.setText(SBStringUtils.df3.format(s.getOgHigh()));
+		abvLowLabel.setText(SBStringUtils.df1.format(s.getAlcLow()));		
+		abvHighLabel.setText(SBStringUtils.df1.format(s.getAlcHigh()));
+		colourLowLabel.setText(SBStringUtils.df1.format(s.getLovLow()));		
+		colourHighLabel.setText(SBStringUtils.df1.format(s.getLovHigh()));
+		ibuLowLabel.setText(SBStringUtils.df1.format(s.getIbuLow()));		
+		ibuHighLabel.setText(SBStringUtils.df1.format(s.getIbuHigh()));
 		
 	}
 	
@@ -147,6 +189,7 @@ public class DilutionPanel extends javax.swing.JPanel {
 						postBoilText = new JSpinner();
 						postBoilPanel.add(postBoilText);
 						postBoilText.setPreferredSize(new java.awt.Dimension(85, 20));
+						postBoilText.addChangeListener(this);
 					}
 				}
 				{
@@ -161,9 +204,13 @@ public class DilutionPanel extends javax.swing.JPanel {
 						diluteWithLabel.setText("Dilute With:");
 					}
 					{
+						SpinnerNumberModel diluteWithTextSpinnerModel = new SpinnerNumberModel(0.0, 0.0,
+								999.9, 0.5);
 						diluteWithText = new JSpinner();
+						diluteWithText.setModel(diluteWithTextSpinnerModel);
 						diluteWithPanel.add(diluteWithText);
 						diluteWithText.setPreferredSize(new java.awt.Dimension(79, 20));
+						diluteWithText.addChangeListener(this);
 					}
 				}
 				{
@@ -179,13 +226,14 @@ public class DilutionPanel extends javax.swing.JPanel {
 					}
 					{
 
-						SpinnerNumberModel totalVolumeSpinnerModel = new SpinnerNumberModel(10.0, 0.1,
+						SpinnerNumberModel totalVolumeSpinnerModel = new SpinnerNumberModel(0.0, 0.0,
 								999.9, 0.5);
 						
 						totalVolumeSpinner = new JSpinner();
 						totalVolPanel.add(totalVolumeSpinner);
 						totalVolumeSpinner.setModel(totalVolumeSpinnerModel);
 						totalVolumeSpinner.setPreferredSize(new java.awt.Dimension(91, 21));
+						totalVolumeSpinner.addChangeListener(this);
 					}
 				}
 			}
@@ -243,6 +291,7 @@ public class DilutionPanel extends javax.swing.JPanel {
 					ibuDilutedSpin = new JSpinner();
 					stylePanel.add(ibuDilutedSpin);
 					ibuDilutedSpin.setModel(ibuDilutedSpinModel);
+					ibuDilutedSpin.addChangeListener(this);
 				}
 				{
 					ibuHighLabel = new JLabel();
@@ -322,6 +371,7 @@ public class DilutionPanel extends javax.swing.JPanel {
 					ogDilutedSpin = new JSpinner();
 					stylePanel.add(ogDilutedSpin);
 					ogDilutedSpin.setModel(ogSpinModel);
+					ogDilutedSpin.addChangeListener(this);
 				}
 				{
 					ogHighLabel = new JLabel();
@@ -332,6 +382,21 @@ public class DilutionPanel extends javax.swing.JPanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void stateChanged(ChangeEvent e) {
+		Object o = e.getSource();	
+		
+		if (o == diluteWithText){
+			myRecipe.dilution.setAddVol(Double.parseDouble(diluteWithText.getValue().toString()));
+			displayDilution();
+		}
+		 
+//		if (o == postBoilText) {
+//			myRecipe.setPostBoil(Double.parseDouble(postBoilText.getValue().toString()));
+//			displayDilution();
+//		}
+		
 	}
 
 }

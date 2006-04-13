@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.2 2006/04/12 16:18:14 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.3 2006/04/13 17:44:10 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -8,7 +8,7 @@
  * recipe.
  */
 package ca.strangebrew;
-
+ 
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -427,8 +427,8 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentElement.equalsIgnoreCase("SIZE")) {
 				r.setPostBoil(Double.parseDouble(s));
 			} else if (currentElement.equalsIgnoreCase("SIZE_UNITS")) {
-				r.setPreBoilVolUnits(s);
-				r.setPostBoilVolUnits(s);
+				// also sets postboil:
+				r.setVolUnits(s);				
 			} else if (currentElement.equalsIgnoreCase("STYLE")) {
 				r.setStyle(s);
 			} else if (currentElement.equalsIgnoreCase("BOIL_TIME")) {

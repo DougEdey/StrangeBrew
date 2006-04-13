@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.5 2006/04/12 18:44:18 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.6 2006/04/13 17:44:11 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -61,7 +61,6 @@ import ca.strangebrew.Debug;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
-
 
 
 public class MashManager extends javax.swing.JFrame implements ActionListener, FocusListener {
@@ -716,6 +715,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 		String recipeUnitsAbrv = new Quantity().getVolAbrv(myRecipe.getVolUnits());
 		String mashUnitsAbrv = new Quantity().getVolAbrv(myRecipe.mash.getMashVolUnits());
 
+		totalWaterLbl.setText(myRecipe.getTotalWater());
 		totalUnitsLbl.setText(recipeUnitsAbrv);
 		
 		usedMashLbl.setText(myRecipe.mash.getTotalWaterStr());

@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.5 2006/04/12 18:44:18 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.6 2006/04/13 17:44:11 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -257,6 +257,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		try {
 			path = new File(".").getCanonicalPath() + slash + "src" + slash + "ca" 
 			+ slash + "strangebrew" + slash + "data";
+			Debug.print("DB Path: " + path);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -741,7 +742,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									String q = (String) cmbSizeUnits.getSelectedItem();
 									if (myRecipe != null && q != myRecipe.getVolUnits()) {
 										// also sets postboil units:
-										myRecipe.setPreBoilVolUnits(q);
+										myRecipe.setVolUnits(q);
 										displayRecipe();
 									}
 								}
