@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.8 2006/04/17 17:04:14 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.9 2006/04/17 21:01:43 ckilburn Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -42,6 +42,7 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -1501,10 +1502,15 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		FileWriter out = new FileWriter(tmp);
 		out.write(myRecipe.toXML());
 		out.close();
-		FileOutputStream output = new java.io.FileOutputStream(f);
-		XmlTransformer.writeStream("tmp.xml", "src/strangebrew/data/recipeToHtml.xslt", output);
+		
+        // find the xslt stylesheet in the classpath
+        URL xsltUrl = getClass().getClassLoader().getResource("ca/strangebrew/data/recipeToHtml.xslt");
+        File xsltFile = new File(xsltUrl.getFile());
+        
+        FileOutputStream output = new FileOutputStream(f);
+        
+		XmlTransformer.writeStream(tmp, xsltFile, output);
 		tmp.delete();
-
 	}
 
 	public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor {
