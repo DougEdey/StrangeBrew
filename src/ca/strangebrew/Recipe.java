@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.8 2006/04/13 20:00:49 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.9 2006/04/17 17:04:14 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -293,6 +293,7 @@ public class Recipe {
 	public double getMaltPercent(int i){ return ((Fermentable)fermentables.get(i)).getPercent(); }
 	public double getMaltAmountAs(int i, String s){ return ((Fermentable)fermentables.get(i)).getAmountAs(s); }
 	public String getMaltDescription(int i){ return ((Fermentable)fermentables.get(i)).getDescription(); }
+	public boolean getMaltMashed(int i){ return ((Fermentable)fermentables.get(i)).getMashed(); }
 	
 	// fermentable set methods
 	public void setMaltName(int i, String n) {

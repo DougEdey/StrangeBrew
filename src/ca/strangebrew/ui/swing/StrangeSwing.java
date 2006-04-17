@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.7 2006/04/13 20:00:50 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.8 2006/04/17 17:04:14 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -172,7 +172,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JPanel pnlMain;
 	private JTable hopsTable;
 	private JScrollPane scpComments;
-	private JTable maltTable;
+	public JTable maltTable;
 	private JLabel lblAlcValue;
 	private JLabel lblColourValue;
 	private JLabel lblIBUvalue;

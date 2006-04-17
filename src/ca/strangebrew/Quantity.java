@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.2 2006/04/12 16:18:14 andrew_avis Exp $
+ * $Id: Quantity.java,v 1.3 2006/04/17 17:04:14 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -155,6 +155,15 @@ public class Quantity {
 			return null;
 		else 
 			return u[i].unit;
+	}
+	
+	
+	// TODO: make this work
+	private boolean isAbrv(String a){
+		int i=0;
+		Converter[] u;
+		return false;
+		
 	}
 	
 	private String getAbrvFromUnit(String t, String s){

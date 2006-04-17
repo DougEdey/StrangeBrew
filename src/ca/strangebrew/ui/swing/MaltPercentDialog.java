@@ -1,41 +1,42 @@
 package ca.strangebrew.ui.swing;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import ca.strangebrew.Fermentable;
+import ca.strangebrew.Debug;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 
 
 
-
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
 public class MaltPercentDialog extends javax.swing.JDialog {
 	private JScrollPane jPanel1;
+	private JSpinner weightSpn;
+	private JPanel jPanel5;
+	private JRadioButton OGBtn;
+	private JRadioButton weightBtn;
+	private JLabel jLabel1;
+	private JPanel jPanel4;
+	private JSpinner OGSpn;
 	private JPanel jPanel3;
 	private JButton cancelBtn;
 	private JTable maltTable;
@@ -43,6 +44,7 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 	private JPanel jPanel2;
 	private Recipe myRecipe;
 	private StrangeSwing app;
+	private ButtonGroup bg = new ButtonGroup();
 
 	/**
 	* Auto-generated main method to display this JDialog
@@ -63,11 +65,35 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 	private void calcWeights() {
 		// we've set the % in the fermentables list, now
 		// let's figure out the correct amounts:
-		for (int i=0; i<myRecipe.getMaltListSize(); i++){
-			double newAmount = myRecipe.getTotalMaltLbs() *  myRecipe.getMaltPercent(i) / 100;
-			myRecipe.setMaltAmountAs(i,newAmount,"lb" );
+		
+		// by weight?
+		if (weightBtn.isSelected()) {
+			double totalWeight = Double.parseDouble(weightSpn.getValue().toString());
+			for (int i = 0; i < myRecipe.getMaltListSize(); i++) {
+				double newAmount = totalWeight * myRecipe.getMaltPercent(i) / 100;
+				myRecipe.setMaltAmountAs(i, newAmount, "lb");
+			}
+		}
+		
+		// no, by OG
+		else {
+			double effic;
+			double targOG = Double.parseDouble(OGSpn.getValue().toString());
+			double totalPoints = (myRecipe.getPostBoilVol("gal US") * (targOG - 1.0)) * 1000;
+			
+			for (int i = 0; i < myRecipe.getMaltListSize(); i++) {
+				double contribPoints = totalPoints * myRecipe.getMaltPercent(i) / 100;
+				if (myRecipe.getMaltMashed(i))
+					effic = myRecipe.getEfficiency();
+				else
+					effic = 100;
+				double newAmount = contribPoints / ((myRecipe.getMaltPppg(i)-1) * (effic / 100) * 1000); 
+				myRecipe.setMaltAmountAs(i, newAmount, "lb");
+			}
+			
 		}
 		myRecipe.calcMaltTotals();
+		
 	}
 	
 	private void initGUI() {
@@ -77,29 +103,88 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 
 		TableModel maltTableModel = new MaltPercentTableModel();
 
-		jPanel2 = new JPanel();
-		FlowLayout jPanel2Layout = new FlowLayout();
-		jPanel2Layout.setAlignment(FlowLayout.RIGHT);
-		jPanel2.setLayout(jPanel2Layout);
-		getContentPane().add(jPanel2, BorderLayout.SOUTH);
+		jPanel5 = new JPanel();
+		BoxLayout jPanel5Layout = new BoxLayout(jPanel5, javax.swing.BoxLayout.Y_AXIS);
+		jPanel5.setLayout(jPanel5Layout);
+		getContentPane().add(jPanel5, BorderLayout.CENTER);
 
 		jPanel3 = new JPanel();
-		getContentPane().add(jPanel3, BorderLayout.NORTH);
+		jPanel5.add(jPanel3);
+		BoxLayout jPanel3Layout = new BoxLayout(jPanel3, javax.swing.BoxLayout.Y_AXIS);
+		jPanel3.setLayout(jPanel3Layout);
 
 		jPanel1 = new JScrollPane();
 		jPanel3.add(jPanel1);
 		jPanel1.setPreferredSize(new java.awt.Dimension(392, 252));
 		jPanel1.setBorder(BorderFactory.createTitledBorder("Fermentables"));
 
+		jPanel4 = new JPanel();
+		GridBagLayout jPanel4Layout = new GridBagLayout();
+		jPanel4Layout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1};
+		jPanel4Layout.rowHeights = new int[] {7, 7, 7, 7};
+		jPanel4Layout.columnWeights = new double[] {0.1, 0.2, 0.1, 0.1};
+		jPanel4Layout.columnWidths = new int[] {5, 9, 7, 7};
+		jPanel4.setLayout(jPanel4Layout);
+		jPanel3.add(jPanel4);
+
+		weightBtn = new JRadioButton("Target weight:");		
+		jPanel4.add(weightBtn, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		bg.add(weightBtn);
+		weightBtn.setSelected(true);
+		
+
+		weightSpn = new JSpinner();
+		jPanel4.add(weightSpn, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+		// SpinnerListModel weightSpnModel = new SpinnerListModel(new String[] { "Sun", "Mon", "Tue",
+		// 		"Wed", "Thu", "Fri", "Sat" });
+		// weightSpn.setModel(weightSpnModel);
+		weightSpn.setValue(new Double(myRecipe.getTotalMaltLbs()));
+
+		OGBtn = new JRadioButton("Target OG:");
+		jPanel4.add(OGBtn, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		bg.add(OGBtn);
+
+
+		OGSpn = new JSpinner();
+		SpinnerNumberModel OGSpnModel = new SpinnerNumberModel(1.000, 0.900,
+				2.000, 0.001);
+		jPanel4.add(OGSpn, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+		OGSpn.setModel(OGSpnModel);
+
+		jLabel1 = new JLabel();
+		jPanel4.add(jLabel1, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jLabel1.setText("lbs");
+
+		OGSpn.setValue(new Double(myRecipe.getEstOg()));
+
 		maltTable = new JTable();
-		// jPanel1.add(maltTable, BorderLayout.CENTER);
 		jPanel1.setViewportView(maltTable);
 		maltTable.setModel(maltTableModel);
 		maltTable.setPreferredSize(new java.awt.Dimension(203, 84));
 
+		jPanel2 = new JPanel();
+		jPanel5.add(jPanel2);
+		FlowLayout jPanel2Layout = new FlowLayout();
+		jPanel2Layout.setAlignment(FlowLayout.RIGHT);
+		jPanel2.setLayout(jPanel2Layout);
+
 		cancelBtn = new JButton();
 		jPanel2.add(cancelBtn);
 		cancelBtn.setText("Cancel");
+
+		okBtn = new JButton();
+		jPanel2.add(okBtn);
+		okBtn.setText("OK");
+		okBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				calcWeights();				
+				setVisible(false);
+				app.displayRecipe();
+				app.maltTable.updateUI();
+				dispose();
+			}
+		});
+
 		cancelBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				setVisible(false);
@@ -107,17 +192,7 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 			}
 		});
 
-		okBtn = new JButton();
-		jPanel2.add(okBtn);
-		okBtn.setText("OK");
-
-		okBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				calcWeights();
-				setVisible(false);
-				dispose();
-			}
-		});
+		// jPanel1.add(maltTable, BorderLayout.CENTER);
 
 			setSize(400, 300);
 		} catch (Exception e) {
