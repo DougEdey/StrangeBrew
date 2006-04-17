@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.4 2006/04/17 19:11:56 andrew_avis Exp $
+ * $Id: Quantity.java,v 1.5 2006/04/17 20:30:10 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -15,6 +15,7 @@ import java.util.ArrayList;
  *
  * This is the class for amounts + units.
  * It's pretty smart, and knows how to convert itself to other units.
+ * 
  */
 
 public class Quantity {
@@ -62,28 +63,6 @@ public class Quantity {
 		};
 	
 	// Get/Set:
-	// This is **waaaaay** too complicated.  Let's kill it and do something more sane.
-	/*
-	public void setQuantity(String u, String a, double am){
-		if (u!=null && !u.equals("")){
-			unit = u;
-			type = getTypeFromUnit(u);
-			if (a==null) // gotta set the abrv too:
-				abrv = getAbrvFromUnit(type, u);
-		}		
-		if (a!=null && !a.equals("")){
-			abrv = a;
-			type = getTypeFromUnit(a);
-			if (u==null) // gotta set the unit too:
-				unit = getUnitFromAbrv(type, a);
-			if (unit==null) // this is not a recognized unit because the above call failed
-						 // just set unit = a
-				unit = a;
-		}
-		if (am >= 0)
-			value = am;
-	}
-	*/
 	
 	public Quantity(){
 		unit = "";
@@ -225,7 +204,7 @@ public class Quantity {
 		  u = weightUnits;
 		
 		while (i < u.length
-				&& u[i].unit != s) {
+				&& !u[i].unit.equalsIgnoreCase(s)) {
 			i++;
 		}
 		if (i >= u.length)
@@ -270,8 +249,10 @@ public class Quantity {
 		return list;
 	}
 
-	public String getVolAbrv(String unit) {
-		return getAbrvFromUnit(getTypeFromUnit(unit), unit);
+	public static String getVolAbrv(String unit) {
+		Quantity q = new Quantity();
+		q.setUnits(unit);
+		return q.abrv;
 	}
 	
 

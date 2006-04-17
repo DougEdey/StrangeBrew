@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.6 2006/04/13 17:44:11 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.7 2006/04/17 20:30:09 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -712,8 +712,8 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 	
 	public void displayWater(){
 		
-		String recipeUnitsAbrv = new Quantity().getVolAbrv(myRecipe.getVolUnits());
-		String mashUnitsAbrv = new Quantity().getVolAbrv(myRecipe.mash.getMashVolUnits());
+		String recipeUnitsAbrv = Quantity.getVolAbrv(myRecipe.getVolUnits());
+		String mashUnitsAbrv = Quantity.getVolAbrv(myRecipe.mash.getMashVolUnits());
 
 		totalWaterLbl.setText(myRecipe.getTotalWater());
 		totalUnitsLbl.setText(recipeUnitsAbrv);
