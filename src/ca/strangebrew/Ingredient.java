@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * $Id: Ingredient.java,v 1.2 2006/04/13 20:00:49 andrew_avis Exp $
+ * $Id: Ingredient.java,v 1.3 2006/04/17 19:11:56 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  *
@@ -33,13 +33,13 @@ public class Ingredient {
 	
 	// Setter methods:
 	public void setName(String n){ name = n; }
-	public void setAmount(double a){ amount.setQuantity(null, null, a); }
+	public void setAmount(double a){ amount.setAmount(a); }
 	public void setAmountAs(double a, String u) {
 		double converted = Quantity.convertUnit(u, amount.getUnits(), a);
-		amount.setQuantity(null, null, converted);
+		amount.setAmount(converted);
 	}
-	public void setUnits(String a){ amount.setQuantity( null, a, -1); }
-	public void setUnitsFull(String u){ amount.setQuantity( u, null, -1); }
+	public void setUnits(String a){ amount.setUnits(a); }
+	public void setUnitsFull(String u){ amount.setUnits(u); }
 	public void setCost(double c){ costPerU = c; }
 	
 	public void setCost(String c){
@@ -69,7 +69,9 @@ public class Ingredient {
 		int i = a.indexOf(" ");
 		String d = a.substring(0,i);
 		String u = a.substring(i);
-		amount.setQuantity(null, u.trim(), Double.parseDouble(d.trim()));
+		
+		amount.setAmount(Double.parseDouble(d.trim()));
+		amount.setUnits(u.trim());
 	}
 	
 	public String toXML(){

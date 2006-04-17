@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.3 2006/04/17 17:04:14 andrew_avis Exp $
+ * $Id: Quantity.java,v 1.4 2006/04/17 19:11:56 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -62,6 +62,8 @@ public class Quantity {
 		};
 	
 	// Get/Set:
+	// This is **waaaaay** too complicated.  Let's kill it and do something more sane.
+	/*
 	public void setQuantity(String u, String a, double am){
 		if (u!=null && !u.equals("")){
 			unit = u;
@@ -80,6 +82,41 @@ public class Quantity {
 		}
 		if (am >= 0)
 			value = am;
+	}
+	*/
+	
+	public Quantity(){
+		unit = "";
+		type = "";
+		abrv = "";		
+	}
+	
+	public Quantity(String u, double am){
+		setUnits(u);
+		setAmount(am);
+	}
+	
+	// This sets a quantity's unit, abrv, and type:
+	public void setUnits(String s){
+		String t = getTypeFromUnit(s);
+		type = t;
+		
+		if (isAbrv(s)){
+			String u = getUnitFromAbrv(t, s);
+			unit = u;			
+			abrv = s;
+		}
+		// it's a unit
+		else {
+			String a = getAbrvFromUnit(t, s);
+			unit = s;			
+			abrv = a;
+		}
+	}
+	
+	// set the amount only:
+	public void setAmount(double am){
+		value = am;
 	}
 	
 	public double getValue(){ return value;	}
@@ -111,16 +148,17 @@ public class Quantity {
 	public void add(double v, String u){
 		// convert v from u to current units
 		// then add it
-		Quantity q = new Quantity();
-		q.setQuantity(u, null, v);
+		Quantity q = new Quantity(u,v);
 		double v2 = q.getValueAs(getUnits());
 		value += v2;
 	}
 	
-//	 implement to support comboboxes in Swing:
+	//	 implement to support comboboxes in Swing:
 	public String getName(){
 		return unit;
 	}
+	
+
 	
 
 	
@@ -160,8 +198,19 @@ public class Quantity {
 	
 	// TODO: make this work
 	private boolean isAbrv(String a){
-		int i=0;
+
 		Converter[] u;
+		String t = getTypeFromUnit(a);
+		if (t == "vol")
+			  u = volUnits;
+			else // assume weight
+			  u = weightUnits;
+		
+		for (int i=0; i<u.length; i++){
+			if (u[i].abrv.equalsIgnoreCase(a))
+				return true;
+			
+		}
 		return false;
 		
 	}
@@ -198,6 +247,8 @@ public class Quantity {
 			return "weight";
 		
 	}
+
+
 	
 	/*
 	 * These are "generic" functions you can call on any quantity object (or just
@@ -223,10 +274,11 @@ public class Quantity {
 		return getAbrvFromUnit(getTypeFromUnit(unit), unit);
 	}
 	
+
+	
 	// let's just convert a unit from something to something else
 	public static double convertUnit(String from, String to, double value){
-		Quantity q = new Quantity();
-		q.setQuantity(null,from,value);		
+		Quantity q = new Quantity(from,value);
 		return q.getValueAs(to);
 	}
 

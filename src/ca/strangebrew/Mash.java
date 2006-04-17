@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Collections;
 
 /**
- * $Id: Mash.java,v 1.4 2006/04/12 18:44:17 andrew_avis Exp $
+ * $Id: Mash.java,v 1.5 2006/04/17 19:11:56 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -212,9 +212,7 @@ public class Mash {
 	 * @return Val converted to the mash vol, formated to 1 decimal
 	 */
 	private String getVolConverted(double val){
-		Quantity q = new Quantity();
-		q.setQuantity(null, "qt", val);
-		double d = q.getValueAs(volUnits);
+		double d = Quantity.convertUnit("qt", volUnits, val); 
 		String s = df1.format(d).toString();
 		return s;
 	}
@@ -231,9 +229,7 @@ public class Mash {
 	 * + the units.
 	 */
 	public String getMashTotalVol() {
-		Quantity q = new Quantity();
-		q.setQuantity(null, "qt", volQts);
-		double d = q.getValueAs(volUnits);
+		double d = Quantity.convertUnit("qt", volUnits, volQts);
 		String s = df1.format(d).toString() + " " + volUnits;
 		return s;	
 	}	
@@ -404,8 +400,9 @@ public class Mash {
 		waterEquiv = maltWeightLbs * (0.192 + mr);
 		mashVolQTS = calcMashVol(maltWeightLbs, mr);
 		totalMashTime += stp.minutes;
-		mashWaterQTS += waterAddedQTS;
-		stp.infuseVol.setQuantity(null, "qt", waterAddedQTS);
+		mashWaterQTS += waterAddedQTS;		
+		stp.infuseVol.setUnits("qt");
+		stp.infuseVol.setAmount(waterAddedQTS);
 		stp.method = "infusion";
 
 		// subtract the water added from the Water Equiv so that they are correct when added in the next part of the loop
@@ -435,7 +432,9 @@ public class Mash {
 				// Updated the water added
 				waterAddedQTS = calcWaterAddition(targetTemp, currentTemp,
 						waterEquiv, 212);
-				stp.infuseVol.setQuantity(null, "qt", waterAddedQTS);
+				
+				stp.infuseVol.setUnits("qt");
+				stp.infuseVol.setAmount(waterAddedQTS);
 				if (tempUnits == "C")
 					strikeTemp = 100;
 				stp.directions = "Add " + df1.format(stp.infuseVol.getValueAs(volUnits)) + " " + volUnits
@@ -473,9 +472,12 @@ public class Mash {
 			} else
 				totalMashTime += stp.minutes;
 
-			stp.infuseVol.setQuantity(null, "qt", waterAddedQTS);
-			stp.decoctVol.setQuantity(null, "qt", decoct);
-
+			
+			stp.infuseVol.setUnits("qt");
+			stp.infuseVol.setAmount(waterAddedQTS);			
+			stp.decoctVol.setUnits("qt");
+			stp.decoctVol.setAmount(decoct);
+			
 			// set target temp to end temp for next step
 			targetTemp = stp.endTemp;
 

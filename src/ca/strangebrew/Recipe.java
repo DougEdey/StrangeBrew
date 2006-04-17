@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.9 2006/04/17 17:04:14 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.10 2006/04/17 19:11:56 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -102,8 +102,10 @@ public class Recipe {
 		name = "My Recipe";
 		created = new GregorianCalendar();
 		efficiency = opts.getDProperty("optEfficiency");
-		preBoilVol.setQuantity(opts.getProperty("optSizeU"), null, opts.getDProperty("optPreBoilVol"));
-		postBoilVol.setQuantity(opts.getProperty("optSizeU"), null, opts.getDProperty("optPostBoilVol"));
+		preBoilVol.setUnits(opts.getProperty("optSizeU"));
+		preBoilVol.setAmount(opts.getDProperty("optPreBoilVol"));
+		preBoilVol.setUnits(opts.getProperty("optSizeU"));
+		preBoilVol.setAmount(opts.getDProperty("optPostBoilVol"));
 		// setPostBoil(opts.getDProperty("optPostBoilVol"));
 		// setVolUnits(opts.getProperty("optSizeU"));
 		attenuation = opts.getDProperty("optAttenuation");
@@ -155,10 +157,8 @@ public class Recipe {
 	public double getTotalHopsCost(){ return totalHopsCost; }
 	public double getTotalMaltCost(){ return totalMaltCost; }
 	public double getTotalMashLbs(){ return totalMashLbs; }
-	public double getTotalMash() {
-		Quantity q = new Quantity();
-		q.setQuantity(null,"lb",totalMashLbs);
-		return q.getValueAs(mash.getMashVolUnits());
+	public double getTotalMash() {		
+		return Quantity.convertUnit("lb", mash.getMashVolUnits(), totalMashLbs);
 	}
 	public double getTotalMaltLbs(){ return totalMaltLbs; }
 	public double getTrubLoss() { return trubLoss; }
@@ -168,9 +168,7 @@ public class Recipe {
 	
 	// water
 	private String getVolConverted(double val){
-		Quantity q = new Quantity();
-		q.setQuantity(null, "qt", val);
-		double d = q.getValueAs(getVolUnits());
+		double d = Quantity.convertUnit("qt", getVolUnits(), val); 
 		String s = SBStringUtils.df1.format(d).toString();
 		return s;
 	}
@@ -210,7 +208,7 @@ public class Recipe {
             evap = e; 
             // JvH changing the evaporation, changes the post boil volume (NOT the pre boil)
             double post = preBoilVol.getValue() - (evap * boilMinutes / 60);
-            postBoilVol.setQuantity(null, null, post);
+            postBoilVol.setAmount(post);
             calcMaltTotals();
             calcHopsTotals();
         }
@@ -347,8 +345,8 @@ public class Recipe {
 	// Setters that need to do extra work:
 	
 	public void setVolUnits(String v) {
-		preBoilVol.setQuantity( v, null, -1);
-		postBoilVol.setQuantity( v, null, -1);
+		preBoilVol.setUnits( v );
+		postBoilVol.setUnits( v );
 		calcMaltTotals();
 		calcHopsTotals();
 		
@@ -386,20 +384,20 @@ public class Recipe {
 		
 	}
 	public void setPreBoil(double p) { 
-		preBoilVol.setQuantity(null, null, p);
+		preBoilVol.setAmount(p);
 		// TODO: implement % as well as constant
 		double post = p - (evap * boilMinutes / 60);
-		postBoilVol.setQuantity(null, null, post);
+		postBoilVol.setAmount(post);
 		calcMaltTotals();
 		calcHopsTotals();
 		dilution.calcDilution();
 		}
 	
 	public void setPostBoil(double p) {
-		postBoilVol.setQuantity(null, null, p); 
+		postBoilVol.setAmount(p); 
 		// TODO: implement % as well as constant 
 		double pre = p + (evap * boilMinutes / 60);
-		preBoilVol.setQuantity(null, null, pre);		
+		preBoilVol.setAmount(pre);		
 		calcMaltTotals();
 		calcHopsTotals();
 		if (!diluted){
@@ -474,9 +472,10 @@ public class Recipe {
 		int i = a.indexOf(" ");
 		String d = a.substring(0,i);
 		String u = a.substring(i);		
-		preBoilVol.setQuantity( null, u.trim(), Double.parseDouble(d.trim()));
-		postBoilVol.setQuantity( null, u.trim(), Double.parseDouble(d.trim()));
-		// this seems redundant, but we need to re-calc pre-boil vol:
+		// preBoilVol.setAmount(Double.parseDouble(d.trim()));
+		preBoilVol.setUnits(u.trim());
+		// postBoilVol.setAmount(Double.parseDouble(d.trim()));		
+		postBoilVol.setUnits(u.trim());
 		setPostBoil(Double.parseDouble(d.trim()));
 
 	}
@@ -906,10 +905,8 @@ public class Recipe {
 		// constructor
 		public DilutedRecipe(){
 			// initialize the amounts
-			dilVol = new Quantity();
-			addVol = new Quantity();
-			dilVol.setQuantity(getVolUnits(), null, postBoilVol.getValue());
-			addVol.setQuantity(getVolUnits(), null, 0);
+			dilVol = new Quantity(getVolUnits(), postBoilVol.getValue());
+			addVol = new Quantity(getVolUnits(), 0);
 		}
 
 		public double getDilSrm(){
@@ -919,9 +916,11 @@ public class Recipe {
 			return addVol.getValueAs(getVolUnits());
 		}
 
-		public void setAddVol(double a) {
-			addVol.setQuantity(getVolUnits(), null, a);
-			dilVol.setQuantity(getVolUnits(), null, postBoilVol.getValue() + addVol.getValue());
+		public void setAddVol(double a) {			
+			addVol.setAmount(a);
+			addVol.setUnits(getVolUnits());			
+			dilVol.setAmount(postBoilVol.getValue() + addVol.getValue());
+			dilVol.setUnits(getVolUnits());
 			calcDilution();			
 		}
 
@@ -956,9 +955,11 @@ public class Recipe {
 			return dilVol.getValueAs(getVolUnits());
 		}
 
-		public void setDilVol(double d) {
-			this.dilVol.setQuantity(getVolUnits(), null, d);
-			addVol.setQuantity(getVolUnits(), null, dilVol.getValue() - postBoilVol.getValue() );
+		public void setDilVol(double d) {			
+			this.dilVol.setAmount(d);
+			this.dilVol.setUnits(getVolUnits());
+			addVol.setAmount( dilVol.getValue() - postBoilVol.getValue() );
+			addVol.setUnits(getVolUnits());
 			calcDilution();	
 		}
 		
