@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.2 2006/04/07 17:59:13 andrew_avis Exp $
+ * $Id: Options.java,v 1.3 2006/04/17 20:53:06 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -41,7 +41,6 @@ public class Options {
 			{"optFWHTime", "1"},
 			{"optMashHopTime", "2"},
 			{"optHopsUtil", "4.15"},
-			{"optBoilTempF", "212"},
 			{"optColourEfficiency", "false"},
 			
 			// recipe basics:
@@ -273,6 +272,7 @@ public class Options {
 			d.put("optMashRatio", "1.25");
 			d.put("optGrainTemp", "68");
 			d.put("optTunLossF", "3");
+			d.put("optBoilTempF", "212");
 		}
 
 	}

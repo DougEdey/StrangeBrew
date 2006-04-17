@@ -122,6 +122,10 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private JTextField txtTinsethUtil;
 	private JLabel jLabelc4;
 	private JTextField txtFWHTime;
+	private JTextField boilTempTxt;
+	private JLabel jLabel12;
+	private JPanel mashPanel;
+	private JPanel newRecipePanel;
 	private JTextField txtLostInTrub;
 	private JTextField txtMiscLosses;
 	private JTextField txtLeftInKettle;
@@ -188,6 +192,9 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		txtLeftInKettle.setText(opts.getProperty("optKettleLoss"));
 		txtMiscLosses.setText(opts.getProperty("optMiscLoss"));
 		txtLostInTrub.setText(opts.getProperty("optTrubLoss"));
+		
+		// new recipe tab:
+		boilTempTxt.setText(opts.getProperty("optBoilTempF"));
 	}
 	
 	private void saveOptions(){
@@ -233,7 +240,10 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		opts.setProperty("optKettleLoss", txtLeftInKettle.getText());
 		opts.setProperty("optMiscLoss", txtMiscLosses.getText());
 		opts.setProperty("optTrubLoss", txtLostInTrub.getText());
+		
 
+		// new recipe tab:
+		opts.setProperty("optBoilTempF", boilTempTxt.getText());
 		
 	}
 	
@@ -601,6 +611,27 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				jTabbedPane1.addTab("Database", null, pnlDatabase, null);
 				pnlDatabase.setVisible(false);
 			}
+
+			newRecipePanel = new JPanel();
+			GridBagLayout newRecipePanelLayout = new GridBagLayout();
+			newRecipePanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1};
+			newRecipePanelLayout.rowHeights = new int[] {7, 7, 7, 7};
+			newRecipePanelLayout.columnWeights = new double[] {0.1, 0.1, 0.1, 0.1};
+			newRecipePanelLayout.columnWidths = new int[] {7, 7, 7, 7};
+			newRecipePanel.setLayout(newRecipePanelLayout);
+			jTabbedPane1.addTab("New Recipe Defaults", null, newRecipePanel, null);
+
+			mashPanel = new JPanel();
+			newRecipePanel.add(mashPanel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+			mashPanel.setBorder(BorderFactory.createTitledBorder("Mash"));
+
+			jLabel12 = new JLabel();
+			mashPanel.add(jLabel12);
+			jLabel12.setText("Boil Temp (F):");
+
+			boilTempTxt = new JTextField();
+			mashPanel.add(boilTempTxt);
+			boilTempTxt.setText("212");
 
 		}
 		getContentPane().add(BorderLayout.CENTER, jTabbedPane1);

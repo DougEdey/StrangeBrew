@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Collections;
 
 /**
- * $Id: Mash.java,v 1.5 2006/04/17 19:11:56 andrew_avis Exp $
+ * $Id: Mash.java,v 1.6 2006/04/17 20:53:06 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -23,6 +23,7 @@ public class Mash {
 	private String volUnits;
 	private double grainTemp;
 	private String mashTempU;
+	private double boilTempF;
 	
 	// calculated:
 	private double volQts;
@@ -47,6 +48,7 @@ public class Mash {
 		 tempUnits = opts.getProperty("optMashTempU");
 		 volUnits = opts.getProperty("optMashVolU");
 		 grainTemp = opts.getDProperty("optGrainTemp");
+		 boilTempF = opts.getDProperty("optBoilTempF");
 	}
 
 	public class MashStep {
@@ -204,6 +206,11 @@ public class Mash {
 		grainTemp = t;
 		calcMashSchedule();
 	}
+	
+	public void setBoilTempF(double t){
+		boilTempF = t;
+		calcMashSchedule();
+	}
 
 	
 	/**
@@ -222,6 +229,7 @@ public class Mash {
 	public String getMashTempUnits(){ return tempUnits; }
 	public int getMashTotalTime(){ return totalTime; }
 	public double getGrainTemp() { return grainTemp; }
+	public double getBoilTempF() { return boilTempF; }
 	
 	/**
 	 * 
@@ -427,11 +435,11 @@ public class Mash {
 			if (stp.method.equals("infusion")) { // calculate an infusion step
 				decoct = 0;
 				waterEquiv += waterAddedQTS; // add previous addition to get WE
-				strikeTemp = 212; // boiling water -- TODO: add from options
+				strikeTemp = boilTempF; // boiling water 
 
 				// Updated the water added
 				waterAddedQTS = calcWaterAddition(targetTemp, currentTemp,
-						waterEquiv, 212);
+						waterEquiv, boilTempF);
 				
 				stp.infuseVol.setUnits("qt");
 				stp.infuseVol.setAmount(waterAddedQTS);
@@ -449,10 +457,10 @@ public class Mash {
 
 				waterEquiv += waterAddedQTS; // add previous addition to get WE
 				waterAddedQTS = 0;
-				strikeTemp = 212; // boiling water
+				strikeTemp = boilTempF; // boiling water
 
 				// Calculate volume (qts) of mash to remove
-				decoct = calcDecoction(targetTemp, currentTemp, waterEquiv, 212);
+				decoct = calcDecoction(targetTemp, currentTemp, waterEquiv, boilTempF);
 
 				// Updated the decoction, convert to right units & make directions
 				double decoctConv = decoct;

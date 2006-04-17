@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.7 2006/04/17 20:30:09 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.8 2006/04/17 20:53:06 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -57,7 +57,6 @@ import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumn;
 
-import ca.strangebrew.Debug;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
@@ -72,6 +71,9 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 	private JButton addStepButton;
 	private JLabel recipeNameLabel;
 	private JLabel titleLabel;
+	private JLabel jLabel12;
+	private JTextField boilTempTxt;
+	private JPanel boilTempPanel;
 	private JLabel finalUnitsLbl;
 	private JLabel miscLosUnitsLbl;
 	private JLabel trubLossUnitsLbl;
@@ -396,7 +398,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 				FlowLayout pnlButtonsLayout = new FlowLayout();
 				pnlButtonsLayout.setAlignment(FlowLayout.RIGHT);
 				pnlButtons.setLayout(pnlButtonsLayout);
-				getContentPane().add(pnlButtons, new GridBagConstraints(1, 5, 2, 1, 0.0, 0.0, GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+				getContentPane().add(pnlButtons, new GridBagConstraints(1, 6, 2, 1, 0.0, 0.0, GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 				{
 					btnOk = new JButton();
 					pnlButtons.add(btnOk);
@@ -669,6 +671,25 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 					tempLostULabel.setText("F");
 				}
 			}
+
+			boilTempPanel = new JPanel();
+			BoxLayout boilTempPanelLayout = new BoxLayout(
+				boilTempPanel,
+				javax.swing.BoxLayout.X_AXIS);
+			boilTempPanel.setLayout(boilTempPanelLayout);
+			getContentPane().add(boilTempPanel, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+			boilTempPanel.setBorder(BorderFactory.createTitledBorder(null, "Boil Temp", TitledBorder.LEADING, TitledBorder.TOP));
+
+			boilTempTxt = new JTextField();
+			boilTempPanel.add(boilTempTxt);
+			boilTempTxt.setText("212");
+			boilTempTxt.addFocusListener(this);
+			boilTempTxt.addActionListener(this);
+
+			jLabel12 = new JLabel();
+			boilTempPanel.add(jLabel12);
+			jLabel12.setText("F");
+
 			pack();
 			this.setSize(468, 400);
 		} catch (Exception e) {
@@ -699,6 +720,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 			totalTimeLabel.setText(new Integer(myRecipe.mash.getMashTotalTime()).toString());
 			volLabel.setText(myRecipe.mash.getMashTotalVol());
 			grainTempText.setText(new Double(myRecipe.mash.getGrainTemp()).toString());			
+			boilTempTxt.setText(new Double(myRecipe.mash.getBoilTempF()).toString());
 			
 			int i = tblMash.getSelectedRow();
 			if (i>-1){
@@ -792,7 +814,11 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 		else if (o == grainTempText) {
 			String s = grainTempText.getText();
 			myRecipe.mash.setGrainTemp(Double.parseDouble(s));
-		}		
+		}
+		else if (o == boilTempTxt) {
+			String s = boilTempTxt.getText();
+			myRecipe.mash.setBoilTempF(Double.parseDouble(s));
+		}
 		
 		// water use stuff:
 		else if (o == kettleTxt) {
