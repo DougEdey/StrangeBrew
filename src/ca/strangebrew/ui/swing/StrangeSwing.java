@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.9 2006/04/17 21:01:43 ckilburn Exp $ 
+ * $Id: StrangeSwing.java,v 1.10 2006/04/18 20:41:17 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -114,6 +114,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
+	
+	private String version = "0.2 (Beta)";
+	
+	
 	private JMenuItem helpMenuItem;
 	private JMenu jMenu5;
 	private JMenuItem deleteMenuItem;
@@ -361,7 +365,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private void initGUI() {
 		try {
 
-			this.setSize(520, 532);
+			this.setSize(600, 532);
 			this.addWindowListener(new WindowAdapter() {
 				public void windowClosed(WindowEvent evt) {
 					System.exit(1);
@@ -1466,7 +1470,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						final JFrame owner = this;
 						aboutMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
-								aboutDlg = new AboutDialog(owner);
+								aboutDlg = new AboutDialog(owner, version);
 								aboutDlg.setVisible(true);
 
 							}
@@ -1511,6 +1515,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
         
 		XmlTransformer.writeStream(tmp, xsltFile, output);
 		tmp.delete();
+
 	}
 
 	public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor {
