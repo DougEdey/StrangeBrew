@@ -79,9 +79,9 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 		else {
 			double effic;
 			double targOG = Double.parseDouble(OGSpn.getValue().toString());
-			double totalPoints = (myRecipe.getPostBoilVol("gal US") * (targOG - 1.0)) * 1000;
+			double totalPoints = (myRecipe.getPostBoilVol("gal") * (targOG - 1.0)) * 1000;
 			
-			for (int i = 0; i < myRecipe.getMaltListSize(); i++) {
+			for (int i = 0; i < myRecipe.getMaltListSize(); i++) {				
 				double contribPoints = totalPoints * myRecipe.getMaltPercent(i) / 100;
 				if (myRecipe.getMaltMashed(i))
 					effic = myRecipe.getEfficiency();
@@ -89,6 +89,7 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 					effic = 100;
 				double newAmount = contribPoints / ((myRecipe.getMaltPppg(i)-1) * (effic / 100) * 1000); 
 				myRecipe.setMaltAmountAs(i, newAmount, "lb");
+				
 			}
 			
 		}

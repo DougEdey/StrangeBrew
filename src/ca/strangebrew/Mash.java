@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Collections;
 
 /**
- * $Id: Mash.java,v 1.6 2006/04/17 20:53:06 andrew_avis Exp $
+ * $Id: Mash.java,v 1.7 2006/04/18 20:41:32 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -24,6 +24,8 @@ public class Mash {
 	private double grainTemp;
 	private String mashTempU;
 	private double boilTempF;
+	private double thermalMass;
+	private double tunLossF;
 	
 	// calculated:
 	private double volQts;
@@ -211,6 +213,11 @@ public class Mash {
 		boilTempF = t;
 		calcMashSchedule();
 	}
+	
+	public void setTunLossF(double t){
+		tunLossF = t;
+		calcMashSchedule();
+	}
 
 	
 	/**
@@ -230,6 +237,7 @@ public class Mash {
 	public int getMashTotalTime(){ return totalTime; }
 	public double getGrainTemp() { return grainTemp; }
 	public double getBoilTempF() { return boilTempF; }
+	public double getTunLossF() { return tunLossF; }
 	
 	/**
 	 * 
@@ -372,7 +380,7 @@ public class Mash {
 		double currentTemp = grainTemp;
 
 		double displTemp = 0;
-		double tunLoss = 0; // figure out a better way to do this, eg: themal mass
+		double tunLoss = tunLossF; // figure out a better way to do this, eg: themal mass
 		double decoct = 0;
 		int totalMashTime = 0;
 		double totalSpargeTime = 0;
@@ -390,7 +398,7 @@ public class Mash {
 		// convert CurrentTemp to F
 		if (mashTempU == "C") {
 			currentTemp = cToF(currentTemp);
-			tunLoss = tunLoss / 1.8;
+			tunLoss = cToF(tunLossF);
 		}
 
 		// perform calcs on first record	  
@@ -568,6 +576,10 @@ public class Mash {
 			double tunLossF) {
 		// calculate strike temp
 		// Ratio is in quarts / lb, TunLoss is in F
+		
+		// this uses thermal mass:
+		// double strikeTemp = (maltWeightLbs + thermalMass)*( targetTemp - currentTemp )/( boilTempF - targetTemp );
+
 		return (targetTemp + 0.192 * (targetTemp - currentTemp) / ratio)
 				+ tunLossF;
 	}
@@ -648,6 +660,8 @@ public class Mash {
 			sb.append("      <TYPE>" + st.type + "</TYPE>\n");
 			sb.append("      <TEMP>" + st.startTemp + "</TEMP>\n");
 			sb.append("      <END_TEMP>" + st.endTemp + "</END_TEMP>\n");
+			sb.append("      <MIN>" + st.minutes + "</MIN>\n");
+			sb.append("      <RAMP_MIN>" + st.rampMin + "</RAMP_MIN>\n");
 			sb.append("      <METHOD>" + st.method + "</METHOD>\n");
 			sb.append("      <DIRECTIONS>" + st.directions + "</DIRECTIONS>\n");
 			sb.append("    </ITEM>\n");

@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.8 2006/04/17 20:53:06 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.9 2006/04/18 20:41:32 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -50,6 +50,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -60,6 +61,7 @@ import javax.swing.table.TableColumn;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
+
 
 
 public class MashManager extends javax.swing.JFrame implements ActionListener, FocusListener {
@@ -109,7 +111,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 	private JLabel jLabel1;
 	private JPanel waterUsePanel;
 	private JLabel tempLostULabel;
-	private JTextField tempLostText;
+	private JTextField tunLossTxt;
 	private JPanel tempLostPanel;
 	private JLabel grainTempULabel;
 	private JTextField grainTempText;
@@ -658,12 +660,10 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 				tempLostPanel.setPreferredSize(new java.awt.Dimension(104, 45));
 				tempLostPanel.setBorder(BorderFactory.createTitledBorder("Tun Temp Lost"));
 				{
-					tempLostText = new JTextField();
-					tempLostPanel.add(tempLostText);
-					tempLostText.setText("3");
-					tempLostText.setEditable(false);
-					tempLostText.addFocusListener(this);
-					tempLostText.addActionListener(this);
+					tunLossTxt = new JTextField();
+					tempLostPanel.add(tunLossTxt);
+					tunLossTxt.addFocusListener(this);
+					tunLossTxt.addActionListener(this);
 				}
 				{
 					tempLostULabel = new JLabel();
@@ -721,6 +721,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 			volLabel.setText(myRecipe.mash.getMashTotalVol());
 			grainTempText.setText(new Double(myRecipe.mash.getGrainTemp()).toString());			
 			boilTempTxt.setText(new Double(myRecipe.mash.getBoilTempF()).toString());
+			tunLossTxt.setText(new Double(myRecipe.mash.getTunLossF()).toString());
 			
 			int i = tblMash.getSelectedRow();
 			if (i>-1){
@@ -818,6 +819,10 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 		else if (o == boilTempTxt) {
 			String s = boilTempTxt.getText();
 			myRecipe.mash.setBoilTempF(Double.parseDouble(s));
+		}
+		else if (o == tunLossTxt) {
+			String s = tunLossTxt.getText();
+			myRecipe.mash.setTunLossF(Double.parseDouble(s));
 		}
 		
 		// water use stuff:

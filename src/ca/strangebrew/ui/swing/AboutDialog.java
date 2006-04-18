@@ -57,18 +57,13 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 	private JPanel aboutPanel;
 	private JButton okButton;
 	private Image image;
-
-	/**
-	* Auto-generated main method to display this JDialog
-	*/
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		AboutDialog inst = new AboutDialog(frame);
-		inst.setVisible(true);
-	}
 	
-	public AboutDialog(JFrame frame) {
+	private String version;
+
+	
+	public AboutDialog(JFrame frame, String v) {
 		super(frame);
+		version = v;
 		initGUI();
 	}
 	
@@ -98,7 +93,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 					{
 						versionLabel = new JLabel();
 						aboutPanel.add(versionLabel);
-						versionLabel.setText("Version: Beta 1");
+						versionLabel.setText("Version: " + version);
 					}
 					{
 						emailLabel = new JLabel();
