@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.10 2006/04/17 19:11:56 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.11 2006/04/19 20:03:58 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -106,8 +106,6 @@ public class Recipe {
 		preBoilVol.setAmount(opts.getDProperty("optPreBoilVol"));
 		preBoilVol.setUnits(opts.getProperty("optSizeU"));
 		preBoilVol.setAmount(opts.getDProperty("optPostBoilVol"));
-		// setPostBoil(opts.getDProperty("optPostBoilVol"));
-		// setVolUnits(opts.getProperty("optSizeU"));
 		attenuation = opts.getDProperty("optAttenuation");
 		boilMinutes = opts.getIProperty("optBoilTime");
 		ibuCalcMethod = opts.getProperty("optIBUCalcMethod");
@@ -141,6 +139,7 @@ public class Recipe {
 	public double getEstOg(){ return estOg; }	
 	public double getEstFg(){ return estFg; }
 	public double getEvap(){ return evap; }
+	public String getEvapMethod(){ return evapMethod; }
 	public double getKettleLoss() { return kettleLoss; }
 	public Mash getMash() { return mash; }	
 	public double getIbu(){ return ibu; }	
@@ -193,8 +192,17 @@ public class Recipe {
 	}
 	public void setBoilMinutes(int b) {
             boilMinutes = b; 
+            double post=0;
             // JvH changing the boiltime, changes the post boil volume (NOT the pre boil)
-            double post = preBoilVol.getValue() - (evap * boilMinutes / 60);
+            if (evapMethod.equals("Constant")){
+            	post = preBoilVol.getValue() - (evap * boilMinutes / 60);           	
+            }
+            else { // %
+            	post = preBoilVol.getValue() - (preBoilVol.getValue() * (evap / 100) * boilMinutes / 60);
+            	
+            }
+            	
+            
             setPostBoil(post);
         }
 	public void setBrewer(String b) { brewer = b; }
@@ -206,15 +214,21 @@ public class Recipe {
 	public void setCreated(Date d) { created.setTime(d); }
 	public void setEvap(double e) { 
             evap = e; 
+            double post=0;
             // JvH changing the evaporation, changes the post boil volume (NOT the pre boil)
-            double post = preBoilVol.getValue() - (evap * boilMinutes / 60);
+            if (evapMethod.equals("Constant")){
+            	post = preBoilVol.getValue() - (evap * boilMinutes / 60);
+            }
+            else { // %
+            	post = preBoilVol.getValue() - (preBoilVol.getValue() * (evap / 100) * boilMinutes / 60);
+            }
             postBoilVol.setAmount(post);
             calcMaltTotals();
             calcHopsTotals();
         }
 	public void setEvapMethod(String e) {
-		evapMethod = e;
-		// TODO: force a recalculation of evap
+		evapMethod = e;		
+		setEvap(getEvap());
 	}
 	
 	public void setHopsUnits(String h) { hopUnits = h; }
@@ -385,8 +399,15 @@ public class Recipe {
 	}
 	public void setPreBoil(double p) { 
 		preBoilVol.setAmount(p);
-		// TODO: implement % as well as constant
-		double post = p - (evap * boilMinutes / 60);
+		
+		double post=0;
+		if (evapMethod.equals("Constant")){
+			post = p - (evap * boilMinutes / 60);
+		}
+		else {
+			post = p - (p * (evap / 100) * boilMinutes / 60);
+		}
+		
 		postBoilVol.setAmount(post);
 		calcMaltTotals();
 		calcHopsTotals();
@@ -395,8 +416,15 @@ public class Recipe {
 	
 	public void setPostBoil(double p) {
 		postBoilVol.setAmount(p); 
-		// TODO: implement % as well as constant 
-		double pre = p + (evap * boilMinutes / 60);
+		
+		double pre = 0;
+		if (evapMethod.equals("Constant")){
+			pre = p + (evap * boilMinutes / 60);
+		}
+		else {
+			//pre = p + (p * (evap / 100) * boilMinutes / 60);
+			pre = p / ((1 - ((evap / 100) * boilMinutes / 60)));
+		}
 		preBoilVol.setAmount(pre);		
 		calcMaltTotals();
 		calcHopsTotals();

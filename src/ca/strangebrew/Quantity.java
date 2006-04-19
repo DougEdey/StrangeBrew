@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.5 2006/04/17 20:30:10 andrew_avis Exp $
+ * $Id: Quantity.java,v 1.6 2006/04/19 20:03:58 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -175,7 +175,6 @@ public class Quantity {
 	}
 	
 	
-	// TODO: make this work
 	private boolean isAbrv(String a){
 
 		Converter[] u;
@@ -231,7 +230,7 @@ public class Quantity {
 	
 	/*
 	 * These are "generic" functions you can call on any quantity object (or just
-	 * create a new one).  TODO: Move to a static class.
+	 * create a new one).  
 	 */
 	
 	public ArrayList getListofUnits(String type) {

@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.3 2006/04/17 20:53:06 andrew_avis Exp $
+ * $Id: Options.java,v 1.4 2006/04/19 20:03:58 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -126,22 +126,6 @@ public class Options {
 		}
 		
 		Debug.print(path);
-		
-		/*
-		String path =
-			  this.getClass()
-				  .getProtectionDomain()
-				  .getCodeSource()
-				  .getLocation()
-				  .toString()
-				  .substring(6);
-		// hack to truncate string if this is run from StrangeBrew_fat.jar
-		// have to take off additional 4 chars from front of string, dunno why
-		int i = path.indexOf("StrangeBrew_fat.jar");
-		if (i>0)
-			path = path.substring(4, i);
-		*/
-		
 		
 		return path;
 	}

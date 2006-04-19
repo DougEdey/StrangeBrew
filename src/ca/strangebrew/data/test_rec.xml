@@ -25,6 +25,11 @@
   <ALC_METHOD>Weight</ALC_METHOD>
   <IBU_METHOD>Tinseth</IBU_METHOD>
   <COLOUR_METHOD>SRM</COLOUR_METHOD>
+	 <EVAP>1.5</EVAP>
+	 <EVAP_METHOD>Percent</EVAP_METHOD>
+	 <KETTLE_LOSS>0.2</KETTLE_LOSS>
+	 <TRUB_LOSS>0.1</TRUB_LOSS>
+	 <MISC_LOSS>0.1</MISC_LOSS>
   <!-- END SBJ1.0 Extensions -->
   </DETAILS>
   <FERMENTABLES>
@@ -36,7 +41,7 @@
       <LOV>34.0</LOV>
       <MASHED>true</MASHED>
       <STEEPED>false</STEEPED>
-      <DESCRIPTION>British Carastan: Also known as CaraStan, use 5 to 20% of English Crystal to add color and a full, toffee/sweet flavor to Bitters, Pale Ales and Porters.</DESCRIPTION>
+      <DESCRIPTION>null</DESCRIPTION>
     </ITEM>
     <ITEM>
       <MALT>German Carafa Chocolate</MALT>
@@ -46,7 +51,7 @@
       <LOV>525.0</LOV>
       <MASHED>true</MASHED>
       <STEEPED>false</STEEPED>
-      <DESCRIPTION>German Carafa Chocolate - very smooth version of chocolate malt.</DESCRIPTION>
+      <DESCRIPTION>null</DESCRIPTION>
     </ITEM>
     <ITEM>
       <MALT>German Pilsener</MALT>
@@ -56,7 +61,7 @@
       <LOV>1.6</LOV>
       <MASHED>true</MASHED>
       <STEEPED>false</STEEPED>
-      <DESCRIPTION>German Pilsener - usually a moravian malt, very light in colour, perfect for decoction mashes and as a base for lighter lagers.</DESCRIPTION>
+      <DESCRIPTION>null</DESCRIPTION>
     </ITEM>
   </FERMENTABLES>
   <HOPS>
@@ -69,7 +74,7 @@
       <ALPHA>3.5</ALPHA>
       <COSTOZ>1.25</COSTOZ>
       <ADD>Boil</ADD>
-      <DESCRIPTION>Saaz: Having mild bittering power, it's the spicy, earthy, flavor and aroma that makes Saaz one of the worlds most prized Pilsner and Lager hops.</DESCRIPTION>
+      <DESCRIPTION></DESCRIPTION>
       <DATE>null</DATE>
     </ITEM>
     <ITEM>
@@ -81,7 +86,7 @@
       <ALPHA>3.5</ALPHA>
       <COSTOZ>1.25</COSTOZ>
       <ADD>Boil</ADD>
-      <DESCRIPTION>Saaz: Having mild bittering power, it's the spicy, earthy, flavor and aroma that makes Saaz one of the worlds most prized Pilsner and Lager hops.</DESCRIPTION>
+      <DESCRIPTION></DESCRIPTION>
       <DATE>null</DATE>
     </ITEM>
   </HOPS>
@@ -92,6 +97,8 @@
       <TYPE>alpha</TYPE>
       <TEMP>155.0</TEMP>
       <END_TEMP>155.0</END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
       <METHOD>infusion</METHOD>
       <DIRECTIONS>Mash in with 8.8 gallons US of water at 168.4 F</DIRECTIONS>
     </ITEM>
@@ -99,6 +106,8 @@
       <TYPE>mashout</TYPE>
       <TEMP>168.0</TEMP>
       <END_TEMP>168.0</END_TEMP>
+      <MIN>10</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
       <METHOD>infusion</METHOD>
       <DIRECTIONS>Add 3.0 gallons US of water at 212.0 F</DIRECTIONS>
     </ITEM>

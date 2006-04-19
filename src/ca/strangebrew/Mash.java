@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Collections;
 
 /**
- * $Id: Mash.java,v 1.7 2006/04/18 20:41:32 andrew_avis Exp $
+ * $Id: Mash.java,v 1.8 2006/04/19 20:03:58 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -659,7 +659,15 @@ public class Mash {
 			sb.append("    <ITEM>\n");
 			sb.append("      <TYPE>" + st.type + "</TYPE>\n");
 			sb.append("      <TEMP>" + st.startTemp + "</TEMP>\n");
+			if (tempUnits.equals("C"))
+				sb.append("      <DISPL_TEMP>" + SBStringUtils.df1.format(fToC(st.startTemp)) + "</DISPL_TEMP>\n");
+			else
+				sb.append("      <DISPL_TEMP>" + st.startTemp + "</DISPL_TEMP>\n");
 			sb.append("      <END_TEMP>" + st.endTemp + "</END_TEMP>\n");
+			if (tempUnits.equals("C"))
+				sb.append("      <DISPL_END_TEMP>" + SBStringUtils.df1.format(fToC(st.endTemp)) + "</DISPL_END_TEMP>\n");
+			else
+				sb.append("      <DISPL_END_TEMP>" + st.endTemp + "</DISPL_END_TEMP>\n");
 			sb.append("      <MIN>" + st.minutes + "</MIN>\n");
 			sb.append("      <RAMP_MIN>" + st.rampMin + "</RAMP_MIN>\n");
 			sb.append("      <METHOD>" + st.method + "</METHOD>\n");

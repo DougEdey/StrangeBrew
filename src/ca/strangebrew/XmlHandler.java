@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.3 2006/04/13 17:44:10 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.4 2006/04/19 20:03:58 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -23,8 +23,6 @@ import java.util.*;
  *
  * This class handles XML import.
  * Currently it handles StrangeBrew 1.8 and QBrew formats.
- * TODO: handle misc ingredients
- * TODO: handle mash info
  */
 public class XmlHandler extends DefaultHandler{
 	private Recipe r = null;

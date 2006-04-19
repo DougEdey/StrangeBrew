@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.11 2006/04/19 17:41:48 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.12 2006/04/19 20:03:58 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -54,6 +54,7 @@ import java.util.EventObject;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -101,7 +102,6 @@ import ca.strangebrew.XmlTransformer;
 import ca.strangebrew.Yeast;
 
 
-
 public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener {
 
 	/*	{
@@ -142,6 +142,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JPanel pnlHopsButtons;
 	private JButton btnDelMalt;
 	private JButton btnAddMalt;
+	private JComboBox evapMethodCombo;
 	private JComboBox colourMethodCombo;
 	private JComboBox ibuMethodCombo;
 	private JComboBox alcMethodCombo;
@@ -316,6 +317,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		alcMethodComboModel.setSelectedItem(myRecipe.getAlcMethod());
 		ibuMethodComboModel.setSelectedItem(myRecipe.getIBUMethod());
 		colourMethodCombo.setSelectedItem(myRecipe.getColourMethod());
+		evapMethodCombo.setSelectedItem(myRecipe.getEvapMethod());
 		
 
 	}
@@ -588,9 +590,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						}
 						{
 							lblComments = new JLabel();
-							pnlDetails.add(lblComments, new GridBagConstraints(6, 3, 1, 1, 0.0,
-									0.0, GridBagConstraints.EAST, GridBagConstraints.NONE,
-									new Insets(0, 0, 0, 0), 0, 0));
+							pnlDetails.add(lblComments, new GridBagConstraints(7, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 							lblComments.setText("Comments:");
 						}
 
@@ -689,18 +689,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						}
 						{
 							scpComments = new JScrollPane();
-							pnlDetails.add(scpComments, new GridBagConstraints(
-								6,
-								4,
-								4,
-								2,
-								0.0,
-								0.0,
-								GridBagConstraints.EAST,
-								GridBagConstraints.BOTH,
-								new Insets(0, 0, 0, 0),
-								0,
-								0));
+							pnlDetails.add(scpComments, new GridBagConstraints(7, 4, 3, 2, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 							{
 								txtComments = new JTextArea();
 								scpComments.setViewportView(txtComments);
@@ -832,6 +821,19 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								}
 							});
 						}
+
+						ComboBoxModel evapMethodComboModel = new DefaultComboBoxModel(new String[] {
+								"Constant", "Percent" });
+
+						evapMethodCombo = new JComboBox();
+						pnlDetails.add(evapMethodCombo, new GridBagConstraints(6, 5, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+						evapMethodCombo.setModel(evapMethodComboModel);
+						evapMethodCombo.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								recipeSettingsActionPerformed(evt);
+							}
+						});
+
 					}
 					{
 						SBNotifier sbn = new SBNotifier();
@@ -960,11 +962,11 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						pnlMaltButtonsLayout.setAlignment(FlowLayout.LEFT);
 						pnlMaltButtonsLayout.setVgap(0);
 						pnlMaltButtons.setLayout(pnlMaltButtonsLayout);
-						pnlMaltButtons.setPreferredSize(new java.awt.Dimension(390, 34));
+						pnlMaltButtons.setPreferredSize(new java.awt.Dimension(592, 27));
 						{
 							tlbMalt = new JToolBar();
 							pnlMaltButtons.add(tlbMalt);
-							tlbMalt.setPreferredSize(new java.awt.Dimension(140, 20));
+							tlbMalt.setPreferredSize(new java.awt.Dimension(55, 20));
 							tlbMalt.setFloatable(false);
 							{
 								btnAddMalt = new JButton();
@@ -1101,7 +1103,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						{
 							tlbHops = new JToolBar();
 							pnlHopsButtons.add(tlbHops);
-							tlbHops.setPreferredSize(new java.awt.Dimension(70, 19));
+							tlbHops.setPreferredSize(new java.awt.Dimension(58, 19));
 							tlbHops.setFloatable(false);
 							{
 								btnAddHop = new JButton();
@@ -1744,6 +1746,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			myRecipe.setIBUMethod(s);
 		else if (o == colourMethodCombo)
 			myRecipe.setColourMethod(s);
+		else if (o == evapMethodCombo)
+			myRecipe.setEvapMethod(s);
 
 		displayRecipe();
 	}
