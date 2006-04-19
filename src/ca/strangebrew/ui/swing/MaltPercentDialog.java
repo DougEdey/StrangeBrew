@@ -62,6 +62,20 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 		initGUI();
 	}
 
+	private double calcOG(double weightLbs){
+		double OG=0;
+		for (int i = 0; i < myRecipe.getMaltListSize(); i++) {
+			double points = (myRecipe.getMaltPercent(i) / 100) 
+				* weightLbs 
+				* (myRecipe.getMaltPppg(i) - 1.0)
+				/ myRecipe.getPostBoilVol("gal");
+			if (myRecipe.getMaltMashed(i))
+				points *= myRecipe.getEfficiency() / 100;
+			OG += points;
+		}
+		return OG;
+	}
+	
 	private void calcWeights() {
 		// we've set the % in the fermentables list, now
 		// let's figure out the correct amounts:
@@ -77,20 +91,29 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 		
 		// no, by OG
 		else {
-			double effic;
+
 			double targOG = Double.parseDouble(OGSpn.getValue().toString());
-			double totalPoints = (myRecipe.getPostBoilVol("gal") * (targOG - 1.0)) * 1000;
 			
-			for (int i = 0; i < myRecipe.getMaltListSize(); i++) {				
-				double contribPoints = totalPoints * myRecipe.getMaltPercent(i) / 100;
-				if (myRecipe.getMaltMashed(i))
-					effic = myRecipe.getEfficiency();
-				else
-					effic = 100;
-				double newAmount = contribPoints / ((myRecipe.getMaltPppg(i)-1) * (effic / 100) * 1000); 
-				myRecipe.setMaltAmountAs(i, newAmount, "lb");
-				
+			// "seed" value -- assume conservative 30 ppppg
+			double totalPoints = (targOG - 1) * 1000 * myRecipe.getPostBoilVol("gal");
+			double totalWeightLbs = (totalPoints / 30) * (myRecipe.getEfficiency() / 100);
+
+			// brute force - just keep incrementing the total grain bill
+			// by .1 lb until it's close to what we want (95%)
+						
+			while (calcOG(totalWeightLbs) < ((targOG -1))*0.95) {
+				totalWeightLbs += 0.1;
 			}
+			
+			while (calcOG(totalWeightLbs) < (targOG -1)) {
+				totalWeightLbs += 0.01;
+			}
+	
+			for (int k = 0; k < myRecipe.getMaltListSize(); k++) {
+				double newAmount = totalWeightLbs * (myRecipe.getMaltPercent(k)/ 100); 
+				myRecipe.setMaltAmountAs(k, newAmount, "lb");
+			}
+
 			
 		}
 		myRecipe.calcMaltTotals();

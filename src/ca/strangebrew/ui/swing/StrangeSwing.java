@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.10 2006/04/18 20:41:17 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.11 2006/04/19 17:41:48 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -39,9 +39,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.PrintStream;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -1280,7 +1282,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 										currentFile = file;
 										
 									} catch (Exception e) {
-										// TODO: handle io exception
+										showError(e);
 									}
 
 								}
@@ -1341,7 +1343,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 										try {
 											saveAsHTML(file);
 										} catch (Exception e) {
-											// TODO: handle io exception
+											showError(e);
 										}
 									} else {
 										Debug.print("Save command cancelled by user.\n");
@@ -1371,7 +1373,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 											out.write(myRecipe.toText());
 											out.close();
 										} catch (Exception e) {
-											// TODO: handle io exception
+											showError(e);
+											
+											
 										}
 									} else {
 										Debug.print("Export text command cancelled by user.\n");
@@ -1673,7 +1677,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				displayRecipe();
 				
 			} catch (Exception e) {
-				// TODO: handle io exception
+				showError(e);
 			}
 		} else {
 			Debug.print("Save command cancelled by user.\n");
@@ -1742,6 +1746,21 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			myRecipe.setColourMethod(s);
 
 		displayRecipe();
+	}
+	
+	private void showError(Exception e) {		
+		
+		ByteArrayOutputStream bs = new ByteArrayOutputStream();
+		  e.printStackTrace(new PrintStream(bs));
+		  String stackStr = bs.toString();
+		  
+		  
+		JOptionPane.showMessageDialog(
+				null, 
+				"There seems to be a problem: " + e.toString()
+				+ "\n" + stackStr,
+				"Pain!", 
+				JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	// an object that you give to other gui objects so that they can set things on the main SB GUI
