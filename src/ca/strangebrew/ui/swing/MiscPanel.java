@@ -69,19 +69,6 @@ public class MiscPanel extends javax.swing.JPanel {
 	private int selectedRow; // the selected row of the table
 	
 	
-
-	/**
-	* Auto-generated main method to display this 
-	* JPanel inside a new JFrame.
-	*/
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		frame.getContentPane().add(new MiscPanel(new Recipe()));
-//		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-//		frame.pack();
-//		frame.show();
-//	}
-	
 	public MiscPanel(Recipe r) {		
 		super();
 		myRecipe = r;		
@@ -127,14 +114,7 @@ public class MiscPanel extends javax.swing.JPanel {
 						miscTableScrollPane.setViewportView(miscTable);
 						miscTable.setModel(miscTableModel);
 						
-//						miscTable.addMouseListener(new MouseAdapter() {
-//							public void mouseClicked(MouseEvent evt) {
-//								int i = miscTable.getSelectedRow();
-//								miscCommentsTextArea.setText(myRecipe.getMiscComments(i));
-//								miscDescrTextArea.setText(myRecipe.getMiscDescription(i));
-//							}
-//						});
-						
+	
 						// set up name combo
 						JComboBox miscComboBox = new JComboBox();
 						miscComboModel = new ComboModel();

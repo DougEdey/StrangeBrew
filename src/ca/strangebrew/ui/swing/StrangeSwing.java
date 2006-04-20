@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.12 2006/04/19 20:03:58 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.13 2006/04/20 17:26:39 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -154,6 +154,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JLabel fileNameLabel;
 	private MiscPanel miscPanel;
 	private NotesPanel notesPanel;
+	private SettingsPanel settingsPanel;
 	private DilutionPanel dilutionPanel;
 	private JMenuItem aboutMenuItem;
 	private JTextField evapText;
@@ -309,8 +310,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		hopsTableModel.setData(myRecipe);
 		miscPanel.setData(myRecipe);
 		notesPanel.setData(myRecipe);
-		stylePanel.setData(myRecipe);
+		stylePanel.setData(myRecipe);		
 		dilutionPanel.setData(myRecipe);
+		settingsPanel.setData(myRecipe);
 		maltTable.updateUI();
 		hopsTable.updateUI();
 		
@@ -343,7 +345,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		txtDate.setText(dateFormat1.format(myRecipe.getCreated().getTime()));
                 Costs = myNF.format(myRecipe.getTotalMaltCost());
 		tblMaltTotalsModel.setDataVector(new String[][]{{"Totals:",
-				"" + SBStringUtils.df1.format(myRecipe.getTotalMaltLbs()), myRecipe.getMaltUnits(),
+				"" + SBStringUtils.df1.format(myRecipe.getTotalMalt()), myRecipe.getMaltUnits(),
 				"" + SBStringUtils.df3.format(myRecipe.getEstOg()),
 				"" + SBStringUtils.df1.format(myRecipe.getSrm()),
 				Costs, "100"}}, new String[]{"",
@@ -351,7 +353,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
                 Costs = myNF.format(myRecipe.getTotalHopsCost());
 		tblHopsTotalsModel.setDataVector(new String[][]{{"Totals:", "", "",
-				"" + SBStringUtils.df1.format(myRecipe.getTotalHopsOz()), myRecipe.getHopUnits(), "",
+				"" + SBStringUtils.df1.format(myRecipe.getTotalHops()), myRecipe.getHopUnits(), "",
 				"", "" + SBStringUtils.df1.format(myRecipe.getIbu()),
 				Costs}}, new String[]{"", "", "",
 				"", "", "", "", "", ""});
@@ -852,6 +854,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					{
 						dilutionPanel = new DilutionPanel();
 						jTabbedPane1.addTab("Dilution", null, dilutionPanel, null);
+						
+					}
+					{
+						SBNotifier sbn = new SBNotifier();
+						settingsPanel = new SettingsPanel(sbn);
+						jTabbedPane1.addTab("Settings", null, settingsPanel, null);
 						
 					}
 				}
@@ -1768,9 +1776,15 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	}
 	
 	// an object that you give to other gui objects so that they can set things on the main SB GUI
+	// used by style and settings panels
 	public class SBNotifier {
 		public void setStyle(Style s){
 			cmbStyleModel.addOrInsert(s);
 		}
+		
+		public void displRecipe(){
+			displayRecipe();
+		}
+		
 	}
 }

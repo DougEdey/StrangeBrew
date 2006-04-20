@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.6 2006/04/19 20:03:58 andrew_avis Exp $
+ * $Id: Quantity.java,v 1.7 2006/04/20 17:26:38 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -237,6 +237,7 @@ public class Quantity {
 		ArrayList list = new ArrayList();
 		int i = 0;
 		if (type.equals("weight")) {
+			
 			for (i = 0; i < weightUnits.length; i++) 
 				list.add(weightUnits[i].unit);
 		}

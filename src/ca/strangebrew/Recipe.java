@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.12 2006/04/20 16:24:30 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.13 2006/04/20 17:26:38 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -153,6 +153,9 @@ public class Recipe {
 	public String getStyle(){ return style.getName(); } 
 	public Style getStyleObj(){ return style;}
 	public double getTotalHopsOz(){ return totalHopsOz; }
+	public double getTotalHops(){ 
+		return Quantity.convertUnit("oz", hopUnits, totalHopsOz);
+	}
 	public double getTotalHopsCost(){ return totalHopsCost; }
 	public double getTotalMaltCost(){ return totalMaltCost; }
 	public double getTotalMashLbs(){ return totalMashLbs; }
@@ -160,6 +163,9 @@ public class Recipe {
 		return Quantity.convertUnit("lb", mash.getMashVolUnits(), totalMashLbs);
 	}
 	public double getTotalMaltLbs(){ return totalMaltLbs; }
+	public double getTotalMalt(){
+		return Quantity.convertUnit("lb", maltUnits, totalMaltLbs);
+	}
 	public double getTrubLoss() { return trubLoss; }
 	public String getVolUnits(){ return postBoilVol.getUnits(); }
 	public String getYeast(){ return yeast.getName();}	
