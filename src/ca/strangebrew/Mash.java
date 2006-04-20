@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Collections;
 
 /**
- * $Id: Mash.java,v 1.8 2006/04/19 20:03:58 andrew_avis Exp $
+ * $Id: Mash.java,v 1.9 2006/04/20 16:24:31 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -461,18 +461,23 @@ public class Mash {
 
 			}
 
-			else if (stp.method.equals("decoction")) { // calculate a decoction step
+			else if (stp.method.contains("decoction")) { // calculate a decoction step
 
 				waterEquiv += waterAddedQTS; // add previous addition to get WE
 				waterAddedQTS = 0;
 				strikeTemp = boilTempF; // boiling water
+				double ratio=0.75;
 
+				if (stp.method.contains("thick"))
+					ratio = 0.6;
+				else if (stp.method.contains("thin"))
+					ratio = 0.9;
 				// Calculate volume (qts) of mash to remove
-				decoct = calcDecoction(targetTemp, currentTemp, waterEquiv, boilTempF);
-
+				decoct = calcDecoction2(targetTemp, currentTemp, mashWaterQTS, ratio);				
+				stp.decoctVol.setUnits("qt");
+				stp.decoctVol.setAmount(decoct);
 				// Updated the decoction, convert to right units & make directions
-				double decoctConv = decoct;
-				stp.directions = "Remove " + df1.format(decoctConv) + " " + volUnits
+				stp.directions = "Remove " + df1.format(stp.decoctVol.getValueAs(volUnits)) + " " + volUnits
 						+ " of mash, boil, and return to mash.";
 
 			} else if (stp.method.equals("direct")) { // calculate a direct heat step
@@ -515,6 +520,49 @@ public class Mash {
 	
 
 	// private methods:
+	
+	/* from John Palmer:
+	 * 		Vd (quarts) = [(T2 - T1)(.4G + 2W)] / [(Td - T1)(.4g + w)]
+            Where:
+            Vd = decoction volume
+            T1 = initial mash temperature
+            T2 = target mash temperature
+            Td = decoction temperature (212F)
+            G = Grainbill weight
+            W = volume of water in mash (i.e. initial infusion volume)
+            g = pounds of grain per quart of decoction = 1/(Rd + .32)
+            w = quarts of water per quart of decoction = g*Rd*water density = 2gRd
+            Rd = ratio of grain to water in the decoction volume (range of .6 to 1
+            quart/lb)
+            thick decoctions will have a ratio of .6-.7, thinner decoctions will
+           have a ratio of .8-.9
+	 */
+	
+	private double calcDecoction2(double targetTemp, double currentTemp, double waterVolQTS, double ratio){
+		double decoctQTS=0;
+
+		double g = 1 / (ratio + .32);
+		double w = 2 * g * ratio;
+
+		decoctQTS = ((targetTemp - currentTemp) * ((0.4 * maltWeightLbs) + (2 * waterVolQTS)))
+			/ ((boilTempF - currentTemp) * (0.4 * g + w));
+
+
+		return decoctQTS;
+	}
+	
+	private double calcDecoction(double targetTemp, double currentTemp, double mashVol,
+			double boilTempF) {
+		// calculate amount of grain/mash to remove and boil to raise mash temp to
+		// a target temperature
+		// returns percent
+
+		double dectPercent = (targetTemp - boilTempF)
+				/ (currentTemp - boilTempF);
+		dectPercent = 1 - dectPercent;
+		return (mashVol * dectPercent);
+	}
+	
 	private String calcStepType(double temp) {
 		String stepType = "none";
 		// less than 90, none
@@ -588,18 +636,6 @@ public class Mash {
 			double mashVol, double boilTempF) {
 		// calculate amount of boiling water to add to raise mash to new temp
 		return (mashVol * (targetTemp - currentTemp) / (boilTempF - targetTemp));
-	}
-
-	double calcDecoction(double targetTemp, double currentTemp, double mashVol,
-			double boilTempF) {
-		// calculate amount of grain/mash to remove and boil to raise mash temp to
-		// a target temperature
-		// returns percent
-
-		double dectPercent = (targetTemp - boilTempF)
-				/ (currentTemp - boilTempF);
-		dectPercent = 1 - dectPercent;
-		return (mashVol * dectPercent);
 	}
 
 	private double fToC(double tempF) {

@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.9 2006/04/18 20:41:32 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.10 2006/04/20 16:24:32 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -61,7 +61,6 @@ import javax.swing.table.TableColumn;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
-
 
 
 public class MashManager extends javax.swing.JFrame implements ActionListener, FocusListener {
@@ -231,7 +230,8 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 						mashColumn.setCellEditor(new DefaultCellEditor(typesComboBox));
 						
 						// set up method combo
-						String [] methods = {"infusion","decoction","direct"};
+						String [] methods = {"infusion","decoction", "decoction thick",
+								"decoction thin", "direct"};
 						JComboBox methodComboBox = new JComboBox(methods);
 						mashColumn = tblMash.getColumnModel().getColumn(1);
 						mashColumn.setCellEditor(new DefaultCellEditor(methodComboBox));
@@ -691,7 +691,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 			jLabel12.setText("F");
 
 			pack();
-			this.setSize(468, 400);
+			this.setSize(550, 400);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.11 2006/04/19 20:03:58 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.12 2006/04/20 16:24:30 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -104,8 +104,8 @@ public class Recipe {
 		efficiency = opts.getDProperty("optEfficiency");
 		preBoilVol.setUnits(opts.getProperty("optSizeU"));
 		preBoilVol.setAmount(opts.getDProperty("optPreBoilVol"));
-		preBoilVol.setUnits(opts.getProperty("optSizeU"));
-		preBoilVol.setAmount(opts.getDProperty("optPostBoilVol"));
+		postBoilVol.setUnits(opts.getProperty("optSizeU"));
+		postBoilVol.setAmount(opts.getDProperty("optPostBoilVol"));
 		attenuation = opts.getDProperty("optAttenuation");
 		boilMinutes = opts.getIProperty("optBoilTime");
 		ibuCalcMethod = opts.getProperty("optIBUCalcMethod");
