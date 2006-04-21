@@ -1,5 +1,5 @@
 /**
- * $Id: Hop.java,v 1.2 2006/04/21 16:23:07 andrew_avis Exp $
+ * $Id: Hop.java,v 1.3 2006/04/21 18:59:14 andrew_avis Exp $
  * Created on Oct 5, 2004
  *
  * Base class for hops.  This object doesn't do much except hold data and
@@ -21,8 +21,7 @@ public class Hop extends Ingredient{
 	// Constructors:
 	
 	public Hop(){
-		// default constructor
-		// TODO: fill in with preferences
+		// default constructor		
 		setType("Leaf");
 		setAdd("Boil");
 	}

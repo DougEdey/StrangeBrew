@@ -27,6 +27,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -38,6 +39,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 
@@ -120,6 +123,10 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private JTextField txtTinsethUtil;
 	private JLabel jLabelc4;
 	private JTextField txtFWHTime;
+	private JLabel jLabel19;
+	private JComboBox landfCombo;
+
+	private JPanel landfPanel;
 	private JPanel blackPanel;
 	private JPanel brownPanel;
 	private JPanel copperPanel;
@@ -160,13 +167,42 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private JPanel pnlDefaultDB = null;
 	private JTextField txtDBLocation = null;
 	private JButton btnBrowse = null;
+	
+	private ArrayList looks;
+	
+	private Frame sb;
 
 	public PreferencesDialog(Frame owner, Options preferences) {
 		super(owner, "Recipe Preferences", true);
 		opts = preferences;
-		layoutUi();
+		sb = owner;
+		
+		UIManager.LookAndFeelInfo[] installed =
+	          UIManager.getInstalledLookAndFeels();
+		looks = new ArrayList();
+		for (int i = 0; i < installed.length; i++) {
+			looks.add(installed[i].getClassName());
+			// landfCombo.addItem(installed[i].getName());
+		}
+		
+		layoutUi();		
 		setLocation(owner.getLocation());
-		setOptions();
+		setOptions();				
+		
+		landfCombo.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt) {
+				String s = landfCombo.getSelectedItem().toString();
+				try {
+					UIManager.setLookAndFeel(s);
+					SwingUtilities.updateComponentTreeUI(sb);					
+					sb.pack();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+				
+			}
+		});
 
 	}
 
@@ -618,6 +654,17 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			colourPanel.setLayout(colourPanelLayout);
 			colourPanel.setPreferredSize(new java.awt.Dimension(340, 223));
 			colourPanel.setBorder(BorderFactory.createTitledBorder("Colour Swatch"));
+
+			landfPanel = new JPanel();
+			appearancePanel.add(landfPanel, BorderLayout.NORTH);
+
+			jLabel19 = new JLabel();
+			landfPanel.add(jLabel19);
+			jLabel19.setText("Look and Feel:");
+
+			landfCombo = new JComboBox(looks.toArray());
+			
+			landfPanel.add(landfCombo);
 
 			colMethod1rb = new JRadioButton();
 			colMethod1rb.addActionListener(this);

@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.14 2006/04/21 16:23:07 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.15 2006/04/21 18:59:14 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -370,9 +370,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		
 		colourPanel.setBackground(Recipe.calcRGB(myRecipe.getSrm(), 8, 30, 20));
 		colourPanel2.setBackground(Recipe.calcRBG2(myRecipe.getSrm()));
-		
-		maltTable.updateUI();
-		hopsTable.updateUI();
 
 	}
 
@@ -1388,6 +1385,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 										//This is where a real application would save the file.
 										try {
 											saveAsHTML(file);
+											
 										} catch (Exception e) {
 											showError(e);
 										}
@@ -1820,6 +1818,14 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		
 		public void displRecipe(){
 			displayRecipe();
+		}
+		
+		public void maltUpdateUI(){
+			maltTable.updateUI();
+		}
+		
+		public void hopsUpdateUI(){
+			hopsTable.updateUI();
 		}
 		
 	}

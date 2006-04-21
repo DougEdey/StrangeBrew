@@ -1,5 +1,5 @@
 /*
- * $Id: SettingsPanel.java,v 1.2 2006/04/21 16:23:07 andrew_avis Exp $
+ * $Id: SettingsPanel.java,v 1.3 2006/04/21 18:59:14 andrew_avis Exp $
  */
 
 package ca.strangebrew.ui.swing;
@@ -85,7 +85,7 @@ public class SettingsPanel extends javax.swing.JPanel {
 				String u = (String) maltUnitsComboModel.getSelectedItem();				
 				if (myRecipe != null) {
 					myRecipe.setMaltUnits(u);
-					sbn.displRecipe();
+					sbn.displRecipe();					
 				}
 
 			}
@@ -119,6 +119,7 @@ public class SettingsPanel extends javax.swing.JPanel {
 				if (myRecipe != null) {
 					myRecipe.setPelletHopPct(u);
 					sbn.displRecipe();
+					sbn.hopsUpdateUI();
 				}
 
 			}
