@@ -1,5 +1,5 @@
 README
-StrangeBrew Java - Beta 0.2
+StrangeBrew Java - Beta 0.3
 (c)2000-2006 Drew Avis - drew.avis@gmail.com
 
 Thank you for downloading and trying StrangeBrew Java.
@@ -13,13 +13,26 @@ StrangeBrew Java is a Java port of the popular Windows homebrewing
 software, StrangeBrew (www.strangebrew.ca).
 
 Running StrangeBrew:
-1. Unzip the sbjar_XXX.zip file (where XXX is the latest version, eg: "beta1").
-The file contains the data directory (src/strangebrew/data/) and the
-StrangeBrew java archive (StrangeBrew_fat.jar).
+1. Unzip the sb_XXX.zip file (where XXX is the latest version, eg: "beta1").
+Be sure to preserve the directory structure.
 2. Type "java -jar StrangeBrew_fat.jar" at the command line.  Under Windows,
 you can right-click this file, select "Open With > " and select a Java
-installation. There's probably a Mac way to do this, but I don't know
-what it is.
+installation. You can also just double-click the file, if ".jar" files
+are associated with javaw.exe.  There's probably a Mac/Linux way to do this, 
+but I don't know what it is.
+
+NOTE: StrangeBrew loads data (ingredients, styles, etc) from:
+src/ca/strangebrew/data/
+When you unzip the file, be sure to preserve directory names, so
+that StrangeBrew can find this data.
+
+The file you downloaded should contain these files (at least):
+  * src.zip: complete Java source
+  * Strangebrew_fat.jar: a Fat Jar file which you can run (see above)
+  * gpl.txt: the GPL license this software is distributed under
+  * readme.txt: this file
+  * src/ca/strangebrew/data: data files and example recipes, and
+    the xslt file required for exporting HTML
 
 You require a Java Runtime Environment (JRE) on your system to run
 StrangeBrew.  It should run with versions 1.4 and up; I'm using
@@ -33,21 +46,39 @@ of reported bugs.  If you've found one that's not there, please report it!
 
 What's new in:
 
-Beta 02:
-- New water usage stats on the Mash Manager dialog
+Beta 0.3:
+- New colour swatch to estimate the beer colour (this is a
+  rough guide only!)
+- Pellet hops IBUs are now calculated using the "additional IBUs %"
+  setting, to account for higher utilization
+- Settable look and feel (on the Appearance panel)
+- "Jumpy" UI behaviour is fixed (I think).
 
-Beta 1:
+Beta 0.2:
+- New water usage stats on the Mash Manager dialog
+- New Malt Percent dialog lets you specify the % of each malt 
+  to hit a target OG or total grain bill
+- You can now specify the boil temp (in F) both on the Preferences
+  dialog, and on the Mash Manager  
+- Improved error handling  
+- Evaporation can now be calculated as a % rather than
+  a constant.
+- You can set hop and malt total units  
+- Improved decoction calculations - you can now specify thick and thin
+  decoctions
+
+Beta 0.1:
 - New dilution panel to manage wort dilution
 - New style panel to check style conformance
 - New Preferences dialog to set defaults and preferences
 
-
+  
 Soon-to-be Implemented Features:
 - edit ingredient databases
 - track costs
 - mash tun thermal mass
 - recipe resize / unit conversion
-- evaporation calculated as a %
+- hop scaling
 
 
 StrangeBrew Java Pro Features:
@@ -57,6 +88,7 @@ StrangeBrew Java Pro Features:
 - inventory tracking
 - brewday timeline generation
 - brew sessions (vs recipes)
+- saved mash schedules
 
 (StrangeBrew Java will be released under a "dual-license": a free 
 Open Source version and a commercial "Pro" version that will 
