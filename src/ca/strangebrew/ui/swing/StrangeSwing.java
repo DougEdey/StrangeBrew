@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.13 2006/04/20 17:26:39 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.14 2006/04/21 16:23:07 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -117,7 +117,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
-	private String version = "0.2 (Beta)";
+	private String version = "0.3 (Beta)";
 	
 	
 	private JMenuItem helpMenuItem;
@@ -142,6 +142,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JPanel pnlHopsButtons;
 	private JButton btnDelMalt;
 	private JButton btnAddMalt;
+	private JPanel colourPanel2;
+	private JPanel colourPanel;
 	private JComboBox evapMethodCombo;
 	private JComboBox colourMethodCombo;
 	private JComboBox ibuMethodCombo;
@@ -365,6 +367,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		fileNameLabel.setText("File: " + fileName);
 		ibuMethodLabel.setText("IBU method: " + myRecipe.getIBUMethod());
 		alcMethodLabel.setText("Alc method: " + myRecipe.getAlcMethod());
+		
+		colourPanel.setBackground(Recipe.calcRGB(myRecipe.getSrm(), 8, 30, 20));
+		colourPanel2.setBackground(Recipe.calcRBG2(myRecipe.getSrm()));
+		
+		maltTable.updateUI();
+		hopsTable.updateUI();
 
 	}
 
@@ -439,6 +447,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							pnlDetails.add(brewerNameText, new GridBagConstraints(1, 0, 2, 1, 0.0,
 									0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
+							brewerNameText.setPreferredSize(new java.awt.Dimension(69, 20));
 							brewerNameText.addFocusListener(this);
 							brewerNameText.addActionListener(this);
 							brewerNameText.setText("Brewer");
@@ -485,6 +494,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
 											0, 0, 0), 0, 0));
 							lblEffic.setText("Effic:");
+							lblEffic.setPreferredSize(new java.awt.Dimension(31, 14));
 						}
 						{
 							lblAtten = new JLabel();
@@ -492,6 +502,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
 											0, 0, 0), 0, 0));
 							lblAtten.setText("Atten:");
+							lblAtten.setPreferredSize(new java.awt.Dimension(34, 14));
 						}
 						{
 							lblOG = new JLabel();
@@ -534,6 +545,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
 							txtDate.setText("Date");
+							txtDate.setPreferredSize(new java.awt.Dimension(73, 20));
 							txtDate.addFocusListener(this);
 							txtDate.addActionListener(this);
 						}
@@ -545,6 +557,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									new Insets(0, 0, 0, 0), 0, 0));
 							cmbStyle.setModel(cmbStyleModel);
 							cmbStyle.setMaximumSize(new java.awt.Dimension(100, 32767));
+							cmbStyle.setPreferredSize(new java.awt.Dimension(190, 20));
 
 							cmbStyle.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -566,6 +579,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
 							txtPreBoil.setText("Pre Boil");
+							txtPreBoil.setPreferredSize(new java.awt.Dimension(37, 20));
 							txtPreBoil.addFocusListener(this);
 							txtPreBoil.addActionListener(this);
 						}
@@ -575,6 +589,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
 							postBoilText.setText("Post Boil");
+							postBoilText.setPreferredSize(new java.awt.Dimension(46, 20));
 							postBoilText.addFocusListener(new FocusAdapter() {
 								public void focusLost(FocusEvent evt) {
 									myRecipe.setPostBoil(Double.parseDouble(postBoilText.getText()
@@ -592,7 +607,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						}
 						{
 							lblComments = new JLabel();
-							pnlDetails.add(lblComments, new GridBagConstraints(7, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+							pnlDetails.add(lblComments, new GridBagConstraints(6, 4, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 							lblComments.setText("Comments:");
 						}
 
@@ -614,6 +629,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							});
 							spnEffic.setEditor(new JSpinner.NumberEditor(spnEffic, "00.#"));
 							spnEffic.getEditor().setPreferredSize(new java.awt.Dimension(28, 16));
+							spnEffic.setPreferredSize(new java.awt.Dimension(53, 18));
 						}
 						{
 							SpinnerNumberModel spnAttenModel = new SpinnerNumberModel(75.0, 0.0,
@@ -631,6 +647,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								}
 							});
 							spnAtten.setEditor(new JSpinner.NumberEditor(spnAtten, "00.#"));
+							spnAtten.setPreferredSize(new java.awt.Dimension(49, 20));
 						}
 						{
 							SpinnerNumberModel spnOgModel = new SpinnerNumberModel(1.000, 0.900,
@@ -649,6 +666,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							});
 							spnOG.setEditor(new JSpinner.NumberEditor(spnOG, "0.000"));
 							spnOG.getEditor().setPreferredSize(new java.awt.Dimension(20, 16));
+							spnOG.setPreferredSize(new java.awt.Dimension(67, 18));
 						}
 						{
 							SpinnerNumberModel spnFgModel = new SpinnerNumberModel(1.000, 0.900,
@@ -659,6 +677,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									new Insets(0, 0, 0, 0), 0, 0));
 							spnFG.setModel(spnFgModel);
 							spnFG.setEditor(new JSpinner.NumberEditor(spnFG, "0.000"));
+							spnFG.setPreferredSize(new java.awt.Dimension(69, 20));
 							spnFG.addChangeListener(new ChangeListener() {
 								public void stateChanged(ChangeEvent evt) {
 									// set the new FG, and update alc:
@@ -699,6 +718,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								txtComments.setWrapStyleWord(true);
 								// txtComments.setPreferredSize(new java.awt.Dimension(117, 42));
 								txtComments.setLineWrap(true);
+								txtComments.setPreferredSize(new java.awt.Dimension(263, 40));
 								txtComments.addFocusListener(new FocusAdapter() {
 									public void focusLost(FocusEvent evt) {
 										if (!txtComments.getText().equals(myRecipe.getComments())) {
@@ -715,6 +735,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
 							cmbYeast.setModel(cmbYeastModel);
+							cmbYeast.setPreferredSize(new java.awt.Dimension(193, 20));
 							cmbYeast.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									Yeast y = (Yeast) cmbYeastModel.getSelectedItem();
@@ -773,6 +794,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
 							boilMinText.setText("60");
+							boilMinText.setPreferredSize(new java.awt.Dimension(22, 20));
 							boilMinText.addFocusListener(this);
 							boilMinText.addActionListener(this);
 						}
@@ -782,6 +804,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
 							evapText.setText("4");
+							evapText.setPreferredSize(new java.awt.Dimension(23, 20));
 							evapText.addFocusListener(this);
 							evapText.addActionListener(this);
 						}
@@ -791,6 +814,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							pnlDetails.add(alcMethodCombo, new GridBagConstraints(9, 0, 1, 1, 0.0,
 									0.0, GridBagConstraints.WEST, GridBagConstraints.NONE,
 									new Insets(0, 0, 0, 0), 0, 0));
+							alcMethodCombo.setPreferredSize(new java.awt.Dimension(58, 20));
 							alcMethodCombo.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									recipeSettingsActionPerformed(evt);
@@ -805,6 +829,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							pnlDetails.add(ibuMethodCombo, new GridBagConstraints(9, 1, 1, 1, 0.0,
 									0.0, GridBagConstraints.WEST, GridBagConstraints.NONE,
 									new Insets(0, 0, 0, 0), 0, 0));
+							ibuMethodCombo.setPreferredSize(new java.awt.Dimension(59, 20));
 							ibuMethodCombo.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									recipeSettingsActionPerformed(evt);
@@ -817,6 +842,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							pnlDetails.add(colourMethodCombo, new GridBagConstraints(9, 2, 1, 1,
 									0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE,
 									new Insets(0, 0, 0, 0), 0, 0));
+							colourMethodCombo.setPreferredSize(new java.awt.Dimension(44, 20));
 							colourMethodCombo.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									recipeSettingsActionPerformed(evt);
@@ -830,6 +856,16 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						evapMethodCombo = new JComboBox();
 						pnlDetails.add(evapMethodCombo, new GridBagConstraints(6, 5, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 						evapMethodCombo.setModel(evapMethodComboModel);
+						evapMethodCombo.setPreferredSize(new java.awt.Dimension(64, 20));
+
+						colourPanel = new JPanel();
+						pnlDetails.add(colourPanel, new GridBagConstraints(8, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+						colourPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+
+						colourPanel2 = new JPanel();
+						pnlDetails.add(colourPanel2, new GridBagConstraints(9, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+						colourPanel2.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+
 						evapMethodCombo.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
 								recipeSettingsActionPerformed(evt);

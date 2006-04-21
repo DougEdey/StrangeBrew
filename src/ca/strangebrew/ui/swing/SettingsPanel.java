@@ -1,5 +1,5 @@
 /*
- * $Id: SettingsPanel.java,v 1.1 2006/04/20 17:26:39 andrew_avis Exp $
+ * $Id: SettingsPanel.java,v 1.2 2006/04/21 16:23:07 andrew_avis Exp $
  */
 
 package ca.strangebrew.ui.swing;
@@ -19,6 +19,7 @@ import javax.swing.JComboBox;
 import javax.swing.WindowConstants;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import ca.strangebrew.Fermentable;
 import ca.strangebrew.Quantity;
@@ -34,9 +35,17 @@ public class SettingsPanel extends javax.swing.JPanel {
 	private Recipe myRecipe;
 	private StrangeSwing.SBNotifier sbn;
 	private JLabel jLabel2;
+	private JLabel jLabel4;
+	private JTextField pelletHopPctTxt;
+	private JLabel jLabel3;
 	private JComboBox hopUnitsCombo;
 	private ComboModel hopUnitsComboModel;
 
+	public SettingsPanel() {
+		super();
+		initGUI();
+	}
+	
 	public SettingsPanel(StrangeSwing.SBNotifier sb) {
 		super();
 		sbn = sb;
@@ -49,6 +58,7 @@ public class SettingsPanel extends javax.swing.JPanel {
 		myRecipe = r;
 		maltUnitsComboModel.setSelectedItem(myRecipe.getMaltUnits());
 		hopUnitsComboModel.setSelectedItem(myRecipe.getHopUnits());
+		pelletHopPctTxt.setText(new Double(myRecipe.getPelletHopPct()).toString());
 	}
 	
 	private void initGUI() {
@@ -92,6 +102,28 @@ public class SettingsPanel extends javax.swing.JPanel {
 		this.add(hopUnitsCombo, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		hopUnitsCombo.setModel(hopUnitsComboModel);
 
+		jLabel3 = new JLabel();
+		this.add(jLabel3, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jLabel3.setText("Pellet Hops +IBU:");
+
+		jLabel4 = new JLabel();
+		this.add(jLabel4, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jLabel4.setText("%");
+
+		pelletHopPctTxt = new JTextField();
+		this.add(pelletHopPctTxt, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		pelletHopPctTxt.setPreferredSize(new java.awt.Dimension(67, 20));
+		pelletHopPctTxt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				double u = Double.parseDouble( pelletHopPctTxt.getText() );				
+				if (myRecipe != null) {
+					myRecipe.setPelletHopPct(u);
+					sbn.displRecipe();
+				}
+
+			}
+		});
+
 		hopUnitsCombo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				String u = (String) hopUnitsComboModel.getSelectedItem();				
@@ -101,7 +133,8 @@ public class SettingsPanel extends javax.swing.JPanel {
 				}
 
 			}
-		});
+		});		
+		
 
 			setPreferredSize(new Dimension(400, 300));
 

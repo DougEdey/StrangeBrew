@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.4 2006/04/19 20:03:58 andrew_avis Exp $
+ * $Id: Options.java,v 1.5 2006/04/21 16:23:07 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -42,6 +42,7 @@ public class Options {
 			{"optMashHopTime", "2"},
 			{"optHopsUtil", "4.15"},
 			{"optColourEfficiency", "false"},
+			{"optHopForm", "Leaf"},
 			
 			// recipe basics:
 			{"optSizeU", "gallons US"},

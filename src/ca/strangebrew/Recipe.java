@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.13 2006/04/20 17:26:38 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.14 2006/04/21 16:23:07 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -24,6 +24,7 @@
 
 package ca.strangebrew;
 
+import java.awt.Color;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,6 +80,7 @@ public class Recipe {
 	private double ibuHopUtil;
 	private String evapMethod;
 	private String alcMethod;
+	private double pelletHopPct;
 	
 	// totals:	
 	private double totalMaltCost;
@@ -116,11 +118,12 @@ public class Recipe {
 		evapMethod = opts.getProperty("optEvapCalcMethod");
 		evap = opts.getDProperty("optEvaporation");
 		alcMethod = opts.getProperty("optAlcCalcMethod");
-		colourMethod = opts.getProperty("optColourMethod");
+		colourMethod = opts.getProperty("optColourMethod");		
 		
 		kettleLoss = opts.getDProperty("optKettleLoss");
 		trubLoss = opts.getDProperty("optTrubLoss");
 		miscLoss = opts.getDProperty("optMiscLoss");
+		pelletHopPct = opts.getDProperty("optPelletHopsPct");
 		
 		dilution = new DilutedRecipe();
 
@@ -147,6 +150,7 @@ public class Recipe {
 	public String getMaltUnits(){ return maltUnits; }
 	public double getMiscLoss() { return miscLoss; }
 	public String getName(){ return name; }		
+	public double getPelletHopPct(){ return pelletHopPct; }
 	public double getPreBoilVol(String s){ return preBoilVol.getValueAs(s); }
 	public double getPostBoilVol(String s){ return postBoilVol.getValueAs(s); }
 	public double getSrm(){ return srm; }
@@ -255,6 +259,10 @@ public class Recipe {
 		calcMaltTotals();
 		}
 	public void setName(String n) {	name = n; }
+	public void setPelletHopPct(double p){
+		pelletHopPct = p;
+		calcHopsTotals();
+	}
 	public void setStyle(String s) { style.setName(s); }
 	public void setStyle(Style s) { style = s; }
 	public void setTrubLoss(double t) { 
@@ -616,6 +624,10 @@ public class Recipe {
 				h.setIBU(CalcRager(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, h.getMinutes(), h.getAlpha()));
 			else
 				h.setIBU(CalcGaretz(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, h.getMinutes(), preBoilVol.getValueAs("gal"), 1, h.getAlpha())); 
+			if (h.getType().equalsIgnoreCase("Pellet")){				
+				h.setIBU ( h.getIBU() * (1.0 + (pelletHopPct/100)) );
+
+			}
 			ibuTotal += h.getIBU();
 			totalHopsCost += h.getCostPerU() * h.getAmountAs("oz");
 			totalHopsOz += h.getAmountAs("oz");
@@ -737,6 +749,61 @@ public class Recipe {
 
 		return ibu;
 	}
+	
+	// RGB estimation:
+	
+	public static Color calcRGB(double srm, double rConst, double gConst, double bConst)
+	{
+	  // estimates the RGB equivalent colour for beer based on SRM
+	  // NOTE: optRed, optGreen and optBlue need to be adjusted for different monitors.
+	  // This is from the Windows version of SB
+		// typical values are: r=8, g=30, b=20
+
+	  int R=0, G=0, B=0, A=255;
+
+	  if (srm < 10) {
+	    R = 255;
+	  }
+	  else {
+	    R = new Double(255 - ((srm - rConst) * 10)).intValue();
+	  }
+
+	  if (gConst !=0)
+	    G = new Double(250 - ((srm / gConst) * 250)).intValue();
+	  else
+	    G = new Double((250 - ((srm / 30) * 250))).intValue();
+	  B = new Double(200 - (srm * bConst)).intValue();
+	  
+	  if (R < 0)
+	    R = 1;
+	  if (G < 0)
+	    G = 1;
+	  if (B < 0)
+	    B = 1;
+
+	  return new Color(R, G, B, A);
+	}
+	
+	public static Color calcRBG2(double srm) {
+		
+		double R = 279.93 + -9.067 * srm;
+		double G = 258.49 + -11.51 * srm; 
+		double B = 75.27 + -2.92 * srm;
+		float a = 1;
+		
+		float r = (float)R / 255;		
+		float b = (float)B / 255;
+		float g = (float)G / 255;
+		if (r<0) r = 0;
+		if (r>1) r= 1;
+		if (g<0) g = 0;
+		if (g>1) g = 1;
+		if (b<0) b = 0;
+		if (b>1) b = 1;
+		
+		return new Color(r,g,b,a);
+		
+	}
 
 	public String toXML() {
 		StringBuffer sb = new StringBuffer();		
@@ -773,6 +840,7 @@ public class Recipe {
 		sb.append("	 <KETTLE_LOSS>" + kettleLoss + "</KETTLE_LOSS>\n");
 		sb.append("	 <TRUB_LOSS>" + trubLoss + "</TRUB_LOSS>\n");
 		sb.append("	 <MISC_LOSS>" + miscLoss + "</MISC_LOSS>\n");
+		sb.append("	 <PELLET_HOP_PCT>" + pelletHopPct + "</PELLET_HOP_PCT>\n");
 		sb.append("  <!-- END SBJ1.0 Extensions -->\n");
 		sb.append("  </DETAILS>\n");
 		
