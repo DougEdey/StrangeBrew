@@ -54,6 +54,12 @@ class MashTableModel extends AbstractTableModel {
 		return columnNames[col];
 	}
 
+	public String getDirectionsAt(int row) {
+		if (row < 0)
+			return "";
+		return data.getStepDirections(row);
+	}
+	
 	public Object getValueAt(int row, int col) {
 		
 		try {
@@ -136,8 +142,9 @@ class MashTableModel extends AbstractTableModel {
 		};
 		data.calcMashSchedule();
 		fireTableCellUpdated(row, col);
-		fireTableDataChanged();		
-		mashManager.displayMash();
+		fireTableDataChanged();
+		if (mashManager != null)
+			mashManager.displayMash();
 		
 		
 	}
