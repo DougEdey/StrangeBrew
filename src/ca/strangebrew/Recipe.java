@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.14 2006/04/21 16:23:07 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.15 2006/04/24 16:08:31 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -37,6 +37,8 @@ import java.util.GregorianCalendar;
 public class Recipe {
 
 	// basics:
+	
+	private String version;
 	
 	private double alcohol;
 	private double attenuation;
@@ -665,7 +667,7 @@ public class Recipe {
 		double re = (q * oPlato + fPlato) / (1.0 + q);
 		// calculate by weight:
 		alcohol = (oPlato - re) / (2.0665 - 0.010665 * oPlato);
-		if (method == "Volume") // convert to by volume
+		if (method.equalsIgnoreCase("Volume")) // convert to by volume
 			alcohol = alcohol * estFg / 0.794;
 
 	}
@@ -809,6 +811,7 @@ public class Recipe {
 		StringBuffer sb = new StringBuffer();		
 		sb.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
 		sb.append("<STRANGEBREWRECIPE version = \"J1.0\">\n");
+		sb.append("<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->\n");
 		sb.append("  <DETAILS>\n");
 		sb.append("  <NAME>" + SBStringUtils.subEntities(name) + "</NAME>\n");
 		sb.append("  <BREWER>" + SBStringUtils.subEntities(brewer) + "</BREWER>\n");
@@ -910,9 +913,10 @@ public class Recipe {
 		sb.append("Brewer: " + brewer + "\n");
 		sb.append("Size: " + SBStringUtils.df1.format(postBoilVol.getValue()) + " " + postBoilVol.getUnits()+"\n");
 		sb.append("Style: " + style.getName() + "\n");
-	    mf = new MessageFormat("OG: {0,number,0.000},\tFG:{1,number,0.000}, \tALC:{2,number,0.0}\n");
-		Object[] objs = {new Double(estOg), new Double(estFg), new Double(alcohol) };
+	    mf = new MessageFormat("OG: {0,number,0.000},\tFG:{1,number,0.000}, \tAlc:{2,number,0.0}, \tIBU:{3,number,0.0}\n");
+		Object[] objs = {new Double(estOg), new Double(estFg), new Double(alcohol), new Double(ibu) };		
 		sb.append(mf.format( objs ));
+		sb.append("(Alc method: by " + alcMethod + "; IBU method: " + ibuCalcMethod + ")\n");
 		sb.append("Fermentables:\n");
 		sb.append(padLeft("Name ", 30, ' ') + " amount units  pppg    lov   %\n");
 
@@ -958,11 +962,8 @@ public class Recipe {
 					padRight(" " + mash.getStepEndTemp(i), 6, ' '),
 					padRight(" "+mash.getStepRampMin(i), 4, ' '),
 					padRight(" "+mash.getStepMin(i), 6, ' ')};					
-			sb.append(mf.format(objm));
-			
-			
+			sb.append(mf.format(objm));			
 		}
-
 
 		return sb.toString();
 	}	

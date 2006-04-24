@@ -8,6 +8,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -179,6 +181,11 @@ public class StylePanel extends javax.swing.JPanel {
 			pnlStyleLayout.columnWidths = new int[] {7,7};
 			this.setLayout(pnlStyleLayout);
 			setPreferredSize(new Dimension(400, 300));
+//			this.addComponentListener(new ComponentAdapter() {
+//				public void componentShown(ComponentEvent evt) {
+//					setStyleData();
+//				}
+//			});
 			{
 				jPanel1 = new JPanel();
 				this.add(jPanel1, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -374,6 +381,8 @@ public class StylePanel extends javax.swing.JPanel {
 					}
 				}
 			}
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

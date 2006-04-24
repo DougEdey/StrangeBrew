@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.10 2006/04/20 16:24:32 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.11 2006/04/24 16:08:31 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -691,7 +691,7 @@ public class MashManager extends javax.swing.JFrame implements ActionListener, F
 			jLabel12.setText("F");
 
 			pack();
-			this.setSize(550, 400);
+			this.setSize(600, 530);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

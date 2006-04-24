@@ -774,7 +774,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		getContentPane().add(BorderLayout.CENTER, jTabbedPane1);
 		getContentPane().add(BorderLayout.SOUTH, buttons);
 
-		setSize(400, 400);
+		setSize(500, 500);
 
 	}
 

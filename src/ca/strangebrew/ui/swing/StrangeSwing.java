@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.15 2006/04/21 18:59:14 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.16 2006/04/24 16:08:31 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -37,6 +37,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.ByteArrayOutputStream;
@@ -102,7 +103,7 @@ import ca.strangebrew.XmlTransformer;
 import ca.strangebrew.Yeast;
 
 
-public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener {
+public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener, WindowListener {
 
 	/*	{
 	 //Set Look & Feel
@@ -114,7 +115,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	 }
 	 */
 	{
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);	
+		this.addWindowListener(this);
 	}
 	
 	private String version = "0.3 (Beta)";
@@ -158,6 +160,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private NotesPanel notesPanel;
 	private SettingsPanel settingsPanel;
 	private DilutionPanel dilutionPanel;
+//	private MashPanel mashPanel;
 	private JMenuItem aboutMenuItem;
 	private JTextField evapText;
 	private JTextField boilMinText;
@@ -184,6 +187,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JTable hopsTable;
 	private JScrollPane scpComments;
 	public JTable maltTable;
+	private JTextField amountEditor;
 	private JLabel lblAlcValue;
 	private JLabel lblColourValue;
 	private JLabel lblIBUvalue;
@@ -364,12 +368,16 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		if (currentFile != null) {
 			fileName = currentFile.getName();
 		}
+	
+			
 		fileNameLabel.setText("File: " + fileName);
 		ibuMethodLabel.setText("IBU method: " + myRecipe.getIBUMethod());
 		alcMethodLabel.setText("Alc method: " + myRecipe.getAlcMethod());
 		
 		colourPanel.setBackground(Recipe.calcRGB(myRecipe.getSrm(), 8, 30, 20));
 		colourPanel2.setBackground(Recipe.calcRBG2(myRecipe.getSrm()));
+		
+		stylePanel.setStyleData();
 
 	}
 
@@ -562,6 +570,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									if (myRecipe != null && s != myRecipe.getStyleObj()) {
 										myRecipe.setStyle(s);
 										stylePanel.setStyle(s);
+										
 									}
 
 									cmbStyle.setToolTipText(SBStringUtils.multiLineToolTip(50, s
@@ -591,6 +600,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								public void focusLost(FocusEvent evt) {
 									myRecipe.setPostBoil(Double.parseDouble(postBoilText.getText()
 											.toString()));
+									
 									displayRecipe();
 								}
 							});
@@ -598,6 +608,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								public void actionPerformed(ActionEvent evt) {
 									myRecipe.setPostBoil(Double.parseDouble(postBoilText.getText()
 											.toString()));
+									
 									displayRecipe();
 								}
 							});
@@ -621,6 +632,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								public void stateChanged(ChangeEvent evt) {
 									myRecipe.setEfficiency(Double.parseDouble(spnEffic.getValue()
 											.toString()));
+									
 									displayRecipe();
 								}
 							});
@@ -640,6 +652,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								public void stateChanged(ChangeEvent evt) {
 									myRecipe.setAttenuation(Double.parseDouble(spnAtten.getValue()
 											.toString()));
+									
 									displayRecipe();
 								}
 							});
@@ -658,6 +671,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								public void stateChanged(ChangeEvent evt) {
 									myRecipe.setEstOg(Double.parseDouble(spnOG.getValue()
 											.toString()));
+									
 									displayRecipe();
 								}
 							});
@@ -680,6 +694,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									// set the new FG, and update alc:
 									myRecipe.setEstFg(Double.parseDouble(spnFG.getValue()
 											.toString()));
+									
 									displayRecipe();
 								}
 							});
@@ -720,6 +735,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									public void focusLost(FocusEvent evt) {
 										if (!txtComments.getText().equals(myRecipe.getComments())) {
 											myRecipe.setComments(txtComments.getText());
+											
 										}
 									}
 								});
@@ -738,6 +754,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									Yeast y = (Yeast) cmbYeastModel.getSelectedItem();
 									if (myRecipe != null && y != myRecipe.getYeastObj()) {
 										myRecipe.setYeast(y);
+										
 									}
 									String st = SBStringUtils.multiLineToolTip(40, y
 											.getDescription());
@@ -759,6 +776,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									if (myRecipe != null && q != myRecipe.getVolUnits()) {
 										// also sets postboil units:
 										myRecipe.setVolUnits(q);
+										
 										displayRecipe();
 									}
 								}
@@ -895,6 +913,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						jTabbedPane1.addTab("Settings", null, settingsPanel, null);
 						
 					}
+					{
+//						mashPanel = new MashPanel(myRecipe);
+//						jTabbedPane1.addTab("Mash", null, mashPanel, null);
+					}
 				}
 				{
 					pnlTables = new JPanel();
@@ -958,7 +980,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 										}
 
 									}
-								});
+								});								
 
 								// set up malt units combo
 								JComboBox maltUnitsComboBox = new JComboBox();
@@ -980,7 +1002,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 										}
 
 									}
-								});
+								});					
+							
 
 							}
 						}
@@ -1324,6 +1347,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 										Debug.print("Saved: " + file.getAbsoluteFile());
 										currentFile = file;
 										
+										
 									} catch (Exception e) {
 										showError(e);
 									}
@@ -1635,10 +1659,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				if (evt.getPropertyName().equals("preferredWidth")) {
 					TableColumnModel tcm = hopsTable.getColumnModel();
 					TableColumnModel tcmt = tblHopsTotals.getColumnModel();
-					int columnCount = tcm.getColumnCount();
+					int colCount = tcm.getColumnCount();
 
 					// for each column, get its width
-					for (int i = 0; i < columnCount; i++) {
+					for (int i = 0; i < colCount; i++) {
 						tcmt.getColumn(i).setPreferredWidth(tcm.getColumn(i).getPreferredWidth());
 					}
 				}
@@ -1688,6 +1712,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			myRecipe.setBoilMinutes(Integer.parseInt(s));
 			displayRecipe();
 		}
+		
+		
 
 	}
 
@@ -1718,6 +1744,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				out.write(myRecipe.toXML());
 				out.close();
 				currentFile = file;
+				
 				displayRecipe();
 				
 			} catch (Exception e) {
@@ -1791,6 +1818,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		else if (o == evapMethodCombo)
 			myRecipe.setEvapMethod(s);
 
+		
 		displayRecipe();
 	}
 	
@@ -1829,4 +1857,30 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		}
 		
 	}
+	
+	// This main window is closing, prompt to save file:
+	public void windowClosing(WindowEvent e) {
+        // displayMessage("WindowListener method called: windowClosing.");
+
+		int choice = 1;
+		
+		choice = JOptionPane.showConfirmDialog(null,
+				"Do you wish to save the current recipe?",
+				"Save Recipe?", JOptionPane.YES_NO_OPTION);
+		
+		if (choice == 0)
+			saveAs();
+    }
+	
+    public void windowClosed(WindowEvent e) { }
+    public void windowOpened(WindowEvent e) { }
+    public void windowIconified(WindowEvent e) { }
+    public void windowDeiconified(WindowEvent e) { }
+    public void windowActivated(WindowEvent e) { }
+    public void windowDeactivated(WindowEvent e) { }
+
+
+	
+
+	
 }

@@ -26,6 +26,10 @@ class MashTableModel extends AbstractTableModel {
 	public MashTableModel(MashManager m) {
 		mashManager = m;
 	}
+	
+	public MashTableModel() {
+		mashManager = null;
+	}
 
 	public void addRow(MashStep step) {
 		data.addStep();
