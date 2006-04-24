@@ -24,8 +24,10 @@ public class SBStringUtils {
 	public static String multiLineToolTip(int len, String input) {
 		String s = "";
 		int length = len;
-		if (input == null || input.length() < length)
+		if (input == null)
 			return "";
+		if (input.length() < length)
+			return input;
 
 		int i = 0;
 		int lastSpace = 0;
