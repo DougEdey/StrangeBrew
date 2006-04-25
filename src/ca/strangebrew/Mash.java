@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Collections;
 
 /**
- * $Id: Mash.java,v 1.10 2006/04/25 16:35:12 andrew_avis Exp $
+ * $Id: Mash.java,v 1.11 2006/04/25 18:45:14 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -175,7 +175,7 @@ public class Mash {
 	}
 	
 	public void delStep(int i){
-		if (steps.size()>i && !steps.isEmpty()){			
+		if (steps.size()>i && !steps.isEmpty() && i > -1){			
 			steps.remove(i);
 			calcMashSchedule();
 		}

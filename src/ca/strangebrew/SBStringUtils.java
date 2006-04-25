@@ -6,6 +6,7 @@
 package ca.strangebrew;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  * @author aavis
@@ -76,5 +77,6 @@ public class SBStringUtils {
 	public static DecimalFormat df2 = new DecimalFormat("#.00");
 	public static DecimalFormat df3 = new DecimalFormat("0.000");
 	public static DecimalFormat df0 = new DecimalFormat("#0");
+	public static NumberFormat myNF = NumberFormat.getCurrencyInstance(); // Use the country currency
 
 }

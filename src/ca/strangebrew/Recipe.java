@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.15 2006/04/24 16:08:31 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.16 2006/04/25 18:45:14 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -87,6 +87,7 @@ public class Recipe {
 	// totals:	
 	private double totalMaltCost;
 	private double totalHopsCost;
+	private double totalMiscCost;
 	private double totalMaltLbs;
 	private double totalHopsOz;
 	private double totalMashLbs;
@@ -172,6 +173,7 @@ public class Recipe {
 	public double getTotalMalt(){
 		return Quantity.convertUnit("lb", maltUnits, totalMaltLbs);
 	}
+	public double getTotalMiscCost() { return totalMiscCost; }
 	public double getTrubLoss() { return trubLoss; }
 	public String getVolUnits(){ return postBoilVol.getUnits(); }
 	public String getYeast(){ return yeast.getName();}	
@@ -347,11 +349,20 @@ public class Recipe {
 		Misc m = ((Misc)misc.get(i));
 		return m.getAmountAs(m.getUnits());		
 	}
-	public void setMiscAmount(int i, double a) {((Misc)misc.get(i)).setAmount(a); }
+	public void setMiscAmount(int i, double a) {
+		((Misc)misc.get(i)).setAmount(a); 
+		calcMiscCost();
+	}
 	public String getMiscUnits(int i) { return ((Misc)misc.get(i)).getUnits();}
-	public void setMiscUnits(int i, String u) {((Misc)misc.get(i)).setUnits(u); }
+	public void setMiscUnits(int i, String u) {
+		((Misc)misc.get(i)).setUnits(u);
+		calcMiscCost();
+	}
 	public double getMiscCost(int i) { return ((Misc)misc.get(i)).getCostPerU();}
-	public void setMiscCost(int i, double c) {((Misc)misc.get(i)).setCost(c); }
+	public void setMiscCost(int i, double c) {
+		((Misc)misc.get(i)).setCost(c);
+		calcMiscCost();
+	}
 	public String getMiscStage(int i) { return ((Misc)misc.get(i)).getStage();}
 	public void setMiscStage(int i, String s) {((Misc)misc.get(i)).setStage(s);}
 	public int getMiscTime(int i) { return ((Misc)misc.get(i)).getTime();}
@@ -485,23 +496,35 @@ public class Recipe {
 		calcHopsTotals();
 		}
 	public void delHop(int i){
-		if (!hops.isEmpty()){
+		if (!hops.isEmpty() && i > -1){
 			hops.remove(i);
 			calcHopsTotals();
 		}
 	}
-	public void addMisc(Misc m) { misc.add(m); }
+	public void addMisc(Misc m) {
+		misc.add(m); 
+		calcMiscCost();
+	}
 	
 	public void delMisc(int i){
-		if (!misc.isEmpty()){
+		if (!misc.isEmpty() && i > -1){
 			misc.remove(i);
+			calcMiscCost();
+		}
+	}
+	
+	private void calcMiscCost(){
+		totalMiscCost = 0;
+		for (int i=0; i<misc.size(); i++){
+			Misc m = (Misc)misc.get(i);
+			totalMiscCost += m.getAmountAs(m.getUnits()) * m.getCostPerU();
 		}
 	}
 	
 	public void addNote(Note n) { notes.add(n); }
 	
 	public void delNote(int i){
-		if (!notes.isEmpty()){
+		if (!notes.isEmpty() && i > -1){
 			notes.remove(i);
 		}
 	}

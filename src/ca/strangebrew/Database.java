@@ -8,7 +8,7 @@ import java.util.*;
 import com.mindprod.csv.*;
 
 /**
- * $Id: Database.java,v 1.1 2006/04/07 13:59:14 andrew_avis Exp $
+ * $Id: Database.java,v 1.2 2006/04/25 18:45:14 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -75,7 +75,7 @@ public class Database {
 					else
 						f.setAmount(0);
 					f.setDescription(fields[descrIdx]);
-					fermDB.add(f);
+					fermDB.add(f);					
 				}
 			} catch (EOFException e) {
 			}

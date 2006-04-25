@@ -1,6 +1,6 @@
 /**
  * Created on Oct 4, 2004
- * $Id: Fermentable.java,v 1.1 2006/04/07 13:59:14 andrew_avis Exp $
+ * $Id: Fermentable.java,v 1.2 2006/04/25 18:45:14 andrew_avis Exp $
  * @author aavis
  *
  * This is the base malt class.  It doesn't do much, except hold data
@@ -73,6 +73,7 @@ public class Fermentable extends Ingredient {
 	    sb.append( "      <LOV>"+lov+"</LOV>\n" );
 	    sb.append( "      <MASHED>"+mashed+"</MASHED>\n" );
 	    sb.append( "      <STEEPED>"+steeped+"</STEEPED>\n" );
+	    sb.append( "      <COSTLB>"+getCostPerU()+"</COSTLB>\n" );
 	    sb.append( "      <DESCRIPTION>"+getDescription()+"</DESCRIPTION>\n" );
 	    sb.append( "    </ITEM>\n" );
 	    return sb.toString();
