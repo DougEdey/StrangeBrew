@@ -196,8 +196,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					UIManager.setLookAndFeel(s);
 					SwingUtilities.updateComponentTreeUI(sb);					
 					sb.pack();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (Exception e) {					
 					e.printStackTrace();
 				} 
 				

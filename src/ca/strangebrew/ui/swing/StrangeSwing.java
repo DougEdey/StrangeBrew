@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.18 2006/04/25 16:35:12 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.19 2006/04/25 18:45:30 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -85,6 +85,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.plaf.ScrollBarUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
@@ -155,6 +156,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private DilutionPanel dilutionPanel;
 	private MashPanel mashPanel;
 	private WaterPanel waterPanel;
+	private CostPanel costPanel;
 	private JMenuItem aboutMenuItem;
 	private JTextField evapText;
 	private JTextField boilMinText;
@@ -242,7 +244,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 	private DateFormat dateFormat1 = DateFormat.getDateInstance(DateFormat.SHORT);
 
-	private NumberFormat myNF = NumberFormat.getCurrencyInstance(); // Use the country currency
+
 	private String Costs;
 
 	private Options preferences = new Options();
@@ -333,10 +335,11 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		miscPanel.setData(myRecipe);
 		notesPanel.setData(myRecipe);
 		stylePanel.setData(myRecipe);		
-		dilutionPanel.setData(myRecipe);
-		settingsPanel.setData(myRecipe);
+		dilutionPanel.setData(myRecipe);		
 		mashPanel.setData(myRecipe);
 		waterPanel.setData(myRecipe);
+		costPanel.setData(myRecipe);
+		settingsPanel.setData(myRecipe);
 		maltTable.updateUI();
 		hopsTable.updateUI();
 
@@ -367,7 +370,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		lblColourValue.setText(SBStringUtils.df1.format(myRecipe.getSrm()));
 		lblAlcValue.setText(SBStringUtils.df1.format(myRecipe.getAlcohol()));
 		txtDate.setText(dateFormat1.format(myRecipe.getCreated().getTime()));
-		Costs = myNF.format(myRecipe.getTotalMaltCost());
+		Costs = SBStringUtils.myNF.format(myRecipe.getTotalMaltCost());
 		tblMaltTotalsModel.setDataVector(new String[][]{{"Totals:",
 			"" + SBStringUtils.df1.format(myRecipe.getTotalMalt()), myRecipe.getMaltUnits(),
 			"" + SBStringUtils.df3.format(myRecipe.getEstOg()),
@@ -375,7 +378,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			Costs, "100"}}, new String[]{"",
 				"", "", "", "", "", ""});
 
-		Costs = myNF.format(myRecipe.getTotalHopsCost());
+		Costs = SBStringUtils.myNF.format(myRecipe.getTotalHopsCost());
 		tblHopsTotalsModel.setDataVector(new String[][]{{"Totals:", "", "",
 			"" + SBStringUtils.df1.format(myRecipe.getTotalHops()), myRecipe.getHopUnits(), "",
 			"", "" + SBStringUtils.df1.format(myRecipe.getIbu()),
@@ -395,6 +398,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		colourPanel.setBackground(Recipe.calcRGB(myRecipe.getSrm(), 8, 30, 20));		
 
 		stylePanel.setStyleData();
+		costPanel.displayCost();
 
 	}
 
@@ -511,6 +515,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						f2.setDescription(f.getDescription());
 						f2.setMashed(f.getMashed());
 						f2.setSteep(f.getSteep());
+						f2.setCost(f.getCostPerU());
 					}
 				}
 
@@ -996,33 +1001,27 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						stylePanel = new StylePanel(sbn);
 						jTabbedPane1.addTab("Style", null, stylePanel, null);
 
-					}
-					{
 						miscPanel = new MiscPanel(myRecipe);
 						jTabbedPane1.addTab("Misc", null, miscPanel, null);
-					}
-					{
+
 						notesPanel = new NotesPanel();
 						jTabbedPane1.addTab("Notes", null, notesPanel, null);
-					}
-					{
+
 						dilutionPanel = new DilutionPanel();
 						jTabbedPane1.addTab("Dilution", null, dilutionPanel, null);
 
-					}
-					{
-						SBNotifier sbn = new SBNotifier();
-						settingsPanel = new SettingsPanel(sbn);
-						jTabbedPane1.addTab("Settings", null, settingsPanel, null);
-
-					}
-					{
 						mashPanel = new MashPanel(myRecipe);
 						jTabbedPane1.addTab("Mash", null, mashPanel, null);
-					}
-					{
+
 						waterPanel = new WaterPanel();
 						jTabbedPane1.addTab("Water", null, waterPanel, null);
+
+						costPanel = new CostPanel();
+						jTabbedPane1.addTab("Cost", null, costPanel, null);
+						
+						// SBNotifier sbn = new SBNotifier();
+						settingsPanel = new SettingsPanel(sbn);
+						jTabbedPane1.addTab("Settings", null, settingsPanel, null);
 					}
 				}
 				{

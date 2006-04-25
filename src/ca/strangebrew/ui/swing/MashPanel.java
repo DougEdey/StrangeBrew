@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.2 2006/04/25 16:35:12 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.3 2006/04/25 18:45:30 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -126,26 +126,27 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 
 		}
 		displayMash();
+		tblMash.updateUI();
 	}
 
 	public void setData(Recipe r) {
 		myRecipe = r;
 		mashModel.setData(myRecipe.mash);
 		displayMash();
+		tblMash.updateUI();
 	}
 
 	private void initGUI() {
 		try {
 			GridBagLayout thisLayout = new GridBagLayout();
-			thisLayout.columnWeights = new double[] {0.3, 0.3};
-			thisLayout.columnWidths = new int[] {7, 7};
+			thisLayout.columnWeights = new double[]{0.3, 0.3};
+			thisLayout.columnWidths = new int[]{7, 7};
 			thisLayout.rowWeights = new double[]{0.1, 0.8, 0.1};
 			thisLayout.rowHeights = new int[]{7, 7, 7};
 			this.setLayout(thisLayout);
-			
 
 			{
-				
+
 				titlePanel = new JPanel();
 				FlowLayout titlePanelLayout = new FlowLayout();
 				titlePanelLayout.setAlignment(FlowLayout.LEFT);
@@ -169,7 +170,9 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				tablePanel = new JPanel();
 				BorderLayout pnlTableLayout = new BorderLayout();
 				tablePanel.setLayout(pnlTableLayout);
-				this.add(tablePanel, new GridBagConstraints(0, 1, 2, 3, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+				this.add(tablePanel, new GridBagConstraints(0, 1, 2, 3, 0.0, 0.0,
+						GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0),
+						0, 0));
 				tablePanel.setName("");
 				tablePanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
@@ -184,7 +187,8 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 							public String getToolTipText(MouseEvent e) {
 								java.awt.Point p = e.getPoint();
 								int rowIndex = rowAtPoint(p);
-								return SBStringUtils.multiLineToolTip(40, mashModel.getDirectionsAt(rowIndex));
+								return SBStringUtils.multiLineToolTip(40, mashModel
+										.getDirectionsAt(rowIndex));
 
 							}
 						};
@@ -212,86 +216,52 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			jPanel1 = new JPanel();
 			BorderLayout jPanel1Layout = new BorderLayout();
 			jPanel1.setLayout(jPanel1Layout);
-			this.add(jPanel1, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+			this.add(jPanel1, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0,
+					GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
+					0));
 
 			{
 				settingsPanel = new JPanel();
 				jPanel1.add(settingsPanel, BorderLayout.CENTER);
 				GridBagLayout settingsPanelLayout = new GridBagLayout();
-				settingsPanelLayout.rowWeights = new double[] { 0.1, 0.1, 0.1, 0.1 };
-				settingsPanelLayout.rowHeights = new int[] { 7, 7, 7, 7 };
-				settingsPanelLayout.columnWeights = new double[] { 0.3, 0.1, 0.1 };
-				settingsPanelLayout.columnWidths = new int[] { 7, 7, 7 };
+				settingsPanelLayout.rowWeights = new double[]{0.1, 0.1, 0.1, 0.1};
+				settingsPanelLayout.rowHeights = new int[]{7, 7, 7, 7};
+				settingsPanelLayout.columnWeights = new double[]{0.3, 0.1, 0.1};
+				settingsPanelLayout.columnWidths = new int[]{7, 7, 7};
 				settingsPanel.setLayout(settingsPanelLayout);
 				settingsPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 				settingsPanel.setPreferredSize(new java.awt.Dimension(172, 175));
 
 				jLabel15 = new JLabel();
-				settingsPanel.add(jLabel15, new GridBagConstraints(
-					0,
-					0,
-					1,
-					1,
-					0.0,
-					0.0,
-					GridBagConstraints.EAST,
-					GridBagConstraints.NONE,
-					new Insets(0, 0, 0, 0),
-					0,
-					0));
+				settingsPanel.add(jLabel15, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
 				jLabel15.setText("Mash Ratio: 1:");
 				{
 					ratioText = new JTextField();
-					settingsPanel.add(ratioText, new GridBagConstraints(
-						1,
-						0,
-						1,
-						1,
-						0.0,
-						0.0,
-						GridBagConstraints.CENTER,
-						GridBagConstraints.HORIZONTAL,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
+					settingsPanel.add(ratioText, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
+									0, 0, 0), 0, 0));
 					ratioText.setText("1.25");
 					ratioText.addFocusListener(this);
 					ratioText.addActionListener(this);
 				}
 				{
-					ComboBoxModel ratioUnitsComboModel = new DefaultComboBoxModel(new String[] {
-							"qt/lb", "l/kg" });
+					ComboBoxModel ratioUnitsComboModel = new DefaultComboBoxModel(new String[]{
+							"qt/lb", "l/kg"});
 					this.setPreferredSize(new java.awt.Dimension(502, 276));
 					ratioUnitsCombo = new JComboBox();
-					settingsPanel.add(ratioUnitsCombo, new GridBagConstraints(
-						2,
-						0,
-						1,
-						1,
-						0.0,
-						0.0,
-						GridBagConstraints.CENTER,
-						GridBagConstraints.NONE,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
+					settingsPanel.add(ratioUnitsCombo, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
+									0), 0, 0));
 					ratioUnitsCombo.setModel(ratioUnitsComboModel);
 					ratioUnitsCombo.addActionListener(this);
 				}
 				{
 					grainTempText = new JTextField();
-					settingsPanel.add(grainTempText, new GridBagConstraints(
-						1,
-						1,
-						1,
-						1,
-						0.0,
-						0.0,
-						GridBagConstraints.CENTER,
-						GridBagConstraints.HORIZONTAL,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
+					settingsPanel.add(grainTempText, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
+									0, 0, 0), 0, 0));
 					grainTempText.setText("10");
 
 					grainTempText.addFocusListener(this);
@@ -299,130 +269,58 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				}
 				{
 					grainTempULabel = new JLabel();
-					settingsPanel.add(grainTempULabel, new GridBagConstraints(
-						2,
-						1,
-						1,
-						1,
-						0.0,
-						0.0,
-						GridBagConstraints.CENTER,
-						GridBagConstraints.NONE,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
+					settingsPanel.add(grainTempULabel, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0,
+							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
+									0), 0, 0));
 					grainTempULabel.setText("F");
 
 				}
 
 				jLabel19 = new JLabel();
-				settingsPanel.add(jLabel19, new GridBagConstraints(
-					0,
-					1,
-					1,
-					1,
-					0.0,
-					0.0,
-					GridBagConstraints.EAST,
-					GridBagConstraints.NONE,
-					new Insets(0, 0, 0, 0),
-					0,
-					0));
+				settingsPanel.add(jLabel19, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
 				jLabel19.setText("Grain Temp:");
 
 				boilTempTxt = new JTextField();
-				settingsPanel.add(boilTempTxt, new GridBagConstraints(
-					1,
-					3,
-					1,
-					1,
-					0.0,
-					0.0,
-					GridBagConstraints.CENTER,
-					GridBagConstraints.HORIZONTAL,
-					new Insets(0, 0, 0, 0),
-					0,
-					0));
+				settingsPanel.add(boilTempTxt, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
+						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0,
+								0, 0), 0, 0));
 				boilTempTxt.setText("212");
 
 				jLabel20 = new JLabel();
-				settingsPanel.add(jLabel20, new GridBagConstraints(
-					0,
-					3,
-					1,
-					1,
-					0.0,
-					0.0,
-					GridBagConstraints.EAST,
-					GridBagConstraints.NONE,
-					new Insets(0, 0, 0, 0),
-					0,
-					0));
+				settingsPanel.add(jLabel20, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
+						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
 				jLabel20.setText("Boil Temp:");
 
 				jLabel12 = new JLabel();
-				settingsPanel.add(jLabel12, new GridBagConstraints(
-					2,
-					3,
-					1,
-					1,
-					0.0,
-					0.0,
-					GridBagConstraints.CENTER,
-					GridBagConstraints.NONE,
-					new Insets(0, 0, 0, 0),
-					0,
-					0));
+				settingsPanel.add(jLabel12, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0,
+						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
 				jLabel12.setText("F");
 
 				{
 					tunLossTxt = new JTextField();
-					settingsPanel.add(tunLossTxt, new GridBagConstraints(
-						1,
-						4,
-						1,
-						1,
-						0.0,
-						0.0,
-						GridBagConstraints.CENTER,
-						GridBagConstraints.HORIZONTAL,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
+					settingsPanel.add(tunLossTxt, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
+							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
+									0, 0, 0), 0, 0));
 
 					tunLossTxt.addFocusListener(this);
 					tunLossTxt.addActionListener(this);
 				}
 				{
 					tempLostULabel = new JLabel();
-					settingsPanel.add(tempLostULabel, new GridBagConstraints(
-						2,
-						4,
-						1,
-						1,
-						0.0,
-						0.0,
-						GridBagConstraints.CENTER,
-						GridBagConstraints.NONE,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
+					settingsPanel.add(tempLostULabel, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
+							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
+									0), 0, 0));
 					tempLostULabel.setText("F");
 				}
 
 				jLabel1 = new JLabel();
-				settingsPanel.add(jLabel1, new GridBagConstraints(
-					0,
-					4,
-					1,
-					1,
-					0.0,
-					0.0,
-					GridBagConstraints.EAST,
-					GridBagConstraints.NONE,
-					new Insets(0, 0, 0, 0),
-					0,
-					0));
+				settingsPanel.add(jLabel1, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
 				jLabel1.setText("Temp Lost in Tun:");
 				{
 					buttonsPanel = new JPanel();
@@ -459,18 +357,9 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 					tempBg.add(tempCrb);
 
 					jLabel14 = new JLabel();
-					settingsPanel.add(jLabel14, new GridBagConstraints(
-						0,
-						2,
-						1,
-						1,
-						0.0,
-						0.0,
-						GridBagConstraints.EAST,
-						GridBagConstraints.NONE,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
+					settingsPanel.add(jLabel14, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+							GridBagConstraints.EAST, GridBagConstraints.NONE,
+							new Insets(0, 0, 0, 0), 0, 0));
 					jLabel14.setText("Vol Units:");
 
 					{
@@ -501,18 +390,9 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 					volUnitsComboModel = new ComboModel();
 					volUnitsComboModel.setList(new Quantity().getListofUnits("vol"));
 					volUnitsCombo = new JComboBox();
-					settingsPanel.add(volUnitsCombo, new GridBagConstraints(
-						1,
-						2,
-						1,
-						1,
-						0.0,
-						0.0,
-						GridBagConstraints.CENTER,
-						GridBagConstraints.HORIZONTAL,
-						new Insets(0, 0, 0, 0),
-						0,
-						0));
+					settingsPanel.add(volUnitsCombo, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
+							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
+									0, 0, 0), 0, 0));
 					volUnitsCombo.setModel(volUnitsComboModel);
 					volUnitsCombo.addActionListener(this);
 				}
@@ -543,55 +423,39 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 
 			jLabel17.setText("Total Vol:");
 
-			totalsPanel.add(jLabel16, new GridBagConstraints(
-				0,
-				1,
-				1,
-				1,
-				0.0,
-				0.0,
-				GridBagConstraints.EAST,
-				GridBagConstraints.NONE,
-				new Insets(0, 0, 0, 0),
-				0,
-				0));
-			totalsPanel.add(totalMashLabel, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
-			totalsPanel.add(jLabel17, new GridBagConstraints(
-				0,
-				2,
-				1,
-				1,
-				0.0,
-				0.0,
-				GridBagConstraints.EAST,
-				GridBagConstraints.NONE,
-				new Insets(0, 0, 0, 0),
-				0,
-				0));
-			totalsPanel.add(jLabel18, new GridBagConstraints(
-				0,
-				0,
-				1,
-				1,
-				0.0,
-				0.0,
-				GridBagConstraints.EAST,
-				GridBagConstraints.NONE,
-				new Insets(0, 0, 0, 0),
-				0,
-				0));
-			totalsPanel.add(totalTimeLabel, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
+			totalsPanel
+					.add(jLabel16, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+							GridBagConstraints.EAST, GridBagConstraints.NONE,
+							new Insets(0, 0, 0, 0), 0, 0));
+			totalsPanel
+					.add(totalMashLabel, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+							GridBagConstraints.WEST, GridBagConstraints.NONE,
+							new Insets(0, 2, 0, 0), 0, 0));
+			totalsPanel
+					.add(jLabel17, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+							GridBagConstraints.EAST, GridBagConstraints.NONE,
+							new Insets(0, 0, 0, 0), 0, 0));
+			totalsPanel
+					.add(jLabel18, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+							GridBagConstraints.EAST, GridBagConstraints.NONE,
+							new Insets(0, 0, 0, 0), 0, 0));
+			totalsPanel
+					.add(totalTimeLabel, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+							GridBagConstraints.WEST, GridBagConstraints.NONE,
+							new Insets(0, 2, 0, 0), 0, 0));
 			{
 				volLabel = new JLabel();
-				totalsPanel.add(volLabel, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
+				totalsPanel.add(volLabel, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
+						GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0),
+						0, 0));
 				volLabel.setText("10");
 			}
 			jLabel16.setText("Total Weight:");
 
-			totalsPanelLayout.rowWeights = new double[] { 0.1, 0.1, 0.1 };
-			totalsPanelLayout.rowHeights = new int[] { 7, 7, 7 };
-			totalsPanelLayout.columnWeights = new double[] { 0.1, 0.1 };
-			totalsPanelLayout.columnWidths = new int[] { 7, 7 };
+			totalsPanelLayout.rowWeights = new double[]{0.1, 0.1, 0.1};
+			totalsPanelLayout.rowHeights = new int[]{7, 7, 7};
+			totalsPanelLayout.columnWeights = new double[]{0.1, 0.1};
+			totalsPanelLayout.columnWidths = new int[]{7, 7};
 			totalsPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
 			totalMashLabel.setText("10");
@@ -617,7 +481,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 
 			// set totals:
 			String mashWeightTotal = SBStringUtils.df1.format(myRecipe.getTotalMash()) + " "
-			+ myRecipe.getMaltUnits();
+					+ myRecipe.getMaltUnits();
 			totalMashLabel.setText("Total");
 			totalTimeLabel.setText(new Integer(myRecipe.mash.getMashTotalTime()).toString());
 			volLabel.setText(myRecipe.mash.getMashTotalVol());
@@ -625,45 +489,8 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			boilTempTxt.setText(new Double(myRecipe.mash.getBoilTempF()).toString());
 			tunLossTxt.setText(new Double(myRecipe.mash.getTunLossF()).toString());
 
-
 		}
 	}
-
-	// public void displayWater(){
-	//		
-	// String recipeUnitsAbrv = Quantity.getVolAbrv(myRecipe.getVolUnits());
-	// String mashUnitsAbrv =
-	// Quantity.getVolAbrv(myRecipe.mash.getMashVolUnits());
-	//
-	// totalWaterLbl.setText(myRecipe.getTotalWater());
-	// totalUnitsLbl.setText(recipeUnitsAbrv);
-	//		
-	// usedMashLbl.setText(myRecipe.mash.getTotalWaterStr());
-	// usedInMashUnitsLbl.setText(mashUnitsAbrv);
-	// absorbedLbl.setText(myRecipe.mash.getAbsorbedStr());
-	// absorbedUnitsLbl.setText(mashUnitsAbrv);
-	// spargeWithLbl.setText(myRecipe.getSparge());
-	// spargeUnitsLbl.setText(mashUnitsAbrv);
-	//		
-	// collectTxt.setValue(new
-	// Double(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));
-	// collectUnitsLbl.setText(recipeUnitsAbrv);
-	// postBoilTxt.setValue(new
-	// Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
-	// postBoilUnitsLbl.setText(recipeUnitsAbrv);
-	//		
-	// chillShrinkLbl.setText(myRecipe.getChillShrink());
-	// kettleTxt.setValue(new Double(myRecipe.getKettleLoss()));
-	// kettleUnitsLbl.setText(recipeUnitsAbrv);
-	// trubLossTxt.setValue(new Double(myRecipe.getTrubLoss()));
-	// trubLossUnitsLbl.setText(recipeUnitsAbrv);
-	// miscLossTxt.setValue(new Double(myRecipe.getMiscLoss()));
-	// miscLosUnitsLbl.setText(recipeUnitsAbrv);
-	//		
-	// finalVolTxt.setValue(new Double(myRecipe.getFinalWortVol()));
-	// finalUnitsLbl.setText(recipeUnitsAbrv);
-	//		
-	// }
 
 	private void addStepButtonActionPerformed(ActionEvent evt) {
 		myRecipe.mash.addStep();
@@ -684,11 +511,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	// (DISPOSE_ON_CLOSE).
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		// if (o == btnOk) {
-		// setVisible(false);
-		// dispose();
-		// return;
-		// }
+
 		if (o == ratioText) {
 			double d = Double.parseDouble(ratioText.getText());
 			myRecipe.mash.setMashRatio(d);
@@ -716,33 +539,6 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			String s = tunLossTxt.getText();
 			myRecipe.mash.setTunLossF(Double.parseDouble(s));
 		}
-
-		// water use stuff:
-		// else if (o == kettleTxt) {
-		// String s = kettleTxt.getText();
-		// myRecipe.setKettleLoss(Double.parseDouble(s));
-		// }
-		// else if (o == miscLossTxt) {
-		// String s = miscLossTxt.getText();
-		// myRecipe.setMiscLoss(Double.parseDouble(s));
-		// }
-		// else if (o == trubLossTxt) {
-		// String s = trubLossTxt.getText();
-		// myRecipe.setTrubLoss(Double.parseDouble(s));
-		// }
-		// else if (o == collectTxt) {
-		// String s = collectTxt.getText();
-		// myRecipe.setPreBoil(Double.parseDouble(s));
-		//
-		// } else if (o == postBoilTxt) {
-		// String s = postBoilTxt.getText();
-		// myRecipe.setPostBoil(Double.parseDouble(s));
-		//
-		// } else if (o == finalVolTxt) {
-		// String s = finalVolTxt.getText();
-		// myRecipe.setFinalWortVol(Double.parseDouble(s));
-		//
-		// }
 
 		tblMash.updateUI();
 		displayMash();
