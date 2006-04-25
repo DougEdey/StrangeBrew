@@ -244,6 +244,9 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 		// new recipe tab:
 		boilTempTxt.setText(opts.getProperty("optBoilTempF"));
+		
+		// appearances tab:
+		// landfCombo.setSelectedItem(opts.getProperty("optLookAndFeel"));
 	}
 
 	private void saveOptions() {
@@ -292,6 +295,9 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 		// new recipe tab:
 		opts.setProperty("optBoilTempF", boilTempTxt.getText());
+		
+		// appearances:
+		opts.setProperty("optLookAndFeel", landfCombo.getSelectedItem().toString());
 
 	}
 

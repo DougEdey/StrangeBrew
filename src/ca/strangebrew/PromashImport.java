@@ -1,5 +1,5 @@
 /*
- * $Id: PromashImport.java,v 1.1 2006/04/07 13:59:14 andrew_avis Exp $ Created on Jun 15, 2005
+ * $Id: PromashImport.java,v 1.2 2006/04/25 16:35:12 andrew_avis Exp $ Created on Jun 15, 2005
  * by aavis
  * A Promash .rec file importer, based on specs provided by Don Kelly
  */
@@ -27,8 +27,9 @@ public class PromashImport {
 		String path2 = new String("C:\\Program Files\\ProMash\\recipes\\");
 		String angry = new String("Angry American (911) Ale.rec");
 		String mule = new String("Mule Kick Bitter.rec");
-		String filen = new String("Company1_Red.rec");
-		File f = new File (path2 + filen);
+		String file1 = new String("Company1_Red.rec");
+		String file2 = new String("VictoryIPA.rec");
+		File f = new File (path2 + file2);
 		FileInputStream in = new FileInputStream(f); 
         		                
         String s = "";

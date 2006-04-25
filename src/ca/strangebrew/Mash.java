@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Collections;
 
 /**
- * $Id: Mash.java,v 1.9 2006/04/20 16:24:31 andrew_avis Exp $
+ * $Id: Mash.java,v 1.10 2006/04/25 16:35:12 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -461,16 +461,16 @@ public class Mash {
 
 			}
 
-			else if (stp.method.contains("decoction")) { // calculate a decoction step
+			else if (stp.method.indexOf("decoction") > 0) { // calculate a decoction step
 
 				waterEquiv += waterAddedQTS; // add previous addition to get WE
 				waterAddedQTS = 0;
 				strikeTemp = boilTempF; // boiling water
 				double ratio=0.75;
 
-				if (stp.method.contains("thick"))
+				if (stp.method.indexOf("thick") > 0)
 					ratio = 0.6;
-				else if (stp.method.contains("thin"))
+				else if (stp.method.indexOf("thin") > 0)
 					ratio = 0.9;
 				// Calculate volume (qts) of mash to remove
 				decoct = calcDecoction2(targetTemp, currentTemp, mashWaterQTS, ratio);				

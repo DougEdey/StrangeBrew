@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.5 2006/04/21 16:23:07 andrew_avis Exp $
+ * $Id: Options.java,v 1.6 2006/04/25 16:35:12 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -82,6 +82,7 @@ public class Options {
 			// appearance:
 			{"optMaltSortOrder", "By Name"},
 			{"optFirstScreen", ""},
+			{"optLookAndFeel", ""},
 			
 			// time:
 			{"optBrewDayStart", "10:00"},
