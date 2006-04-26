@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.19 2006/04/25 18:45:30 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.20 2006/04/26 17:25:08 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -47,7 +47,6 @@ import java.io.FileWriter;
 import java.io.PrintStream;
 import java.net.URL;
 import java.text.DateFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.EventObject;
@@ -80,12 +79,10 @@ import javax.swing.JToolBar;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.plaf.ScrollBarUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
@@ -317,6 +314,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		addListeners();
 
 		myRecipe = new Recipe();
+		myRecipe.setVersion(version);
 		currentFile = null;
 		attachRecipeData();
 		displayRecipe();
@@ -395,7 +393,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		ibuMethodLabel.setText("IBU method: " + myRecipe.getIBUMethod());
 		alcMethodLabel.setText("Alc method: " + myRecipe.getAlcMethod());
 
-		colourPanel.setBackground(Recipe.calcRGB(myRecipe.getSrm(), 8, 30, 20));		
+		colourPanel.setBackground(Recipe.calcRGB(1, myRecipe.getSrm(), 8, 30, 20, 255));		
 
 		stylePanel.setStyleData();
 		costPanel.displayCost();
@@ -1318,6 +1316,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								// This is just a test right now to see that
 								// stuff is changed.
 								myRecipe = new Recipe();
+								myRecipe.setVersion(version);
 								currentFile = null;
 								attachRecipeData();
 								displayRecipe();
@@ -1348,6 +1347,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									Debug.print("Opening: " + file.getName() + ".\n");
 									ImportXml imp = new ImportXml(file.toString());
 									myRecipe = imp.handler.getRecipe();
+									myRecipe.setVersion(version);									
 									myRecipe.calcMaltTotals();
 									myRecipe.calcHopsTotals();
 									myRecipe.mash.calcMashSchedule();
@@ -1851,6 +1851,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	public void setRecipe(Recipe r, File f) {
 		currentFile = f;
 		myRecipe = r;
+		myRecipe.setVersion(version);
 		displayRecipe();
 		attachRecipeData();
 	}

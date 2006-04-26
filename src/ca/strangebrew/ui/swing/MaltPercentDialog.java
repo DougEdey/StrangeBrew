@@ -22,7 +22,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-import ca.strangebrew.Debug;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 

@@ -1,5 +1,5 @@
 /**
- * $Id: XmlTransformer.java,v 1.1 2006/04/07 13:59:14 andrew_avis Exp $
+ * $Id: XmlTransformer.java,v 1.2 2006/04/26 17:25:07 andrew_avis Exp $
  * Created on Nov 19, 2004
  * @author Christopher Cook
  *
@@ -23,13 +23,14 @@ package ca.strangebrew;
 
 import java.io.File;
 import java.io.OutputStream;
+
 import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 public class XmlTransformer {
 

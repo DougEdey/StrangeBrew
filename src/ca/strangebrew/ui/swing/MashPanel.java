@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.3 2006/04/25 18:45:30 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.4 2006/04/26 17:25:08 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -34,31 +34,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
-import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumn;
 
 import ca.strangebrew.Quantity;
@@ -132,7 +124,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	public void setData(Recipe r) {
 		myRecipe = r;
 		mashModel.setData(myRecipe.mash);
-		displayMash();
+		// displayMash();
 		tblMash.updateUI();
 	}
 

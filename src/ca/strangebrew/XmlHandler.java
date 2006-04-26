@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.5 2006/04/21 16:23:07 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.6 2006/04/26 17:25:07 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -9,13 +9,16 @@
  */
 package ca.strangebrew;
  
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
-import java.text.*;
-import java.util.*;
 
 
 /**

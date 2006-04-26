@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.16 2006/04/25 18:45:14 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.17 2006/04/26 17:25:07 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -83,6 +83,9 @@ public class Recipe {
 	private String evapMethod;
 	private String alcMethod;
 	private double pelletHopPct;
+	private String bottleU;
+	private double bottleSize;
+	private double otherCost;
 	
 	// totals:	
 	private double totalMaltCost;
@@ -128,7 +131,12 @@ public class Recipe {
 		miscLoss = opts.getDProperty("optMiscLoss");
 		pelletHopPct = opts.getDProperty("optPelletHopsPct");
 		
+		bottleU = opts.getProperty("optBottleU");
+		bottleSize = opts.getDProperty("optBottleSize");
+		otherCost = opts.getDProperty("optMiscCost");
+		
 		dilution = new DilutedRecipe();
+		version = "";
 
 	}
 	
@@ -137,6 +145,8 @@ public class Recipe {
 	public String getAlcMethod(){ return alcMethod; }
 	public double getAttenuation(){ return attenuation; }
 	public int getBoilMinutes(){ return boilMinutes; }
+	public String getBottleU(){ return bottleU; }
+	public double getBottleSize() { return bottleSize; }
 	public String getBrewer(){ return brewer; }	
 	public String getComments() { return comments; }
 	public String getColourMethod() { return ""; }
@@ -152,7 +162,8 @@ public class Recipe {
 	public String getIBUMethod(){ return ibuCalcMethod; }
 	public String getMaltUnits(){ return maltUnits; }
 	public double getMiscLoss() { return miscLoss; }
-	public String getName(){ return name; }		
+	public String getName(){ return name; }	
+	public double getOtherCost() { return otherCost; }
 	public double getPelletHopPct(){ return pelletHopPct; }
 	public double getPreBoilVol(String s){ return preBoilVol.getValueAs(s); }
 	public double getPostBoilVol(String s){ return postBoilVol.getValueAs(s); }
@@ -275,6 +286,7 @@ public class Recipe {
 		}
 	public void setYeastName(String s) { yeast.setName(s); }
 	public void setYeast(Yeast y) { yeast = y; }
+	public void setVersion(String v) { version = v; }
 
 	
 	// hop list get functions:
@@ -777,63 +789,84 @@ public class Recipe {
 	
 	// RGB estimation:
 	
-	public static Color calcRGB(double srm, double rConst, double gConst, double bConst)
-	{
-	  // estimates the RGB equivalent colour for beer based on SRM
-	  // NOTE: optRed, optGreen and optBlue need to be adjusted for different monitors.
-	  // This is from the Windows version of SB
+	public static Color calcRGB(int method, double srm, int rConst, int gConst, int bConst, int aConst) {
+		// estimates the RGB equivalent colour for beer based on SRM
+		// NOTE: optRed, optGreen and optBlue need to be adjusted for different
+		// monitors.
+		// This is from the Windows version of SB
 		// typical values are: r=8, g=30, b=20
+		if (method == 1) {
 
-	  int R=0, G=0, B=0, A=255;
+			int R = 0, G = 0, B = 0, A = aConst;
 
-	  if (srm < 10) {
-	    R = 255;
-	  }
-	  else {
-	    R = new Double(255 - ((srm - rConst) * 10)).intValue();
-	  }
+			if (srm < 10) {
+				R = 255;
+			} else {
+				R = new Double(255 - ((srm - rConst) * 10)).intValue();
+			}
 
-	  if (gConst !=0)
-	    G = new Double(250 - ((srm / gConst) * 250)).intValue();
-	  else
-	    G = new Double((250 - ((srm / 30) * 250))).intValue();
-	  B = new Double(200 - (srm * bConst)).intValue();
-	  
-	  if (R < 0)
-	    R = 1;
-	  if (G < 0)
-	    G = 1;
-	  if (B < 0)
-	    B = 1;
+			if (gConst != 0)
+				G = new Double(250 - ((srm / gConst) * 250)).intValue();
+			else
+				G = new Double((250 - ((srm / 30) * 250))).intValue();
+			B = new Double(200 - (srm * bConst)).intValue();
 
-	  return new Color(R, G, B, A);
+			if (R < 0)
+				R = 1;
+			if (G < 0)
+				G = 1;
+			if (B < 0)
+				B = 1;
+
+			return new Color(R, G, B, A);
+			
+		} else {
+			// this is the "new" way, based on rbg screen samples from Gibby
+			double R,G,B;
+			
+			if (srm < 11){
+				R = 259.13 + -7.42 * srm;
+				G = 278.87 + -15.12 * srm;
+				B = 82.73 + -4.48 * srm;
+			}
+			else if (srm >= 11 && srm < 21){
+				R = 335.27 + -11.73 * srm;
+				G = 203.42 + -7.58 * srm;
+				B = 92.50 + -2.90 * srm;
+			}
+			else {
+				R = 220.20 + -7.20 * srm;
+				G = 109.42 + -3.42 * srm;
+				B = 50.75 + -1.33 * srm;
+			}
+			
+
+			int r = new Double(R).intValue();
+			int b = new Double(B).intValue();
+			int g = new Double(G).intValue();
+			if (r < 0)
+				r = 0;
+			if (r > 255)
+				r = 255;
+			if (g < 0)
+				g = 0;
+			if (g > 255)
+				g = 255;
+			if (b < 0)
+				b = 0;
+			if (b > 255)
+				b = 255;
+
+			return new Color(r, g, b, aConst);
+		}
 	}
-	
-	public static Color calcRBG2(double srm) {
-		
-		double R = 279.93 + -9.067 * srm;
-		double G = 258.49 + -11.51 * srm; 
-		double B = 75.27 + -2.92 * srm;
-		float a = 1;
-		
-		float r = (float)R / 255;		
-		float b = (float)B / 255;
-		float g = (float)G / 255;
-		if (r<0) r = 0;
-		if (r>1) r= 1;
-		if (g<0) g = 0;
-		if (g>1) g = 1;
-		if (b<0) b = 0;
-		if (b>1) b = 1;
-		
-		return new Color(r,g,b,a);
-		
-	}
+
+
 
 	public String toXML() {
 		StringBuffer sb = new StringBuffer();		
 		sb.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
-		sb.append("<STRANGEBREWRECIPE version = \"J1.0\">\n");
+		sb.append("<STRANGEBREWRECIPE version = \"" + version + "\">\n");
 		sb.append("<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->\n");
 		sb.append("  <DETAILS>\n");
 		sb.append("  <NAME>" + SBStringUtils.subEntities(name) + "</NAME>\n");
@@ -930,7 +963,7 @@ public class Recipe {
 	public String toText(){
 		MessageFormat mf;
 		StringBuffer sb = new StringBuffer();
-		sb.append("StrangeBrew J1.0 recipe text output\n\n");
+		sb.append("StrangeBrew J v." + version + " recipe text output\n\n");
 		sb.append("Details:\n");
 		sb.append("Name: " + name + "\n");
 		sb.append("Brewer: " + brewer + "\n");

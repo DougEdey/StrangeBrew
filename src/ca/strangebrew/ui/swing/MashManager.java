@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashManager.java,v 1.11 2006/04/24 16:08:31 andrew_avis Exp $
+ * $Id: MashManager.java,v 1.12 2006/04/26 17:25:08 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -50,7 +50,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;

@@ -1,5 +1,5 @@
 /*
- * $Id: SettingsPanel.java,v 1.3 2006/04/21 18:59:14 andrew_avis Exp $
+ * $Id: SettingsPanel.java,v 1.4 2006/04/26 17:25:08 andrew_avis Exp $
  */
 
 package ca.strangebrew.ui.swing;
@@ -10,18 +10,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-
-import javax.swing.WindowConstants;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import ca.strangebrew.Fermentable;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 

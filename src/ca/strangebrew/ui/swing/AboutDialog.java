@@ -38,8 +38,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
-import ca.strangebrew.Debug;
-
 
 public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 	private JTabbedPane aboutTabPanel;

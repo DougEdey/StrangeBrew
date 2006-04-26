@@ -2,11 +2,11 @@ package ca.strangebrew;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Collections;
+import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.11 2006/04/25 18:45:14 andrew_avis Exp $
+ * $Id: Mash.java,v 1.12 2006/04/26 17:25:07 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -388,8 +388,7 @@ public class Mash {
 		double mashVolQTS = 0;
 		String stepType;
 		int numSparge = 0;
-		String mashVolU; // gotta define this somewhere
-
+		
 		// convert mash ratio to qts/lb if in l/kg
 		if (mashRatioU.equalsIgnoreCase("l/kg")) {
 			mr *= 0.479325;

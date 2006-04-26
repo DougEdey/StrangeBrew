@@ -1,5 +1,5 @@
 /*
- * $Id: DilutionPanel.java,v 1.3 2006/04/13 20:00:50 andrew_avis Exp $
+ * $Id: DilutionPanel.java,v 1.4 2006/04/26 17:25:08 andrew_avis Exp $
  * Created on June 4, 2005
  * Dilution panel to help you figure out the results of diluting
  * your wort with water post-boil.
@@ -112,7 +112,7 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 	
 	public void setData(Recipe r){
 		myRecipe = r;
-		displayDilution();
+		// displayDilution();
 	}
 	
 	private void displayDilution(){

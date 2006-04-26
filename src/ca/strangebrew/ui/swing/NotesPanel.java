@@ -31,6 +31,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -43,8 +44,6 @@ import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
-
-import javax.swing.BorderFactory;
 
 import ca.strangebrew.Note;
 import ca.strangebrew.Recipe;

@@ -1,5 +1,5 @@
 /*
- * $Id: FindDialog.java,v 1.2 2006/04/13 20:00:50 andrew_avis Exp $ 
+ * $Id: FindDialog.java,v 1.3 2006/04/26 17:25:08 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis find recipe window class
  */
 
@@ -24,14 +24,19 @@
 
 package ca.strangebrew.ui.swing;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -40,11 +45,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.BoxLayout;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.GridBagConstraints;
-import java.awt.BorderLayout;
+
 import ca.strangebrew.Debug;
 import ca.strangebrew.ImportXml;
 import ca.strangebrew.Recipe;

@@ -10,7 +10,6 @@ import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-import ca.strangebrew.Debug;
 import ca.strangebrew.Fermentable;
 import ca.strangebrew.Hop;
 import ca.strangebrew.Style;

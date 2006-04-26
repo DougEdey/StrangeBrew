@@ -1,14 +1,16 @@
 package ca.strangebrew;
 import java.io.EOFException;
-import java.io.FileReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
-import com.mindprod.csv.*;
+import com.mindprod.csv.CSVReader;
 
 /**
- * $Id: Database.java,v 1.2 2006/04/25 18:45:14 andrew_avis Exp $
+ * $Id: Database.java,v 1.3 2006/04/26 17:25:08 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 

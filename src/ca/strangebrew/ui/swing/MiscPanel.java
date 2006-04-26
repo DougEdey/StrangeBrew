@@ -20,31 +20,26 @@
 package ca.strangebrew.ui.swing;
 
 import java.awt.Dimension;
-
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
-import javax.swing.JTable;
-import javax.swing.JPanel;
-import javax.swing.JButton;
 import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import javax.swing.table.TableColumn;
-
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.TableColumn;
 
 import ca.strangebrew.Misc;
 import ca.strangebrew.Recipe;

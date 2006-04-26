@@ -37,12 +37,16 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
@@ -61,7 +65,7 @@ import ca.strangebrew.Recipe;
  * the user.  If the dialog box is closed any other way then no changes will
  * be made to the Options object.
  */
-public class PreferencesDialog extends javax.swing.JDialog implements ActionListener {
+public class PreferencesDialog extends javax.swing.JDialog implements ActionListener, ChangeListener {
 
 	private boolean m_savePreferences = false;
 	private Options opts = null;
@@ -123,6 +127,14 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private JTextField txtTinsethUtil;
 	private JLabel jLabelc4;
 	private JTextField txtFWHTime;
+	private JLabel jLabel23;
+	private JLabel jLabel22;
+	private JLabel jLabel21;
+	private JLabel jLabel20;
+	private JSpinner alphaSpn;
+	private JSpinner blueSpn;
+	private JSpinner greenSpn;
+	private JSpinner redSpn;
 	private JLabel jLabel19;
 	private JComboBox landfCombo;
 
@@ -652,10 +664,10 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			colourPanel = new JPanel();
 			appearancePanel.add(colourPanel, BorderLayout.CENTER);
 			GridBagLayout colourPanelLayout = new GridBagLayout();
-			colourPanelLayout.rowWeights = new double[]{0.1, 0.1, 0.1, 0.1};
-			colourPanelLayout.rowHeights = new int[]{7, 7, 7, 7};
-			colourPanelLayout.columnWeights = new double[]{0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
-			colourPanelLayout.columnWidths = new int[]{7, 7, 7, 7, 7, 7};
+			colourPanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+			colourPanelLayout.rowHeights = new int[] {7, 7, 7, 7, 7, 7};
+			colourPanelLayout.columnWeights = new double[] {0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+			colourPanelLayout.columnWidths = new int[] {7, 7, 7, 7, 7, 7};
 			colourPanel.setLayout(colourPanelLayout);
 			colourPanel.setPreferredSize(new java.awt.Dimension(340, 223));
 			colourPanel.setBorder(BorderFactory.createTitledBorder("Colour Swatch"));
@@ -674,90 +686,106 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			colMethod1rb = new JRadioButton();
 			colMethod1rb.addActionListener(this);
 			colourGroup.add(colMethod1rb);
-			colourPanel.add(colMethod1rb, new GridBagConstraints(0, 0, 3, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			colourPanel.add(colMethod1rb, new GridBagConstraints(0, 0, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			colMethod1rb.setText("Colour Method 1");
 
 			colMethod2rb = new JRadioButton();
 			colMethod2rb.addActionListener(this);
 			colourGroup.add(colMethod2rb);
-			colourPanel.add(colMethod2rb, new GridBagConstraints(3, 0, 3, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			colourPanel.add(colMethod2rb, new GridBagConstraints(3, 0, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			colMethod2rb.setText("Colour Method 2");
 
 			jLabel13 = new JLabel();
-			colourPanel.add(jLabel13, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			colourPanel.add(jLabel13, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel13.setText("Straw \n(2)");
 
 			jLabel14 = new JLabel();
-			colourPanel.add(jLabel14, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			colourPanel.add(jLabel14, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel14.setText("Pale\n(4)");
 
 			jLabel15 = new JLabel();
-			colourPanel.add(jLabel15, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			colourPanel.add(jLabel15, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel15.setText("Amber\n(8)");
 
 			jLabel16 = new JLabel();
-			colourPanel.add(jLabel16, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			colourPanel.add(jLabel16, new GridBagConstraints(3, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel16.setText("Copper (15)");
 
 			jLabel17 = new JLabel();
-			colourPanel.add(jLabel17, new GridBagConstraints(4, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			colourPanel.add(jLabel17, new GridBagConstraints(4, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel17.setText("Brown (20)");
 
 			jLabel18 = new JLabel();
-			colourPanel.add(jLabel18, new GridBagConstraints(5, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			colourPanel.add(jLabel18, new GridBagConstraints(5, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel18.setText("Black (30)");
 
 			stawPanel = new JPanel();
-			colourPanel.add(stawPanel, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
-					0));
+			colourPanel.add(stawPanel, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			stawPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
 			palePanel = new JPanel();
-			colourPanel.add(palePanel, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
-					0));
+			colourPanel.add(palePanel, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			palePanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
 			amberPanel = new JPanel();
-			colourPanel.add(amberPanel, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
-					0));
+			colourPanel.add(amberPanel, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			amberPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
 			copperPanel = new JPanel();
-			colourPanel.add(copperPanel, new GridBagConstraints(3, 2, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
-					0));
+			colourPanel.add(copperPanel, new GridBagConstraints(3, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			copperPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
 			brownPanel = new JPanel();
-			colourPanel.add(brownPanel, new GridBagConstraints(4, 2, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
-					0));
+			colourPanel.add(brownPanel, new GridBagConstraints(4, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			brownPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
 			blackPanel = new JPanel();
-			colourPanel.add(blackPanel, new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
-					0));
+			colourPanel.add(blackPanel, new GridBagConstraints(5, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			blackPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+
+			SpinnerNumberModel redSpnModel = new SpinnerNumberModel(8,0,255,1);
+
+			redSpn = new JSpinner();
+			colourPanel.add(redSpn, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			redSpn.setModel(redSpnModel);
+			redSpn.addChangeListener(this);
+
+			SpinnerNumberModel greenSpnModel = new SpinnerNumberModel(30,0,255,1);
+
+			greenSpn = new JSpinner();
+			colourPanel.add(greenSpn, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			greenSpn.setModel(greenSpnModel);
+			greenSpn.addChangeListener(this);
+
+			SpinnerNumberModel blueSpnModel = new SpinnerNumberModel(20,0,255,1);
+
+			blueSpn = new JSpinner();
+			colourPanel.add(blueSpn, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			blueSpn.setModel(blueSpnModel);
+			blueSpn.addChangeListener(this);
+
+			SpinnerNumberModel alphaSpnModel = new SpinnerNumberModel(255,0,255,1);
+
+			alphaSpn = new JSpinner();
+			colourPanel.add(alphaSpn, new GridBagConstraints(3, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			alphaSpn.setModel(alphaSpnModel);
+			alphaSpn.addChangeListener(this);
+
+			jLabel20 = new JLabel();
+			colourPanel.add(jLabel20, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			jLabel20.setText("Red:");
+
+			jLabel21 = new JLabel();
+			colourPanel.add(jLabel21, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			jLabel21.setText("Blue:");
+
+			jLabel22 = new JLabel();
+			colourPanel.add(jLabel22, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			jLabel22.setText("Green:");
+
+			jLabel23 = new JLabel();
+			colourPanel.add(jLabel23, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			jLabel23.setText("Alpha:");
 
 			mashPanel = new JPanel();
 			newRecipePanel.add(mashPanel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
@@ -989,30 +1017,48 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();		
 		
+		
+		
 		if (o == okButton) {
 		saveOptions();
 		opts.saveProperties();
 		setVisible(false);
 		dispose();
 		}
-		else if (o == colMethod1rb){
-			stawPanel.setBackground(Recipe.calcRGB(2, 8, 20, 30));
-			palePanel.setBackground(Recipe.calcRGB(4, 8, 20, 30));
-			amberPanel.setBackground(Recipe.calcRGB(8, 8, 20, 30));
-			copperPanel.setBackground(Recipe.calcRGB(15, 8, 20, 30));
-			brownPanel.setBackground(Recipe.calcRGB(20, 8, 20, 30));
-			blackPanel.setBackground(Recipe.calcRGB(30, 8, 20, 30));
-		}
-		else if (o == colMethod2rb){
-			stawPanel.setBackground(Recipe.calcRBG2(2));
-			palePanel.setBackground(Recipe.calcRBG2(4));
-			amberPanel.setBackground(Recipe.calcRBG2(8));
-			copperPanel.setBackground(Recipe.calcRBG2(15));
-			brownPanel.setBackground(Recipe.calcRBG2(20));
-			blackPanel.setBackground(Recipe.calcRBG2(30));
-			
+		else if (o == colMethod1rb || o == colMethod2rb){
+			displayColour();
 		}
 		
+	}
+	
+	public void stateChanged(ChangeEvent e){
+		displayColour();
+	}
+	
+	private void displayColour(){
+		
+		int r = Integer.parseInt(redSpn.getValue().toString());
+		int g = Integer.parseInt(greenSpn.getValue().toString());
+		int b = Integer.parseInt(blueSpn.getValue().toString());
+		int a = Integer.parseInt(alphaSpn.getValue().toString());
+		
+		if (colMethod1rb.isSelected()){
+			stawPanel.setBackground(Recipe.calcRGB(1, 2, r, g, b, a));
+			palePanel.setBackground(Recipe.calcRGB(1, 4, r, g, b, a));
+			amberPanel.setBackground(Recipe.calcRGB(1,8, r, g, b, a));
+			copperPanel.setBackground(Recipe.calcRGB(1,15, r, g, b, a));
+			brownPanel.setBackground(Recipe.calcRGB(1,20, r, g, b, a));
+			blackPanel.setBackground(Recipe.calcRGB(1,30, r, g, b, a));
+		}
+		else {
+			stawPanel.setBackground(Recipe.calcRGB(2, 2, r, g, b, a));
+			palePanel.setBackground(Recipe.calcRGB(2, 4, r, g, b, a));
+			amberPanel.setBackground(Recipe.calcRGB(2, 8, r, g, b, a));
+			copperPanel.setBackground(Recipe.calcRGB(2, 15, r, g, b, a));
+			brownPanel.setBackground(Recipe.calcRGB(2, 20, r, g, b, a));
+			blackPanel.setBackground(Recipe.calcRGB(2, 30, r, g, b, a));
+			
+		}
 	}
 
 }

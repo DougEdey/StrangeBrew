@@ -22,7 +22,6 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.text.JTextComponent;
 
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;

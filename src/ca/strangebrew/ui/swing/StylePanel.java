@@ -8,8 +8,6 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -90,7 +88,7 @@ public class StylePanel extends javax.swing.JPanel {
 	public void setData(Recipe r) {
 		myRecipe = r;
 		cmbStyle2Model.addOrInsert(myRecipe.getStyleObj());
-		setStyleData();
+		// setStyleData();
 	}
 	
 	public void setList(ArrayList styleList){
