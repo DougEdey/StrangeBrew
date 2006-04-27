@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.20 2006/04/26 17:25:08 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.21 2006/04/27 17:29:52 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -275,7 +275,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	}
 
 	public StrangeSwing() {
-		super();
+		super();	
 		initGUI();
 		// There has *got* to be a better way to do this:
 		Database db = new Database();
@@ -318,6 +318,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		currentFile = null;
 		attachRecipeData();
 		displayRecipe();
+		
+		
 
 	}
 
@@ -1345,7 +1347,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								if (returnVal == JFileChooser.APPROVE_OPTION) {
 									File file = fileChooser.getSelectedFile();
 									Debug.print("Opening: " + file.getName() + ".\n");
-									ImportXml imp = new ImportXml(file.toString());
+									ImportXml imp = new ImportXml(file.toString(), "recipe");
 									myRecipe = imp.handler.getRecipe();
 									myRecipe.setVersion(version);									
 									myRecipe.calcMaltTotals();

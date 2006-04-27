@@ -2,7 +2,7 @@ package ca.strangebrew;
 
 
 /**
- * $Id: Style.java,v 1.1 2006/04/07 13:59:14 andrew_avis Exp $
+ * $Id: Style.java,v 1.2 2006/04/27 17:29:52 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  * This is a class to create a style object
@@ -24,6 +24,15 @@ public class Style {
 	public double lovHigh;
 	public String commercialEx;
 	public String description;
+	
+	public String aroma;
+	public String appearance;
+	public String flavour;
+	public String mouthfeel;
+	public String impression;
+	public String comments;
+	public String ingredients;
+	
 	
 	
 	
@@ -182,6 +191,24 @@ public class Style {
 		StringBuffer sb = new StringBuffer();
 	    sb.append( "<STYLE>"+getName()+"</STYLE>\n" );
 	    sb.append( "<DESCR>"+getDescription()+"</DESCR>\n" );
+	    return sb.toString();
+	}
+	
+	public String toText(){
+		StringBuffer sb = new StringBuffer();
+	    sb.append( "Name: "+catNum + ":"+getName()+"\n" );
+	    sb.append( "Category: "+category+"\n" );
+	    sb.append( "OG:"+ogLow + "-"+ogHigh+"\n" );
+	    sb.append( "IBU:"+ibuLow + "-"+ibuHigh+"\n" );
+	    sb.append( "SRM:"+lovLow + "-"+lovHigh+"\n" );
+	    sb.append( "Alc:"+alcLow + "-"+alcHigh+"\n" );
+	    sb.append( "Aroma:"+aroma+"\n" );
+	    sb.append( "Appearance:"+appearance+"\n" );
+	    sb.append( "Flavour:"+flavour+"\n" );
+	    sb.append( "Mouthfeel:"+mouthfeel+"\n" );
+	    sb.append( "Impression:"+impression+"\n" );
+	    sb.append( "Comments:"+comments+"\n" );
+	    sb.append( "Ingredients:"+ingredients+"\n" );
 	    return sb.toString();
 	}
 	

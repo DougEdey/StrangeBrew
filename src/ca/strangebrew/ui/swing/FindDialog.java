@@ -1,5 +1,5 @@
 /*
- * $Id: FindDialog.java,v 1.3 2006/04/26 17:25:08 andrew_avis Exp $ 
+ * $Id: FindDialog.java,v 1.4 2006/04/27 17:29:52 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis find recipe window class
  */
 
@@ -189,7 +189,7 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 				// so we have to build it ourselves
 				String fileName = dir.getAbsolutePath() + System.getProperty("file.separator")
 						+ file.getName();
-				ImportXml imp = new ImportXml(fileName);
+				ImportXml imp = new ImportXml(fileName, "recipe");
 				Recipe r = imp.handler.getRecipe();
 				recipes.add(r);
 				files.add(file);

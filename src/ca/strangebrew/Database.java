@@ -10,7 +10,7 @@ import java.util.Comparator;
 import com.mindprod.csv.CSVReader;
 
 /**
- * $Id: Database.java,v 1.3 2006/04/26 17:25:08 andrew_avis Exp $
+ * $Id: Database.java,v 1.4 2006/04/27 17:29:52 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -41,6 +41,7 @@ public class Database {
 		readYeast(dbPath);
 		readStyles(dbPath);
 		readMisc(dbPath);
+		importStyles(dbPath);
 	}
 	public void readFermentables(String dbPath) {
 		// read the fermentables from the csv file
@@ -242,6 +243,18 @@ public class Database {
 			ObjComparator sc = new ObjComparator();
 			Collections.sort(styleDB,  sc);
 		
+	}
+	
+	public void importStyles(String dbPath){
+		// import a yeast array from an xml file:
+		File yeastFile = new File(dbPath, "styleguide.xml");
+		Debug.print("Opening: " + yeastFile.getName() + ".\n");
+		ImportXml imp = new ImportXml(yeastFile.toString(), "style");
+		ArrayList st = imp.styleHandler.getStyles();
+		for (int i=0;i<2; i++){
+			Style s = (Style)st.get(i);
+			Debug.print(s.toText());
+		}
 	}
 	
 	public void readMisc(String dbPath) {
