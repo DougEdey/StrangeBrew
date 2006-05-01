@@ -1,14 +1,10 @@
 /*
- * $Id: XmlStyleHandler.java,v 1.1 2006/04/27 17:29:52 andrew_avis Exp $
+ * $Id: XmlStyleHandler.java,v 1.2 2006/05/01 20:02:06 andrew_avis Exp $
  * Created on Oct 14, 2004
  */
 package ca.strangebrew;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
@@ -29,7 +25,7 @@ public class XmlStyleHandler extends DefaultHandler {
 	private String currentList = null; //current List name
 	private String currentElement = null; // current element name
 	private String descrBuf = ""; // buffer to hold long descriptions
-	private String buffer = ""; // buffer 
+	private String type = ""; // beer class 
 
 	private boolean newStyle = false;
 
@@ -80,6 +76,19 @@ public class XmlStyleHandler extends DefaultHandler {
 		currentElement = eName;
 		currentAttributes = attrs;
 		
+		if (eName.equalsIgnoreCase("class")){
+			if (attrs != null) {
+				for (int i = 0; i < attrs.getLength(); i++) {
+					String s = attrs.getLocalName(i); // Attr name
+					if ("".equalsIgnoreCase(s))
+						s = attrs.getQName(i);
+					if (s.equalsIgnoreCase("type")) {
+						type = attrs.getValue(i);
+					}
+				}
+			}
+		}
+		
 		if (eName.equalsIgnoreCase("og") ||
 				eName.equalsIgnoreCase("fg") ||
 				eName.equalsIgnoreCase("ibu") ||
@@ -88,9 +97,10 @@ public class XmlStyleHandler extends DefaultHandler {
 			currentList = eName;
 		}
 
-		if (eName.equalsIgnoreCase("subcategory")) {
+		if (eName.equalsIgnoreCase("subcategory") ) {
 			style = new Style();
 			style.setCategory(category);
+			style.type = type;
 			newStyle = true;
 			
 
@@ -119,7 +129,9 @@ public class XmlStyleHandler extends DefaultHandler {
 	) throws SAXException {
 
 		if (qName.equalsIgnoreCase("subcategory") && newStyle) {
-			styles.add(style);
+			// only add if it's beer class for now:
+			if (type.equalsIgnoreCase("beer"))
+				styles.add(style);
 			style = null;
 			newStyle = false;
 		}
@@ -152,6 +164,10 @@ public class XmlStyleHandler extends DefaultHandler {
 			style.ingredients = descrBuf;
 			descrBuf = "";
 		}
+		if (qName.equalsIgnoreCase("examples")){
+			style.commercialEx = descrBuf;
+			descrBuf = "";
+		}
 
 	}
 
@@ -167,31 +183,22 @@ public class XmlStyleHandler extends DefaultHandler {
 		if (!s.trim().equals("") && newStyle) {
 			if (currentElement.equalsIgnoreCase("name")){
 				style.setName(s.trim());
-			}
-			if (currentElement.equalsIgnoreCase("aroma")){
-				descrBuf = descrBuf + s;
-			}
+			}			
 			if (currentElement.equalsIgnoreCase("abbr")){
 				descrBuf = descrBuf + " " +  s.trim();				
 			}
-			if (currentElement.equalsIgnoreCase("appearance")){
+			if (currentElement.equalsIgnoreCase("aroma") ||
+					currentElement.equalsIgnoreCase("appearance") ||
+					currentElement.equalsIgnoreCase("flavor") ||
+					currentElement.equalsIgnoreCase("mouthfeel") ||
+					currentElement.equalsIgnoreCase("impression") ||
+					currentElement.equalsIgnoreCase("comments") ||
+					currentElement.equalsIgnoreCase("ingredients") ||
+					currentElement.equalsIgnoreCase("examples") ){
 				descrBuf = descrBuf + s;
 			}
-			if (currentElement.equalsIgnoreCase("flavor")){
-				descrBuf = descrBuf + s;
-			}
-			if (currentElement.equalsIgnoreCase("mouthfeel")){
-				descrBuf = descrBuf + s;
-			}
-			if (currentElement.equalsIgnoreCase("impression")){
-				descrBuf = descrBuf + s;
-			}
-			if (currentElement.equalsIgnoreCase("comments")){
-				descrBuf = descrBuf + s;
-			}
-			if (currentElement.equalsIgnoreCase("ingredients")){
-				descrBuf = descrBuf + s;
-			}
+			
+		
 			if (currentElement.equalsIgnoreCase("low")){
 				if (currentList.equalsIgnoreCase("og"))
 					style.ogLow = Double.parseDouble(s);

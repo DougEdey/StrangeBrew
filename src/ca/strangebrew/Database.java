@@ -10,7 +10,7 @@ import java.util.Comparator;
 import com.mindprod.csv.CSVReader;
 
 /**
- * $Id: Database.java,v 1.4 2006/04/27 17:29:52 andrew_avis Exp $
+ * $Id: Database.java,v 1.5 2006/05/01 20:02:06 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -27,8 +27,7 @@ public class Database {
 	// I suspect that binary files will be faster, and
 	// we might want to move that way in the future.
 	
-	private final static boolean DEBUG = false;
-
+	
 	public ArrayList fermDB = new ArrayList();
 	public ArrayList hopsDB = new ArrayList();
 	public ArrayList yeastDB = new ArrayList();
@@ -39,7 +38,7 @@ public class Database {
 		readFermentables(dbPath);
 		readHops(dbPath);
 		readYeast(dbPath);
-		readStyles(dbPath);
+		// readStyles(dbPath);
 		readMisc(dbPath);
 		importStyles(dbPath);
 	}
@@ -171,10 +170,7 @@ public class Database {
 			} catch (EOFException e) {
 			}
 			reader.close();
-			if (DEBUG){
-				for (int i=0; i<yeastDB.size(); i++)
-					System.out.print(((Yeast) yeastDB.get(i)).toXML());
-			}
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -224,16 +220,13 @@ public class Database {
 						s.setLovLow(Double.parseDouble(fields[lovlowIdx]));
 						s.setLovHigh(Double.parseDouble(fields[lovhighIdx]));
 						s.setCommercialEx(fields[commexIdx]);
-						s.setDescription(fields[descrIdx]);
+						s.comments = fields[descrIdx];
 						styleDB.add(s);
 					}
 				} catch (EOFException e) {
 				}
 				reader.close();
-				if (DEBUG){
-					for (int i=0; i<styleDB.size(); i++)
-						System.out.print(((Style) styleDB.get(i)).toXML());
-				}
+			
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -250,9 +243,9 @@ public class Database {
 		File yeastFile = new File(dbPath, "styleguide.xml");
 		Debug.print("Opening: " + yeastFile.getName() + ".\n");
 		ImportXml imp = new ImportXml(yeastFile.toString(), "style");
-		ArrayList st = imp.styleHandler.getStyles();
+		styleDB = imp.styleHandler.getStyles();
 		for (int i=0;i<2; i++){
-			Style s = (Style)st.get(i);
+			Style s = (Style)styleDB.get(i);
 			Debug.print(s.toText());
 		}
 	}

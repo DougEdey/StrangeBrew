@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.17 2006/04/26 17:25:07 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.18 2006/05/01 20:02:06 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -278,7 +278,9 @@ public class Recipe {
 		pelletHopPct = p;
 		calcHopsTotals();
 	}
-	public void setStyle(String s) { style.setName(s); }
+	public void setStyle(String s) 	// TODO: look up an existing style 
+	{ style.setName(s); }
+
 	public void setStyle(Style s) { style = s; }
 	public void setTrubLoss(double t) { 
 		trubLoss = t;

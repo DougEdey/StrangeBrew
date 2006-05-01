@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.12 2006/04/26 17:25:07 andrew_avis Exp $
+ * $Id: Mash.java,v 1.13 2006/05/01 20:02:06 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -74,7 +74,8 @@ public class Mash {
 			tempU = tu;
 			method = m;
 			minutes = min;
-			rampMin = rmin;
+			rampMin = rmin;		
+			
 		}
 
 		// default constructor:

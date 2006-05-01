@@ -2,7 +2,7 @@ package ca.strangebrew;
 
 
 /**
- * $Id: Style.java,v 1.2 2006/04/27 17:29:52 andrew_avis Exp $
+ * $Id: Style.java,v 1.3 2006/05/01 20:02:06 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  * This is a class to create a style object
@@ -23,7 +23,7 @@ public class Style {
 	public double lovLow;
 	public double lovHigh;
 	public String commercialEx;
-	public String description;
+	// public String description;
 	
 	public String aroma;
 	public String appearance;
@@ -32,6 +32,8 @@ public class Style {
 	public String impression;
 	public String comments;
 	public String ingredients;
+	
+	public String type;
 	
 	
 	
@@ -42,6 +44,16 @@ public class Style {
 			return name;
 		else
 			return "";}
+	
+	public String getDescription() {
+		String s = "";
+		if (impression != null)
+			s = "<b>Impression:</b> " + impression + "\n";
+		if (comments != null)
+			s = s + "<b>Comments:</b> " + comments;
+		
+		return s;
+	}
 		
 	/**
 	 * @return Returns the alcHigh.
@@ -73,12 +85,7 @@ public class Style {
 	public String getCommercialEx() {
 		return commercialEx;
 	}
-	/**
-	 * @return Returns the description.
-	 */
-	public String getDescription() {
-		return description;
-	}
+
 	/**
 	 * @return Returns the ibuHigh.
 	 */
@@ -118,8 +125,7 @@ public class Style {
 	
 	// set methods:
 	public void setName(String n){ name = n; }
-	public void setDescription(String d){ description = d; }
-	
+		
 	/**
 	 * @param alcHigh The alcHigh to set.
 	 */
@@ -190,7 +196,7 @@ public class Style {
 	public String toXML(){
 		StringBuffer sb = new StringBuffer();
 	    sb.append( "<STYLE>"+getName()+"</STYLE>\n" );
-	    sb.append( "<DESCR>"+getDescription()+"</DESCR>\n" );
+	    // sb.append( "<DESCR>"+getDescription()+"</DESCR>\n" );
 	    return sb.toString();
 	}
 	
@@ -198,17 +204,19 @@ public class Style {
 		StringBuffer sb = new StringBuffer();
 	    sb.append( "Name: "+catNum + ":"+getName()+"\n" );
 	    sb.append( "Category: "+category+"\n" );
-	    sb.append( "OG:"+ogLow + "-"+ogHigh+"\n" );
-	    sb.append( "IBU:"+ibuLow + "-"+ibuHigh+"\n" );
-	    sb.append( "SRM:"+lovLow + "-"+lovHigh+"\n" );
-	    sb.append( "Alc:"+alcLow + "-"+alcHigh+"\n" );
-	    sb.append( "Aroma:"+aroma+"\n" );
-	    sb.append( "Appearance:"+appearance+"\n" );
-	    sb.append( "Flavour:"+flavour+"\n" );
-	    sb.append( "Mouthfeel:"+mouthfeel+"\n" );
-	    sb.append( "Impression:"+impression+"\n" );
-	    sb.append( "Comments:"+comments+"\n" );
-	    sb.append( "Ingredients:"+ingredients+"\n" );
+	    sb.append( "Class: "+type+"\n" );
+	    sb.append( "OG: "+ogLow + "-"+ogHigh+"\n" );
+	    sb.append( "IBU: "+ibuLow + "-"+ibuHigh+"\n" );
+	    sb.append( "SRM: "+lovLow + "-"+lovHigh+"\n" );
+	    sb.append( "Alc: "+alcLow + "-"+alcHigh+"\n" );
+	    sb.append( "Aroma: "+aroma+"\n" );
+	    sb.append( "Appearance: "+appearance+"\n" );
+	    sb.append( "Flavour: "+flavour+"\n" );
+	    sb.append( "Mouthfeel: "+mouthfeel+"\n" );
+	    sb.append( "Impression: "+impression+"\n" );
+	    sb.append( "Comments: "+comments+"\n" );
+	    sb.append( "Ingredients: "+ingredients+"\n" );
+	    sb.append( "Examples: "+commercialEx+"\n" );
 	    return sb.toString();
 	}
 	

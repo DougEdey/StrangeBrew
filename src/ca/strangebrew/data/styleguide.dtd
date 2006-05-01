@@ -1,0 +1,110 @@
+<!--
+Revision: 1; 2004-09-02
+
+****** BEGIN LICENSE BLOCK ******
+*
+* The contents of this file are Copyright (C) 2004 BJCP.org and
+* the original authors. All rights reserved.
+*
+* The initial developer of the code is:
+*   Christopher Cook (http://www.intraplanar.net/)
+*
+* Contributor(s):
+*   Mike Charlton <mike@rook.dyndns.org>
+*
+* Original document location:
+*   http://www.bjcp.org/styles04/xml/styleguide.dtd
+*
+* This file may be freely distributed ONLY in an UNMODIFED form and ONLY
+* when accompanied by the original UNMODIFIED xml document
+* (styleguide.xml). If modifications are made to the code (xml schema,
+* entities, etc.), those modifications MAY be sent to the BJCP
+* communication director <communication_director@bjcp.org>.
+*
+****** END LICENSE BLOCK ******
+-->
+
+
+<!-- Generic text markup elements -->
+<!ENTITY % phrase "em | strong | abbr | acronym | link | quote | cite | span | div">
+<!ENTITY % list "ul | ol | dl">
+<!ENTITY % inline "(#PCDATA | %phrase; | %list; | table)*">
+<!ELEMENT li (#PCDATA | %phrase; | %list;)*>
+<!ELEMENT ul (li)*>
+<!ATTLIST ul class CDATA #IMPLIED>
+<!ELEMENT ol (li)*>
+<!ATTLIST ol class CDATA #IMPLIED>
+<!ELEMENT em (#PCDATA)>
+<!ELEMENT strong (#PCDATA)>
+<!ELEMENT abbr (#PCDATA)>
+<!ATTLIST abbr title CDATA #REQUIRED>
+<!ELEMENT acronym (#PCDATA)>
+<!ATTLIST acronym title CDATA #REQUIRED>
+<!ELEMENT span %inline;>
+<!ATTLIST span
+  class CDATA #IMPLIED
+  id CDATA #IMPLIED
+  title CDATA #IMPLIED
+  xml:lang CDATA #IMPLIED
+>
+<!ELEMENT div %inline;>
+<!ATTLIST div
+  class CDATA #IMPLIED
+  id CDATA #IMPLIED
+>
+<!ELEMENT cite (#PCDATA)>
+<!ELEMENT quote (#PCDATA | cite)*>
+<!ELEMENT definition %inline;>
+<!ELEMENT definitionterm (#PCDATA)>
+<!ELEMENT definitionitem (definitionterm+, definition+)>
+<!ELEMENT definitionlist (definitionitem+)>
+<!ELEMENT linkcaption (#PCDATA)>
+<!ELEMENT destination EMPTY>
+<!ATTLIST destination
+  type (url) #REQUIRED
+  target CDATA #REQUIRED
+>
+<!ELEMENT link (destination+, linkcaption)>
+
+<!-- Style specific markup -->
+<!ELEMENT styleguide (class*)>
+<!ELEMENT class (introduction*, category*)>
+<!ATTLIST class type (beer | mead | cider) #REQUIRED>
+<!ELEMENT introduction (revision, title, section*, notes*)>
+<!ELEMENT section (sectiontitle?, (definitionlist | paragraph | ul | ol)*)>
+<!ELEMENT title %inline;>
+<!ELEMENT sectiontitle %inline;>
+<!ELEMENT paragraph %inline;>
+<!ELEMENT category (revision, name, notes*, subcategory*)>
+<!ATTLIST category id CDATA #REQUIRED>
+<!ELEMENT revision (#PCDATA)>
+<!ATTLIST revision number CDATA #REQUIRED>
+<!ELEMENT notes %inline;>
+<!ELEMENT subcategory (name, notes*, aroma?, appearance?, flavor?, mouthfeel?, impression?, history?, comments?, ingredients?, varieties?, stats?, examples?)>
+<!ATTLIST subcategory id CDATA #REQUIRED>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT aroma %inline;>
+<!ELEMENT appearance %inline;>
+<!ELEMENT flavor %inline;>
+<!ELEMENT mouthfeel %inline;>
+<!ELEMENT impression %inline;>
+<!ELEMENT history %inline;>
+<!ELEMENT comments %inline;>
+<!ELEMENT ingredients %inline;>
+<!ELEMENT varieties %inline;>
+<!ELEMENT exceptions %inline;>
+<!ELEMENT stats (exceptions*, og?, fg?, ibu?, srm?, abv?)>
+<!ENTITY % range "(low, high)">
+<!ELEMENT og (%range;)>
+<!ELEMENT fg (%range;)>
+<!ELEMENT ibu (%range;)>
+<!ELEMENT srm (%range;)>
+<!ELEMENT abv (%range;)>
+<!ELEMENT low (#PCDATA)>
+<!ELEMENT high (#PCDATA)>
+<!ELEMENT examples %inline;>
+<!ATTLIST og flexible (false | true) "false">
+<!ATTLIST fg flexible (false | true) "false">
+<!ATTLIST ibu flexible (false | true) "false">
+<!ATTLIST srm flexible (false | true) "false">
+<!ATTLIST abv flexible (false | true) "false">

@@ -64,9 +64,9 @@ class MaltTableModel extends AbstractTableModel {
 				case 2 :
 					return data.getMaltUnits(row);
 				case 3 :
-					return new Double(data.getMaltPppg(row));
+					return new Double(SBStringUtils.df3.format(data.getMaltPppg(row)));
 				case 4 :
-					return new Double(data.getMaltLov(row));
+					return new Double(SBStringUtils.df0.format(data.getMaltLov(row)));
 				case 5 :
 					return new Double(data.getMaltCostPerU(row));
 				case 6 :
