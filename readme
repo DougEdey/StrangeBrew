@@ -1,5 +1,5 @@
 README
-StrangeBrew Java - Beta 0.3
+StrangeBrew Java - Beta 0.4
 (c)2000-2006 Drew Avis - drew.avis@gmail.com
 
 Thank you for downloading and trying StrangeBrew Java.
@@ -46,13 +46,32 @@ of reported bugs.  If you've found one that's not there, please report it!
 
 What's new in:
 
+Beta 0.4:
+- You can now import Promash and BeerXML (BeerSmith) recipes.  Just select
+  the file from the "Open" dialog.  Note: not all Promash data is imported. 
+  This is a short list of items not read: misc ingredients; decoction steps;
+  style data; water details; custom mash schedules 
+
+
 Beta 0.3:
 - New colour swatch to estimate the beer colour (this is a
   rough guide only!)
 - Pellet hops IBUs are now calculated using the "additional IBUs %"
   setting, to account for higher utilization
-- Settable look and feel (on the Appearance panel)
+- Settable look and feel (on the Appearance panel of the Preferences
+  dialog).
 - "Jumpy" UI behaviour is fixed (I think).
+- Window sizes for Mash Manager and Preferences are a bit larger, so
+  text isn't cut off.
+- You are now propted to save a recipe on close.  
+- New mash and water use panels replace the Mash Manager.
+- *New Cost panel for tracking recipe cost.  
+- *Improved RGB colour estimation - you can choose which method to use.
+- Improved hops list (complete descriptions).
+- Improved styles list - now read from the official BJCP 2004 styleguide
+  (in xml)
+  
+*Not yet fully implemented!  
 
 Beta 0.2:
 - New water usage stats on the Mash Manager dialog
@@ -67,6 +86,7 @@ Beta 0.2:
 - Improved decoction calculations - you can now specify thick and thin
   decoctions
 
+
 Beta 0.1:
 - New dilution panel to manage wort dilution
 - New style panel to check style conformance
@@ -74,11 +94,15 @@ Beta 0.1:
 
   
 Soon-to-be Implemented Features:
-- edit ingredient databases
-- track costs
+x- edit ingredient databases (just edit w/ text editor)
 - mash tun thermal mass
 - recipe resize / unit conversion
 - hop scaling
+- alternate malt/hop selection dialog
+- specify decoction thickness value
+- application help
+- sparge calculations (fly and batch)
+- mash/steep indicators on malt list
 
 
 StrangeBrew Java Pro Features:
