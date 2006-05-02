@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.6 2006/04/26 17:25:07 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.7 2006/05/02 16:49:26 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -67,11 +67,9 @@ public class XmlHandler extends DefaultHandler{
 	public void startDocument() throws SAXException {
 	}
 
-	// this is debug stuff, delete later
+	// we don't do anything with the end of a document
 	public void endDocument() throws SAXException {
-		// emit(r.toXML());
-		// r.testRecipe();
-		nl();
+
 		System.out.flush();
 	}
 
@@ -491,7 +489,7 @@ public class XmlHandler extends DefaultHandler{
 	public void ignorableWhitespace(char buf[], int offset, int len)
 			throws SAXException {
 		nl();
-		emit("IGNORABLE");
+		// emit("IGNORABLE");
 	}
 
 	public void processingInstruction(String target, String data)

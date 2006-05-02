@@ -1,5 +1,5 @@
 /**
- * $Id: ImportXml.java,v 1.2 2006/04/27 17:29:52 andrew_avis Exp $
+ * $Id: ImportXml.java,v 1.3 2006/05/02 16:49:26 andrew_avis Exp $
  *
  * This is the "driver" for xml import.  It sets up the parser, catches
  * exceptions, and associates our XmlHandler class with the parser so 
@@ -20,12 +20,12 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import org.xml.sax.helpers.DefaultHandler;
 
 public class ImportXml  {
 	
 	public XmlHandler handler; 
 	public XmlStyleHandler styleHandler;
+	public XmlBeerXmlHandler beerXmlHandler;
 	
 	public ImportXml(String fileName, String type) {
 		
@@ -40,6 +40,10 @@ public class ImportXml  {
 			if (type.equalsIgnoreCase("style")){
 				styleHandler = new XmlStyleHandler();
 				saxParser.parse(new File(fileName), styleHandler);
+			}
+			if (type.equalsIgnoreCase("beerXML")){
+				beerXmlHandler = new XmlBeerXmlHandler();
+				saxParser.parse(new File(fileName), beerXmlHandler);
 			}
 			else {
 				handler = new XmlHandler();

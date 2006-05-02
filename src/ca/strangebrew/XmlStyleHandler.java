@@ -1,5 +1,5 @@
 /*
- * $Id: XmlStyleHandler.java,v 1.2 2006/05/01 20:02:06 andrew_avis Exp $
+ * $Id: XmlStyleHandler.java,v 1.3 2006/05/02 16:49:26 andrew_avis Exp $
  * Created on Oct 14, 2004
  */
 package ca.strangebrew;
@@ -230,8 +230,7 @@ public class XmlStyleHandler extends DefaultHandler {
 	}
 
 	public void ignorableWhitespace(char buf[], int offset, int len) throws SAXException {
-		// nl();
-		emit("IGNORABLE");
+
 	}
 
 	public void processingInstruction(String target, String data) throws SAXException {

@@ -159,6 +159,8 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 					        }
 					        licenseTextArea.setText(s);
 					        licenseTextArea.setLineWrap(true);
+					        
+					        in.close();
 						}
 					}
 				}

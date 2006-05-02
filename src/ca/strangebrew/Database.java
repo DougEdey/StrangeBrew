@@ -10,7 +10,7 @@ import java.util.Comparator;
 import com.mindprod.csv.CSVReader;
 
 /**
- * $Id: Database.java,v 1.5 2006/05/01 20:02:06 andrew_avis Exp $
+ * $Id: Database.java,v 1.6 2006/05/02 16:49:26 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -244,10 +244,7 @@ public class Database {
 		Debug.print("Opening: " + yeastFile.getName() + ".\n");
 		ImportXml imp = new ImportXml(yeastFile.toString(), "style");
 		styleDB = imp.styleHandler.getStyles();
-		for (int i=0;i<2; i++){
-			Style s = (Style)styleDB.get(i);
-			Debug.print(s.toText());
-		}
+
 	}
 	
 	public void readMisc(String dbPath) {

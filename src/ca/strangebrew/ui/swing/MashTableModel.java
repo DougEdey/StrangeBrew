@@ -16,19 +16,16 @@ import ca.strangebrew.Mash.MashStep;
 
 class MashTableModel extends AbstractTableModel {
 	// private final StrangeSwing app;
-	private final MashManager mashManager;
+
 
 	private String[] columnNames = {"Type", "Method", "Start Temp", "End Temp",
 			"Ramp Min", "Step Min"};
 
 	private Mash data = null;
 
-	public MashTableModel(MashManager m) {
-		mashManager = m;
-	}
-	
+
 	public MashTableModel() {
-		mashManager = null;
+		
 	}
 
 	public void addRow(MashStep step) {
@@ -143,8 +140,6 @@ class MashTableModel extends AbstractTableModel {
 		data.calcMashSchedule();
 		fireTableCellUpdated(row, col);
 		fireTableDataChanged();
-		if (mashManager != null)
-			mashManager.displayMash();
 		
 		
 	}

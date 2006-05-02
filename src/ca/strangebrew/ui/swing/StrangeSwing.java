@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.22 2006/05/01 20:02:06 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.23 2006/05/02 16:49:26 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -45,8 +45,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.URL;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -90,15 +88,12 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import net.sf.wraplog.AbstractLogger;
-import net.sf.wraplog.Level;
 import ca.strangebrew.Database;
 import ca.strangebrew.Debug;
 import ca.strangebrew.Fermentable;
 import ca.strangebrew.Hop;
-import ca.strangebrew.ImportXml;
+import ca.strangebrew.OpenImport;
 import ca.strangebrew.Options;
-import ca.strangebrew.PromashImport;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
@@ -165,13 +160,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JLabel evapLabel;
 	private JLabel boilTimeLable;
 	private JPanel statusPanel;
-	// private JMenuItem mashManagerMenuItem;
 	private JMenu mnuTools;
 	private JToolBar tlbMalt;
 	private JPanel pnlMaltButtons;
 	private StylePanel stylePanel;
-	private JMenu importMenu;
-	private JMenuItem importPromashMenu;
 	private JMenuItem exportHTMLmenu;
 	private JMenu exportMenu;
 	private JScrollPane jScrollPane2;
@@ -242,8 +234,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private ComboModel cmbHopsUnitsModel;
 	private ArrayList weightList;
 	private ArrayList volList;
-	private JFileChooser fileChooser;
-	private MashManager mashMgr;
+	private JFileChooser fileChooser;	
 	private AboutDialog aboutDlg;
 
 	private DateFormat dateFormat1 = DateFormat.getDateInstance(DateFormat.SHORT);
@@ -1342,20 +1333,25 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 								// Show open dialog; this method does
 								// not return until the dialog is closed
-								String[] ext = {"xml", "qbrew"};
-								String desc = "StrangBrew and QBrew recipes";
-								sbFileFilter saveFileFilter = new sbFileFilter(ext, desc);
+								String[] ext = {"xml", "qbrew", "rec"};
+								String desc = "StrangBrew and importable formats";
+								sbFileFilter openFileFilter = new sbFileFilter(ext, desc);
 
 								// fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-								fileChooser.setFileFilter(saveFileFilter);
+								fileChooser.setFileFilter(openFileFilter);
 
 
 								int returnVal = fileChooser.showOpenDialog(jMenuBar1);
 								if (returnVal == JFileChooser.APPROVE_OPTION) {
 									File file = fileChooser.getSelectedFile();
 									Debug.print("Opening: " + file.getName() + ".\n");
-									ImportXml imp = new ImportXml(file.toString(), "recipe");
-									myRecipe = imp.handler.getRecipe();
+									
+									OpenImport oi = new OpenImport();
+									myRecipe = oi.openFile(file);
+									
+									// ImportXml imp = new ImportXml(file.toString(), "recipe");
+									// myRecipe = imp.handler.getRecipe();
+									
 									myRecipe.setVersion(version);									
 									myRecipe.calcMaltTotals();
 									myRecipe.calcHopsTotals();
@@ -1445,47 +1441,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						});
 					}
 					{
-						importMenu = new JMenu();
-						fileMenu.add(importMenu);
-						importMenu.setText("Import");
-						{
-							importPromashMenu = new JMenuItem();
-							importMenu.add(importPromashMenu);
-							importPromashMenu.setText("Promash");
-							importPromashMenu.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt){
-									// Show open dialog; this method does
-									// not return until the dialog is closed
-									String[] ext = {"rec"};
-									String desc = "Promash recipes";
-									sbFileFilter importFileFilter = new sbFileFilter(ext, desc);
-
-									// fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-									fileChooser.setFileFilter(importFileFilter);
-
-
-									int returnVal = fileChooser.showOpenDialog(jMenuBar1);
-									if (returnVal == JFileChooser.APPROVE_OPTION) {
-										File file = fileChooser.getSelectedFile();
-										Debug.print("Opening: " + file.getName() + ".\n");	
-										
-										PromashImport imp = new PromashImport();										
-										myRecipe = imp.readRecipe(file);										
-										myRecipe.setVersion(version);									
-										myRecipe.calcMaltTotals();
-										myRecipe.calcHopsTotals();
-										myRecipe.mash.calcMashSchedule();
-										attachRecipeData();
-										currentFile = file;
-										displayRecipe();
-
-									} else {
-										Debug.print("Open command cancelled by user.\n");
-									}
-								}
-							});
-						}
-						
+											
 						exportMenu = new JMenu();
 						fileMenu.add(exportMenu);
 						exportMenu.setText("Export");
@@ -1991,90 +1947,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 
 
-/*	private void launchHelp(){
-		String urlString = "";
-		String slash = System.getProperty("file.separator");
-		try {
-			urlString = new File(".").getCanonicalPath() + slash + "src" + slash + "ca" 
-			+ slash + "strangebrew" + slash + "help" + slash + "strangebrew.htm";
-			Debug.print("Help Path: " + urlString);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		TestAppLogger logger = new TestAppLogger();
-		BrowserLauncher launcher;
-		try {
-			launcher = new BrowserLauncher(logger);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		BrowserLauncherErrorHandler errorHandler = new BrowserLauncherDefaultErrorHandler();
-		BrowserLauncherRunner runner = new BrowserLauncherRunner(launcher, urlString, errorHandler);
-		Thread launcherThread = new Thread(runner);
-		launcherThread.start();
-	}*/
-	
 
-	class TestAppLogger extends AbstractLogger {
-
-
-		public TestAppLogger() {
-			super();
-
-		}
-
-		/**
-		 * Logs a message and optional error details.
-		 *
-		 * @param logLevel one of: Level.DEBUG, Level.INFO, Level.WARN,
-		 *   Level.ERROR
-		 * @param message the actual message; this will never be
-		 *   <code>null</code>
-		 * @param error an error that is related to the message; unless
-		 *   <code>null</code>, the name and stack trace of the error are logged
-		 * @throws Exception
-		 * @todo Implement this net.sf.wraplog.AbstractLogger method
-		 */
-		protected void reallyLog(int logLevel, String message, Throwable error) throws Exception {
-			if (message == null) {
-				message = "null";
-			}
-			StringWriter stringWriter = new StringWriter();
-			PrintWriter printWriter = new PrintWriter(stringWriter, true);
-			String threadName = Thread.currentThread().getName();
-			
-			printWriter.println(" [" + threadName + "] " + getLevelText(logLevel)
-					+ " " + message);
-			if (error != null) {
-				error.printStackTrace(printWriter);
-			}
-			printWriter.println();
-			printWriter.close();
-			Debug.print(stringWriter.toString());
-		}
-
-		public String getLevelText() {
-			return getLevelText(getLevel());
-		}
-
-		
-
-		/**
-		 * Return text that represents <code>logLevel</code>.
-		 */
-		private String getLevelText(int logLevel) {
-			if (logLevel < Level.DEBUG || logLevel > Level.ERROR) {
-				throw new IllegalArgumentException(
-						"logLevel must be one of those defined in net.sf.warplog.Level, but is "
-								+ logLevel);
-			} 
-			return "1";
-		}
-	}
 
 
 
