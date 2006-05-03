@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.20 2006/05/03 14:07:02 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.21 2006/05/03 17:39:39 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -306,6 +306,12 @@ public class Recipe {
 
 		setPostBoil(post);
 	}
+	public void setBottleSize(double b) {
+		bottleSize = b;
+	}
+	public void setBottleU(String u) {
+		bottleU = u;
+	}
 	public void setBrewer(String b) {
 		brewer = b;
 	}
@@ -366,10 +372,14 @@ public class Recipe {
 		miscLoss = m;
 		calcMaltTotals();
 	}
-	public void setName(String n) {	name = n; }	
-	
-	public void setOtherCost(double c){	otherCost = c; }
-	
+	public void setName(String n) {
+		name = n;
+	}
+
+	public void setOtherCost(double c) {
+		otherCost = c;
+	}
+
 	public void setPelletHopPct(double p) {
 		pelletHopPct = p;
 		calcHopsTotals();
@@ -379,14 +389,18 @@ public class Recipe {
 		style.setName(s);
 	}
 
-	public void setStyle(Style s) { style = s;	}
-	
+	public void setStyle(Style s) {
+		style = s;
+	}
+
 	public void setTrubLoss(double t) {
 		trubLoss = t;
 		calcMaltTotals();
 	}
-	public void setYeastName(String s) { yeast.setName(s); }
-	
+	public void setYeastName(String s) {
+		yeast.setName(s);
+	}
+
 	public void setYeast(Yeast y) {
 		yeast = y;
 	}
@@ -853,8 +867,7 @@ public class Recipe {
 			// first, the OG at the time of addition:
 			double adjPreSize, aveOg = 0;
 			Hop h = ((Hop) hops.get(i));
-			if (h.getAdd().equalsIgnoreCase("boil") || 
-					h.getAdd().equalsIgnoreCase("fwh")) {
+			if (h.getAdd().equalsIgnoreCase("boil") || h.getAdd().equalsIgnoreCase("fwh")) {
 
 				if (h.getMinutes() > 0)
 					adjPreSize = postBoilVol.getValueAs("gal")

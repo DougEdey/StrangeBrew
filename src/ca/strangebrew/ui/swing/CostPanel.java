@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -19,6 +20,7 @@ import javax.swing.WindowConstants;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
+
 
 public class CostPanel extends javax.swing.JPanel implements ActionListener{
 	private JPanel jPanel1;
@@ -77,7 +79,8 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener{
 		double totalCost = myRecipe.getTotalMaltCost() + 
 			myRecipe.getTotalHopsCost() +
 			myRecipe.getYeastObj().getCostPerU() +
-			myRecipe.getTotalMiscCost();
+			myRecipe.getTotalMiscCost() + 
+			myRecipe.getOtherCost();
 		
 		totalLbl.setText(SBStringUtils.myNF.format(totalCost));
 
@@ -108,78 +111,56 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener{
 			jPanel1.setBorder(BorderFactory.createTitledBorder("Recipe Cost:"));
 
 			jLabel1 = new JLabel();
-			jPanel1.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel1.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel1.setText("Grain:");
 
 			jLabel2 = new JLabel();
-			jPanel1.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel1.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel2.setText("Hops:");
 
 			jLabel3 = new JLabel();
-			jPanel1.add(jLabel3, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel1.add(jLabel3, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel3.setText("Misc Ingr.:");
 
 			jLabel4 = new JLabel();
-			jPanel1.add(jLabel4, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel1.add(jLabel4, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel4.setText("Yeast:");
 
 			jLabel5 = new JLabel();
-			jPanel1.add(jLabel5, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel1.add(jLabel5, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel5.setText("Other:");
 
 			jLabel6 = new JLabel();
-			jPanel1.add(jLabel6, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel1.add(jLabel6, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel6.setText("Total:");
 			jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
 
 			grainLbl = new JLabel();
-			jPanel1.add(grainLbl, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel1.add(grainLbl, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			grainLbl.setText("jLabel11");
 
 			hopsLbl = new JLabel();
-			jPanel1.add(hopsLbl, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel1.add(hopsLbl, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			hopsLbl.setText("jLabel11");
 
 			yeastTxt = new JTextField();
-			jPanel1.add(yeastTxt, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel1.add(yeastTxt, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			yeastTxt.setText("jLabel11");
+			yeastTxt.setPreferredSize(new java.awt.Dimension(48, 20));
 			yeastTxt.addActionListener(this);
 
 			miscLbl = new JLabel();
-			jPanel1.add(miscLbl, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel1.add(miscLbl, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			miscLbl.setText("jLabel11");
 
 			otherTxt = new JTextField();
-			jPanel1.add(otherTxt, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel1.add(otherTxt, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			otherTxt.setText("jLabel11");
+			otherTxt.setPreferredSize(new java.awt.Dimension(48, 20));
 			otherTxt.addActionListener(this);
 
 			totalLbl = new JLabel();
-			jPanel1.add(totalLbl, new GridBagConstraints(1, 5, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel1.add(totalLbl, new GridBagConstraints(1, 5, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			totalLbl.setText("jLabel11");
 			totalLbl.setFont(new java.awt.Font("Tahoma", 1, 11));
 
@@ -194,60 +175,46 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener{
 			jPanel2.setBorder(BorderFactory.createTitledBorder("Bottle Cost:"));
 
 			jLabel7 = new JLabel();
-			jPanel2.add(jLabel7, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel2.add(jLabel7, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel7.setText("Bottle Size:");
 
 			jLabel8 = new JLabel();
-			jPanel2.add(jLabel8, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel2.add(jLabel8, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel8.setText("Final Volume:");
 
 			jLabel9 = new JLabel();
-			jPanel2.add(jLabel9, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel2.add(jLabel9, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel9.setText("# Bottles:");
 
 			jLabel10 = new JLabel();
-			jPanel2.add(jLabel10, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel2.add(jLabel10, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel10.setText("Cost / Bottle:");
 
 			bottleSizeTxt = new JTextField();
-			jPanel2.add(bottleSizeTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel2.add(bottleSizeTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			bottleSizeTxt.setText("jTextField1");
+			bottleSizeTxt.setPreferredSize(new java.awt.Dimension(62, 20));
+			bottleSizeTxt.addActionListener(this);
 
 			bottleSizeUCmbModel = new ComboModel();
 			bottleSizeUCmbModel.setList(new Quantity().getListofUnits("vol"));
 
 			bottleSizeUCmb = new JComboBox();
-			jPanel2.add(bottleSizeUCmb, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel2.add(bottleSizeUCmb, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			bottleSizeUCmb.setModel(bottleSizeUCmbModel);
+			bottleSizeUCmb.setPreferredSize(new java.awt.Dimension(80, 20));
+			bottleSizeUCmb.addActionListener(this);
 
 			finalVolLbl = new JLabel();
-			jPanel2.add(finalVolLbl, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel2.add(finalVolLbl, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			finalVolLbl.setText("jLabel11");
 
 			numBottlesLbl = new JLabel();
-			jPanel2.add(numBottlesLbl, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel2.add(numBottlesLbl, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			numBottlesLbl.setText("jLabel11");
 
 			bottleCostLbl = new JLabel();
-			jPanel2.add(bottleCostLbl, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
-					0));
+			jPanel2.add(bottleCostLbl, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			bottleCostLbl.setText("jLabel11");
 
 			setPreferredSize(new Dimension(400, 300));
@@ -261,11 +228,31 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener{
 		Object o = e.getSource();
 		
 		if (o == yeastTxt){
-			myRecipe.getYeastObj().setCost(yeastTxt.getText());
+			try {
+				myRecipe.getYeastObj().setCost(SBStringUtils.myNF.parse(yeastTxt.getText()).doubleValue());
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			displayCost();
 		}		
 		if (o == otherTxt){
-			myRecipe.setOtherCost(Double.parseDouble(otherTxt.getText()));
+			try {
+				myRecipe.setOtherCost(SBStringUtils.myNF.parse(otherTxt.getText()).doubleValue());
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			displayCost();
 		}		 
+		if (o == bottleSizeTxt){
+			myRecipe.setBottleSize(Double.parseDouble(bottleSizeTxt.getText()));
+			displayCost();
+		}
+		if (o == bottleSizeUCmb){
+			myRecipe.setBottleU(bottleSizeUCmbModel.getSelectedItem().toString());
+			displayCost();
+		}
 
 	}
 

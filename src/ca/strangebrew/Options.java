@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.6 2006/04/25 16:35:12 andrew_avis Exp $
+ * $Id: Options.java,v 1.7 2006/05/03 17:39:39 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -82,7 +82,11 @@ public class Options {
 			// appearance:
 			{"optMaltSortOrder", "By Name"},
 			{"optFirstScreen", ""},
-			{"optLookAndFeel", ""},
+			{"optRed", "8"},
+			{"optGreen", "30"},
+			{"optBlue", "20"},
+			{"optAlpha", "255"},
+			{"optRGBMethod", "1"},
 			
 			// time:
 			{"optBrewDayStart", "10:00"},
@@ -174,80 +178,6 @@ public class Options {
 				d.put(optionString[i][0], optionString[i][1]);
 			}
 			
-/*			// calculations:
-			d.put("optIBUCalcMethod", "Tinseth");
-			d.put("optAlcCalcMethod", "Volume");
-			d.put("optEvapCalcMethod", "Constant");
-			d.put("optColourMethod", "SRM");
-			d.put("optEfficiency", "75");
-			d.put("optAttenuation", "75");
-			d.put("optEvaporation", "1.5");
-			d.put("optPelletHopsPct", "6");
-			d.put("optDryHopTime", "0");
-			d.put("optFWHTime", "1");
-			d.put("optMashHopTime", "2");
-			d.put("optHopsUtil", "4.15");
-			d.put("optBoilTempF", "212");
-			d.put("optColourEfficiency", "false");
-			
-			// recipe basics:
-			d.put("optSizeU", "gallons US");
-			d.put("optMaltU", "pounds");
-			d.put("optHopsU", "ounces");
-			d.put("optPostBoilVol", "5");
-			d.put("optPreBoilVol", "6");
-			d.put("optMash", "true");
-
-			// carbonation:
-			d.put("optPrimingSugar", "dextrose");
-			d.put("optSugarU", "grams");
-			d.put("optBottleU", "ml");
-			d.put("optCarbTempU", "F");
-			d.put("optBottleSize", "341");
-			d.put("optBottleTemp", "68");
-			d.put("optServeTemp", "45");
-			d.put("optVolsCO2", "2.4");
-			d.put("optKegged", "true");
-
-			// water:
-			d.put("optSourceWater", "");
-			d.put("optTargetWater", "");
-			
-			
-			// labels:
-			d.put("optBrewer", "Your Name");
-			d.put("optStreet", "Your Street");
-			d.put("optCity", "Your City");
-			d.put("optProv", "Your State/Prov");
-			d.put("optCode", "Your zip/postal code");
-			d.put("optPhone", "Your Phone");
-			d.put("optClub", "Your Club");
-			d.put("optCountry", "Your Country");
-			d.put("optEmail", "Your Email");
-			
-			// appearance:
-			d.put("optMaltSortOrder", "By Name");
-			d.put("optFirstScreen", "");
-			
-			// time:
-			d.put("optBrewDayStart", "10:00");
-			d.put("optPrepTime", "31");
-			d.put("optSpargeTime", "60");
-			d.put("optGetToBoilTime", "45");
-			d.put("optChillTime", "45");
-			d.put("optCleanTime", "120");
-			d.put("optBoilTime", "60");
-
-			// water use:
-			d.put("optKettleLoss", "1");
-			d.put("optTrubLoss", "1");
-			d.put("optMiscLoss", "1");
-			
-			// cost:
-			d.put("optMiscCost", "5.0");
-			
-			
-			*/
 			
 		} 
 		

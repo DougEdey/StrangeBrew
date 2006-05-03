@@ -75,6 +75,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private JTextField txtBottleSize;
 
 	private JButton okButton;
+	private JButton cancelButton;
 	private JPanel pnlButtons;
 	private JLabel jLabel8;
 	private JPanel pnlSortOrder;
@@ -180,7 +181,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private JTextField txtDBLocation = null;
 	private JButton btnBrowse = null;
 	
-	private ArrayList looks;
+/*	private ArrayList looks;*/
 	
 	private Frame sb;
 
@@ -189,19 +190,19 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		opts = preferences;
 		sb = owner;
 		
-		UIManager.LookAndFeelInfo[] installed =
+/*		UIManager.LookAndFeelInfo[] installed =
 	          UIManager.getInstalledLookAndFeels();
 		looks = new ArrayList();
 		for (int i = 0; i < installed.length; i++) {
 			looks.add(installed[i].getClassName());
 			// landfCombo.addItem(installed[i].getName());
-		}
+		}*/
 		
 		layoutUi();		
 		setLocation(owner.getLocation());
 		setOptions();				
 		
-		landfCombo.addActionListener(new ActionListener(){
+/*		landfCombo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt) {
 				String s = landfCombo.getSelectedItem().toString();
 				try {
@@ -213,7 +214,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				} 
 				
 			}
-		});
+		});*/
 
 	}
 
@@ -257,7 +258,14 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		boilTempTxt.setText(opts.getProperty("optBoilTempF"));
 		
 		// appearances tab:
-		// landfCombo.setSelectedItem(opts.getProperty("optLookAndFeel"));
+		redSpn.setValue(new Integer(opts.getIProperty("optRed")));
+		greenSpn.setValue(new Integer(opts.getIProperty("optGreen")));
+		blueSpn.setValue(new Integer(opts.getIProperty("optBlue")));
+		alphaSpn.setValue(new Integer(opts.getIProperty("optAlpha")));
+		colMethod1rb.setSelected(opts.getProperty("optRGBMethod").equals("1"));
+		colMethod2rb.setSelected(opts.getProperty("optRGBMethod").equals("2"));
+		
+		
 	}
 
 	private void saveOptions() {
@@ -308,8 +316,16 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		opts.setProperty("optBoilTempF", boilTempTxt.getText());
 		
 		// appearances:
-		opts.setProperty("optLookAndFeel", landfCombo.getSelectedItem().toString());
-
+		
+		opts.setProperty("optRed", redSpn.getValue().toString());
+		opts.setProperty("optGreen", greenSpn.getValue().toString());
+		opts.setProperty("optBlue", blueSpn.getValue().toString());
+		opts.setProperty("optAlpha", alphaSpn.getValue().toString());
+		if (colMethod1rb.isSelected())
+			opts.setProperty("optRGBMethod", "1");
+		else 
+			opts.setProperty("optRGBMethod", "2");
+	
 	}
 
 	private void layoutUi() {
@@ -317,7 +333,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		JPanel buttons = new JPanel();
 		okButton = new JButton("OK");
 		okButton.addActionListener(this);
-		JButton cancelButton = new JButton("Cancel");
+		cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(this);
 		buttons.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		buttons.add(cancelButton);
@@ -661,6 +677,18 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			appearancePanel.setLayout(appearancePanelLayout);
 			jTabbedPane1.addTab("Appearance", null, appearancePanel, null);
 
+/*			landfPanel = new JPanel();
+			appearancePanel.add(landfPanel, BorderLayout.NORTH);
+
+			jLabel19 = new JLabel();
+			landfPanel.add(jLabel19);
+			jLabel19.setText("Look and Feel:");
+
+			landfCombo = new JComboBox(looks.toArray());
+			
+			landfPanel.add(landfCombo);*/
+			
+			
 			colourPanel = new JPanel();
 			appearancePanel.add(colourPanel, BorderLayout.CENTER);
 			GridBagLayout colourPanelLayout = new GridBagLayout();
@@ -671,17 +699,6 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			colourPanel.setLayout(colourPanelLayout);
 			colourPanel.setPreferredSize(new java.awt.Dimension(340, 223));
 			colourPanel.setBorder(BorderFactory.createTitledBorder("Colour Swatch"));
-
-			landfPanel = new JPanel();
-			appearancePanel.add(landfPanel, BorderLayout.NORTH);
-
-			jLabel19 = new JLabel();
-			landfPanel.add(jLabel19);
-			jLabel19.setText("Look and Feel:");
-
-			landfCombo = new JComboBox(looks.toArray());
-			
-			landfPanel.add(landfCombo);
 
 			colMethod1rb = new JRadioButton();
 			colMethod1rb.addActionListener(this);
@@ -1025,9 +1042,18 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		setVisible(false);
 		dispose();
 		}
+		else if (o == cancelButton){
+			setVisible(false);
+			dispose();
+		}
 		else if (o == colMethod1rb || o == colMethod2rb){
+			redSpn.setEnabled(o == colMethod1rb);
+			greenSpn.setEnabled(o == colMethod1rb);
+			blueSpn.setEnabled(o == colMethod1rb);
 			displayColour();
 		}
+		
+		
 		
 	}
 	

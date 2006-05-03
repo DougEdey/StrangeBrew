@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.4 2006/04/26 17:25:08 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.5 2006/05/03 17:39:35 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -124,7 +124,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	public void setData(Recipe r) {
 		myRecipe = r;
 		mashModel.setData(myRecipe.mash);
-		// displayMash();
+		displayMash();
 		tblMash.updateUI();
 	}
 
@@ -474,12 +474,14 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			// set totals:
 			String mashWeightTotal = SBStringUtils.df1.format(myRecipe.getTotalMash()) + " "
 					+ myRecipe.getMaltUnits();
-			totalMashLabel.setText("Total");
+			totalMashLabel.setText(mashWeightTotal);
 			totalTimeLabel.setText(new Integer(myRecipe.mash.getMashTotalTime()).toString());
 			volLabel.setText(myRecipe.mash.getMashTotalVol());
 			grainTempText.setText(new Double(myRecipe.mash.getGrainTemp()).toString());
 			boilTempTxt.setText(new Double(myRecipe.mash.getBoilTempF()).toString());
 			tunLossTxt.setText(new Double(myRecipe.mash.getTunLossF()).toString());
+			tempFrb.setSelected(myRecipe.mash.getMashTempUnits().equalsIgnoreCase("F"));
+
 
 		}
 	}
@@ -493,9 +495,11 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 
 	private void delStepButtonActionPerformed(ActionEvent evt) {
 		int i = tblMash.getSelectedRow();
-		myRecipe.mash.delStep(i);
-		tblMash.updateUI();
-		displayMash();
+		if (i > -1) {
+			myRecipe.mash.delStep(i);
+			tblMash.updateUI();
+			displayMash();
+		}
 
 	}
 

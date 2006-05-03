@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.24 2006/05/03 14:03:02 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.25 2006/05/03 17:39:35 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -393,7 +393,18 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		ibuMethodLabel.setText("IBU method: " + myRecipe.getIBUMethod());
 		alcMethodLabel.setText("Alc method: " + myRecipe.getAlcMethod());
 
-		colourPanel.setBackground(Recipe.calcRGB(1, myRecipe.getSrm(), 8, 30, 20, 255));		
+		if (preferences.getProperty("optRGBMethod").equals("1"))
+			colourPanel.setBackground(Recipe.calcRGB(1, myRecipe.getSrm(), 
+					preferences.getIProperty("optRed"),
+					preferences.getIProperty("optGreen"),
+					preferences.getIProperty("optBlue"),
+					preferences.getIProperty("optAlpha")));	
+		else
+			colourPanel.setBackground(Recipe.calcRGB(2, myRecipe.getSrm(), 
+					preferences.getIProperty("optRed"),
+					preferences.getIProperty("optGreen"),
+					preferences.getIProperty("optBlue"),
+					preferences.getIProperty("optAlpha")));
 
 		stylePanel.setStyleData();
 		costPanel.displayCost();

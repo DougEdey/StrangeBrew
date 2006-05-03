@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.8 2006/05/03 14:07:02 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.9 2006/05/03 17:39:39 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -221,6 +221,8 @@ public class XmlHandler extends DefaultHandler{
 		if (importType == "STRANGEBREW") {
 			if (qName.equalsIgnoreCase("ITEM")
 					&& currentList.equalsIgnoreCase("FERMENTABLES")) {
+				m.setDescription(descrBuf);
+				descrBuf = "";
 				r.addMalt(m);
 				m = null;
 			} else if (qName.equalsIgnoreCase("ITEM")
@@ -334,8 +336,9 @@ public class XmlHandler extends DefaultHandler{
 				m.setUnits(s);
 			} else if (currentElement.equalsIgnoreCase("LOV")) {
 				m.setLov(Double.parseDouble(s));
-			} else if (currentElement.equalsIgnoreCase("DescrLookup")) {
-				m.setDescription(s);
+			} else if (currentElement.equalsIgnoreCase("DescrLookup") ||
+					currentElement.equalsIgnoreCase("description")) {
+				descrBuf = descrBuf + s;
 			}
 		}
 		else if (currentList.equalsIgnoreCase("HOPS")) {
@@ -353,7 +356,8 @@ public class XmlHandler extends DefaultHandler{
 				h.setCost( s );
 			} else if (currentElement.equalsIgnoreCase("ADD")) {
 				h.setAdd(s);
-			} else if (currentElement.equalsIgnoreCase("DescrLookup")) {
+			} else if (currentElement.equalsIgnoreCase("DescrLookup")||
+					currentElement.equalsIgnoreCase("description")) {
 				descrBuf = descrBuf + s;
 			} else if (currentElement.equalsIgnoreCase("TIME")) {
 				h.setMinutes(Integer.parseInt(s));
@@ -373,7 +377,8 @@ public class XmlHandler extends DefaultHandler{
 				// misc.setCost( Double.parseDouble(s) );
 			} else if (currentElement.equalsIgnoreCase("ADD")) {
 				h.setAdd(s);
-			} else if (currentElement.equalsIgnoreCase("DescrLookup")) {
+			} else if (currentElement.equalsIgnoreCase("DescrLookup")||
+					currentElement.equalsIgnoreCase("description")) {
 				descrBuf = descrBuf + s;
 			} else if (currentElement.equalsIgnoreCase("TIME")) {
 				misc.setTime(Integer.parseInt(s));
