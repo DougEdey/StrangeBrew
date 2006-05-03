@@ -16,6 +16,7 @@ public class Misc extends Ingredient {
 		setName("");;
 		setCost(0);
 		setDescription("");
+		setUnits("gr");
 	}
 	
 	// get methods

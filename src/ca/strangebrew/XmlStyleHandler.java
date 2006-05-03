@@ -1,5 +1,5 @@
 /*
- * $Id: XmlStyleHandler.java,v 1.3 2006/05/02 16:49:26 andrew_avis Exp $
+ * $Id: XmlStyleHandler.java,v 1.4 2006/05/03 14:07:02 andrew_avis Exp $
  * Created on Oct 14, 2004
  */
 package ca.strangebrew;
@@ -266,16 +266,6 @@ public class XmlStyleHandler extends DefaultHandler {
 		// System.out.flush();
 	}
 
-	// Start a new line
-	// and indent the next line appropriately
-	private void nl() throws SAXException {
-		String indentString = "    "; // Amount to indent
-		int indentLevel = 0;
-		String lineEnd = System.getProperty("line.separator");
-		System.out.print(lineEnd);
-		for (int i = 0; i < indentLevel; i++)
-			System.out.print(indentString);
 
-	}
 
 }

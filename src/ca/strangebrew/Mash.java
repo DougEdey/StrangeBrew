@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.13 2006/05/01 20:02:06 andrew_avis Exp $
+ * $Id: Mash.java,v 1.14 2006/05/03 14:07:02 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -162,9 +162,9 @@ public class Mash {
 		public void setType(String s){ type = s; }
 	}
 
-	public void addStep(String t, double st, double et, String tu, String m, int min,
+	public void addStep(String type, double st, double et, String tu, String m, int min,
 			int rmin) {
-		MashStep step = new MashStep(t, st, et, tu, m, min, rmin);
+		MashStep step = new MashStep(type, st, et, tu, m, min, rmin);
 		steps.add(step);		
 		calcMashSchedule();
 	}

@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.7 2006/05/02 16:49:26 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.8 2006/05/03 14:07:02 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -480,6 +480,12 @@ public class XmlHandler extends DefaultHandler{
 			else if (currentElement.equalsIgnoreCase("PELLET_HOP_PCT")) {
 				r.setPelletHopPct(Double.parseDouble(s));
 			}
+			else if (currentElement.equalsIgnoreCase("YEAST_COST")) {
+				r.getYeastObj().setCost((Double.parseDouble(s)));
+			}
+			else if (currentElement.equalsIgnoreCase("OTHER_COST")) {
+				r.setOtherCost(Double.parseDouble(s));
+			}
 
 		}
 		else
@@ -488,13 +494,12 @@ public class XmlHandler extends DefaultHandler{
 
 	public void ignorableWhitespace(char buf[], int offset, int len)
 			throws SAXException {
-		nl();
-		// emit("IGNORABLE");
+
 	}
 
 	public void processingInstruction(String target, String data)
 			throws SAXException {
-		nl();
+		
 		emit("PROCESS: ");
 		emit("<?" + target + " " + data + "?>");
 	}
@@ -526,16 +531,6 @@ public class XmlHandler extends DefaultHandler{
 			System.out.flush();
 	}
 
-	// Start a new line
-	// and indent the next line appropriately
-	private void nl() throws SAXException {
-		String indentString = "    "; // Amount to indent
-		int indentLevel = 0;
-		String lineEnd = System.getProperty("line.separator");
-		System.out.print(lineEnd);
-		for (int i = 0; i < indentLevel; i++)
-			System.out.print(indentString);
 
-	}
 
 }

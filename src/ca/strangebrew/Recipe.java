@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.19 2006/05/02 16:49:26 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.20 2006/05/03 14:07:02 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -366,9 +366,10 @@ public class Recipe {
 		miscLoss = m;
 		calcMaltTotals();
 	}
-	public void setName(String n) {
-		name = n;
-	}
+	public void setName(String n) {	name = n; }	
+	
+	public void setOtherCost(double c){	otherCost = c; }
+	
 	public void setPelletHopPct(double p) {
 		pelletHopPct = p;
 		calcHopsTotals();
@@ -378,16 +379,14 @@ public class Recipe {
 		style.setName(s);
 	}
 
-	public void setStyle(Style s) {
-		style = s;
-	}
+	public void setStyle(Style s) { style = s;	}
+	
 	public void setTrubLoss(double t) {
 		trubLoss = t;
 		calcMaltTotals();
 	}
-	public void setYeastName(String s) {
-		yeast.setName(s);
-	}
+	public void setYeastName(String s) { yeast.setName(s); }
+	
 	public void setYeast(Yeast y) {
 		yeast = y;
 	}
@@ -1108,6 +1107,8 @@ public class Recipe {
 		sb.append("	 <TRUB_LOSS>" + trubLoss + "</TRUB_LOSS>\n");
 		sb.append("	 <MISC_LOSS>" + miscLoss + "</MISC_LOSS>\n");
 		sb.append("	 <PELLET_HOP_PCT>" + pelletHopPct + "</PELLET_HOP_PCT>\n");
+		sb.append("	 <YEAST_COST>" + yeast.getCostPerU() + "</YEAST_COST>\n");
+		sb.append("	 <OTHER_COST>" + otherCost + "</OTHER_COST>\n");
 		sb.append("  <!-- END SBJ1.0 Extensions -->\n");
 		sb.append("  </DETAILS>\n");
 

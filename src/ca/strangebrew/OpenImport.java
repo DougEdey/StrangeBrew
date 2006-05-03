@@ -10,88 +10,78 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 public class OpenImport {
 
-	private String fileType;
+	private String fileType = "";
 	private Recipe myRecipe;
-	
-	private String checkFileType(File f){
-		
-		String suff = f.getPath().substring(f.getPath().length()-3, f.getPath().length());
-		
-		Debug.print(suff);
-		if (suff.equalsIgnoreCase(".rec"))
+	private ArrayList recipes = null;
+
+	private String checkFileType(File f) {
+
+		if (f.getPath().endsWith(".rec"))
 			return "promash";
-		
+
 		// let's open it up and have a peek
 		// we'll only read 10 lines
-		try {
-			FileReader in = new FileReader(f);
-			BufferedReader inb = new BufferedReader(in);
-			String c;			
-			int i = 0;			
-			while ((c = inb.readLine()) != null && i<10){
-				if (c.indexOf("BeerXML Format") > -1)
-					return "beerxml";
-				if (c.indexOf("STRANGEBREWRECIPE") > -1)
-					return "sb";
-				if (c.indexOf("generator=\"qbrew\"") > -1)
-					return "qbrew";
-				i++;
+
+		if (f.getPath().endsWith(".qbrew") || (f.getPath().endsWith(".xml"))) {
+			try {
+				FileReader in = new FileReader(f);
+				BufferedReader inb = new BufferedReader(in);
+				String c;
+				int i = 0;
+				while ((c = inb.readLine()) != null && i < 10) {
+					if (c.indexOf("BeerXML Format") > -1)
+						return "beerxml";
+					if (c.indexOf("STRANGEBREWRECIPE") > -1)
+						return "sb";
+					if (c.indexOf("generator=\"qbrew\"") > -1)
+						return "qbrew";
+					i++;
+				}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}				
-		
+		}
 		return "";
 	}
-	
-	public Recipe openFile(File f){
-		
-		String type = checkFileType(f);
-		Debug.print("File type: " + type);
-		
-		if (type.equalsIgnoreCase("")){
-			Debug.print("Unrecognized file");
-			JOptionPane.showMessageDialog(
-					null, 
-					"The file you've tried to open isn't a recognized format. \n" +
-					"You can open: \n" +
-					"StrangeBrew 1.x and Java files (.xml)\n" +
-					"QBrew files (.qbrew)\n" +
-					"BeerXML files (.xml)\n" +
-					"Promash files (.rec)",
-					"Unrecognized Format!", 
-					JOptionPane.INFORMATION_MESSAGE);
-			myRecipe = new Recipe();			
-		}
-		
-		if (type.equals("promash")){
-			
-			PromashImport imp = new PromashImport();										
+
+	public String getFileType() {
+		return fileType;
+	}
+	public ArrayList getRecipes() {
+		return recipes;
+	}
+
+	public Recipe openFile(File f) {
+
+		fileType = checkFileType(f);
+		Debug.print("File type: " + fileType);
+
+		if (fileType.equals("promash")) {
+			PromashImport imp = new PromashImport();
 			myRecipe = imp.readRecipe(f);
-			
-		}
-		if (type.equals("sb") || type.equals("qbrew")){			
+		} else if (fileType.equals("sb") || fileType.equals("qbrew")) {
 			ImportXml imp = new ImportXml(f.toString(), "recipe");
 			myRecipe = imp.handler.getRecipe();
-		}
-		if (type.equals("beerxml")){
+		} else if (fileType.equals("beerxml")) {
 			ImportXml imp = new ImportXml(f.toString(), "beerXML");
 			myRecipe = imp.beerXmlHandler.getRecipe();
+			recipes = imp.beerXmlHandler.getRecipes();
+		} else {
+			// unrecognized type, just return a new blank recipe
+			myRecipe = new Recipe();
 		}
-		
-		
-		
+
 		return myRecipe;
-		
-		
+
 	}
 }

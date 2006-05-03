@@ -1,5 +1,5 @@
 /*
- * $Id: XmlBeerXmlHandler.java,v 1.1 2006/05/02 16:49:26 andrew_avis Exp $
+ * $Id: XmlBeerXmlHandler.java,v 1.2 2006/05/03 14:07:02 andrew_avis Exp $
  * Created on Oct 14, 2004
  */
 package ca.strangebrew;
@@ -21,8 +21,9 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 	private Recipe myRecipe = null;
 	private Hop h;
 	private Fermentable f;
+	private Misc m;
 	private ArrayList recipes = new ArrayList();
-
+	
 	private Attributes currentAttributes = null;
 	private String currentList = null; //current List name
 	private String currentElement = null; // current element name	
@@ -36,6 +37,10 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 
 	public Recipe getRecipe() {
 		return myRecipe;
+	}
+	
+	public ArrayList getRecipes(){
+		return recipes;
 	}
 
 	//===========================================================
@@ -82,6 +87,7 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 		if (eName.equalsIgnoreCase("recipe")){
 			newRecipe = true;
 			myRecipe = new Recipe();
+			myRecipe.mash.setMashTempUnits("C");
 			currentList = eName;
 			
 		}
@@ -100,7 +106,13 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 		}
 		if (eName.equalsIgnoreCase("FERMENTABLE")){
 			f = new Fermentable();
-		}		
+		}	
+		if (eName.equalsIgnoreCase("MISC")){
+			m = new Misc();
+		}
+		if (qName.equalsIgnoreCase("MASH_STEP")){			
+			myRecipe.mash.addStep();			
+		}
 		if (eName.equalsIgnoreCase("notes")){
 			descrBuf = "";
 		}
@@ -134,11 +146,20 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 		if (qName.equalsIgnoreCase("fermentable")){			
 			myRecipe.addMalt(f);
 		}
+		if (qName.equalsIgnoreCase("misc")){			
+			myRecipe.addMisc(m);
+		}
+		
 		if (qName.equalsIgnoreCase("notes")){
 			if (currentList.equalsIgnoreCase("hops"))
 				h.setDescription(descrBuf);
 			if (currentList.equalsIgnoreCase("fermentables"))
 				f.setDescription(descrBuf);
+			if (currentList.equalsIgnoreCase("miscs"))
+				m.setDescription(descrBuf);
+			if (currentList.equalsIgnoreCase("yeast"))
+				myRecipe.getYeastObj().setDescription(descrBuf);
+			
 		}
 		
 
@@ -179,10 +200,8 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 					if (s.trim().equalsIgnoreCase("dry hop"))
 						h.setAdd("Dry");
 					if (s.trim().equalsIgnoreCase("first wort"))
-						h.setAdd("FWH");
-					
-				}
-					
+						h.setAdd("FWH");					
+				}					
 			}
 			else if (currentList.equalsIgnoreCase("fermentables")){
 				if (currentElement.equalsIgnoreCase("name"))
@@ -194,9 +213,35 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 				if (currentElement.equalsIgnoreCase("color"))
 					f.setLov(Double.parseDouble(s.trim()));
 				if (currentElement.equalsIgnoreCase("RECOMMEND_MASH"))
-					f.setMashed(s.trim().equalsIgnoreCase("true"));
+					f.setMashed(s.trim().equalsIgnoreCase("true"));				
+			}
+			else if (currentList.equalsIgnoreCase("mash")){
+				if (currentElement.equalsIgnoreCase("type"))
+					myRecipe.mash.setStepMethod(myRecipe.mash.getStepSize()-1, s.trim());
+				if (currentElement.equalsIgnoreCase("STEP_TIME"))
+					myRecipe.mash.setStepMin(myRecipe.mash.getStepSize()-1, new Double(s.trim()).intValue());
+				if (currentElement.equalsIgnoreCase("STEP_TEMP"))
+					myRecipe.mash.setStepStartTemp(myRecipe.mash.getStepSize()-1, Double.parseDouble(s.trim()));
+				if (currentElement.equalsIgnoreCase("END_TEMP"))
+					myRecipe.mash.setStepEndTemp(myRecipe.mash.getStepSize()-1, Double.parseDouble(s.trim()));
+			}
+			else if (currentList.equalsIgnoreCase("miscs")){
+				if (currentElement.equalsIgnoreCase("name"))
+					m.setName(s.trim());
+				if (currentElement.equalsIgnoreCase("amount"))
+					m.setAmountAs(Double.parseDouble(s.trim()), "kg");	
+				if (currentElement.equalsIgnoreCase("use"))
+					m.setStage(s.trim());
+				if (currentElement.equalsIgnoreCase("time"))
+					m.setTime(new Double(s.trim()).intValue());
+								
+			}
+			else if (currentList.equalsIgnoreCase("yeast")){
+				if (currentElement.equalsIgnoreCase("name"))
+					myRecipe.setYeastName(s.trim());
 				
 			}
+			
 			else if (currentList.equalsIgnoreCase("style")){
 				if (currentElement.equalsIgnoreCase("name"))
 					myRecipe.setStyle(s.trim());
@@ -266,16 +311,5 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 		// System.out.flush();
 	}
 
-	// Start a new line
-	// and indent the next line appropriately
-	private void nl() throws SAXException {
-		String indentString = "    "; // Amount to indent
-		int indentLevel = 0;
-		String lineEnd = System.getProperty("line.separator");
-		System.out.print(lineEnd);
-		for (int i = 0; i < indentLevel; i++)
-			System.out.print(indentString);
-
-	}
 
 }
