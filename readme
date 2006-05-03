@@ -39,6 +39,16 @@ StrangeBrew.  It should run with versions 1.4 and up; I'm using
 1.5.02. (See http://java.sun.com/j2se/1.5.0/index.jsp).  StrangeBrew has
 been tested and runs on Linux, MacOS-X, and Windows.
 
+NOTE: You can set the Java "Look and Feel" of StrangeBrew when you start it
+from the command line.  For example:
+"java -Dswing.defaultlaf=de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel -jar StrangeBrew_fat.jar"
+Make sure you put the look and feel .jar file in your JRE's /lib/ext/ directory.
+I really like Synthetica (http://javasoft.de/jsf/public/products/synthetica).  There
+are lots of interesting free Look and Feels out there.
+You can also set the Look and Feel by editing your swing.properties file; see:
+http://java.sun.com/docs/books/tutorial/uiswing/misc/plaf.html#properties
+
+
 Bugs:
 We're using the Sourceforge tracking feature to track bugs.  Please go to 
 www.sourceforge.net/projects/strangebrew and click on "bugs" to view a list
@@ -50,8 +60,14 @@ Beta 0.4:
 - You can now import Promash and BeerXML (BeerSmith) recipes.  Just select
   the file from the "Open" dialog.  Note: not all Promash data is imported. 
   This is a short list of items not read: misc ingredients; decoction steps;
-  style data; water details; custom mash schedules 
-
+  style data; water details; custom mash schedules.
+  BeerXML files can contain multiple recipes; using File > Open opens just
+  the last recipe in the file.  When you point the Find dialog at a directory
+  containing a BeerXML file with multiple recipes, all the recipes show up in the
+  list.  Use this dialog to select other recipes in a BeerXML file.
+- The cost panel is now fully implemented.  
+- The colour preferences are now fully implemented.  Depending on your system,
+  one of RBG calculation methods may work better than the other.
 
 Beta 0.3:
 - New colour swatch to estimate the beer colour (this is a
@@ -130,6 +146,7 @@ Mike Gibson - testing and the splash screen / logo
 Kris Henderson (Zymurgist) - preferences coding
 Don Kelly - Promash recipe format decoding
 Colin Kilburn - testing / bug fixes
+Jason Landry - database updates
 
 Parts of this program are copyright by:
         Copyright (C) 2002-2004 Roedy Green 
