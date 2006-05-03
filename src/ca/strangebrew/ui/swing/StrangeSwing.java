@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.23 2006/05/02 16:49:26 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.24 2006/05/03 14:03:02 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -544,6 +544,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					Hop h2 = myRecipe.getHop(i);
 					h2.setAlpha(h.getAlpha());
 					h2.setDescription(h.getDescription());
+					h2.setCost(h.getCostPerU());
 				}
 
 			}
@@ -1348,9 +1349,28 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									
 									OpenImport oi = new OpenImport();
 									myRecipe = oi.openFile(file);
-									
-									// ImportXml imp = new ImportXml(file.toString(), "recipe");
-									// myRecipe = imp.handler.getRecipe();
+									if (oi.getFileType().equals("")){										
+
+										JOptionPane.showMessageDialog(
+												null, 
+												"The file you've tried to open isn't a recognized format. \n" +
+												"You can open: \n" +
+												"StrangeBrew 1.x and Java files (.xml)\n" +
+												"QBrew files (.qbrew)\n" +
+												"BeerXML files (.xml)\n" +
+												"Promash files (.rec)",
+												"Unrecognized Format!", 
+												JOptionPane.INFORMATION_MESSAGE);																					
+									}
+									if (oi.getFileType().equals("beerxml")){	
+										JOptionPane.showMessageDialog(
+												null, 
+												"The file you've opened is in BeerXML format.  It may contain \n" +
+												"several recipes.  Only the first recipe is opened.  Use the Find \n" +
+												"dialog to open other recipes in a BeerXML file.",
+												"BeerXML!", 
+												JOptionPane.INFORMATION_MESSAGE);
+									}
 									
 									myRecipe.setVersion(version);									
 									myRecipe.calcMaltTotals();
@@ -1516,10 +1536,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					{
 						exitMenuItem = new JMenuItem();
 						fileMenu.add(exitMenuItem);
-						exitMenuItem.setText("Exit");
+						exitMenuItem.setText("Exit");	
+						final JFrame owner = this;
 						exitMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
-								// exit program								
+								// exit program	
+								processWindowEvent(new WindowEvent(owner,WindowEvent.WINDOW_CLOSING));
 								System.exit(0);
 							}
 						});

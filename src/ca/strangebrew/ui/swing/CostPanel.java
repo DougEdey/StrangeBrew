@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -18,7 +20,7 @@ import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 
-public class CostPanel extends javax.swing.JPanel {
+public class CostPanel extends javax.swing.JPanel implements ActionListener{
 	private JPanel jPanel1;
 	private JLabel jLabel4;
 	private JLabel bottleCostLbl;
@@ -159,6 +161,7 @@ public class CostPanel extends javax.swing.JPanel {
 					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
 					0));
 			yeastTxt.setText("jLabel11");
+			yeastTxt.addActionListener(this);
 
 			miscLbl = new JLabel();
 			jPanel1.add(miscLbl, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
@@ -171,6 +174,7 @@ public class CostPanel extends javax.swing.JPanel {
 					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
 					0));
 			otherTxt.setText("jLabel11");
+			otherTxt.addActionListener(this);
 
 			totalLbl = new JLabel();
 			jPanel1.add(totalLbl, new GridBagConstraints(1, 5, 1, 1, 0.0, 0.0,
@@ -251,6 +255,18 @@ public class CostPanel extends javax.swing.JPanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		
+		if (o == yeastTxt){
+			myRecipe.getYeastObj().setCost(yeastTxt.getText());
+		}		
+		if (o == otherTxt){
+			myRecipe.setOtherCost(Double.parseDouble(otherTxt.getText()));
+		}		 
+
 	}
 
 }

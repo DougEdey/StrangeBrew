@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<STRANGEBREWRECIPE version = "0.3 (Beta)">
+<STRANGEBREWRECIPE version = "0.4 (Beta)">
 <!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
   <DETAILS>
   <NAME>Bass Ale Clone</NAME>
   <BREWER>Andrew Carmichael</BREWER>
-  <NOTES>Based on 05/06 BYO clone recipe.</NOTES>
+  <NOTES></NOTES>
   <EFFICIENCY>75.0</EFFICIENCY>
-  <OG>1.054</OG>
-  <FG>1.014</FG>
+  <OG>1.051</OG>
+  <FG>1.013</FG>
   <STYLE>Extra Special/Strong Bitter (English Pale Ale)</STYLE>
   <MASH>false</MASH>
-  <LOV>11.3</LOV>
-  <IBU>36.8</IBU>
-  <ALC>5.3</ALC>
+  <LOV>10.8</LOV>
+  <IBU>35.5</IBU>
+  <ALC>5.0</ALC>
   <BOIL_TIME>75</BOIL_TIME>
-  <PRESIZE>11.25</PRESIZE>
-  <SIZE>10.0</SIZE>
+  <PRESIZE>11.9</PRESIZE>
+  <SIZE>10.65</SIZE>
   <SIZE_UNITS>gallons US</SIZE_UNITS>
   <MALT_UNITS>pounds</MALT_UNITS>
   <HOPS_UNITS>ounces</HOPS_UNITS>
@@ -42,9 +42,9 @@
       <POINTS>1.034</POINTS>
       <LOV>55.0</LOV>
       <MASHED>true</MASHED>
-      <STEEPED>true</STEEPED>
+      <STEEPED>false</STEEPED>
       <COSTLB>1.58</COSTLB>
-      <DESCRIPTION>British Crystal 50-60L</DESCRIPTION>
+      <DESCRIPTION>null</DESCRIPTION>
     </ITEM>
     <ITEM>
       <MALT>British Two-Row</MALT>
@@ -55,7 +55,7 @@
       <MASHED>true</MASHED>
       <STEEPED>false</STEEPED>
       <COSTLB>0.47</COSTLB>
-      <DESCRIPTION>British Two-Row: Fully modified British malt, easily converted by a single temperature mash.  Preferred by many brewers for full flavored ales.  Pale Ale malt has undergone higher kilning than Klages and is lower in diastatic power so keep adjuncts to 15% or less. </DESCRIPTION>
+      <DESCRIPTION>null</DESCRIPTION>
     </ITEM>
     <ITEM>
       <MALT>Corn (Flaked)</MALT>
@@ -66,7 +66,7 @@
       <MASHED>true</MASHED>
       <STEEPED>false</STEEPED>
       <COSTLB>0.9</COSTLB>
-      <DESCRIPTION>Corn (Flaked): can add a sweet, corn flavour to beer without additional colour.  Used especially in Classic American (Pre-Prohibition) Pilsners, up to 30%.  Flaked corn is pre-gelatanized and can be added directly to the mash.  </DESCRIPTION>
+      <DESCRIPTION>null</DESCRIPTION>
     </ITEM>
     <ITEM>
       <MALT>Roast Barley</MALT>
@@ -75,9 +75,9 @@
       <POINTS>1.029</POINTS>
       <LOV>450.0</LOV>
       <MASHED>true</MASHED>
-      <STEEPED>true</STEEPED>
+      <STEEPED>false</STEEPED>
       <COSTLB>0.9</COSTLB>
-      <DESCRIPTION>Roast Barley: Use 10 to 12% to impart a distinct, roasted flavor to Stouts.  Other dark beers also benefit from smaller quantities (2 - 6%). </DESCRIPTION>
+      <DESCRIPTION>null</DESCRIPTION>
     </ITEM>
   </FERMENTABLES>
   <HOPS>
@@ -88,7 +88,7 @@
       <UNITS>oz</UNITS>
       <FORM>Leaf</FORM>
       <ALPHA>6.9</ALPHA>
-      <COSTOZ>0.0</COSTOZ>
+      <COSTOZ>1.25</COSTOZ>
       <ADD>FWH</ADD>
       <DESCRIPTION>Northern Brewer: Northern Brewer is a versatile bittering hop for Ales, Porters and Stouts. While not considered an aroma hop it can be used to flavor Steam Beer recipes. German grown Northern Brewer will contribute a solid bittering and rich flavor to Ales and Lagers.</DESCRIPTION>
       <DATE>null</DATE>
@@ -100,7 +100,7 @@
       <UNITS>oz</UNITS>
       <FORM>Leaf</FORM>
       <ALPHA>5.0</ALPHA>
-      <COSTOZ>0.0</COSTOZ>
+      <COSTOZ>1.25</COSTOZ>
       <ADD>Boil</ADD>
       <DESCRIPTION>E. Kent Goldngs: A British grown version of the classic ale finishing hop.  Slightly smoother and more refined than the herbal, Canadian grown version.</DESCRIPTION>
       <DATE>null</DATE>
@@ -109,6 +109,28 @@
   <MISC>
   </MISC>
   <MASH>
+    <ITEM>
+      <TYPE>alpha</TYPE>
+      <TEMP>152.0</TEMP>
+      <DISPL_TEMP>152.0</DISPL_TEMP>
+      <END_TEMP>152.0</END_TEMP>
+      <DISPL_END_TEMP>152.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Mash in with 6.0 gallons US of water at 164.9 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>mashout</TYPE>
+      <TEMP>168.0</TEMP>
+      <DISPL_TEMP>168.0</DISPL_TEMP>
+      <END_TEMP>168.0</END_TEMP>
+      <DISPL_END_TEMP>168.0</DISPL_END_TEMP>
+      <MIN>10</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Add 2.5 gallons US of water at 212.0 F</DIRECTIONS>
+    </ITEM>
   </MASH>
   <NOTES>
   </NOTES>

@@ -1,5 +1,5 @@
 /*
- * $Id: FindDialog.java,v 1.4 2006/04/27 17:29:52 andrew_avis Exp $ 
+ * $Id: FindDialog.java,v 1.5 2006/05/03 14:03:02 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis find recipe window class
  */
 
@@ -47,7 +47,7 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
 import ca.strangebrew.Debug;
-import ca.strangebrew.ImportXml;
+import ca.strangebrew.OpenImport;
 import ca.strangebrew.Recipe;
 
 public class FindDialog extends javax.swing.JDialog implements ActionListener {
@@ -62,6 +62,7 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 	private JScrollPane recipeScrollPane;
 	private FindTableModel recipeTableModel;
 
+	private Recipe r;
 	private ArrayList recipes;
 	private ArrayList files;
 	private File currentDir;
@@ -75,7 +76,7 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 		currentDir = new java.io.File(".");
 		initGUI();
 		dirLocationText.setText(currentDir.getAbsolutePath());
-		loadRecipes(currentDir);
+		// loadRecipes(currentDir);
 	}
 
 	private void initGUI() {
@@ -98,13 +99,15 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 				{
 					recipeScrollPane = new JScrollPane();
 					findPanel.add(recipeScrollPane);
-					// recipeScrollPane.setPreferredSize(new java.awt.Dimension(152, 75));
+					// recipeScrollPane.setPreferredSize(new
+					// java.awt.Dimension(152, 75));
 					{
 						recipeTableModel = new FindTableModel();
 						recipeTable = new JTable();
 						recipeScrollPane.setViewportView(recipeTable);
 						recipeTable.setModel(recipeTableModel);
-						// recipeTable.setPreferredSize(new java.awt.Dimension(148, 32));
+						// recipeTable.setPreferredSize(new
+						// java.awt.Dimension(148, 32));
 					}
 				}
 			}
@@ -183,17 +186,31 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 
 		for (int i = 0; i < dir.list().length; i++) {
 			File file = new File(dir.list()[i]);
-			if (file.getName().endsWith("xml") || file.getName().endsWith("qbrew")) {
+
+			if (file.getPath().endsWith(".rec") || file.getPath().endsWith(".qbrew")
+					|| file.getPath().endsWith(".xml")) {
+
 				Debug.print("Opening: " + file.getName() + ".\n");
 				// file.getAbsolutePath doesn't work here for some reason,
 				// so we have to build it ourselves
 				String fileName = dir.getAbsolutePath() + System.getProperty("file.separator")
 						+ file.getName();
-				ImportXml imp = new ImportXml(fileName, "recipe");
-				Recipe r = imp.handler.getRecipe();
-				recipes.add(r);
-				files.add(file);
+				file = new File(fileName);
+				OpenImport openImport = new OpenImport();
+				r = openImport.openFile(file);
+				if (openImport.getFileType().equals("sb")
+						|| openImport.getFileType().equals("qbrew")
+						|| openImport.getFileType().equals("promash")) {
+					recipes.add(r);
+					files.add(file);
 
+				} else if (openImport.getFileType().equals("beerxml")) {
+					ArrayList rs = openImport.getRecipes();
+					for (int j=0; j<rs.size(); j++){
+						recipes.add(rs.get(j));
+						files.add(file);
+					}
+				}
 			}
 		}
 		recipeTableModel.setData(recipes);
@@ -209,7 +226,7 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 			return;
 		} else if (o == openButton) {
 			int i = recipeTable.getSelectedRow();
-			if (i > -1) {
+			if (i > -1 && i < recipes.size()) {
 				inst.setRecipe((Recipe) recipes.get(i), (File) files.get(i));
 			}
 
@@ -277,10 +294,9 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 		 * would contain text ("true"/"false"), rather than a check box.
 		 */
 
-		//		public Class getColumnClass(int c) {
-		//			return getValueAt(0, c).getClass();
-		//		}
-
+		// public Class getColumnClass(int c) {
+		// return getValueAt(0, c).getClass();
+		// }
 	}
 
 }
