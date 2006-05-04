@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.25 2006/05/03 17:39:35 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.26 2006/05/04 17:18:54 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -176,7 +176,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JComboBox cmbSizeUnits;
 	private JScrollPane scrMalts;
 	private JPanel pnlMain;
-	private JTable hopsTable;
+	public JTable hopsTable;
 	private JComboBox hopComboBox;
 	private JComboBox hopsUnitsComboBox;
 
@@ -325,8 +325,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// this method attaches data from the recipe to the tables 
 		// and comboboxes
 		// use whenever the Recipe changes
-		cmbStyleModel.addOrInsert(myRecipe.getStyleObj());
-		cmbYeastModel.addOrInsert(myRecipe.getYeastObj());
+		cmbStyleModel.addOrInsert(myRecipe.getStyleObj());		
+		cmbYeastModel.addOrInsert(myRecipe.getYeastObj());		
 		cmbSizeUnitsModel.addOrInsert(myRecipe.getVolUnits());
 		maltTableModel.setData(myRecipe);
 		hopsTableModel.setData(myRecipe);
@@ -346,6 +346,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		colourMethodCombo.setSelectedItem(myRecipe.getColourMethod());
 		evapMethodCombo.setSelectedItem(myRecipe.getEvapMethod());
 
+		// set the yeast and style descriptions:
+		Yeast y = (Yeast) cmbYeastModel.getSelectedItem();
+		String st = SBStringUtils.multiLineToolTip(40, y.getDescription());
+		cmbYeast.setToolTipText(st);
+		Style s = (Style) cmbStyleModel.getSelectedItem();
+		st = SBStringUtils.multiLineToolTip(40, s.getDescription());
+		cmbStyle.setToolTipText(st);
 
 	}
 
@@ -466,7 +473,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				Yeast y = (Yeast) cmbYeastModel.getSelectedItem();
 				if (myRecipe != null && y != myRecipe.getYeastObj()) {
 					myRecipe.setYeast(y);
-
 				}
 				String st = SBStringUtils.multiLineToolTip(40, y
 						.getDescription());
@@ -1592,24 +1598,29 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					jMenuBar1.add(mnuTools);
 					mnuTools.setText("Tools");
 					{
-//						mashManagerMenuItem = new JMenuItem();
-//						mnuTools.add(mashManagerMenuItem);
-//						mashManagerMenuItem.setText("Mash Manager...");
-//						mashManagerMenuItem.addActionListener(new ActionListener() {
-//						public void actionPerformed(ActionEvent evt) {
-//						mashMgr = new MashManager(myRecipe);
-//						mashMgr.setVisible(true);
+						final JFrame owner = this;
+						
+						JMenuItem scalRecipeMenuItem = new JMenuItem();
+						mnuTools.add(scalRecipeMenuItem);
+						scalRecipeMenuItem.setText("Scale Recipe...");
+						
+						scalRecipeMenuItem.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								ScaleRecipeDialog scaleRecipe = new ScaleRecipeDialog(owner);
+								scaleRecipe.setModal(true);
+								scaleRecipe.setVisible(true);
+							}
+						});
 
-//						}
-//						});
 
 						JMenuItem maltPercentMenuItem = new JMenuItem();
 						mnuTools.add(maltPercentMenuItem);
 						maltPercentMenuItem.setText("Malt Percent...");
-						final JFrame owner = this;
+						
 						maltPercentMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
 								MaltPercentDialog maltPercent = new MaltPercentDialog(owner);
+								maltPercent.setModal(true);
 								maltPercent.setVisible(true);
 							}
 						});

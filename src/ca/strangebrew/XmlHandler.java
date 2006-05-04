@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.9 2006/05/03 17:39:39 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.10 2006/05/04 17:18:53 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -289,6 +289,9 @@ public class XmlHandler extends DefaultHandler{
 		String s = new String(buf, offset, len);
 
 		if (!s.trim().equals("") && importType == "STRANGEBREW") {
+			// SBWin uses gr instead of g, fix it:
+			if (s.trim().equalsIgnoreCase("gr"))
+				s="g";
 			sbCharacters(s.trim());	
 		} 
 		else if (!s.trim().equals("") && importType == "QBREW") {

@@ -45,15 +45,7 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 	private StrangeSwing app;
 	private ButtonGroup bg = new ButtonGroup();
 
-	/**
-	* Auto-generated main method to display this JDialog
-	*/
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		MaltPercentDialog inst = new MaltPercentDialog(frame);
-		inst.setVisible(true);
-	}
-	
+
 	public MaltPercentDialog(JFrame frame) {
 		super(frame);
 		app = (StrangeSwing)frame;

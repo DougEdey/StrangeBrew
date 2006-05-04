@@ -65,7 +65,7 @@ class HopsTableModel extends AbstractTableModel {
 				case 2 :
 					return new Double(data.getHopAlpha(row));
 				case 3 :
-					return new Double(data.getHopAmountAs(row, data.getHopUnits(row)));
+					return new Double(SBStringUtils.df1.format(data.getHopAmountAs(row, data.getHopUnits(row))));
 				case 4 :
 					return data.getHopUnits(row);
 				case 5 :

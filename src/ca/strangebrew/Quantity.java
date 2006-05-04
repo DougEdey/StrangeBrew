@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.7 2006/04/20 17:26:38 andrew_avis Exp $
+ * $Id: Quantity.java,v 1.8 2006/05/04 17:18:53 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -53,7 +53,6 @@ public class Quantity {
 
 	Converter weightUnits[] =
 		{
-			new Converter("grams", "gr", 453.59237),
 			new Converter("grams", "g", 453.59237),
 			new Converter("kilograms", "kg", 0.45359237),
 			new Converter("ounces", "oz", 16),
@@ -105,7 +104,6 @@ public class Quantity {
 	public double getValueAs(String to){
 		double fromBase = 0;
 		double toBase = 0;
-		int i = 0;
 		Converter[] u;
 		
 		// don't do any work if we're converting to ourselves

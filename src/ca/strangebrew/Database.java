@@ -10,7 +10,7 @@ import java.util.Comparator;
 import com.mindprod.csv.CSVReader;
 
 /**
- * $Id: Database.java,v 1.6 2006/05/02 16:49:26 andrew_avis Exp $
+ * $Id: Database.java,v 1.7 2006/05/04 17:18:53 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -262,7 +262,7 @@ public class Database {
 				int costIdx = getIndex(fields, "COST");
 				int descrIdx = getIndex(fields, "DESCR");
 				int unitsIdx = getIndex(fields, "UNITS");
-				int stockIdx = getIndex(fields, "STOCK");
+				// int stockIdx = getIndex(fields, "STOCK");
 				int stageIdx = getIndex(fields, "STAGE");
 
 				while (true) {

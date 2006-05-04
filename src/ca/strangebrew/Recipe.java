@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.21 2006/05/03 17:39:39 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.22 2006/05/04 17:18:53 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -1355,6 +1355,34 @@ public class Recipe {
 
 		}
 
+	}
+	
+	/*
+	 * Scale the recipe up or down, so that the new OG = old OG, and
+	 * new IBU = old IBU
+	 */
+	public void scaleRecipe(double newSize, String newUnits){
+		double currentSize =getPostBoilVol(getVolUnits());
+		currentSize = Quantity.convertUnit(getVolUnits(), newUnits, currentSize);
+		double conversionFactor = newSize / currentSize;
+		
+		if (conversionFactor != 1){
+			setPostBoil(newSize);
+			setVolUnits(newUnits);
+			
+			// TODO: figure out a way to make sure old IBU = new IBU
+			for (int i=0;i<getHopsListSize(); i++){
+				Hop h = getHop(i);				
+				h.setAmount(h.getAmountAs(h.getUnits()) * conversionFactor);
+			}
+			for (int i=0;i<getMaltListSize(); i++){
+				Fermentable f = getFermentable(i);				
+				f.setAmount(f.getAmountAs(f.getUnits()) * conversionFactor);
+			}
+			calcHopsTotals();
+			calcMaltTotals();
+
+		}
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Id: PromashImport.java,v 1.3 2006/05/01 20:02:06 andrew_avis Exp $ Created on Jun 15, 2005
+ * $Id: PromashImport.java,v 1.4 2006/05/04 17:18:53 andrew_avis Exp $ Created on Jun 15, 2005
  * by aavis
  * A Promash .rec file importer, based on specs provided by Don Kelly
  */
@@ -296,8 +296,8 @@ public class PromashImport {
 					break;					
 				}
 				if (l > 0){
-					myRecipe.mash.addStep(stepType, Double.valueOf(l).doubleValue(), 
-							Double.valueOf(l).doubleValue(), "f", "infusion",  Double.valueOf(l2).intValue(), 0);					
+					myRecipe.mash.addStep(stepType, new Double(l).doubleValue(), 
+							new Double(l).doubleValue(), "f", "infusion",  new Double(l2).intValue(), 0);					
 				}
 			}		
 
