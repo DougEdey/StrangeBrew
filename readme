@@ -68,6 +68,9 @@ Beta 0.4:
 - The cost panel is now fully implemented.  
 - The colour preferences are now fully implemented.  Depending on your system,
   one of RBG calculation methods may work better than the other.
+- New Resize Dialog to scale your recipe. Note: IBUs change slightly on resize -
+  this will be fixed in a future release.
+
 
 Beta 0.3:
 - New colour swatch to estimate the beer colour (this is a
@@ -112,13 +115,12 @@ Beta 0.1:
 Soon-to-be Implemented Features:
 x- edit ingredient databases (just edit w/ text editor)
 - mash tun thermal mass
-- recipe resize / unit conversion
 - hop scaling
-- alternate malt/hop selection dialog
 - specify decoction thickness value
 - application help
 - sparge calculations (fly and batch)
 - mash/steep indicators on malt list
+- add new ingredients on open/import
 
 
 StrangeBrew Java Pro Features:
@@ -129,6 +131,7 @@ StrangeBrew Java Pro Features:
 - brewday timeline generation
 - brew sessions (vs recipes)
 - saved mash schedules
+- alternate malt/hop selection dialog
 
 (StrangeBrew Java will be released under a "dual-license": a free 
 Open Source version and a commercial "Pro" version that will 
