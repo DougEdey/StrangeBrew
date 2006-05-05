@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.22 2006/05/04 17:18:53 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.23 2006/05/05 20:08:38 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -164,7 +164,7 @@ public class Recipe {
 		return comments;
 	}
 	public String getColourMethod() {
-		return "";
+		return colourMethod;
 	}
 	public GregorianCalendar getCreated() {
 		return created;
@@ -346,7 +346,7 @@ public class Recipe {
 	}
 
 	public void setHopsUnits(String h) {
-		hopUnits = h;
+		hopUnits = h;		
 	}
 	public void setIBUMethod(String s) {
 		ibuCalcMethod = s;
@@ -357,7 +357,7 @@ public class Recipe {
 		calcMaltTotals();
 	}
 	public void setMaltUnits(String m) {
-		maltUnits = m;
+		maltUnits = m;		
 	}
 	public void setMashed(boolean m) {
 		mashed = m;
@@ -827,7 +827,7 @@ public class Recipe {
 						/ postBoilVol.getValueAs("gal");
 
 			mcu += m.getLov() * m.getAmountAs("lb") / postBoilVol.getValueAs("gal");
-			totalMaltCost += m.getCostPerU() * m.getAmountAs("lb");
+			totalMaltCost += m.getCostPerU() * m.getAmountAs(m.getUnits());
 		}
 
 		// now set the malt % by weight:
@@ -892,7 +892,7 @@ public class Recipe {
 				}
 				ibuTotal += h.getIBU();
 			}
-			totalHopsCost += h.getCostPerU() * h.getAmountAs("oz");
+			totalHopsCost += h.getCostPerU() * h.getAmountAs(h.getUnits());
 			totalHopsOz += h.getAmountAs("oz");
 		}
 
@@ -1020,6 +1020,10 @@ public class Recipe {
 		// monitors.
 		// This is from the Windows version of SB
 		// typical values are: r=8, g=30, b=20
+		
+		
+		
+		
 		if (method == 1) {
 
 			int R = 0, G = 0, B = 0, A = aConst;

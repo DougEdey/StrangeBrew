@@ -1,5 +1,5 @@
 /*
- * $Id: PromashImport.java,v 1.4 2006/05/04 17:18:53 andrew_avis Exp $ Created on Jun 15, 2005
+ * $Id: PromashImport.java,v 1.5 2006/05/05 20:08:38 andrew_avis Exp $ Created on Jun 15, 2005
  * by aavis
  * A Promash .rec file importer, based on specs provided by Don Kelly
  */
@@ -18,9 +18,6 @@ public class PromashImport {
 
 	private Recipe myRecipe;
 
-	public static void main(String[] args) throws Exception {
-		
-	}
 
 	public Recipe readRecipe(File input) {
 		myRecipe = new Recipe();
@@ -29,8 +26,7 @@ public class PromashImport {
 		FileInputStream in = null;
 		try {
 			in = new FileInputStream(input);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+		} catch (FileNotFoundException e) {			
 			e.printStackTrace();
 		}
 
@@ -347,8 +343,7 @@ public class PromashImport {
 
 		try {
 			in.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (IOException e) {			
 			e.printStackTrace();
 		}
 

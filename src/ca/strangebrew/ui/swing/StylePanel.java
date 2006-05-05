@@ -59,20 +59,6 @@ public class StylePanel extends javax.swing.JPanel {
 	private Recipe myRecipe;
 	private StrangeSwing.SBNotifier sbn;
 	
-
-	
-
-	/**
-	* Auto-generated main method to display this 
-	* JPanel inside a new JFrame.
-	*/
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(new StylePanel());
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
-	}
 	
 	public StylePanel() {
 		super();

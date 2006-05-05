@@ -50,16 +50,6 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener{
 
 	private Recipe myRecipe;
 
-	/**
-	 * Auto-generated main method to display this JPanel inside a new JFrame.
-	 */
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(new CostPanel());
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		frame.setVisible(true);
-	}
-
 	public CostPanel() {
 		super();
 		initGUI();
@@ -230,8 +220,7 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener{
 		if (o == yeastTxt){
 			try {
 				myRecipe.getYeastObj().setCost(SBStringUtils.myNF.parse(yeastTxt.getText()).doubleValue());
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
+			} catch (ParseException e1) {				
 				e1.printStackTrace();
 			}
 			displayCost();
@@ -239,8 +228,7 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener{
 		if (o == otherTxt){
 			try {
 				myRecipe.setOtherCost(SBStringUtils.myNF.parse(otherTxt.getText()).doubleValue());
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
+			} catch (ParseException e1) {				
 				e1.printStackTrace();
 			}
 			displayCost();

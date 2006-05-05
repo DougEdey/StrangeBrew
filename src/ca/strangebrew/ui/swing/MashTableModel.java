@@ -12,6 +12,7 @@ import javax.swing.table.AbstractTableModel;
 
 import ca.strangebrew.Debug;
 import ca.strangebrew.Mash;
+import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.Mash.MashStep;
 
 class MashTableModel extends AbstractTableModel {
@@ -66,9 +67,9 @@ class MashTableModel extends AbstractTableModel {
 				case 1 :
 					return data.getStepMethod(row);
 				case 2 :					
-					return new Double(data.getStepStartTemp(row)) ;
+					return SBStringUtils.df1.format(data.getStepStartTemp(row));
 				case 3 :
-					return new Double(data.getStepEndTemp(row)) ;
+					return SBStringUtils.df1.format(data.getStepEndTemp(row)) ;
 				case 4 :
 					return new Integer(data.getStepRampMin(row));
 				case 5 :

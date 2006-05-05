@@ -1,5 +1,5 @@
 /*
- * $Id: FindDialog.java,v 1.5 2006/05/03 14:03:02 andrew_avis Exp $ 
+ * $Id: FindDialog.java,v 1.6 2006/05/05 20:08:54 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis find recipe window class
  */
 
@@ -33,6 +33,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -73,10 +74,16 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 		recipes = new ArrayList();
 		files = new ArrayList();
 		inst = (StrangeSwing) frame;
+		String slash = System.getProperty("file.separator");
 		currentDir = new java.io.File(".");
+		try {
+			currentDir = new File(currentDir.getCanonicalPath() + slash + "recipes");
+		} catch (IOException e) {			
+			e.printStackTrace();
+		}		
 		initGUI();
 		dirLocationText.setText(currentDir.getAbsolutePath());
-		// loadRecipes(currentDir);
+		loadRecipes(currentDir);
 	}
 
 	private void initGUI() {

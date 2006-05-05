@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.26 2006/05/04 17:18:54 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.27 2006/05/05 20:08:54 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -77,6 +77,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -100,6 +101,8 @@ import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.Style;
 import ca.strangebrew.XmlTransformer;
 import ca.strangebrew.Yeast;
+
+import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 
 
 public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener, WindowListener {
@@ -263,6 +266,11 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		}
 		}
 	}*/
+	{
+	try {
+	      UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
+	   } catch (Exception e) {}
+	}
 	
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -297,6 +305,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		cmbMaltUnitsModel.setList(new Quantity().getListofUnits("weight"));
 		cmbHopsUnitsModel.setList(new Quantity().getListofUnits("weight"));
 
+		try {
+			path = new File(".").getCanonicalPath() + slash + "recipes";
+			Debug.print("Recipes path:" + path);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		fileChooser = new JFileChooser();
 
 		fileChooser.setCurrentDirectory(new File(path));
@@ -400,14 +415,23 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		ibuMethodLabel.setText("IBU method: " + myRecipe.getIBUMethod());
 		alcMethodLabel.setText("Alc method: " + myRecipe.getAlcMethod());
 
+		double colour = myRecipe.getSrm();
+		//		 convert from ebc if that's our mode:
+		if (myRecipe.getColourMethod().equals("EBC")) {
+			// From Greg Noonan's article at
+			// http://brewingtechniques.com/bmg/noonan.html			
+			
+			colour = (colour + 1.2) / 2.65;
+		}
+		
 		if (preferences.getProperty("optRGBMethod").equals("1"))
-			colourPanel.setBackground(Recipe.calcRGB(1, myRecipe.getSrm(), 
+			colourPanel.setBackground(Recipe.calcRGB(1, colour, 
 					preferences.getIProperty("optRed"),
 					preferences.getIProperty("optGreen"),
 					preferences.getIProperty("optBlue"),
 					preferences.getIProperty("optAlpha")));	
 		else
-			colourPanel.setBackground(Recipe.calcRGB(2, myRecipe.getSrm(), 
+			colourPanel.setBackground(Recipe.calcRGB(2, colour, 
 					preferences.getIProperty("optRed"),
 					preferences.getIProperty("optGreen"),
 					preferences.getIProperty("optBlue"),
@@ -1356,6 +1380,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								sbFileFilter openFileFilter = new sbFileFilter(ext, desc);
 
 								// fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+								
 								fileChooser.setFileFilter(openFileFilter);
 
 
@@ -1455,7 +1480,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								}
 
 								if (choice == 0) {
-									// same as save as:
+									// same as save as:									
 									saveAs();
 								}
 
@@ -1840,8 +1865,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// Show save dialog; this method does
 		// not return until the dialog is closed
 		String[] ext = {"xml"};
-		sbFileFilter saveFileFilter = new sbFileFilter(ext, "XML");
+		sbFileFilter saveFileFilter = new sbFileFilter(ext, "StrangeBrew XML");
 		fileChooser.setFileFilter(saveFileFilter);
+		fileChooser.setSelectedFile(new File(myRecipe.getName() + ".xml"));		
 
 		int returnVal = fileChooser.showSaveDialog(jMenuBar1);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {

@@ -7,12 +7,8 @@ package ca.strangebrew;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
 
 public class OpenImport {
 
@@ -43,13 +39,9 @@ public class OpenImport {
 						return "qbrew";
 					i++;
 				}
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+			} catch (Exception e) {				
 				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			} 
 		}
 		return "";
 	}

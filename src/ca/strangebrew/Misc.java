@@ -37,7 +37,7 @@ public class Misc extends Ingredient {
 	    sb.append( "      <UNITS>"+getUnits()+"</UNITS>\n" );
 	    sb.append( "      <STAGE>"+stage+"</STAGE>\n" );
 	    sb.append( "      <TIME>"+time+"</TIME>\n" );
-	    sb.append( "      <COMMENTS>"+comments+"</COMMENTS>\n" );
+	    sb.append( "      <COMMENTS>"+SBStringUtils.subEntities(comments)+"</COMMENTS>\n" );
 	    sb.append( "    </ITEM>\n" );
 	    return sb.toString();
 	}

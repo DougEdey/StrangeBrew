@@ -65,18 +65,6 @@ public class NotesPanel extends javax.swing.JPanel {
 	private int selectedRow;
 	
 
-	/**
-	* Auto-generated main method to display this 
-	* JPanel inside a new JFrame.
-	*/
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(new NotesPanel());
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
-	}
-	
 	public NotesPanel() {
 		super();
 		initGUI();

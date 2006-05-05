@@ -14,8 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import ca.strangebrew.Fermentable;
-import ca.strangebrew.Hop;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 

@@ -62,18 +62,7 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 	
 	private Recipe myRecipe;
 
-	/**
-	* Auto-generated main method to display this 
-	* JPanel inside a new JFrame.
-	*/
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(new WaterPanel());
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
-	}
-	
+
 	public WaterPanel() {
 		super();
 		initGUI();
