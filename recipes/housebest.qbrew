@@ -1,0 +1,19 @@
+<!DOCTYPE recipe>
+<recipe generator="qbrew" version="0.3.4" >
+<title>House Best</title>
+<brewer>Mike</brewer>
+<style>Special Bitters</style>
+<batch quantity="22.000000 L" mash="true" />
+<grains>
+<grain use="mashed" quantity="3.750000 kg" color="2.5" extract="1.038" >British two-row</grain>
+<grain use="mashed" quantity="0.180000 kg" color="75" extract="1.034" >British crystal 70-80L</grain>
+</grains>
+<hops>
+<hop form="whole" alpha="5" quantity="18.000000 g" time="15" >Homegrown Cascade</hop>
+<hop form="pellet" alpha="4.2" quantity="50.000000 g" time="60" >Kent Golding</hop>
+</hops>
+<miscingredients>
+<miscingredient notes="dry" quantity="10.000000 unit" >S04</miscingredient>
+</miscingredients>
+</recipe>
+
