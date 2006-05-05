@@ -1,13 +1,13 @@
 Chunk			Bytes	Percent Complete
 ------------------------------------------------
-<Recipe>		  120	90%
+<Recipe>		  126	90%
 <Style>			  775	100%
-[Hops]*			  614	100%
+[Hops]*			  635	100%
 [Malt]*			  521	100%
 [Extra]*		  444	100%
 <Yeast>			  473	90%
 <Water>			  106	90%
-<MashSched>		   62	75%
+<MashSched>		  292	75%
 <Notes>			 8311	100%
 <CustomMashSchedule>	14867	60%
 
