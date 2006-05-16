@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.10 2006/05/04 17:18:53 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.11 2006/05/16 14:36:52 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -225,6 +225,12 @@ public class XmlHandler extends DefaultHandler{
 				descrBuf = "";
 				r.addMalt(m);
 				m = null;
+			} else if (qName.equalsIgnoreCase("MALT")) {
+				m.setName(descrBuf);
+				descrBuf = "";			
+			} else if (qName.equalsIgnoreCase("HOP")) {
+				h.setName(descrBuf);
+				descrBuf = "";			
 			} else if (qName.equalsIgnoreCase("ITEM")
 					&& currentList.equalsIgnoreCase("HOPS")) {
 				h.setDescription(descrBuf);
@@ -328,7 +334,8 @@ public class XmlHandler extends DefaultHandler{
 	void sbCharacters(String s){
 		if (currentList.equals("FERMENTABLES")) {
 			if (currentElement.equalsIgnoreCase("MALT")) {
-				m.setName(s);
+				//m.setName(s);
+				descrBuf = descrBuf + s;
 			} else if (currentElement.equalsIgnoreCase("AMOUNT")) {
 				m.setAmount(Double.parseDouble(s));
 			} else if (currentElement.equalsIgnoreCase("POINTS")) {
@@ -339,6 +346,10 @@ public class XmlHandler extends DefaultHandler{
 				m.setUnits(s);
 			} else if (currentElement.equalsIgnoreCase("LOV")) {
 				m.setLov(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("MASHED")) {
+				m.setMashed(Boolean.valueOf(s).booleanValue());
+			} else if (currentElement.equalsIgnoreCase("STEEPED")) {
+				m.setSteep(Boolean.valueOf(s).booleanValue());
 			} else if (currentElement.equalsIgnoreCase("DescrLookup") ||
 					currentElement.equalsIgnoreCase("description")) {
 				descrBuf = descrBuf + s;
@@ -346,7 +357,8 @@ public class XmlHandler extends DefaultHandler{
 		}
 		else if (currentList.equalsIgnoreCase("HOPS")) {
 			if (currentElement.equalsIgnoreCase("HOP")) {
-				h.setName(s);
+				// h.setName(s);
+				descrBuf = descrBuf + s;
 			} else if (currentElement.equalsIgnoreCase("AMOUNT")) {
 				h.setAmount(Double.parseDouble(s));
 			} else if (currentElement.equalsIgnoreCase("ALPHA")) {
@@ -489,7 +501,7 @@ public class XmlHandler extends DefaultHandler{
 				r.setPelletHopPct(Double.parseDouble(s));
 			}
 			else if (currentElement.equalsIgnoreCase("YEAST_COST")) {
-				r.getYeastObj().setCost((Double.parseDouble(s)));
+				r.getYeastObj().setCost((s));
 			}
 			else if (currentElement.equalsIgnoreCase("OTHER_COST")) {
 				r.setOtherCost(Double.parseDouble(s));

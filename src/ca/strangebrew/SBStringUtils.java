@@ -5,8 +5,10 @@
  */
 package ca.strangebrew;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * @author aavis
@@ -72,11 +74,36 @@ public class SBStringUtils {
 
 		return output;
 	}
-
-	public static DecimalFormat df1 = new DecimalFormat("####.0");
-	public static DecimalFormat df2 = new DecimalFormat("#.00");
-	public static DecimalFormat df3 = new DecimalFormat("0.000");
-	public static DecimalFormat df0 = new DecimalFormat("#0");
+	
+	
+	public static NumberFormat nf = NumberFormat.getNumberInstance();
+	public static DecimalFormat df = (DecimalFormat)nf; 
 	public static NumberFormat myNF = NumberFormat.getCurrencyInstance(); // Use the country currency
+	public static DateFormat dateFormat1 = DateFormat.getDateInstance(DateFormat.SHORT);
+	
+	public static String format(double value, int decimal){
+		
+		String pattern = "0";
+		switch (decimal){
+			case 0: pattern = "0";
+			break;
+			case 1: pattern = "0.0";
+			break;
+			case 2: pattern = "0.00";
+			break;
+			case 3: pattern = "0.000";
+			break;
+			
+		}
+		df.applyPattern(pattern);
+		return df.format(value);		
+	}
+	
+	
+	
+	
+	
+	
+	
 
 }

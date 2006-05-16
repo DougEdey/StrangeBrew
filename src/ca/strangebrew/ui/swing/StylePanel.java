@@ -12,12 +12,10 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
 import ca.strangebrew.Recipe;
@@ -91,18 +89,18 @@ public class StylePanel extends javax.swing.JPanel {
 
 		// descriptionTextArea.setText(s.getDescription());
 		// cmbStyle2.setToolTipText(multiLineToolTip(50,s.getDescription()));
-		stlLowOG.setText(SBStringUtils.df3.format(s.ogLow));
-		stlRcpOG.setText(SBStringUtils.df3.format(myRecipe.getEstOg()));
-		stlHighOG.setText(SBStringUtils.df3.format(s.ogHigh));
-		stlLowABV.setText(SBStringUtils.df1.format(s.alcLow));
-		stlRcpABV.setText(SBStringUtils.df1.format(myRecipe.getAlcohol()));
-		stlHighABV.setText(SBStringUtils.df1.format(s.alcHigh));
-		stlLowColour.setText(SBStringUtils.df1.format(s.lovLow));
-		stlRcpColour.setText(SBStringUtils.df1.format(myRecipe.getSrm()));
-		stlHighColour.setText(SBStringUtils.df1.format(s.lovHigh));
-		stlLowIBU.setText(SBStringUtils.df1.format(s.ibuLow));
-		stlRcpIBU.setText(SBStringUtils.df1.format(myRecipe.getIbu()));
-		stlHighIBU.setText(SBStringUtils.df1.format(s.ibuHigh));
+		stlLowOG.setText(SBStringUtils.format(s.ogLow, 3));
+		stlRcpOG.setText(SBStringUtils.format(myRecipe.getEstOg(), 3));
+		stlHighOG.setText(SBStringUtils.format(s.ogHigh, 3));
+		stlLowABV.setText(SBStringUtils.format(s.alcLow, 1));
+		stlRcpABV.setText(SBStringUtils.format(myRecipe.getAlcohol(), 1));
+		stlHighABV.setText(SBStringUtils.format(s.alcHigh, 1));
+		stlLowColour.setText(SBStringUtils.format(s.lovLow, 1));
+		stlRcpColour.setText(SBStringUtils.format(myRecipe.getSrm(), 1));
+		stlHighColour.setText(SBStringUtils.format(s.lovHigh, 1));
+		stlLowIBU.setText(SBStringUtils.format(s.ibuLow, 1));
+		stlRcpIBU.setText(SBStringUtils.format(myRecipe.getIbu(), 1));
+		stlHighIBU.setText(SBStringUtils.format(s.ibuHigh, 1));
 		
 		checkStyleConformance();
 		txaStyles.setText(getStyleMatches());

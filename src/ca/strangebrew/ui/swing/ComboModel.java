@@ -18,8 +18,6 @@ import ca.strangebrew.Yeast;
 
 public class ComboModel extends AbstractListModel implements ComboBoxModel {
 	
-	private final static boolean DEBUG = false;
-
 	List list = new ArrayList();
 	Object selected = null;
 

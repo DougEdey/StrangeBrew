@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.7 2006/05/03 17:39:39 andrew_avis Exp $
+ * $Id: Options.java,v 1.8 2006/05/16 14:36:52 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -104,6 +104,12 @@ public class Options {
 			
 			// cost:
 			{"optMiscCost", "5.0"},
+			
+			// application window:
+			{"winX", "0"},
+			{"winY", "0"},
+			{"winWidth", "600"},
+			{"winHeight", "600"},
 	};
 	
 	// default constructor, create options for a recipe

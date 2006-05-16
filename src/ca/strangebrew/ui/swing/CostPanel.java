@@ -11,11 +11,9 @@ import java.text.ParseException;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.WindowConstants;
 
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
@@ -74,14 +72,14 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener{
 		
 		totalLbl.setText(SBStringUtils.myNF.format(totalCost));
 
-		bottleSizeTxt.setText(SBStringUtils.df0.format(myRecipe.getBottleSize()));
+		bottleSizeTxt.setText(SBStringUtils.format(myRecipe.getBottleSize(), 0));
 		bottleSizeUCmbModel.addOrInsert(myRecipe.getBottleU());
 
 		finalVolLbl.setText(myRecipe.getFinalWortVol() + " " + myRecipe.getVolUnits());
 		double numBottles = Quantity.convertUnit(myRecipe.getVolUnits(), 
 				myRecipe.getBottleU(), 
-				Double.parseDouble(myRecipe.getFinalWortVol())) / myRecipe.getBottleSize();
-		numBottlesLbl.setText(SBStringUtils.df1.format(numBottles));
+				myRecipe.getFinalWortVol()) / myRecipe.getBottleSize();
+		numBottlesLbl.setText(SBStringUtils.format(numBottles, 1));
 		bottleCostLbl.setText(SBStringUtils.myNF.format( totalCost/numBottles ));
 
 

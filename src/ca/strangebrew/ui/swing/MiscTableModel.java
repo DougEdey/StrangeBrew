@@ -65,8 +65,8 @@ class MiscTableModel extends AbstractTableModel {
 				case 0 :
 					return data.getMiscName(row);
 				case 1 :
-					return new Double(SBStringUtils.df1.format(data
-							.getMiscAmount(row)));
+					return new Double(SBStringUtils.format(data
+							.getMiscAmount(row), 1));
 				case 2 :
 					return data.getMiscUnits(row);
 				case 3 :

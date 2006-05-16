@@ -57,20 +57,24 @@ class MaltTableModel extends AbstractTableModel {
 		try {
 			switch (col) {
 				case 0 :
-					return data.getMaltName(row);
+					// indicate this is a sugar:
+					String s = "";
+					if (!data.getMaltMashed(row) && data.getMaltSteep(row))
+						s = "*";
+					return s + data.getMaltName(row);
 				case 1 :
-					return SBStringUtils.df1.format(data
-							.getMaltAmountAs(row, data.getMaltUnits(row)));
+					return SBStringUtils.format(data
+							.getMaltAmountAs(row, data.getMaltUnits(row)), 1);
 				case 2 :
 					return data.getMaltUnits(row);
 				case 3 :
-					return SBStringUtils.df3.format(data.getMaltPppg(row));
+					return SBStringUtils.format(data.getMaltPppg(row), 3);
 				case 4 :
-					return SBStringUtils.df0.format(data.getMaltLov(row));
+					return SBStringUtils.format(data.getMaltLov(row), 0);
 				case 5 :
 					return new Double(data.getMaltCostPerU(row));
 				case 6 :
-					return SBStringUtils.df1.format(new Double(data.getMaltPercent(row)));
+					return SBStringUtils.format(data.getMaltPercent(row), 1);
 
 			}
 		} catch (Exception e) {

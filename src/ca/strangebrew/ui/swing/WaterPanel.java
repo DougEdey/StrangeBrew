@@ -12,14 +12,13 @@ import java.awt.event.FocusListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
+import ca.strangebrew.SBStringUtils;
 
 
 public class WaterPanel extends javax.swing.JPanel implements ActionListener, FocusListener{
@@ -78,30 +77,30 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 		String recipeUnitsAbrv = Quantity.getVolAbrv(myRecipe.getVolUnits());
 		String mashUnitsAbrv = Quantity.getVolAbrv(myRecipe.mash.getMashVolUnits());
 
-		totalWaterLbl.setText(myRecipe.getTotalWater());
+		totalWaterLbl.setText(SBStringUtils.format(myRecipe.getTotalWater(), 1));
 		totalUnitsLbl.setText(recipeUnitsAbrv);
 		
 		usedMashLbl.setText(myRecipe.mash.getTotalWaterStr());
 		usedInMashUnitsLbl.setText(mashUnitsAbrv);		
 		absorbedLbl.setText(myRecipe.mash.getAbsorbedStr());
 		absorbedUnitsLbl.setText(mashUnitsAbrv);
-		spargeWithLbl.setText(myRecipe.getSparge());
+		spargeWithLbl.setText(SBStringUtils.format(myRecipe.getSparge(), 1));
 		spargeUnitsLbl.setText(mashUnitsAbrv);
 		
-		collectTxt.setValue(new Double(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));
+		collectTxt.setValue(SBStringUtils.format(myRecipe.getPreBoilVol(myRecipe.getVolUnits()), 1));
 		collectUnitsLbl.setText(recipeUnitsAbrv);
-		postBoilTxt.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
+		postBoilTxt.setValue(SBStringUtils.format(myRecipe.getPostBoilVol(myRecipe.getVolUnits()), 1));
 		postBoilUnitsLbl.setText(recipeUnitsAbrv);
 		
-		chillShrinkLbl.setText(myRecipe.getChillShrink());
-		kettleTxt.setValue(new Double(myRecipe.getKettleLoss()));
+		chillShrinkLbl.setText(SBStringUtils.format(myRecipe.getChillShrink(), 1));
+		kettleTxt.setValue(SBStringUtils.format(myRecipe.getKettleLoss(), 1));
 		kettleUnitsLbl.setText(recipeUnitsAbrv);
-		trubLossTxt.setValue(new Double(myRecipe.getTrubLoss()));
+		trubLossTxt.setValue(SBStringUtils.format(myRecipe.getTrubLoss(), 1));
 		trubLossUnitsLbl.setText(recipeUnitsAbrv);
-		miscLossTxt.setValue(new Double(myRecipe.getMiscLoss()));
+		miscLossTxt.setValue(SBStringUtils.format(myRecipe.getMiscLoss(), 1));
 		miscLosUnitsLbl.setText(recipeUnitsAbrv);
 		
-		finalVolTxt.setValue(new Double(myRecipe.getFinalWortVol()));
+		finalVolTxt.setValue(SBStringUtils.format(myRecipe.getFinalWortVol(), 1));
 		finalUnitsLbl.setText(recipeUnitsAbrv);
 		
 	}
@@ -153,7 +152,7 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 				kettleTxt.addFocusListener(this);
 				kettleTxt.addActionListener(this);
 				kettleTxt.setText("1");
-				kettleTxt.setPreferredSize(new java.awt.Dimension(43, 20));
+				kettleTxt.setPreferredSize(new java.awt.Dimension(38, 20));
 			}
 			{
 				kettleUnitsLbl = new JLabel();
@@ -172,7 +171,7 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 				trubLossTxt.addFocusListener(this);
 				trubLossTxt.addActionListener(this);
 				trubLossTxt.setText("jTextField1");
-				trubLossTxt.setPreferredSize(new java.awt.Dimension(50, 20));
+				trubLossTxt.setPreferredSize(new java.awt.Dimension(36, 20));
 			}
 			{
 				trubLossUnitsLbl = new JLabel();
@@ -191,7 +190,7 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 				miscLossTxt.addFocusListener(this);
 				miscLossTxt.addActionListener(this);
 				miscLossTxt.setText("jTextField1");
-				miscLossTxt.setPreferredSize(new java.awt.Dimension(51, 20));
+				miscLossTxt.setPreferredSize(new java.awt.Dimension(37, 20));
 			}
 			{
 				miscLosUnitsLbl = new JLabel();
@@ -303,7 +302,7 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
 								0, 0, 0), 0, 0));
 				collectTxt.setText("l");
-				collectTxt.setPreferredSize(new java.awt.Dimension(47, 20));
+				collectTxt.setPreferredSize(new java.awt.Dimension(65, 20));
 			}
 			{
 				postBoilTxt = new JFormattedTextField();
@@ -313,7 +312,7 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
 								0, 0, 0), 0, 0));
 				postBoilTxt.setText("l");
-				postBoilTxt.setPreferredSize(new java.awt.Dimension(42, 20));
+				postBoilTxt.setPreferredSize(new java.awt.Dimension(67, 20));
 			}
 			{
 				finalVolTxt = new JFormattedTextField();
@@ -321,7 +320,7 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 				finalVolTxt.addActionListener(this);
 				waterUsePanel.add(finalVolTxt, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 				finalVolTxt.setText("jTextField1");
-				finalVolTxt.setPreferredSize(new java.awt.Dimension(42, 20));
+				finalVolTxt.setPreferredSize(new java.awt.Dimension(69, 20));
 			}
 			{
 				finalUnitsLbl = new JLabel();

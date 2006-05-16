@@ -125,6 +125,17 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private JTextField txtTinsethUtil;
 	private JLabel jLabelc4;
 	private JTextField txtFWHTime;
+	private JTextField batchSizeTxt;
+	private JComboBox volUnitsCombo;
+	private JComboBox hopsUnitsCombo;
+	private JComboBox maltUnitsCombo;
+	private ComboModel maltUnitsComboModel;
+	private ComboModel hopsUnitsComboModel;
+	private ComboModel volUnitsComboModel;
+	private JLabel jLabel26;
+	private JLabel jLabel25;
+	private JLabel jLabel24;
+	private JPanel jPanel1;
 	private JLabel jLabel23;
 	private JLabel jLabel22;
 	private JLabel jLabel21;
@@ -253,6 +264,11 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 		// new recipe tab:
 		boilTempTxt.setText(opts.getProperty("optBoilTempF"));
+		batchSizeTxt.setText(opts.getProperty("optPostBoilVol"));
+		maltUnitsComboModel.addOrInsert(opts.getProperty("optMaltU"));
+		hopsUnitsComboModel.addOrInsert(opts.getProperty("optHopsU"));
+		volUnitsComboModel.addOrInsert(opts.getProperty("optSizeU"));
+		
 		
 		// appearances tab:
 		redSpn.setValue(new Integer(opts.getIProperty("optRed")));
@@ -261,7 +277,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		alphaSpn.setValue(new Integer(opts.getIProperty("optAlpha")));
 		colMethod1rb.setSelected(opts.getProperty("optRGBMethod").equals("1"));
 		colMethod2rb.setSelected(opts.getProperty("optRGBMethod").equals("2"));
-		
+		displayColour();
 		
 	}
 
@@ -311,6 +327,11 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 		// new recipe tab:
 		opts.setProperty("optBoilTempF", boilTempTxt.getText());
+		opts.setProperty("optPostBoilVol", batchSizeTxt.getText());
+		opts.setProperty("optMaltU", maltUnitsComboModel.getSelectedItem().toString());
+		opts.setProperty("optHopsU", hopsUnitsComboModel.getSelectedItem().toString());
+		opts.setProperty("optSizeU", volUnitsComboModel.getSelectedItem().toString());
+		
 		
 		// appearances:
 		
@@ -802,10 +823,56 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			jLabel23.setText("Alpha:");
 
 			mashPanel = new JPanel();
-			newRecipePanel.add(mashPanel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
-					0));
+			newRecipePanel.add(mashPanel, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			mashPanel.setBorder(BorderFactory.createTitledBorder("Mash"));
+
+			jPanel1 = new JPanel();
+			GridBagLayout jPanel1Layout = new GridBagLayout();
+			jPanel1Layout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1};
+			jPanel1Layout.rowHeights = new int[] {7, 7, 7, 7};
+			jPanel1Layout.columnWeights = new double[] {0.1, 0.1};
+			jPanel1Layout.columnWidths = new int[] {7, 7};
+			jPanel1.setLayout(jPanel1Layout);
+			newRecipePanel.add(jPanel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+			jPanel1.setBorder(BorderFactory.createTitledBorder("Units"));
+
+			jLabel19 = new JLabel();
+			jPanel1.add(jLabel19, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			jLabel19.setText("Malt Units:");
+
+			maltUnitsCombo = new JComboBox();
+			jPanel1.add(maltUnitsCombo, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+			maltUnitsComboModel = new ComboModel();
+			maltUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
+			maltUnitsCombo.setModel(maltUnitsComboModel);
+
+			jLabel24 = new JLabel();
+			jPanel1.add(jLabel24, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			jLabel24.setText("Hops Units:");
+
+			hopsUnitsCombo = new JComboBox();
+			jPanel1.add(hopsUnitsCombo, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+			hopsUnitsComboModel = new ComboModel();
+			hopsUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
+			hopsUnitsCombo.setModel(hopsUnitsComboModel);
+
+			jLabel25 = new JLabel();
+			jPanel1.add(jLabel25, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			jLabel25.setText("Vol Units:");
+
+			volUnitsCombo = new JComboBox();
+			jPanel1.add(volUnitsCombo, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+			volUnitsComboModel = new ComboModel();
+			volUnitsComboModel.setList(new Quantity().getListofUnits("vol"));
+			volUnitsCombo.setModel(volUnitsComboModel);
+
+			jLabel26 = new JLabel();
+			jPanel1.add(jLabel26, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			jLabel26.setText("Batch Size:");
+
+			batchSizeTxt = new JTextField();
+			jPanel1.add(batchSizeTxt, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+			batchSizeTxt.setText("jTextField1");
 
 			jLabel12 = new JLabel();
 			mashPanel.add(jLabel12);
@@ -814,8 +881,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			boilTempTxt = new JTextField();
 			mashPanel.add(boilTempTxt);
 			boilTempTxt.setText("212");
-			
-			
+			boilTempTxt.setPreferredSize(new java.awt.Dimension(43, 20));
 
 		}
 		getContentPane().add(BorderLayout.CENTER, jTabbedPane1);
@@ -1036,6 +1102,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		if (o == okButton) {
 		saveOptions();
 		opts.saveProperties();
+		((StrangeSwing)sb).displayRecipe();
 		setVisible(false);
 		dispose();
 		}

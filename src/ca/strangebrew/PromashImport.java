@@ -1,5 +1,5 @@
 /*
- * $Id: PromashImport.java,v 1.5 2006/05/05 20:08:38 andrew_avis Exp $ Created on Jun 15, 2005
+ * $Id: PromashImport.java,v 1.6 2006/05/16 14:36:52 andrew_avis Exp $ Created on Jun 15, 2005
  * by aavis
  * A Promash .rec file importer, based on specs provided by Don Kelly
  */
@@ -206,8 +206,10 @@ public class PromashImport {
 			}
 
 			for (int i = 0; i < extraCount; i++) {
-				s = readString(in, 155);
+				Misc m = new Misc();
+				s = readString(in, 55);
 				Debug.print("Extra: " + s);
+				m.setName(s);
 
 				String type = "";
 				x = readInt(in);
@@ -232,8 +234,68 @@ public class PromashImport {
 						break;
 				}
 				Debug.print("Type: " + type);
+				m.setType(type);
+				l = readLong(in);
+				Debug.print("Time: " + l);
+				String use = "";
+				x = readInt(in);
+				switch (x) {
+					case 0 :
+						use = "Boil";
+						break;
+					case 1 :
+						use = "Primary";
+						break;
+					case 2 :
+						use = "Mash";
+						break;
+				}
+				Debug.print("Use: " + use);
+				m.setStage(use);
+				in.skip(1);
+				String units = "";
+				x = readInt(in);
+				switch (x) {
+					case 0 :
+						units = "oz";
+						break;
+					case 1 :
+						units = "g";
+						break;
+					case 2 :
+						units = "lb";
+						break;
+					case 3 :
+						units = "tsp";
+						break;
+					case 4 :
+						units = "Tbs";
+						break;
+					case 5 :
+						units = "cups";
+						break;
+					case 6 :
+						units = "Single";
+						break;
+				}
+				Debug.print("Units: " + units);
+				m.setUnits(units);
+				
+				fl = readFloat(in);
+				Debug.print("Amount: " + fl);
+				m.setAmount(fl);
+				
+				s = readString(in, 222);
+				Debug.print("Usage: " + s);
+				m.setDescription(s);
+			
+				s = readString(in, 155);
+				Debug.print("Comments: " + s);
+				m.setComments(s);
 
-				in.skip(433);
+				myRecipe.addMisc(m);
+				
+				in.skip(145);
 			}
 
 			// yeast: 473

@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.5 2006/05/03 17:39:35 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.6 2006/05/16 14:36:52 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -472,7 +472,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			tempLostULabel.setText(myRecipe.mash.getMashTempUnits());
 
 			// set totals:
-			String mashWeightTotal = SBStringUtils.df1.format(myRecipe.getTotalMash()) + " "
+			String mashWeightTotal = SBStringUtils.format(myRecipe.getTotalMash(), 1) + " "
 					+ myRecipe.getMaltUnits();
 			totalMashLabel.setText(mashWeightTotal);
 			totalTimeLabel.setText(new Integer(myRecipe.mash.getMashTotalTime()).toString());

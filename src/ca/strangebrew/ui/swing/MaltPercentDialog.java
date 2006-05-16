@@ -261,7 +261,7 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 					case 2 :
 						return new Double(data.getMaltLov(row));
 					case 3 :
-						return SBStringUtils.df1.format(new Double(data.getMaltPercent(row)));
+						return SBStringUtils.format(data.getMaltPercent(row),1);
 
 				}
 			} catch (Exception e) {
