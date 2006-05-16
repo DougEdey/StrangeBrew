@@ -1,0 +1,812 @@
+<?xml version="1.0" encoding="ISO8859-1" ?>
+<?xml-stylesheet type="text/xsl" href="strangebrew18.xsl" ?>
+ <STRANGEBREWRECIPE version = "1.8">
+<DETAILS>
+   <NAME type="1">
+     Elixir Magique De Malt
+   </NAME>
+   <NOTES type="16">
+     
+   </NOTES>
+   <EFFICIENCY type="6">
+     85.3
+   </EFFICIENCY>
+   <OG type="6">
+     1.100
+   </OG>
+   <FG type="6">
+     1.022
+   </FG>
+   <STYLE type="1">
+     Belgian Strong Dark Ale
+   </STYLE>
+   <MASH type="5">
+     True
+   </MASH>
+   <LOV type="6">
+     34.3
+   </LOV>
+   <IBU type="6">
+     30.1
+   </IBU>
+   <ALC type="6">
+     10.38
+   </ALC>
+   <BOIL_TIME type="6">
+     120
+   </BOIL_TIME>
+   <PRESIZE type="6">
+     8.5
+   </PRESIZE>
+   <SIZE type="6">
+     5.8
+   </SIZE>
+   <SIZE_UNITS type="1">
+     gallons US
+   </SIZE_UNITS>
+   <MALT_UNITS type="1">
+     lb
+   </MALT_UNITS>
+   <HOPS_UNITS type="1">
+     oz
+   </HOPS_UNITS>
+   <HOPS_OZS type="6">
+     2.80
+   </HOPS_OZS>
+   <YEAST type="1">
+     Wyeast 1762 Abbey Ale II
+   </YEAST>
+   <MALT_LBS type="6">
+     18.00
+   </MALT_LBS>
+   <INDEX type="14">
+     189
+   </INDEX>
+   <RECIPE_DATE type="11">
+     11/8/05
+   </RECIPE_DATE>
+   <ATTENUATION type="6">
+     78.0
+   </ATTENUATION>
+   <MISC_COST type="6">
+     $5.00
+   </MISC_COST>
+   <GRAIN_TMP type="6">
+     70
+   </GRAIN_TMP>
+   <BOTTLE_SIZE type="6">
+     12
+   </BOTTLE_SIZE>
+   <SUGAR_TYPE type="1">
+     dextrose
+   </SUGAR_TYPE>
+   <KEGGED type="5">
+     False
+   </KEGGED>
+   <SERV_TEMP type="6">
+     45
+   </SERV_TEMP>
+   <BOTTLE_TEMP type="6">
+     65
+   </BOTTLE_TEMP>
+   <VOLS_CO type="6">
+     3
+   </VOLS_CO>
+   <MISC_INGR_COST type="6">
+     $0.37
+   </MISC_INGR_COST>
+   <YEAST_COST type="6">
+     $6.00
+   </YEAST_COST>
+   <MASH_LBS type="6">
+     15.75
+   </MASH_LBS>
+   <MASH_RATIO type="6">
+     0.58
+   </MASH_RATIO>
+   <MASH_RATIO_U type="1">
+     qt/lb
+   </MASH_RATIO_U>
+   <MASH_TMP_U type="1">
+     F
+   </MASH_TMP_U>
+   <MASH_VOL_U type="1">
+     quart US
+   </MASH_VOL_U>
+   <CARB_TEMP_U type="1">
+     F
+   </CARB_TEMP_U>
+   <BOTTLE_U type="1">
+     fl. ounces
+   </BOTTLE_U>
+   <SUGAR_U type="1">
+     grams
+   </SUGAR_U>
+   <BREWED type="5">
+     False
+   </BREWED>
+   <DATEBREWED type="9">
+     
+   </DATEBREWED>
+   <WL_TRUB type="6">
+     0
+   </WL_TRUB>
+   <WL_KETTLE type="6">
+     2
+   </WL_KETTLE>
+   <BREWER type="1">
+     Dan Morey
+   </BREWER>
+   <DescrLookup type="1">
+     High gravity yeast w
+   </DescrLookup>
+   <LOCKED type="5">
+     False
+   </LOCKED>
+   <MASH_TIME type="6">
+     125
+   </MASH_TIME>
+   <FINAL_BEER_VOL type="6">
+     
+   </FINAL_BEER_VOL>
+   <FOLDER type="1">
+     
+   </FOLDER>
+   <STARTTIME type="10">
+     8:00:00 AM
+   </STARTTIME>
+   <TIMETOSPARGE type="3">
+     20
+   </TIMETOSPARGE>
+   <TIMETOBOIL type="3">
+     20
+   </TIMETOBOIL>
+   <TIMETOCHILL type="3">
+     15
+   </TIMETOCHILL>
+   <TIMETOCLEAN type="3">
+     30
+   </TIMETOCLEAN>
+   <TIMETOPREP type="3">
+     30
+   </TIMETOPREP>
+   <DILUTED type="5">
+     False
+   </DILUTED>
+   <DILUTE_VOL type="6">
+     0.00
+   </DILUTE_VOL>
+   <DILUTE_TOTAL type="6">
+     5.00
+   </DILUTE_TOTAL>
+   <MASH_TUNLOSS_TEMP type="6">
+     0
+   </MASH_TUNLOSS_TEMP>
+   <WL_MISC type="6">
+     .4
+   </WL_MISC>
+   <EVAP type="6">
+     1.35000002384186
+   </EVAP>
+   <BATCHES type="3">
+     2
+   </BATCHES>
+</DETAILS>
+ <FERMENTABLES>
+<ITEM>
+   <MALT type="1">
+     American Special Roast
+   </MALT>
+   <AMOUNT type="6">
+     0.75
+   </AMOUNT>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <POINTS type="6">
+     1.033
+   </POINTS>
+   <COSTLB type="6">
+     $0.90
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     40
+   </LOV>
+   <DescrLookup type="1">
+     American Special Roast: Pale roasted to lend an unmistakable, toasted malt flavor and aroma and amber, red-orange color to beer. At the rate of 3 to 10% Special Roast is an excellent addition to your Vienna, Marzen and Alt beers or in recipes calling for Amber malt
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Belgian Aromatic
+   </MALT>
+   <AMOUNT type="6">
+     2
+   </AMOUNT>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <POINTS type="6">
+     1.030
+   </POINTS>
+   <COSTLB type="6">
+     $0.90
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     25
+   </LOV>
+   <DescrLookup type="1">
+     Belgian Aromatic: Used at rates of up to 10%, Aromatic malt will lend a distinct, almost exaggerated malt aroma and flavor to your finished Ales and Lagers.  Aromatic malt also has a rich color and is high in diastatic power for aid in starch conversion. 
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Belgian Biscuit
+   </MALT>
+   <AMOUNT type="6">
+     0.75
+   </AMOUNT>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <POINTS type="6">
+     1.030
+   </POINTS>
+   <COSTLB type="6">
+     $0.90
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     22.5
+   </LOV>
+   <DescrLookup type="1">
+     Belgian Biscuit: Biscuit is a unique malt in that it  lightly roasted, lending the subtle properties of black and chocolate malts.  Used at the rate of 3 to 15%, it is designed to improve the "bread  &amp; biscuits", or toasted flavor and aroma characteristics to Lagers and Ales
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Belgian Candi Sugar Dark
+   </MALT>
+   <AMOUNT type="6">
+     1
+   </AMOUNT>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <POINTS type="6">
+     1.045
+   </POINTS>
+   <COSTLB type="6">
+     $0.00
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     275
+   </LOV>
+   <DescrLookup type="1">
+     Used to increase alcohol and lighten body. Commonly used in Abbey Ales and other Belgian ales.
+
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Belgian CaraMunich
+   </MALT>
+   <AMOUNT type="6">
+     0.5
+   </AMOUNT>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <POINTS type="6">
+     1.033
+   </POINTS>
+   <COSTLB type="6">
+     $0.90
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     75
+   </LOV>
+   <DescrLookup type="1">
+     Belgian CaraMunich: Use CaraMunich for a deeper color in Ales and Lagers, and in small amounts in Lagers.  5 to 15% will also lend a fuller flavor, contribute to foam stability, add unfermentable, caramelized sugars and contribute a rich malt aroma.
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Belgian Caravienne
+   </MALT>
+   <AMOUNT type="6">
+     0.5
+   </AMOUNT>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <POINTS type="6">
+     1.030
+   </POINTS>
+   <COSTLB type="6">
+     $1.59
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     21.6
+   </LOV>
+   <DescrLookup type="1">
+     Belgian Caravienne: As with normal Crystal malts, CaraVienne is non-enzymatic.  It does, however, impart a rich, caramel-sweet aroma to the wort and promotes a fuller flavored beer at rates of 5 to 20% of grist total.  Excellent in most Belgian styles.
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Belgian Special B
+   </MALT>
+   <AMOUNT type="6">
+     0.38
+   </AMOUNT>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <POINTS type="6">
+     1.029
+   </POINTS>
+   <COSTLB type="6">
+     $0.90
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     221
+   </LOV>
+   <DescrLookup type="1">
+     Belgian Special B: Special-B is a unique malt in that it provides an intense roasted caramel character to beers. Use small amounts to add depth and complexity to dark ales and lagers or more for an intense malt flavor and aroma.
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     German Carafa
+   </MALT>
+   <AMOUNT type="6">
+     0.13
+   </AMOUNT>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <POINTS type="6">
+     1.030
+   </POINTS>
+   <COSTLB type="6">
+     $1.75
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     300
+   </LOV>
+   <DescrLookup type="1">
+     German Carafa light - a very nice version of chocolate malt.
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Moravian Pilsner
+   </MALT>
+   <AMOUNT type="6">
+     10.75
+   </AMOUNT>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <POINTS type="6">
+     1.038
+   </POINTS>
+   <COSTLB type="6">
+     $0.75
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     1.6
+   </LOV>
+   <DescrLookup type="1">
+     
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     White Cane Sugar (Gran)
+   </MALT>
+   <AMOUNT type="6">
+     1.25
+   </AMOUNT>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <POINTS type="6">
+     1.042
+   </POINTS>
+   <COSTLB type="6">
+     $0.00
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     0
+   </LOV>
+   <DescrLookup type="1">
+     
+   </DescrLookup>
+</ITEM>
+ </FERMENTABLES>
+ <HOPS>
+<ITEM>
+   <HOP type="1">
+     Northern Brewer
+   </HOP>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <AMOUNT type="6">
+     1.6
+   </AMOUNT>
+   <ADDORDER type="3">
+     2
+   </ADDORDER>
+   <TIME type="6">
+     70
+   </TIME>
+   <UNITS type="1">
+     oz
+   </UNITS>
+   <FORM type="1">
+     Leaf
+   </FORM>
+   <ALPHA type="6">
+     6.6
+   </ALPHA>
+   <COSTOZ type="6">
+     $0.75
+   </COSTOZ>
+   <ADD type="1">
+     Boil
+   </ADD>
+   <DescrLookup type="1">
+     Northern Brewer: Northern Brewer is a versatile bittering hop for Ales, Porters and Stouts. While not considered an aroma hop it can be used to flavor Steam Beer recipes. German grown Northern Brewer will contribute a solid bittering and rich flavor to Ales and Lagers.
+   </DescrLookup>
+   <GUID type="14">
+     502
+   </GUID>
+</ITEM>
+<ITEM>
+   <HOP type="1">
+     Styrian Golding
+   </HOP>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <AMOUNT type="6">
+     .7
+   </AMOUNT>
+   <ADDORDER type="3">
+     2
+   </ADDORDER>
+   <TIME type="6">
+     11
+   </TIME>
+   <UNITS type="1">
+     oz
+   </UNITS>
+   <FORM type="1">
+     Leaf
+   </FORM>
+   <ALPHA type="6">
+     3.9
+   </ALPHA>
+   <COSTOZ type="6">
+     $1.00
+   </COSTOZ>
+   <ADD type="1">
+     Boil
+   </ADD>
+   <DescrLookup type="1">
+     Styrian Golding: A nice bittering hop with slightly spicy flavor and aroma characteristics.  Well suited to continental style Lagers and some Ales. Slovinian grown.
+   </DescrLookup>
+   <GUID type="14">
+     503
+   </GUID>
+</ITEM>
+<ITEM>
+   <HOP type="1">
+     Styrian Golding
+   </HOP>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <AMOUNT type="6">
+     .5
+   </AMOUNT>
+   <ADDORDER type="3">
+     2
+   </ADDORDER>
+   <TIME type="6">
+     2
+   </TIME>
+   <UNITS type="1">
+     oz
+   </UNITS>
+   <FORM type="1">
+     Leaf
+   </FORM>
+   <ALPHA type="6">
+     3.9
+   </ALPHA>
+   <COSTOZ type="6">
+     $1.00
+   </COSTOZ>
+   <ADD type="1">
+     Boil
+   </ADD>
+   <DescrLookup type="1">
+     Styrian Golding: A nice bittering hop with slightly spicy flavor and aroma characteristics.  Well suited to continental style Lagers and some Ales. Slovinian grown.
+   </DescrLookup>
+   <GUID type="14">
+     504
+   </GUID>
+</ITEM>
+ </HOPS>
+ <MASH>
+<ITEM>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <TYPE type="1">
+     none
+   </TYPE>
+   <DISPL_TEMP type="6">
+     60.0
+   </DISPL_TEMP>
+   <TEMP type="6">
+     60.0
+   </TEMP>
+   <METHOD type="1">
+     infusion
+   </METHOD>
+   <MIN type="3">
+     50
+   </MIN>
+   <DIRECTIONS type="16">
+     Mash in with 9.1 quart US of water at 56.7 F
+   </DIRECTIONS>
+   <WATER_EQV type="6">
+     15.8
+   </WATER_EQV>
+   <WATER_QTS type="6">
+     9.1
+   </WATER_QTS>
+   <DECOCT_QTS type="6">
+     0.0
+   </DECOCT_QTS>
+   <END_TEMP type="6">
+     60.0
+   </END_TEMP>
+   <RAMP_MIN type="3">
+     0
+   </RAMP_MIN>
+   <DISPL_END_TEMP type="6">
+     60.0
+   </DISPL_END_TEMP>
+</ITEM>
+<ITEM>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <TYPE type="1">
+     beta
+   </TYPE>
+   <DISPL_TEMP type="6">
+     149.0
+   </DISPL_TEMP>
+   <TEMP type="6">
+     149.0
+   </TEMP>
+   <METHOD type="1">
+     infusion
+   </METHOD>
+   <MIN type="3">
+     45
+   </MIN>
+   <DIRECTIONS type="16">
+     Add 17.5 quart US of water at 211.0 F
+   </DIRECTIONS>
+   <WATER_EQV type="6">
+     12.2
+   </WATER_EQV>
+   <WATER_QTS type="6">
+     17.5
+   </WATER_QTS>
+   <DECOCT_QTS type="6">
+     0.0
+   </DECOCT_QTS>
+   <END_TEMP type="6">
+     149.0
+   </END_TEMP>
+   <RAMP_MIN type="3">
+     0
+   </RAMP_MIN>
+   <DISPL_END_TEMP type="6">
+     149.0
+   </DISPL_END_TEMP>
+</ITEM>
+<ITEM>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <TYPE type="1">
+     mashout
+   </TYPE>
+   <DISPL_TEMP type="6">
+     168.0
+   </DISPL_TEMP>
+   <TEMP type="6">
+     168.0
+   </TEMP>
+   <METHOD type="1">
+     direct
+   </METHOD>
+   <MIN type="3">
+     30
+   </MIN>
+   <DIRECTIONS type="16">
+     Add direct heat until mash reaches 168.0 F.
+   </DIRECTIONS>
+   <WATER_EQV type="6">
+     29.6
+   </WATER_EQV>
+   <WATER_QTS type="6">
+     0.0
+   </WATER_QTS>
+   <DECOCT_QTS type="6">
+     0.0
+   </DECOCT_QTS>
+   <END_TEMP type="6">
+     168.0
+   </END_TEMP>
+   <RAMP_MIN type="3">
+     0
+   </RAMP_MIN>
+   <DISPL_END_TEMP type="6">
+     168.0
+   </DISPL_END_TEMP>
+</ITEM>
+ </MASH>
+ <MISC>
+<ITEM>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <NAME type="1">
+     Yeast nutrient
+   </NAME>
+   <AMOUNT type="6">
+     1
+   </AMOUNT>
+   <UNITS type="1">
+     tsp
+   </UNITS>
+   <COMMENTS type="16">
+     
+   </COMMENTS>
+   <DescrLookup type="1">
+     Often dead brewers yeast, although may contain other amonia-based nutrients.  Do not use in excess!  Most all-malt beers do not require yeast nutrients.  Follow manufacturer's suggestions for use.
+   </DescrLookup>
+   <COST_PER_U type="6">
+     $0.22
+   </COST_PER_U>
+   <STAGE type="1">
+     Boil
+   </STAGE>
+   <TIME type="3">
+     10
+   </TIME>
+</ITEM>
+<ITEM>
+   <RECIPE type="2">
+     189
+   </RECIPE>
+   <NAME type="1">
+     Irish Moss
+   </NAME>
+   <AMOUNT type="6">
+     1
+   </AMOUNT>
+   <UNITS type="1">
+     tsp
+   </UNITS>
+   <COMMENTS type="16">
+     
+   </COMMENTS>
+   <DescrLookup type="1">
+     A form of seaweed added to the boil (10-20 minutes) to aid in clarification.  Helps to coagulate haze-causing  proteins as hot break.  Use at a rate of 1 tsp per 5 gallons.
+   </DescrLookup>
+   <COST_PER_U type="6">
+     $0.15
+   </COST_PER_U>
+   <STAGE type="1">
+     Boil
+   </STAGE>
+   <TIME type="3">
+     10
+   </TIME>
+</ITEM>
+ </MISC>
+ <NOTES>
+<ITEM>
+   <RECIPE type="6">
+     189
+   </RECIPE>
+   <DATE type="9">
+     4/5/05
+   </DATE>
+   <GUID type="14">
+     104
+   </GUID>
+   <TYPE type="1">
+     Planning
+   </TYPE>
+   <NOTE type="16">
+     Recipe formulated by analyzing Gordon Strong and Chris Frey's dark strong recipes presented at NHC 2003.
+   </NOTE>
+</ITEM>
+<ITEM>
+   <RECIPE type="6">
+     189
+   </RECIPE>
+   <DATE type="9">
+     4/17/05
+   </DATE>
+   <GUID type="14">
+     105
+   </GUID>
+   <TYPE type="1">
+     Brewed
+   </TYPE>
+   <NOTE type="16">
+     John Straka came over to help brew.
+   </NOTE>
+</ITEM>
+<ITEM>
+   <RECIPE type="6">
+     189
+   </RECIPE>
+   <DATE type="9">
+     10/23/05
+   </DATE>
+   <GUID type="14">
+     106
+   </GUID>
+   <TYPE type="1">
+     Contest
+   </TYPE>
+   <NOTE type="16">
+     Won 3rd place in flight at the Chicago Beer Societies Spooky Brew Review for Begian Strong Catagory.
+   </NOTE>
+</ITEM>
+ </NOTES>
+ </STRANGEBREWRECIPE>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "0.5.1 (Beta)">
+<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
+  <DETAILS>
+  <NAME>Smithwicks Clone</NAME>
+  <BREWER>Drew Avis</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>75.0</EFFICIENCY>
+  <OG>1.054</OG>
+  <FG>1.013</FG>
+  <STYLE>Strong Bitter / English Pale Ale</STYLE>
+  <MASH>true</MASH>
+  <LOV>11.4</LOV>
+  <IBU>28.5</IBU>
+  <ALC>5.3</ALC>
+  <BOIL_TIME>75</BOIL_TIME>
+  <PRESIZE>60.0</PRESIZE>
+  <SIZE>56.25</SIZE>
+  <SIZE_UNITS>litres</SIZE_UNITS>
+  <MALT_UNITS>lb</MALT_UNITS>
+  <HOPS_UNITS>oz</HOPS_UNITS>
+  <YEAST>Safale K-97</YEAST>
+  <RECIPE_DATE>03/27/2006</RECIPE_DATE>
+  <ATTENUATION>75.0</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Volume</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>SRM</COLOUR_METHOD>
+  <EVAP>3.0</EVAP>
+  <EVAP_METHOD>Constant</EVAP_METHOD>
+  <KETTLE_LOSS>1.0</KETTLE_LOSS>
+  <TRUB_LOSS>1.0</TRUB_LOSS>
+  <MISC_LOSS>1.0</MISC_LOSS>
+  <PELLET_HOP_PCT>6.0</PELLET_HOP_PCT>
+  <YEAST_COST>0.75</YEAST_COST>
+  <OTHER_COST>5.0</OTHER_COST>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <ITEM>
+      <MALT>British Carastan</MALT>
+      <AMOUNT>3.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.035</POINTS>
+      <LOV>34.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>British Carastan: Also known as CaraStan, use 5 to 20% of English Crystal to add color and a full, toffee/sweet flavor to Bitters, Pale Ales and Porters.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Brown Sugar</MALT>
+      <AMOUNT>2.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.045</POINTS>
+      <LOV>2.0</LOV>
+      <MASHED>false</MASHED>
+      <STEEPED>true</STEEPED>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>Brown Sugar: used in authentic British bitters.  Can lend a buttery, molases flavour when used in small amounts.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Marris Otter</MALT>
+      <AMOUNT>23.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.036</POINTS>
+      <LOV>3.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>The classic British ale malt, prized by the finest brewers in Britain. Made from fully modified two-row winter Maris Otter. This malt has a wide optimum temperature and pH range, making it very forgiving in the brewery and popular with small-scale brewers. Very low protein (9.5%), high flavour malt, perfect for lower gravity Bitters</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Roast Barley</MALT>
+      <AMOUNT>4.0</AMOUNT>
+      <UNITS>oz</UNITS>
+      <POINTS>1.029</POINTS>
+      <LOV>450.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.06</COSTLB>
+      <DESCRIPTION>Roast Barley: Use 10 to 12% to impart a distinct, roasted flavor to Stouts.  Other dark beers also benefit from smaller quantities (2 - 6%).</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <ITEM>
+      <HOP>E. Kent Goldngs</HOP>
+      <AMOUNT>4.0</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>5.0</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>E. Kent Goldngs: A British grown version of the classic ale finishing hop.  Slightly smoother and more refined than the herbal, Canadian grown version.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>E. Kent Goldngs</HOP>
+      <AMOUNT>2.0</AMOUNT>
+      <TIME>15</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>5.0</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>E. Kent Goldngs: A British grown version of the classic ale finishing hop.  Slightly smoother and more refined than the herbal, Canadian grown version.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+  </MISC>
+  <MASH>
+    <ITEM>
+      <TYPE>alpha</TYPE>
+      <TEMP>152.0</TEMP>
+      <DISPL_TEMP>152.0</DISPL_TEMP>
+      <END_TEMP>152.0</END_TEMP>
+      <DISPL_END_TEMP>152.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Mash in with 8.2 gallons US of water at 168.9 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>mashout</TYPE>
+      <TEMP>168.0</TEMP>
+      <DISPL_TEMP>168.0</DISPL_TEMP>
+      <END_TEMP>168.0</END_TEMP>
+      <DISPL_END_TEMP>168.0</DISPL_END_TEMP>
+      <MIN>10</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Add 3.4 gallons US of water at 212.0 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>sparge</TYPE>
+      <TEMP>170.0</TEMP>
+      <DISPL_TEMP>170.0</DISPL_TEMP>
+      <END_TEMP>170.0</END_TEMP>
+      <DISPL_END_TEMP>170.0</DISPL_END_TEMP>
+      <MIN>10</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Add 0.6 gallons US of water at 212.0 F</DIRECTIONS>
+    </ITEM>
+  </MASH>
+  <NOTES>
+  </NOTES>
+</STRANGEBREWRECIPE>

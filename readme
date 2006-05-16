@@ -2,18 +2,20 @@
 +                   README                     +
 ================================================
 
-StrangeBrew Java - Beta 0.5
+StrangeBrew Java - Beta 0.6
 (c)2000-2006 Drew Avis - drew.avis@gmail.com
 
 Thank you for downloading and trying StrangeBrew Java.
 
 This file contains:
 * What is this?
+* Recipes at bodensatz.com
 * Running StrangeBrew Java
 * Extra help for running on Linux
 * Files in this release
 * Required JRE
-* Bugs
+* Known Issues (bugs)
+* Reporting Bugs
 * What's New in this release?
 * Roadmap
 * Contributors
@@ -30,6 +32,16 @@ how you like it!
 
 StrangeBrew Java is a Java port of the popular Windows homebrewing
 software, StrangeBrew (www.strangebrew.ca).
+
+========================
+Recipes at bodensatz.com
+========================
+
+There is a repository of StrangeBrew recipes available for viewing and
+download at www.bodensatz.com/sb, hosted by Alan McKay.  Please feel free
+to download recipes to open with StrangeBrew Java.  However, please do not
+upload StrangeBrew Java files to bodensatz.  This is "Beta" software, and
+contains bugs, and the saved recipe file may cause problems for other users.
 
 ==========================
  Running StrangeBrew Java
@@ -88,7 +100,7 @@ The file you downloaded should contain these files (at least):
     customize the look of the HTML.
   * help/: help files.  These are the SB Windows help files, and will
     eventually be updated to SB Java.  Some of the information pertains to
-    the Java version, though, as the two versions share a similiar interface.
+    the Java version, though, as the two versions share a similar interface.
   * recipes/: example recipe files in various formats.    
 
 
@@ -101,9 +113,20 @@ StrangeBrew.  It should run with versions 1.4 and up; I'm using
 1.5.06. (See http://java.sun.com/j2se/1.5.0/index.jsp).  StrangeBrew has
 been tested and runs on Linux, MacOS-X, and Windows.
 
-=======
-Bugs
-=======
+============
+Known Issues
+============
+
+* When importing recipes from StrangeBrew for Windows (1.8 or earlier),
+fermentables that are sugars are incorrectly considered "grains".  Their
+gravity contribution is calculated using the recipe efficiency, rather than
+100%.  You should re-select the ingredient from the drop-down list to
+re-set it to get the correct calculation.  Sugars are indicated by an *.
+If the * doesn't appear before it's name, you should re-select it. 
+
+==============
+Reporting Bugs
+==============
 
 We're using the Sourceforge tracking feature to track bugs.  Please go to 
 www.sourceforge.net/projects/strangebrew and click on "bugs" to view a list
@@ -113,23 +136,51 @@ of reported bugs.  If you've found one that's not there, please report it!
 What's New
 ==========
 
+Beta 0.6
+--------
+- New File > Copy to Clipboard sends the recipe to the system clipboard, so you can
+  easily paste it into another application (such as an email message).
+- Numbers are now formatted according to local settings, which fixes a NumberFormatException
+  on startup for some regional settings.  
+TODO:
+- convert cost when changing units
+- fix steep indicator
+
+
+Beta 0.5.1
+----------
+- Made compatible with 1.4 JREs.
+- Water and mash tabs are now updated appropriately when data changes.
+
 Beta 0.5
 --------
-
+- Some menu items now have keyboard shortcuts and pretty icons.
+- You can now set default units for hops, malts, and volume, as well as default
+  batch size.
+- StrangeBrew now remembers its window size and location when you re-start.  
+- You can now set the malt and hops units with a drop-down in the totals area.
+- "New" ingredients are now detected when you open a recipe.  You can choose to
+  add them permanently to your existing ingredient databases.  NOTE: this is currently
+  just a comparison between the ingredient name and the list in the database, so 
+  you could end up with two nearly identical ingredients (eg "pils malt" and 
+  "pilsner malt").
+  
 Fixed in Beta 0.5:
 - Hop and fermentable costs are calculated by using the units for the ingredient,
   not oz and lbs.
 - Mash table now displays temps to only 1 decimal when you convert between F and C.
 - The colour patch now displays correctly when the colour method is set to EBC.
+- The colour patch now uses new RBG settings when you close the Preferences dialog.
 - When you select "Save" or "Save As...", StrangeBrew now suggests a file name, and
   adds ".xml" to the file name for you.
-
----- TOFIX: ----
-- recalcs on water tab (decimal formatting?)
-- apply colour method when closing prefs
-- hop & malt units dropdowns
-- PM misc import
-- qbrew misc import
+- Fermentables that are not mashed or steeped are now read correctly from a saved
+  file (bug 1483173).
+- SB 1.8 and earlier recipes now import correctly (bug 1483523).
+- XML entities are now saved correctly in descriptions (bug 1483143).    
+- The misc. ingredients in Promash recipes are now read.
+- Values no longer are "jumping" around when you click in different fields on the 
+  water tab.
+- XML import is improved so that malt and hop names aren't occasionally truncated.  
 
 
 Beta 0.4
@@ -151,47 +202,6 @@ Beta 0.4
 - Example recipes and data files are now located two different locations.  
 - The UI now uses the JGoodies Plastic3D Look and Feel.
 
-Beta 0.3
---------
-- New colour swatch to estimate the beer colour (this is a
-  rough guide only!)
-- Pellet hops IBUs are now calculated using the "additional IBUs %"
-  setting, to account for higher utilization
-- Settable look and feel (on the Appearance panel of the Preferences
-  dialog).
-- "Jumpy" UI behaviour is fixed (I think).
-- Window sizes for Mash Manager and Preferences are a bit larger, so
-  text isn't cut off.
-- You are now propted to save a recipe on close.  
-- New mash and water use panels replace the Mash Manager.
-- *New Cost panel for tracking recipe cost.  
-- *Improved RGB colour estimation - you can choose which method to use.
-- Improved hops list (complete descriptions).
-- Improved styles list - now read from the official BJCP 2004 styleguide
-  (in xml)
-  
-*Not yet fully implemented!  
-
-Beta 0.2
---------
-- New water usage stats on the Mash Manager dialog
-- New Malt Percent dialog lets you specify the % of each malt 
-  to hit a target OG or total grain bill
-- You can now specify the boil temp (in F) both on the Preferences
-  dialog, and on the Mash Manager  
-- Improved error handling  
-- Evaporation can now be calculated as a % rather than
-  a constant.
-- You can set hop and malt total units  
-- Improved decoction calculations - you can now specify thick and thin
-  decoctions
-
-
-Beta 0.1
---------
-- New dilution panel to manage wort dilution
-- New style panel to check style conformance
-- New Preferences dialog to set defaults and preferences
 
   
 =========
@@ -199,14 +209,14 @@ Beta 0.1
 =========
 
 Soon-to-be Implemented Features:
-x- edit ingredient databases (just edit w/ text editor)
+- edit ingredient databases 
 - mash tun thermal mass
 - hop scaling
 - specify decoction thickness value
 - real application help (not the SB Win version)
 - sparge calculations (fly and batch)
 - mash/steep indicators on malt list
-- add new ingredients on open/import
+- printing support
 
 Planned StrangeBrew Java Pro Features:
 - water profiling

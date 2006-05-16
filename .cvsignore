@@ -8,3 +8,4 @@ settings.fatjar
 *.zip
 strangebrew.ini
 help
+data.backup

@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="ISO8859-1" ?>
+<?xml:stylesheet type="text/xsl" href="strangebrew17.xsl" ?>
+ <STRANGEBREWRECIPE version = "1.7">
+<DETAILS>
+   <NAME type="1">
+     Second Honey Brown
+   </NAME>
+   <NOTES type="16">
+     I do not think this will be enough honey malt - probably needs at least twice this amount.
+   </NOTES>
+   <EFFICIENCY type="6">
+     82.0
+   </EFFICIENCY>
+   <OG type="6">
+     1.057
+   </OG>
+   <FG type="6">
+     1.014
+   </FG>
+   <STYLE type="1">
+     American Brown Ale
+   </STYLE>
+   <MASH type="5">
+     True
+   </MASH>
+   <LOV type="6">
+     19
+   </LOV>
+   <IBU type="6">
+     30
+   </IBU>
+   <ALC type="6">
+     5.64
+   </ALC>
+   <BOIL_TIME type="6">
+     60
+   </BOIL_TIME>
+   <PRESIZE type="6">
+     55
+   </PRESIZE>
+   <SIZE type="6">
+     44
+   </SIZE>
+   <SIZE_UNITS type="1">
+     litres
+   </SIZE_UNITS>
+   <MALT_UNITS type="1">
+     lb
+   </MALT_UNITS>
+   <HOPS_UNITS type="1">
+     oz
+   </HOPS_UNITS>
+   <HOPS_OZS type="6">
+     8.00
+   </HOPS_OZS>
+   <YEAST type="1">
+     DCL K-97
+   </YEAST>
+   <MALT_LBS type="6">
+     24.22
+   </MALT_LBS>
+   <INDEX type="14">
+     135
+   </INDEX>
+   <RECIPE_DATE type="11">
+     2003.05.03
+   </RECIPE_DATE>
+   <ATTENUATION type="6">
+     75.0
+   </ATTENUATION>
+   <MISC_COST type="6">
+     $5.00
+   </MISC_COST>
+   <GRAIN_TMP type="6">
+     65
+   </GRAIN_TMP>
+   <BOTTLE_SIZE type="6">
+     .341
+   </BOTTLE_SIZE>
+   <SUGAR_TYPE type="1">
+     dextrose
+   </SUGAR_TYPE>
+   <KEGGED type="5">
+     False
+   </KEGGED>
+   <SERV_TEMP type="6">
+     38
+   </SERV_TEMP>
+   <BOTTLE_TEMP type="6">
+     68
+   </BOTTLE_TEMP>
+   <VOLS_CO type="6">
+     2.4
+   </VOLS_CO>
+   <MISC_INGR_COST type="6">
+     
+   </MISC_INGR_COST>
+   <YEAST_COST type="6">
+     $0.75
+   </YEAST_COST>
+   <MASH_LBS type="6">
+     24.22
+   </MASH_LBS>
+   <MASH_RATIO type="6">
+     1.25
+   </MASH_RATIO>
+   <MASH_RATIO_U type="1">
+     qt/lb
+   </MASH_RATIO_U>
+   <MASH_TMP_U type="1">
+     F
+   </MASH_TMP_U>
+   <MASH_VOL_U type="1">
+     quart US
+   </MASH_VOL_U>
+   <CARB_TEMP_U type="1">
+     F
+   </CARB_TEMP_U>
+   <BOTTLE_U type="1">
+     litres
+   </BOTTLE_U>
+   <SUGAR_U type="1">
+     gr
+   </SUGAR_U>
+   <BREWED type="5">
+     False
+   </BREWED>
+   <DATEBREWED type="9">
+     
+   </DATEBREWED>
+   <WL_TRUB type="6">
+     0
+   </WL_TRUB>
+   <WL_KETTLE type="6">
+     0
+   </WL_KETTLE>
+   <BREWER type="1">
+     Alan McKay
+   </BREWER>
+   <DescrLookup type="1">
+     A well-known, bottom
+   </DescrLookup>
+   <LOCKED type="5">
+     False
+   </LOCKED>
+   <MASH_TIME type="6">
+     90
+   </MASH_TIME>
+   <FINAL_BEER_VOL type="6">
+     
+   </FINAL_BEER_VOL>
+   <FOLDER type="1">
+     
+   </FOLDER>
+   <STARTTIME type="10">
+     08:00:00
+   </STARTTIME>
+   <TIMETOSPARGE type="3">
+     60
+   </TIMETOSPARGE>
+   <TIMETOBOIL type="3">
+     30
+   </TIMETOBOIL>
+   <TIMETOCHILL type="3">
+     30
+   </TIMETOCHILL>
+   <TIMETOCLEAN type="3">
+     15
+   </TIMETOCLEAN>
+   <TIMETOPREP type="3">
+     30
+   </TIMETOPREP>
+   <DILUTED type="5">
+     False
+   </DILUTED>
+   <DILUTE_VOL type="6">
+     
+   </DILUTE_VOL>
+   <DILUTE_TOTAL type="6">
+     5
+   </DILUTE_TOTAL>
+   <MASH_TUNLOSS_TEMP type="6">
+     0
+   </MASH_TUNLOSS_TEMP>
+   <WL_MISC type="6">
+     0
+   </WL_MISC>
+   <EVAP type="6">
+     20
+   </EVAP>
+</DETAILS>
+ <FERMENTABLES>
+<ITEM>
+   <MALT type="1">
+     Belgian Biscuit
+   </MALT>
+   <AMOUNT type="6">
+     200
+   </AMOUNT>
+   <RECIPE type="2">
+     135
+   </RECIPE>
+   <POINTS type="6">
+     1.030
+   </POINTS>
+   <COSTLB type="6">
+     $0.00
+   </COSTLB>
+   <UNITS type="1">
+     gr
+   </UNITS>
+   <LOV type="6">
+     22.5
+   </LOV>
+   <DescrLookup type="1">
+     Belgian Biscuit: Biscuit is a unique malt in that it  lightly roasted, lending the subtle properties of black and chocolate malts.  Used at the rate of 3 to 15%, it is designed to improve the "bread  &amp; biscuits", or toasted flavor and aroma characteristics to Lagers and Ales
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Canadian Honey Malt
+   </MALT>
+   <AMOUNT type="6">
+     1
+   </AMOUNT>
+   <RECIPE type="2">
+     135
+   </RECIPE>
+   <POINTS type="6">
+     1.030
+   </POINTS>
+   <COSTLB type="6">
+     $1.98
+   </COSTLB>
+   <UNITS type="1">
+     kg
+   </UNITS>
+   <LOV type="6">
+     25
+   </LOV>
+   <DescrLookup type="1">
+     Canadian Honey: made by Gambrinus.  Malt sweetness and honey like flavour and aroma make it perfect for any specialty beer. The closest comparison is a light caramel, but Honey Malt has a flavour of its own: sweet and a little bit nutty. Made by restricting the oxygen flow during the sprouting process, Honey Malt is essentially self-stewed. When the oxygen is cut off, the grain bed heats up, developing sugars and rich malt flavours. The malt is lightly kilned for a color color profile of 25 SRM and is devoid of astringent roast flavors. Honey malt has a diastatic power of 50, and needs to be mashed with a base malt. Use up to 15% in specialty beers for a unique flavour. 
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Canadian Munich (Light)
+   </MALT>
+   <AMOUNT type="6">
+     15.5
+   </AMOUNT>
+   <RECIPE type="2">
+     135
+   </RECIPE>
+   <POINTS type="6">
+     1.034
+   </POINTS>
+   <COSTLB type="6">
+     $1.80
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     15
+   </LOV>
+   <DescrLookup type="1">
+     Canadian Munich (Light)
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Canadian Vienna
+   </MALT>
+   <AMOUNT type="6">
+     5.25
+   </AMOUNT>
+   <RECIPE type="2">
+     135
+   </RECIPE>
+   <POINTS type="6">
+     1.034
+   </POINTS>
+   <COSTLB type="6">
+     $0.00
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     15
+   </LOV>
+   <DescrLookup type="1">
+     Canadian Munich (Light)
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     CaraFoam
+   </MALT>
+   <AMOUNT type="6">
+     200
+   </AMOUNT>
+   <RECIPE type="2">
+     135
+   </RECIPE>
+   <POINTS type="6">
+     1.033
+   </POINTS>
+   <COSTLB type="6">
+     $0.00
+   </COSTLB>
+   <UNITS type="1">
+     gr
+   </UNITS>
+   <LOV type="6">
+     3
+   </LOV>
+   <DescrLookup type="1">
+     Best used to create Pilseners, lagers, and low- or nonalcoholic beers. Increases smoothness and mouth fullness, without adding flavours. Try Carafoam instead of Carapils. 
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     German Carafa Chocolate
+   </MALT>
+   <AMOUNT type="6">
+     175
+   </AMOUNT>
+   <RECIPE type="2">
+     135
+   </RECIPE>
+   <POINTS type="6">
+     1.030
+   </POINTS>
+   <COSTLB type="6">
+     $0.00
+   </COSTLB>
+   <UNITS type="1">
+     gr
+   </UNITS>
+   <LOV type="6">
+     525
+   </LOV>
+   <DescrLookup type="1">
+     German Carafa Chocolate - very smooth version of chocolate malt.
+   </DescrLookup>
+</ITEM>
+ </FERMENTABLES>
+ <HOPS>
+<ITEM>
+   <HOP type="1">
+     Tettnanger
+   </HOP>
+   <RECIPE type="2">
+     135
+   </RECIPE>
+   <AMOUNT type="6">
+     5
+   </AMOUNT>
+   <ADDORDER type="3">
+     2
+   </ADDORDER>
+   <TIME type="6">
+     60
+   </TIME>
+   <UNITS type="1">
+     oz
+   </UNITS>
+   <FORM type="1">
+     Leaf
+   </FORM>
+   <ALPHA type="6">
+     4.3
+   </ALPHA>
+   <COSTOZ type="6">
+     $1.25
+   </COSTOZ>
+   <ADD type="1">
+     Boil
+   </ADD>
+   <DescrLookup type="1">
+     Tettnanger: While it can be used as a bittering hop, Tettnanger is an outstanding aroma hop, giving a rich and fragrant, almost sweet flavor and aroma to fine Lagers.
+   </DescrLookup>
+   <GUID type="14">
+     374
+   </GUID>
+</ITEM>
+<ITEM>
+   <HOP type="1">
+     Saaz
+   </HOP>
+   <RECIPE type="2">
+     135
+   </RECIPE>
+   <AMOUNT type="6">
+     3
+   </AMOUNT>
+   <ADDORDER type="3">
+     2
+   </ADDORDER>
+   <TIME type="6">
+     0
+   </TIME>
+   <UNITS type="1">
+     oz
+   </UNITS>
+   <FORM type="1">
+     Leaf
+   </FORM>
+   <ALPHA type="6">
+     2.8
+   </ALPHA>
+   <COSTOZ type="6">
+     $1.25
+   </COSTOZ>
+   <ADD type="1">
+     Boil
+   </ADD>
+   <DescrLookup type="1">
+     Saaz: Having mild bittering power, it's the spicy, earthy, flavor and aroma that makes Saaz one of the worlds most prized Pilsner and Lager hops.
+   </DescrLookup>
+   <GUID type="14">
+     375
+   </GUID>
+</ITEM>
+ </HOPS>
+ <MASH>
+<ITEM>
+   <RECIPE type="2">
+     135
+   </RECIPE>
+   <TYPE type="1">
+     alpha
+   </TYPE>
+   <DISPL_TEMP type="6">
+     151.0
+   </DISPL_TEMP>
+   <TEMP type="6">
+     151.0
+   </TEMP>
+   <METHOD type="1">
+     infusion
+   </METHOD>
+   <MIN type="3">
+     75
+   </MIN>
+   <DIRECTIONS type="16">
+     Mash in with 30.3 quart US of water at 164.0 F
+   </DIRECTIONS>
+   <WATER_EQV type="6">
+     40.5
+   </WATER_EQV>
+   <WATER_QTS type="6">
+     30.3
+   </WATER_QTS>
+   <DECOCT_QTS type="6">
+     0.0
+   </DECOCT_QTS>
+   <END_TEMP type="6">
+     155.0
+   </END_TEMP>
+   <RAMP_MIN type="3">
+     0
+   </RAMP_MIN>
+   <DISPL_END_TEMP type="6">
+     151.0
+   </DISPL_END_TEMP>
+</ITEM>
+<ITEM>
+   <RECIPE type="2">
+     135
+   </RECIPE>
+   <TYPE type="1">
+     mashout
+   </TYPE>
+   <DISPL_TEMP type="6">
+     168.0
+   </DISPL_TEMP>
+   <TEMP type="6">
+     168.0
+   </TEMP>
+   <METHOD type="1">
+     direct
+   </METHOD>
+   <MIN type="3">
+     15
+   </MIN>
+   <DIRECTIONS type="16">
+     Add direct heat until mash reaches 168.0 F.
+   </DIRECTIONS>
+   <WATER_EQV type="6">
+     34.9
+   </WATER_EQV>
+   <WATER_QTS type="6">
+     0.0
+   </WATER_QTS>
+   <DECOCT_QTS type="6">
+     0.0
+   </DECOCT_QTS>
+   <END_TEMP type="6">
+     155.0
+   </END_TEMP>
+   <RAMP_MIN type="3">
+     0
+   </RAMP_MIN>
+   <DISPL_END_TEMP type="6">
+     168.0
+   </DISPL_END_TEMP>
+</ITEM>
+ </MASH>
+ <MISC>
+ </MISC>
+ <NOTES>
+<ITEM>
+   <RECIPE type="6">
+     135
+   </RECIPE>
+   <DATE type="9">
+     2003.05.04
+   </DATE>
+   <GUID type="14">
+     75
+   </GUID>
+   <TYPE type="1">
+     
+   </TYPE>
+   <NOTE type="16">
+     Pitched at about 8pm last night, and going like a bat out of hell early this monring. 
+   </NOTE>
+</ITEM>
+ </NOTES>
+ </STRANGEBREWRECIPE>
