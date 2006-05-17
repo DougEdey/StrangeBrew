@@ -3,5 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/looks-2.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/microba.jar"/>
+	<classpathentry kind="lib" path="lib/substance-lite.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

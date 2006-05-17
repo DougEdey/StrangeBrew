@@ -56,7 +56,6 @@ public class MiscPanel extends javax.swing.JPanel {
 	private JButton addButton;
 	private JPanel tablePanel;
 	private JTextArea miscCommentsTextArea;
-	private JTextArea miscDescrTextArea;
 	
 	private Recipe myRecipe;
 	private MiscTableModel miscTableModel;
@@ -183,6 +182,7 @@ public class MiscPanel extends javax.swing.JPanel {
 				commentsPanel.setLayout(commentsPanelLayout);
 				this.add(commentsPanel);
 				commentsPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false), "Comments", TitledBorder.LEADING, TitledBorder.TOP));
+				commentsPanel.setPreferredSize(new java.awt.Dimension(147, 300));
 				{
 					jScrollPane1 = new JScrollPane();
 					commentsPanel.add(jScrollPane1);
@@ -191,7 +191,8 @@ public class MiscPanel extends javax.swing.JPanel {
 						jScrollPane1.setViewportView(miscCommentsTextArea);						
 						miscCommentsTextArea.setLineWrap(true);
 						miscCommentsTextArea.setWrapStyleWord(true);
-						
+						miscCommentsTextArea.setPreferredSize(new java.awt.Dimension(136, 272));
+
 						miscCommentsTextArea.addFocusListener(new FocusAdapter() {
 							public void focusLost(FocusEvent evt) {								
 								if ( selectedRow > -1 && !miscCommentsTextArea.getText().equals(myRecipe.getMiscComments(selectedRow))) {

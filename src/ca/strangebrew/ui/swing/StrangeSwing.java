@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.28 2006/05/16 14:36:51 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.29 2006/05/17 17:08:07 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -43,13 +43,14 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.PrintStream;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.EventObject;
@@ -94,6 +95,8 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import org.jvnet.substance.SubstanceLookAndFeel;
+
 import ca.strangebrew.Database;
 import ca.strangebrew.Debug;
 import ca.strangebrew.Fermentable;
@@ -107,7 +110,7 @@ import ca.strangebrew.Style;
 import ca.strangebrew.XmlTransformer;
 import ca.strangebrew.Yeast;
 
-import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
+import com.michaelbaranov.microba.calendar.DatePicker;
 
 
 public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener, WindowListener {
@@ -125,7 +128,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private DefaultComboBoxModel alcMethodComboModel;
 	private JLabel alcMethodLabel;
 	private JPanel alcMethodPanel;
-	private JTextField amountEditor;
+	private SBCellEditor amountEditor;
 	private String appRoot="";
 	private JTextField boilMinText;
 	private JLabel boilTimeLable;
@@ -237,7 +240,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 	private JMenuItem saveMenuItem;
 	private JScrollPane scpComments;
-	private JScrollPane scrMalts;
+	// private JScrollPane scrMalts;
 	private SettingsPanel settingsPanel;
 	private String slash;
 	private JSpinner spnAtten;
@@ -256,7 +259,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JToolBar tlbMalt;
 
 	private JTextArea txtComments;
-	private JFormattedTextField txtDate;
+	// private JFormattedTextField txtDate;
+	private DatePicker txtDate;
 	private JTextField txtName;
 	private JFormattedTextField txtPreBoil;
 	
@@ -381,21 +385,16 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		this.addWindowListener(this);
 	}
 
-	/*	{
-		//Set Look & Feel
-		
-		if (!preferences.getProperty("optLookAndFeel").equals("")){
-		try {
-			javax.swing.UIManager.setLookAndFeel(preferences.getProperty("optLookAndFeel"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		}
-	}*/
-	{
+/*	{
 	try {
 	      UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
 	   } catch (Exception e) {}
+	}*/
+	
+	{
+		try {
+		      UIManager.setLookAndFeel(new SubstanceLookAndFeel());
+		   } catch (Exception e) {}
 	}
 
 	public StrangeSwing() {
@@ -460,8 +459,10 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		Object o = e.getSource();
 		String s = "";
 		// String t = "";
-
-
+		
+		if (!o.getClass().getName().endsWith("JTextField"))
+			return;
+		
 		s = ((JTextField) o).getText();
 		// t = s.replace(',','.'); // accept also european decimal komma
 
@@ -544,7 +545,13 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		lblIBUvalue.setText(SBStringUtils.format(myRecipe.getIbu(), 1));
 		lblColourValue.setText(SBStringUtils.format(myRecipe.getSrm(), 1));
 		lblAlcValue.setText(SBStringUtils.format(myRecipe.getAlcohol(), 1));
-		txtDate.setText(SBStringUtils.dateFormat1.format(myRecipe.getCreated().getTime()));
+		try {
+			txtDate.setDate(myRecipe.getCreated().getTime());
+		} catch (PropertyVetoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		// setText(SBStringUtils.dateFormat1.format(myRecipe.getCreated().getTime()));
 		Costs = SBStringUtils.myNF.format(myRecipe.getTotalMaltCost());
 		tblMaltTotalsModel.setDataVector(new String[][]{{"Totals:",
 			"" + SBStringUtils.format(myRecipe.getTotalMalt(), 1), myRecipe.getMaltUnits(),
@@ -899,7 +906,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 					preferences.getIProperty("winHeight"));
 			this.setLocation(preferences.getIProperty("winX"), 
 					preferences.getIProperty("winY"));
-			imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/brew.gif");
+			imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/sb2.gif");
 			icon = new ImageIcon(imgURL);
 			this.setIconImage(icon.getImage());
 			this.setTitle("StrangeBrew " + version);
@@ -1038,12 +1045,14 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 							lblColour.setText("Colour:");
 						}
 						{
-							txtDate = new JFormattedTextField();
+							//txtDate = new JFormattedTextField();
+							txtDate = new DatePicker();
 							pnlDetails.add(txtDate, new GridBagConstraints(1, 1, 2, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
-							txtDate.setText("Date");
+							// txtDate.setText("Date");
 							txtDate.setPreferredSize(new java.awt.Dimension(73, 20));
+							txtDate.setDateStyle(DateFormat.SHORT);
 
 						}
 						{
@@ -1437,7 +1446,11 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 								cmbMaltModel = new ComboModel();
 								maltComboBox.setModel(cmbMaltModel);
 								maltColumn.setCellEditor(new DefaultCellEditor(maltComboBox));
-
+								
+								// set up malt amount editor
+								amountEditor = new SBCellEditor(new JTextField());								
+								maltColumn = maltTable.getColumnModel().getColumn(1);
+								maltColumn.setCellEditor(amountEditor);
 
 								// set up malt units combo
 								maltUnitsComboBox = new JComboBox();
@@ -1491,7 +1504,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						{
 							tlbMalt = new JToolBar();
 							pnlMaltButtons.add(tlbMalt);
-							tlbMalt.setPreferredSize(new java.awt.Dimension(55, 20));
+							tlbMalt.setPreferredSize(new java.awt.Dimension(386, 20));
 							tlbMalt.setFloatable(false);
 							{
 								btnAddMalt = new JButton();
@@ -1621,7 +1634,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						{
 							tlbHops = new JToolBar();
 							pnlHopsButtons.add(tlbHops);
-							tlbHops.setPreferredSize(new java.awt.Dimension(58, 19));
+							tlbHops.setPreferredSize(new java.awt.Dimension(413, 19));
 							tlbHops.setFloatable(false);
 							{
 								btnAddHop = new JButton();
@@ -2223,6 +2236,18 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 			n.setVisible(true);
 		}
 		
+	}
+	
+	private class SBCellEditor extends DefaultCellEditor {
+		
+		public SBCellEditor(final JTextField textField) {
+		    super(textField);
+		    super.clickCountToStart = 1;
+		  } 
+		 public boolean shouldSelectCell(EventObject anEvent) {
+		        return true;
+
+		} 
 	}
 	
 	

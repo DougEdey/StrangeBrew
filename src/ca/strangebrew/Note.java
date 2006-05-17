@@ -23,6 +23,10 @@ public class Note {
 	private String type;
 	private String note;
 	
+	public Note() {
+		date = new Date();
+		
+	}
 	/**
 	 * @return Returns the date.
 	 */

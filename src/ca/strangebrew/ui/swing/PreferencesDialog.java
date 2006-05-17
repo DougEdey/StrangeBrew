@@ -1,21 +1,3 @@
-/**
- StrangeBrew Java - a homebrew recipe calculator
- Copyright (C) 2005  Drew Avis
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- */
 package ca.strangebrew.ui.swing;
 
 import java.awt.BorderLayout;
@@ -48,6 +30,7 @@ import javax.swing.event.ChangeListener;
 import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
+
 
 
 /**
@@ -125,6 +108,9 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private JTextField txtTinsethUtil;
 	private JLabel jLabelc4;
 	private JTextField txtFWHTime;
+	private JLabel evapAmountLbl;
+	private JTextField evapAmountTxt;
+	private JPanel jPanel3;
 	private JTextField batchSizeTxt;
 	private JComboBox volUnitsCombo;
 	private JComboBox hopsUnitsCombo;
@@ -250,9 +236,15 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		rbEBC.setSelected((opts.getProperty("optColourMethod").equalsIgnoreCase("EBC")));
 
 		rbPercent.setSelected((opts.getProperty("optEvapCalcMethod").equalsIgnoreCase("Percent")));
-		rbConstant
-		.setSelected((opts.getProperty("optEvapCalcMethod").equalsIgnoreCase("Constant")));
-
+		rbConstant.setSelected((opts.getProperty("optEvapCalcMethod").equalsIgnoreCase("Constant")));
+		evapAmountTxt.setText(opts.getProperty("optEvaporation"));
+		if (opts.getProperty("optEvapCalcMethod").equalsIgnoreCase("Percent"))
+			evapAmountLbl.setText("%");
+		else
+			evapAmountLbl.setText(opts.getProperty("optSizeU") + "/hr");
+			
+		
+		
 		txtPellet.setText(opts.getProperty("optPelletHopsPct"));
 		txtTinsethUtil.setText(opts.getProperty("optHopsUtil"));
 		txtDryHopTime.setText(opts.getProperty("optDryHopTime"));
@@ -315,6 +307,8 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			opts.setProperty("optEvapCalcMethod", "Percent");
 		if (rbConstant.isSelected())
 			opts.setProperty("optEvapCalcMethod", "Constant");
+		
+		opts.setProperty("optEvaporation", evapAmountTxt.getText());
 
 		opts.setProperty("optPelletHopsPct", txtPellet.getText());
 		opts.setProperty("optHopsUtil", txtTinsethUtil.getText());
@@ -568,23 +562,18 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					jPanel2.setLayout(jPanel2Layout);
 					{
 						jLabel1 = new JLabel();
-						jPanel2.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-								GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, new Insets(
-										0, 0, 0, 0), 0, 0));
+						jPanel2.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 						jLabel1.setText("Other Cost:");
 					}
 					{
 						txtOtherCost = new JTextField();
-						jPanel2.add(txtOtherCost, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-								GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(
-										0, 0, 0, 0), 0, 0));
+						jPanel2.add(txtOtherCost, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 						txtOtherCost.setText("$0.00");
+						txtOtherCost.setPreferredSize(new java.awt.Dimension(62, 20));
 					}
 					{
 						jLabel2 = new JLabel();
-						jPanel2.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-								GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, new Insets(
-										0, 0, 0, 0), 0, 0));
+						jPanel2.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 						jLabel2.setText("Bottle Size:");
 					}
 					{
@@ -592,12 +581,9 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 						cmbBottleSizeModel = new ComboModel();
 						cmbBottleSizeModel.setList(new Quantity().getListofUnits("vol"));
 						cmbBottleSize.setModel(cmbBottleSizeModel);
-						jPanel2.add(cmbBottleSize, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
-								GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0,
-										0, 0), 0, 0));
-						jPanel2.add(getTxtBottleSize(), new GridBagConstraints(1, 1, 1, 1, 0.0,
-								0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-								new Insets(0, 0, 0, 0), 0, 0));
+						jPanel2.add(cmbBottleSize, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+						cmbBottleSize.setPreferredSize(new java.awt.Dimension(89, 20));
+						jPanel2.add(getTxtBottleSize(), new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
 					}
 				}
@@ -1062,8 +1048,23 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			pnlEvaporation.setBorder(BorderFactory.createTitledBorder("Evaporation:"));
 			pnlEvaporation.add(getRbPercent());
 			pnlEvaporation.add(getRbConstant());
+
+			jPanel3 = new JPanel();
+			pnlEvaporation.add(jPanel3);
+
+			evapAmountTxt = new JTextField();
+			jPanel3.add(evapAmountTxt);
+			evapAmountTxt.setText("0");
+			evapAmountTxt.setPreferredSize(new java.awt.Dimension(54, 20));
+
+			evapAmountLbl = new JLabel();
+			jPanel3.add(evapAmountLbl);
+			evapAmountLbl.setText(Quantity.getVolAbrv(opts.getProperty("optVolUnits")));
+
 			bgEvap.add(rbPercent);
 			bgEvap.add(rbConstant);
+			rbPercent.addActionListener(this);
+			rbConstant.addActionListener(this);
 		}
 		return pnlEvaporation;
 	}
@@ -1081,6 +1082,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			rbConstant = new JRadioButton();
 			rbConstant.setText("Constant");
 		}
+
 		return rbConstant;
 	}
 
@@ -1088,6 +1090,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		if (txtBottleSize == null) {
 			txtBottleSize = new JTextField();
 			txtBottleSize.setText("351");
+			txtBottleSize.setPreferredSize(new java.awt.Dimension(61, 20));
 		}
 		return txtBottleSize;
 	}
@@ -1115,6 +1118,12 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			greenSpn.setEnabled(o == colMethod1rb);
 			blueSpn.setEnabled(o == colMethod1rb);
 			displayColour();
+		}
+		else if (o == rbPercent){
+			evapAmountLbl.setText("%");
+		}
+		else if (o == rbConstant){
+			evapAmountLbl.setText(Quantity.getVolAbrv(volUnitsComboModel.getSelectedItem().toString()) + "/hr");
 		}
 		
 		

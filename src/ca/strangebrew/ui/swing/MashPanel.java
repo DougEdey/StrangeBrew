@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.6 2006/05/16 14:36:52 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.7 2006/05/17 17:08:07 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -56,6 +56,7 @@ import javax.swing.table.TableColumn;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
+
 
 public class MashPanel extends javax.swing.JPanel implements ActionListener, FocusListener {
 	private JScrollPane jScrollPane1;
@@ -208,9 +209,8 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			jPanel1 = new JPanel();
 			BorderLayout jPanel1Layout = new BorderLayout();
 			jPanel1.setLayout(jPanel1Layout);
-			this.add(jPanel1, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
-					0));
+			this.add(jPanel1, new GridBagConstraints(3, 1, 1, 2, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+			jPanel1.setPreferredSize(new java.awt.Dimension(158, 230));
 
 			{
 				settingsPanel = new JPanel();

@@ -10,7 +10,10 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,9 +25,9 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
+import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
-
 
 
 public class MaltPercentDialog extends javax.swing.JDialog {
@@ -33,6 +36,7 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 	private JPanel jPanel5;
 	private JRadioButton OGBtn;
 	private JRadioButton weightBtn;
+	private JComboBox weightUCombo;
 	private JLabel jLabel1;
 	private JPanel jPanel4;
 	private JSpinner OGSpn;
@@ -74,6 +78,8 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 		// by weight?
 		if (weightBtn.isSelected()) {
 			double totalWeight = Double.parseDouble(weightSpn.getValue().toString());
+			// convert to lbs
+			totalWeight = Quantity.convertUnit(weightUCombo.getSelectedItem().toString(), "lb", totalWeight);
 			for (int i = 0; i < myRecipe.getMaltListSize(); i++) {
 				double newAmount = totalWeight * myRecipe.getMaltPercent(i) / 100;
 				myRecipe.setMaltAmountAs(i, newAmount, "lb");
@@ -153,7 +159,7 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 		// SpinnerListModel weightSpnModel = new SpinnerListModel(new String[] { "Sun", "Mon", "Tue",
 		// 		"Wed", "Thu", "Fri", "Sat" });
 		// weightSpn.setModel(weightSpnModel);
-		weightSpn.setValue(new Double(myRecipe.getTotalMaltLbs()));
+		weightSpn.setValue(new Double(myRecipe.getTotalMalt()));
 
 		OGBtn = new JRadioButton("Target OG:");
 		jPanel4.add(OGBtn, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -166,9 +172,13 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 		jPanel4.add(OGSpn, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		OGSpn.setModel(OGSpnModel);
 
-		jLabel1 = new JLabel();
-		jPanel4.add(jLabel1, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-		jLabel1.setText("lbs");
+		ComboModel weightUComboModel = new ComboModel();
+		weightUComboModel.setList(new Quantity().getListofUnits("weight"));
+		weightUComboModel.addOrInsert(myRecipe.getMaltUnits());
+
+		weightUCombo = new JComboBox();
+		jPanel4.add(weightUCombo, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		weightUCombo.setModel(weightUComboModel);
 
 		OGSpn.setValue(new Double(myRecipe.getEstOg()));
 
