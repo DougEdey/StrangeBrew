@@ -1,9 +1,12 @@
 package ca.strangebrew;
 import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,7 +15,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.8 2006/05/16 14:36:52 andrew_avis Exp $
+ * $Id: Database.java,v 1.9 2006/05/17 19:57:19 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -148,6 +151,7 @@ public class Database {
 	public void writeFermentables(ArrayList newIngr, boolean[] add) {		
 		
 		File maltsFile = new File(dbPath, "malts.csv");
+		backupFile(maltsFile);
 
 		try {
 			CSVWriter writer = new CSVWriter(new FileWriter(maltsFile));
@@ -259,6 +263,7 @@ public class Database {
 		if (!(newIngr.size() > 0))
 			return;
 		File hopsFile = new File(dbPath, "hops.csv");
+		backupFile(hopsFile);
 
 		try {
 			CSVWriter writer = new CSVWriter(new FileWriter(hopsFile));
@@ -360,6 +365,7 @@ public class Database {
 		if (!(newIngr.size() > 0))
 			return;
 		File yeastFile = new File(dbPath, "yeast.csv");
+		backupFile(yeastFile);
 
 		try {
 			CSVWriter writer = new CSVWriter(new FileWriter(yeastFile));
@@ -519,6 +525,7 @@ public class Database {
 		if (!(newIngr.size() > 0))
 			return;
 		File miscFile = new File(dbPath, "misc_ingr.csv");
+		backupFile(miscFile);
 
 		try {
 			CSVWriter writer = new CSVWriter(new FileWriter(miscFile));
@@ -601,5 +608,20 @@ public class Database {
 			else return 0;
 		}
 
+	}
+	
+	public void backupFile(File in){
+		try {
+		File out = new File (in.getAbsolutePath() + ".bak");
+		FileChannel sourceChannel = new FileInputStream(in).getChannel();
+		FileChannel destinationChannel = new FileOutputStream(out).getChannel();
+		sourceChannel.transferTo(0, sourceChannel.size(), destinationChannel);
+		// or
+		//  destinationChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+		sourceChannel.close();
+		destinationChannel.close();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 }

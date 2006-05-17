@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.11 2006/05/16 14:36:52 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.12 2006/05/17 19:57:19 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -251,7 +251,7 @@ public class XmlHandler extends DefaultHandler{
 			
 			} else if (qName.equalsIgnoreCase("ITEM")
 						&& currentList.equalsIgnoreCase("MASH")) {
-					r.mash.addStep(type, startTemp, endTemp, "F", method, minutes, rampMin);				
+					r.mash.addStep(type, startTemp, endTemp, method, minutes, rampMin);				
 				
 			} // there's a problem with having two elements named "NOTES" : 
 			  else if (qName.equalsIgnoreCase("FERMENTABLS")

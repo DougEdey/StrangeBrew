@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.15 2006/05/16 14:36:52 andrew_avis Exp $
+ * $Id: Mash.java,v 1.16 2006/05/17 19:57:19 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -21,7 +21,7 @@ public class Mash {
 	private String mashRatioU;
 	private String tempUnits;
 	private String volUnits;
-	private double grainTemp;
+	private double grainTempF;
 	private String mashTempU;
 	private double boilTempF;
 	private double thermalMass;
@@ -44,20 +44,19 @@ public class Mash {
 	
 	public Mash(){
 
-		Options opts = new Options("mash");
+		 Options opts = new Options("mash");
 		 mashRatio = opts.getDProperty("optMashRatio");
 		 mashRatioU = opts.getProperty("optMashRatioU");;
 		 tempUnits = opts.getProperty("optMashTempU");
 		 volUnits = opts.getProperty("optMashVolU");
-		 grainTemp = opts.getDProperty("optGrainTemp");
+		 grainTempF = opts.getDProperty("optGrainTemp");
 		 boilTempF = opts.getDProperty("optBoilTempF");
 	}
 
 	public class MashStep {
 		private String type;
 		private double startTemp;
-		private double endTemp;
-		private String tempU;
+		private double endTemp;		
 		private String method;
 		private int minutes;
 		private int rampMin;
@@ -66,12 +65,11 @@ public class Mash {
 		public Quantity infuseVol = new Quantity();
 		public Quantity decoctVol = new Quantity();
 
-		public MashStep(String t, double st, double et, String tu, String m, int min,
+		public MashStep(String t, double st, double et, String m, int min,
 				int rmin) {
 			type = t;
 			startTemp = st;
-			endTemp = et;
-			tempU = tu;
+			endTemp = et;			
 			method = m;
 			minutes = min;
 			rampMin = rmin;		
@@ -162,9 +160,9 @@ public class Mash {
 		public void setType(String s){ type = s; }
 	}
 
-	public void addStep(String type, double st, double et, String tu, String m, int min,
+	public void addStep(String type, double st, double et, String m, int min,
 			int rmin) {
-		MashStep step = new MashStep(type, st, et, tu, m, min, rmin);
+		MashStep step = new MashStep(type, st, et, m, min, rmin);
 		steps.add(step);		
 		calcMashSchedule();
 	}
@@ -206,17 +204,26 @@ public class Mash {
 	}
 	
 	public void setGrainTemp(double t){
-		grainTemp = t;
+		if (tempUnits.equals("F"))
+			grainTempF = t;
+		else
+			grainTempF = cToF(t);
 		calcMashSchedule();
 	}
 	
-	public void setBoilTempF(double t){
-		boilTempF = t;
+	public void setBoilTemp(double t){
+		if (tempUnits.equals("F"))
+			boilTempF = t;
+		else
+			boilTempF = cToF(t);
 		calcMashSchedule();
 	}
 	
-	public void setTunLossF(double t){
-		tunLossF = t;
+	public void setTunLoss(double t){
+		if (tempUnits.equals("F"))
+			tunLossF = t;
+		else
+			tunLossF = cToF(t);
 		calcMashSchedule();
 	}
 
@@ -236,9 +243,24 @@ public class Mash {
 	public String getMashVolUnits(){ return volUnits; }
 	public String getMashTempUnits(){ return tempUnits; }
 	public int getMashTotalTime(){ return totalTime; }
-	public double getGrainTemp() { return grainTemp; }
-	public double getBoilTempF() { return boilTempF; }
-	public double getTunLossF() { return tunLossF; }
+	public double getGrainTemp() {
+		if (tempUnits.equals("F"))
+			return grainTempF; 
+		else
+			return fToC(grainTempF);
+		}
+	public double getBoilTemp() { 
+		if (tempUnits.equals("F")) 
+				return boilTempF;
+		else
+			return fToC(boilTempF);
+		}
+	public double getTunLoss() { 
+		if (tempUnits.equals("F"))
+			return tunLossF; 
+		else
+			return fToC(tunLossF);
+		}
 	
 	/**
 	 * 
@@ -378,7 +400,7 @@ public class Mash {
 		double waterAddedQTS = 0;
 		double waterEquiv = 0;
 		double mr = mashRatio;
-		double currentTemp = grainTemp;
+		double currentTemp = grainTempF;
 
 		double displTemp = 0;
 		double tunLoss = tunLossF; // figure out a better way to do this, eg: themal mass
@@ -551,6 +573,9 @@ public class Mash {
 		return decoctQTS;
 	}
 	
+	/*
+	 * This is the old method, we don't use it anymore because calcDecoction2 is better
+	 */
 	private double calcDecoction(double targetTemp, double currentTemp, double mashVol,
 			double boilTempF) {
 		// calculate amount of grain/mash to remove and boil to raise mash temp to
@@ -638,12 +663,12 @@ public class Mash {
 		return (mashVol * (targetTemp - currentTemp) / (boilTempF - targetTemp));
 	}
 
-	private double fToC(double tempF) {
+	public static double fToC(double tempF) {
 		// routine to convert basic F temps to C
 		return (5 * (tempF - 32)) / 9;
 	}
 
-	private double cToF(double tempC) {
+	public static double cToF(double tempC) {
 		// routine to convert Celcius to Farenheit
 		return ((tempC * 9) / 5) + 32;
 	}

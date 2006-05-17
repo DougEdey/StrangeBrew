@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.7 2006/05/17 17:08:07 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.8 2006/05/17 19:57:19 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -76,7 +76,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	private JLabel jLabel15;
 	private JLabel jLabel14;
 	private JLabel jLabel13;
-	private JLabel jLabel12;
+	private JLabel boilTempULbl;
 	private JTextField boilTempTxt;
 	private JPanel totalsPanel;
 	private JLabel jLabel1;
@@ -89,7 +89,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	private JLabel totalTimeLabel;
 	private JComboBox ratioUnitsCombo;
 	private JTextField ratioText;
-	private ButtonGroup tempUnitsButtonGroup;
+	// private ButtonGroup tempUnitsButtonGroup;
 	private JComboBox volUnitsCombo;
 	private ComboModel volUnitsComboModel;
 	private JRadioButton tempCrb;
@@ -286,11 +286,11 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 						0, 0));
 				jLabel20.setText("Boil Temp:");
 
-				jLabel12 = new JLabel();
-				settingsPanel.add(jLabel12, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0,
+				boilTempULbl = new JLabel();
+				settingsPanel.add(boilTempULbl, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
 						0, 0));
-				jLabel12.setText("F");
+				boilTempULbl.setText("F");
 
 				{
 					tunLossTxt = new JTextField();
@@ -470,6 +470,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				tempCrb.setSelected(true);
 			grainTempULabel.setText(myRecipe.mash.getMashTempUnits());
 			tempLostULabel.setText(myRecipe.mash.getMashTempUnits());
+			boilTempULbl.setText(myRecipe.mash.getMashTempUnits());
 
 			// set totals:
 			String mashWeightTotal = SBStringUtils.format(myRecipe.getTotalMash(), 1) + " "
@@ -478,8 +479,8 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			totalTimeLabel.setText(new Integer(myRecipe.mash.getMashTotalTime()).toString());
 			volLabel.setText(myRecipe.mash.getMashTotalVol());
 			grainTempText.setText(new Double(myRecipe.mash.getGrainTemp()).toString());
-			boilTempTxt.setText(new Double(myRecipe.mash.getBoilTempF()).toString());
-			tunLossTxt.setText(new Double(myRecipe.mash.getTunLossF()).toString());
+			boilTempTxt.setText(new Double(myRecipe.mash.getBoilTemp()).toString());
+			tunLossTxt.setText(new Double(myRecipe.mash.getTunLoss()).toString());
 			tempFrb.setSelected(myRecipe.mash.getMashTempUnits().equalsIgnoreCase("F"));
 
 
@@ -530,10 +531,10 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			myRecipe.mash.setGrainTemp(Double.parseDouble(s));
 		} else if (o == boilTempTxt) {
 			String s = boilTempTxt.getText();
-			myRecipe.mash.setBoilTempF(Double.parseDouble(s));
+			myRecipe.mash.setBoilTemp(Double.parseDouble(s));
 		} else if (o == tunLossTxt) {
 			String s = tunLossTxt.getText();
-			myRecipe.mash.setTunLossF(Double.parseDouble(s));
+			myRecipe.mash.setTunLoss(Double.parseDouble(s));
 		}
 
 		tblMash.updateUI();

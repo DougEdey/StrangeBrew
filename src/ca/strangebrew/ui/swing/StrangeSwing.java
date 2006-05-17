@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.29 2006/05/17 17:08:07 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.30 2006/05/17 19:57:19 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -553,11 +553,11 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		} 
 		// setText(SBStringUtils.dateFormat1.format(myRecipe.getCreated().getTime()));
 		Costs = SBStringUtils.myNF.format(myRecipe.getTotalMaltCost());
-		tblMaltTotalsModel.setDataVector(new String[][]{{"Totals:",
+		tblMaltTotalsModel.setDataVector(new String[][]{{"", "", "Totals:", 
 			"" + SBStringUtils.format(myRecipe.getTotalMalt(), 1), myRecipe.getMaltUnits(),
 			"" + SBStringUtils.format(myRecipe.getEstOg(), 3),
 			"" + SBStringUtils.format(myRecipe.getSrm(), 1),
-			Costs, "100"}}, new String[]{"",
+			Costs, "100"}}, new String[]{"", "", "",
 				"", "", "", "", "", ""});
 
 		Costs = SBStringUtils.myNF.format(myRecipe.getTotalHopsCost());
@@ -680,6 +680,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 	private void addColumnWidthListeners() {
 		TableColumnModel mtcm = maltTable.getColumnModel();
 		TableColumnModel htcm = hopsTable.getColumnModel();
+		
 
 		//: listener that watches the width of a column
 		PropertyChangeListener mpcl = new PropertyChangeListener() {
@@ -730,6 +731,18 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 			TableColumn tc = (TableColumn) e.nextElement();
 			tc.addPropertyChangeListener(hpcl);
 		}
+		
+		// set preferred widths of the malt table
+		maltTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		TableColumn col = mtcm.getColumn(0);
+		col.setPreferredWidth(10);
+		col = mtcm.getColumn(1);
+		col.setPreferredWidth(10);
+		col = mtcm.getColumn(2);
+		col.setPreferredWidth(200);
+
+		maltTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+		
 	}
 
 	// add the listeners *after* all the data has been attached to speed
@@ -1439,7 +1452,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 								// maltTable.setAutoCreateColumnsFromModel(false);
 								maltTable.getTableHeader().setReorderingAllowed(false);
 
-								TableColumn maltColumn = maltTable.getColumnModel().getColumn(0);
+								TableColumn maltColumn = maltTable.getColumnModel().getColumn(2);
 
 								// set up malt list combo
 								maltComboBox = new JComboBox();
@@ -1449,14 +1462,14 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 								
 								// set up malt amount editor
 								amountEditor = new SBCellEditor(new JTextField());								
-								maltColumn = maltTable.getColumnModel().getColumn(1);
+								maltColumn = maltTable.getColumnModel().getColumn(3);
 								maltColumn.setCellEditor(amountEditor);
 
 								// set up malt units combo
 								maltUnitsComboBox = new JComboBox();
 								cmbMaltUnitsModel = new ComboModel();
 								maltUnitsComboBox.setModel(cmbMaltUnitsModel);
-								maltColumn = maltTable.getColumnModel().getColumn(2);
+								maltColumn = maltTable.getColumnModel().getColumn(4);
 								maltColumn.setCellEditor(new DefaultCellEditor(maltUnitsComboBox));
 
 
@@ -1465,7 +1478,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						}
 						{
 							tblMaltTotalsModel = new DefaultTableModel(new String[][]{{""}},
-									new String[]{"Malt", "Amount", "Units", "Points", "Lov",
+									new String[]{"S", "M", "Malt", "Amount", "Units", "Points", "Lov",
 									"Cost/U", "%"});
 							tblMaltTotals = new JTable();
 							pnlMalt.add(tblMaltTotals, BorderLayout.SOUTH);

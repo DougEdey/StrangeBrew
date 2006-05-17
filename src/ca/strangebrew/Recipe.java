@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.24 2006/05/16 14:36:52 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.25 2006/05/17 19:57:19 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -552,6 +552,12 @@ public class Recipe {
 	}
 	public void setMaltPercent(int i, double p) {
 		((Fermentable) fermentables.get(i)).setPercent(p);
+	}
+	public void setMaltSteep(int i, boolean c) {
+		((Fermentable) fermentables.get(i)).setSteep(c);
+	}
+	public void setMaltMashed(int i, boolean c) {
+		((Fermentable) fermentables.get(i)).setMashed(c);
 	}
 
 	// misc get/set functions

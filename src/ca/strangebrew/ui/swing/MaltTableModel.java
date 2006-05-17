@@ -13,7 +13,7 @@ import ca.strangebrew.SBStringUtils;
 class MaltTableModel extends AbstractTableModel {
 	private final StrangeSwing app;
 
-	private String[] columnNames = {"Malt", "Amount", "Units", "Points",
+	private String[] columnNames = {"S", "M", "Malt", "Amount", "Units", "Points",
 			"Lov", "Cost/U", "%"};
 
 	private Recipe data = null;
@@ -56,24 +56,28 @@ class MaltTableModel extends AbstractTableModel {
 		// Fermentable m = (Fermentable) data.get(row);
 		try {
 			switch (col) {
-				case 0 :
+				case 0: // steep
+					return data.getMaltSteep(row);
+				case 1: // mash
+					return data.getMaltMashed(row);
+				case 2 :
 					// indicate this is a sugar:
 					String s = "";
 					if (!data.getMaltMashed(row) && data.getMaltSteep(row))
 						s = "*";
 					return s + data.getMaltName(row);
-				case 1 :
+				case 3 :
 					return SBStringUtils.format(data
 							.getMaltAmountAs(row, data.getMaltUnits(row)), 1);
-				case 2 :
-					return data.getMaltUnits(row);
-				case 3 :
-					return SBStringUtils.format(data.getMaltPppg(row), 3);
 				case 4 :
-					return SBStringUtils.format(data.getMaltLov(row), 0);
+					return data.getMaltUnits(row);
 				case 5 :
-					return new Double(data.getMaltCostPerU(row));
+					return SBStringUtils.format(data.getMaltPppg(row), 3);
 				case 6 :
+					return SBStringUtils.format(data.getMaltLov(row), 0);
+				case 7 :
+					return new Double(data.getMaltCostPerU(row));
+				case 8 :
 					return SBStringUtils.format(data.getMaltPercent(row), 1);
 
 			}
@@ -88,9 +92,9 @@ class MaltTableModel extends AbstractTableModel {
 	 * would contain text ("true"/"false"), rather than a check box.
 	 */
 	
-/*	public Class getColumnClass(int c) {
+	public Class getColumnClass(int c) {
 		return getValueAt(0, c).getClass();
-	}*/
+	}
 
 	/*
 	 * Don't need to implement this method unless your table's editable.
@@ -114,25 +118,31 @@ class MaltTableModel extends AbstractTableModel {
 		// Fermentable m = (Fermentable) data.get(row);
 		try {
 			switch (col) {
-				case 0 :
-					data.setMaltName(row, value.toString());
+				case 0: 
+					data.setMaltSteep(row, new Boolean (value.toString()).booleanValue());
 					break;
-				case 1 :
-					data.setMaltAmount(row, Double.parseDouble(value.toString()));					
+				case 1:
+					data.setMaltMashed(row, new Boolean(value.toString()).booleanValue());
 					break;
 				case 2 :
-					// m.setUnits(value.toString());
+					data.setMaltName(row, value.toString());
 					break;
 				case 3 :
-					data.setMaltPppg(row, Double.parseDouble(value.toString()));
+					data.setMaltAmount(row, Double.parseDouble(value.toString()));					
 					break;
 				case 4 :
-					data.setMaltLov(row, Double.parseDouble(value.toString()));
+					// m.setUnits(value.toString());
 					break;
 				case 5 :
-					data.setMaltCost(row, value.toString());
+					data.setMaltPppg(row, Double.parseDouble(value.toString()));
 					break;
 				case 6 :
+					data.setMaltLov(row, Double.parseDouble(value.toString()));
+					break;
+				case 7 :
+					data.setMaltCost(row, value.toString());
+					break;
+				case 8 :
 					// data.setMaltPercent(row, Double.parseDouble(value.toString()));
 					break;
 

@@ -138,12 +138,13 @@ What's New
 
 Beta 0.6
 --------
+New Features:
 - New File > Copy to Clipboard sends the recipe to the system clipboard, so you can
   easily paste it into another application (such as an email message).
+
+Bugs Fixed:
 - Numbers are now formatted according to local settings, which fixes a NumberFormatException
   on startup for some regional settings. 
-
-Fixed in Beta 0.6:
 - New notes now have a default date (current date), which prevents a crash when saving
   the recipe (Bug 1489273 & 1489269).  
 - You can now specify the total target weight in different units (Bug 1489275).
@@ -151,11 +152,13 @@ Fixed in Beta 0.6:
 - The comments area is now smaller on the Misc tab (Bug 1489254).  
 - Cost and carb boxes are larger on the Prefs dialog (Bug 1489251).
 - You can now set the evaporation default value on the Prefs dialog (Bug 1489248).
+- Various temperatures now convert correctly when you change the temp units 
+  (Bug 1489257 and 1489279).
    
 TODO:
 - convert cost when changing units
 - fix steep indicator
-- convert temps when changing units
+
 
 
 Beta 0.5.1
