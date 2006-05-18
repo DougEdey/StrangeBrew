@@ -141,6 +141,14 @@ Beta 0.6
 New Features:
 - New File > Copy to Clipboard sends the recipe to the system clipboard, so you can
   easily paste it into another application (such as an email message).
+- Database files are now backed up before new ingredients are added.
+- Hop and Fermentables tables are tweaked for easier viewing of ingredient names.
+- The Fermentables table now has indicators for "Steep" and "Mashed".  A "Steeped" grain
+  can be used in a partial mash or extract session by steeping in warm water - for example,
+  crystal malt.  Mashed malts must be mashed.  If a fermentable is neither steeped nor
+  mashed, it is considered a sugar, and is calculated as contributing 100% of its 
+  potential.
+- New BU:GU indicator on the Style tab (Bug 1489262).  
 
 Bugs Fixed:
 - Numbers are now formatted according to local settings, which fixes a NumberFormatException
@@ -154,11 +162,9 @@ Bugs Fixed:
 - You can now set the evaporation default value on the Prefs dialog (Bug 1489248).
 - Various temperatures now convert correctly when you change the temp units 
   (Bug 1489257 and 1489279).
-   
-TODO:
-- convert cost when changing units
-- fix steep indicator
-
+- Styles now sorted alphabetically (Bug 1490617).  
+- Batch size now imports correctly.
+- Hop and Fermentables now convert their amount and cost when you change the units.
 
 
 Beta 0.5.1
@@ -223,24 +229,23 @@ Beta 0.4
 =========
 
 Soon-to-be Implemented Features:
-- edit ingredient databases 
 - mash tun thermal mass
 - hop scaling
 - specify decoction thickness value
 - real application help (not the SB Win version)
 - sparge calculations (fly and batch)
-- mash/steep indicators on malt list
-- printing support
+- printing support (?)
+- refractometer utilities
 
 Planned StrangeBrew Java Pro Features:
 - water profiling
 - carbonation
-- refractometer utilities
 - inventory tracking
 - brewday timeline generation
 - brew sessions (vs recipes)
 - saved mash schedules
 - alternate malt/hop selection dialog
+- ingredient database editing
 
 (StrangeBrew Java will be released under a "dual-license": a free 
 Open Source version and a commercial "Pro" version that will 

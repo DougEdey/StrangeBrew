@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.8 2006/05/04 17:18:53 andrew_avis Exp $
+ * $Id: Quantity.java,v 1.9 2006/05/18 17:34:42 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -130,13 +130,15 @@ public class Quantity {
 		value += v2;
 	}
 	
+	public void convertTo(String to){
+		value = Quantity.convertUnit(unit, to, value);
+		setUnits(to);
+	}
+	
 	//	 implement to support comboboxes in Swing:
 	public String getName(){
 		return unit;
-	}
-	
-
-	
+	}	
 
 	
 	// private functions:	

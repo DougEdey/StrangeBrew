@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.30 2006/05/17 19:57:19 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.31 2006/05/18 17:34:57 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -95,8 +95,6 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import org.jvnet.substance.SubstanceLookAndFeel;
-
 import ca.strangebrew.Database;
 import ca.strangebrew.Debug;
 import ca.strangebrew.Fermentable;
@@ -110,6 +108,7 @@ import ca.strangebrew.Style;
 import ca.strangebrew.XmlTransformer;
 import ca.strangebrew.Yeast;
 
+import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.michaelbaranov.microba.calendar.DatePicker;
 
 
@@ -136,8 +135,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JButton btnAddHop;
 	private JButton btnAddMalt;
 	private JButton jButton2;
-	private JButton jButton1;
-	private JToolBar jToolBar1;
+	private JButton saveButton;
+	private JToolBar mainToolBar;
 	private JButton btnDelHop;
 	private JButton btnDelMalt;
 	private ComboModel cmbHopsModel;
@@ -385,17 +384,17 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		this.addWindowListener(this);
 	}
 
-/*	{
+	{
 	try {
 	      UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
 	   } catch (Exception e) {}
-	}*/
+	}
 	
-	{
+/*	{
 		try {
 		      UIManager.setLookAndFeel(new SubstanceLookAndFeel());
 		   } catch (Exception e) {}
-	}
+	}*/
 
 	public StrangeSwing() {
 		super();	
@@ -740,9 +739,13 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		col.setPreferredWidth(10);
 		col = mtcm.getColumn(2);
 		col.setPreferredWidth(200);
-
 		maltTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 		
+		// now do the same for the hops table
+		hopsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		col = htcm.getColumn(0);
+		col.setPreferredWidth(200);
+		hopsTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 	}
 
 	// add the listeners *after* all the data has been attached to speed
@@ -871,7 +874,8 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 				if (myRecipe != null && i != -1) {
 					Fermentable f2 = myRecipe.getFermentable(i);
 					if (f2 != null){
-						f2.setUnitsFull(u);
+						// this converts the cost and amount:					
+						f2.convertTo(u);
 						myRecipe.calcMaltTotals();
 						displayRecipe();
 					}
@@ -900,7 +904,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 				int i = hopsTable.getSelectedRow();
 				if (myRecipe != null && i != -1) {
 					Hop h = myRecipe.getHop(i);
-					h.setUnitsFull(u);
+					h.convertTo(u);
 					myRecipe.calcHopsTotals();
 					// tblHops.updateUI();
 					displayRecipe();
@@ -919,7 +923,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 					preferences.getIProperty("winHeight"));
 			this.setLocation(preferences.getIProperty("winX"), 
 					preferences.getIProperty("winY"));
-			imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/sb2.gif");
+			imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/brew.ico");
 			icon = new ImageIcon(imgURL);
 			this.setIconImage(icon.getImage());
 			this.setTitle("StrangeBrew " + version);
@@ -1332,25 +1336,25 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 							jPanel1Layout.setAlignment(FlowLayout.LEFT);
 							jPanel1.setLayout(jPanel1Layout);
 
-							jToolBar1 = new JToolBar();
-							getContentPane().add(jToolBar1, BorderLayout.NORTH);
-							jToolBar1.setFloatable(false);
-							jToolBar1.setRollover(true);
+							mainToolBar = new JToolBar();
+							getContentPane().add(mainToolBar, BorderLayout.NORTH);
+							mainToolBar.setFloatable(false);
+							mainToolBar.setRollover(true);
 
-							jButton1 = new JButton();
-							jToolBar1.add(jButton1);
-							jButton1.setMnemonic(java.awt.event.KeyEvent.VK_S);
-							jButton1.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
-								"ca/strangebrew/icons/save.gif")));
-							jButton1.addActionListener(new ActionListener() {
+							saveButton = new JButton();
+							mainToolBar.add(saveButton);
+							saveButton.setMnemonic(java.awt.event.KeyEvent.VK_S);
+							saveButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
+								"ca/strangebrew/icons/save.gif")));			
+							
+							saveButton.addActionListener(new ActionListener(){
 								public void actionPerformed(ActionEvent evt) {
-									System.out.println("jButton1.actionPerformed, event=" + evt);
-									//TODO add your code for jButton1.actionPerformed
+									saveFile(evt);
 								}
 							});
 
 							jButton2 = new JButton();
-							jToolBar1.add(jButton2);
+							mainToolBar.add(jButton2);
 							jButton2.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
 								"ca/strangebrew/icons/find.gif")));
 							jButton2.addActionListener(new ActionListener() {
@@ -1491,7 +1495,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 							maltTotalUnitsComboModel = new ComboModel();
 							maltTotalUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
 							maltTotalUnitsComboBox.setModel(maltTotalUnitsComboModel);
-							TableColumn t = tblMaltTotals.getColumnModel().getColumn(2);
+							TableColumn t = tblMaltTotals.getColumnModel().getColumn(4);
 							t.setCellEditor(new DefaultCellEditor(maltTotalUnitsComboBox));
 							maltTotalUnitsComboBox.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -1850,42 +1854,10 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(
 						        KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 
-						saveMenuItem.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {
-
-								int choice = 1;
-
-								if (currentFile != null) {
-									File file = currentFile;
-									//This is where a real application would save the file.
-									try {
-										FileWriter out = new FileWriter(file);
-										out.write(myRecipe.toXML());
-										out.close();										
-										Debug.print("Saved: " + file.getAbsoluteFile());
-										currentFile = file;
-
-
-									} catch (Exception e) {
-										showError(e);
-									}
-
+						saveMenuItem.addActionListener(new ActionListener(){
+								public void actionPerformed(ActionEvent evt) {
+									saveFile(evt);
 								}
-								// prompt to save if not already saved
-								else {
-
-									choice = JOptionPane.showConfirmDialog(null,
-											"File not saved.  Do you wish to save it?",
-											"File note saved", JOptionPane.YES_NO_OPTION);
-
-								}
-
-								if (choice == 0) {
-									// same as save as:									
-									saveAs();
-								}
-
-							}
 						});
 					}
 					{
@@ -1987,27 +1959,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						
 						JMenuItem printMenuItem = new JMenuItem("Print...");
 						fileMenu.add(printMenuItem);
-						
-						final JFrame owner = this;
-						printMenuItem.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {
-								// Copy current recipe to clipboard
-//								 save file as xml, then transform it to html
-								File tmp = new File("tmp.html");								
-								try {
-									saveAsHTML(tmp, "ca/strangebrew/data/recipeToSimpleHtml.xslt");
-									HTMLViewer view = new HTMLViewer(owner, tmp.toURL());
-									view.setModal(true);
-									view.setVisible(true);
-								} catch (Exception e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}	
-								tmp.delete();
-								
-								
-							}
-						});
+						printMenuItem.setEnabled(false);
 						
 					}
 					{
@@ -2105,24 +2057,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						helpMenuItem = new JMenuItem();
 						jMenu5.add(helpMenuItem);
 						helpMenuItem.setText("Help");
-						final JFrame owner = this;
-						helpMenuItem.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {
-								URL help;
-								try {
-									help = new File(appRoot + "/help/index.html").toURL();
-									HTMLViewer view = new HTMLViewer(owner, help);
-									view.setModal(true);
-									view.setVisible(true);
-								} catch (Exception e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								
-
-							}
-						});
-						
+						helpMenuItem.setEnabled(false);
 						
 					}
 					{
@@ -2144,6 +2079,44 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 			e.printStackTrace();
 		}
 	}
+	
+	private void saveFile(ActionEvent evt){
+
+		int choice = 1;
+
+		if (currentFile != null) {
+			File file = currentFile;									
+			try {
+				FileWriter out = new FileWriter(file);
+				out.write(myRecipe.toXML());
+				out.close();										
+				Debug.print("Saved: " + file.getAbsoluteFile());
+				currentFile = file;
+
+
+			} catch (Exception e) {
+				showError(e);
+			}
+
+		}
+		// prompt to save if not already saved
+		else {
+
+			choice = JOptionPane.showConfirmDialog(null,
+					"File not saved.  Do you wish to save it?",
+					"File note saved", JOptionPane.YES_NO_OPTION);
+
+		}
+
+		if (choice == 0) {
+			// same as save as:
+			saveAs();
+		}
+
+
+
+	}
+	
 	private void recipeSettingsActionPerformed(ActionEvent evt) {
 		Object o = evt.getSource();
 		String s = (String) ((JComboBox) o).getSelectedItem();

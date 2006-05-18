@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.12 2006/05/17 19:57:19 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.13 2006/05/18 17:34:42 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -49,7 +49,9 @@ public class XmlHandler extends DefaultHandler{
 	private int minutes;
 	private int rampMin;
 
-	public Recipe getRecipe() {return r;}
+	public Recipe getRecipe() {
+		r.setAllowRecalcs(true);
+		return r;}
 	
 	//===========================================================
 	// SAX DocumentHandler methods
@@ -94,6 +96,7 @@ public class XmlHandler extends DefaultHandler{
 		if (eName.equalsIgnoreCase("STRANGEBREWRECIPE")) {
 			importType = "STRANGEBREW";
 			r = new Recipe();
+			r.setAllowRecalcs(false);
 			emit("StrangeBrew recipe detected.");
 		} else if (eName.equalsIgnoreCase("RECIPE")) {
 			if (attrs != null) {
@@ -105,6 +108,7 @@ public class XmlHandler extends DefaultHandler{
 							"qbrew".equalsIgnoreCase(attrs.getValue(i))){
 						importType = "QBREW";
 						r = new Recipe();
+						r.setAllowRecalcs(false);
 						emit("QBrew recipe detected.");
 					}						
 				}

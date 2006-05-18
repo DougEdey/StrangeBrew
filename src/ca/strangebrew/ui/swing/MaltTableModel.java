@@ -57,15 +57,11 @@ class MaltTableModel extends AbstractTableModel {
 		try {
 			switch (col) {
 				case 0: // steep
-					return data.getMaltSteep(row);
+					return new Boolean(data.getMaltSteep(row));
 				case 1: // mash
-					return data.getMaltMashed(row);
-				case 2 :
-					// indicate this is a sugar:
-					String s = "";
-					if (!data.getMaltMashed(row) && data.getMaltSteep(row))
-						s = "*";
-					return s + data.getMaltName(row);
+					return new Boolean (data.getMaltMashed(row));
+				case 2 :					
+					return data.getMaltName(row);
 				case 3 :
 					return SBStringUtils.format(data
 							.getMaltAmountAs(row, data.getMaltUnits(row)), 1);

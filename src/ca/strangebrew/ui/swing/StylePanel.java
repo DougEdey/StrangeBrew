@@ -23,7 +23,6 @@ import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.Style;
 
 
-
 public class StylePanel extends javax.swing.JPanel {
 	private JLabel jLabel1;
 	private JLabel lblStyle2;
@@ -39,13 +38,14 @@ public class StylePanel extends javax.swing.JPanel {
 	private JLabel stlRcpABV;
 	private JLabel stlRcpIBU;
 	private JLabel stlRcpColour;
-	private JPanel stylePanel;
 	private ComboModel cmbStyle2Model;
 	private JComboBox cmbStyle2;
 	private JLabel jLabel7;
 	private JLabel jLabel6;
 	private JLabel jLabel5;
 	private JLabel jLabel4;
+	private JLabel jLabel8;
+	private JLabel ogbuLbl;
 	private JPanel jPanel3;
 	private JPanel jPanel1;
 	private JLabel jLabel3;
@@ -101,6 +101,9 @@ public class StylePanel extends javax.swing.JPanel {
 		stlLowIBU.setText(SBStringUtils.format(s.ibuLow, 1));
 		stlRcpIBU.setText(SBStringUtils.format(myRecipe.getIbu(), 1));
 		stlHighIBU.setText(SBStringUtils.format(s.ibuHigh, 1));
+		
+		double bugu = myRecipe.getIbu() / (myRecipe.getEstOg() - 1) * 1000;
+		ogbuLbl.setText("" + SBStringUtils.format(bugu, 1));
 		
 		checkStyleConformance();
 		txaStyles.setText(getStyleMatches());
@@ -345,6 +348,15 @@ public class StylePanel extends javax.swing.JPanel {
 							new Insets(0, 0, 0, 0), 0, 0));
 					stlHighIBU.setText("0");
 				}
+
+				jLabel8 = new JLabel();
+				jPanel2.add(jLabel8, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+				jLabel8.setText("BU:GU:");
+
+				ogbuLbl = new JLabel();
+				jPanel2.add(ogbuLbl, new GridBagConstraints(2, 5, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+				ogbuLbl.setText("1:1");
+
 			}
 			{
 				jPanel3 = new JPanel();

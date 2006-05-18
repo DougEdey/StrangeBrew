@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * $Id: Ingredient.java,v 1.4 2006/05/16 14:36:52 andrew_avis Exp $
+ * $Id: Ingredient.java,v 1.5 2006/05/18 17:34:42 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  *
@@ -105,8 +105,10 @@ public class Ingredient {
 	public void setStock (double d) { stock = d; }
 	public void setType(String t){ type = t; }
 	public void setUnits(String a){ amount.setUnits(a); }
-	
-	public void setUnitsFull(String u){ amount.setUnits(u); }
+	public void convertTo(String newUnits){
+		setCost(Quantity.convertUnit(newUnits, getUnits(), getCostPerU()));			
+		amount.convertTo(newUnits);		
+	}
 	
 	// implement to support comboboxes in Swing:
 	public String toString(){

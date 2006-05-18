@@ -15,7 +15,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.9 2006/05/17 19:57:19 andrew_avis Exp $
+ * $Id: Database.java,v 1.10 2006/05/18 17:34:42 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -91,6 +91,13 @@ public class Database {
 		readMisc(dbPath);
 		styleDB = new ArrayList();
 		importStyles(dbPath);
+		
+		// sort
+		ObjComparator sc = new ObjComparator();
+		Collections.sort(styleDB,  sc);
+		Collections.sort(fermDB,  sc);
+		Collections.sort(hopsDB,  sc);
+		Collections.sort(yeastDB,  sc);
 	}
 	public void readFermentables(String path) {
 		// read the fermentables from the csv file
@@ -143,8 +150,6 @@ public class Database {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
-		/*ObjComparator sc = new ObjComparator();
-		Collections.sort(fermDB,  sc);*/
 
 	}
 	
@@ -252,9 +257,7 @@ public class Database {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
-		// sort:
-		/*ObjComparator sc = new ObjComparator();
-		Collections.sort(hopsDB,  sc);*/
+
 
 	}
 	
@@ -354,9 +357,7 @@ public class Database {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
-		// sort:
-		ObjComparator sc = new ObjComparator();
-		Collections.sort(yeastDB,  sc);
+
 
 	}
 	
@@ -470,7 +471,8 @@ public class Database {
 		File yeastFile = new File(path, "styleguide.xml");
 		Debug.print("Opening: " + yeastFile.getName() + ".\n");
 		ImportXml imp = new ImportXml(yeastFile.toString(), "style");
-		styleDB = imp.styleHandler.getStyles();
+		styleDB = imp.styleHandler.getStyles();		
+
 
 	}
 	

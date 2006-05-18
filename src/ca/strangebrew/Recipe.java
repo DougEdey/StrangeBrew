@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.25 2006/05/17 19:57:19 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.26 2006/05/18 17:34:42 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -38,7 +38,8 @@ public class Recipe {
 	// basics:
 
 	private String version;
-
+	
+	private boolean allowRecalcs = true;
 	private double alcohol;
 	private double attenuation;
 	private int boilMinutes;
@@ -294,6 +295,13 @@ public class Recipe {
 	}
 
 	// Setters:
+	
+	/*
+	 * Turn off allowRecalcs when you are importing a recipe, so that
+	 * strange things don't happen.  BE SURE TO TURN BACK ON!
+	 */
+	public void setAllowRecalcs(boolean b){ allowRecalcs = b; }
+	
 	public void setAlcMethod(String s) {
 		alcMethod = s;
 		calcAlcohol(alcMethod);
@@ -824,6 +832,8 @@ public class Recipe {
 
 	public void calcMaltTotals() {
 
+		if (!allowRecalcs)
+			return;
 		double maltPoints = 0;
 		double mcu = 0;
 		totalMaltLbs = 0;
@@ -874,6 +884,8 @@ public class Recipe {
 
 	public void calcHopsTotals() {
 
+		if (!allowRecalcs)
+			return;
 		double ibuTotal = 0;
 		totalHopsCost = 0;
 		totalHopsOz = 0;
@@ -1120,6 +1132,10 @@ public class Recipe {
 		sb.append("  <LOV>" + SBStringUtils.format(srm, 1) + "</LOV>\n");
 		sb.append("  <IBU>" + SBStringUtils.format(ibu, 1) + "</IBU>\n");
 		sb.append("  <ALC>" + SBStringUtils.format(alcohol, 1) + "</ALC>\n");
+		sb.append("  <!-- SBJ1.0 Extensions: -->\n");
+		sb.append("  <EVAP>" + evap + "</EVAP>\n");
+		sb.append("  <EVAP_METHOD>" + evapMethod + "</EVAP_METHOD>\n");
+		sb.append("  <!-- END SBJ1.0 Extensions -->\n");
 		sb.append("  <BOIL_TIME>" + boilMinutes + "</BOIL_TIME>\n");
 		sb.append("  <PRESIZE>" + preBoilVol.getValue() + "</PRESIZE>\n");
 		sb.append("  <SIZE>" + postBoilVol.getValue() + "</SIZE>\n");
@@ -1134,8 +1150,6 @@ public class Recipe {
 		sb.append("  <ALC_METHOD>" + alcMethod + "</ALC_METHOD>\n");
 		sb.append("  <IBU_METHOD>" + ibuCalcMethod + "</IBU_METHOD>\n");
 		sb.append("  <COLOUR_METHOD>" + colourMethod + "</COLOUR_METHOD>\n");
-		sb.append("  <EVAP>" + evap + "</EVAP>\n");
-		sb.append("  <EVAP_METHOD>" + evapMethod + "</EVAP_METHOD>\n");
 		sb.append("  <KETTLE_LOSS>" + kettleLoss + "</KETTLE_LOSS>\n");
 		sb.append("  <TRUB_LOSS>" + trubLoss + "</TRUB_LOSS>\n");
 		sb.append("  <MISC_LOSS>" + miscLoss + "</MISC_LOSS>\n");
