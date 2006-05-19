@@ -1,5 +1,5 @@
 /*
- * $Id: DilutionPanel.java,v 1.5 2006/05/16 14:36:51 andrew_avis Exp $
+ * $Id: DilutionPanel.java,v 1.6 2006/05/19 16:57:30 andrew_avis Exp $
  * Created on June 4, 2005
  * Dilution panel to help you figure out the results of diluting
  * your wort with water post-boil.
@@ -138,8 +138,8 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 		ogHighLabel.setText(SBStringUtils.format(s.getOgHigh(), 3));
 		abvLowLabel.setText(SBStringUtils.format(s.getAlcLow(), 1));		
 		abvHighLabel.setText(SBStringUtils.format(s.getAlcHigh(), 1));
-		colourLowLabel.setText(SBStringUtils.format(s.getLovLow(), 1));		
-		colourHighLabel.setText(SBStringUtils.format(s.getLovHigh(), 1));
+		colourLowLabel.setText(SBStringUtils.format(s.getSrmLow(), 1));		
+		colourHighLabel.setText(SBStringUtils.format(s.getSrmHigh(), 1));
 		ibuLowLabel.setText(SBStringUtils.format(s.getIbuLow(), 1));		
 		ibuHighLabel.setText(SBStringUtils.format(s.getIbuHigh(), 1));
 		

@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.26 2006/05/18 17:34:42 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.27 2006/05/19 16:57:30 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -1114,12 +1114,18 @@ public class Recipe {
 			return new Color(r, g, b, aConst);
 		}
 	}
+	
+	private String addXMLHeader(String in){
+		in = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" + in; 
+		return in;
+	}
 
-	public String toXML() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+	public String toXML(String printOptions) {
+		StringBuffer sb = new StringBuffer();		
 		sb.append("<STRANGEBREWRECIPE version = \"" + version + "\">\n");
 		sb.append("<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->\n");
+		if (printOptions != null)
+			sb.append(printOptions);
 		sb.append("  <DETAILS>\n");
 		sb.append("  <NAME>" + SBStringUtils.subEntities(name) + "</NAME>\n");
 		sb.append("  <BREWER>" + SBStringUtils.subEntities(brewer) + "</BREWER>\n");
@@ -1191,10 +1197,14 @@ public class Recipe {
 			sb.append(((Note) notes.get(i)).toXML());
 		}
 		sb.append("  </NOTES>\n");
+		
+		// style xml:
+		sb.append(style.toXML());
 
 		sb.append("</STRANGEBREWRECIPE>");
 
-		return sb.toString();
+		
+		return addXMLHeader(sb.toString());
 	}
 
 	public static String padLeft(String str, int fullLength, char ch) {

@@ -1,435 +1,129 @@
-<?xml version="1.0" encoding="ISO8859-1" ?>
-<?xml:stylesheet type="text/xsl" href="strangebrew17.xsl" ?>
- <STRANGEBREWRECIPE version = "1.7">
-<DETAILS>
-   <NAME type="1">
-     Mattagami Dark
-   </NAME>
-   <NOTES type="16">
-     A fabulous brown ale that was a huge hit with brewers at the 2002 MOB big brew, and won bronze in the Brown Ale category at March in Montreal 2003.
-   </NOTES>
-   <EFFICIENCY type="6">
-     75.0
-   </EFFICIENCY>
-   <OG type="6">
-     1.045
-   </OG>
-   <FG type="6">
-     1.011
-   </FG>
-   <STYLE type="1">
-     Northern Brown
-   </STYLE>
-   <MASH type="5">
-     True
-   </MASH>
-   <LOV type="6">
-     12
-   </LOV>
-   <IBU type="6">
-     20.3
-   </IBU>
-   <ALC type="6">
-     4.44
-   </ALC>
-   <BOIL_TIME type="6">
-     60
-   </BOIL_TIME>
-   <PRESIZE type="6">
-     5.9
-   </PRESIZE>
-   <SIZE type="6">
-     5
-   </SIZE>
-   <SIZE_UNITS type="1">
-     gallons US
-   </SIZE_UNITS>
-   <MALT_UNITS type="1">
-     lb
-   </MALT_UNITS>
-   <HOPS_UNITS type="1">
-     oz
-   </HOPS_UNITS>
-   <HOPS_OZS type="6">
-     1.70
-   </HOPS_OZS>
-   <YEAST type="1">
-     Danstar Nottingham Dry Ale Yeast
-   </YEAST>
-   <MALT_LBS type="6">
-     8.13
-   </MALT_LBS>
-   <INDEX type="14">
-     101
-   </INDEX>
-   <RECIPE_DATE type="11">
-     5/15/2002
-   </RECIPE_DATE>
-   <ATTENUATION type="6">
-     75.0
-   </ATTENUATION>
-   <MISC_COST type="6">
-     $6.00
-   </MISC_COST>
-   <GRAIN_TMP type="6">
-     65
-   </GRAIN_TMP>
-   <BOTTLE_SIZE type="6">
-     12
-   </BOTTLE_SIZE>
-   <SUGAR_TYPE type="1">
-     DME
-   </SUGAR_TYPE>
-   <KEGGED type="5">
-     False
-   </KEGGED>
-   <SERV_TEMP type="6">
-     6
-   </SERV_TEMP>
-   <BOTTLE_TEMP type="6">
-     16
-   </BOTTLE_TEMP>
-   <VOLS_CO type="6">
-     2.4
-   </VOLS_CO>
-   <MISC_INGR_COST type="6">
-     
-   </MISC_INGR_COST>
-   <YEAST_COST type="6">
-     $0.75
-   </YEAST_COST>
-   <MASH_LBS type="6">
-     8.13
-   </MASH_LBS>
-   <MASH_RATIO type="6">
-     1.25
-   </MASH_RATIO>
-   <MASH_RATIO_U type="1">
-     qt/lb
-   </MASH_RATIO_U>
-   <MASH_TMP_U type="1">
-     F
-   </MASH_TMP_U>
-   <MASH_VOL_U type="1">
-     litres
-   </MASH_VOL_U>
-   <CARB_TEMP_U type="1">
-     C
-   </CARB_TEMP_U>
-   <BOTTLE_U type="1">
-     fl. ounces
-   </BOTTLE_U>
-   <SUGAR_U type="1">
-     ounces
-   </SUGAR_U>
-   <BREWED type="5">
-     False
-   </BREWED>
-   <DATEBREWED type="9">
-     
-   </DATEBREWED>
-   <WL_TRUB type="6">
-     1
-   </WL_TRUB>
-   <WL_KETTLE type="6">
-     1
-   </WL_KETTLE>
-   <BREWER type="1">
-     Andrew Perron
-   </BREWER>
-   <DescrLookup type="1">
-     The Nottingham strai
-   </DescrLookup>
-   <LOCKED type="5">
-     False
-   </LOCKED>
-   <MASH_TIME type="6">
-     60
-   </MASH_TIME>
-   <FINAL_BEER_VOL type="6">
-     
-   </FINAL_BEER_VOL>
-   <FOLDER type="1">
-     
-   </FOLDER>
-   <STARTTIME type="10">
-     9:00:00 AM
-   </STARTTIME>
-   <TIMETOSPARGE type="3">
-     60
-   </TIMETOSPARGE>
-   <TIMETOBOIL type="3">
-     30
-   </TIMETOBOIL>
-   <TIMETOCHILL type="3">
-     30
-   </TIMETOCHILL>
-   <TIMETOCLEAN type="3">
-     15
-   </TIMETOCLEAN>
-   <TIMETOPREP type="3">
-     30
-   </TIMETOPREP>
-   <DILUTED type="5">
-     False
-   </DILUTED>
-   <DILUTE_VOL type="6">
-     
-   </DILUTE_VOL>
-   <DILUTE_TOTAL type="6">
-     
-   </DILUTE_TOTAL>
-   <MASH_TUNLOSS_TEMP type="6">
-     3
-   </MASH_TUNLOSS_TEMP>
-   <WL_MISC type="6">
-     
-   </WL_MISC>
-   <EVAP type="6">
-     15
-   </EVAP>
-</DETAILS>
- <FERMENTABLES>
-<ITEM>
-   <MALT type="1">
-     British Carastan
-   </MALT>
-   <AMOUNT type="6">
-     2
-   </AMOUNT>
-   <RECIPE type="2">
-     101
-   </RECIPE>
-   <POINTS type="6">
-     1.035
-   </POINTS>
-   <COSTLB type="6">
-     $0.90
-   </COSTLB>
-   <UNITS type="1">
-     lb
-   </UNITS>
-   <LOV type="6">
-     34
-   </LOV>
-   <DescrLookup type="1">
-     British Carastan: Also known as CaraStan, use 5 to 20% of English Crystal to add color and a full, toffee/sweet flavor to Bitters, Pale Ales and Porters.
-   </DescrLookup>
-</ITEM>
-<ITEM>
-   <MALT type="1">
-     British Two-Row
-   </MALT>
-   <AMOUNT type="6">
-     6
-   </AMOUNT>
-   <RECIPE type="2">
-     101
-   </RECIPE>
-   <POINTS type="6">
-     1.038
-   </POINTS>
-   <COSTLB type="6">
-     $0.47
-   </COSTLB>
-   <UNITS type="1">
-     lb
-   </UNITS>
-   <LOV type="6">
-     2.5
-   </LOV>
-   <DescrLookup type="1">
-     British Two-Row: Fully modified British malt, easily converted by a single temperature mash.  Preferred by many brewers for full flavored ales.  Pale Ale malt has undergone higher kilning than Klages and is lower in diastatic power so keep adjuncts to 15% or less. 
-   </DescrLookup>
-</ITEM>
-<ITEM>
-   <MALT type="1">
-     Roast Barley
-   </MALT>
-   <AMOUNT type="6">
-     2
-   </AMOUNT>
-   <RECIPE type="2">
-     101
-   </RECIPE>
-   <POINTS type="6">
-     1.029
-   </POINTS>
-   <COSTLB type="6">
-     $0.06
-   </COSTLB>
-   <UNITS type="1">
-     oz
-   </UNITS>
-   <LOV type="6">
-     450
-   </LOV>
-   <DescrLookup type="1">
-     Roast Barley: Use 10 to 12% to impart a distinct, roasted flavor to Stouts.  Other dark beers also benefit from smaller quantities (2 - 6%). 
-   </DescrLookup>
-</ITEM>
- </FERMENTABLES>
- <HOPS>
-<ITEM>
-   <HOP type="1">
-     Fuggles
-   </HOP>
-   <RECIPE type="2">
-     101
-   </RECIPE>
-   <AMOUNT type="6">
-     1
-   </AMOUNT>
-   <ADDORDER type="3">
-     3
-   </ADDORDER>
-   <TIME type="6">
-     60
-   </TIME>
-   <UNITS type="1">
-     oz
-   </UNITS>
-   <FORM type="1">
-     Leaf
-   </FORM>
-   <ALPHA type="6">
-     4.5
-   </ALPHA>
-   <COSTOZ type="6">
-     $1.25
-   </COSTOZ>
-   <ADD type="1">
-     FWH
-   </ADD>
-   <DescrLookup type="1">
-     Fuggles: Good all purpose ale hop. Well suited to bittering, flavoring and finishing.Will lend a pleasant hop profile, tending to be slightly fruity in aroma.
-   </DescrLookup>
-   <GUID type="14">
-     332
-   </GUID>
-</ITEM>
-<ITEM>
-   <HOP type="1">
-     Fuggles
-   </HOP>
-   <RECIPE type="2">
-     101
-   </RECIPE>
-   <AMOUNT type="6">
-     .5
-   </AMOUNT>
-   <ADDORDER type="3">
-     2
-   </ADDORDER>
-   <TIME type="6">
-     15
-   </TIME>
-   <UNITS type="1">
-     oz
-   </UNITS>
-   <FORM type="1">
-     Leaf
-   </FORM>
-   <ALPHA type="6">
-     4.5
-   </ALPHA>
-   <COSTOZ type="6">
-     $1.25
-   </COSTOZ>
-   <ADD type="1">
-     Boil
-   </ADD>
-   <DescrLookup type="1">
-     Fuggles: Good all purpose ale hop. Well suited to bittering, flavoring and finishing.Will lend a pleasant hop profile, tending to be slightly fruity in aroma.
-   </DescrLookup>
-   <GUID type="14">
-     333
-   </GUID>
-</ITEM>
-<ITEM>
-   <HOP type="1">
-     Fuggles
-   </HOP>
-   <RECIPE type="2">
-     101
-   </RECIPE>
-   <AMOUNT type="6">
-     .2
-   </AMOUNT>
-   <ADDORDER type="3">
-     2
-   </ADDORDER>
-   <TIME type="6">
-     0
-   </TIME>
-   <UNITS type="1">
-     oz
-   </UNITS>
-   <FORM type="1">
-     Leaf
-   </FORM>
-   <ALPHA type="6">
-     4.5
-   </ALPHA>
-   <COSTOZ type="6">
-     $1.25
-   </COSTOZ>
-   <ADD type="1">
-     Boil
-   </ADD>
-   <DescrLookup type="1">
-     Fuggles: Good all purpose ale hop. Well suited to bittering, flavoring and finishing.Will lend a pleasant hop profile, tending to be slightly fruity in aroma.
-   </DescrLookup>
-   <GUID type="14">
-     334
-   </GUID>
-</ITEM>
- </HOPS>
- <MASH>
-<ITEM>
-   <RECIPE type="2">
-     101
-   </RECIPE>
-   <TYPE type="1">
-     alpha
-   </TYPE>
-   <DISPL_TEMP type="6">
-     155.0
-   </DISPL_TEMP>
-   <TEMP type="6">
-     155.0
-   </TEMP>
-   <METHOD type="1">
-     infusion
-   </METHOD>
-   <MIN type="3">
-     60
-   </MIN>
-   <DIRECTIONS type="16">
-     Mash in with 9.6 litres of water at 172.0 F
-   </DIRECTIONS>
-   <WATER_EQV type="6">
-     13.6
-   </WATER_EQV>
-   <WATER_QTS type="6">
-     10.2
-   </WATER_QTS>
-   <DECOCT_QTS type="6">
-     0.0
-   </DECOCT_QTS>
-   <END_TEMP type="6">
-     155.0
-   </END_TEMP>
-   <RAMP_MIN type="3">
-     0
-   </RAMP_MIN>
-   <DISPL_END_TEMP type="6">
-     155.0
-   </DISPL_END_TEMP>
-</ITEM>
- </MASH>
- <MISC>
- </MISC>
- <NOTES>
- </NOTES>
- </STRANGEBREWRECIPE>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "0.6 (Beta)">
+<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
+  <DETAILS>
+  <NAME>Mattagami Dark</NAME>
+  <BREWER>Andrew Perron</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>75.0</EFFICIENCY>
+  <OG>1.038</OG>
+  <FG>1.009</FG>
+  <STYLE>Northern Brown</STYLE>
+  <MASH>true</MASH>
+  <LOV>12.9</LOV>
+  <IBU>18.4</IBU>
+  <ALC>3.7</ALC>
+  <EVAP>1.0</EVAP>
+  <EVAP_METHOD>Constant</EVAP_METHOD>
+  <BOIL_TIME>60</BOIL_TIME>
+  <PRESIZE>7.0</PRESIZE>
+  <SIZE>6.0</SIZE>
+  <SIZE_UNITS>gallons US</SIZE_UNITS>
+  <MALT_UNITS>lb</MALT_UNITS>
+  <HOPS_UNITS>oz</HOPS_UNITS>
+  <YEAST>Danstar Nottingham Dry Ale Yeast</YEAST>
+  <RECIPE_DATE>05/15/2002</RECIPE_DATE>
+  <ATTENUATION>75.0</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Volume</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>SRM</COLOUR_METHOD>
+  <KETTLE_LOSS>1.0</KETTLE_LOSS>
+  <TRUB_LOSS>1.0</TRUB_LOSS>
+  <MISC_LOSS>1.0</MISC_LOSS>
+  <PELLET_HOP_PCT>6.0</PELLET_HOP_PCT>
+  <YEAST_COST>0.75</YEAST_COST>
+  <OTHER_COST>5.0</OTHER_COST>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <ITEM>
+      <MALT>British Carastan</MALT>
+      <AMOUNT>2.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.035</POINTS>
+      <LOV>34.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>British Carastan: Also known as CaraStan, use 5 to 20% of English Crystal to add color and a full, toffee/sweet flavor to Bitters, Pale Ales and Porters.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>British Two-Row</MALT>
+      <AMOUNT>6.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.038</POINTS>
+      <LOV>2.5</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.47</COSTLB>
+      <DESCRIPTION>British Two-Row: Fully modified British malt, easily converted by a single temperature mash.  Preferred by many brewers for full flavored ales.  Pale Ale malt has undergone higher kilning than Klages and is lower in diastatic power so keep adjuncts to 15% or less.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Roast Barley</MALT>
+      <AMOUNT>2.0</AMOUNT>
+      <UNITS>oz</UNITS>
+      <POINTS>1.029</POINTS>
+      <LOV>450.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.06</COSTLB>
+      <DESCRIPTION>Roast Barley: Use 10 to 12% to impart a distinct, roasted flavor to Stouts.  Other dark beers also benefit from smaller quantities (2 - 6%).</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <ITEM>
+      <HOP>Fuggles</HOP>
+      <AMOUNT>1.0</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>4.5</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>FWH</ADD>
+      <DESCRIPTION>Fuggles: Good all purpose ale hop. Well suited to bittering, flavoring and finishing.Will lend a pleasant hop profile, tending to be slightly fruity in aroma.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Fuggles</HOP>
+      <AMOUNT>0.5</AMOUNT>
+      <TIME>15</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>4.5</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Fuggles: Good all purpose ale hop. Well suited to bittering, flavoring and finishing.Will lend a pleasant hop profile, tending to be slightly fruity in aroma.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Fuggles</HOP>
+      <AMOUNT>0.2</AMOUNT>
+      <TIME>0</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>4.5</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Fuggles: Good all purpose ale hop. Well suited to bittering, flavoring and finishing.Will lend a pleasant hop profile, tending to be slightly fruity in aroma.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+  </MISC>
+  <MASH>
+    <ITEM>
+      <TYPE>alpha</TYPE>
+      <TEMP>155.0</TEMP>
+      <DISPL_TEMP>155.0</DISPL_TEMP>
+      <END_TEMP>155.0</END_TEMP>
+      <DISPL_END_TEMP>155.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Mash in with 0.0 gallons US of water at 168.4 F</DIRECTIONS>
+    </ITEM>
+  </MASH>
+  <NOTES>
+  </NOTES>
+</STRANGEBREWRECIPE>

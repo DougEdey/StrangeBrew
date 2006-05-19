@@ -1,5 +1,5 @@
 /*
- * $Id: XmlStyleHandler.java,v 1.4 2006/05/03 14:07:02 andrew_avis Exp $
+ * $Id: XmlStyleHandler.java,v 1.5 2006/05/19 16:57:30 andrew_avis Exp $
  * Created on Oct 14, 2004
  */
 package ca.strangebrew;
@@ -26,6 +26,7 @@ public class XmlStyleHandler extends DefaultHandler {
 	private String currentElement = null; // current element name
 	private String descrBuf = ""; // buffer to hold long descriptions
 	private String type = ""; // beer class 
+	private boolean flexible = false; // flexible attr
 
 	private boolean newStyle = false;
 
@@ -95,7 +96,30 @@ public class XmlStyleHandler extends DefaultHandler {
 				eName.equalsIgnoreCase("srm") ||
 				eName.equalsIgnoreCase("abv")) {
 			currentList = eName;
+			if (attrs != null) {
+				for (int i = 0; i < attrs.getLength(); i++) {
+					String s = attrs.getLocalName(i); // Attr name
+					if ("".equalsIgnoreCase(s))
+						s = attrs.getQName(i);
+					if (s.equalsIgnoreCase("flexible")) {
+						flexible = new Boolean(attrs.getValue(i)).booleanValue();
+					}
+				}
+				if (eName.equalsIgnoreCase("og"))
+					style.ogFlexible = flexible;
+				if (eName.equalsIgnoreCase("fg"))
+					style.fgFlexible = flexible;
+				if (eName.equalsIgnoreCase("ibu"))
+					style.ibuFlexible = flexible;
+				if (eName.equalsIgnoreCase("srm"))
+					style.srmFlexible = flexible;
+				if (eName.equalsIgnoreCase("abv"))
+					style.alcFlexible = flexible;					
+						
+			}
 		}
+		
+		
 
 		if (eName.equalsIgnoreCase("subcategory") ) {
 			style = new Style();
@@ -165,7 +189,7 @@ public class XmlStyleHandler extends DefaultHandler {
 			descrBuf = "";
 		}
 		if (qName.equalsIgnoreCase("examples")){
-			style.commercialEx = descrBuf;
+			style.examples = descrBuf;
 			descrBuf = "";
 		}
 
@@ -205,7 +229,7 @@ public class XmlStyleHandler extends DefaultHandler {
 				if (currentList.equalsIgnoreCase("ibu"))
 					style.ibuLow = Double.parseDouble(s);
 				if (currentList.equalsIgnoreCase("srm"))
-					style.lovLow = Double.parseDouble(s);
+					style.srmLow = Double.parseDouble(s);
 				if (currentList.equalsIgnoreCase("abv"))
 					style.alcLow = Double.parseDouble(s);
 			}
@@ -215,7 +239,7 @@ public class XmlStyleHandler extends DefaultHandler {
 				if (currentList.equalsIgnoreCase("ibu"))
 					style.ibuHigh = Double.parseDouble(s);
 				if (currentList.equalsIgnoreCase("srm"))
-					style.lovHigh = Double.parseDouble(s);
+					style.srmHigh = Double.parseDouble(s);
 				if (currentList.equalsIgnoreCase("abv"))
 					style.alcHigh = Double.parseDouble(s);
 			}

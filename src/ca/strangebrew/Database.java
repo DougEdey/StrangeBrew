@@ -15,7 +15,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.10 2006/05/18 17:34:42 andrew_avis Exp $
+ * $Id: Database.java,v 1.11 2006/05/19 16:57:30 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -141,8 +141,7 @@ public class Database {
 				}
 			} catch (EOFException e) {
 			}
-			reader.close();
-			
+			reader.close();	
 			
 
 
@@ -445,9 +444,9 @@ public class Database {
 						s.setAlcHigh(Double.parseDouble(fields[alchighIdx]));
 						s.setIbuLow(Double.parseDouble(fields[ibulowIdx]));
 						s.setIbuHigh(Double.parseDouble(fields[ibuhighIdx]));
-						s.setLovLow(Double.parseDouble(fields[lovlowIdx]));
-						s.setLovHigh(Double.parseDouble(fields[lovhighIdx]));
-						s.setCommercialEx(fields[commexIdx]);
+						s.setSrmLow(Double.parseDouble(fields[lovlowIdx]));
+						s.setSrmHigh(Double.parseDouble(fields[lovhighIdx]));
+						s.setExamples(fields[commexIdx]);
 						s.comments = fields[descrIdx];
 						styleDB.add(s);
 					}

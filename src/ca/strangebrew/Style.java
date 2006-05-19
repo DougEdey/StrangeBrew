@@ -2,7 +2,7 @@ package ca.strangebrew;
 
 
 /**
- * $Id: Style.java,v 1.3 2006/05/01 20:02:06 andrew_avis Exp $
+ * $Id: Style.java,v 1.4 2006/05/19 16:57:30 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  * This is a class to create a style object
@@ -16,13 +16,20 @@ public class Style {
 	public String catNum;
 	public double ogLow;
 	public double ogHigh;
+	public boolean ogFlexible;
+	public double fgLow;
+	public double fgHigh;
+	public boolean fgFlexible;
 	public double alcLow;
 	public double alcHigh;
+	public boolean alcFlexible;
 	public double ibuLow;
 	public double ibuHigh;
-	public double lovLow;
-	public double lovHigh;
-	public String commercialEx;
+	public boolean ibuFlexible;
+	public double srmLow;
+	public double srmHigh;
+	public boolean srmFlexible;
+	public String examples;
 	// public String description;
 	
 	public String aroma;
@@ -80,10 +87,10 @@ public class Style {
 		return catNum;
 	}
 	/**
-	 * @return Returns the commercialEx.
+	 * @return Returns the examples.
 	 */
-	public String getCommercialEx() {
-		return commercialEx;
+	public String getExamples() {
+		return examples;
 	}
 
 	/**
@@ -99,16 +106,16 @@ public class Style {
 		return ibuLow;
 	}
 	/**
-	 * @return Returns the lovHigh.
+	 * @return Returns the srmHigh.
 	 */
-	public double getLovHigh() {
-		return lovHigh;
+	public double getSrmHigh() {
+		return srmHigh;
 	}
 	/**
-	 * @return Returns the lovLow.
+	 * @return Returns the srmLow.
 	 */
-	public double getLovLow() {
-		return lovLow;
+	public double getSrmLow() {
+		return srmLow;
 	}
 	/**
 	 * @return Returns the ogHigh.
@@ -151,10 +158,10 @@ public class Style {
 		this.catNum = catNum;
 	}
 	/**
-	 * @param commercialEx The commercialEx to set.
+	 * @param examples The examples to set.
 	 */
-	public void setCommercialEx(String commercialEx) {
-		this.commercialEx = commercialEx;
+	public void setExamples(String commercialEx) {
+		this.examples = commercialEx;
 	}
 	/**
 	 * @param ibuHigh The ibuHigh to set.
@@ -169,16 +176,16 @@ public class Style {
 		this.ibuLow = ibuLow;
 	}
 	/**
-	 * @param lovHigh The lovHigh to set.
+	 * @param srmHigh The srmHigh to set.
 	 */
-	public void setLovHigh(double lovHigh) {
-		this.lovHigh = lovHigh;
+	public void setSrmHigh(double lovHigh) {
+		this.srmHigh = lovHigh;
 	}
 	/**
-	 * @param lovLow The lovLow to set.
+	 * @param srmLow The srmLow to set.
 	 */
-	public void setLovLow(double lovLow) {
-		this.lovLow = lovLow;
+	public void setSrmLow(double lovLow) {
+		this.srmLow = lovLow;
 	}
 	/**
 	 * @param ogHigh The ogHigh to set.
@@ -193,10 +200,57 @@ public class Style {
 		this.ogLow = ogLow;
 	}
 	
+	private String xmlElement(String elem, String content, int i) {
+		String s = "";
+		for (int j = 0; j<i;j++)
+			s += " ";		
+		s += "<" + elem + ">" + content + "</" + elem + ">\n";		
+		return s;
+	}
+
+	
 	public String toXML(){
 		StringBuffer sb = new StringBuffer();
-	    sb.append( "<STYLE>"+getName()+"</STYLE>\n" );
-	    // sb.append( "<DESCR>"+getDescription()+"</DESCR>\n" );
+		int indent = 0;
+	    sb.append(" <style>\n");    
+	    // this is the BJCP style dtd:
+	    sb.append("  <subcategory id=\"" + catNum + "\">");
+	    indent = 4;
+	    sb.append(xmlElement("name", name, indent));
+	    sb.append(xmlElement("aroma", aroma, indent)); 
+	    sb.append(xmlElement("appearance", appearance, indent));
+	    sb.append(xmlElement("flavor", flavour, indent));
+	    sb.append(xmlElement("mouthfeel", mouthfeel, indent));
+	    sb.append(xmlElement("impression", impression, indent));
+	    sb.append(xmlElement("comments", comments, indent));
+	    sb.append(xmlElement("ingredients", ingredients, indent));
+	    sb.append(" <stats>\n");
+	    sb.append("  <og flexible=\"" + ogFlexible + "\">\n");
+	    indent = 6;
+	    sb.append(xmlElement("low", ""+ogLow, indent));
+	    sb.append(xmlElement("high", ""+ogHigh, indent));
+	    sb.append("  </og>\n"); 
+	    sb.append("  <fg flexible=\"" + fgFlexible + "\">\n");
+	    sb.append(xmlElement("low", ""+fgLow, indent));
+	    sb.append(xmlElement("high", ""+fgHigh, indent));
+	    sb.append("  </fg>\n");
+	    sb.append("  <ibu flexible=\"" + ibuFlexible + "\">\n");
+	    sb.append(xmlElement("low", ""+ibuLow, indent));
+	    sb.append(xmlElement("high", ""+ibuHigh, indent));
+	    sb.append("  </ibu>\n");
+	    sb.append("  <srm flexible=\"" + srmFlexible + "\">\n");
+	    sb.append(xmlElement("low", ""+srmLow, indent));
+	    sb.append(xmlElement("high", ""+srmHigh, indent));
+	    sb.append("  </srm>\n");
+	    sb.append("  <abv flexible=\"" + alcFlexible + "\">\n");
+	    sb.append(xmlElement("low", ""+alcLow, indent));
+	    sb.append(xmlElement("high", ""+alcHigh, indent));
+	    sb.append("  </abv>\n");	    
+	    sb.append("</stats>\n");
+	    indent = 4;
+	    sb.append(xmlElement("examples", examples, indent));	    
+	    sb.append("  </subcategory>\n");
+	    sb.append(" </style>\n");	    
 	    return sb.toString();
 	}
 	
@@ -207,7 +261,7 @@ public class Style {
 	    sb.append( "Class: "+type+"\n" );
 	    sb.append( "OG: "+ogLow + "-"+ogHigh+"\n" );
 	    sb.append( "IBU: "+ibuLow + "-"+ibuHigh+"\n" );
-	    sb.append( "SRM: "+lovLow + "-"+lovHigh+"\n" );
+	    sb.append( "SRM: "+srmLow + "-"+srmHigh+"\n" );
 	    sb.append( "Alc: "+alcLow + "-"+alcHigh+"\n" );
 	    sb.append( "Aroma: "+aroma+"\n" );
 	    sb.append( "Appearance: "+appearance+"\n" );
@@ -216,7 +270,7 @@ public class Style {
 	    sb.append( "Impression: "+impression+"\n" );
 	    sb.append( "Comments: "+comments+"\n" );
 	    sb.append( "Ingredients: "+ingredients+"\n" );
-	    sb.append( "Examples: "+commercialEx+"\n" );
+	    sb.append( "Examples: "+examples+"\n" );
 	    return sb.toString();
 	}
 	

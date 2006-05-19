@@ -1,538 +1,153 @@
-<?xml version="1.0" encoding="ISO8859-1" ?>
-<?xml-stylesheet type="text/xsl" href="strangebrew18.xsl" ?>
- <STRANGEBREWRECIPE version = "1.8">
-<DETAILS>
-   <NAME type="1">
-     30A Ginger Rye Camomile Wit
-   </NAME>
-   <NOTES type="16">
-     
-   </NOTES>
-   <EFFICIENCY type="6">
-     78.0
-   </EFFICIENCY>
-   <OG type="6">
-     1.066
-   </OG>
-   <FG type="6">
-     1.017
-   </FG>
-   <STYLE type="1">
-     Witbier
-   </STYLE>
-   <MASH type="5">
-     True
-   </MASH>
-   <LOV type="6">
-     4.2
-   </LOV>
-   <IBU type="6">
-     18.2
-   </IBU>
-   <ALC type="6">
-     6.55
-   </ALC>
-   <BOIL_TIME type="6">
-     75
-   </BOIL_TIME>
-   <PRESIZE type="6">
-     56
-   </PRESIZE>
-   <SIZE type="6">
-     51
-   </SIZE>
-   <SIZE_UNITS type="1">
-     litres
-   </SIZE_UNITS>
-   <MALT_UNITS type="1">
-     lb
-   </MALT_UNITS>
-   <HOPS_UNITS type="1">
-     oz
-   </HOPS_UNITS>
-   <HOPS_OZS type="6">
-     4.50
-   </HOPS_OZS>
-   <YEAST type="1">
-     Safbrew T-58
-   </YEAST>
-   <MALT_LBS type="6">
-     36.00
-   </MALT_LBS>
-   <INDEX type="14">
-     182
-   </INDEX>
-   <RECIPE_DATE type="11">
-     4/13/2005
-   </RECIPE_DATE>
-   <ATTENUATION type="6">
-     75.0
-   </ATTENUATION>
-   <MISC_COST type="6">
-     $5.00
-   </MISC_COST>
-   <GRAIN_TMP type="6">
-     65
-   </GRAIN_TMP>
-   <BOTTLE_SIZE type="6">
-     12
-   </BOTTLE_SIZE>
-   <SUGAR_TYPE type="1">
-     dextrose
-   </SUGAR_TYPE>
-   <KEGGED type="5">
-     False
-   </KEGGED>
-   <SERV_TEMP type="6">
-     38
-   </SERV_TEMP>
-   <BOTTLE_TEMP type="6">
-     72
-   </BOTTLE_TEMP>
-   <VOLS_CO type="6">
-     2.4
-   </VOLS_CO>
-   <MISC_INGR_COST type="6">
-     $1.24
-   </MISC_INGR_COST>
-   <YEAST_COST type="6">
-     $0.75
-   </YEAST_COST>
-   <MASH_LBS type="6">
-     36.00
-   </MASH_LBS>
-   <MASH_RATIO type="6">
-     1.25
-   </MASH_RATIO>
-   <MASH_RATIO_U type="1">
-     qt/lb
-   </MASH_RATIO_U>
-   <MASH_TMP_U type="1">
-     F
-   </MASH_TMP_U>
-   <MASH_VOL_U type="1">
-     gallons US
-   </MASH_VOL_U>
-   <CARB_TEMP_U type="1">
-     F
-   </CARB_TEMP_U>
-   <BOTTLE_U type="1">
-     fl. ounces
-   </BOTTLE_U>
-   <SUGAR_U type="1">
-     gr
-   </SUGAR_U>
-   <BREWED type="5">
-     False
-   </BREWED>
-   <DATEBREWED type="9">
-     
-   </DATEBREWED>
-   <WL_TRUB type="6">
-     0.5
-   </WL_TRUB>
-   <WL_KETTLE type="6">
-     0.5
-   </WL_KETTLE>
-   <BREWER type="1">
-     Drew Avis
-   </BREWER>
-   <DescrLookup type="1">
-     A speciality yeast s
-   </DescrLookup>
-   <LOCKED type="5">
-     False
-   </LOCKED>
-   <MASH_TIME type="6">
-     120
-   </MASH_TIME>
-   <FINAL_BEER_VOL type="6">
-     
-   </FINAL_BEER_VOL>
-   <FOLDER type="1">
-     
-   </FOLDER>
-   <STARTTIME type="10">
-     12:00:00 PM
-   </STARTTIME>
-   <TIMETOSPARGE type="3">
-     0
-   </TIMETOSPARGE>
-   <TIMETOBOIL type="3">
-     30
-   </TIMETOBOIL>
-   <TIMETOCHILL type="3">
-     30
-   </TIMETOCHILL>
-   <TIMETOCLEAN type="3">
-     15
-   </TIMETOCLEAN>
-   <TIMETOPREP type="3">
-     30
-   </TIMETOPREP>
-   <DILUTED type="5">
-     True
-   </DILUTED>
-   <DILUTE_VOL type="6">
-     10.00
-   </DILUTE_VOL>
-   <DILUTE_TOTAL type="6">
-     61.00
-   </DILUTE_TOTAL>
-   <MASH_TUNLOSS_TEMP type="6">
-     3
-   </MASH_TUNLOSS_TEMP>
-   <WL_MISC type="6">
-     
-   </WL_MISC>
-   <EVAP type="6">
-     4
-   </EVAP>
-   <BATCHES type="3">
-     0
-   </BATCHES>
-</DETAILS>
- <FERMENTABLES>
-<ITEM>
-   <MALT type="1">
-     German Pilsener
-   </MALT>
-   <AMOUNT type="6">
-     16
-   </AMOUNT>
-   <RECIPE type="2">
-     182
-   </RECIPE>
-   <POINTS type="6">
-     1.038
-   </POINTS>
-   <COSTLB type="6">
-     $0.72
-   </COSTLB>
-   <UNITS type="1">
-     lb
-   </UNITS>
-   <LOV type="6">
-     1.6
-   </LOV>
-   <DescrLookup type="1">
-     German Pilsener - usually a moravian malt, very light in colour, perfect for decoction mashes and as a base for lighter lagers.
-   </DescrLookup>
-</ITEM>
-<ITEM>
-   <MALT type="1">
-     Rice Hulls
-   </MALT>
-   <AMOUNT type="6">
-     4
-   </AMOUNT>
-   <RECIPE type="2">
-     182
-   </RECIPE>
-   <POINTS type="6">
-     1.000
-   </POINTS>
-   <COSTLB type="6">
-     $0.50
-   </COSTLB>
-   <UNITS type="1">
-     lb
-   </UNITS>
-   <LOV type="6">
-     0
-   </LOV>
-   <DescrLookup type="1">
-     Filter bed material for beers with large amounts of adjuncts. Rule of thumb: use in grists that consist of greater than 60% wheat or 10% rye.  Use 10% or more.
-   </DescrLookup>
-</ITEM>
-<ITEM>
-   <MALT type="1">
-     Rye Malt
-   </MALT>
-   <AMOUNT type="6">
-     2
-   </AMOUNT>
-   <RECIPE type="2">
-     182
-   </RECIPE>
-   <POINTS type="6">
-     1.030
-   </POINTS>
-   <COSTLB type="6">
-     $0.60
-   </COSTLB>
-   <UNITS type="1">
-     lb
-   </UNITS>
-   <LOV type="6">
-     4
-   </LOV>
-   <DescrLookup type="1">
-     Malted Rye
-   </DescrLookup>
-</ITEM>
-<ITEM>
-   <MALT type="1">
-     Wheat (Flaked)
-   </MALT>
-   <AMOUNT type="6">
-     14
-   </AMOUNT>
-   <RECIPE type="2">
-     182
-   </RECIPE>
-   <POINTS type="6">
-     1.034
-   </POINTS>
-   <COSTLB type="6">
-     $0.50
-   </COSTLB>
-   <UNITS type="1">
-     lb
-   </UNITS>
-   <LOV type="6">
-     2
-   </LOV>
-   <DescrLookup type="1">
-     Wheat (Flaked)
-   </DescrLookup>
-</ITEM>
- </FERMENTABLES>
- <HOPS>
-<ITEM>
-   <HOP type="1">
-     Saaz
-   </HOP>
-   <RECIPE type="2">
-     182
-   </RECIPE>
-   <AMOUNT type="6">
-     4.5
-   </AMOUNT>
-   <ADDORDER type="3">
-     2
-   </ADDORDER>
-   <TIME type="6">
-     65
-   </TIME>
-   <UNITS type="1">
-     oz
-   </UNITS>
-   <FORM type="1">
-     Leaf
-   </FORM>
-   <ALPHA type="6">
-     3.5
-   </ALPHA>
-   <COSTOZ type="6">
-     $1.00
-   </COSTOZ>
-   <ADD type="1">
-     Boil
-   </ADD>
-   <DescrLookup type="1">
-     Saaz: Having mild bittering power, it's the spicy, earthy, flavor and aroma that makes Saaz one of the worlds most prized Pilsner and Lager hops.
-   </DescrLookup>
-   <GUID type="14">
-     478
-   </GUID>
-</ITEM>
- </HOPS>
- <MASH>
-<ITEM>
-   <RECIPE type="2">
-     182
-   </RECIPE>
-   <TYPE type="1">
-     alpha
-   </TYPE>
-   <DISPL_TEMP type="6">
-     155.0
-   </DISPL_TEMP>
-   <TEMP type="6">
-     155.0
-   </TEMP>
-   <METHOD type="1">
-     infusion
-   </METHOD>
-   <MIN type="3">
-     60
-   </MIN>
-   <DIRECTIONS type="16">
-     Mash in with 11.3 gallons US of water at 172.0 F
-   </DIRECTIONS>
-   <WATER_EQV type="6">
-     60.1
-   </WATER_EQV>
-   <WATER_QTS type="6">
-     45.0
-   </WATER_QTS>
-   <DECOCT_QTS type="6">
-     0.0
-   </DECOCT_QTS>
-   <END_TEMP type="6">
-     155.0
-   </END_TEMP>
-   <RAMP_MIN type="3">
-     0
-   </RAMP_MIN>
-   <DISPL_END_TEMP type="6">
-     155.0
-   </DISPL_END_TEMP>
-</ITEM>
-<ITEM>
-   <RECIPE type="2">
-     182
-   </RECIPE>
-   <TYPE type="1">
-     mashout
-   </TYPE>
-   <DISPL_TEMP type="6">
-     168.0
-   </DISPL_TEMP>
-   <TEMP type="6">
-     168.0
-   </TEMP>
-   <METHOD type="1">
-     infusion
-   </METHOD>
-   <MIN type="3">
-     60
-   </MIN>
-   <DIRECTIONS type="16">
-     Add 3.8 gallons US of water at 212.0 F
-   </DIRECTIONS>
-   <WATER_EQV type="6">
-     51.9
-   </WATER_EQV>
-   <WATER_QTS type="6">
-     15.3
-   </WATER_QTS>
-   <DECOCT_QTS type="6">
-     0.0
-   </DECOCT_QTS>
-   <END_TEMP type="6">
-     168.0
-   </END_TEMP>
-   <RAMP_MIN type="3">
-     0
-   </RAMP_MIN>
-   <DISPL_END_TEMP type="6">
-     168.0
-   </DISPL_END_TEMP>
-</ITEM>
- </MASH>
- <MISC>
-<ITEM>
-   <RECIPE type="2">
-     182
-   </RECIPE>
-   <NAME type="1">
-     Ginger
-   </NAME>
-   <AMOUNT type="6">
-     2
-   </AMOUNT>
-   <UNITS type="1">
-     oz
-   </UNITS>
-   <COMMENTS type="16">
-     Grated ginger, added at flameout.
-   </COMMENTS>
-   <DescrLookup type="1">
-     Use fresh ground ginger (vary .5 to 4 oz per 5 gallon batch).  I used dried ginger once and dumped the whole batch.  
-   </DescrLookup>
-   <COST_PER_U type="6">
-     $0.12
-   </COST_PER_U>
-   <STAGE type="1">
-     Boil
-   </STAGE>
-   <TIME type="3">
-     0
-   </TIME>
-</ITEM>
-<ITEM>
-   <RECIPE type="2">
-     182
-   </RECIPE>
-   <NAME type="1">
-     Camomile
-   </NAME>
-   <AMOUNT type="6">
-     1
-   </AMOUNT>
-   <UNITS type="1">
-     oz
-   </UNITS>
-   <COMMENTS type="16">
-     Loose bulk flowers, added at flameout.
-   </COMMENTS>
-   <DescrLookup type="1">
-     A flower often used to make tea
-   </DescrLookup>
-   <COST_PER_U type="6">
-     $1.00
-   </COST_PER_U>
-   <STAGE type="1">
-     Boil
-   </STAGE>
-   <TIME type="3">
-     0
-   </TIME>
-</ITEM>
- </MISC>
- <NOTES>
-<ITEM>
-   <RECIPE type="6">
-     182
-   </RECIPE>
-   <DATE type="9">
-     6/2/2005
-   </DATE>
-   <GUID type="14">
-     81
-   </GUID>
-   <TYPE type="1">
-     Lagered
-   </TYPE>
-   <NOTE type="16">
-     More note testing
-   </NOTE>
-</ITEM>
-<ITEM>
-   <RECIPE type="6">
-     182
-   </RECIPE>
-   <DATE type="9">
-     6/8/2005
-   </DATE>
-   <GUID type="14">
-     80
-   </GUID>
-   <TYPE type="1">
-     Planning
-   </TYPE>
-   <NOTE type="16">
-     TEsting the notes
-   </NOTE>
-</ITEM>
-<ITEM>
-   <RECIPE type="6">
-     182
-   </RECIPE>
-   <DATE type="9">
-     6/16/2005
-   </DATE>
-   <GUID type="14">
-     82
-   </GUID>
-   <TYPE type="1">
-     Contest
-   </TYPE>
-   <NOTE type="16">
-     Yep
-   </NOTE>
-</ITEM>
- </NOTES>
- </STRANGEBREWRECIPE>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "0.6 (Beta)">
+<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
+  <DETAILS>
+  <NAME>30A Ginger Rye Camomile Wit</NAME>
+  <BREWER>Drew Avis</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>78.0</EFFICIENCY>
+  <OG>1.071</OG>
+  <FG>1.018</FG>
+  <STYLE>Witbier</STYLE>
+  <MASH>true</MASH>
+  <LOV>4.4</LOV>
+  <IBU>18.8</IBU>
+  <ALC>7.0</ALC>
+  <BOIL_TIME>75</BOIL_TIME>
+  <PRESIZE>52.875</PRESIZE>
+  <SIZE>47.875</SIZE>
+  <SIZE_UNITS>litres</SIZE_UNITS>
+  <MALT_UNITS>lb</MALT_UNITS>
+  <HOPS_UNITS>oz</HOPS_UNITS>
+  <YEAST>Safbrew T-58</YEAST>
+  <RECIPE_DATE>04/13/2005</RECIPE_DATE>
+  <ATTENUATION>75.0</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Volume</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>SRM</COLOUR_METHOD>
+  <EVAP>4.0</EVAP>
+  <EVAP_METHOD>Constant</EVAP_METHOD>
+  <KETTLE_LOSS>1.0</KETTLE_LOSS>
+  <TRUB_LOSS>1.0</TRUB_LOSS>
+  <MISC_LOSS>1.0</MISC_LOSS>
+  <PELLET_HOP_PCT>6.0</PELLET_HOP_PCT>
+  <YEAST_COST>0.75</YEAST_COST>
+  <OTHER_COST>5.0</OTHER_COST>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <ITEM>
+      <MALT>German Pilsener</MALT>
+      <AMOUNT>16.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.038</POINTS>
+      <LOV>1.6</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.72</COSTLB>
+      <DESCRIPTION>German Pilsener - usually a moravian malt, very light in colour, perfect for decoction mashes and as a base for lighter lagers.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Rice Hulls</MALT>
+      <AMOUNT>4.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.0</POINTS>
+      <LOV>0.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.5</COSTLB>
+      <DESCRIPTION>Filter bed material for beers with large amounts of adjuncts. Rule of thumb: use in grists that consist of greater than 60% wheat or 10% rye.  Use 10% or more.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Rye Malt</MALT>
+      <AMOUNT>2.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.03</POINTS>
+      <LOV>4.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.6</COSTLB>
+      <DESCRIPTION>Malted Rye</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Wheat (Flaked)</MALT>
+      <AMOUNT>14.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.034</POINTS>
+      <LOV>2.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.5</COSTLB>
+      <DESCRIPTION>Wheat (Flaked)</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <ITEM>
+      <HOP>Saaz</HOP>
+      <AMOUNT>4.5</AMOUNT>
+      <TIME>65</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>3.5</ALPHA>
+      <COSTOZ>1.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Saaz: Having mild bittering power, it&apos;s the spicy, earthy, flavor and aroma that makes Saaz one of the worlds most prized Pilsner and Lager hops.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+    <ITEM>
+      <NAME>Ginger</NAME>
+      <AMOUNT>2.0</AMOUNT>
+      <UNITS>ounces</UNITS>
+      <STAGE>Boil</STAGE>
+      <TIME>0</TIME>
+      <COMMENTS>Grated ginger, added at flameout.</COMMENTS>
+    </ITEM>
+    <ITEM>
+      <NAME>Camomile</NAME>
+      <AMOUNT>1.0</AMOUNT>
+      <UNITS>ounces</UNITS>
+      <STAGE>Boil</STAGE>
+      <TIME>0</TIME>
+      <COMMENTS>Loose bulk flowers, added at flameout.</COMMENTS>
+    </ITEM>
+  </MISC>
+  <MASH>
+    <ITEM>
+      <TYPE>alpha</TYPE>
+      <TEMP>155.0</TEMP>
+      <DISPL_TEMP>155.0</DISPL_TEMP>
+      <END_TEMP>155.0</END_TEMP>
+      <DISPL_END_TEMP>155.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Mash in with 11.2 gallons US of water at 168.4 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>mashout</TYPE>
+      <TEMP>168.0</TEMP>
+      <DISPL_TEMP>168.0</DISPL_TEMP>
+      <END_TEMP>168.0</END_TEMP>
+      <DISPL_END_TEMP>168.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Add 3.8 gallons US of water at 212.0 F</DIRECTIONS>
+    </ITEM>
+  </MASH>
+  <NOTES>
+    <ITEM>
+      <DATE>05/17/2006</DATE>
+      <TYPE>Planning</TYPE>
+      <NOTE>This is a test</NOTE>
+    </ITEM>
+    <ITEM>
+      <DATE>05/17/2006</DATE>
+      <TYPE>Brewed</TYPE>
+      <NOTE>Another Test</NOTE>
+    </ITEM>
+  </NOTES>
+</STRANGEBREWRECIPE>

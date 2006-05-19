@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.31 2006/05/18 17:34:57 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.32 2006/05/19 16:57:30 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -95,6 +95,8 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import net.sf.wraplog.AbstractLogger;
+import net.sf.wraplog.SystemLogger;
 import ca.strangebrew.Database;
 import ca.strangebrew.Debug;
 import ca.strangebrew.Fermentable;
@@ -110,6 +112,11 @@ import ca.strangebrew.Yeast;
 
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.michaelbaranov.microba.calendar.DatePicker;
+
+import edu.stanford.ejalbert.BrowserLauncher;
+import edu.stanford.ejalbert.BrowserLauncherRunner;
+import edu.stanford.ejalbert.exception.BrowserLaunchingInitializingException;
+import edu.stanford.ejalbert.exception.UnsupportedOperatingSystemException;
 
 
 public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener, WindowListener {
@@ -616,11 +623,11 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		actionPerformed(evt);
 	}
 
-	public void saveAsHTML(File f, String xslt) throws Exception {
+	public void saveAsHTML(File f, String xslt, String options) throws Exception {
 		// save file as xml, then transform it to html
 		File tmp = new File("tmp.xml");
 		FileWriter out = new FileWriter(tmp);
-		out.write(myRecipe.toXML());
+		out.write(myRecipe.toXML(options));
 		out.close();
 
 		// find the xslt stylesheet in the classpath		
@@ -630,7 +637,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		FileOutputStream output = new FileOutputStream(f);
 
 		XmlTransformer.writeStream(tmp, xsltFile, output);
-		tmp.delete();
+		// tmp.delete();
 
 	}
 
@@ -923,7 +930,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 					preferences.getIProperty("winHeight"));
 			this.setLocation(preferences.getIProperty("winX"), 
 					preferences.getIProperty("winY"));
-			imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/brew.ico");
+			imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/sb2.gif");
 			icon = new ImageIcon(imgURL);
 			this.setIconImage(icon.getImage());
 			this.setTitle("StrangeBrew " + version);
@@ -1867,12 +1874,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						fileMenu.add(saveAsMenuItem);						
 						saveAsMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
-								// This is just a test right now to see that
-								// stuff is changed.
-								Debug.print(myRecipe.toXML());
-
 								saveAs();
-
 							}
 						});
 					}
@@ -1900,7 +1902,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 										File file = fileChooser.getSelectedFile();
 										//This is where a real application would save the file.
 										try {
-											saveAsHTML(file, "ca/strangebrew/data/recipeToHtml.xslt");
+											saveAsHTML(file, "ca/strangebrew/data/recipeToHtml.xslt", null);
 
 										} catch (Exception e) {
 											showError(e);
@@ -1959,7 +1961,15 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						
 						JMenuItem printMenuItem = new JMenuItem("Print...");
 						fileMenu.add(printMenuItem);
-						printMenuItem.setEnabled(false);
+						final JFrame owner = this;
+						printMenuItem.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								PrintDialog pd = new PrintDialog(owner);
+								pd.setModal(true);
+								pd.setVisible(true);
+							}
+						});
+						
 						
 					}
 					{
@@ -2056,8 +2066,31 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 					{
 						helpMenuItem = new JMenuItem();
 						jMenu5.add(helpMenuItem);
-						helpMenuItem.setText("Help");
-						helpMenuItem.setEnabled(false);
+						helpMenuItem.setText("Help");						
+						helpMenuItem.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								String urlString = "file://" + appRoot + slash + "help" + slash + "index.html";
+								Debug.print(urlString);
+								AbstractLogger logger = new SystemLogger();								
+								BrowserLauncher launcher;
+								try {
+									launcher = new BrowserLauncher(logger);
+									BrowserLauncherRunner runner = new BrowserLauncherRunner(
+						                    launcher,
+						                    urlString,
+						                    null);
+						            Thread launcherThread = new Thread(runner);
+						            launcherThread.start();
+								} catch (BrowserLaunchingInitializingException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (UnsupportedOperatingSystemException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}							
+
+							}
+						});
 						
 					}
 					{
@@ -2088,7 +2121,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 			File file = currentFile;									
 			try {
 				FileWriter out = new FileWriter(file);
-				out.write(myRecipe.toXML());
+				out.write(myRecipe.toXML(null));
 				out.close();										
 				Debug.print("Saved: " + file.getAbsoluteFile());
 				currentFile = file;
@@ -2148,7 +2181,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 			//This is where a real application would save the file.
 			try {
 				FileWriter out = new FileWriter(file);
-				out.write(myRecipe.toXML());
+				out.write(myRecipe.toXML(null));
 				out.close();
 				currentFile = file;
 

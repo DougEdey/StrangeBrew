@@ -98,7 +98,7 @@ public class NotesPanel extends javax.swing.JPanel {
 						notesTable.setModel(notesTableModel);
 
 						// set up type combo
-						String[] types = {"Planning", "Brewed", "Racked", "Conditioned", "Kegged",
+						String[] types = {"Planning", "Brewed", "Fermentation", "Racked", "Conditioned", "Kegged",
 								"Bottled", "Tasting", "Contest"};
 						JComboBox typeComboBox = new JComboBox(types);
 						TableColumn noteColumn = notesTable.getColumnModel().getColumn(1);

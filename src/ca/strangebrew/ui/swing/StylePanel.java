@@ -95,9 +95,9 @@ public class StylePanel extends javax.swing.JPanel {
 		stlLowABV.setText(SBStringUtils.format(s.alcLow, 1));
 		stlRcpABV.setText(SBStringUtils.format(myRecipe.getAlcohol(), 1));
 		stlHighABV.setText(SBStringUtils.format(s.alcHigh, 1));
-		stlLowColour.setText(SBStringUtils.format(s.lovLow, 1));
+		stlLowColour.setText(SBStringUtils.format(s.srmLow, 1));
 		stlRcpColour.setText(SBStringUtils.format(myRecipe.getSrm(), 1));
-		stlHighColour.setText(SBStringUtils.format(s.lovHigh, 1));
+		stlHighColour.setText(SBStringUtils.format(s.srmHigh, 1));
 		stlLowIBU.setText(SBStringUtils.format(s.ibuLow, 1));
 		stlRcpIBU.setText(SBStringUtils.format(myRecipe.getIbu(), 1));
 		stlHighIBU.setText(SBStringUtils.format(s.ibuHigh, 1));
@@ -123,8 +123,8 @@ public class StylePanel extends javax.swing.JPanel {
 		else
 			stlRcpABV.setForeground(Color.black);
 		
-		if (myRecipe.getSrm() < s.lovLow ||
-				myRecipe.getSrm() > s.lovHigh)
+		if (myRecipe.getSrm() < s.srmLow ||
+				myRecipe.getSrm() > s.srmHigh)
 			stlRcpColour.setForeground(Color.red);
 		else
 			stlRcpColour.setForeground(Color.black);
@@ -147,7 +147,7 @@ public class StylePanel extends javax.swing.JPanel {
 			s = (Style) cmbStyle2Model.list.get(i);
 			if (	myRecipe.getEstOg() > s.ogLow && myRecipe.getEstOg() < s.ogHigh &&
 					myRecipe.getAlcohol() > s.alcLow && myRecipe.getAlcohol() < s.alcHigh &&
-					myRecipe.getSrm() > s.lovLow && myRecipe.getSrm() < s.lovHigh &&
+					myRecipe.getSrm() > s.srmLow && myRecipe.getSrm() < s.srmHigh &&
 					myRecipe.getIbu() > s.ibuLow && myRecipe.getIbu() < s.ibuHigh ) {
 				styles = styles.concat(s.name + "\n");
 			}
