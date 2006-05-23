@@ -101,9 +101,8 @@ public class StylePanel extends javax.swing.JPanel {
 		stlLowIBU.setText(SBStringUtils.format(s.ibuLow, 1));
 		stlRcpIBU.setText(SBStringUtils.format(myRecipe.getIbu(), 1));
 		stlHighIBU.setText(SBStringUtils.format(s.ibuHigh, 1));
-		
-		double bugu = myRecipe.getIbu() / (myRecipe.getEstOg() - 1) * 1000;
-		ogbuLbl.setText("" + SBStringUtils.format(bugu, 1));
+
+		ogbuLbl.setText("" + SBStringUtils.format(myRecipe.getBUGU(), 1));
 		
 		checkStyleConformance();
 		txaStyles.setText(getStyleMatches());

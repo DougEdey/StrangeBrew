@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.8 2006/05/17 19:57:19 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.9 2006/05/23 19:17:58 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -480,7 +480,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			volLabel.setText(myRecipe.mash.getMashTotalVol());
 			grainTempText.setText(new Double(myRecipe.mash.getGrainTemp()).toString());
 			boilTempTxt.setText(new Double(myRecipe.mash.getBoilTemp()).toString());
-			tunLossTxt.setText(new Double(myRecipe.mash.getTunLoss()).toString());
+			tunLossTxt.setText(SBStringUtils.format(myRecipe.mash.getTunLoss(), 1));
 			tempFrb.setSelected(myRecipe.mash.getMashTempUnits().equalsIgnoreCase("F"));
 
 

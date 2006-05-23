@@ -1,5 +1,5 @@
 /*
- * $Id: DilutionPanel.java,v 1.6 2006/05/19 16:57:30 andrew_avis Exp $
+ * $Id: DilutionPanel.java,v 1.7 2006/05/23 19:17:58 andrew_avis Exp $
  * Created on June 4, 2005
  * Dilution panel to help you figure out the results of diluting
  * your wort with water post-boil.
@@ -86,24 +86,6 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 	
 	private Recipe myRecipe;
 
-	/**
-	* Auto-generated main method to display this 
-	* JPanel inside a new JFrame.
-	*/
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		frame.getContentPane().add(new DilutionPanel());
-//		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-//		frame.pack();
-//		frame.setVisible(true);
-//	}
-	
-//	public DilutionPanel(Recipe r){
-//		super();
-//		myRecipe = r;
-//		initGUI();
-//		displayDilution();
-//	}
 		
 	public DilutionPanel() {
 		super();
@@ -115,7 +97,7 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 		// displayDilution();
 	}
 	
-	private void displayDilution(){
+	public void displayDilution(){
 		postBoilText.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
 		diluteWithText.setValue(new Double(myRecipe.dilution.getAddVol()));
 		totalVolumeSpinner.setValue(new Double(myRecipe.dilution.getDilVol()));

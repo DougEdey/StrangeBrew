@@ -141,7 +141,7 @@ public class PrintDialog extends javax.swing.JDialog implements ActionListener {
 		if (o == prevButton) {
 			File file = new File("print.html");
 			try {
-				app.saveAsHTML(file, "ca/strangebrew/data/recipeToHtml.xslt", printOptions);
+				app.saveAsHTML(file, "recipeToHtml.xslt", printOptions);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

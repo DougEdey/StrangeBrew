@@ -1,5 +1,5 @@
 /*
- * $Id: XmlBeerXmlHandler.java,v 1.2 2006/05/03 14:07:02 andrew_avis Exp $
+ * $Id: XmlBeerXmlHandler.java,v 1.3 2006/05/23 19:17:58 andrew_avis Exp $
  * Created on Oct 14, 2004
  */
 package ca.strangebrew;
@@ -157,7 +157,7 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 				f.setDescription(descrBuf);
 			if (currentList.equalsIgnoreCase("miscs"))
 				m.setDescription(descrBuf);
-			if (currentList.equalsIgnoreCase("yeast"))
+			if (currentList.equalsIgnoreCase("yeasts"))
 				myRecipe.getYeastObj().setDescription(descrBuf);
 			
 		}
@@ -236,7 +236,7 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 					m.setTime(new Double(s.trim()).intValue());
 								
 			}
-			else if (currentList.equalsIgnoreCase("yeast")){
+			else if (currentList.equalsIgnoreCase("yeasts")){
 				if (currentElement.equalsIgnoreCase("name"))
 					myRecipe.setYeastName(s.trim());
 				

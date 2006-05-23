@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.27 2006/05/19 16:57:30 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.28 2006/05/23 19:17:58 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -164,6 +164,10 @@ public class Recipe {
 	}
 	public double getBottleSize() {
 		return bottleSize;
+	}
+	public double getBUGU(){
+		double bugu = getIbu() / ((getEstOg() - 1) * 1000);		
+		return bugu;		
 	}
 	public String getBrewer() {
 		return brewer;

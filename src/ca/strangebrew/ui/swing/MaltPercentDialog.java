@@ -13,7 +13,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -35,7 +34,6 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 	private JRadioButton OGBtn;
 	private JRadioButton weightBtn;
 	private JComboBox weightUCombo;
-	private JLabel jLabel1;
 	private JPanel jPanel4;
 	private JSpinner OGSpn;
 	private JPanel jPanel3;
@@ -229,7 +227,7 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 		private String[] columnNames = {"Malt", "Points", "Lov", "%"};
 
 		private Recipe data = null;
-		private double[] percents;
+		// private double[] percents;
 
 		
 		public MaltPercentTableModel() {

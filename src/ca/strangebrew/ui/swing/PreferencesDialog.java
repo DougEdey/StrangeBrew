@@ -47,7 +47,7 @@ import ca.strangebrew.Recipe;
  */
 public class PreferencesDialog extends javax.swing.JDialog implements ActionListener, ChangeListener {
 
-	private boolean m_savePreferences = false;
+	
 	private Options opts = null;
 
 	private JPanel pnlBrewer;
@@ -56,7 +56,6 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 	private JButton okButton;
 	private JButton cancelButton;
-	private JPanel pnlButtons;
 	private JLabel jLabel8;
 	private JPanel pnlSortOrder;
 	private JLabel jLabel4;
@@ -68,7 +67,6 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private JTextField txtPhone;
 	private JLabel jLabel5;
 	private JTextField txtBrewerName;
-	private JButton jButton2;
 	private JLabel jLabel3;
 	private JPanel carbPanel;
 	private JComboBox cmbBottleSize;
@@ -131,9 +129,6 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private JSpinner greenSpn;
 	private JSpinner redSpn;
 	private JLabel jLabel19;
-	private JComboBox landfCombo;
-
-	private JPanel landfPanel;
 	private JPanel blackPanel;
 	private JPanel brownPanel;
 	private JPanel copperPanel;

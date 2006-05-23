@@ -2,7 +2,7 @@
 +                   README                     +
 ================================================
 
-StrangeBrew Java - Beta 0.6
+StrangeBrew Java - Beta 0.7
 (c)2000-2006 Drew Avis - drew.avis@gmail.com
 
 Thank you for downloading and trying StrangeBrew Java.
@@ -137,6 +137,28 @@ of reported bugs.  If you've found one that's not there, please report it!
 What's New
 ==========
 
+Beta 0.7
+--------
+New Features:
+
+Bugs Fixed:
+- BU:GU ratio is now displayed correctly on the Style panel (Bug 1493283).
+- Dilution panel is now updated when you first open a recipe (Bug 1492475).
+- Setting pre-boil amount now correctly updates post-boil amount.
+- Changing mash temp units to C now correctly converts tun loss (Bug 1492220).
+- Yeast now imports in BeerXML recipes. (Note: if there's more than one yeast
+  listed, only the last is imported w/ the recipe).
+- Find toolbar button now works (Bug 1489274).  
+
+// TODO:
+add these to xml output:
+>> > DETAILS/MASH_RATIO
+>> > DETAILS/MASH_TIME
+>> > DETAILS/MASH_TMP_U
+>> > DETAILS/MASH_TUNLOSS_TEMP
+
+
+
 Beta 0.6
 --------
 New Features:
@@ -240,6 +262,7 @@ Soon-to-be Implemented Features:
 - printing support (?)
 - refractometer utilities
 - save / load mash profiles
+- potential extract calculator ( http://www.brewingtechniques.com/bmg/noonan.html)
 
 Planned StrangeBrew Java Pro Features:
 - water profiling

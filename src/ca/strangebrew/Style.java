@@ -2,7 +2,7 @@ package ca.strangebrew;
 
 
 /**
- * $Id: Style.java,v 1.4 2006/05/19 16:57:30 andrew_avis Exp $
+ * $Id: Style.java,v 1.5 2006/05/23 19:17:58 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  * This is a class to create a style object
@@ -200,13 +200,7 @@ public class Style {
 		this.ogLow = ogLow;
 	}
 	
-	private String xmlElement(String elem, String content, int i) {
-		String s = "";
-		for (int j = 0; j<i;j++)
-			s += " ";		
-		s += "<" + elem + ">" + content + "</" + elem + ">\n";		
-		return s;
-	}
+	
 
 	
 	public String toXML(){
@@ -216,39 +210,39 @@ public class Style {
 	    // this is the BJCP style dtd:
 	    sb.append("  <subcategory id=\"" + catNum + "\">");
 	    indent = 4;
-	    sb.append(xmlElement("name", name, indent));
-	    sb.append(xmlElement("aroma", aroma, indent)); 
-	    sb.append(xmlElement("appearance", appearance, indent));
-	    sb.append(xmlElement("flavor", flavour, indent));
-	    sb.append(xmlElement("mouthfeel", mouthfeel, indent));
-	    sb.append(xmlElement("impression", impression, indent));
-	    sb.append(xmlElement("comments", comments, indent));
-	    sb.append(xmlElement("ingredients", ingredients, indent));
+	    sb.append(SBStringUtils.xmlElement("name", name, indent));
+	    sb.append(SBStringUtils.xmlElement("aroma", aroma, indent)); 
+	    sb.append(SBStringUtils.xmlElement("appearance", appearance, indent));
+	    sb.append(SBStringUtils.xmlElement("flavor", flavour, indent));
+	    sb.append(SBStringUtils.xmlElement("mouthfeel", mouthfeel, indent));
+	    sb.append(SBStringUtils.xmlElement("impression", impression, indent));
+	    sb.append(SBStringUtils.xmlElement("comments", comments, indent));
+	    sb.append(SBStringUtils.xmlElement("ingredients", ingredients, indent));
 	    sb.append(" <stats>\n");
 	    sb.append("  <og flexible=\"" + ogFlexible + "\">\n");
 	    indent = 6;
-	    sb.append(xmlElement("low", ""+ogLow, indent));
-	    sb.append(xmlElement("high", ""+ogHigh, indent));
+	    sb.append(SBStringUtils.xmlElement("low", ""+ogLow, indent));
+	    sb.append(SBStringUtils.xmlElement("high", ""+ogHigh, indent));
 	    sb.append("  </og>\n"); 
 	    sb.append("  <fg flexible=\"" + fgFlexible + "\">\n");
-	    sb.append(xmlElement("low", ""+fgLow, indent));
-	    sb.append(xmlElement("high", ""+fgHigh, indent));
+	    sb.append(SBStringUtils.xmlElement("low", ""+fgLow, indent));
+	    sb.append(SBStringUtils.xmlElement("high", ""+fgHigh, indent));
 	    sb.append("  </fg>\n");
 	    sb.append("  <ibu flexible=\"" + ibuFlexible + "\">\n");
-	    sb.append(xmlElement("low", ""+ibuLow, indent));
-	    sb.append(xmlElement("high", ""+ibuHigh, indent));
+	    sb.append(SBStringUtils.xmlElement("low", ""+ibuLow, indent));
+	    sb.append(SBStringUtils.xmlElement("high", ""+ibuHigh, indent));
 	    sb.append("  </ibu>\n");
 	    sb.append("  <srm flexible=\"" + srmFlexible + "\">\n");
-	    sb.append(xmlElement("low", ""+srmLow, indent));
-	    sb.append(xmlElement("high", ""+srmHigh, indent));
+	    sb.append(SBStringUtils.xmlElement("low", ""+srmLow, indent));
+	    sb.append(SBStringUtils.xmlElement("high", ""+srmHigh, indent));
 	    sb.append("  </srm>\n");
 	    sb.append("  <abv flexible=\"" + alcFlexible + "\">\n");
-	    sb.append(xmlElement("low", ""+alcLow, indent));
-	    sb.append(xmlElement("high", ""+alcHigh, indent));
+	    sb.append(SBStringUtils.xmlElement("low", ""+alcLow, indent));
+	    sb.append(SBStringUtils.xmlElement("high", ""+alcHigh, indent));
 	    sb.append("  </abv>\n");	    
 	    sb.append("</stats>\n");
 	    indent = 4;
-	    sb.append(xmlElement("examples", examples, indent));	    
+	    sb.append(SBStringUtils.xmlElement("examples", examples, indent));	    
 	    sb.append("  </subcategory>\n");
 	    sb.append(" </style>\n");	    
 	    return sb.toString();

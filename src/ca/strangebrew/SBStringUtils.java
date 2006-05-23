@@ -99,6 +99,14 @@ public class SBStringUtils {
 		return df.format(value);		
 	}
 	
+	public static String xmlElement(String elem, String content, int i) {
+		String s = "";
+		for (int j = 0; j<i;j++)
+			s += " ";		
+		s += "<" + elem + ">" + content + "</" + elem + ">\n";		
+		return s;
+	}
+	
 	
 	
 	

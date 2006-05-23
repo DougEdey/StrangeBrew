@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.16 2006/05/17 19:57:19 andrew_avis Exp $
+ * $Id: Mash.java,v 1.17 2006/05/23 19:17:58 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -223,7 +223,7 @@ public class Mash {
 		if (tempUnits.equals("F"))
 			tunLossF = t;
 		else
-			tunLossF = cToF(t);
+			tunLossF = t * 1.8;
 		calcMashSchedule();
 	}
 
@@ -259,7 +259,7 @@ public class Mash {
 		if (tempUnits.equals("F"))
 			return tunLossF; 
 		else
-			return fToC(tunLossF);
+			return ( tunLossF / 1.8 );
 		}
 	
 	/**
@@ -420,7 +420,7 @@ public class Mash {
 		// convert CurrentTemp to F
 		if (mashTempU == "C") {
 			currentTemp = cToF(currentTemp);
-			tunLoss = cToF(tunLossF);
+			tunLoss = tunLossF * 1.8;
 		}
 
 		// perform calcs on first record	  
@@ -715,6 +715,7 @@ public class Mash {
 	
 		StringBuffer sb = new StringBuffer();
 		sb.append("  <MASH>\n");
+		sb.append(SBStringUtils.xmlElement("VOLUME", getMashTotalVol(), 4));
 		for (int i = 0; i < steps.size(); i++) {
 			MashStep st = (MashStep) steps.get(i);
 			sb.append("    <ITEM>\n");

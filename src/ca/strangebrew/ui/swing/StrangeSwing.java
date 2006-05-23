@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.32 2006/05/19 16:57:30 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.33 2006/05/23 19:17:58 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -122,7 +122,7 @@ import edu.stanford.ejalbert.exception.UnsupportedOperatingSystemException;
 public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener, WindowListener {
 
 
-	private String version = "0.6 (Beta)";
+	private String version = "0.7 (Beta)";
 	
 	public JTable hopsTable;
 	public JTable maltTable;
@@ -268,7 +268,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	// private JFormattedTextField txtDate;
 	private DatePicker txtDate;
 	private JTextField txtName;
-	private JFormattedTextField txtPreBoil;
+	private JFormattedTextField preBoilText;
 	
 
 	private WaterPanel waterPanel;
@@ -466,7 +466,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		String s = "";
 		// String t = "";
 		
-		if (!o.getClass().getName().endsWith("JTextField"))
+		if (!o.getClass().getName().endsWith("TextField"))
 			return;
 		
 		s = ((JTextField) o).getText();
@@ -476,7 +476,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 			myRecipe.setName(s);
 		else if (o == brewerNameText)
 			myRecipe.setBrewer(s);
-		else if (o == txtPreBoil) {
+		else if (o == preBoilText) {
 			myRecipe.setPreBoil(Double.parseDouble(s));
 			displayRecipe();
 		} else if (o == postBoilText) {
@@ -538,7 +538,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 			return;
 		txtName.setText(myRecipe.getName());
 		brewerNameText.setText(myRecipe.getBrewer());
-		txtPreBoil.setValue(new Double(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));
+		preBoilText.setValue(new Double(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));
 		lblSizeUnits.setText(myRecipe.getVolUnits());
 		postBoilText.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
 		boilMinText.setText(SBStringUtils.format(myRecipe.getBoilMinutes(), 0));
@@ -610,6 +610,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		costPanel.displayCost();
 		waterPanel.displayWater();
 		mashPanel.displayMash();
+		dilutionPanel.displayDilution();
 
 	}
 
@@ -631,8 +632,10 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		out.close();
 
 		// find the xslt stylesheet in the classpath		
-		URL xsltUrl = getClass().getClassLoader().getResource(xslt);
-		File xsltFile = new File(xsltUrl.getFile());
+		// URL xsltUrl = getClass().getClassLoader().getResource(xslt);
+		String path = appRoot + slash + "src" + slash + "ca" 
+		+ slash + "strangebrew" + slash + "data" + slash;
+		File xsltFile = new File(path + xslt);
 
 		FileOutputStream output = new FileOutputStream(f);
 
@@ -765,8 +768,10 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		brewerNameText.addActionListener(this);
 		txtDate.addFocusListener(this);
 		txtDate.addActionListener(this);
-		txtPreBoil.addFocusListener(this);
-		txtPreBoil.addActionListener(this);
+		preBoilText.addFocusListener(this);
+		preBoilText.addActionListener(this);
+		postBoilText.addFocusListener(this);
+		postBoilText.addActionListener(this);
 		boilMinText.addFocusListener(this);
 		boilMinText.addActionListener(this);
 		evapText.addFocusListener(this);
@@ -788,22 +793,15 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 			}
 		});
 
-		postBoilText.addFocusListener(new FocusAdapter() {
+/*		postBoilText.addFocusListener(new FocusAdapter() {
 			public void focusLost(FocusEvent evt) {
 				myRecipe.setPostBoil(Double.parseDouble(postBoilText.getText()
 						.toString()));
 
 				displayRecipe();
 			}
-		});
-		postBoilText.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				myRecipe.setPostBoil(Double.parseDouble(postBoilText.getText()
-						.toString()));
+		});*/
 
-				displayRecipe();
-			}
-		});
 
 		cmbYeast.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -1091,12 +1089,12 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 
 						}
 						{
-							txtPreBoil = new JFormattedTextField();
-							pnlDetails.add(txtPreBoil, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
+							preBoilText = new JFormattedTextField();
+							pnlDetails.add(preBoilText, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
 									GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
-							txtPreBoil.setText("Pre Boil");
-							txtPreBoil.setPreferredSize(new java.awt.Dimension(37, 20));
+							preBoilText.setText("Pre Boil");
+							preBoilText.setPreferredSize(new java.awt.Dimension(37, 20));
 
 						}
 						{
@@ -1364,10 +1362,12 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 							mainToolBar.add(jButton2);
 							jButton2.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
 								"ca/strangebrew/icons/find.gif")));
+							final JFrame owner = this;
 							jButton2.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									System.out.println("jButton2.actionPerformed, event=" + evt);
-									//TODO add your code for jButton2.actionPerformed
+									FindDialog fd = new FindDialog(owner);
+									fd.setModal(true);
+									fd.setVisible(true);
 								}
 							});
 
@@ -1848,6 +1848,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 							public void actionPerformed(ActionEvent evt) {
 								// open the find dialog
 								FindDialog fd = new FindDialog(owner);
+								fd.setModal(true);
 								fd.setVisible(true);
 
 							}
@@ -1902,7 +1903,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 										File file = fileChooser.getSelectedFile();
 										//This is where a real application would save the file.
 										try {
-											saveAsHTML(file, "ca/strangebrew/data/recipeToHtml.xslt", null);
+											saveAsHTML(file, "recipeToHtml.xslt", null);
 
 										} catch (Exception e) {
 											showError(e);
