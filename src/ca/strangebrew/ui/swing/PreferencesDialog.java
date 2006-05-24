@@ -208,6 +208,15 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	}
 
 	private void setOptions() {
+		
+		// new recipe tab:
+		boilTempTxt.setText(opts.getProperty("optBoilTempF"));
+		batchSizeTxt.setText(opts.getProperty("optPostBoilVol"));
+		maltUnitsComboModel.addOrInsert(opts.getProperty("optMaltU"));
+		hopsUnitsComboModel.addOrInsert(opts.getProperty("optHopsU"));
+		volUnitsComboModel.addOrInsert(opts.getProperty("optSizeU"));
+		
+		
 		// cost tab:
 		txtOtherCost.setText(opts.getProperty("optMiscCost"));
 		txtBottleSize.setText(opts.getProperty("optBottleSize"));
@@ -233,12 +242,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		rbPercent.setSelected((opts.getProperty("optEvapCalcMethod").equalsIgnoreCase("Percent")));
 		rbConstant.setSelected((opts.getProperty("optEvapCalcMethod").equalsIgnoreCase("Constant")));
 		evapAmountTxt.setText(opts.getProperty("optEvaporation"));
-		if (opts.getProperty("optEvapCalcMethod").equalsIgnoreCase("Percent"))
-			evapAmountLbl.setText("%");
-		else
-			evapAmountLbl.setText(opts.getProperty("optSizeU") + "/hr");
-			
-		
+		setEvapLable();
 		
 		txtPellet.setText(opts.getProperty("optPelletHopsPct"));
 		txtTinsethUtil.setText(opts.getProperty("optHopsUtil"));
@@ -247,15 +251,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		txtMashHopTime.setText(opts.getProperty("optMashHopTime"));
 		txtLeftInKettle.setText(opts.getProperty("optKettleLoss"));
 		txtMiscLosses.setText(opts.getProperty("optMiscLoss"));
-		txtLostInTrub.setText(opts.getProperty("optTrubLoss"));
-
-		// new recipe tab:
-		boilTempTxt.setText(opts.getProperty("optBoilTempF"));
-		batchSizeTxt.setText(opts.getProperty("optPostBoilVol"));
-		maltUnitsComboModel.addOrInsert(opts.getProperty("optMaltU"));
-		hopsUnitsComboModel.addOrInsert(opts.getProperty("optHopsU"));
-		volUnitsComboModel.addOrInsert(opts.getProperty("optSizeU"));
-		
+		txtLostInTrub.setText(opts.getProperty("optTrubLoss"));		
 		
 		// appearances tab:
 		redSpn.setValue(new Integer(opts.getIProperty("optRed")));
@@ -842,6 +838,11 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			jLabel25.setText("Vol Units:");
 
 			volUnitsCombo = new JComboBox();
+			volUnitsCombo.addActionListener(new ActionListener() {
+				public void actionPerformed (ActionEvent e){
+					setEvapLable();
+				}
+			});
 			jPanel1.add(volUnitsCombo, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			volUnitsComboModel = new ComboModel();
 			volUnitsComboModel.setList(new Quantity().getListofUnits("vol"));
@@ -1153,6 +1154,13 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			blackPanel.setBackground(Recipe.calcRGB(2, 30, r, g, b, a));
 			
 		}
+	}
+	
+	private void setEvapLable(){
+		if (rbPercent.isSelected())				
+			evapAmountLbl.setText("%");
+		else
+			evapAmountLbl.setText(volUnitsComboModel.getSelectedItem().toString() + "/hr");
 	}
 
 }

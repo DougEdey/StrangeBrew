@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.17 2006/05/23 19:17:58 andrew_avis Exp $
+ * $Id: Mash.java,v 1.18 2006/05/24 16:01:20 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -715,7 +715,14 @@ public class Mash {
 	
 		StringBuffer sb = new StringBuffer();
 		sb.append("  <MASH>\n");
-		sb.append(SBStringUtils.xmlElement("VOLUME", getMashTotalVol(), 4));
+		sb.append(SBStringUtils.xmlElement("MASH_VOLUME", getMashTotalVol(), 4));
+		sb.append(SBStringUtils.xmlElement("MASH_RATIO", "" + mashRatio, 4));
+		sb.append(SBStringUtils.xmlElement("MASH_TIME", "" + totalTime, 4));
+		sb.append(SBStringUtils.xmlElement("MASH_TMP_U", "" + mashTempU, 4));
+		if (tempUnits.equals("C"))
+			sb.append(SBStringUtils.xmlElement("MASH_TUNLOSS_TEMP", "" + (tunLossF/1.8), 4));
+		else			
+			sb.append(SBStringUtils.xmlElement("MASH_TUNLOSS_TEMP", "" + tunLossF, 4));
 		for (int i = 0; i < steps.size(); i++) {
 			MashStep st = (MashStep) steps.get(i);
 			sb.append("    <ITEM>\n");

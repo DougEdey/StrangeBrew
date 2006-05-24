@@ -140,6 +140,8 @@ What's New
 Beta 0.7
 --------
 New Features:
+- The Resize Recipe dialog now allows you to also convert hops and fermentables
+  (Bug 1489903).
 
 Bugs Fixed:
 - BU:GU ratio is now displayed correctly on the Style panel (Bug 1493283).
@@ -149,13 +151,12 @@ Bugs Fixed:
 - Yeast now imports in BeerXML recipes. (Note: if there's more than one yeast
   listed, only the last is imported w/ the recipe).
 - Find toolbar button now works (Bug 1489274).  
-
-// TODO:
-add these to xml output:
->> > DETAILS/MASH_RATIO
->> > DETAILS/MASH_TIME
->> > DETAILS/MASH_TMP_U
->> > DETAILS/MASH_TUNLOSS_TEMP
+- Water panel numbers now aligned (Bug 1493293).
+- On the preferences dialog, when you select a constant evaporation rate, the
+  units are correctly displayed as the current default recipe volume units 
+  (Bug 1493263).
+- Removed the extra note area on the notes tab (Bug 1493286).
+  
 
 
 

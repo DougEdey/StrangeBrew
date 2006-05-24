@@ -6,8 +6,13 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,85 +22,162 @@ import javax.swing.JTextField;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 
-public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionListener{
+public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionListener {
 	private JPanel jPanel1;
 	private JComboBox sizeUnitsCombo;
+	private JComboBox hopsUnitsCombo;
+	private JComboBox maltUnitsCombo;
+	private ComboModel maltUnitsComboModel;
+	private ComboModel hopsUnitsComboModel;	
+	private JCheckBox convHopsChk;
+	private JCheckBox convMaltsChk;
+	private JPanel jPanel4;
+	private JPanel jPanel3;
 	private ComboModel sizeUnitsComboModel;
 	private JTextField sizeTxt;
 	private JLabel jLabel1;
 	private JButton cancelButton;
 	private JButton okBtn;
 	private JPanel jPanel2;
-	
+
 	private Recipe myRecipe;
 	private StrangeSwing app;
 
-	
 	public ScaleRecipeDialog(JFrame frame) {
 		super(frame);
-		app = (StrangeSwing)frame;
+		app = (StrangeSwing) frame;
 		myRecipe = app.myRecipe;
 		initGUI();
 	}
-	
+
 	private void initGUI() {
 		try {
+
+			this.setTitle("Resize / Convert Recipe");		
+
+			jPanel2 = new JPanel();
+			FlowLayout jPanel2Layout = new FlowLayout();
+			jPanel2Layout.setAlignment(FlowLayout.RIGHT);
+			jPanel2.setLayout(jPanel2Layout);
+			getContentPane().add(jPanel2, BorderLayout.SOUTH);
+
+			jPanel3 = new JPanel();
+			BoxLayout jPanel3Layout = new BoxLayout(jPanel3, javax.swing.BoxLayout.Y_AXIS);
+			jPanel3.setLayout(jPanel3Layout);
+			getContentPane().add(jPanel3, BorderLayout.CENTER);
+
+			jPanel1 = new JPanel();
+			jPanel3.add(jPanel1);
+
+			jLabel1 = new JLabel();
+
+			sizeTxt = new JTextField();
+			sizeTxt.setText("" + myRecipe.getPostBoilVol(myRecipe.getVolUnits()));
+
+			jPanel1.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
+					0));
+			jPanel1.add(sizeTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+					GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+					new Insets(0, 0, 0, 0), 0, 0));
+
+			sizeUnitsCombo = new JComboBox();
+			jPanel1.add(sizeUnitsCombo, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
+					0));
+			sizeUnitsComboModel = new ComboModel();
+			sizeUnitsComboModel.setList(new Quantity().getListofUnits("vol"));
+			sizeUnitsComboModel.addOrInsert(myRecipe.getVolUnits());
+			sizeUnitsCombo.setModel(sizeUnitsComboModel);
+
+			jLabel1.setText("New Size:");
+
+			GridBagLayout jPanel1Layout = new GridBagLayout();
+			jPanel1Layout.rowWeights = new double[]{0.1, 0.1};
+			jPanel1Layout.rowHeights = new int[]{7, 7};
+			jPanel1Layout.columnWeights = new double[]{0.1, 0.1, 0.1};
+			jPanel1Layout.columnWidths = new int[]{7, 7, 7};
+			jPanel1.setLayout(jPanel1Layout);
+			jPanel1.setBorder(BorderFactory.createTitledBorder("Resize"));
+
+			jPanel4 = new JPanel();
+			GridBagLayout jPanel4Layout = new GridBagLayout();
+			jPanel4Layout.rowWeights = new double[]{0.1, 0.1};
+			jPanel4Layout.rowHeights = new int[]{7, 7};
+			jPanel4Layout.columnWeights = new double[]{0.1, 0.1};
+			jPanel4Layout.columnWidths = new int[]{7, 7};
+			jPanel4.setLayout(jPanel4Layout);
+			jPanel3.add(jPanel4);
+			jPanel4.setBorder(BorderFactory.createTitledBorder("Convert"));
+
+			convMaltsChk = new JCheckBox();
+			jPanel4.add(convMaltsChk, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
+					0));
+			convMaltsChk.setText("Convert Malts:");
+
+			convHopsChk = new JCheckBox();
+			jPanel4.add(convHopsChk, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
+					0));
+			convHopsChk.setText("Convert Hops:");
+
+			maltUnitsComboModel = new ComboModel();
+			maltUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
+			maltUnitsComboModel.addOrInsert(myRecipe.getMaltUnits());
 			
-			this.setTitle("Resize Recipe");
 
-		jPanel1 = new JPanel();
-		GridBagLayout jPanel1Layout = new GridBagLayout();
-		jPanel1Layout.rowWeights = new double[] {0.1, 0.1};
-		jPanel1Layout.rowHeights = new int[] {7, 7};
-		jPanel1Layout.columnWeights = new double[] {0.1, 0.1, 0.1};
-		jPanel1Layout.columnWidths = new int[] {7, 7, 7};
-		jPanel1.setLayout(jPanel1Layout);
-		getContentPane().add(jPanel1, BorderLayout.CENTER);
+			maltUnitsCombo = new JComboBox();
+			jPanel4.add(maltUnitsCombo, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
+					0));
+			maltUnitsCombo.setModel(maltUnitsComboModel);
+			maltUnitsCombo.setPreferredSize(new java.awt.Dimension(96, 20));
 
-		jLabel1 = new JLabel();
-		jPanel1.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-		jLabel1.setText("New Size:");
+			hopsUnitsComboModel = new ComboModel();
+			hopsUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
+			hopsUnitsComboModel.addOrInsert(myRecipe.getHopUnits());
 
-		sizeTxt = new JTextField();
-		jPanel1.add(sizeTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-		sizeTxt.setText("" + myRecipe.getPostBoilVol(myRecipe.getVolUnits()));
+			hopsUnitsCombo = new JComboBox();
+			jPanel4.add(hopsUnitsCombo, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
+					0));
+			hopsUnitsCombo.setModel(hopsUnitsComboModel);
+			hopsUnitsCombo.setPreferredSize(new java.awt.Dimension(97, 20));
 
-		sizeUnitsComboModel = new ComboModel();
-		sizeUnitsComboModel.setList(new Quantity().getListofUnits("vol"));
-		sizeUnitsComboModel.addOrInsert(myRecipe.getVolUnits());
+			cancelButton = new JButton();
+			cancelButton.addActionListener(this);
+			jPanel2.add(cancelButton);
+			cancelButton.setText("Cancel");
 
-		sizeUnitsCombo = new JComboBox();
-		jPanel1.add(sizeUnitsCombo, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-		sizeUnitsCombo.setModel(sizeUnitsComboModel);
+			okBtn = new JButton();
+			okBtn.addActionListener(this);
+			jPanel2.add(okBtn);
+			okBtn.setText("OK");
 
-		jPanel2 = new JPanel();
-		FlowLayout jPanel2Layout = new FlowLayout();
-		jPanel2Layout.setAlignment(FlowLayout.RIGHT);
-		jPanel2.setLayout(jPanel2Layout);
-		getContentPane().add(jPanel2, BorderLayout.SOUTH);
-
-		cancelButton = new JButton();
-		cancelButton.addActionListener(this);
-		jPanel2.add(cancelButton);
-		cancelButton.setText("Cancel");
-
-		okBtn = new JButton();
-		okBtn.addActionListener(this);
-		jPanel2.add(okBtn);
-		okBtn.setText("OK");
-
-			this.setSize(306, 135);
+			this.setSize(306, 193);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void scaleRecipe() {
 
 		String newUnits = sizeUnitsComboModel.getSelectedItem().toString();
 		double newSize = Double.parseDouble(sizeTxt.getText());
 
 		myRecipe.scaleRecipe(newSize, newUnits);
+		
+		if (convMaltsChk.isSelected()){
+			for (int i=0;i<myRecipe.getMaltListSize();i++){
+				myRecipe.getFermentable(i).convertTo(maltUnitsComboModel.getSelectedItem().toString());
+			}
+		}
+		if (convHopsChk.isSelected()){
+			for (int i=0;i<myRecipe.getHopsListSize();i++){
+				myRecipe.getHop(i).convertTo(hopsUnitsComboModel.getSelectedItem().toString());
+			}			
+		}
 
 		app.displayRecipe();
 		app.maltTable.updateUI();
@@ -104,18 +186,17 @@ public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionList
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		Object o = e.getSource();			
-		
+		Object o = e.getSource();
+
 		if (o == okBtn) {
-			scaleRecipe();			
+			scaleRecipe();
+			setVisible(false);
+			dispose();
+		} else if (o == cancelButton) {
 			setVisible(false);
 			dispose();
 		}
-		else if (o == cancelButton){
-			setVisible(false);
-			dispose();
-		}		
-		
+
 	}
-	
+
 }

@@ -65,7 +65,7 @@ class HopsTableModel extends AbstractTableModel {
 				case 2 :
 					return new Double(data.getHopAlpha(row));
 				case 3 :
-					return new Double(SBStringUtils.format(data.getHopAmountAs(row, data.getHopUnits(row)), 1));
+					return SBStringUtils.format(data.getHopAmountAs(row, data.getHopUnits(row)), 1);
 				case 4 :
 					return data.getHopUnits(row);
 				case 5 :
@@ -73,9 +73,9 @@ class HopsTableModel extends AbstractTableModel {
 				case 6 :
 					return new Double(data.getHopMinutes(row));
 				case 7 :
-					return new Double(SBStringUtils.format(data.getHopIBU(row), 1));
+					return SBStringUtils.format(data.getHopIBU(row), 1);
 				case 8 :
-					return new Double(data.getHopCostPerU(row));
+					return SBStringUtils.format(data.getHopCostPerU(row), 2);
 
 			}
 		} catch (Exception e) {

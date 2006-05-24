@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.33 2006/05/23 19:17:58 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.34 2006/05/24 16:01:20 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -2032,7 +2032,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						
 						JMenuItem scalRecipeMenuItem = new JMenuItem();
 						mnuTools.add(scalRecipeMenuItem);
-						scalRecipeMenuItem.setText("Scale Recipe...");
+						scalRecipeMenuItem.setText("Resize / Convert Recipe...");
 						scalRecipeMenuItem.setAccelerator(KeyStroke.getKeyStroke(
 						        KeyEvent.VK_R, ActionEvent.CTRL_MASK));
 						
@@ -2195,22 +2195,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 			Debug.print("Save command cancelled by user.\n");
 		}
 	}
-	/**
-	 * Auto-generated method for setting the popup menu for a component
-	 */
-	private void setComponentPopupMenu(final java.awt.Component parent,
-			final javax.swing.JPopupMenu menu) {
-		parent.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mousePressed(java.awt.event.MouseEvent e) {
-				if (e.isPopupTrigger())
-					menu.show(parent, e.getX(), e.getY());
-			}
-			public void mouseReleased(java.awt.event.MouseEvent e) {
-				if (e.isPopupTrigger())
-					menu.show(parent, e.getX(), e.getY());
-			}
-		});
-	}
+
 	private void showError(Exception e) {		
 
 		ByteArrayOutputStream bs = new ByteArrayOutputStream();

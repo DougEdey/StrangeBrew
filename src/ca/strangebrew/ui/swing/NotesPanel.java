@@ -42,10 +42,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 
+import ca.strangebrew.Debug;
 import ca.strangebrew.Note;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
@@ -65,7 +69,6 @@ public class NotesPanel extends javax.swing.JPanel {
 	private Recipe myRecipe;
 	private NotesTableModel notesTableModel;
 	private int selectedRow;
-	private DatePicker dateEditor;
 
 	public NotesPanel() {
 		super();
@@ -102,19 +105,33 @@ public class NotesPanel extends javax.swing.JPanel {
 								"Bottled", "Tasting", "Contest"};
 						JComboBox typeComboBox = new JComboBox(types);
 						TableColumn noteColumn = notesTable.getColumnModel().getColumn(1);
-						noteColumn.setCellEditor(new DefaultCellEditor(typeComboBox));
-
-						notesTable.addMouseListener(new MouseAdapter() {
-							public void mouseClicked(MouseEvent evt) {
-								int i = notesTable.getSelectedRow();
-								noteTextArea.setText(myRecipe.getNoteNote(i));
-							}
-						});
+						noteColumn.setCellEditor(new DefaultCellEditor(typeComboBox));				
 
 						// set up the date picker
 						DateEditor dateEditor = new DateEditor();						
 						noteColumn = notesTable.getColumnModel().getColumn(0);
 						noteColumn.setCellEditor(dateEditor);
+						
+						// listen for row selections:
+						ListSelectionModel rowSM = notesTable.getSelectionModel();						
+						notesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+						
+						// Ask to be notified of selection changes.
+						
+						rowSM.addListSelectionListener(new ListSelectionListener() {
+						    public void valueChanged(ListSelectionEvent e) {
+						        //Ignore extra messages.
+						        if (e.getValueIsAdjusting()) return;
+						        ListSelectionModel lsm =
+						            (ListSelectionModel)e.getSource();
+						        if (lsm.isSelectionEmpty()) {
+						            // ...//no rows are selected
+						        } else {
+						            int selectedRow = lsm.getMinSelectionIndex();
+						            noteTextArea.setText(myRecipe.getNoteNote(selectedRow));
+						        }
+						    }
+						});
 
 					}
 				}
@@ -172,18 +189,13 @@ public class NotesPanel extends javax.swing.JPanel {
 						noteTextArea.setLineWrap(true);
 						noteTextArea.addFocusListener(new FocusAdapter() {
 							public void focusLost(FocusEvent evt) {
-								if (selectedRow > -1
-										&& !noteTextArea.getText().equals(
-												myRecipe.getNoteNote(selectedRow))) {
+								selectedRow = notesTable.getSelectedRow();
+								if (selectedRow > -1) {
 									myRecipe.setNoteNote(selectedRow, noteTextArea.getText());
 								}
 							}
-						});
-						noteTextArea.addFocusListener(new FocusAdapter() {
-							public void focusGained(FocusEvent evt) {
-								selectedRow = notesTable.getSelectedRow();
-							}
-						});
+						});	
+
 					}
 				}
 			}
@@ -194,7 +206,7 @@ public class NotesPanel extends javax.swing.JPanel {
 
 	class NotesTableModel extends AbstractTableModel {
 
-		private String[] columnNames = {"Date", "Type", "Note"};
+		private String[] columnNames = {"Date", "Type"};
 
 		private Recipe data = null;
 
@@ -226,16 +238,14 @@ public class NotesPanel extends javax.swing.JPanel {
 			return columnNames[col];
 		}
 
-		public Object getValueAt(int row, int col) {
-
+		public Object getValueAt(int row, int col) {		
+			
 			try {
 				switch (col) {
 					case 0 :
 						return SBStringUtils.dateFormatShort.format(data.getNoteDate(row));
-					case 1 :
+					case 1 :						
 						return data.getNoteType(row);
-					case 2 :
-						return data.getNoteNote(row);
 
 				}
 			} catch (Exception e) {
@@ -285,9 +295,7 @@ public class NotesPanel extends javax.swing.JPanel {
 					case 1 :
 						data.setNoteType(row, value.toString());
 						break;
-					case 2 :
-						data.setNoteNote(row, value.toString());
-						break;
+
 				}
 			} catch (Exception e) {
 			};
