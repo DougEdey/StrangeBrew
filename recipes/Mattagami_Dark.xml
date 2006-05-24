@@ -117,7 +117,13 @@
   <MISC>
   </MISC>
   <MASH>
-    <VOLUME>3.4 gallons US</VOLUME>
+    <MASH_VOLUME>3.39</MASH_VOLUME>
+    <MASH_VOL_U>gallons US</MASH_VOL_U>
+    <MASH_RATIO>1.25</MASH_RATIO>
+    <MASH_RATIO_U>qt/lb</MASH_RATIO_U>
+    <MASH_TIME>60</MASH_TIME>
+    <MASH_TMP_U>null</MASH_TMP_U>
+    <MASH_TUNLOSS_TEMP>0.0</MASH_TUNLOSS_TEMP>
     <ITEM>
       <TYPE>alpha</TYPE>
       <TEMP>155.0</TEMP>
