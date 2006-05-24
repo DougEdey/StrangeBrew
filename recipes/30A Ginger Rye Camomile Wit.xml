@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<STRANGEBREWRECIPE version = "0.6 (Beta)">
+<STRANGEBREWRECIPE version = "0.7 (Beta)">
 <!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
   <DETAILS>
   <NAME>30A Ginger Rye Camomile Wit</NAME>
   <BREWER>Drew Avis</BREWER>
   <NOTES></NOTES>
   <EFFICIENCY>78.0</EFFICIENCY>
-  <OG>1.071</OG>
-  <FG>1.018</FG>
+  <OG>1.075</OG>
+  <FG>1.019</FG>
   <STYLE>Witbier</STYLE>
   <MASH>true</MASH>
-  <LOV>4.4</LOV>
-  <IBU>18.8</IBU>
-  <ALC>7.0</ALC>
+  <LOV>4.6</LOV>
+  <IBU>19.3</IBU>
+  <ALC>7.5</ALC>
+  <!-- SBJ1.0 Extensions: -->
+  <EVAP>4.0</EVAP>
+  <EVAP_METHOD>Constant</EVAP_METHOD>
+  <!-- END SBJ1.0 Extensions -->
   <BOIL_TIME>75</BOIL_TIME>
-  <PRESIZE>52.875</PRESIZE>
-  <SIZE>47.875</SIZE>
+  <PRESIZE>49.75</PRESIZE>
+  <SIZE>44.75</SIZE>
   <SIZE_UNITS>litres</SIZE_UNITS>
   <MALT_UNITS>lb</MALT_UNITS>
   <HOPS_UNITS>oz</HOPS_UNITS>
@@ -26,8 +30,6 @@
   <ALC_METHOD>Volume</ALC_METHOD>
   <IBU_METHOD>Tinseth</IBU_METHOD>
   <COLOUR_METHOD>SRM</COLOUR_METHOD>
-  <EVAP>4.0</EVAP>
-  <EVAP_METHOD>Constant</EVAP_METHOD>
   <KETTLE_LOSS>1.0</KETTLE_LOSS>
   <TRUB_LOSS>1.0</TRUB_LOSS>
   <MISC_LOSS>1.0</MISC_LOSS>
@@ -40,6 +42,7 @@
     <ITEM>
       <MALT>German Pilsener</MALT>
       <AMOUNT>16.0</AMOUNT>
+      <PERCENT>44.4</PERCENT>
       <UNITS>lb</UNITS>
       <POINTS>1.038</POINTS>
       <LOV>1.6</LOV>
@@ -51,6 +54,7 @@
     <ITEM>
       <MALT>Rice Hulls</MALT>
       <AMOUNT>4.0</AMOUNT>
+      <PERCENT>11.1</PERCENT>
       <UNITS>lb</UNITS>
       <POINTS>1.0</POINTS>
       <LOV>0.0</LOV>
@@ -62,6 +66,7 @@
     <ITEM>
       <MALT>Rye Malt</MALT>
       <AMOUNT>2.0</AMOUNT>
+      <PERCENT>5.6</PERCENT>
       <UNITS>lb</UNITS>
       <POINTS>1.03</POINTS>
       <LOV>4.0</LOV>
@@ -73,6 +78,7 @@
     <ITEM>
       <MALT>Wheat (Flaked)</MALT>
       <AMOUNT>14.0</AMOUNT>
+      <PERCENT>38.9</PERCENT>
       <UNITS>lb</UNITS>
       <POINTS>1.034</POINTS>
       <LOV>2.0</LOV>
@@ -115,6 +121,11 @@
     </ITEM>
   </MISC>
   <MASH>
+    <MASH_VOLUME>18.9 gallons US</MASH_VOLUME>
+    <MASH_RATIO>1.25</MASH_RATIO>
+    <MASH_TIME>120</MASH_TIME>
+    <MASH_TMP_U>null</MASH_TMP_U>
+    <MASH_TUNLOSS_TEMP>0.0</MASH_TUNLOSS_TEMP>
     <ITEM>
       <TYPE>alpha</TYPE>
       <TEMP>155.0</TEMP>
@@ -150,4 +161,38 @@
       <NOTE>Another Test</NOTE>
     </ITEM>
   </NOTES>
+ <style>
+  <subcategory id="null">    <name>Witbier</name>
+    <aroma>null</aroma>
+    <appearance>null</appearance>
+    <flavor>null</flavor>
+    <mouthfeel>null</mouthfeel>
+    <impression>null</impression>
+    <comments>null</comments>
+    <ingredients>null</ingredients>
+ <stats>
+  <og flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </og>
+  <fg flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </fg>
+  <ibu flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </ibu>
+  <srm flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </srm>
+  <abv flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </abv>
+</stats>
+    <examples>null</examples>
+  </subcategory>
+ </style>
 </STRANGEBREWRECIPE>
