@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.35 2006/05/26 13:57:25 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.36 2006/05/26 17:30:53 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -2247,23 +2247,32 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 	}
 
 	public void checkIngredientsInDB(){
+		
+		// while we're doing this, why not synch up the style?
+		// default style is just a name - find the matching style
+		// in the style db.		
+		int j = DB.inDB(myRecipe.getStyleObj());
+		if (j>-1)
+			myRecipe.setStyle((Style)DB.styleDB.get(j));
+		// TODO: dialog w/ close matches to this style
+		
 		ArrayList newIngr = new ArrayList();
 		
 		// check yeast
-		if(! DB.inDB(myRecipe.getYeastObj())){
+		if(DB.inDB(myRecipe.getYeastObj())<0){
 			newIngr.add(myRecipe.getYeastObj());
 		}
 		
 		// check malts:
 		for (int i=0; i<myRecipe.getMaltListSize(); i++){
-			if (! DB.inDB(myRecipe.getFermentable(i))){
+			if (DB.inDB(myRecipe.getFermentable(i))<0){
 				newIngr.add(myRecipe.getFermentable(i));
 			}			
 		}
 		
 		// check hops:
 		for (int i=0; i<myRecipe.getHopsListSize(); i++){
-			if (! DB.inDB(myRecipe.getHop(i))){
+			if (DB.inDB(myRecipe.getHop(i))<0){
 				newIngr.add(myRecipe.getHop(i));
 			}
 			

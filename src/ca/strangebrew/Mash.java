@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.19 2006/05/26 13:57:25 andrew_avis Exp $
+ * $Id: Mash.java,v 1.20 2006/05/26 17:30:53 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -22,7 +22,6 @@ public class Mash {
 	private String tempUnits;
 	private String volUnits;
 	private double grainTempF;
-	private String mashTempU;
 	private double boilTempF;
 	private double thermalMass;
 	private double tunLossF;
@@ -418,7 +417,7 @@ public class Mash {
 		}
 
 		// convert CurrentTemp to F
-		if (mashTempU == "C") {
+		if (tempUnits == "C") {
 			currentTemp = cToF(currentTemp);
 			tunLoss = tunLossF * 1.8;
 		}
@@ -720,7 +719,7 @@ public class Mash {
 		sb.append(SBStringUtils.xmlElement("MASH_RATIO", "" + mashRatio, 4));
 		sb.append(SBStringUtils.xmlElement("MASH_RATIO_U", "" + mashRatioU, 4));
 		sb.append(SBStringUtils.xmlElement("MASH_TIME", "" + totalTime, 4));
-		sb.append(SBStringUtils.xmlElement("MASH_TMP_U", "" + mashTempU, 4));
+		sb.append(SBStringUtils.xmlElement("MASH_TMP_U", "" + tempUnits, 4));
 		if (tempUnits.equals("C"))
 			sb.append(SBStringUtils.xmlElement("MASH_TUNLOSS_TEMP", "" + (tunLossF/1.8), 4));
 		else			

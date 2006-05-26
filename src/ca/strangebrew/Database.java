@@ -15,7 +15,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.11 2006/05/19 16:57:30 andrew_avis Exp $
+ * $Id: Database.java,v 1.12 2006/05/26 17:30:53 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -41,13 +41,13 @@ public class Database {
 	public String dbPath;
 
 	
-	public boolean inDB(Object o){		
+	public int inDB(Object o){		
 		if (o.getClass().getName().equals("ca.strangebrew.Yeast")) {
 			for (int i=0; i<yeastDB.size(); i++){
 				Yeast y1 = (Yeast)o;
 				Yeast y2 = (Yeast)yeastDB.get(i);
 				if (y1.equals(y2)) {					
-					return true;			
+					return i;			
 				}
 			}			
 		} else if (o.getClass().getName().equals("ca.strangebrew.Fermentable")) {
@@ -55,7 +55,7 @@ public class Database {
 				Fermentable y1 = (Fermentable)o;
 				Fermentable y2 = (Fermentable)fermDB.get(i);
 				if (y1.equals(y2)) {					
-					return true;			
+					return i;			
 				}
 			}
 		} else if (o.getClass().getName().equals("ca.strangebrew.Hop")) {
@@ -63,19 +63,27 @@ public class Database {
 				Hop y1 = (Hop)o;
 				Hop y2 = (Hop)hopsDB.get(i);
 				if (y1.equals(y2)) {					
-					return true;			
+					return i;			
 				}
 			}
 		} else if (o.getClass().getName().equals("ca.strangebrew.Misc")) {
 			for (int i=0; i<miscDB.size(); i++){
 				Misc y1 = (Misc)o;
-				Misc y2 = (Misc)hopsDB.get(i);
+				Misc y2 = (Misc)miscDB.get(i);
 				if (y1.equals(y2)) {					
-					return true;			
+					return i;			
+				}
+			}
+		} else if (o.getClass().getName().equals("ca.strangebrew.Style")) {
+			for (int i=0; i<styleDB.size(); i++){
+				Style y1 = (Style)o;
+				Style y2 = (Style)styleDB.get(i);
+				if (y1.equals(y2)) {					
+					return i;			
 				}
 			}
 		}
-		return false;
+		return -1;
 	}
 	
 	public void readDB(String path){

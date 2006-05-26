@@ -5,21 +5,21 @@
   <NAME>30A Ginger Rye Camomile Wit</NAME>
   <BREWER>Drew Avis</BREWER>
   <NOTES></NOTES>
-  <EFFICIENCY>78.0</EFFICIENCY>
-  <OG>1.075</OG>
-  <FG>1.019</FG>
+  <EFFICIENCY>72.0</EFFICIENCY>
+  <OG>1.052</OG>
+  <FG>1.013</FG>
   <STYLE>Witbier</STYLE>
   <MASH>true</MASH>
-  <LOV>4.6</LOV>
-  <IBU>19.3</IBU>
-  <ALC>7.5</ALC>
+  <LOV>3.8</LOV>
+  <IBU>17.5</IBU>
+  <ALC>5.1</ALC>
   <!-- SBJ1.0 Extensions: -->
   <EVAP>4.0</EVAP>
   <EVAP_METHOD>Constant</EVAP_METHOD>
   <!-- END SBJ1.0 Extensions -->
   <BOIL_TIME>75</BOIL_TIME>
-  <PRESIZE>49.75</PRESIZE>
-  <SIZE>44.75</SIZE>
+  <PRESIZE>65.0</PRESIZE>
+  <SIZE>60.0</SIZE>
   <SIZE_UNITS>litres</SIZE_UNITS>
   <MALT_UNITS>lb</MALT_UNITS>
   <HOPS_UNITS>oz</HOPS_UNITS>
@@ -126,7 +126,7 @@
     <MASH_RATIO>1.25</MASH_RATIO>
     <MASH_RATIO_U>qt/lb</MASH_RATIO_U>
     <MASH_TIME>120</MASH_TIME>
-    <MASH_TMP_U>null</MASH_TMP_U>
+    <MASH_TMP_U>F</MASH_TMP_U>
     <MASH_TUNLOSS_TEMP>0.0</MASH_TUNLOSS_TEMP>
     <ITEM>
       <TYPE>alpha</TYPE>
@@ -164,37 +164,45 @@
     </ITEM>
   </NOTES>
  <style>
-  <subcategory id="null">    <name>Witbier</name>
-    <aroma>null</aroma>
-    <appearance>null</appearance>
-    <flavor>null</flavor>
-    <mouthfeel>null</mouthfeel>
-    <impression>null</impression>
-    <comments>null</comments>
-    <ingredients>null</ingredients>
+  <subcategory id="16A">    <name>Witbier</name>
+    <aroma>
+Moderate sweetness (often with light notes of honey and/or vanilla) with light, grainy, spicy wheat aromatics, often with a bit of tartness. Moderate perfumy coriander, often with a complex herbal, spicy, or peppery note in the background. Moderate zesty, orangey fruitiness. A low spicy-herbal hop aroma is optional, but should never overpower the other characteristics. No diacetyl. Vegetal, celery-like, or ham-like aromas from certain types of spices are inappropriate. Spices should blend in with fruity, floral and sweet aromas and should not be overly strong.</aroma>
+    <appearance>
+Very pale straw to very light gold in color. The beer will be very cloudy from starch haze and/or yeast, which gives it a milky, whitish-yellow appearance. Dense, white, moussy head. Head retention should be quite good.</appearance>
+    <flavor>
+Pleasant sweetness (often with a honey and/or vanilla character) and a zesty, orange-citrusy fruitiness. Refreshingly crisp with a dry, often tart, finish. Can have a low wheat flavor. Optionally has a very light lactic-tasting sourness. Herbal-spicy flavors are common but not overpowering, and can taste moderately of coriander and other spices at a more subtle level. A spicy-earthy hop flavor is low to none, and never gets in the way of the spices. Hop bitterness is low to medium-low (as with a Hefeweizen), and doesn't interfere with refreshing flavors of fruit and spice, nor does it persist into the finish. Bitterness from orange pith should not be present. Vegetal, celery-like, ham-like, or soapy flavors from certain types of spices are inappropriate. No diacetyl.</flavor>
+    <mouthfeel>
+Medium-light to medium body, often having a smoothness and light creaminess from unmalted wheat and the occasional oats. Despite body and creaminess, finishes dry and often a bit tart. Effervescent character from high carbonation. Refreshing, from carbonation, light acidity, and lack of bitterness in finish. No harshness or astringency from orange pith. Should not be overly dry and thin, nor should it be thick and heavy.</mouthfeel>
+    <impression>
+A refreshing, elegant, tasty, moderate-strength wheat-based ale.</impression>
+    <comments>
+The presence, character and degree of spicing and lactic sourness varies. Overly spiced and/or sour beers are not good examples of the style. The beer tends to be fragile and does not age well, so younger, fresher, properly handled examples are most desirable.</comments>
+    <ingredients>
+About 50% unmalted wheat (traditionally soft white winter wheat) and 50% pale barley malt (usually pils malt) constitute the grist. In some versions, up to 5-10% raw oats may be used. Spices of freshly-ground coriander and Curaçao or sometimes sweet orange peel complement the sweet aroma and are quite characteristic. Other spices (e.g., chamomile, cumin, cinnamon, Grains of Paradise) may be used for complexity but are much less prominent. Ale yeast prone to the production of mild, spicy flavors is very characteristic. In some instances a very limited lactic fermentation, or the actual addition of lactic acid, is done.</ingredients>
  <stats>
   <og flexible="false">
-      <low>0.0</low>
-      <high>0.0</high>
+      <low>1.044</low>
+      <high>1.052</high>
   </og>
   <fg flexible="false">
       <low>0.0</low>
       <high>0.0</high>
   </fg>
   <ibu flexible="false">
-      <low>0.0</low>
-      <high>0.0</high>
+      <low>10.0</low>
+      <high>20.0</high>
   </ibu>
   <srm flexible="false">
-      <low>0.0</low>
-      <high>0.0</high>
+      <low>2.0</low>
+      <high>4.0</high>
   </srm>
   <abv flexible="false">
-      <low>0.0</low>
-      <high>0.0</high>
+      <low>4.5</low>
+      <high>5.5</high>
   </abv>
 </stats>
-    <examples>null</examples>
+    <examples> ABV of 5% is most typical
+Hoegaarden Wit, Vuuve 5, Blanche de Bruges, Blanche de Bruxelles, Brugs Tarwebier, Sterkens White Ale, Celis White (now made in Michigan), Blanche de Brooklyn, Great Lakes Holy Moses, Unibroue Blanche de Chambly, Blue Moon Belgian White</examples>
   </subcategory>
  </style>
 </STRANGEBREWRECIPE>

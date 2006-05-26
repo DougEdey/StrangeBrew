@@ -1,8 +1,7 @@
 package ca.strangebrew;
 
-
 /**
- * $Id: Style.java,v 1.5 2006/05/23 19:17:58 andrew_avis Exp $
+ * $Id: Style.java,v 1.6 2006/05/26 17:30:53 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  * This is a class to create a style object
@@ -10,8 +9,8 @@ package ca.strangebrew;
  */
 
 public class Style {
-	
-	public String name;
+
+	public String name = "";
 	public String category;
 	public String catNum;
 	public double ogLow;
@@ -31,7 +30,7 @@ public class Style {
 	public boolean srmFlexible;
 	public String examples;
 	// public String description;
-	
+
 	public String aroma;
 	public String appearance;
 	public String flavour;
@@ -39,29 +38,50 @@ public class Style {
 	public String impression;
 	public String comments;
 	public String ingredients;
-	
+
 	public String type;
-	
-	
-	
-	
+
+	// override the equals so we can compare:
+	public boolean equals(Object obj) {
+		if (obj == this)
+			return true;
+
+		/* is obj reference null */
+		if (obj == null)
+			return false;
+		
+		/* Make sure references are of same type */
+		if (!(getClass() == obj.getClass()))
+			return false;
+		
+		else {
+			Style tmp = (Style) obj;
+			
+			if (tmp.name.equalsIgnoreCase(this.name)) {
+				return true;
+			} else
+				return false;
+		}
+	}
+
 	// get methods:
-	public String getName(){ 
+	public String getName() {
 		if (name != null)
 			return name;
 		else
-			return "";}
-	
+			return "";
+	}
+
 	public String getDescription() {
 		String s = "";
 		if (impression != null)
 			s = "<b>Impression:</b> " + impression + "\n";
 		if (comments != null)
 			s = s + "<b>Comments:</b> " + comments;
-		
+
 		return s;
 	}
-		
+
 	/**
 	 * @return Returns the alcHigh.
 	 */
@@ -128,11 +148,13 @@ public class Style {
 	 */
 	public double getOgLow() {
 		return ogLow;
-	}	
-	
+	}
+
 	// set methods:
-	public void setName(String n){ name = n; }
-		
+	public void setName(String n) {
+		name = n;
+	}
+
 	/**
 	 * @param alcHigh The alcHigh to set.
 	 */
@@ -199,82 +221,74 @@ public class Style {
 	public void setOgLow(double ogLow) {
 		this.ogLow = ogLow;
 	}
-	
-	
 
-	
-	public String toXML(){
+	public String toXML() {
 		StringBuffer sb = new StringBuffer();
 		int indent = 0;
-	    sb.append(" <style>\n");    
-	    // this is the BJCP style dtd:
-	    sb.append("  <subcategory id=\"" + catNum + "\">");
-	    indent = 4;
-	    sb.append(SBStringUtils.xmlElement("name", name, indent));
-	    sb.append(SBStringUtils.xmlElement("aroma", aroma, indent)); 
-	    sb.append(SBStringUtils.xmlElement("appearance", appearance, indent));
-	    sb.append(SBStringUtils.xmlElement("flavor", flavour, indent));
-	    sb.append(SBStringUtils.xmlElement("mouthfeel", mouthfeel, indent));
-	    sb.append(SBStringUtils.xmlElement("impression", impression, indent));
-	    sb.append(SBStringUtils.xmlElement("comments", comments, indent));
-	    sb.append(SBStringUtils.xmlElement("ingredients", ingredients, indent));
-	    sb.append(" <stats>\n");
-	    sb.append("  <og flexible=\"" + ogFlexible + "\">\n");
-	    indent = 6;
-	    sb.append(SBStringUtils.xmlElement("low", ""+ogLow, indent));
-	    sb.append(SBStringUtils.xmlElement("high", ""+ogHigh, indent));
-	    sb.append("  </og>\n"); 
-	    sb.append("  <fg flexible=\"" + fgFlexible + "\">\n");
-	    sb.append(SBStringUtils.xmlElement("low", ""+fgLow, indent));
-	    sb.append(SBStringUtils.xmlElement("high", ""+fgHigh, indent));
-	    sb.append("  </fg>\n");
-	    sb.append("  <ibu flexible=\"" + ibuFlexible + "\">\n");
-	    sb.append(SBStringUtils.xmlElement("low", ""+ibuLow, indent));
-	    sb.append(SBStringUtils.xmlElement("high", ""+ibuHigh, indent));
-	    sb.append("  </ibu>\n");
-	    sb.append("  <srm flexible=\"" + srmFlexible + "\">\n");
-	    sb.append(SBStringUtils.xmlElement("low", ""+srmLow, indent));
-	    sb.append(SBStringUtils.xmlElement("high", ""+srmHigh, indent));
-	    sb.append("  </srm>\n");
-	    sb.append("  <abv flexible=\"" + alcFlexible + "\">\n");
-	    sb.append(SBStringUtils.xmlElement("low", ""+alcLow, indent));
-	    sb.append(SBStringUtils.xmlElement("high", ""+alcHigh, indent));
-	    sb.append("  </abv>\n");	    
-	    sb.append("</stats>\n");
-	    indent = 4;
-	    sb.append(SBStringUtils.xmlElement("examples", examples, indent));	    
-	    sb.append("  </subcategory>\n");
-	    sb.append(" </style>\n");	    
-	    return sb.toString();
+		sb.append(" <style>\n");
+		// this is the BJCP style dtd:
+		sb.append("  <subcategory id=\"" + catNum + "\">");
+		indent = 4;
+		sb.append(SBStringUtils.xmlElement("name", name, indent));
+		sb.append(SBStringUtils.xmlElement("aroma", aroma, indent));
+		sb.append(SBStringUtils.xmlElement("appearance", appearance, indent));
+		sb.append(SBStringUtils.xmlElement("flavor", flavour, indent));
+		sb.append(SBStringUtils.xmlElement("mouthfeel", mouthfeel, indent));
+		sb.append(SBStringUtils.xmlElement("impression", impression, indent));
+		sb.append(SBStringUtils.xmlElement("comments", comments, indent));
+		sb.append(SBStringUtils.xmlElement("ingredients", ingredients, indent));
+		sb.append(" <stats>\n");
+		sb.append("  <og flexible=\"" + ogFlexible + "\">\n");
+		indent = 6;
+		sb.append(SBStringUtils.xmlElement("low", "" + ogLow, indent));
+		sb.append(SBStringUtils.xmlElement("high", "" + ogHigh, indent));
+		sb.append("  </og>\n");
+		sb.append("  <fg flexible=\"" + fgFlexible + "\">\n");
+		sb.append(SBStringUtils.xmlElement("low", "" + fgLow, indent));
+		sb.append(SBStringUtils.xmlElement("high", "" + fgHigh, indent));
+		sb.append("  </fg>\n");
+		sb.append("  <ibu flexible=\"" + ibuFlexible + "\">\n");
+		sb.append(SBStringUtils.xmlElement("low", "" + ibuLow, indent));
+		sb.append(SBStringUtils.xmlElement("high", "" + ibuHigh, indent));
+		sb.append("  </ibu>\n");
+		sb.append("  <srm flexible=\"" + srmFlexible + "\">\n");
+		sb.append(SBStringUtils.xmlElement("low", "" + srmLow, indent));
+		sb.append(SBStringUtils.xmlElement("high", "" + srmHigh, indent));
+		sb.append("  </srm>\n");
+		sb.append("  <abv flexible=\"" + alcFlexible + "\">\n");
+		sb.append(SBStringUtils.xmlElement("low", "" + alcLow, indent));
+		sb.append(SBStringUtils.xmlElement("high", "" + alcHigh, indent));
+		sb.append("  </abv>\n");
+		sb.append("</stats>\n");
+		indent = 4;
+		sb.append(SBStringUtils.xmlElement("examples", examples, indent));
+		sb.append("  </subcategory>\n");
+		sb.append(" </style>\n");
+		return sb.toString();
 	}
-	
-	public String toText(){
+
+	public String toText() {
 		StringBuffer sb = new StringBuffer();
-	    sb.append( "Name: "+catNum + ":"+getName()+"\n" );
-	    sb.append( "Category: "+category+"\n" );
-	    sb.append( "Class: "+type+"\n" );
-	    sb.append( "OG: "+ogLow + "-"+ogHigh+"\n" );
-	    sb.append( "IBU: "+ibuLow + "-"+ibuHigh+"\n" );
-	    sb.append( "SRM: "+srmLow + "-"+srmHigh+"\n" );
-	    sb.append( "Alc: "+alcLow + "-"+alcHigh+"\n" );
-	    sb.append( "Aroma: "+aroma+"\n" );
-	    sb.append( "Appearance: "+appearance+"\n" );
-	    sb.append( "Flavour: "+flavour+"\n" );
-	    sb.append( "Mouthfeel: "+mouthfeel+"\n" );
-	    sb.append( "Impression: "+impression+"\n" );
-	    sb.append( "Comments: "+comments+"\n" );
-	    sb.append( "Ingredients: "+ingredients+"\n" );
-	    sb.append( "Examples: "+examples+"\n" );
-	    return sb.toString();
+		sb.append("Name: " + catNum + ":" + getName() + "\n");
+		sb.append("Category: " + category + "\n");
+		sb.append("Class: " + type + "\n");
+		sb.append("OG: " + ogLow + "-" + ogHigh + "\n");
+		sb.append("IBU: " + ibuLow + "-" + ibuHigh + "\n");
+		sb.append("SRM: " + srmLow + "-" + srmHigh + "\n");
+		sb.append("Alc: " + alcLow + "-" + alcHigh + "\n");
+		sb.append("Aroma: " + aroma + "\n");
+		sb.append("Appearance: " + appearance + "\n");
+		sb.append("Flavour: " + flavour + "\n");
+		sb.append("Mouthfeel: " + mouthfeel + "\n");
+		sb.append("Impression: " + impression + "\n");
+		sb.append("Comments: " + comments + "\n");
+		sb.append("Ingredients: " + ingredients + "\n");
+		sb.append("Examples: " + examples + "\n");
+		return sb.toString();
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return getName();
 	}
 
-	
-	
-	
 }
-
-
