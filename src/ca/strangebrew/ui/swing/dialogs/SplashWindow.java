@@ -7,7 +7,7 @@
  *
  * This software is in the public domain.
  */
-package ca.strangebrew.ui.swing;
+package ca.strangebrew.ui.swing.dialogs;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Frame;
@@ -19,6 +19,8 @@ import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
+
+import ca.strangebrew.ui.swing.StrangeSwing;
 
 /**
  * A Splash window.

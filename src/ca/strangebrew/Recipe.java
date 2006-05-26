@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.28 2006/05/23 19:17:58 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.29 2006/05/26 13:57:25 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -863,7 +863,10 @@ public class Recipe {
 		// now set the malt % by weight:
 		for (int i = 0; i < fermentables.size(); i++) {
 			Fermentable m = ((Fermentable) fermentables.get(i));
-			m.setPercent((m.getAmountAs("lb") / totalMaltLbs * 100));
+			if (m.getAmountAs("lb") == 0)
+				m.setPercent(0);
+			else
+				m.setPercent((m.getAmountAs("lb") / totalMaltLbs * 100));
 		}
 
 		// set the fields in the object

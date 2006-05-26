@@ -17,11 +17,10 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package ca.strangebrew.ui.swing;
+package ca.strangebrew.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -39,6 +38,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
 
+
 public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 	private JTabbedPane aboutTabPanel;
 	private JPanel buttonPanel;
@@ -54,7 +54,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 	private JPanel readmePanel;
 	private JPanel aboutPanel;
 	private JButton okButton;
-	private Image image;
+
 	
 	private String version;
 
@@ -101,7 +101,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 					{
 						copyrightLabel = new JLabel();
 						aboutPanel.add(copyrightLabel);
-						copyrightLabel.setText("(c) 2005 Drew Avis");
+						copyrightLabel.setText("(c) 2005-2006 Drew Avis");
 					}
 				}
 				{

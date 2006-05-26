@@ -1,4 +1,4 @@
-package ca.strangebrew.ui.swing;
+package ca.strangebrew.ui.swing.dialogs;
 import java.awt.BorderLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
@@ -22,24 +22,13 @@ import javax.swing.SpinnerNumberModel;
 import net.sf.wraplog.AbstractLogger;
 import net.sf.wraplog.SystemLogger;
 import ca.strangebrew.Debug;
-import ca.strangebrew.Recipe;
+import ca.strangebrew.ui.swing.StrangeSwing;
 import edu.stanford.ejalbert.BrowserLauncher;
 import edu.stanford.ejalbert.BrowserLauncherRunner;
 import edu.stanford.ejalbert.exception.BrowserLaunchingInitializingException;
 import edu.stanford.ejalbert.exception.UnsupportedOperatingSystemException;
 
-/**
- * This code was edited or generated using CloudGarden's Jigloo
- * SWT/Swing GUI Builder, which is free for non-commercial
- * use. If Jigloo is being used commercially (ie, by a corporation,
- * company or business for any purpose whatever) then you
- * should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details.
- * Use of Jigloo implies acceptance of these licensing terms.
- * A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
- * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
- * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
+
 public class PrintDialog extends javax.swing.JDialog implements ActionListener {
 	private JPanel jPanel1;
 	private JComboBox fontCombo;
@@ -50,14 +39,14 @@ public class PrintDialog extends javax.swing.JDialog implements ActionListener {
 	private JSpinner sizeSpin;
 	private JLabel jLabel3;
 	private JLabel jLabel1;
-	private Recipe myRecipe;
+	// private Recipe myRecipe;
 	private StrangeSwing app;
 	
 
 	public PrintDialog(JFrame frame) {
 		super(frame);
 		app = (StrangeSwing) frame;
-		myRecipe = app.myRecipe;
+		// myRecipe = app.myRecipe;
 		initGUI();
 	}
 

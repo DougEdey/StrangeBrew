@@ -112,7 +112,8 @@ Required JRE
 You require a Java Runtime Environment (JRE) on your system to run
 StrangeBrew.  It should run with versions 1.4 and up; I'm using
 1.5.06. (See http://java.sun.com/j2se/1.5.0/index.jsp).  StrangeBrew has
-been tested and runs on Linux, MacOS-X, and Windows.
+been tested and runs on Linux, MacOS-X, and Windows.  MacOS-X users may 
+have to install the one-jar library from http://one-jar.sourceforge.net/.
 
 ============
 Known Issues
@@ -121,9 +122,9 @@ Known Issues
 * When importing recipes from StrangeBrew for Windows (1.8 or earlier),
 fermentables that are sugars are incorrectly considered "grains".  Their
 gravity contribution is calculated using the recipe efficiency, rather than
-100%.  You should re-select the ingredient from the drop-down list to
-re-set it to get the correct calculation.  Sugars are indicated by an *.
-If the * doesn't appear before it's name, you should re-select it. 
+100%.  You should uncheck the "M" (for mashed) column, which indicates that
+the ingredient is a sugar.  This applies to all sugar-type fermentables, such
+as honey, DME, LME, maple syrup, and sugars.
 
 ==============
 Reporting Bugs
@@ -142,6 +143,7 @@ Beta 0.7
 New Features:
 - The Resize Recipe dialog now allows you to also convert hops and fermentables
   (Bug 1489903).
+- New potential extract calculator.  
 
 Bugs Fixed:
 - BU:GU ratio is now displayed correctly on the Style panel (Bug 1493283).
@@ -156,9 +158,9 @@ Bugs Fixed:
   units are correctly displayed as the current default recipe volume units 
   (Bug 1493263).
 - Removed the extra note area on the notes tab (Bug 1493286).
-  
-
-
+- Malts with a weight of 0 are correctly displayed as being 0% (Bug 1493276).  
+- Malt and hop amounts are rounded to 2 decimal places instead of 1 (Bug 1493281).
+- Preferences are saved in the right place on non-Windows machines.
 
 Beta 0.6
 --------
@@ -263,7 +265,7 @@ Soon-to-be Implemented Features:
 - printing support (?)
 - refractometer utilities
 - save / load mash profiles
-- potential extract calculator ( http://www.brewingtechniques.com/bmg/noonan.html)
+
 
 Planned StrangeBrew Java Pro Features:
 - water profiling

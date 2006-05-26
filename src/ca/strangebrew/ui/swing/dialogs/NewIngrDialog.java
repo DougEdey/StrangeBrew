@@ -1,4 +1,4 @@
-package ca.strangebrew.ui.swing;
+package ca.strangebrew.ui.swing.dialogs;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +19,7 @@ import javax.swing.table.AbstractTableModel;
 import ca.strangebrew.Database;
 import ca.strangebrew.Ingredient;
 import ca.strangebrew.SBStringUtils;
+import ca.strangebrew.ui.swing.StrangeSwing;
 
 
 public class NewIngrDialog extends javax.swing.JDialog {

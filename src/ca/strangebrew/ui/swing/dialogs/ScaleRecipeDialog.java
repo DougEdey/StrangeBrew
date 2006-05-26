@@ -1,4 +1,4 @@
-package ca.strangebrew.ui.swing;
+package ca.strangebrew.ui.swing.dialogs;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -6,11 +6,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -21,6 +19,8 @@ import javax.swing.JTextField;
 
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
+import ca.strangebrew.ui.swing.ComboModel;
+import ca.strangebrew.ui.swing.StrangeSwing;
 
 public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionListener {
 	private JPanel jPanel1;

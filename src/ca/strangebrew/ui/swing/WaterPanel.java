@@ -47,7 +47,6 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 	private JLabel jLabel11;
 	private JLabel jLabel10;
 	private JLabel jLabel9;
-	private JPanel directionsPanel;
 	private JLabel jLabel4;
 	private JLabel jLabel8;
 	private JPanel waterLossPanel;

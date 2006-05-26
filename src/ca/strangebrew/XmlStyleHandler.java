@@ -1,5 +1,5 @@
 /*
- * $Id: XmlStyleHandler.java,v 1.5 2006/05/19 16:57:30 andrew_avis Exp $
+ * $Id: XmlStyleHandler.java,v 1.6 2006/05/26 13:57:25 andrew_avis Exp $
  * Created on Oct 14, 2004
  */
 package ca.strangebrew;
@@ -21,7 +21,7 @@ public class XmlStyleHandler extends DefaultHandler {
 	private Style style = null;
 	private ArrayList styles = new ArrayList();
 
-	private Attributes currentAttributes = null;
+	// private Attributes currentAttributes = null;
 	private String currentList = null; //current List name
 	private String currentElement = null; // current element name
 	private String descrBuf = ""; // buffer to hold long descriptions
@@ -75,7 +75,7 @@ public class XmlStyleHandler extends DefaultHandler {
 			eName = qName; // namespaceAware = false
 
 		currentElement = eName;
-		currentAttributes = attrs;
+		// currentAttributes = attrs;
 		
 		if (eName.equalsIgnoreCase("class")){
 			if (attrs != null) {

@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.8 2006/05/16 14:36:52 andrew_avis Exp $
+ * $Id: Options.java,v 1.9 2006/05/26 13:57:25 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -126,19 +126,19 @@ public class Options {
 		loadProperties();
 	}
 	
-	private String getPath(){
-		
-		
-		String path = "";
+	private String getSep(){
 		String slash = System.getProperty("file.separator");
+		return slash;
+	}
+	
+	private String getPath(){		
+		String path = "";		
 		try {
 			path = new File(".").getCanonicalPath();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		
-		Debug.print(path);
-		
+		}		
+		Debug.print(path);		
 		return path;
 	}
 	
@@ -146,12 +146,12 @@ public class Options {
 		try {	
 			
 			String path = getPath();				
-			File inputFile = new File(path + "\\" + type + ".ini");
+			File inputFile = new File(path + getSep() + type + ".ini");
 			if (inputFile.exists()){			
 				props.load(new FileInputStream(inputFile));
 				Debug.print(type + ".ini file read: " + inputFile.getAbsolutePath() +". Contents:");
 
-				}
+			}
 			
 		}
 		catch (Exception e) {

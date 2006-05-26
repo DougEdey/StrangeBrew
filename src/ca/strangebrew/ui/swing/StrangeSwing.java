@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.34 2006/05/24 16:01:20 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.35 2006/05/26 13:57:25 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -36,6 +36,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -58,6 +59,7 @@ import java.util.EventObject;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ComboBoxEditor;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
@@ -109,6 +111,14 @@ import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.Style;
 import ca.strangebrew.XmlTransformer;
 import ca.strangebrew.Yeast;
+import ca.strangebrew.ui.swing.dialogs.AboutDialog;
+import ca.strangebrew.ui.swing.dialogs.FindDialog;
+import ca.strangebrew.ui.swing.dialogs.MaltPercentDialog;
+import ca.strangebrew.ui.swing.dialogs.NewIngrDialog;
+import ca.strangebrew.ui.swing.dialogs.PotentialExtractCalcDialog;
+import ca.strangebrew.ui.swing.dialogs.PreferencesDialog;
+import ca.strangebrew.ui.swing.dialogs.PrintDialog;
+import ca.strangebrew.ui.swing.dialogs.ScaleRecipeDialog;
 
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.michaelbaranov.microba.calendar.DatePicker;
@@ -693,8 +703,8 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 
 		//: listener that watches the width of a column
 		PropertyChangeListener mpcl = new PropertyChangeListener() {
-			private int columnCount = maltTable.getColumnCount();
-			private int[] width = new int[columnCount];
+			// private int columnCount = maltTable.getColumnCount();
+			// private int[] width = new int[columnCount];
 
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (evt.getPropertyName().equals("preferredWidth")) {
@@ -712,8 +722,8 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 
 		//: listener that watches the width of a column
 		PropertyChangeListener hpcl = new PropertyChangeListener() {
-			private int columnCount = hopsTable.getColumnCount();
-			private int[] width = new int[columnCount];
+			// private int columnCount = hopsTable.getColumnCount();
+			// private int[] width = new int[columnCount];
 
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (evt.getPropertyName().equals("preferredWidth")) {
@@ -1080,6 +1090,9 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						{
 							cmbStyleModel = new ComboModel();
 							cmbStyle = new JComboBox();
+							// Install the custom key selection manager
+							cmbStyle.setKeySelectionManager(new SBKeySelectionManager());
+							
 							pnlDetails.add(cmbStyle, new GridBagConstraints(1, 2, 5, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
@@ -1237,6 +1250,8 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						{
 							cmbYeastModel = new ComboModel();
 							cmbYeast = new JComboBox();
+							// Install the custom key selection manager
+							cmbYeast.setKeySelectionManager(new SBKeySelectionManager());
 							pnlDetails.add(cmbYeast, new GridBagConstraints(1, 3, 5, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
@@ -1466,7 +1481,15 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 								TableColumn maltColumn = maltTable.getColumnModel().getColumn(2);
 
 								// set up malt list combo
-								maltComboBox = new JComboBox();
+								maltComboBox = new JComboBox();	
+								ComboBoxEditor editor = maltComboBox.getEditor();
+								editor.getEditorComponent().addKeyListener(new KeyAdapter(){
+								        public void keyPressed(KeyEvent evt){
+								        	// TODO: handle keypress
+								        }
+
+								}); 
+
 								cmbMaltModel = new ComboModel();
 								maltComboBox.setModel(cmbMaltModel);
 								maltColumn.setCellEditor(new DefaultCellEditor(maltComboBox));
@@ -1619,6 +1642,8 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 
 								TableColumn hopColumn = hopsTable.getColumnModel().getColumn(0);
 								hopComboBox = new JComboBox();
+								// Install the custom key selection manager
+								hopComboBox.setKeySelectionManager(new SBKeySelectionManager());
 								cmbHopsModel = new ComboModel();
 								hopComboBox.setModel(cmbHopsModel);
 								hopColumn.setCellEditor(new DefaultCellEditor(hopComboBox));
@@ -2058,6 +2083,19 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 								maltPercent.setVisible(true);
 							}
 						});
+						
+						JMenuItem extractPotentialMenuItem = new JMenuItem();
+						mnuTools.add(extractPotentialMenuItem);
+						extractPotentialMenuItem.setText("Extract Potential...");
+						extractPotentialMenuItem.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								PotentialExtractCalcDialog extCalc = new PotentialExtractCalcDialog(owner);
+								extCalc.setModal(true);
+								extCalc.setVisible(true);
+							}
+						});
+						
+						
 					}
 				}
 				{
@@ -2146,9 +2184,6 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 			// same as save as:
 			saveAs();
 		}
-
-
-
 	}
 	
 	private void recipeSettingsActionPerformed(ActionEvent evt) {
@@ -2255,6 +2290,58 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		} 
 	}
 	
-	
+
+    
+    // This key selection manager will handle selections based on multiple keys.
+    private class SBKeySelectionManager implements JComboBox.KeySelectionManager {
+        long lastKeyTime = 0;
+        String pattern = "";
+    
+        public int selectionForKey(char aKey, ComboBoxModel model) {
+            // Find index of selected item
+            int selIx = 01;
+            Object sel = model.getSelectedItem();
+            if (sel != null) {
+                for (int i=0; i<model.getSize(); i++) {
+                    if (sel.equals(model.getElementAt(i))) {
+                        selIx = i;
+                        break;
+                    }
+                }
+            }
+    
+            // Get the current time
+            long curTime = System.currentTimeMillis();
+    
+            // If last key was typed less than 300 ms ago, append to current pattern
+            if (curTime - lastKeyTime < 300) {
+                pattern += ("" + aKey).toLowerCase();
+            } else {
+                pattern = ("" + aKey).toLowerCase();
+            }
+    
+            // Save current time
+            lastKeyTime = curTime;
+    
+            // Search forward from current selection
+            for (int i=selIx+1; i<model.getSize(); i++) {
+                String s = model.getElementAt(i).toString().toLowerCase();
+                if (s.startsWith(pattern)) {
+                    return i;
+                }
+            }
+    
+            // Search from top to current selection
+            for (int i=0; i<selIx ; i++) {
+                if (model.getElementAt(i) != null) {
+                    String s = model.getElementAt(i).toString().toLowerCase();
+                    if (s.startsWith(pattern)) {
+                        return i;
+                    }
+                }
+            }
+            return -1;
+        }
+    }
 
 }

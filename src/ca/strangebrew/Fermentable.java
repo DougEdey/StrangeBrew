@@ -1,6 +1,6 @@
 /**
  * Created on Oct 4, 2004
- * $Id: Fermentable.java,v 1.6 2006/05/23 19:17:58 andrew_avis Exp $
+ * $Id: Fermentable.java,v 1.7 2006/05/26 13:57:25 andrew_avis Exp $
  * @author aavis
  *
  * This is the base malt class.  It doesn't do much, except hold data
@@ -31,7 +31,8 @@ public class Fermentable extends Ingredient {
 	public Fermentable(String u) {
 		setName("");
 		pppg = 1.000;
-		setUnits(u);		
+		setUnits(u);
+		
 	}
 	
 	public Fermentable(){

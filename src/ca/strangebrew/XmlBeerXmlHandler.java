@@ -1,5 +1,5 @@
 /*
- * $Id: XmlBeerXmlHandler.java,v 1.3 2006/05/23 19:17:58 andrew_avis Exp $
+ * $Id: XmlBeerXmlHandler.java,v 1.4 2006/05/26 13:57:25 andrew_avis Exp $
  * Created on Oct 14, 2004
  */
 package ca.strangebrew;
@@ -24,13 +24,11 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 	private Misc m;
 	private ArrayList recipes = new ArrayList();
 	
-	private Attributes currentAttributes = null;
+	// private Attributes currentAttributes = null;
 	private String currentList = null; //current List name
 	private String currentElement = null; // current element name	
 	private String descrBuf = ""; // buffer to hold long descriptions
  
-
-	private boolean newRecipe = false;
 	private int numRecipes = 0;
 
 
@@ -82,10 +80,9 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 			eName = qName; // namespaceAware = false
 
 		currentElement = eName;
-		currentAttributes = attrs;
+		// currentAttributes = attrs;
 		
 		if (eName.equalsIgnoreCase("recipe")){
-			newRecipe = true;
 			myRecipe = new Recipe();
 			myRecipe.mash.setMashTempUnits("C");
 			currentList = eName;
@@ -124,8 +121,7 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 	) throws SAXException {
 
 
-		if (qName.equalsIgnoreCase("recipe")){
-			newRecipe = false;
+		if (qName.equalsIgnoreCase("recipe")){			
 			numRecipes ++;
 			recipes.add(myRecipe);
 			

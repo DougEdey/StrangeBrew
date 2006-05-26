@@ -1,4 +1,4 @@
-package ca.strangebrew.ui.swing;
+package ca.strangebrew.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -30,6 +30,8 @@ import javax.swing.event.ChangeListener;
 import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
+import ca.strangebrew.ui.swing.ComboModel;
+import ca.strangebrew.ui.swing.StrangeSwing;
 
 
 

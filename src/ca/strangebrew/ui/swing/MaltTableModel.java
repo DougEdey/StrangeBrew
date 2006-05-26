@@ -64,7 +64,7 @@ class MaltTableModel extends AbstractTableModel {
 					return data.getMaltName(row);
 				case 3 :
 					return SBStringUtils.format(data
-							.getMaltAmountAs(row, data.getMaltUnits(row)), 1);
+							.getMaltAmountAs(row, data.getMaltUnits(row)), 2);
 				case 4 :
 					return data.getMaltUnits(row);
 				case 5 :

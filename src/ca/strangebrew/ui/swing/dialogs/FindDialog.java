@@ -1,5 +1,5 @@
 /*
- * $Id: FindDialog.java,v 1.6 2006/05/05 20:08:54 andrew_avis Exp $ 
+ * $Id: FindDialog.java,v 1.1 2006/05/26 13:57:25 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis find recipe window class
  */
 
@@ -22,7 +22,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package ca.strangebrew.ui.swing;
+package ca.strangebrew.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -50,6 +50,7 @@ import javax.swing.table.AbstractTableModel;
 import ca.strangebrew.Debug;
 import ca.strangebrew.OpenImport;
 import ca.strangebrew.Recipe;
+import ca.strangebrew.ui.swing.StrangeSwing;
 
 public class FindDialog extends javax.swing.JDialog implements ActionListener {
 	private JPanel findPanel;

@@ -1,4 +1,4 @@
-package ca.strangebrew.ui.swing;
+package ca.strangebrew.ui.swing.dialogs;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -25,6 +25,8 @@ import javax.swing.table.TableModel;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
+import ca.strangebrew.ui.swing.ComboModel;
+import ca.strangebrew.ui.swing.StrangeSwing;
 
 
 public class MaltPercentDialog extends javax.swing.JDialog {

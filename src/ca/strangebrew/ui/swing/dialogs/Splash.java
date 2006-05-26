@@ -12,7 +12,8 @@
  *
  * @author  werni
  */
-package ca.strangebrew.ui.swing;
+package ca.strangebrew.ui.swing.dialogs;
+
 
 public class Splash {
     /**
