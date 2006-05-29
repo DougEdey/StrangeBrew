@@ -13,7 +13,7 @@
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
 		encoding="UTF-8"/>
 
-	<xsl:template match="/">
+	<xsl:template match="/STRANGEBREWRECIPE">
 		<html lang="en" xml:lang="en">
 			<head>
 				<title>Strangebrew Recipe</title>
@@ -29,21 +29,20 @@
 					tbody tr.even,table.vertical tbody td{background-color:#EEE;}
 					#meta{margin-bottom:2em;}
 					#author{margin-bottom:0;}
-					#notes{}
 				</style>
 				<style type="text/css" media="print">
 					body,th,td{font-family:Georgia,"Bitstream Vera Serif","Times New Roman",serif;font-size:11pt;}
 					table{page-break-inside:avoid;}
-					<xsl:apply-templates select="STRANGEBREWRECIPE/PRINT"/>
+					<xsl:apply-templates select="PRINT"/>
 					a{color:#000;text-decoration:none;}
 					a:after{content:" [" attr(href) "]";}
 					abbr{border-width:0;}
 				</style>
 			</head>
 			<body>
-				<xsl:apply-templates select="STRANGEBREWRECIPE/DETAILS"/>
-				<xsl:apply-templates select="STRANGEBREWRECIPE/FERMENTABLES"/>
-				<xsl:apply-templates select="STRANGEBREWRECIPE/MASH"/>
+				<xsl:apply-templates select="DETAILS"/>
+				<xsl:apply-templates select="FERMENTABLES"/>
+				<xsl:apply-templates select="MASH"/>
 				<table>
 					<thead>
 						<tr>
@@ -59,8 +58,8 @@
 							<th>Stage</th>
 							<th>Time</th>
 						</tr>
-						<xsl:apply-templates select="STRANGEBREWRECIPE/HOPS"/>
-						<xsl:apply-templates select="STRANGEBREWRECIPE/MISC"/>
+						<xsl:apply-templates select="HOPS"/>
+						<xsl:apply-templates select="MISC"/>
 					</tbody>
 				</table>
 
@@ -73,9 +72,9 @@
 					<tbody>
 						<tr>
 							<th>Yeast</th>
-							<td><xsl:value-of select="STRANGEBREWRECIPE/DETAILS/YEAST"/></td>
+							<td><xsl:value-of select="DETAILS/YEAST"/></td>
 							<th>Fermentation temperature</th>
-							<td><xsl:value-of select="STRANGEBREWRECIPE/DETAILS/FERMENTATION_TEMP"/></td>
+							<td><xsl:value-of select="DETAILS/FERMENTATION_TEMP"/></td>
 						</tr>
 					</tbody>
 				</table>
@@ -84,7 +83,7 @@
 		</html>
 	</xsl:template>
 
-	<xsl:template match="STRANGEBREWRECIPE/DETAILS">
+	<xsl:template match="DETAILS">
 		<h1><xsl:value-of select="NAME"/></h1>
 		<div id="meta">
 			<h3 id="author">Created by <xsl:value-of select="BREWER"/> on <xsl:value-of select="RECIPE_DATE"/></h3>
@@ -167,7 +166,7 @@
 		<div id="notes"><xsl:value-of select="."/><xsl:text> </xsl:text></div>
 	</xsl:template>
 
-	<xsl:template match="STRANGEBREWRECIPE/FERMENTABLES">
+	<xsl:template match="FERMENTABLES">
 		<table xmlns="http://www.w3.org/1999/xhtml">
 			<thead>
 				<tr>
@@ -210,7 +209,7 @@
 		</table>
 	</xsl:template>
 
-	<xsl:template match="STRANGEBREWRECIPE/HOPS">
+	<xsl:template match="HOPS">
 		<xsl:for-each select="ITEM">
 			<tr>
 				<xsl:if test="(position() mod 2 = 0)">
@@ -231,6 +230,7 @@
 	</xsl:template>
 
 	<xsl:template match="STRANGEBREWRECIPE/MASH">
+		<xsl:variable name="tempUnits" select="MASH_TMP_U"/>
 		<table>
 			<thead>
 				<tr>
@@ -256,12 +256,12 @@
 						<td>
 							<xsl:value-of select="format-number(TEMP, '#.#')"/>
 							<xsl:text> </xsl:text>
-							<xsl:value-of select="/STRANGEBREWRECIPE/DETAILS/MASH_TMP_U"/>
+							<xsl:copy-of select="$tempUnits"/>
 						</td>
 						<td>
 							<xsl:value-of select="format-number(END_TEMP, '#.#')"/>
 							<xsl:text> </xsl:text>
-							<xsl:value-of select="/STRANGEBREWRECIPE/DETAILS/MASH_TMP_U"/>
+							<xsl:copy-of select="$tempUnits"/>
 						</td>
 						<td><xsl:value-of select="METHOD"/></td>
 						<td><xsl:value-of select="RAMP_MIN"/></td>
@@ -273,7 +273,7 @@
 		</table>
 	</xsl:template>
 
-	<xsl:template match="STRANGEBREWRECIPE/MISC">
+	<xsl:template match="MISC">
 		<xsl:for-each select="ITEM">
 			<tr>
 				<xsl:if test="(position() mod 2 = 0)">
@@ -293,8 +293,8 @@
 		</xsl:for-each>
 	</xsl:template>
 
-	<xsl:template match="STRANGEBREWRECIPE/PRINT">
-		body,th,td{font-size:<xsl:value-of select="/STRANGEBREWRECIPE/PRINT/@FONTSIZE"/>;font-family:"<xsl:value-of select="/STRANGEBREWRECIPE/PRINT/@FONTFACE"/>";}
+	<xsl:template match="PRINT">
+		body,th,td{font-size:<xsl:value-of select="@FONTSIZE"/>;font-family:"<xsl:value-of select="@FONTFACE"/>";}
 	</xsl:template>
 
 </xsl:stylesheet>
