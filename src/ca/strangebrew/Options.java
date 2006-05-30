@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.9 2006/05/26 13:57:25 andrew_avis Exp $
+ * $Id: Options.java,v 1.10 2006/05/30 17:08:06 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -109,7 +109,7 @@ public class Options {
 			{"winX", "0"},
 			{"winY", "0"},
 			{"winWidth", "600"},
-			{"winHeight", "600"},
+			{"winHeight", "650"},
 	};
 	
 	// default constructor, create options for a recipe
@@ -195,6 +195,16 @@ public class Options {
 			d.put("optGrainTemp", "68");
 			d.put("optTunLossF", "3");
 			d.put("optBoilTempF", "212");
+
+			// default ranges for mash steps - indicates the bottom of the range
+			d.put("optAcidTmpF", "85");
+			d.put("optGlucanTmpF", "95");
+			d.put("optProteinTmpF", "113");
+			d.put("optBetaTmpF", "131");
+			d.put("optAlphaTmpF", "151");
+			d.put("optMashoutTmpF", "161");
+			d.put("optSpargeTmpF", "170");
+
 		}
 
 	}
@@ -206,6 +216,10 @@ public class Options {
 	
 	public double getDProperty(String key){
 		return Double.parseDouble(props.getProperty(key));
+	}
+	
+	public float getFProperty(String key){
+		return Float.parseFloat(props.getProperty(key));
 	}
 			
 	public int getIProperty(String key){

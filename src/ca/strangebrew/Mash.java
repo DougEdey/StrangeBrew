@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.20 2006/05/26 17:30:53 andrew_avis Exp $
+ * $Id: Mash.java,v 1.21 2006/05/30 17:08:06 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -15,6 +15,7 @@ public class Mash {
 	
 	// set this:
 	private double maltWeightLbs;
+	private Recipe myRecipe;
 	
 	//options:
 	private double mashRatio;
@@ -31,17 +32,24 @@ public class Mash {
 	private int totalTime;
 	private double absorbedQTS;
 	private double totalWaterQTS;
-
-	
-	
+	private double spargeQTS;
 	
 	// steps:
 	private ArrayList steps = new ArrayList();
 	
-	// format:
-	public DecimalFormat df1 = new DecimalFormat("#####0.0");
+	// configurable temps, can be set by the user:
+	// target temps are 1/2 between temp + next temp
+
+	public float ACIDTMPF = 85;
+	public float GLUCANTMPF = 95;
+	public float PROTEINTMPF = 113;
+	public float BETATMPF = 131;
+	public float ALPHATMPF = 151;
+	public float MASHOUTTMPF = 161;
+	public float SPARGETMPF = 170;
 	
-	public Mash(){
+	
+	public Mash(Recipe r){
 
 		 Options opts = new Options("mash");
 		 mashRatio = opts.getDProperty("optMashRatio");
@@ -50,6 +58,15 @@ public class Mash {
 		 volUnits = opts.getProperty("optMashVolU");
 		 grainTempF = opts.getDProperty("optGrainTemp");
 		 boilTempF = opts.getDProperty("optBoilTempF");
+		 ACIDTMPF = opts.getFProperty("optAcidTmpF");
+		 GLUCANTMPF = opts.getFProperty("optGlucanTmpF");
+		 PROTEINTMPF = opts.getFProperty("optProteinTmpF");
+		 BETATMPF = opts.getFProperty("optBetaTmpF");
+		 ALPHATMPF = opts.getFProperty("optAlphaTmpF");
+		 MASHOUTTMPF = opts.getFProperty("optMashoutTmpF");
+		 SPARGETMPF = opts.getFProperty("optSpargeTmpF");
+		 
+		 myRecipe = r;
 	}
 
 	public class MashStep {
@@ -234,7 +251,7 @@ public class Mash {
 	 */
 	private String getVolConverted(double val){
 		double d = Quantity.convertUnit("qt", volUnits, val); 
-		String s = df1.format(d).toString();
+		String s = SBStringUtils.format(d, 1);
 		return s;
 	}
 		
@@ -254,6 +271,13 @@ public class Mash {
 		else
 			return fToC(boilTempF);
 		}
+	
+	public double getSpargeVol(){
+		return Quantity.convertUnit("qt", volUnits, spargeQTS);
+	}
+	
+	public double getSpargeQts(){ return spargeQTS; }
+
 	public double getTunLoss() { 
 		if (tempUnits.equals("F"))
 			return tunLossF; 
@@ -268,7 +292,7 @@ public class Mash {
 	 */
 	public String getMashTotalVol() {
 		double d = Quantity.convertUnit("qt", volUnits, volQts);
-		String s = df1.format(d).toString() + " " + volUnits;
+		String s = SBStringUtils.format(d, 1) + " " + volUnits;
 		return s;	
 	}	
 	
@@ -449,8 +473,8 @@ public class Mash {
 
 		if (tempUnits == "C")
 			strikeTemp = fToC(strikeTemp);
-		stp.directions = "Mash in with " + df1.format(stp.infuseVol.getValueAs(volUnits)) + " " + volUnits
-				+ " of water at " + df1.format(strikeTemp) + " " + tempUnits;
+		stp.directions = "Mash in with " + SBStringUtils.format(stp.infuseVol.getValueAs(volUnits),1 ) + " " + volUnits
+				+ " of water at " + SBStringUtils.format(strikeTemp, 1) + " " + tempUnits;
 
 		// set TargetTemp to the end temp
 		targetTemp = stp.endTemp;
@@ -474,8 +498,8 @@ public class Mash {
 				stp.infuseVol.setAmount(waterAddedQTS);
 				if (tempUnits == "C")
 					strikeTemp = 100;
-				stp.directions = "Add " + df1.format(stp.infuseVol.getValueAs(volUnits)) + " " + volUnits
-						+ " of water at " + df1.format(strikeTemp) + " " + tempUnits;
+				stp.directions = "Add " + SBStringUtils.format(stp.infuseVol.getValueAs(volUnits), 1) + " " + volUnits
+						+ " of water at " + SBStringUtils.format(strikeTemp, 1) + " " + tempUnits;
 
 				mashWaterQTS += waterAddedQTS;
 				mashVolQTS += waterAddedQTS;
@@ -498,7 +522,7 @@ public class Mash {
 				stp.decoctVol.setUnits("qt");
 				stp.decoctVol.setAmount(decoct);
 				// Updated the decoction, convert to right units & make directions
-				stp.directions = "Remove " + df1.format(stp.decoctVol.getValueAs(volUnits)) + " " + volUnits
+				stp.directions = "Remove " + SBStringUtils.format(stp.decoctVol.getValueAs(volUnits), 1) + " " + volUnits
 						+ " of mash, boil, and return to mash.";
 
 			} else if (stp.method.equals("direct")) { // calculate a direct heat step
@@ -534,7 +558,7 @@ public class Mash {
 		
 		// spargeTotalQTS = (myRecipe.getPreBoilVol("qt")) - (mashWaterQTS - absorbedQTS);
 		totalWaterQTS = mashWaterQTS;
-				
+		spargeQTS = myRecipe.getPreBoilVol("qt") - (mashWaterQTS - absorbedQTS);		
 		// TODO: sparge stuff should get figured here:		 
 
 	}
@@ -572,44 +596,30 @@ public class Mash {
 		return decoctQTS;
 	}
 	
-	/*
-	 * This is the old method, we don't use it anymore because calcDecoction2 is better
-	 */
-	private double calcDecoction(double targetTemp, double currentTemp, double mashVol,
-			double boilTempF) {
-		// calculate amount of grain/mash to remove and boil to raise mash temp to
-		// a target temperature
-		// returns percent
 
-		double dectPercent = (targetTemp - boilTempF)
-				/ (currentTemp - boilTempF);
-		dectPercent = 1 - dectPercent;
-		return (mashVol * dectPercent);
-	}
-	
 	private String calcStepType(double temp) {
 		String stepType = "none";
 		// less than 90, none
-		// 90 - 103 - acid
-		if (temp > 89 && temp < 104)
+		// 86 - 95 - acid
+		if (temp >= ACIDTMPF && temp < GLUCANTMPF)
 			stepType = "acid";
-		// 103 - 110 - gluten
-		else if (temp < 111)
-			stepType = "gluten";
-		// 110 - 135 protein
-		else if (temp < 136)
+		// 95 - 113 - glucan
+		else if (temp < PROTEINTMPF)
+			stepType = "glucan";
+		// 113 - 131 protein
+		else if (temp < BETATMPF)
 			stepType = "protein";
-		// 135 - 149 beta
-		else if (temp < 150)
+		// 131 - 150 beta
+		else if (temp < ALPHATMPF)
 			stepType = "beta";
-		// 150-160 alpha
-		else if (temp < 161)
+		// 150-162 alpha
+		else if (temp < MASHOUTTMPF)
 			stepType = "alpha";
-		// 160-169, mashout
-		else if (temp < 170)
+		// 163-169, mashout
+		else if (temp < SPARGETMPF)
 			stepType = "mashout";
 		// over 170, sparge
-		else if (temp >= 170)
+		else if (temp >= SPARGETMPF)
 			stepType = "sparge";
 
 		return stepType;
@@ -618,19 +628,19 @@ public class Mash {
 	private double calcStepTemp(String stepType) {
 		float stepTempF = 0;
 		if (stepType == "acid")
-			stepTempF = 95;
-		else if (stepType == "gluten")
-			stepTempF = 105;
+			stepTempF = (ACIDTMPF + GLUCANTMPF) / 2;
+		else if (stepType == "glucan")
+			stepTempF = (GLUCANTMPF + PROTEINTMPF) / 2;
 		else if (stepType == "protein")
-			stepTempF = 122;
+			stepTempF = (PROTEINTMPF + BETATMPF) / 2;
 		else if (stepType == "beta")
-			stepTempF = 149;
+			stepTempF = (BETATMPF + ALPHATMPF) / 2;
 		else if (stepType == "alpha")
-			stepTempF = 155;
+			stepTempF = (ALPHATMPF + MASHOUTTMPF) / 2;
 		else if (stepType == "mashout")
-			stepTempF = 168;
+			stepTempF = (MASHOUTTMPF + SPARGETMPF) / 2;
 		else if (stepType == "sparge")
-			stepTempF = 170;
+			stepTempF = SPARGETMPF;
 
 		return stepTempF;
 	}

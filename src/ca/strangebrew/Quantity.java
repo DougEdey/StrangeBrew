@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.9 2006/05/18 17:34:42 andrew_avis Exp $
+ * $Id: Quantity.java,v 1.10 2006/05/30 17:08:06 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -233,21 +233,32 @@ public class Quantity {
 	 * create a new one).  
 	 */
 	
-	public ArrayList getListofUnits(String type) {
+	public ArrayList getListofUnits(String type, boolean abrv) {
 		ArrayList list = new ArrayList();
 		int i = 0;
 		if (type.equals("weight")) {
 			
 			for (i = 0; i < weightUnits.length; i++) 
-				list.add(weightUnits[i].unit);
+				if (abrv)
+					list.add(weightUnits[i].abrv);
+				else
+					list.add(weightUnits[i].unit);
 		}
 		else {
-			for (i = 0; i < volUnits.length; i++) 
-				list.add(volUnits[i].unit);
+			for (i = 0; i < volUnits.length; i++)
+				if (abrv)
+					list.add(volUnits[i].abrv);
+				else
+					list.add(volUnits[i].unit);
 		}			
 
 		return list;
 	}
+	
+	public ArrayList getListofUnits(String type) {
+		return (getListofUnits(type, false));
+	}
+	
 
 	public static String getVolAbrv(String unit) {
 		Quantity q = new Quantity();

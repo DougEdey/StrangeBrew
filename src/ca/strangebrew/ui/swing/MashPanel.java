@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.9 2006/05/23 19:17:58 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.10 2006/05/30 17:08:06 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -42,6 +42,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -66,6 +67,8 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	private JButton addStepButton;
 	private JLabel recipeNameLabel;
 	private JLabel titleLabel;
+	private JComboBox spargeCombo;
+	private JCheckBox spargeChk;
 	private JPanel jPanel1;
 	private JLabel jLabel20;
 	private JLabel jLabel19;
@@ -191,7 +194,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 						tblMash.getTableHeader().setReorderingAllowed(false);
 
 						// set up type combo
-						String[] types = {"acid", "gluten", "protein", "beta", "alpha", "mashout"};
+						String[] types = {"acid", "glucan", "protein", "beta", "alpha", "mashout"};
 						JComboBox typesComboBox = new JComboBox(types);
 						TableColumn mashColumn = tblMash.getColumnModel().getColumn(0);
 						mashColumn.setCellEditor(new DefaultCellEditor(typesComboBox));
@@ -216,10 +219,10 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				settingsPanel = new JPanel();
 				jPanel1.add(settingsPanel, BorderLayout.CENTER);
 				GridBagLayout settingsPanelLayout = new GridBagLayout();
-				settingsPanelLayout.rowWeights = new double[]{0.1, 0.1, 0.1, 0.1};
-				settingsPanelLayout.rowHeights = new int[]{7, 7, 7, 7};
-				settingsPanelLayout.columnWeights = new double[]{0.3, 0.1, 0.1};
-				settingsPanelLayout.columnWidths = new int[]{7, 7, 7};
+				settingsPanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+				settingsPanelLayout.rowHeights = new int[] {7, 7, 7, 7, 7, 7, 7};
+				settingsPanelLayout.columnWeights = new double[] {0.3};
+				settingsPanelLayout.columnWidths = new int[] {7};
 				settingsPanel.setLayout(settingsPanelLayout);
 				settingsPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 				settingsPanel.setPreferredSize(new java.awt.Dimension(172, 175));
@@ -228,13 +231,14 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				settingsPanel.add(jLabel15, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
 						0, 0));
-				jLabel15.setText("Mash Ratio: 1:");
+				jLabel15.setText("Ratio: 1:");
 				{
 					ratioText = new JTextField();
 					settingsPanel.add(ratioText, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
 					ratioText.setText("1.25");
+					ratioText.setPreferredSize(new java.awt.Dimension(51, 20));
 					ratioText.addFocusListener(this);
 					ratioText.addActionListener(this);
 				}
@@ -251,69 +255,54 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				}
 				{
 					grainTempText = new JTextField();
-					settingsPanel.add(grainTempText, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
-									0, 0, 0), 0, 0));
+					settingsPanel.add(grainTempText, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 					grainTempText.setText("10");
+					grainTempText.setPreferredSize(new java.awt.Dimension(50, 20));
 
 					grainTempText.addFocusListener(this);
 					grainTempText.addActionListener(this);
 				}
 				{
 					grainTempULabel = new JLabel();
-					settingsPanel.add(grainTempULabel, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
-									0), 0, 0));
+					settingsPanel.add(grainTempULabel, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 					grainTempULabel.setText("F");
 
 				}
 
 				jLabel19 = new JLabel();
-				settingsPanel.add(jLabel19, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
-						0, 0));
-				jLabel19.setText("Grain Temp:");
+				settingsPanel.add(jLabel19, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+				jLabel19.setText("Grain Tmp:");
 
 				boilTempTxt = new JTextField();
-				settingsPanel.add(boilTempTxt, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0,
-								0, 0), 0, 0));
+				settingsPanel.add(boilTempTxt, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 				boilTempTxt.setText("212");
+				boilTempTxt.setPreferredSize(new java.awt.Dimension(52, 20));
 
 				jLabel20 = new JLabel();
-				settingsPanel.add(jLabel20, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
-						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
-						0, 0));
+				settingsPanel.add(jLabel20, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 				jLabel20.setText("Boil Temp:");
 
 				boilTempULbl = new JLabel();
-				settingsPanel.add(boilTempULbl, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
-						0, 0));
+				settingsPanel.add(boilTempULbl, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 				boilTempULbl.setText("F");
 
 				{
 					tunLossTxt = new JTextField();
-					settingsPanel.add(tunLossTxt, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
-									0, 0, 0), 0, 0));
+					settingsPanel.add(tunLossTxt, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+					tunLossTxt.setPreferredSize(new java.awt.Dimension(52, 20));
 
 					tunLossTxt.addFocusListener(this);
 					tunLossTxt.addActionListener(this);
 				}
 				{
 					tempLostULabel = new JLabel();
-					settingsPanel.add(tempLostULabel, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
-									0), 0, 0));
+					settingsPanel.add(tempLostULabel, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 					tempLostULabel.setText("F");
 				}
 
 				jLabel1 = new JLabel();
-				settingsPanel.add(jLabel1, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
-						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
-						0, 0));
-				jLabel1.setText("Temp Lost in Tun:");
+				settingsPanel.add(jLabel1, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+				jLabel1.setText("Lost in Tun:");
 				{
 					buttonsPanel = new JPanel();
 					tablePanel.add(buttonsPanel, BorderLayout.SOUTH);
@@ -325,7 +314,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 					jToolBar1 = new JToolBar();
 					buttonsPanel.add(jToolBar1);
 					jToolBar1.setFloatable(false);
-					jToolBar1.setPreferredSize(new java.awt.Dimension(65, 18));
+					jToolBar1.setPreferredSize(new java.awt.Dimension(76, 18));
 
 					jLabel13 = new JLabel();
 					buttonsPanel.add(jLabel13);
@@ -349,9 +338,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 					tempBg.add(tempCrb);
 
 					jLabel14 = new JLabel();
-					settingsPanel.add(jLabel14, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
-							GridBagConstraints.EAST, GridBagConstraints.NONE,
-							new Insets(0, 0, 0, 0), 0, 0));
+					settingsPanel.add(jLabel14, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 					jLabel14.setText("Vol Units:");
 
 					{
@@ -380,14 +367,24 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				{
 
 					volUnitsComboModel = new ComboModel();
-					volUnitsComboModel.setList(new Quantity().getListofUnits("vol"));
+					volUnitsComboModel.setList(new Quantity().getListofUnits("vol", true));
 					volUnitsCombo = new JComboBox();
-					settingsPanel.add(volUnitsCombo, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
-									0, 0, 0), 0, 0));
+					settingsPanel.add(volUnitsCombo, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 					volUnitsCombo.setModel(volUnitsComboModel);
+					volUnitsCombo.setPreferredSize(new java.awt.Dimension(57, 20));
 					volUnitsCombo.addActionListener(this);
 				}
+
+				spargeChk = new JCheckBox();
+				settingsPanel.add(spargeChk, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+				spargeChk.setText("sparge:");
+
+				ComboBoxModel spargeComboModel = new DefaultComboBoxModel(new String[] {
+						"Item One", "Item Two" });
+
+				spargeCombo = new JComboBox();
+				settingsPanel.add(spargeCombo, new GridBagConstraints(1, 5, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+				spargeCombo.setModel(spargeComboModel);
 
 				boilTempTxt.addFocusListener(this);
 				boilTempTxt.addActionListener(this);

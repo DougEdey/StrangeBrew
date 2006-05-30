@@ -2,7 +2,7 @@
 +                   README                     +
 ================================================
 
-StrangeBrew Java - Beta 0.7
+StrangeBrew Java - 2.0a7
 (c)2000-2006 Drew Avis - drew.avis@gmail.com
 
 Thank you for downloading and trying StrangeBrew Java.
@@ -18,6 +18,7 @@ This file contains:
 * Reporting Bugs
 * What's New in this release?
 * Roadmap
+* Building the project
 * Contributors
 * Copyrights and Licenses
 
@@ -25,7 +26,7 @@ This file contains:
  What is this?
 ===============
 
-This is a "beta" release of StrangeBrew Java, which means it's
+This is an "alpha" release of StrangeBrew Java, which means it's
 still in development and may have some bugs.  
 Please use it for your brewday planning, and let us know
 how you like it!
@@ -161,6 +162,8 @@ Bugs Fixed:
 - Malts with a weight of 0 are correctly displayed as being 0% (Bug 1493276).  
 - Malt and hop amounts are rounded to 2 decimal places instead of 1 (Bug 1493281).
 - Preferences are saved in the right place on non-Windows machines.
+- Misc ingredient table column widths are now nicer (Bug 1493284).
+- %alc, ibu, colour method combos are wider so text isn't cut off (Bug 1489271).
 
 Beta 0.6
 --------
@@ -262,9 +265,9 @@ Soon-to-be Implemented Features:
 - specify decoction thickness value
 - real application help (not the SB Win version)
 - sparge calculations (fly and batch)
-- printing support (?)
 - refractometer utilities
 - save / load mash profiles
+- specify mash temp ranges
 
 
 Planned StrangeBrew Java Pro Features:
@@ -282,6 +285,23 @@ Open Source version and a commercial "Pro" version that will
 include some additional functionality.)
 
 Comments or questions should be directed to drew.avis@gmail.com.
+
+====================
+Building the project
+====================
+
+Complete StrangeBrew Java source is included in the strangebrew_fat.jar file.
+StrangeBrew Java source is also available via CVS via an annonymous pserver 
+connection (see http://sourceforge.net/cvs/?group_id=121177 for more information).
+
+I'm building the project in Eclipse, which is freely available at eclipse.org.  
+Once you've un-archived the source from the jar file (or obtained it from cvs), you
+can import it as a new project into Eclipse.  You'll need to:
+- add the 3rd party .jar files in /lib to the project libraries
+- add an appropriate Sun JRE (1.4+) to the project libraries, if one is not already
+  selected
+
+That should be all you need to build and run the program.
 
 ============
 Contributors

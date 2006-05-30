@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.36 2006/05/26 17:30:53 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.37 2006/05/30 17:08:06 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -132,7 +132,7 @@ import edu.stanford.ejalbert.exception.UnsupportedOperatingSystemException;
 public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener, WindowListener {
 
 
-	private String version = "0.7 (Beta)";
+	private String version = "2.0a7";
 	
 	public JTable hopsTable;
 	public JTable maltTable;
@@ -1309,10 +1309,8 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						{
 							alcMethodComboModel = new DefaultComboBoxModel(new String[]{"Volume", "Weight"});
 							alcMethodCombo = new JComboBox(alcMethodComboModel);							
-							pnlDetails.add(alcMethodCombo, new GridBagConstraints(9, 0, 1, 1, 0.0,
-									0.0, GridBagConstraints.WEST, GridBagConstraints.NONE,
-									new Insets(0, 0, 0, 0), 0, 0));
-							alcMethodCombo.setPreferredSize(new java.awt.Dimension(58, 20));
+							pnlDetails.add(alcMethodCombo, new GridBagConstraints(9, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+							alcMethodCombo.setPreferredSize(new java.awt.Dimension(71, 20));
 
 						}
 						{
@@ -1320,19 +1318,15 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 							"Rager"});
 							ibuMethodCombo = new JComboBox(ibuMethodComboModel);
 
-							pnlDetails.add(ibuMethodCombo, new GridBagConstraints(9, 1, 1, 1, 0.0,
-									0.0, GridBagConstraints.WEST, GridBagConstraints.NONE,
-									new Insets(0, 0, 0, 0), 0, 0));
-							ibuMethodCombo.setPreferredSize(new java.awt.Dimension(59, 20));
+							pnlDetails.add(ibuMethodCombo, new GridBagConstraints(9, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+							ibuMethodCombo.setPreferredSize(new java.awt.Dimension(72, 20));
 
 						}
 						{
 							colourMethodComboModel = new DefaultComboBoxModel(new String[]{"SRM", "EBC"});
 							colourMethodCombo = new JComboBox(colourMethodComboModel);
-							pnlDetails.add(colourMethodCombo, new GridBagConstraints(9, 2, 1, 1,
-									0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE,
-									new Insets(0, 0, 0, 0), 0, 0));
-							colourMethodCombo.setPreferredSize(new java.awt.Dimension(44, 20));
+							pnlDetails.add(colourMethodCombo, new GridBagConstraints(9, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+							colourMethodCombo.setPreferredSize(new java.awt.Dimension(52, 20));
 
 						}
 
@@ -1409,7 +1403,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						colourPanel = new JPanel();
 						pnlDetails.add(colourPanel, new GridBagConstraints(9, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 						colourPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-
+						colourPanel.setPreferredSize(new java.awt.Dimension(93, 32));
 
 					}
 					{

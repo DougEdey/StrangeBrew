@@ -40,6 +40,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import ca.strangebrew.Misc;
 import ca.strangebrew.Recipe;
@@ -107,6 +108,13 @@ public class MiscPanel extends javax.swing.JPanel {
 						
 						miscTableScrollPane.setViewportView(miscTable);
 						miscTable.setModel(miscTableModel);
+						
+						// set preferred widths of the misc table
+						TableColumnModel mtcm = miscTable.getColumnModel();
+						miscTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+						TableColumn col = mtcm.getColumn(0);
+						col.setPreferredWidth(200);
+						miscTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 						
 	
 						// set up name combo

@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.30 2006/05/26 17:30:53 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.31 2006/05/30 17:08:06 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -58,14 +58,14 @@ public class Recipe {
 	private double srm;
 	private Style style = new Style();
 	private Yeast yeast = new Yeast();
-	public Mash mash = new Mash();
+	public Mash mash = new Mash(this);
 
 	// water use:
 	private double chillShrinkQTS;
 	private double kettleLoss;
 	private double trubLoss;
 	private double miscLoss;
-	private double spargeQTS;
+	// private double spargeQTS;
 	private double totalWaterQTS;
 	private double finalWortVolQTS;
 	// this could be user-configurable:
@@ -292,7 +292,8 @@ public class Recipe {
 		return (getVolConverted(chillShrinkQTS));
 	}
 	public double getSparge() {
-		return (getVolConverted(spargeQTS));
+		// return (getVolConverted(spargeQTS));
+		return mash.getSpargeVol();
 	}
 	public double getFinalWortVol() {
 		return (getVolConverted(finalWortVolQTS));
@@ -879,8 +880,8 @@ public class Recipe {
 
 		// do the water calcs w/ the updated mash:
 		chillShrinkQTS = getPostBoilVol("qt") * CHILLPERCENT;
-		spargeQTS = getPreBoilVol("qt") - (mash.getTotalWaterQts() - mash.getAbsorbedQts());
-		totalWaterQTS = mash.getTotalWaterQts() + spargeQTS;
+		// spargeQTS = getPreBoilVol("qt") - (mash.getTotalWaterQts() - mash.getAbsorbedQts());
+		totalWaterQTS = mash.getTotalWaterQts() + mash.getSpargeVol();
 
 		finalWortVolQTS = postBoilVol.getValueAs("qt")
 				- (chillShrinkQTS + Quantity.convertUnit(getVolUnits(), "qt", kettleLoss)
