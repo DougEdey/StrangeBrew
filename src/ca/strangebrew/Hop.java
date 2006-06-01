@@ -1,5 +1,5 @@
 /**
- * $Id: Hop.java,v 1.7 2006/05/18 17:34:42 andrew_avis Exp $
+ * $Id: Hop.java,v 1.8 2006/06/01 20:46:53 andrew_avis Exp $
  * Created on Oct 5, 2004
  *
  * Base class for hops.  This object doesn't do much except hold data and
@@ -11,8 +11,6 @@ package ca.strangebrew;
 
 public class Hop extends Ingredient{
 	private double alpha;
-	private String country;
-	// private String form;
 	private String add;
 	private int minutes;
 	private double storage;

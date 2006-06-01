@@ -1,6 +1,6 @@
 /**
  * Created on Oct 4, 2004
- * $Id: Fermentable.java,v 1.7 2006/05/26 13:57:25 andrew_avis Exp $
+ * $Id: Fermentable.java,v 1.8 2006/06/01 20:46:53 andrew_avis Exp $
  * @author aavis
  *
  * This is the base malt class.  It doesn't do much, except hold data
@@ -13,7 +13,6 @@ public class Fermentable extends Ingredient {
 	// base data
 	private double pppg;
 	private double lov;
-	private String country;
 	private boolean mashed;
 	private boolean steeped;
 	private double percent;

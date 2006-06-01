@@ -1,12 +1,11 @@
 package ca.strangebrew;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.21 2006/05/30 17:08:06 andrew_avis Exp $
+ * $Id: Mash.java,v 1.22 2006/06/01 20:46:53 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -24,7 +23,7 @@ public class Mash {
 	private String volUnits;
 	private double grainTempF;
 	private double boilTempF;
-	private double thermalMass;
+	// private double thermalMass;
 	private double tunLossF;
 	
 	// calculated:
@@ -81,12 +80,12 @@ public class Mash {
 		public Quantity infuseVol = new Quantity();
 		public Quantity decoctVol = new Quantity();
 
-		public MashStep(String t, double st, double et, String m, int min,
+		public MashStep(String type, double startTemp, double endTemp, String method, int min,
 				int rmin) {
-			type = t;
-			startTemp = st;
-			endTemp = et;			
-			method = m;
+			this.type = type;
+			this.startTemp = startTemp;
+			this.endTemp = endTemp;			
+			this.method = method;
 			minutes = min;
 			rampMin = rmin;		
 			
@@ -419,20 +418,18 @@ public class Mash {
 		
 		double strikeTemp = 0;
 		double targetTemp = 0;
-		double endTemp = 0;
 		double waterAddedQTS = 0;
 		double waterEquiv = 0;
 		double mr = mashRatio;
 		double currentTemp = grainTempF;
 
 		double displTemp = 0;
-		double tunLoss = tunLossF; // figure out a better way to do this, eg: themal mass
+		double tunLoss; // figure out a better way to do this, eg: themal mass
 		double decoct = 0;
 		int totalMashTime = 0;
-		double totalSpargeTime = 0;
+		int totalSpargeTime = 0;
 		double mashWaterQTS = 0;
 		double mashVolQTS = 0;
-		String stepType;
 		int numSparge = 0;
 		
 		// convert mash ratio to qts/lb if in l/kg
@@ -445,6 +442,8 @@ public class Mash {
 			currentTemp = cToF(currentTemp);
 			tunLoss = tunLossF * 1.8;
 		}
+		else
+			tunLoss = tunLossF;
 
 		// perform calcs on first record	  
 		if (steps.isEmpty())
@@ -455,7 +454,6 @@ public class Mash {
 
 		MashStep stp = ((MashStep) steps.get(0));
 		targetTemp = stp.startTemp;
-		endTemp = stp.endTemp;
 		strikeTemp = calcStrikeTemp(targetTemp, currentTemp, mr, tunLoss);
 		waterAddedQTS = mr * maltWeightLbs;
 		waterEquiv = maltWeightLbs * (0.192 + mr);
@@ -533,11 +531,12 @@ public class Mash {
 						+ " " + tempUnits + ".";
 			}
 
-			if (stp.method.equals("sparge")) { // Count it
+			if (stp.type.equals("sparge")) 
 				numSparge++;
-			} else
-				totalMashTime += stp.minutes;
 
+		    else {
+				totalMashTime += stp.minutes;
+			}
 			
 			stp.infuseVol.setUnits("qt");
 			stp.infuseVol.setAmount(waterAddedQTS);			
@@ -547,7 +546,7 @@ public class Mash {
 			// set target temp to end temp for next step
 			targetTemp = stp.endTemp;
 
-		} // while not eof
+		} // for steps.size()
 
 		waterEquiv += waterAddedQTS; // add previous addition to get WE
 		totalTime = totalMashTime;
@@ -559,7 +558,69 @@ public class Mash {
 		// spargeTotalQTS = (myRecipe.getPreBoilVol("qt")) - (mashWaterQTS - absorbedQTS);
 		totalWaterQTS = mashWaterQTS;
 		spargeQTS = myRecipe.getPreBoilVol("qt") - (mashWaterQTS - absorbedQTS);		
-		// TODO: sparge stuff should get figured here:		 
+		
+		
+		// Now let's figure out the sparging:		
+		if (numSparge == 0)
+			return;
+		
+		double col = myRecipe.getPreBoilVol("qt") / numSparge;
+		double charge[] = new double[numSparge];
+	    double collect[] = new double[numSparge];
+	    double totalCollectQts = myRecipe.getPreBoilVol("qt");
+	    
+	    if (col < mashWaterQTS - absorbedQTS) {
+		     charge[0] = 0;
+		     collect[0] = mashWaterQTS - absorbedQTS;
+		     totalCollectQts = totalCollectQts - collect[0];
+		   }
+		   else {
+		     charge[0] = col - (mashWaterQTS - absorbedQTS);
+		     collect[0] = col;
+		     totalCollectQts = totalCollectQts - collect[0];
+		   }
+
+		   // do we need any more steps?
+		   if (numSparge > 1) {
+
+			col = totalCollectQts / (numSparge - 1);
+			for (int i = 1; i < numSparge; i++) {
+				charge[i] = col;
+				collect[i] = col;
+			}
+		}
+	    
+	    int j=0;
+		for (int i = 1; i < steps.size(); i++) {
+			stp = ((MashStep) steps.get(i));
+			if (stp.getType().equals("sparge")){				
+				totalSpargeTime += stp.getMinutes();
+				if (numSparge > 1){
+					stp.setMethod("fly");
+					String add = SBStringUtils.format(Quantity.convertUnit("qt", volUnits, charge[j]), 1) +
+					" " + volUnits;
+					String temp;
+					if (tempUnits.equals("F"))
+						temp = "" + SPARGETMPF + "F";
+					else 
+						temp = SBStringUtils.format(fToC(SPARGETMPF), 1) + "C";
+					String collectStr = SBStringUtils.format(Quantity.convertUnit("qt", volUnits, collect[j]), 1) +
+					" " + volUnits;
+					stp.setDirections("Add " + add + " at " + temp + " to collect " + collectStr);
+					
+				}
+				else {
+					stp.setMethod("sparge");
+					stp.setDirections("Sparge with " + 
+							SBStringUtils.format(Quantity.convertUnit("qt", volUnits, spargeQTS), 1) +
+							" " + volUnits);
+				}
+				
+				j++;
+				
+			}
+		}
+
 
 	}
 	
@@ -682,44 +743,7 @@ public class Mash {
 		return ((tempC * 9) / 5) + 32;
 	}
 	
-	
-	 private class batchSparge {
-	    int charges;
-	    double charge[];
-	    double temp[];
-	    double collect[];
-	 };
-
-	 void calc_batch_sparge(batchSparge bs, double absorbedQts, double usedQts, double total_collectQts) {
-	   int i=0;
-	   double collect = total_collectQts / bs.charges;
-
-	   // all units in Qts!!!
-
-	   // is there more in the tun than we need?
-	   if (collect < usedQts - absorbedQts) {
-	     bs.charge[0] = 0;
-	     bs.collect[0] = usedQts - absorbedQts;
-	     total_collectQts = total_collectQts - bs.collect[0];
-	   }
-	   else {
-	     bs.charge[0] = collect - (usedQts - absorbedQts);
-	     bs.collect[0] = collect;
-	     total_collectQts = total_collectQts - bs.collect[0];
-	   }
-
-	   // do we need any more steps?
-	   if (bs.charges == 1) return;
-
-	   collect = total_collectQts / (bs.charges - 1);
-	   for (i=1; i<bs.charges; i++) {
-	     bs.charge[i] = collect;
-	     bs.collect[i] = collect;
-	   }
-
-	   return;
-	 };
-	 
+		 
 	 public String toXml() {
 	
 		StringBuffer sb = new StringBuffer();
