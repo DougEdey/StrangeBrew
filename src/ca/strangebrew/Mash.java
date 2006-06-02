@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.22 2006/06/01 20:46:53 andrew_avis Exp $
+ * $Id: Mash.java,v 1.23 2006/06/02 19:44:26 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -25,6 +25,9 @@ public class Mash {
 	private double boilTempF;
 	// private double thermalMass;
 	private double tunLossF;
+	private double thinDecoctRatio;
+	private double thickDecoctRatio;
+
 	
 	// calculated:
 	private double volQts;
@@ -64,6 +67,8 @@ public class Mash {
 		 ALPHATMPF = opts.getFProperty("optAlphaTmpF");
 		 MASHOUTTMPF = opts.getFProperty("optMashoutTmpF");
 		 SPARGETMPF = opts.getFProperty("optSpargeTmpF");
+		 thickDecoctRatio = opts.getDProperty("optThickDecoctRatio");
+		 thinDecoctRatio = opts.getDProperty("optThinDecoctRatio");
 		 
 		 myRecipe = r;
 	}
@@ -241,6 +246,14 @@ public class Mash {
 			tunLossF = t * 1.8;
 		calcMashSchedule();
 	}
+	
+	public void setDecoctRatio(String type, double r){
+		if (type.equals("thick"))
+			thickDecoctRatio = r;
+		else
+			thinDecoctRatio = r;
+		calcMashSchedule();
+	}
 
 	
 	/**
@@ -307,6 +320,12 @@ public class Mash {
 	}
 	public double getTotalWaterQts() {
 		return totalWaterQTS;
+	}
+	public double getThickDecoctRatio() {
+		return thickDecoctRatio;
+	}
+	public double getThinDecoctRatio() {
+		return thinDecoctRatio;
 	}
 
 	
@@ -452,6 +471,7 @@ public class Mash {
 		// sort the list
 		Collections.sort(steps, new stepComparator());
 
+		// the first step is always an infusion
 		MashStep stp = ((MashStep) steps.get(0));
 		targetTemp = stp.startTemp;
 		strikeTemp = calcStrikeTemp(targetTemp, currentTemp, mr, tunLoss);
@@ -481,7 +501,12 @@ public class Mash {
 			stp = ((MashStep) steps.get(i));
 			currentTemp = targetTemp; // switch
 			targetTemp = stp.startTemp;
-
+			
+			// if this is a former sparge step that's been changed, change
+			// the method to infusion
+			if (!stp.type.equals("sparge") && ( stp.method.equals("fly") || stp.method.equals("batch")))
+					stp.method = "infusion";
+			
 			// do calcs
 			if (stp.method.equals("infusion")) { // calculate an infusion step
 				decoct = 0;
@@ -504,17 +529,17 @@ public class Mash {
 
 			}
 
-			else if (stp.method.indexOf("decoction") > 0) { // calculate a decoction step
+			else if (stp.method.indexOf("decoction") > -1) { // calculate a decoction step
 
 				waterEquiv += waterAddedQTS; // add previous addition to get WE
 				waterAddedQTS = 0;
 				strikeTemp = boilTempF; // boiling water
 				double ratio=0.75;
 
-				if (stp.method.indexOf("thick") > 0)
-					ratio = 0.6;
-				else if (stp.method.indexOf("thin") > 0)
-					ratio = 0.9;
+				if (stp.method.indexOf("thick") > -1)
+					ratio = thickDecoctRatio;
+				else if (stp.method.indexOf("thin") > -1)
+					ratio = thinDecoctRatio;
 				// Calculate volume (qts) of mash to remove
 				decoct = calcDecoction2(targetTemp, currentTemp, mashWaterQTS, ratio);				
 				stp.decoctVol.setUnits("qt");
@@ -536,6 +561,7 @@ public class Mash {
 
 		    else {
 				totalMashTime += stp.minutes;
+
 			}
 			
 			stp.infuseVol.setUnits("qt");
@@ -592,33 +618,34 @@ public class Mash {
 	    
 	    int j=0;
 		for (int i = 1; i < steps.size(); i++) {
-			stp = ((MashStep) steps.get(i));
+			stp = ((MashStep) steps.get(i));			
 			if (stp.getType().equals("sparge")){				
 				totalSpargeTime += stp.getMinutes();
+				String collectStr = SBStringUtils.format(Quantity.convertUnit("qt", volUnits, collect[j]), 1) +
+				" " + volUnits;
+				String tempStr;
+				if (tempUnits.equals("F"))
+					tempStr = "" + SBStringUtils.format(SPARGETMPF, 1) + "F";
+				else 
+					tempStr = SBStringUtils.format(fToC(SPARGETMPF), 1) + "C";		
 				if (numSparge > 1){
-					stp.setMethod("fly");
+					stp.setMethod("batch");
 					String add = SBStringUtils.format(Quantity.convertUnit("qt", volUnits, charge[j]), 1) +
-					" " + volUnits;
-					String temp;
-					if (tempUnits.equals("F"))
-						temp = "" + SPARGETMPF + "F";
-					else 
-						temp = SBStringUtils.format(fToC(SPARGETMPF), 1) + "C";
-					String collectStr = SBStringUtils.format(Quantity.convertUnit("qt", volUnits, collect[j]), 1) +
-					" " + volUnits;
-					stp.setDirections("Add " + add + " at " + temp + " to collect " + collectStr);
+					" " + volUnits;			
+					stp.setDirections("Add " + add + " at " + tempStr + " to collect " + collectStr);
 					
 				}
 				else {
-					stp.setMethod("sparge");
+					stp.setMethod("fly");					
 					stp.setDirections("Sparge with " + 
 							SBStringUtils.format(Quantity.convertUnit("qt", volUnits, spargeQTS), 1) +
-							" " + volUnits);
+							" " + volUnits + " at " + tempStr + " to collect " + collectStr);
 				}
 				
 				j++;
 				
 			}
+
 		}
 
 
@@ -754,10 +781,18 @@ public class Mash {
 		sb.append(SBStringUtils.xmlElement("MASH_RATIO_U", "" + mashRatioU, 4));
 		sb.append(SBStringUtils.xmlElement("MASH_TIME", "" + totalTime, 4));
 		sb.append(SBStringUtils.xmlElement("MASH_TMP_U", "" + tempUnits, 4));
-		if (tempUnits.equals("C"))
+		sb.append(SBStringUtils.xmlElement("THICK_DECOCT_RATIO", "" + thickDecoctRatio, 4));
+		sb.append(SBStringUtils.xmlElement("THIN_DECOCT_RATIO", "" + thinDecoctRatio, 4));		
+		if (tempUnits.equals("C")){
 			sb.append(SBStringUtils.xmlElement("MASH_TUNLOSS_TEMP", "" + (tunLossF/1.8), 4));
-		else			
+			sb.append(SBStringUtils.xmlElement("GRAIN_TEMP", "" + fToC(grainTempF), 4));
+			sb.append(SBStringUtils.xmlElement("BOIL_TEMP", "" + fToC(boilTempF), 4));
+		}
+		else {			
 			sb.append(SBStringUtils.xmlElement("MASH_TUNLOSS_TEMP", "" + tunLossF, 4));
+			sb.append(SBStringUtils.xmlElement("GRAIN_TEMP", "" + grainTempF, 4));
+			sb.append(SBStringUtils.xmlElement("BOIL_TEMP", "" + boilTempF, 4));
+		}
 		for (int i = 0; i < steps.size(); i++) {
 			MashStep st = (MashStep) steps.get(i);
 			sb.append("    <ITEM>\n");

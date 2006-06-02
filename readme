@@ -145,6 +145,11 @@ New Features:
 - The Resize Recipe dialog now allows you to also convert hops and fermentables
   (Bug 1489903).
 - New potential extract calculator.  
+- You can now add sparge steps to a mash schedule.  Add a step, and change the 
+  type to "sparge".  If you add more than one sparge step, it's automatically
+  considered a batch sparge, and correct additions are calculated.  
+- You can now set the parameters for a thick and thin decoction on the 
+  settings tab.
 
 Bugs Fixed:
 - BU:GU ratio is now displayed correctly on the Style panel (Bug 1493283).
@@ -262,9 +267,7 @@ Beta 0.4
 Soon-to-be Implemented Features:
 - mash tun thermal mass
 - hop scaling
-- specify decoction thickness value
 - real application help (not the SB Win version)
-- sparge calculations (fly and batch)
 - refractometer utilities
 - save / load mash profiles
 - specify mash temp ranges

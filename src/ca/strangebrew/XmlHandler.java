@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.13 2006/05/18 17:34:42 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.14 2006/06/02 19:44:26 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -434,6 +434,18 @@ public class XmlHandler extends DefaultHandler{
 				endTemp = Double.parseDouble(s);
 			} else if (currentElement.equalsIgnoreCase("RAMP_MIN")) {
 				rampMin = Integer.parseInt(s);
+				
+				// these are not part of item, but general mash settings:
+			} else if (currentElement.equalsIgnoreCase("THICK_DECOCT_RATIO")) {
+				r.mash.setDecoctRatio("thick",Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("THIN_DECOCT_RATIO")) {
+				r.mash.setDecoctRatio("thin",Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("GRAIN_TEMP")) {
+				r.mash.setGrainTemp(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("MASH_TUNLOSS_TEMP")) {
+				r.mash.setTunLoss(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("BOIL_TEMP")) {
+				r.mash.setBoilTemp(Double.parseDouble(s));
 			}
 		}
 
@@ -463,7 +475,7 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentElement.equalsIgnoreCase("MASH_RATIO")) {
 				r.setMashRatio(Double.parseDouble(s));
 			} else if (currentElement.equalsIgnoreCase("MASH_RATIO_U")) {
-				r.setMashRatioU(s);
+				r.setMashRatioU(s);				
 			} else if (currentElement.equalsIgnoreCase("BREWER")) {
 				r.setBrewer(s);
 			} else if (currentElement.equalsIgnoreCase("MASH")) {

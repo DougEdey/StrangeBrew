@@ -2,30 +2,30 @@
 <STRANGEBREWRECIPE version = "2.0a7">
 <!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
   <DETAILS>
-  <NAME>7 Joule Porter</NAME>
-  <BREWER>Gord McGreggor</BREWER>
+  <NAME>BYO FLP Clone</NAME>
+  <BREWER>BYO</BREWER>
   <NOTES></NOTES>
-  <EFFICIENCY>77.0828640788846</EFFICIENCY>
-  <OG>1.066</OG>
-  <FG>1.016</FG>
+  <EFFICIENCY>75.0</EFFICIENCY>
+  <OG>1.060</OG>
+  <FG>1.015</FG>
   <STYLE>Robust Porter</STYLE>
   <MASH>false</MASH>
-  <LOV>16.7</LOV>
-  <IBU>43.9</IBU>
-  <ALC>6.6</ALC>
+  <LOV>30.3</LOV>
+  <IBU>30.4</IBU>
+  <ALC>5.9</ALC>
   <!-- SBJ1.0 Extensions: -->
   <EVAP>1.5</EVAP>
   <EVAP_METHOD>Constant</EVAP_METHOD>
   <!-- END SBJ1.0 Extensions -->
   <BOIL_TIME>60</BOIL_TIME>
-  <PRESIZE>22.5</PRESIZE>
-  <SIZE>21.0</SIZE>
+  <PRESIZE>21.5</PRESIZE>
+  <SIZE>20.0</SIZE>
   <SIZE_UNITS>litres</SIZE_UNITS>
   <MALT_UNITS>pounds</MALT_UNITS>
   <HOPS_UNITS>ounces</HOPS_UNITS>
-  <YEAST>Safale S-04</YEAST>
-  <RECIPE_DATE>05/05/2006</RECIPE_DATE>
-  <ATTENUATION>75.67552759740262</ATTENUATION>
+  <YEAST>Wyeast 1968 English London E.S.B</YEAST>
+  <RECIPE_DATE>06/02/2006</RECIPE_DATE>
+  <ATTENUATION>75.0</ATTENUATION>
   <!-- SBJ1.0 Extensions: -->
   <ALC_METHOD>Volume</ALC_METHOD>
   <IBU_METHOD>Tinseth</IBU_METHOD>
@@ -34,126 +34,90 @@
   <TRUB_LOSS>1.0</TRUB_LOSS>
   <MISC_LOSS>1.0</MISC_LOSS>
   <PELLET_HOP_PCT>6.0</PELLET_HOP_PCT>
-  <YEAST_COST>0.75</YEAST_COST>
+  <YEAST_COST>6.0</YEAST_COST>
   <OTHER_COST>5.0</OTHER_COST>
   <!-- END SBJ1.0 Extensions -->
   </DETAILS>
   <FERMENTABLES>
     <ITEM>
       <MALT>British Two-Row</MALT>
-      <AMOUNT>8.0</AMOUNT>
-      <PERCENT>61.5</PERCENT>
-      <UNITS>lb</UNITS>
+      <AMOUNT>4.4</AMOUNT>
+      <PERCENT>84.8</PERCENT>
+      <UNITS>kg</UNITS>
       <POINTS>1.038</POINTS>
       <LOV>2.5</LOV>
       <MASHED>true</MASHED>
       <STEEPED>false</STEEPED>
-      <COSTLB>0.47</COSTLB>
-      <DESCRIPTION>British Two-Row: Fully modified British malt, easily converted by a single temperature mash.  Preferred by many brewers for full flavored ales.  Pale Ale malt has undergone higher kilning than Klages and is lower in diastatic power so keep adjuncts to 15% or less.</DESCRIPTION>
+      <COSTLB>1.0361726322689244</COSTLB>
+      <DESCRIPTION>British Two-Row: Fully modified British malt, easily converted by a single temperature mash.  Preferred by many brewers for full flavored ales.  Pale Ale malt has undergone higher kilning than Klages and is lower in diastatic power so keep adjuncts to 15% or less. </DESCRIPTION>
     </ITEM>
     <ITEM>
-      <MALT>British Carastan</MALT>
-      <AMOUNT>2.0</AMOUNT>
-      <PERCENT>15.4</PERCENT>
-      <UNITS>lb</UNITS>
-      <POINTS>1.035</POINTS>
-      <LOV>34.0</LOV>
-      <MASHED>true</MASHED>
-      <STEEPED>false</STEEPED>
-      <COSTLB>0.9</COSTLB>
-      <DESCRIPTION>British Carastan: Also known as CaraStan, use 5 to 20% of English Crystal to add color and a full, toffee/sweet flavor to Bitters, Pale Ales and Porters.</DESCRIPTION>
-    </ITEM>
-    <ITEM>
-      <MALT>Wheat Malt</MALT>
-      <AMOUNT>1.0</AMOUNT>
+      <MALT>British Crystal 50-60L</MALT>
+      <AMOUNT>0.4</AMOUNT>
       <PERCENT>7.7</PERCENT>
-      <UNITS>lb</UNITS>
-      <POINTS>1.039</POINTS>
-      <LOV>1.7</LOV>
+      <UNITS>kg</UNITS>
+      <POINTS>1.034</POINTS>
+      <LOV>55.0</LOV>
       <MASHED>true</MASHED>
-      <STEEPED>false</STEEPED>
-      <COSTLB>0.47</COSTLB>
-      <DESCRIPTION>Wheat Malt: Use to make wheat and weizen beers. Also, small amounts (3-6%) aid in head retention to any beer without altering final flavor. Use 5 to 70% in the mash, 40 to 70% being the norm for wheat beers, combined with a high enzyme malt such as Klages.</DESCRIPTION>
+      <STEEPED>true</STEEPED>
+      <COSTLB>3.483303742521066</COSTLB>
+      <DESCRIPTION>British Crystal 50-60L</DESCRIPTION>
     </ITEM>
     <ITEM>
-      <MALT>British Brown</MALT>
-      <AMOUNT>1.0</AMOUNT>
-      <PERCENT>7.7</PERCENT>
-      <UNITS>lb</UNITS>
-      <POINTS>1.032</POINTS>
-      <LOV>70.0</LOV>
+      <MALT>Chocolate</MALT>
+      <AMOUNT>0.2</AMOUNT>
+      <PERCENT>3.9</PERCENT>
+      <UNITS>kg</UNITS>
+      <POINTS>1.029</POINTS>
+      <LOV>350.0</LOV>
       <MASHED>true</MASHED>
-      <STEEPED>false</STEEPED>
-      <COSTLB>0.64</COSTLB>
-      <DESCRIPTION>British Brown</DESCRIPTION>
+      <STEEPED>true</STEEPED>
+      <COSTLB>1.9841603596638981</COSTLB>
+      <DESCRIPTION>Chocolate: Being the least roasted of the black malts, Chocolate malt will add a dark color and pleasant roast flavor. Small quantities lend a nutty flavor and deep, ruby red color while higher amounts lend a black color and smooth, roasted flavor.  Use 3 to 12%. </DESCRIPTION>
     </ITEM>
     <ITEM>
-      <MALT>Belgian Biscuit</MALT>
-      <AMOUNT>8.0</AMOUNT>
-      <PERCENT>3.8</PERCENT>
-      <UNITS>oz</UNITS>
-      <POINTS>1.03</POINTS>
-      <LOV>22.5</LOV>
+      <MALT>Black Patent</MALT>
+      <AMOUNT>0.09</AMOUNT>
+      <PERCENT>1.7</PERCENT>
+      <UNITS>kg</UNITS>
+      <POINTS>1.029</POINTS>
+      <LOV>500.0</LOV>
       <MASHED>true</MASHED>
-      <STEEPED>false</STEEPED>
-      <COSTLB>0.9</COSTLB>
-      <DESCRIPTION>Belgian Biscuit: Biscuit is a unique malt in that it  lightly roasted, lending the subtle properties of black and chocolate malts.  Used at the rate of 3 to 15%, it is designed to improve the "bread&amp;biscuits&quot;, or toasted flavor and aroma characteristics to Lagers and Ales</DESCRIPTION>
+      <STEEPED>true</STEEPED>
+      <COSTLB>1.9841603596638981</COSTLB>
+      <DESCRIPTION>Black Patent: The darkest of all malts, use sparingly to add deep color and roasty / burnt flavor.  Use no more than 1 to 3%, unless you like sucking charcoal.</DESCRIPTION>
     </ITEM>
     <ITEM>
-      <MALT>British Amber</MALT>
-      <AMOUNT>8.0</AMOUNT>
-      <PERCENT>3.8</PERCENT>
-      <UNITS>oz</UNITS>
-      <POINTS>1.03</POINTS>
-      <LOV>35.0</LOV>
+      <MALT>Roast Barley</MALT>
+      <AMOUNT>0.1</AMOUNT>
+      <PERCENT>1.9</PERCENT>
+      <UNITS>kg</UNITS>
+      <POINTS>1.029</POINTS>
+      <LOV>450.0</LOV>
       <MASHED>true</MASHED>
-      <STEEPED>false</STEEPED>
-      <COSTLB>0.9</COSTLB>
-      <DESCRIPTION>British Amber</DESCRIPTION>
+      <STEEPED>true</STEEPED>
+      <COSTLB>1.9841603596638981</COSTLB>
+      <DESCRIPTION>Roast Barley: Use 10 to 12% to impart a distinct, roasted flavor to Stouts.  Other dark beers also benefit from smaller quantities (2 - 6%). </DESCRIPTION>
     </ITEM>
   </FERMENTABLES>
   <HOPS>
     <ITEM>
-      <HOP>Perle</HOP>
-      <AMOUNT>31.0</AMOUNT>
+      <HOP>E. Kent Goldngs</HOP>
+      <AMOUNT>2.0</AMOUNT>
       <TIME>60</TIME>
-      <UNITS>g</UNITS>
-      <FORM>Pellet</FORM>
-      <ALPHA>7.7</ALPHA>
-      <COSTOZ>0.04</COSTOZ>
-      <ADD>Boil</ADD>
-      <DESCRIPTION>Perle: A nice Hallertau/Northern Brewer cross.  Use as a bittering hop for many Lager varieties and, used sparingly, has a pleasant, green hop aroma.</DESCRIPTION>
-      <DATE>null</DATE>
-    </ITEM>
-    <ITEM>
-      <HOP>Goldings</HOP>
-      <AMOUNT>45.0</AMOUNT>
-      <TIME>30</TIME>
-      <UNITS>g</UNITS>
+      <UNITS>oz</UNITS>
       <FORM>Leaf</FORM>
-      <ALPHA>4.7</ALPHA>
-      <COSTOZ>0.04</COSTOZ>
+      <ALPHA>5.0</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
       <ADD>Boil</ADD>
-      <DESCRIPTION>Goldings: A classic flavor and aroma hop which many brewers reserve for their finest Bitter or Pale Ale recipes.  It also works well as a stand alone bittering hop, and good for dry hopping pale ales&amp;bitterFrom the-home-brew-shop.co.uk (Feb 2002):Alpha Acid 4.5 - 5.5% Originally grown in Kent and Surrey, the majority of Goldings are now produced in Worcestershire. The beautiful, flowery Goldings aroma is highly prized by brewers, but supplies are becoming harder to obtain due to poor y</DESCRIPTION>
-      <DATE>null</DATE>
-    </ITEM>
-    <ITEM>
-      <HOP>Goldings</HOP>
-      <AMOUNT>42.0</AMOUNT>
-      <TIME>5</TIME>
-      <UNITS>g</UNITS>
-      <FORM>Leaf</FORM>
-      <ALPHA>4.7</ALPHA>
-      <COSTOZ>0.04</COSTOZ>
-      <ADD>Boil</ADD>
-      <DESCRIPTION>Goldings: A classic flavor and aroma hop which many brewers reserve for their finest Bitter or Pale Ale recipes.  It also works well as a stand alone bittering hop, and good for dry hopping pale ales&amp;bitterFrom the-home-brew-shop.co.uk (Feb 2002):Alpha Acid 4.5 - 5.5% Originally grown in Kent and Surrey, the majority of Goldings are now produced in Worcestershire. The beautiful, flowery Goldings aroma is highly prized by brewers, but supplies are becoming harder to obtain due to poor y</DESCRIPTION>
+      <DESCRIPTION>E. Kent Goldngs: A British grown version of the classic ale finishing hop.  Slightly smoother and more refined than the herbal, Canadian grown version.</DESCRIPTION>
       <DATE>null</DATE>
     </ITEM>
   </HOPS>
   <MISC>
   </MISC>
   <MASH>
-    <MASH_VOLUME>7.24</MASH_VOLUME>
+    <MASH_VOLUME>5.97</MASH_VOLUME>
     <MASH_VOL_U>gallons US</MASH_VOL_U>
     <MASH_RATIO>1.25</MASH_RATIO>
     <MASH_RATIO_U>qt/lb</MASH_RATIO_U>
@@ -162,25 +126,25 @@
     <MASH_TUNLOSS_TEMP>0.0</MASH_TUNLOSS_TEMP>
     <ITEM>
       <TYPE>alpha</TYPE>
-      <TEMP>151.0</TEMP>
-      <DISPL_TEMP>151.0</DISPL_TEMP>
-      <END_TEMP>151.0</END_TEMP>
-      <DISPL_END_TEMP>151.0</DISPL_END_TEMP>
+      <TEMP>152.0</TEMP>
+      <DISPL_TEMP>152.0</DISPL_TEMP>
+      <END_TEMP>152.0</END_TEMP>
+      <DISPL_END_TEMP>152.0</DISPL_END_TEMP>
       <MIN>60</MIN>
       <RAMP_MIN>0</RAMP_MIN>
       <METHOD>infusion</METHOD>
-      <DIRECTIONS>Mash in with 4.1 gallons US of water at 163.7 F</DIRECTIONS>
+      <DIRECTIONS>Mash in with 3.6 gallons US of water at 164.9 F</DIRECTIONS>
     </ITEM>
     <ITEM>
       <TYPE>mashout</TYPE>
-      <TEMP>168.0</TEMP>
-      <DISPL_TEMP>168.0</DISPL_TEMP>
-      <END_TEMP>168.0</END_TEMP>
-      <DISPL_END_TEMP>168.0</DISPL_END_TEMP>
+      <TEMP>165.5</TEMP>
+      <DISPL_TEMP>165.5</DISPL_TEMP>
+      <END_TEMP>165.5</END_TEMP>
+      <DISPL_END_TEMP>165.5</DISPL_END_TEMP>
       <MIN>10</MIN>
       <RAMP_MIN>0</RAMP_MIN>
       <METHOD>infusion</METHOD>
-      <DIRECTIONS>Add 1.8 gallons US of water at 212.0 F</DIRECTIONS>
+      <DIRECTIONS>Add 1.2 gallons US of water at 212.0 F</DIRECTIONS>
     </ITEM>
   </MASH>
   <NOTES>

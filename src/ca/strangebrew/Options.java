@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.10 2006/05/30 17:08:06 andrew_avis Exp $
+ * $Id: Options.java,v 1.11 2006/06/02 19:44:26 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -195,6 +195,8 @@ public class Options {
 			d.put("optGrainTemp", "68");
 			d.put("optTunLossF", "3");
 			d.put("optBoilTempF", "212");
+			d.put("optThickDecoctRatio", "0.6");
+			d.put("optThinDecoctRatio", "0.9");
 
 			// default ranges for mash steps - indicates the bottom of the range
 			d.put("optAcidTmpF", "85");

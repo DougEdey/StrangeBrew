@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.11 2006/06/01 20:46:53 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.12 2006/06/02 19:44:26 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -31,6 +31,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
@@ -56,6 +57,19 @@ import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 
+
+/**
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
 public class MashPanel extends javax.swing.JPanel implements ActionListener, FocusListener {
 	private JScrollPane jScrollPane1;
 	private JPanel totalsPanel;
@@ -344,6 +358,11 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 					ComboBoxModel ratioUnitsComboModel = new DefaultComboBoxModel(new String[]{
 							"qt/lb", "l/kg"});
 					this.setPreferredSize(new java.awt.Dimension(502, 276));
+					this.addFocusListener(new FocusAdapter() {
+						public void focusGained(FocusEvent evt) {
+							displayMash();
+						}
+					});
 					ratioUnitsCombo = new JComboBox();
 					settingsPanel.add(ratioUnitsCombo, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
@@ -489,8 +508,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 
 	}
 
-	// Make the button do the same thing as the default close operation
-	// (DISPOSE_ON_CLOSE).
+
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 
