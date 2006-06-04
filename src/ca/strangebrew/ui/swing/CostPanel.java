@@ -7,6 +7,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -20,7 +22,7 @@ import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 
 
-public class CostPanel extends javax.swing.JPanel implements ActionListener{
+public class CostPanel extends javax.swing.JPanel implements ActionListener, FocusListener{
 	private JPanel jPanel1;
 	private JLabel jLabel4;
 	private JLabel bottleCostLbl;
@@ -135,6 +137,7 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener{
 			jPanel1.add(yeastTxt, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			yeastTxt.setText("jLabel11");
 			yeastTxt.setPreferredSize(new java.awt.Dimension(48, 20));
+			yeastTxt.addFocusListener(this);
 			yeastTxt.addActionListener(this);
 
 			miscLbl = new JLabel();
@@ -145,6 +148,7 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener{
 			jPanel1.add(otherTxt, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			otherTxt.setText("jLabel11");
 			otherTxt.setPreferredSize(new java.awt.Dimension(48, 20));
+			otherTxt.addFocusListener(this);
 			otherTxt.addActionListener(this);
 
 			totalLbl = new JLabel();
@@ -182,6 +186,7 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener{
 			jPanel2.add(bottleSizeTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			bottleSizeTxt.setText("jTextField1");
 			bottleSizeTxt.setPreferredSize(new java.awt.Dimension(62, 20));
+			bottleSizeTxt.addFocusListener(this);
 			bottleSizeTxt.addActionListener(this);
 
 			bottleSizeUCmbModel = new ComboModel();
@@ -191,6 +196,7 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener{
 			jPanel2.add(bottleSizeUCmb, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			bottleSizeUCmb.setModel(bottleSizeUCmbModel);
 			bottleSizeUCmb.setPreferredSize(new java.awt.Dimension(80, 20));
+			bottleSizeUCmb.addFocusListener(this);
 			bottleSizeUCmb.addActionListener(this);
 
 			finalVolLbl = new JLabel();
@@ -240,6 +246,16 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener{
 			displayCost();
 		}
 
+	}
+	
+	public void focusLost(FocusEvent e) {		
+		Object o = e.getSource();
+		ActionEvent evt = new ActionEvent(o, 1, "");
+		actionPerformed(evt);		
+	}
+	
+	public void focusGained(FocusEvent e) {
+		// do nothing, we don't need this event
 	}
 
 }
