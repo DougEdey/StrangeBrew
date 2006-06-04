@@ -24,6 +24,7 @@ import ca.strangebrew.SBStringUtils;
 
 public class WaterPanel extends javax.swing.JPanel implements ActionListener, FocusListener{
 	
+	private StrangeSwing.SBNotifier sbn;
 	private JLabel finalUnitsLbl;
 	private JLabel miscLosUnitsLbl;
 	private JLabel trubLossUnitsLbl;
@@ -62,8 +63,9 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 	private Recipe myRecipe;
 
 
-	public WaterPanel() {
+	public WaterPanel(StrangeSwing.SBNotifier sb) {
 		super();
+		sbn = sb;
 		initGUI();
 	}
 	
@@ -373,7 +375,9 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 
 		}		
 		
-		displayWater();
+		// don't do display water here call displrecipe on the SB notifier to fortce a refresh of the whole recipe. this will call display water from inside Strangeswing.displayrecipe.
+		//displayWater(); 
+		sbn.displRecipe();
 		
 	}
 	
