@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.37 2006/05/30 17:08:06 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.38 2006/06/04 09:52:52 airgead Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -1423,7 +1423,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						mashPanel = new MashPanel(myRecipe);
 						jTabbedPane1.addTab("Mash", null, mashPanel, null);
 
-						waterPanel = new WaterPanel();
+						waterPanel = new WaterPanel(sbn);
 						jTabbedPane1.addTab("Water", null, waterPanel, null);
 
 						costPanel = new CostPanel();
