@@ -34,7 +34,6 @@ import ca.strangebrew.ui.swing.ComboModel;
 import ca.strangebrew.ui.swing.StrangeSwing;
 
 
-
 /**
  * @author aavis
  * 
@@ -1040,23 +1039,31 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private JPanel getPnlEvaporation() {
 		if (pnlEvaporation == null) {
 			pnlEvaporation = new JPanel();
-			BoxLayout pnlEvaporationLayout = new BoxLayout(pnlEvaporation,
-					javax.swing.BoxLayout.Y_AXIS);
+			GridBagLayout pnlEvaporationLayout = new GridBagLayout();
+			pnlEvaporationLayout.rowWeights = new double[] {0.1, 0.1, 0.1};
+			pnlEvaporationLayout.rowHeights = new int[] {7, 7, 7};
+			pnlEvaporationLayout.columnWeights = new double[] {0.1, 0.1};
+			pnlEvaporationLayout.columnWidths = new int[] {7, 7};
+			pnlEvaporation.setLayout(pnlEvaporationLayout);
 			pnlEvaporation.setLayout(pnlEvaporationLayout);
 			pnlEvaporation.setBorder(BorderFactory.createTitledBorder("Evaporation:"));
-			pnlEvaporation.add(getRbPercent());
-			pnlEvaporation.add(getRbConstant());
+			pnlEvaporation.add(getRbPercent(), new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			pnlEvaporation.add(getRbConstant(), new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
 			jPanel3 = new JPanel();
-			pnlEvaporation.add(jPanel3);
+			FlowLayout jPanel3Layout = new FlowLayout();
+			jPanel3Layout.setAlignment(FlowLayout.LEFT);
+			jPanel3.setLayout(jPanel3Layout);
+			pnlEvaporation.add(jPanel3, new GridBagConstraints(0, 2, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 
 			evapAmountTxt = new JTextField();
 			jPanel3.add(evapAmountTxt);
 			evapAmountTxt.setText("0");
-			evapAmountTxt.setPreferredSize(new java.awt.Dimension(54, 20));
+			evapAmountTxt.setPreferredSize(new java.awt.Dimension(56, 20));
 
 			evapAmountLbl = new JLabel();
 			jPanel3.add(evapAmountLbl);
+			evapAmountLbl.setPreferredSize(new java.awt.Dimension(39, 14));
 			evapAmountLbl.setText(Quantity.getVolAbrv(opts.getProperty("optVolUnits")));
 
 			bgEvap.add(rbPercent);

@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.38 2006/06/04 09:52:52 airgead Exp $ 
+ * $Id: StrangeSwing.java,v 1.39 2006/06/05 17:43:06 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -118,6 +118,7 @@ import ca.strangebrew.ui.swing.dialogs.NewIngrDialog;
 import ca.strangebrew.ui.swing.dialogs.PotentialExtractCalcDialog;
 import ca.strangebrew.ui.swing.dialogs.PreferencesDialog;
 import ca.strangebrew.ui.swing.dialogs.PrintDialog;
+import ca.strangebrew.ui.swing.dialogs.RefractometerDialog;
 import ca.strangebrew.ui.swing.dialogs.ScaleRecipeDialog;
 
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
@@ -2077,6 +2078,19 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 								maltPercent.setVisible(true);
 							}
 						});
+						
+						JMenuItem refractometerMenuItem = new JMenuItem();
+						mnuTools.add(refractometerMenuItem);
+						refractometerMenuItem.setText("Refractometer Utility...");
+												
+						refractometerMenuItem.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								RefractometerDialog refract = new RefractometerDialog(owner);
+								refract.setModal(true);
+								refract.setVisible(true);
+							}
+						});					
+						
 						
 						JMenuItem extractPotentialMenuItem = new JMenuItem();
 						mnuTools.add(extractPotentialMenuItem);
