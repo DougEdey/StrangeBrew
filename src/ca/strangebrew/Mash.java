@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.23 2006/06/02 19:44:26 andrew_avis Exp $
+ * $Id: Mash.java,v 1.24 2006/06/05 20:25:43 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -81,9 +81,11 @@ public class Mash {
 		private int minutes;
 		private int rampMin;
 		private String directions;
-
-		public Quantity infuseVol = new Quantity();
-		public Quantity decoctVol = new Quantity();
+		private double temp;
+		
+		public Quantity vol = new Quantity();
+		
+		// public Quantity decoctVol = new Quantity();
 
 		public MashStep(String type, double startTemp, double endTemp, String method, int min,
 				int rmin) {
@@ -109,13 +111,13 @@ public class Mash {
 	
 		// getter/setter methods	
 		
-		public Quantity getDecoctVol() {
+/*		public Quantity getDecoctVol() {
 			return decoctVol;
 		}
 
 		public void setDecoctVol(Quantity decoctVol) {
 			this.decoctVol = decoctVol;
-		}
+		}*/
 	
 		public String getDirections() {
 			return directions;
@@ -133,12 +135,12 @@ public class Mash {
 			this.endTemp = endTemp;
 		}
 
-		public Quantity getInfuseVol() {
-			return infuseVol;
+		public Quantity getVol() {
+			return vol;
 		}
 
-		public void setInfuseVol(Quantity infuseVol) {
-			this.infuseVol = infuseVol;
+		public void setvol(Quantity vol) {
+			this.vol = vol;
 		}
 
 		public String getMethod() {
@@ -171,6 +173,10 @@ public class Mash {
 
 		public void setStartTemp(double startTemp) {
 			this.startTemp = startTemp;
+		}
+		
+		public double getTemp() {
+			return temp;
 		}
 
 		public String getType() {
@@ -406,6 +412,15 @@ public class Mash {
 		return ((MashStep)steps.get(i)).getRampMin();	
 	}
 	
+	public double getStepTemp(int i) {
+		if (((MashStep)steps.get(i)).getTemp() == 0)
+			return 0;
+		if (tempUnits.equals("F"))
+			return ((MashStep)steps.get(i)).getTemp();	
+		else
+			return fToC(((MashStep)steps.get(i)).getTemp());
+	}
+	
 	public void setStepMin(int i, int m){
 		((MashStep)steps.get(i)).setMinutes(m);
 	}
@@ -414,15 +429,11 @@ public class Mash {
 		return ((MashStep)steps.get(i)).getMinutes();	
 	}
 
-	public double getStepInfuseVol(int i) {
-		return ((MashStep)steps.get(i)).getInfuseVol().getValue();	
+	public double getStepVol(int i) {
+		double vol = ((MashStep)steps.get(i)).getVol().getValue();
+		return Quantity.convertUnit("qt", volUnits, vol);
+	
 	}
-	
-	public double getStepDecoctVol(int i) {
-		return ((MashStep)steps.get(i)).getDecoctVol().getValue();	
-	}
-	
-	
 	
 	
 	public int getStepSize(){
@@ -480,8 +491,9 @@ public class Mash {
 		mashVolQTS = calcMashVol(maltWeightLbs, mr);
 		totalMashTime += stp.minutes;
 		mashWaterQTS += waterAddedQTS;		
-		stp.infuseVol.setUnits("qt");
-		stp.infuseVol.setAmount(waterAddedQTS);
+		stp.vol.setUnits("qt");
+		stp.vol.setAmount(waterAddedQTS);
+		stp.temp = strikeTemp;
 		stp.method = "infusion";
 
 		// subtract the water added from the Water Equiv so that they are correct when added in the next part of the loop
@@ -491,7 +503,7 @@ public class Mash {
 
 		if (tempUnits == "C")
 			strikeTemp = fToC(strikeTemp);
-		stp.directions = "Mash in with " + SBStringUtils.format(stp.infuseVol.getValueAs(volUnits),1 ) + " " + volUnits
+		stp.directions = "Mash in with " + SBStringUtils.format(stp.vol.getValueAs(volUnits),1 ) + " " + volUnits
 				+ " of water at " + SBStringUtils.format(strikeTemp, 1) + " " + tempUnits;
 
 		// set TargetTemp to the end temp
@@ -517,11 +529,12 @@ public class Mash {
 				waterAddedQTS = calcWaterAddition(targetTemp, currentTemp,
 						waterEquiv, boilTempF);
 				
-				stp.infuseVol.setUnits("qt");
-				stp.infuseVol.setAmount(waterAddedQTS);
+				stp.vol.setUnits("qt");
+				stp.vol.setAmount(waterAddedQTS);
+				stp.temp = strikeTemp;
 				if (tempUnits == "C")
-					strikeTemp = 100;
-				stp.directions = "Add " + SBStringUtils.format(stp.infuseVol.getValueAs(volUnits), 1) + " " + volUnits
+					strikeTemp = 100;				
+				stp.directions = "Add " + SBStringUtils.format(stp.vol.getValueAs(volUnits), 1) + " " + volUnits
 						+ " of water at " + SBStringUtils.format(strikeTemp, 1) + " " + tempUnits;
 
 				mashWaterQTS += waterAddedQTS;
@@ -542,10 +555,12 @@ public class Mash {
 					ratio = thinDecoctRatio;
 				// Calculate volume (qts) of mash to remove
 				decoct = calcDecoction2(targetTemp, currentTemp, mashWaterQTS, ratio);				
-				stp.decoctVol.setUnits("qt");
-				stp.decoctVol.setAmount(decoct);
+				stp.vol.setUnits("qt");
+				stp.vol.setAmount(decoct);
+				stp.temp = boilTempF;
+				
 				// Updated the decoction, convert to right units & make directions
-				stp.directions = "Remove " + SBStringUtils.format(stp.decoctVol.getValueAs(volUnits), 1) + " " + volUnits
+				stp.directions = "Remove " + SBStringUtils.format(stp.vol.getValueAs(volUnits), 1) + " " + volUnits
 						+ " of mash, boil, and return to mash.";
 
 			} else if (stp.method.equals("direct")) { // calculate a direct heat step
@@ -554,6 +569,8 @@ public class Mash {
 				waterAddedQTS = 0;
 				stp.directions = "Add direct heat until mash reaches " + displTemp
 						+ " " + tempUnits + ".";
+				stp.vol.setAmount(0);
+				stp.temp = 0;
 			}
 
 			if (stp.type.equals("sparge")) 
@@ -564,10 +581,10 @@ public class Mash {
 
 			}
 			
-			stp.infuseVol.setUnits("qt");
+/*			stp.infuseVol.setUnits("qt");
 			stp.infuseVol.setAmount(waterAddedQTS);			
 			stp.decoctVol.setUnits("qt");
-			stp.decoctVol.setAmount(decoct);
+			stp.decoctVol.setAmount(decoct);*/
 			
 			// set target temp to end temp for next step
 			targetTemp = stp.endTemp;
@@ -619,15 +636,20 @@ public class Mash {
 	    int j=0;
 		for (int i = 1; i < steps.size(); i++) {
 			stp = ((MashStep) steps.get(i));			
-			if (stp.getType().equals("sparge")){				
+			if (stp.getType().equals("sparge")){	
+				stp.vol.setUnits("qt");
+				stp.vol.setAmount(collect[j]);
+				stp.temp = SPARGETMPF;
 				totalSpargeTime += stp.getMinutes();
 				String collectStr = SBStringUtils.format(Quantity.convertUnit("qt", volUnits, collect[j]), 1) +
 				" " + volUnits;
 				String tempStr;
-				if (tempUnits.equals("F"))
-					tempStr = "" + SBStringUtils.format(SPARGETMPF, 1) + "F";
-				else 
-					tempStr = SBStringUtils.format(fToC(SPARGETMPF), 1) + "C";		
+				if (tempUnits.equals("F")){
+					tempStr = "" + SBStringUtils.format(SPARGETMPF, 1) + "F";					
+				}
+				else { 
+					tempStr = SBStringUtils.format(fToC(SPARGETMPF), 1) + "C";
+				}
 				if (numSparge > 1){
 					stp.setMethod("batch");
 					String add = SBStringUtils.format(Quantity.convertUnit("qt", volUnits, charge[j]), 1) +
@@ -636,6 +658,8 @@ public class Mash {
 					
 				}
 				else {
+					stp.vol.setUnits("qt");
+					stp.vol.setAmount(spargeQTS);
 					stp.setMethod("fly");					
 					stp.setDirections("Sparge with " + 
 							SBStringUtils.format(Quantity.convertUnit("qt", volUnits, spargeQTS), 1) +
