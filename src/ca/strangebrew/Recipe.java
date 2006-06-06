@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.31 2006/05/30 17:08:06 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.32 2006/06/06 17:34:04 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -874,7 +874,7 @@ public class Recipe {
 		estOg = (maltPoints / 100) + 1;
 		estFg = 1 + ((estOg - 1) * ((100 - attenuation) / 100));
 		srm = calcColour(mcu);
-		mash.setMaltWeight(totalMashLbs);
+		// mash.setMaltWeight(totalMashLbs);
 
 		calcAlcohol(getAlcMethod());
 

@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.11 2006/06/02 19:44:26 andrew_avis Exp $
+ * $Id: Options.java,v 1.12 2006/06/06 17:34:04 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -206,6 +206,8 @@ public class Options {
 			d.put("optAlphaTmpF", "151");
 			d.put("optMashoutTmpF", "161");
 			d.put("optSpargeTmpF", "170");
+			
+			d.put("optCerealMashTmpF", "155");
 
 		}
 

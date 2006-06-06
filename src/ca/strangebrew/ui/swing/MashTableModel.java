@@ -20,7 +20,7 @@ class MashTableModel extends AbstractTableModel {
 
 
 	private String[] columnNames = {"Type", "Method", "Start Temp", "End Temp",
-			"Ramp Min", "Step Min", "Vol", "Temp"};
+			"Ramp Min", "Step Min", "Weight", "Vol", "Temp" };
 
 	private Mash data = null;
 
@@ -73,10 +73,12 @@ class MashTableModel extends AbstractTableModel {
 				case 4 :
 					return new Integer(data.getStepRampMin(row));
 				case 5 :
-					return new Integer(data.getStepMin(row));
+					return new Integer(data.getStepMin(row));				
 				case 6 :
-					return SBStringUtils.format(data.getStepVol(row), 1);
+					return SBStringUtils.format(data.getStepWeight(row), 1);
 				case 7 :
+					return SBStringUtils.format(data.getStepVol(row), 1);
+				case 8 :
 					return SBStringUtils.format(data.getStepTemp(row), 1);	
 
 
@@ -103,7 +105,7 @@ class MashTableModel extends AbstractTableModel {
 	public boolean isCellEditable(int row, int col) {
 		//Note that the data/cell address is constant,
 		//no matter where the cell appears onscreen.
-		if (col < 0 || col > 5) {
+		if (col < 0 || col > 6) {
 			return false;
 		} else {
 			return true;
@@ -137,6 +139,8 @@ class MashTableModel extends AbstractTableModel {
 				case 5 :
 					data.setStepMin(row, Integer.parseInt(value.toString()));
 					break;
+				case 6 :
+					data.setStepWeight(row, Double.parseDouble(value.toString()));
 
 
 			}

@@ -156,6 +156,12 @@ New Features:
   considered a batch sparge, and correct additions are calculated.  
 - You can now set the parameters for a thick and thin decoction on the 
   settings tab.
+- You can now add cereal mash steps to a mash schedule.  Add a step, and change the
+  method to "cereal mash".  Enter the weight of the grain used in the cereal mash.
+  Other values will update accordingly.  Note: the temperature of the step is adjusted
+  if the cereal mash addition won't bring the step up to the targe temp.  Try
+  increasing the weight and adjusting the temperature until you get the values you
+  want.  
 - New Refractometer Utility lets you peform various calculations with readings
   from a refractometer.  
 
@@ -179,6 +185,7 @@ Bugs Fixed:
 - %alc, ibu, colour method combos are wider so text isn't cut off (Bug 1489271).
 - Switching between % and constant evaporation doesn't redraw the Preferences
   tab. (Bug 1493266)
+- Mash tab now shows step volume and temp. (Bug 1489258)  
 
 Beta 0.6
 --------
@@ -274,14 +281,13 @@ Beta 0.4
  Roadmap
 =========
 
-Soon-to-be Implemented Features:
+Features on the "TODO List":
 - mash tun thermal mass
 - hop scaling
 - real application help (not the SB Win version)
-- refractometer utilities
 - save / load mash profiles
 - specify mash temp ranges
-
+- cereal mash
 
 Planned StrangeBrew Java Pro Features:
 - water profiling

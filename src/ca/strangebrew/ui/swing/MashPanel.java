@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.13 2006/06/05 20:25:44 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.14 2006/06/06 17:34:05 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -28,6 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
@@ -40,12 +41,16 @@ import ca.strangebrew.SBStringUtils;
 
 public class MashPanel extends javax.swing.JPanel implements ActionListener, FocusListener {
 	private JScrollPane jScrollPane1;
+	private JRadioButton stepRadio;
+	private JRadioButton ratioRadio;
+	private ButtonGroup cerealMashBG;
+	private JLabel jLabel2;
+	private JTabbedPane jTabbedPane1;
 	private JPanel totalsPanel;
 	private JTable tblMash;
 	private JPanel buttonsPanel;
 	private JButton delStepButton;
 	private JButton addStepButton;
-	private JPanel jPanel1;
 	private JLabel jLabel20;
 	private JLabel jLabel19;
 	private JLabel jLabel18;
@@ -111,11 +116,13 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			GridBagLayout thisLayout = new GridBagLayout();
 			thisLayout.columnWeights = new double[]{0.3};
 			thisLayout.columnWidths = new int[]{7};
-			thisLayout.rowWeights = new double[]{0.1, 0.8, 0.1};
-			thisLayout.rowHeights = new int[]{7, 7, 7};
+			thisLayout.rowWeights = new double[]{0.1, 0.8};
+			thisLayout.rowHeights = new int[]{7, 7};
 			this.setLayout(thisLayout);
 
 			{
+
+				cerealMashBG = new ButtonGroup();
 				tablePanel = new JPanel();
 				BorderLayout pnlTableLayout = new BorderLayout();
 				tablePanel.setLayout(pnlTableLayout);
@@ -155,7 +162,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 
 						// set up method combo
 						String[] methods = {"infusion", "decoction", "decoction thick",
-								"decoction thin", "direct"};
+								"decoction thin", "direct", "cereal mash"};
 						JComboBox methodComboBox = new JComboBox(methods);
 						mashColumn = tblMash.getColumnModel().getColumn(1);
 						mashColumn.setCellEditor(new DefaultCellEditor(methodComboBox));
@@ -163,150 +170,28 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				}
 			}
 
-			jPanel1 = new JPanel();
-			BorderLayout jPanel1Layout = new BorderLayout();
-			jPanel1.setLayout(jPanel1Layout);
-			this.add(jPanel1, new GridBagConstraints(4, 0, 1, 2, 0.0, 0.0,
+			jTabbedPane1 = new JTabbedPane();
+			this.add(jTabbedPane1, new GridBagConstraints(2, 0, 1, 2, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
 					0));
-			jPanel1.setPreferredSize(new java.awt.Dimension(158, 230));
-
-			totalsPanel = new JPanel();
-			GridBagLayout totalsPanelLayout = new GridBagLayout();
-			totalsPanelLayout.rowWeights = new double[]{0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
-			totalsPanelLayout.rowHeights = new int[]{7, 7, 7, 7, 7, 7};
-			totalsPanelLayout.columnWeights = new double[]{0.1, 0.1};
-			totalsPanelLayout.columnWidths = new int[]{7, 7};
-			totalsPanel.setLayout(totalsPanelLayout);
-			this.add(totalsPanel, new GridBagConstraints(2, 0, 1, 2, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
-					0));
-
-			{
-				totalTimeLabel = new JLabel();
-				totalsPanel.add(totalTimeLabel, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
-						0, 0));
-				totalTimeLabel.setText("Time");
-
-			}
-			{
-				buttonsPanel = new JPanel();
-				tablePanel.add(buttonsPanel, BorderLayout.SOUTH);
-				GridBagLayout buttonsPanelLayout = new GridBagLayout();
-				buttonsPanelLayout.rowWeights = new double[]{0.1, 0.1, 0.1, 0.1};
-				buttonsPanelLayout.rowHeights = new int[]{7, 7, 7, 7};
-				buttonsPanelLayout.columnWeights = new double[]{0.1, 0.1, 0.1, 0.1};
-				buttonsPanelLayout.columnWidths = new int[]{7, 7, 7, 7};
-				buttonsPanel.setLayout(buttonsPanelLayout);
-				buttonsPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-
-				jToolBar1 = new JToolBar();
-				buttonsPanel.add(jToolBar1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0,
-								0, 0), 0, 0));
-				jToolBar1.setFloatable(false);
-				jToolBar1.setPreferredSize(new java.awt.Dimension(76, 18));
-				{
-					tempFrb = new JRadioButton();
-					buttonsPanel.add(tempFrb, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
-									0), 0, 0));
-					tempFrb.setText("F");
-					tempFrb.addActionListener(this);
-				}
-
-				tempBg = new ButtonGroup();
-				tempBg.add(tempFrb);
-				{
-					tempCrb = new JRadioButton();
-					buttonsPanel.add(tempCrb, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
-									0), 0, 0));
-					tempCrb.setText("C");
-					tempCrb.addActionListener(this);
-
-					jLabel13 = new JLabel();
-					buttonsPanel.add(jLabel13, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
-									0), 0, 0));
-					jLabel13.setText("Temp Units:");
-
-				}
-				tempBg.add(tempCrb);
-
-				jLabel18 = new JLabel();
-				totalsPanel.add(jLabel18, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
-						0, 0));
-				jLabel18.setText("Total Time:");
-
-				jLabel16 = new JLabel();
-				totalsPanel.add(jLabel16, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
-						0, 0));
-				jLabel16.setText("Total Weight:");
-
-				totalMashLabel = new JLabel();
-				totalsPanel.add(totalMashLabel, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
-						0, 0));
-
-				jLabel17 = new JLabel();
-				totalsPanel.add(jLabel17, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
-						0, 0));
-				jLabel17.setText("Total Vol:");
-
-				{
-					delStepButton = new JButton();
-					jToolBar1.add(delStepButton);
-					delStepButton.setText("-");
-
-					delStepButton.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent evt) {
-							delStepButtonActionPerformed(evt);
-						}
-					});
-				}
-				{
-					addStepButton = new JButton();
-					jToolBar1.add(addStepButton);
-					addStepButton.setText("+");
-
-					addStepButton.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent evt) {
-							addStepButtonActionPerformed(evt);
-						}
-					});
-				}
-			}
-			{
-				volLabel = new JLabel();
-				totalsPanel.add(volLabel, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
-						0, 0));
-				volLabel.setText("10");
-			}
-
 			{
 				settingsPanel = new JPanel();
-				jPanel1.add(settingsPanel, BorderLayout.CENTER);
+				jTabbedPane1.addTab("Settings", null, settingsPanel, null);
 				GridBagLayout settingsPanelLayout = new GridBagLayout();
-				settingsPanelLayout.rowWeights = new double[]{0.1, 0.1, 0.1, 0.1, 0.1};
-				settingsPanelLayout.rowHeights = new int[]{7, 7, 7, 7, 7};
+				settingsPanelLayout.rowWeights = new double[]{0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+						0.1};
+				settingsPanelLayout.rowHeights = new int[]{7, 7, 7, 7, 7, 7, 7, 7};
 				settingsPanelLayout.columnWeights = new double[]{0.3};
 				settingsPanelLayout.columnWidths = new int[]{7};
 				settingsPanel.setLayout(settingsPanelLayout);
-				settingsPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-				settingsPanel.setPreferredSize(new java.awt.Dimension(172, 175));
+				settingsPanel.setPreferredSize(new java.awt.Dimension(157, 208));
 
 				jLabel14 = new JLabel();
 				settingsPanel.add(jLabel14, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-						GridBagConstraints.EAST, GridBagConstraints.NONE,
-						new Insets(0, 0, 0, 0), 0, 0));
+						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
 				jLabel14.setText("Vol Units:");
-				
+
 				jLabel15 = new JLabel();
 				settingsPanel.add(jLabel15, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
@@ -419,9 +304,147 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 					volUnitsCombo.addActionListener(this);
 				}
 
+				jLabel2 = new JLabel();
+				settingsPanel.add(jLabel2, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
+						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
+				jLabel2.setText("Cereal Mash:");
+
+				stepRadio = new JRadioButton();
+				settingsPanel.add(stepRadio, new GridBagConstraints(1, 5, 1, 1, 0.0, 0.0,
+						GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
+				stepRadio.setText("Step Temp");
+				cerealMashBG.add(stepRadio);
+				stepRadio.setSelected(true);
+				stepRadio.addActionListener(this);
+
+				ratioRadio = new JRadioButton();
+				settingsPanel.add(ratioRadio, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0,
+						GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
+				ratioRadio.setText("Ratio");
+				cerealMashBG.add(ratioRadio);
+				ratioRadio.addActionListener(this);
+
 				boilTempTxt.addFocusListener(this);
 				boilTempTxt.addActionListener(this);
 
+			}
+
+			totalsPanel = new JPanel();
+			jTabbedPane1.addTab("Totals", null, totalsPanel, null);
+			GridBagLayout totalsPanelLayout = new GridBagLayout();
+			totalsPanelLayout.rowWeights = new double[]{0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+			totalsPanelLayout.rowHeights = new int[]{7, 7, 7, 7, 7, 7};
+			totalsPanelLayout.columnWeights = new double[]{0.1, 0.1};
+			totalsPanelLayout.columnWidths = new int[]{7, 7};
+			totalsPanel.setLayout(totalsPanelLayout);
+			{
+				totalTimeLabel = new JLabel();
+				totalsPanel.add(totalTimeLabel, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+						GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
+				totalTimeLabel.setText("Time");
+
+			}
+			{
+				buttonsPanel = new JPanel();
+				tablePanel.add(buttonsPanel, BorderLayout.SOUTH);
+				GridBagLayout buttonsPanelLayout = new GridBagLayout();
+				buttonsPanelLayout.rowWeights = new double[]{0.1};
+				buttonsPanelLayout.rowHeights = new int[]{7};
+				buttonsPanelLayout.columnWeights = new double[]{0.1, 0.1, 0.1, 0.1};
+				buttonsPanelLayout.columnWidths = new int[]{7, 7, 7, 7};
+				buttonsPanel.setLayout(buttonsPanelLayout);
+				buttonsPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+
+				jToolBar1 = new JToolBar();
+				buttonsPanel.add(jToolBar1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0,
+								0, 0), 0, 0));
+				jToolBar1.setFloatable(false);
+				jToolBar1.setPreferredSize(new java.awt.Dimension(76, 18));
+				{
+					tempFrb = new JRadioButton();
+					buttonsPanel.add(tempFrb, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
+									0), 0, 0));
+					tempFrb.setText("F");
+					tempFrb.addActionListener(this);
+				}
+
+				tempBg = new ButtonGroup();
+				tempBg.add(tempFrb);
+				{
+					tempCrb = new JRadioButton();
+					buttonsPanel.add(tempCrb, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
+									0), 0, 0));
+					tempCrb.setText("C");
+					tempCrb.addActionListener(this);
+
+					jLabel13 = new JLabel();
+					buttonsPanel.add(jLabel13, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
+									0), 0, 0));
+					jLabel13.setText("Temp Units:");
+
+				}
+				tempBg.add(tempCrb);
+
+				jLabel18 = new JLabel();
+				totalsPanel.add(jLabel18, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
+				jLabel18.setText("Total Time:");
+
+				jLabel16 = new JLabel();
+				totalsPanel.add(jLabel16, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
+				jLabel16.setText("Total Weight:");
+
+				totalMashLabel = new JLabel();
+				totalsPanel.add(totalMashLabel, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+						GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
+
+				jLabel17 = new JLabel();
+				totalsPanel.add(jLabel17, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
+				jLabel17.setText("Total Vol:");
+
+				{
+					delStepButton = new JButton();
+					jToolBar1.add(delStepButton);
+					delStepButton.setText("-");
+
+					delStepButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							delStepButtonActionPerformed(evt);
+						}
+					});
+				}
+				{
+					addStepButton = new JButton();
+					jToolBar1.add(addStepButton);
+					addStepButton.setText("+");
+
+					addStepButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							addStepButtonActionPerformed(evt);
+						}
+					});
+				}
+			}
+			{
+				volLabel = new JLabel();
+				totalsPanel.add(volLabel, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
+						GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
+				volLabel.setText("10");
 			}
 
 			totalMashLabel.setText("10");
@@ -476,7 +499,6 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 
 	}
 
-
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 
@@ -496,7 +518,6 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 		} else if (o == tempCrb) {
 			myRecipe.mash.setMashTempUnits("C");
 			myRecipe.mash.calcMashSchedule();
-
 		} else if (o == grainTempText) {
 			String s = grainTempText.getText();
 			myRecipe.mash.setGrainTemp(Double.parseDouble(s));
@@ -506,6 +527,11 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 		} else if (o == tunLossTxt) {
 			String s = tunLossTxt.getText();
 			myRecipe.mash.setTunLoss(Double.parseDouble(s));
+		} else if (o == stepRadio || o == ratioRadio){
+			if (stepRadio.isSelected())
+				myRecipe.mash.setCerealMashMethod("step");
+			else
+				myRecipe.mash.setCerealMashMethod("ratio");
 		}
 
 		tblMash.updateUI();
