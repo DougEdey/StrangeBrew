@@ -2,7 +2,7 @@
 +                   README                     +
 ================================================
 
-StrangeBrew Java - 2.0a7
+StrangeBrew Java - 2.0b7
 (c)2000-2006 Drew Avis - drew.avis@gmail.com
 
 Thank you for downloading and trying StrangeBrew Java.
@@ -26,7 +26,7 @@ This file contains:
  What is this?
 ===============
 
-This is an "alpha" release of StrangeBrew Java, which means it's
+This is a "beta" release of StrangeBrew Java, which means it's
 still in development and may have some bugs.  
 Please use it for your brewday planning, and let us know
 how you like it!
@@ -34,10 +34,8 @@ how you like it!
 StrangeBrew Java is a Java port of the popular Windows homebrewing
 software, StrangeBrew (www.strangebrew.ca).
 
-NOTE: We've gone back to calling this an "alpha" release because the software
-isn't yet feature complete.  Once all features are coded, it will be called
-a beta.  We've also changed the numbering to 2.0, based on the idea that this
-is a continuation of the Windows version 1.8.
+NOTE: We've changed the numbering of Java releases to 2.0, based on 
+the idea that this is a continuation of the Windows version 1.8.
 
 
 ========================
@@ -145,7 +143,7 @@ of reported bugs.  If you've found one that's not there, please report it!
 What's New
 ==========
 
-2.0.a7
+2.0.b7
 --------
 New Features:
 - The Resize Recipe dialog now allows you to also convert hops and fermentables
@@ -159,13 +157,17 @@ New Features:
 - You can now add cereal mash steps to a mash schedule.  Add a step, and change the
   method to "cereal mash".  Enter the weight of the grain used in the cereal mash.
   Other values will update accordingly.  Note: the temperature of the step is adjusted
-  if the cereal mash addition won't bring the step up to the targe temp.  Try
-  increasing the weight and adjusting the temperature until you get the values you
+  if the cereal mash addition brings the step above the targe temp.  Try
+  decreasing the weight and adjusting the temperature until you get the values you
   want.  
 - New Refractometer Utility lets you peform various calculations with readings
   from a refractometer.  
 
 Bugs Fixed:
+- Style tab now displays correct SRM value when you're using EBC colour (Bug 1497989)
+- You can now set various mash defaults on the Preferences dialog (Bug 1489256)
+- You can now set boil units (C or F) as well as boil temp on the Preferences
+  dialog (Bug 1489250)
 - Cost tab now re-calculates correctly when values change (Bug 1493994)
 - Final beer volume shown on cost tab now matches volume shown on water tab (Bug 1493294)
 - BU:GU ratio is now displayed correctly on the Style panel (Bug 1493283).

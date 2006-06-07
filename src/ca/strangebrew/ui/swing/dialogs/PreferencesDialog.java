@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -27,12 +29,12 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import ca.strangebrew.BrewCalcs;
 import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.ui.swing.ComboModel;
 import ca.strangebrew.ui.swing.StrangeSwing;
-
 
 /**
  * @author aavis
@@ -107,6 +109,17 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private JTextField txtTinsethUtil;
 	private JLabel jLabelc4;
 	private JTextField txtFWHTime;
+	private JComboBox mashRatioUCombo;
+	private JTextField mashRatioTxt;
+	private JLabel jLabel29;
+	private JComboBox mashVolCombo;
+	private ComboModel mashVolComboModel;
+	private JLabel jLabel28;
+	private JRadioButton crb;
+	private JRadioButton frb;
+	private JLabel jLabel27;
+	private ButtonGroup tempUBG;
+	private JLabel boilTempULbl;
 	private JLabel evapAmountLbl;
 	private JTextField evapAmountTxt;
 	private JPanel jPanel3;
@@ -210,13 +223,19 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 	private void setOptions() {
 		
-		// new recipe tab:
-		boilTempTxt.setText(opts.getProperty("optBoilTempF"));
+		// new recipe tab:		
 		batchSizeTxt.setText(opts.getProperty("optPostBoilVol"));
 		maltUnitsComboModel.addOrInsert(opts.getProperty("optMaltU"));
 		hopsUnitsComboModel.addOrInsert(opts.getProperty("optHopsU"));
 		volUnitsComboModel.addOrInsert(opts.getProperty("optSizeU"));
 		
+		// TODO: convert boiltempF if c is selected
+		boilTempTxt.setText(opts.getProperty("optBoilTempF"));
+		mashVolComboModel.addOrInsert(opts.getProperty("optMashVolU"));
+		frb.setSelected(opts.getProperty("optMashTempU").equalsIgnoreCase("F"));
+		crb.setSelected(opts.getProperty("optMashTempU").equalsIgnoreCase("C"));
+		mashRatioUCombo.setSelectedItem(opts.getProperty("optMashRatioU"));
+		mashRatioTxt.setText(opts.getProperty("optMashRatio"));
 		
 		// cost tab:
 		txtOtherCost.setText(opts.getProperty("optMiscCost"));
@@ -311,13 +330,27 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		opts.setProperty("optMiscLoss", txtMiscLosses.getText());
 		opts.setProperty("optTrubLoss", txtLostInTrub.getText());
 
-		// new recipe tab:
-		opts.setProperty("optBoilTempF", boilTempTxt.getText());
+		// new recipe tab:		
 		opts.setProperty("optPostBoilVol", batchSizeTxt.getText());
 		opts.setProperty("optMaltU", maltUnitsComboModel.getSelectedItem().toString());
 		opts.setProperty("optHopsU", hopsUnitsComboModel.getSelectedItem().toString());
 		opts.setProperty("optSizeU", volUnitsComboModel.getSelectedItem().toString());
 		
+		
+		opts.setProperty("optMashVolU", mashVolComboModel.getSelectedItem().toString());
+		
+		if (frb.isSelected()){
+			opts.setProperty("optMashTempU", "F");
+			opts.setProperty("optBoilTempF", boilTempTxt.getText());
+		}
+		else {
+			opts.setProperty("optMashTempU", "C");
+			double t = Double.parseDouble(boilTempTxt.getText());
+			opts.setDProperty("optBoilTempF", BrewCalcs.cToF(t));
+		}
+		
+		opts.setProperty("optMashRatioU", mashRatioUCombo.getSelectedItem().toString());
+		opts.setProperty("optMashRatio", mashRatioTxt.getText());
 		
 		// appearances:
 		
@@ -346,6 +379,8 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		getContentPane().setLayout(new BorderLayout());
 		this.setFocusTraversalKeysEnabled(false);
 		{
+			
+			tempUBG = new ButtonGroup();
 			jTabbedPane1 = new JTabbedPane();
 			getContentPane().add(jTabbedPane1, BorderLayout.CENTER);
 			{
@@ -801,6 +836,12 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			jLabel23.setText("Alpha:");
 
 			mashPanel = new JPanel();
+			GridBagLayout mashPanelLayout = new GridBagLayout();
+			mashPanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1};
+			mashPanelLayout.rowHeights = new int[] {7, 7, 7, 7};
+			mashPanelLayout.columnWeights = new double[] {0.1, 0.1, 0.1, 0.1};
+			mashPanelLayout.columnWidths = new int[] {7, 7, 7, 7};
+			mashPanel.setLayout(mashPanelLayout);
 			newRecipePanel.add(mashPanel, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			mashPanel.setBorder(BorderFactory.createTitledBorder("Mash"));
 
@@ -858,13 +899,64 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			batchSizeTxt.setText("jTextField1");
 
 			jLabel12 = new JLabel();
-			mashPanel.add(jLabel12);
-			jLabel12.setText("Boil Temp (F):");
+			mashPanel.add(jLabel12, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			jLabel12.setText("Boil Temp:");
 
 			boilTempTxt = new JTextField();
-			mashPanel.add(boilTempTxt);
+			mashPanel.add(boilTempTxt, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			boilTempTxt.setText("212");
-			boilTempTxt.setPreferredSize(new java.awt.Dimension(43, 20));
+			boilTempTxt.setPreferredSize(new java.awt.Dimension(45, 20));
+
+			boilTempULbl = new JLabel();
+			mashPanel.add(boilTempULbl, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			boilTempULbl.setText("F");
+			boilTempULbl.setPreferredSize(new java.awt.Dimension(21, 14));
+
+			jLabel27 = new JLabel();
+			mashPanel.add(jLabel27, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			jLabel27.setText("Temp Units:");
+
+			frb = new JRadioButton();
+			mashPanel.add(frb, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			frb.setText("F");
+			tempUBG.add(frb);
+			frb.setSelected(true);
+			frb.addActionListener(this);
+
+			crb = new JRadioButton();
+			mashPanel.add(crb, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			crb.setText("C");
+			tempUBG.add(crb);
+			crb.addActionListener(this);
+
+			jLabel28 = new JLabel();
+			mashPanel.add(jLabel28, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			jLabel28.setText("Vol Units:");
+
+			mashVolComboModel = new ComboModel();
+			mashVolComboModel.setList(new Quantity().getListofUnits("vol"));
+
+			mashVolCombo = new JComboBox();
+			mashPanel.add(mashVolCombo, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+			mashVolCombo.setModel(mashVolComboModel);
+			mashVolCombo.setPreferredSize(new java.awt.Dimension(137, 20));
+
+			jLabel29 = new JLabel();
+			mashPanel.add(jLabel29, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			jLabel29.setText("Ratio:");
+
+			mashRatioTxt = new JTextField();
+			mashPanel.add(mashRatioTxt, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			mashRatioTxt.setText("1.25");
+			mashRatioTxt.setPreferredSize(new java.awt.Dimension(45, 20));
+
+			ComboBoxModel mashRatioUComboModel = new DefaultComboBoxModel(new String[] {
+					"qt/l", "l/kg" });
+
+			mashRatioUCombo = new JComboBox();
+			mashPanel.add(mashRatioUCombo, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			mashRatioUCombo.setModel(mashRatioUComboModel);
+			mashRatioUCombo.setPreferredSize(new java.awt.Dimension(71, 20));
 
 		}
 		getContentPane().add(BorderLayout.CENTER, jTabbedPane1);
@@ -1100,12 +1192,9 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		return txtBottleSize;
 	}
 
-	//	Make the button do the same thing as the default close operation
-	// (DISPOSE_ON_CLOSE).
+	//	Action Performed 
 	public void actionPerformed(ActionEvent e) {
-		Object o = e.getSource();		
-		
-		
+		Object o = e.getSource();			
 		
 		if (o == okButton) {
 		saveOptions();
@@ -1129,6 +1218,12 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		}
 		else if (o == rbConstant){
 			evapAmountLbl.setText(Quantity.getVolAbrv(volUnitsComboModel.getSelectedItem().toString()) + "/hr");
+		}
+		else if (o == crb || o == frb){
+			if (crb.isSelected())
+				boilTempULbl.setText("C");
+			else
+				boilTempULbl.setText("F");				
 		}
 		
 		

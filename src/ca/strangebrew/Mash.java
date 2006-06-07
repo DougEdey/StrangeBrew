@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.27 2006/06/07 16:34:06 andrew_avis Exp $
+ * $Id: Mash.java,v 1.28 2006/06/07 20:12:48 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -54,7 +54,7 @@ public class Mash {
 	
 	public Mash(Recipe r){
 
-		 Options opts = new Options("mash");
+		 Options opts = r.opts;
 		 mashRatio = opts.getDProperty("optMashRatio");
 		 mashRatioU = opts.getProperty("optMashRatioU");;
 		 tempUnits = opts.getProperty("optMashTempU");
@@ -231,7 +231,7 @@ public class Mash {
 		if (tempUnits.equals("F"))
 			grainTempF = t;
 		else
-			grainTempF = cToF(t);
+			grainTempF = BrewCalcs.cToF(t);
 		calcMashSchedule();
 	}
 	
@@ -239,7 +239,7 @@ public class Mash {
 		if (tempUnits.equals("F"))
 			boilTempF = t;
 		else
-			boilTempF = cToF(t);
+			boilTempF = BrewCalcs.cToF(t);
 		calcMashSchedule();
 	}
 	
@@ -279,13 +279,13 @@ public class Mash {
 		if (tempUnits.equals("F"))
 			return grainTempF; 
 		else
-			return fToC(grainTempF);
+			return BrewCalcs.fToC(grainTempF);
 		}
 	public double getBoilTemp() { 
 		if (tempUnits.equals("F")) 
 				return boilTempF;
 		else
-			return fToC(boilTempF);
+			return BrewCalcs.fToC(boilTempF);
 		}
 	
 	public double getSpargeVol(){
@@ -371,7 +371,7 @@ public class Mash {
 	
 	public void setStepStartTemp(int i, double t){		
 		if (tempUnits.equals("C")){
-			t = cToF(t);			
+			t = BrewCalcs.cToF(t);			
 		}				
 		((MashStep)steps.get(i)).setStartTemp(t);
 		((MashStep)steps.get(i)).setEndTemp(t);
@@ -383,14 +383,14 @@ public class Mash {
 	
 	public double getStepStartTemp(int i) {
 		if (tempUnits.equals("C"))
-			return fToC(((MashStep)steps.get(i)).getStartTemp());
+			return BrewCalcs.fToC(((MashStep)steps.get(i)).getStartTemp());
 		else
 			return ((MashStep)steps.get(i)).getStartTemp();	
 	}
 	
 	public void setStepEndTemp(int i, double t){
 		if (tempUnits.equals("C"))
-			((MashStep)steps.get(i)).setEndTemp(cToF(t));
+			((MashStep)steps.get(i)).setEndTemp(BrewCalcs.cToF(t));
 		else
 			((MashStep)steps.get(i)).setEndTemp(t);
 		calcMashSchedule();
@@ -398,7 +398,7 @@ public class Mash {
 	
 	public double getStepEndTemp(int i) {
 		if (tempUnits.equals("C"))
-			return fToC(((MashStep)steps.get(i)).getEndTemp());
+			return BrewCalcs.fToC(((MashStep)steps.get(i)).getEndTemp());
 		else
 			return ((MashStep)steps.get(i)).getEndTemp();	
 		
@@ -418,7 +418,7 @@ public class Mash {
 		if (tempUnits.equals("F"))
 			return ((MashStep)steps.get(i)).getTemp();	
 		else
-			return fToC(((MashStep)steps.get(i)).getTemp());
+			return BrewCalcs.fToC(((MashStep)steps.get(i)).getTemp());
 	}
 	
 	public double getStepWeight(int i) {
@@ -491,7 +491,7 @@ public class Mash {
 
 		// convert CurrentTemp to F
 		if (tempUnits == "C") {
-			currentTemp = cToF(currentTemp);
+			currentTemp = BrewCalcs.cToF(currentTemp);
 			tunLoss = tunLossF * 1.8;
 		}
 		else
@@ -536,7 +536,7 @@ public class Mash {
 		// Updated the water added
 
 		if (tempUnits == "C")
-			strikeTemp = fToC(strikeTemp);
+			strikeTemp = BrewCalcs.fToC(strikeTemp);
 		stp.directions = "Mash in with " + SBStringUtils.format(stp.vol.getValueAs(volUnits),1 ) + " " + volUnits
 				+ " of water at " + SBStringUtils.format(strikeTemp, 1) + " " + tempUnits;
 
@@ -605,7 +605,7 @@ public class Mash {
 				waterAddedQTS = 0;
 				displTemp = stp.startTemp;
 				if (tempUnits.equals("C"))
-					displTemp = fToC(displTemp);
+					displTemp = BrewCalcs.fToC(displTemp);
 				stp.directions = "Add direct heat until mash reaches " + displTemp
 						+ " " + tempUnits + ".";
 				stp.vol.setAmount(0);
@@ -661,10 +661,10 @@ public class Mash {
 				String volStr = SBStringUtils.format(Quantity.convertUnit("qt", volUnits, waterAddedQTS), 1) 
 				+ " " + volUnits;				
 				if (tempUnits == "C"){
-					strikeTemp = fToC(strikeTemp);
-					cerealTemp = fToC(cerealTemp);
-					targetTemp = fToC(targetTemp);
-					cerealTargTemp = fToC(cerealTargTemp);
+					strikeTemp = BrewCalcs.fToC(strikeTemp);
+					cerealTemp = BrewCalcs.fToC(cerealTemp);
+					targetTemp = BrewCalcs.fToC(targetTemp);
+					cerealTargTemp = BrewCalcs.fToC(cerealTargTemp);
 				}
 				String tempStr = SBStringUtils.format(strikeTemp, 1) + tempUnits;
 				String tempStr2 = SBStringUtils.format(cerealTemp, 1) + tempUnits;
@@ -748,7 +748,7 @@ public class Mash {
 					tempStr = "" + SBStringUtils.format(SPARGETMPF, 1) + "F";					
 				}
 				else { 
-					tempStr = SBStringUtils.format(fToC(SPARGETMPF), 1) + "C";
+					tempStr = SBStringUtils.format(BrewCalcs.fToC(SPARGETMPF), 1) + "C";
 				}
 				if (numSparge > 1){
 					stp.setMethod("batch");
@@ -879,15 +879,7 @@ public class Mash {
 		return (mashVol * (targetTemp - currentTemp) / (boilTempF - targetTemp));
 	}
 
-	public static double fToC(double tempF) {
-		// routine to convert basic F temps to C
-		return (5 * (tempF - 32)) / 9;
-	}
 
-	public static double cToF(double tempC) {
-		// routine to convert Celcius to Farenheit
-		return ((tempC * 9) / 5) + 32;
-	}
 	
 		 
 	 public String toXml() {
@@ -904,8 +896,8 @@ public class Mash {
 		sb.append(SBStringUtils.xmlElement("THIN_DECOCT_RATIO", "" + thinDecoctRatio, 4));		
 		if (tempUnits.equals("C")){
 			sb.append(SBStringUtils.xmlElement("MASH_TUNLOSS_TEMP", "" + (tunLossF/1.8), 4));
-			sb.append(SBStringUtils.xmlElement("GRAIN_TEMP", "" + fToC(grainTempF), 4));
-			sb.append(SBStringUtils.xmlElement("BOIL_TEMP", "" + fToC(boilTempF), 4));
+			sb.append(SBStringUtils.xmlElement("GRAIN_TEMP", "" + BrewCalcs.fToC(grainTempF), 4));
+			sb.append(SBStringUtils.xmlElement("BOIL_TEMP", "" + BrewCalcs.fToC(boilTempF), 4));
 		}
 		else {			
 			sb.append(SBStringUtils.xmlElement("MASH_TUNLOSS_TEMP", "" + tunLossF, 4));
@@ -918,12 +910,12 @@ public class Mash {
 			sb.append("      <TYPE>" + st.type + "</TYPE>\n");
 			sb.append("      <TEMP>" + st.startTemp + "</TEMP>\n");
 			if (tempUnits.equals("C"))
-				sb.append("      <DISPL_TEMP>" + SBStringUtils.format(fToC(st.startTemp), 1) + "</DISPL_TEMP>\n");
+				sb.append("      <DISPL_TEMP>" + SBStringUtils.format(BrewCalcs.fToC(st.startTemp), 1) + "</DISPL_TEMP>\n");
 			else
 				sb.append("      <DISPL_TEMP>" + st.startTemp + "</DISPL_TEMP>\n");
 			sb.append("      <END_TEMP>" + st.endTemp + "</END_TEMP>\n");
 			if (tempUnits.equals("C"))
-				sb.append("      <DISPL_END_TEMP>" + SBStringUtils.format(fToC(st.endTemp), 1) + "</DISPL_END_TEMP>\n");
+				sb.append("      <DISPL_END_TEMP>" + SBStringUtils.format(BrewCalcs.fToC(st.endTemp), 1) + "</DISPL_END_TEMP>\n");
 			else
 				sb.append("      <DISPL_END_TEMP>" + st.endTemp + "</DISPL_END_TEMP>\n");
 			sb.append("      <MIN>" + st.minutes + "</MIN>\n");

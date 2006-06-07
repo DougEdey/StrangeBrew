@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.34 2006/06/07 16:34:06 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.35 2006/06/07 20:12:48 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -56,9 +56,10 @@ public class Recipe {
 	private Quantity preBoilVol = new Quantity();
 	private Quantity postBoilVol = new Quantity();
 	private double srm;
+	private double ebc;
 	private Style style = new Style();
 	private Yeast yeast = new Yeast();
-	public Mash mash = new Mash(this);
+	public Mash mash; 
 
 	// water use:
 	private double chillShrinkQTS;
@@ -76,6 +77,7 @@ public class Recipe {
 	public DilutedRecipe dilution;
 
 	// options:
+	public Options opts;
 	private String colourMethod;
 	private String hopUnits;
 	private String maltUnits;
@@ -107,7 +109,8 @@ public class Recipe {
 	// default constuctor
 	public Recipe() {
 
-		Options opts = new Options();
+		opts = new Options();
+		mash = new Mash(this);
 		name = "My Recipe";
 		created = new GregorianCalendar();
 		efficiency = opts.getDProperty("optEfficiency");
@@ -175,6 +178,13 @@ public class Recipe {
 	public String getComments() {
 		return comments;
 	}
+	public double getColour() {
+		if (colourMethod.equals("SRM"))
+			return srm;
+		else
+			return ebc;
+	}
+	
 	public String getColourMethod() {
 		return colourMethod;
 	}
@@ -873,7 +883,8 @@ public class Recipe {
 		// set the fields in the object
 		estOg = (maltPoints / 100) + 1;
 		estFg = 1 + ((estOg - 1) * ((100 - attenuation) / 100));
-		srm = calcColour(mcu);
+		srm = calcColour(mcu, "SRM");
+		ebc = calcColour(mcu, "EBC");
 		// mash.setMaltWeight(totalMashLbs);
 
 		calcAlcohol(getAlcMethod());
@@ -937,10 +948,10 @@ public class Recipe {
 	}
 
 	// private calculation functions:
-	private double calcColour(double lov) {
+	private double calcColour(double lov, String method) {
 		double colour = 0;
 
-		if (colourMethod.equals("EBC")) {
+		if (method.equals("EBC")) {
 			// From Greg Noonan's article at
 			// http://brewingtechniques.com/bmg/noonan.html
 			colour = 1.4922 * Math.pow(lov, 0.6859); // SRM
@@ -1143,6 +1154,7 @@ public class Recipe {
 		sb.append("  <FG>" + SBStringUtils.format(estFg, 3) + "</FG>\n");
 		sb.append("  <STYLE>" + style.getName() + "</STYLE>\n");
 		sb.append("  <MASH>" + mashed + "</MASH>\n");
+		// TODO: ebc vs srm
 		sb.append("  <LOV>" + SBStringUtils.format(srm, 1) + "</LOV>\n");
 		sb.append("  <IBU>" + SBStringUtils.format(ibu, 1) + "</IBU>\n");
 		sb.append("  <ALC>" + SBStringUtils.format(alcohol, 1) + "</ALC>\n");

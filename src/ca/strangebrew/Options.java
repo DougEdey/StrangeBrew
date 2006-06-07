@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.12 2006/06/06 17:34:04 andrew_avis Exp $
+ * $Id: Options.java,v 1.13 2006/06/07 20:12:48 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -105,11 +105,32 @@ public class Options {
 			// cost:
 			{"optMiscCost", "5.0"},
 			
+			// mash:
+			{"optMashVolU", "gallons US"},
+			{"optMashTempU", "F"},
+			{"optMashRatioU", "qt/lb"},
+			{"optMashRatio", "1.25"},
+			{"optGrainTemp", "68"},
+			{"optTunLossF", "3"},
+			{"optBoilTempF", "212"},
+			{"optThickDecoctRatio", "0.6"},
+			{"optThinDecoctRatio", "0.9"},
+
+			// default ranges for mash steps - indicates the bottom of the range
+			{"optAcidTmpF", "85"},
+			{"optGlucanTmpF", "95"},
+			{"optProteinTmpF", "113"},
+			{"optBetaTmpF", "131"},
+			{"optAlphaTmpF", "151"},
+			{"optMashoutTmpF", "161"},
+			{"optSpargeTmpF", "170"},			
+			{"optCerealMashTmpF", "155"},
+			
 			// application window:
 			{"winX", "0"},
 			{"winY", "0"},
 			{"winWidth", "600"},
-			{"winHeight", "650"},
+			{"winHeight", "650"}
 	};
 	
 	// default constructor, create options for a recipe
@@ -187,7 +208,7 @@ public class Options {
 			
 		} 
 		
-		else if (type.equals("mash")){
+		/*else if (type.equals("mash")){
 			d.put("optMashVolU", "gallons US");
 			d.put("optMashTempU", "F");
 			d.put("optMashRatioU", "qt/lb");
@@ -209,7 +230,7 @@ public class Options {
 			
 			d.put("optCerealMashTmpF", "155");
 
-		}
+		}*/
 
 	}
 	

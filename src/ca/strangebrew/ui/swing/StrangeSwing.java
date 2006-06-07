@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.39 2006/06/05 17:43:06 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.40 2006/06/07 20:12:48 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -560,7 +560,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		spnFG.setValue(new Double(myRecipe.getEstFg()));
 		txtComments.setText(myRecipe.getComments());
 		lblIBUvalue.setText(SBStringUtils.format(myRecipe.getIbu(), 1));
-		lblColourValue.setText(SBStringUtils.format(myRecipe.getSrm(), 1));
+		lblColourValue.setText(SBStringUtils.format(myRecipe.getColour(), 1));
 		lblAlcValue.setText(SBStringUtils.format(myRecipe.getAlcohol(), 1));
 		try {
 			txtDate.setDate(myRecipe.getCreated().getTime());
@@ -573,7 +573,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		tblMaltTotalsModel.setDataVector(new String[][]{{"", "", "Totals:", 
 			"" + SBStringUtils.format(myRecipe.getTotalMalt(), 1), myRecipe.getMaltUnits(),
 			"" + SBStringUtils.format(myRecipe.getEstOg(), 3),
-			"" + SBStringUtils.format(myRecipe.getSrm(), 1),
+			"" + SBStringUtils.format(myRecipe.getColour(), 1),
 			Costs, "100"}}, new String[]{"", "", "",
 				"", "", "", "", "", ""});
 
@@ -595,13 +595,6 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		alcMethodLabel.setText("Alc method: " + myRecipe.getAlcMethod());
 
 		double colour = myRecipe.getSrm();
-		//		 convert from ebc if that's our mode:
-		if (myRecipe.getColourMethod().equals("EBC")) {
-			// From Greg Noonan's article at
-			// http://brewingtechniques.com/bmg/noonan.html			
-			
-			colour = (colour + 1.2) / 2.65;
-		}
 		
 		if (preferences.getProperty("optRGBMethod").equals("1"))
 			colourPanel.setBackground(Recipe.calcRGB(1, colour, 

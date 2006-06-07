@@ -89,4 +89,14 @@ public class BrewCalcs {
 	  return abv;
 	}
 
+	
+	public static double fToC(double tempF) {
+		// routine to convert basic F temps to C
+		return (5 * (tempF - 32)) / 9;
+	}
+
+	public static double cToF(double tempC) {
+		// routine to convert Celcius to Farenheit
+		return ((tempC * 9) / 5) + 32;
+	}
 }
