@@ -166,6 +166,8 @@ New Features:
   from a refractometer.  
 
 Bugs Fixed:
+- Cost tab now re-calculates correctly when values change (Bug 1493994)
+- Final beer volume shown on cost tab now matches volume shown on water tab (Bug 1493294)
 - BU:GU ratio is now displayed correctly on the Style panel (Bug 1493283).
 - Dilution panel is now updated when you first open a recipe (Bug 1492475).
 - Setting pre-boil amount now correctly updates post-boil amount.
