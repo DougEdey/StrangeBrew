@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.26 2006/06/07 14:23:15 andrew_avis Exp $
+ * $Id: Mash.java,v 1.27 2006/06/07 16:34:06 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -28,7 +28,6 @@ public class Mash {
 	private double thinDecoctRatio;
 	private double thickDecoctRatio;
 	private double cerealMashTemp;
-	private String cerealMashMethod;
 
 	
 	// calculated:
@@ -72,8 +71,7 @@ public class Mash {
 		 thickDecoctRatio = opts.getDProperty("optThickDecoctRatio");
 		 thinDecoctRatio = opts.getDProperty("optThinDecoctRatio");
 		 cerealMashTemp = opts.getDProperty("optCerealMashTmpF");
-		 cerealMashMethod = "step";
-		 
+
 		 myRecipe = r;
 	}
 
@@ -185,8 +183,10 @@ public class Mash {
 	}
 
 	public void addStep(String type, double st, double et, String m, int min,
-			int rmin) {
+			int rmin, double weight) {
 		MashStep step = new MashStep(type, st, et, m, min, rmin);
+		if (m.equals("cereal mash"))
+			step.weightLbs = weight;
 		steps.add(step);		
 		calcMashSchedule();
 	}
@@ -211,11 +211,6 @@ public class Mash {
 		mashRatio = mr; 
 		calcMashSchedule();
 	}	
-	
-	public void setCerealMashMethod(String u){ 
-		cerealMashMethod = u;
-		calcMashSchedule();
-	}
 	
 	public void setMashRatioU(String u){ 
 		mashRatioU = u;
@@ -466,6 +461,8 @@ public class Mash {
 	public void calcMashSchedule() {
 		// Method to run through the mash table and calculate values
 
+		if (!myRecipe.allowRecalcs)
+			return;
 		
 		double strikeTemp = 0;
 		double targetTemp = 0;
@@ -618,33 +615,41 @@ public class Mash {
 			} else if (stp.method.indexOf("cereal mash") > -1) { // calculate a cereal mash step
 
 				waterEquiv += waterAddedQTS; // add previous addition to get WE
-				waterAddedQTS = 0;				
+				waterAddedQTS = 0;	
 				targetTemp = stp.startTemp;
+				double extraWaterQTS = 0;				
 				double cerealTemp = boilTempF;
+				double cerealTargTemp = cerealMashTemp;
+				String addStr = "";
 				
-				if (cerealMashMethod.equals("step")){
-					double cerealWaterEquiv = stp.weightLbs * (0.192 + mr);	
-					waterAddedQTS = mr * stp.weightLbs;
-					// Calculate final temp of cereal mash
-					cerealTemp = (targetTemp * (waterEquiv + cerealWaterEquiv) - (waterEquiv * currentTemp)) / cerealWaterEquiv;				
-					
-					// if it's above boiling, Huston we have a problem.  Have to change the target temp
-					if (cerealTemp > boilTempF){
-						cerealTemp = boilTempF;
-						double newTemp = ((waterEquiv * currentTemp) + (cerealWaterEquiv * cerealTemp)) / (waterEquiv + cerealWaterEquiv);
-						stp.setStartTemp(newTemp);
-					}
-					
-				}
-				else {
-				// calculate ratio required to hit target temp
-					double ratio = ((waterEquiv * (targetTemp - currentTemp)) / (cerealTemp - targetTemp)) - 0.192;				
-					strikeTemp = calcStrikeTemp(cerealMashTemp, grainTempF, ratio, 0);				
-					waterAddedQTS = ratio * stp.weightLbs;
+				/*
+				 * 1. check the temp of the mash when you add the boiling cereal mash @ default ratio back
+				 * 2. if it's > than the step temp, adjust the step temp
+				 * 3. if it's < than the step temp, add extra water to increase the "heat equivalencey" of the cereal mash 
+				 */
+
+				double cerealWaterEquiv = stp.weightLbs * (0.192 + mr);	
+				waterAddedQTS = mr * stp.weightLbs;
+				strikeTemp = calcStrikeTemp(cerealMashTemp, grainTempF, mr, 0);
 				
+				double newTemp = ((waterEquiv * currentTemp) + (cerealWaterEquiv * cerealTemp)) / (waterEquiv + cerealWaterEquiv);
+				
+				if (newTemp > targetTemp){
+					stp.startTemp = newTemp;
 				}
+				if (newTemp < targetTemp){
+					double addQts = ((waterEquiv * (targetTemp - currentTemp)) / (cerealTemp - targetTemp)) - 0.192;
+					extraWaterQTS = addQts - waterAddedQTS;
+					addStr = " Add " + SBStringUtils.format(Quantity.convertUnit("qt", volUnits, extraWaterQTS), 1) 
+					  + " " + volUnits + " water to the cereal mash.";
+				}
+				
+				// Calculate final temp of cereal mash
+				// cerealTemp = (targetTemp * (waterEquiv + cerealWaterEquiv) - (waterEquiv * currentTemp)) / cerealWaterEquiv;				
+
+
 				totalMashTime += stp.minutes;				
-				mashWaterQTS += waterAddedQTS;		
+				mashWaterQTS += waterAddedQTS + extraWaterQTS;		
 				stp.vol.setUnits("qt");
 				stp.vol.setAmount(waterAddedQTS);				
 				stp.temp = strikeTemp;				
@@ -659,13 +664,16 @@ public class Mash {
 					strikeTemp = fToC(strikeTemp);
 					cerealTemp = fToC(cerealTemp);
 					targetTemp = fToC(targetTemp);
+					cerealTargTemp = fToC(cerealTargTemp);
 				}
 				String tempStr = SBStringUtils.format(strikeTemp, 1) + tempUnits;
 				String tempStr2 = SBStringUtils.format(cerealTemp, 1) + tempUnits;
 				String tempStr3 = SBStringUtils.format(targetTemp, 1) + tempUnits;
+				String tempStr4 = SBStringUtils.format(cerealTargTemp, 1) + tempUnits;
 				stp.directions = "Cereal mash: mash " + weightStr + " grain with " + volStr + " water at " + 
-					tempStr + ".";
-				stp.directions += " After resting, raise to " +  tempStr2 + " and add to the main mash to reach " + tempStr3;
+					tempStr + " to hit " + tempStr4 + " and rest.";
+				stp.directions += addStr;
+				stp.directions += " Raise to " +  tempStr2 + " and add to the main mash to reach " + tempStr3;
 				
 				// add cereal mash to total weight
 				totalWeightLbs += stp.weightLbs;
@@ -756,15 +764,10 @@ public class Mash {
 					stp.setDirections("Sparge with " + 
 							SBStringUtils.format(Quantity.convertUnit("qt", volUnits, spargeQTS), 1) +
 							" " + volUnits + " at " + tempStr + " to collect " + collectStr);
-				}
-				
-				j++;
-				
+				}				
+				j++;				
 			}
-
 		}
-
-
 	}
 	
 
@@ -926,6 +929,7 @@ public class Mash {
 			sb.append("      <MIN>" + st.minutes + "</MIN>\n");
 			sb.append("      <RAMP_MIN>" + st.rampMin + "</RAMP_MIN>\n");
 			sb.append("      <METHOD>" + st.method + "</METHOD>\n");
+			sb.append("      <WEIGHT_LBS>"	+ st.weightLbs + "</WEIGHT_LBS>\n");
 			sb.append("      <DIRECTIONS>" + st.directions + "</DIRECTIONS>\n");
 			sb.append("    </ITEM>\n");
 		}

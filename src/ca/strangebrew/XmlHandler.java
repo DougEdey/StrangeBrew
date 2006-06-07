@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.14 2006/06/02 19:44:26 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.15 2006/06/07 16:34:06 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -48,6 +48,7 @@ public class XmlHandler extends DefaultHandler{
 	private double endTemp;
 	private int minutes;
 	private int rampMin;
+	private double weightLbs;
 
 	public Recipe getRecipe() {
 		r.setAllowRecalcs(true);
@@ -255,7 +256,7 @@ public class XmlHandler extends DefaultHandler{
 			
 			} else if (qName.equalsIgnoreCase("ITEM")
 						&& currentList.equalsIgnoreCase("MASH")) {
-					r.mash.addStep(type, startTemp, endTemp, method, minutes, rampMin);				
+					r.mash.addStep(type, startTemp, endTemp, method, minutes, rampMin, weightLbs);				
 				
 			} // there's a problem with having two elements named "NOTES" : 
 			  else if (qName.equalsIgnoreCase("FERMENTABLS")
@@ -434,6 +435,8 @@ public class XmlHandler extends DefaultHandler{
 				endTemp = Double.parseDouble(s);
 			} else if (currentElement.equalsIgnoreCase("RAMP_MIN")) {
 				rampMin = Integer.parseInt(s);
+			} else if (currentElement.equalsIgnoreCase("WEIGHT_LBS")) {
+				weightLbs = Double.parseDouble(s);
 				
 				// these are not part of item, but general mash settings:
 			} else if (currentElement.equalsIgnoreCase("THICK_DECOCT_RATIO")) {

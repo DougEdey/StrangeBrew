@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.33 2006/06/07 14:23:16 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.34 2006/06/07 16:34:06 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -39,7 +39,7 @@ public class Recipe {
 
 	private String version;
 	
-	private boolean allowRecalcs = true;
+	public boolean allowRecalcs = true;
 	private double alcohol;
 	private double attenuation;
 	private int boilMinutes;

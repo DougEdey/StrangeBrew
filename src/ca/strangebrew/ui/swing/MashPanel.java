@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.14 2006/06/06 17:34:05 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.15 2006/06/07 16:34:07 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -39,11 +39,9 @@ import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 
+
 public class MashPanel extends javax.swing.JPanel implements ActionListener, FocusListener {
 	private JScrollPane jScrollPane1;
-	private JRadioButton stepRadio;
-	private JRadioButton ratioRadio;
-	private ButtonGroup cerealMashBG;
 	private JLabel jLabel2;
 	private JTabbedPane jTabbedPane1;
 	private JPanel totalsPanel;
@@ -122,7 +120,6 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 
 			{
 
-				cerealMashBG = new ButtonGroup();
 				tablePanel = new JPanel();
 				BorderLayout pnlTableLayout = new BorderLayout();
 				tablePanel.setLayout(pnlTableLayout);
@@ -309,23 +306,6 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
 						0, 0));
 				jLabel2.setText("Cereal Mash:");
-
-				stepRadio = new JRadioButton();
-				settingsPanel.add(stepRadio, new GridBagConstraints(1, 5, 1, 1, 0.0, 0.0,
-						GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
-						0, 0));
-				stepRadio.setText("Step Temp");
-				cerealMashBG.add(stepRadio);
-				stepRadio.setSelected(true);
-				stepRadio.addActionListener(this);
-
-				ratioRadio = new JRadioButton();
-				settingsPanel.add(ratioRadio, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0,
-						GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
-						0, 0));
-				ratioRadio.setText("Ratio");
-				cerealMashBG.add(ratioRadio);
-				ratioRadio.addActionListener(this);
 
 				boilTempTxt.addFocusListener(this);
 				boilTempTxt.addActionListener(this);
@@ -527,12 +507,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 		} else if (o == tunLossTxt) {
 			String s = tunLossTxt.getText();
 			myRecipe.mash.setTunLoss(Double.parseDouble(s));
-		} else if (o == stepRadio || o == ratioRadio){
-			if (stepRadio.isSelected())
-				myRecipe.mash.setCerealMashMethod("step");
-			else
-				myRecipe.mash.setCerealMashMethod("ratio");
-		}
+		} 
 
 		tblMash.updateUI();
 		displayMash();
