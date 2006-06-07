@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.32 2006/06/06 17:34:04 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.33 2006/06/07 14:23:16 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -1175,6 +1175,7 @@ public class Recipe {
 
 		// fermentables list:
 		sb.append("  <FERMENTABLES>\n");
+		sb.append(SBStringUtils.xmlElement("TOTAL", ""+ Quantity.convertUnit("lb", maltUnits, totalMaltLbs), 4));
 		for (int i = 0; i < fermentables.size(); i++) {
 			Fermentable m = (Fermentable) fermentables.get(i);
 			sb.append(m.toXML());
@@ -1183,6 +1184,7 @@ public class Recipe {
 
 		// hops list:
 		sb.append("  <HOPS>\n");
+		sb.append(SBStringUtils.xmlElement("TOTAL", ""+ Quantity.convertUnit("oz", hopUnits, totalHopsOz), 4));
 		for (int i = 0; i < hops.size(); i++) {
 			Hop h = (Hop) hops.get(i);
 			sb.append(h.toXML());

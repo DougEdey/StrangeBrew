@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.25 2006/06/06 17:34:04 andrew_avis Exp $
+ * $Id: Mash.java,v 1.26 2006/06/07 14:23:15 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -663,9 +663,9 @@ public class Mash {
 				String tempStr = SBStringUtils.format(strikeTemp, 1) + tempUnits;
 				String tempStr2 = SBStringUtils.format(cerealTemp, 1) + tempUnits;
 				String tempStr3 = SBStringUtils.format(targetTemp, 1) + tempUnits;
-				stp.directions = "Cereal mash: mash " + weightStr + "grain with " + volStr + " water at " + 
-					tempStr + "\n";
-				stp.directions += "After resting, raise to " +  tempStr2 + " and add to the main mash to reach " + tempStr3;
+				stp.directions = "Cereal mash: mash " + weightStr + " grain with " + volStr + " water at " + 
+					tempStr + ".";
+				stp.directions += " After resting, raise to " +  tempStr2 + " and add to the main mash to reach " + tempStr3;
 				
 				// add cereal mash to total weight
 				totalWeightLbs += stp.weightLbs;
@@ -677,10 +677,7 @@ public class Mash {
 
 		    else {
 				totalMashTime += stp.minutes;
-
-			}	
-
-			
+			}				
 			// set target temp to end temp for next step
 			targetTemp = stp.endTemp;
 

@@ -59,7 +59,19 @@
 							<th>Time</th>
 						</tr>
 						<xsl:apply-templates select="HOPS"/>
-						<xsl:apply-templates select="MISC"/>
+						<xsl:apply-templates select="MISC"/>	
+			 			<tr>
+							<th>Hop totals:</th>
+							<th>
+							<xsl:value-of select="HOPS/TOTAL"/>
+							<xsl:text> </xsl:text>
+							<xsl:value-of select="DETAILS/HOPS_UNITS"/>
+						</th>
+						<th></th>
+						<th><xsl:value-of select="DETAILS/IBU"/></th>
+						<th></th>
+						<th></th>
+					</tr>	
 					</tbody>
 				</table>
 
@@ -205,6 +217,29 @@
 						</td>
 					</tr>
 				</xsl:for-each>
+				<tr>
+					<th>Totals:</th>
+					<th>
+						<xsl:value-of
+							select="format-number(TOTAL, '#0.##')"/>
+						<xsl:text>
+						</xsl:text>
+						<xsl:value-of
+							select="/STRANGEBREWRECIPE/DETAILS/MALT_UNITS"/>
+					</th>
+					<th>100%</th>
+					<th>
+						<xsl:value-of
+							select="format-number(/STRANGEBREWRECIPE/DETAILS/OG, '#.000')"/>
+					</th>
+					<th>
+						<xsl:value-of
+							select="/STRANGEBREWRECIPE/DETAILS/LOV"/>
+					</th>
+					<th></th>
+					
+				</tr>
+				
 			</tbody>
 		</table>
 	</xsl:template>
@@ -227,6 +262,7 @@
 				<td><xsl:value-of select="TIME"/></td>
 			</tr>
 		</xsl:for-each>
+
 	</xsl:template>
 
 	<xsl:template match="STRANGEBREWRECIPE/MASH">
