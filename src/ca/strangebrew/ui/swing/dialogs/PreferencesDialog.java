@@ -109,6 +109,8 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private JTextField txtTinsethUtil;
 	private JLabel jLabelc4;
 	private JTextField txtFWHTime;
+	private JTextField boilTimeTxt;
+	private JLabel jLabel30;
 	private JComboBox mashRatioUCombo;
 	private JTextField mashRatioTxt;
 	private JLabel jLabel29;
@@ -228,6 +230,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		maltUnitsComboModel.addOrInsert(opts.getProperty("optMaltU"));
 		hopsUnitsComboModel.addOrInsert(opts.getProperty("optHopsU"));
 		volUnitsComboModel.addOrInsert(opts.getProperty("optSizeU"));
+		boilTimeTxt.setText(opts.getProperty("optBoilTime"));
 		
 		// TODO: convert boiltempF if c is selected
 		boilTempTxt.setText(opts.getProperty("optBoilTempF"));
@@ -335,7 +338,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		opts.setProperty("optMaltU", maltUnitsComboModel.getSelectedItem().toString());
 		opts.setProperty("optHopsU", hopsUnitsComboModel.getSelectedItem().toString());
 		opts.setProperty("optSizeU", volUnitsComboModel.getSelectedItem().toString());
-		
+		opts.setProperty("optBoilTime", boilTimeTxt.getText());
 		
 		opts.setProperty("optMashVolU", mashVolComboModel.getSelectedItem().toString());
 		
@@ -696,10 +699,10 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 			newRecipePanel = new JPanel();
 			GridBagLayout newRecipePanelLayout = new GridBagLayout();
-			newRecipePanelLayout.rowWeights = new double[]{0.1, 0.1, 0.1, 0.1};
-			newRecipePanelLayout.rowHeights = new int[]{7, 7, 7, 7};
-			newRecipePanelLayout.columnWeights = new double[]{0.1, 0.1, 0.1, 0.1};
-			newRecipePanelLayout.columnWidths = new int[]{7, 7, 7, 7};
+			newRecipePanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1};
+			newRecipePanelLayout.rowHeights = new int[] {7, 7, 7};
+			newRecipePanelLayout.columnWeights = new double[] {0.1, 0.1};
+			newRecipePanelLayout.columnWidths = new int[] {7, 7};
 			newRecipePanel.setLayout(newRecipePanelLayout);
 			jTabbedPane1.addTab("New Recipe Defaults", null, newRecipePanel, null);
 
@@ -891,12 +894,21 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			volUnitsCombo.setModel(volUnitsComboModel);
 
 			jLabel26 = new JLabel();
-			jPanel1.add(jLabel26, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			jLabel26.setText("Batch Size:");
+			jPanel1.add(jLabel26, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			jLabel26.setText("Boil Time (min):");
 
 			batchSizeTxt = new JTextField();
 			jPanel1.add(batchSizeTxt, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			batchSizeTxt.setText("jTextField1");
+
+			jLabel30 = new JLabel();
+			jPanel1.add(jLabel30, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			jLabel30.setText("Batch Size:");
+
+			boilTimeTxt = new JTextField();
+			jPanel1.add(boilTimeTxt, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+			boilTimeTxt.setText("60");
+			boilTimeTxt.setPreferredSize(new java.awt.Dimension(55, 20));
 
 			jLabel12 = new JLabel();
 			mashPanel.add(jLabel12, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));

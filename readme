@@ -164,6 +164,7 @@ New Features:
   from a refractometer.  
 
 Bugs Fixed:
+- You can now specify a default boil time on the Preferences Dialog (Bug 1493270)
 - Style tab now displays correct SRM value when you're using EBC colour (Bug 1497989)
 - You can now set various mash defaults on the Preferences dialog (Bug 1489256)
 - You can now set boil units (C or F) as well as boil temp on the Preferences

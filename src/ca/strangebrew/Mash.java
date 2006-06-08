@@ -1,11 +1,16 @@
 package ca.strangebrew;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.28 2006/06/07 20:12:48 andrew_avis Exp $
+ * $Id: Mash.java,v 1.29 2006/06/08 18:45:13 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -191,10 +196,14 @@ public class Mash {
 		calcMashSchedule();
 	}
 	
-	public void addStep(){
+	public int addStep(){
 		MashStep step = new MashStep();
 		steps.add(step);
+		int i = steps.size();
 		calcMashSchedule();
+		// return the index of the last added step:
+		return i-1;
+		
 	}
 	
 	public void delStep(int i){
@@ -877,6 +886,94 @@ public class Mash {
 			double mashVol, double boilTempF) {
 		// calculate amount of boiling water to add to raise mash to new temp
 		return (mashVol * (targetTemp - currentTemp) / (boilTempF - targetTemp));
+	}
+	
+	private class MashDefaults {
+		String fileName = "mashdefaults";
+		ArrayList defaults;		
+		
+		public MashDefaults(){
+			defaults = new ArrayList();
+		}
+		
+		public void add(Mash m, String name){
+			defaults.add(name);
+			defaults.add("" + m.steps.size());
+			for (int i=0;i<m.steps.size(); i++){
+				defaults.add("" + m.getStepStartTemp(i));
+				defaults.add("" + m.getStepEndTemp(i));
+				defaults.add("" + m.getStepMin(i));
+				defaults.add("" + m.getStepMethod(i));					
+			}
+		}
+		
+		public Mash get(String name, Recipe r){
+			Mash m = new Mash(r);
+			
+			r.allowRecalcs = false;
+			if (defaults.contains(name)){
+				int i = defaults.indexOf(name) + 1;
+				int size = Integer.parseInt(defaults.get(i).toString());
+				i++;
+				int j = i;
+				while (j < (size * 4) + i){
+					int k = m.addStep();					
+					m.setStepStartTemp(k, Double.parseDouble(defaults.get(j++).toString()));
+					m.setStepEndTemp(k, Double.parseDouble(defaults.get(j++).toString()));
+					m.setStepMin(k, Integer.parseInt(defaults.get(j++).toString()));
+					m.setStepMethod(k, defaults.get(j++).toString());					
+				}
+			}
+			r.allowRecalcs = true;
+			
+			return m;
+		}
+		
+		public void save() {
+			String slash = System.getProperty("file.separator");
+			String path="";
+			try {
+				path = new File(".").getCanonicalPath();			
+				File file = new File(path, fileName);
+				FileOutputStream  out = new FileOutputStream (file);
+				ObjectOutputStream out2= new ObjectOutputStream(out);
+				out2.writeObject(defaults);
+				out.close();
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+			
+		}
+		
+		public void load(){
+			String slash = System.getProperty("file.separator");
+			String path="";
+			try {
+				path = new File(".").getCanonicalPath();			
+				File file = new File(path, fileName);
+				if (file.exists()){
+					FileInputStream in = new FileInputStream(file);
+					ObjectInputStream in2 = new ObjectInputStream(in);				
+					defaults = (ArrayList)in2.readObject();
+					in.close();
+				}
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		}			
+	}
+	
+	
+	public void testDefaults(){
+		MashDefaults md = new MashDefaults();
+		md.add(this, "test");
+		md.add(this, "test2");
+		md.save();
+		md.load();		
+		Debug.print(md.defaults.toString());
+		Mash m = (Mash)md.get("test", myRecipe);
+		m.calcMashSchedule();
+		Debug.print(m.toXml());
 	}
 
 

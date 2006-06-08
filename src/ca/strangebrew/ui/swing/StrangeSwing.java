@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.40 2006/06/07 20:12:48 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.41 2006/06/08 18:45:13 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -133,7 +133,7 @@ import edu.stanford.ejalbert.exception.UnsupportedOperatingSystemException;
 public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener, WindowListener {
 
 
-	private String version = "2.0a7";
+	private String version = "2.0b7";
 	
 	public JTable hopsTable;
 	public JTable maltTable;
@@ -2001,6 +2001,10 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						exitMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
 								// exit program	
+								
+								// test mash defaults:
+								myRecipe.mash.testDefaults();
+								
 								processWindowEvent(new WindowEvent(owner,WindowEvent.WINDOW_CLOSING));
 								System.exit(0);
 							}
