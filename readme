@@ -146,6 +146,10 @@ What's New
 2.0.b7
 --------
 New Features:
+- You can now apply default mash schedules on the Mash tab to quickly load
+  a popular schedule.  You can also save the current schedule to the list of
+  defaults.  You can edit the /data/mashdefaults.csv file by hand to add or 
+  remove a default schedule.
 - The Resize Recipe dialog now allows you to also convert hops and fermentables
   (Bug 1489903).
 - New potential extract calculator.  

@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.41 2006/06/08 18:45:13 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.42 2006/06/09 15:23:28 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -103,6 +103,8 @@ import ca.strangebrew.Database;
 import ca.strangebrew.Debug;
 import ca.strangebrew.Fermentable;
 import ca.strangebrew.Hop;
+import ca.strangebrew.Mash;
+import ca.strangebrew.MashDefaults;
 import ca.strangebrew.OpenImport;
 import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
@@ -146,7 +148,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JLabel alcMethodLabel;
 	private JPanel alcMethodPanel;
 	private SBCellEditor amountEditor;
-	private String appRoot="";
 	private JTextField boilMinText;
 	private JLabel boilTimeLable;
 	private JTextField brewerNameText;
@@ -259,7 +260,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JScrollPane scpComments;
 	// private JScrollPane scrMalts;
 	private SettingsPanel settingsPanel;
-	private String slash;
 	private JSpinner spnAtten;
 	private JSpinner spnEffic;
 	private JSpinner spnFG;
@@ -417,21 +417,10 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 	public StrangeSwing() {
 		super();	
 		
-		// these are required to load icons etc:
-		slash = System.getProperty("file.separator");
-		try {
-			appRoot = new File(".").getCanonicalPath();
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-		
 		initGUI();
 		// There has *got* to be a better way to do this:
 		DB = new Database();
-		String path = "";
-		
-		path = appRoot + slash + "src" + slash + "ca" 
-			+ slash + "strangebrew" + slash + "data";
+		String path = SBStringUtils.getAppPath("data");
 		Debug.print("DB Path: " + path);
 		
 		DB.readDB(path);
@@ -445,7 +434,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		cmbMaltUnitsModel.setList(new Quantity().getListofUnits("weight"));
 		cmbHopsUnitsModel.setList(new Quantity().getListofUnits("weight"));
 
-		path = appRoot + slash + "recipes";
+		path = SBStringUtils.getAppPath("recipes");
 		Debug.print("Recipes path:" + path);		
 		
 		fileChooser = new JFileChooser();
@@ -637,8 +626,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 
 		// find the xslt stylesheet in the classpath		
 		// URL xsltUrl = getClass().getClassLoader().getResource(xslt);
-		String path = appRoot + slash + "src" + slash + "ca" 
-		+ slash + "strangebrew" + slash + "data" + slash;
+		String path = SBStringUtils.getAppPath("data");
 		File xsltFile = new File(path + xslt);
 
 		FileOutputStream output = new FileOutputStream(f);
@@ -2002,9 +1990,6 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 							public void actionPerformed(ActionEvent evt) {
 								// exit program	
 								
-								// test mash defaults:
-								myRecipe.mash.testDefaults();
-								
 								processWindowEvent(new WindowEvent(owner,WindowEvent.WINDOW_CLOSING));
 								System.exit(0);
 							}
@@ -2113,7 +2098,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						helpMenuItem.setText("Help");						
 						helpMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
-								String urlString = "file://" + appRoot + slash + "help" + slash + "index.html";
+								String urlString = SBStringUtils.getAppPath("help") + "index.html";
 								Debug.print(urlString);
 								AbstractLogger logger = new SystemLogger();								
 								BrowserLauncher launcher;

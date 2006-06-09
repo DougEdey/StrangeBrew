@@ -1,12 +1,13 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.15 2006/06/07 16:34:07 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.16 2006/06/09 15:23:29 andrew_avis Exp $
  *  @author aavis 
  */
 
 package ca.strangebrew.ui.swing;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -25,7 +26,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -35,13 +39,22 @@ import javax.swing.JToolBar;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableColumn;
 
+import ca.strangebrew.Mash;
+import ca.strangebrew.MashDefaults;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 
 
+
 public class MashPanel extends javax.swing.JPanel implements ActionListener, FocusListener {
 	private JScrollPane jScrollPane1;
+	private JTextField nameTxt;
+	private JButton defaultsButton;
+	private JMenuItem saveDefaultItem;
+	private JMenu applyDefaultMenu;
+	private JPopupMenu mashMenu;
+	private JPanel jPanel1;
 	private JLabel jLabel2;
 	private JTabbedPane jTabbedPane1;
 	private JPanel totalsPanel;
@@ -82,13 +95,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	private Recipe myRecipe;
 	private MashTableModel mashModel;
 
-	/**
-	 * Auto-generated main method to display this JFrame
-	 */
-	/*
-	 * public static void main(String[] args) { MashManager inst = new
-	 * MashManager(); inst.setVisible(true); }
-	 */
+	private MashDefaults md;
 
 	public MashPanel(Recipe r) {
 		super();
@@ -100,6 +107,14 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 		}
 		displayMash();
 		tblMash.updateUI();
+
+		md = new MashDefaults();
+		String[] names = md.getNames();
+		for (int i = 0; i < names.length; i++) {
+			JMenuItem m = new JMenuItem(names[i]);
+			m.addActionListener(this);
+			applyDefaultMenu.add(m);
+		}
 	}
 
 	public void setData(Recipe r) {
@@ -114,7 +129,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			GridBagLayout thisLayout = new GridBagLayout();
 			thisLayout.columnWeights = new double[]{0.3};
 			thisLayout.columnWidths = new int[]{7};
-			thisLayout.rowWeights = new double[]{0.1, 0.8};
+			thisLayout.rowWeights = new double[]{0.1, 1.0};
 			thisLayout.rowHeights = new int[]{7, 7};
 			this.setLayout(thisLayout);
 
@@ -123,7 +138,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				tablePanel = new JPanel();
 				BorderLayout pnlTableLayout = new BorderLayout();
 				tablePanel.setLayout(pnlTableLayout);
-				this.add(tablePanel, new GridBagConstraints(0, 0, 2, 2, 0.0, 0.0,
+				this.add(tablePanel, new GridBagConstraints(0, 1, 2, 2, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0),
 						0, 0));
 				tablePanel.setName("");
@@ -171,6 +186,49 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			this.add(jTabbedPane1, new GridBagConstraints(2, 0, 1, 2, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
 					0));
+
+			jPanel1 = new JPanel();
+			FlowLayout jPanel1Layout = new FlowLayout();
+			jPanel1.setLayout(jPanel1Layout);
+			this.add(jPanel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+					GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0,
+					0));
+			{
+				
+				this.setPreferredSize(new java.awt.Dimension(502, 276));
+
+				
+
+
+				this.addFocusListener(new FocusAdapter() {
+					public void focusGained(FocusEvent evt) {
+						displayMash();
+					}
+				});
+
+			}
+
+			nameTxt = new JTextField();
+			jPanel1.add(nameTxt);
+			nameTxt.setText("Name");
+			nameTxt.setPreferredSize(new java.awt.Dimension(211, 20));
+			nameTxt.addActionListener(this);
+			
+			defaultsButton = new JButton();
+			jPanel1.add(defaultsButton);
+			defaultsButton.setText("Defaults >");
+			defaultsButton.addActionListener(this);
+			
+			mashMenu = new JPopupMenu();				
+			applyDefaultMenu = new JMenu("Apply Default");
+			mashMenu.add(applyDefaultMenu);			
+			saveDefaultItem = new JMenuItem("Save as Default");
+			mashMenu.add(saveDefaultItem);			
+			saveDefaultItem.addActionListener(this);
+
+			
+		
+
 			{
 				settingsPanel = new JPanel();
 				jTabbedPane1.addTab("Settings", null, settingsPanel, null);
@@ -203,22 +261,6 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 					ratioText.setPreferredSize(new java.awt.Dimension(51, 20));
 					ratioText.addFocusListener(this);
 					ratioText.addActionListener(this);
-				}
-				{
-					ComboBoxModel ratioUnitsComboModel = new DefaultComboBoxModel(new String[]{
-							"qt/lb", "l/kg"});
-					this.setPreferredSize(new java.awt.Dimension(502, 276));
-					this.addFocusListener(new FocusAdapter() {
-						public void focusGained(FocusEvent evt) {
-							displayMash();
-						}
-					});
-					ratioUnitsCombo = new JComboBox();
-					settingsPanel.add(ratioUnitsCombo, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,
-									0), 0, 0));
-					ratioUnitsCombo.setModel(ratioUnitsComboModel);
-					ratioUnitsCombo.addActionListener(this);
 				}
 				{
 					grainTempText = new JTextField();
@@ -309,6 +351,15 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 
 				boilTempTxt.addFocusListener(this);
 				boilTempTxt.addActionListener(this);
+				
+				ComboBoxModel ratioUnitsComboModel = new DefaultComboBoxModel(new String[]{"qt/lb",
+				"l/kg"});
+				ratioUnitsCombo = new JComboBox();
+				settingsPanel.add(ratioUnitsCombo, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
+				ratioUnitsCombo.setModel(ratioUnitsComboModel);
+				ratioUnitsCombo.addActionListener(this);
 
 			}
 
@@ -458,6 +509,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			boilTempTxt.setText(new Double(myRecipe.mash.getBoilTemp()).toString());
 			tunLossTxt.setText(SBStringUtils.format(myRecipe.mash.getTunLoss(), 1));
 			tempFrb.setSelected(myRecipe.mash.getMashTempUnits().equalsIgnoreCase("F"));
+			nameTxt.setText(myRecipe.mash.getName());
 
 		}
 	}
@@ -507,7 +559,19 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 		} else if (o == tunLossTxt) {
 			String s = tunLossTxt.getText();
 			myRecipe.mash.setTunLoss(Double.parseDouble(s));
-		} 
+		} else if (o == nameTxt) {
+			myRecipe.mash.setName(nameTxt.getText());
+		} else if (o == defaultsButton){
+			mashMenu.show(defaultsButton, 10, 10);
+		} else if (o == saveDefaultItem){
+			md.add(myRecipe.mash, nameTxt.getText());
+		} else if (o.getClass().getName().endsWith("JMenuItem")){
+			String name = ((JMenuItem)o).getText();
+			md.set(name, myRecipe);	
+			mashModel.setData(myRecipe.getMash());	
+			
+		}
+		
 
 		tblMash.updateUI();
 		displayMash();

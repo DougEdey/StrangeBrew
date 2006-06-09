@@ -5,6 +5,7 @@
  */
 package ca.strangebrew;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -105,6 +106,31 @@ public class SBStringUtils {
 			s += " ";		
 		s += "<" + elem + ">" + content + "</" + elem + ">\n";		
 		return s;
+	}
+	
+	public static String getAppPath(String type){
+		String appRoot = "";
+		String path = "";
+		String slash = System.getProperty("file.separator");
+		try {
+			appRoot = new File(".").getCanonicalPath();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		if (type.equals("data"))
+			path = appRoot + slash + "src" + slash + "ca" 
+				+ slash + "strangebrew" + slash + "data";
+		else if (type.equals("icons"))
+			path = appRoot + slash + "src" + slash + "ca" 
+			+ slash + "strangebrew" + slash + "icons";
+		else if (type.equals("recipes"))
+			path = appRoot + slash + "recipes";
+		else if (type.equals("help"))
+			path = "file://" + appRoot + slash + "help" + slash;
+		else
+			path = appRoot;
+		
+		return path;
 	}
 	
 	
