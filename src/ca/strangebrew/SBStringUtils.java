@@ -127,6 +127,8 @@ public class SBStringUtils {
 			path = appRoot + slash + "recipes";
 		else if (type.equals("help"))
 			path = "file://" + appRoot + slash + "help" + slash;
+		else if (type.equals("ini"))
+			path = appRoot + slash;
 		else
 			path = appRoot;
 		

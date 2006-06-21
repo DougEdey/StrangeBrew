@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.16 2006/06/09 15:23:29 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.17 2006/06/21 20:13:04 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -39,7 +39,6 @@ import javax.swing.JToolBar;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableColumn;
 
-import ca.strangebrew.Mash;
 import ca.strangebrew.MashDefaults;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;

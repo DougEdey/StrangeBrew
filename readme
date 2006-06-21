@@ -2,7 +2,7 @@
 +                   README                     +
 ================================================
 
-StrangeBrew Java - 2.0b7
+StrangeBrew Java - 2.0b8
 (c)2000-2006 Drew Avis - drew.avis@gmail.com
 
 Thank you for downloading and trying StrangeBrew Java.
@@ -12,6 +12,7 @@ This file contains:
 * Recipes at bodensatz.com
 * Running StrangeBrew Java
 * Extra help for running on Linux
+* Setting the look and feel
 * Files in this release
 * Required JRE
 * Known Issues (bugs)
@@ -86,10 +87,52 @@ These are notes from Scott Alfter via rec.crafts.brewing:
    echo ':jarexec:M::PK\x03\x04::/usr/bin/jexec:' >/proc/sys/fs/binfmt_misc/register
 
 When you reboot (or if you execute the preceding from a root prompt), you
-can chmod 755 StrangeBrew_fat.jar and then run it with the following:
+can chmod 755 strangeBrew_fat.jar and then run it with the following:
 
-./StrangeBrew_fat.jar
+./strangeBrew_fat.jar
 
+=========================
+Setting the Look and Feel
+=========================
+
+The Java Swing library (which StrangeBrew uses for its user interface) supports
+a "pluggable look and feel" (LAF) -- meaning you can easily change the appearance 
+of Swing applications to suit your own tastes.  
+
+(Some betas of StrangeBrew used the JGoodies Looks LAF, but I removed
+it as the default to give users more control over how the application looks).
+
+Very nice look and feels are available on-line from several sources.  Here are 
+a few of my favourites for StrangeBrew:
+* JGoodies Looks: http://javootoo.l2fprod.com/plaf/jgoodies/index.php
+* Liquid L&F: https://liquidlnf.dev.java.net/
+* Synthetica L&F: http://www.javasoft.de/jsf/public/products/synthetica
+* Tonic L&F: http://www.digitprop.com/p.php?page=toniclf
+
+Download the .jar file you'd like to try, and put it in your Java home directory under
+/lib/ext.
+
+You can set the Look and Feel in a couple of ways:
+
+1. From the Command-line:
+Use the -Dswing.defaultlaf= option when starting the application.
+Here's an example of starting StrangeBrew using the Synthetica LAF:
+java -Dswing.defaultlaf=de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel -jar strangebrew_fat.jar
+
+The "de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel" bit is the full class 
+name of the Look And Feel -- you'll have to read the documentation for each LAF to find 
+out the proper text to put here
+
+2. Using swing.properties:
+You can set the default LAF for all Java Swing applications by editing the swing.properties
+file in your $JAVA_HOME/lib directory.  You need to add two lines for your new LAF, and
+change the default line.  Here's an example of the new & changed lines using the Tonic
+LAF:
+swing.installedlaf.tonic.name = Tonic
+swing.installedlaf.tonic.class = com.digitprop.tonic.TonicLookAndFeel
+swing.defaultlaf=com.digitprop.tonic.TonicLookAndFeel
+
+Now start StrangeBrew as you would normally, and it should use the new LAF.
 
 ==========
 Files 
@@ -142,6 +185,18 @@ of reported bugs.  If you've found one that's not there, please report it!
 ==========
 What's New
 ==========
+
+2.0.b8
+--------
+New Features:
+- StrangeBrew no longer uses the JGoodies Look And Feel by default, as this was
+causing some refresh issues on older versions of Mac OSX.  Instead, you can set
+the LAF yourself. (See the "Setting the Look And Feel" section above).
+
+Bugs Fixed:
+- FWH, mash hop, and dry hop IBU values are now correctly calculated.
+- The strangebrew.ini file is now saved and read from the correct location on 
+  non-Windows machines.
 
 2.0.b7
 --------

@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.42 2006/06/09 15:23:28 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.43 2006/06/21 20:13:04 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -85,7 +85,6 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -103,8 +102,6 @@ import ca.strangebrew.Database;
 import ca.strangebrew.Debug;
 import ca.strangebrew.Fermentable;
 import ca.strangebrew.Hop;
-import ca.strangebrew.Mash;
-import ca.strangebrew.MashDefaults;
 import ca.strangebrew.OpenImport;
 import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
@@ -123,7 +120,6 @@ import ca.strangebrew.ui.swing.dialogs.PrintDialog;
 import ca.strangebrew.ui.swing.dialogs.RefractometerDialog;
 import ca.strangebrew.ui.swing.dialogs.ScaleRecipeDialog;
 
-import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.michaelbaranov.microba.calendar.DatePicker;
 
 import edu.stanford.ejalbert.BrowserLauncher;
@@ -402,17 +398,14 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		this.addWindowListener(this);
 	}
 
-	{
+/*
+ * If you wanted to set a LAF, you'd do this:
+ * 	{
 	try {
 	      UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
 	   } catch (Exception e) {}
-	}
-	
-/*	{
-		try {
-		      UIManager.setLookAndFeel(new SubstanceLookAndFeel());
-		   } catch (Exception e) {}
 	}*/
+
 
 	public StrangeSwing() {
 		super();	
@@ -627,7 +620,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		// find the xslt stylesheet in the classpath		
 		// URL xsltUrl = getClass().getClassLoader().getResource(xslt);
 		String path = SBStringUtils.getAppPath("data");
-		File xsltFile = new File(path + xslt);
+		File xsltFile = new File(path, xslt);
 
 		FileOutputStream output = new FileOutputStream(f);
 

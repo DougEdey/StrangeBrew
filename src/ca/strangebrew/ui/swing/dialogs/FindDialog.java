@@ -1,5 +1,5 @@
 /*
- * $Id: FindDialog.java,v 1.1 2006/05/26 13:57:25 andrew_avis Exp $ 
+ * $Id: FindDialog.java,v 1.2 2006/06/21 20:13:01 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis find recipe window class
  */
 
@@ -50,6 +50,7 @@ import javax.swing.table.AbstractTableModel;
 import ca.strangebrew.Debug;
 import ca.strangebrew.OpenImport;
 import ca.strangebrew.Recipe;
+import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.ui.swing.StrangeSwing;
 
 public class FindDialog extends javax.swing.JDialog implements ActionListener {
@@ -75,13 +76,8 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 		recipes = new ArrayList();
 		files = new ArrayList();
 		inst = (StrangeSwing) frame;
-		String slash = System.getProperty("file.separator");
-		currentDir = new java.io.File(".");
-		try {
-			currentDir = new File(currentDir.getCanonicalPath() + slash + "recipes");
-		} catch (IOException e) {			
-			e.printStackTrace();
-		}		
+		currentDir = new File(SBStringUtils.getAppPath("recipes"));
+		
 		initGUI();
 		dirLocationText.setText(currentDir.getAbsolutePath());
 		loadRecipes(currentDir);

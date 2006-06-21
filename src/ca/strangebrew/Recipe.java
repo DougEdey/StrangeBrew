@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.35 2006/06/07 20:12:48 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.36 2006/06/21 20:13:02 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -38,7 +38,7 @@ public class Recipe {
 	// basics:
 
 	private String version;
-	
+
 	public boolean allowRecalcs = true;
 	private double alcohol;
 	private double attenuation;
@@ -59,7 +59,7 @@ public class Recipe {
 	private double ebc;
 	private Style style = new Style();
 	private Yeast yeast = new Yeast();
-	public Mash mash; 
+	public Mash mash;
 
 	// water use:
 	private double chillShrinkQTS;
@@ -90,6 +90,10 @@ public class Recipe {
 	private double bottleSize;
 	private double otherCost;
 
+	private int fwhTime;
+	private int dryHopTime;
+	private int mashHopTime;
+
 	// totals:
 	private double totalMaltCost;
 	private double totalHopsCost;
@@ -118,19 +122,22 @@ public class Recipe {
 		// preBoilVol.setAmount(opts.getDProperty("optPreBoilVol"));
 		// postBoilVol.setUnits(opts.getProperty("optSizeU"));
 		// postBoilVol.setAmount(opts.getDProperty("optPostBoilVol"));
-		
+
 		attenuation = opts.getDProperty("optAttenuation");
 		boilMinutes = opts.getIProperty("optBoilTime");
 		ibuCalcMethod = opts.getProperty("optIBUCalcMethod");
 		ibuHopUtil = opts.getDProperty("optHopsUtil");
+		fwhTime = opts.getIProperty("optFWHTime");
+		mashHopTime = opts.getIProperty("optMashHopTime");
+		dryHopTime = opts.getIProperty("optDryHopTime");
 		hopUnits = opts.getProperty("optHopsU");
 		maltUnits = opts.getProperty("optMaltU");
 		brewer = opts.getProperty("optBrewer");
 		evapMethod = opts.getProperty("optEvapCalcMethod");
 		evap = opts.getDProperty("optEvaporation");
 		alcMethod = opts.getProperty("optAlcCalcMethod");
-		colourMethod = opts.getProperty("optColourMethod");		
-		
+		colourMethod = opts.getProperty("optColourMethod");
+
 		kettleLoss = opts.getDProperty("optKettleLoss");
 		trubLoss = opts.getDProperty("optTrubLoss");
 		miscLoss = opts.getDProperty("optMiscLoss");
@@ -142,7 +149,7 @@ public class Recipe {
 
 		dilution = new DilutedRecipe();
 		version = "";
-		
+
 		// trigger the first re-calc:
 		setPostBoil(opts.getDProperty("optPostBoilVol"));
 		setVolUnits(opts.getProperty("optSizeU"));
@@ -168,9 +175,9 @@ public class Recipe {
 	public double getBottleSize() {
 		return bottleSize;
 	}
-	public double getBUGU(){
-		double bugu = getIbu() / ((getEstOg() - 1) * 1000);		
-		return bugu;		
+	public double getBUGU() {
+		double bugu = getIbu() / ((getEstOg() - 1) * 1000);
+		return bugu;
 	}
 	public String getBrewer() {
 		return brewer;
@@ -184,7 +191,7 @@ public class Recipe {
 		else
 			return ebc;
 	}
-	
+
 	public String getColourMethod() {
 		return colourMethod;
 	}
@@ -310,13 +317,15 @@ public class Recipe {
 	}
 
 	// Setters:
-	
+
 	/*
 	 * Turn off allowRecalcs when you are importing a recipe, so that
 	 * strange things don't happen.  BE SURE TO TURN BACK ON!
 	 */
-	public void setAllowRecalcs(boolean b){ allowRecalcs = b; }
-	
+	public void setAllowRecalcs(boolean b) {
+		allowRecalcs = b;
+	}
+
 	public void setAlcMethod(String s) {
 		alcMethod = s;
 		calcAlcohol(alcMethod);
@@ -376,7 +385,7 @@ public class Recipe {
 	}
 
 	public void setHopsUnits(String h) {
-		hopUnits = h;		
+		hopUnits = h;
 	}
 	public void setIBUMethod(String s) {
 		ibuCalcMethod = s;
@@ -387,7 +396,7 @@ public class Recipe {
 		calcMaltTotals();
 	}
 	public void setMaltUnits(String m) {
-		maltUnits = m;		
+		maltUnits = m;
 	}
 	public void setMashed(boolean m) {
 		mashed = m;
@@ -414,15 +423,14 @@ public class Recipe {
 		pelletHopPct = p;
 		calcHopsTotals();
 	}
-	public void setStyle(String s) 
-	{
+	public void setStyle(String s) {
 		style.setName(s);
-	}	
+	}
 
 	public void setStyle(Style s) {
 		style = s;
 	}
-	
+
 	public void setTrubLoss(double t) {
 		trubLoss = t;
 		calcMaltTotals();
@@ -913,32 +921,41 @@ public class Recipe {
 			// calculate the average OG of the boil
 			// first, the OG at the time of addition:
 			double adjPreSize, aveOg = 0;
-			Hop h = ((Hop) hops.get(i));
-			if (h.getAdd().equalsIgnoreCase("boil") || h.getAdd().equalsIgnoreCase("fwh")) {
+			Hop h = ((Hop) hops.get(i));			
 
-				if (h.getMinutes() > 0)
-					adjPreSize = postBoilVol.getValueAs("gal")
-							+ (preBoilVol.getValueAs("gal") - postBoilVol.getValueAs("gal"))
-							/ (boilMinutes / h.getMinutes());
-				else
-					adjPreSize = postBoilVol.getValueAs("gal");
-				aveOg = 1 + (((estOg - 1) + ((estOg - 1) / (adjPreSize / postBoilVol
-						.getValueAs("gal")))) / 2);
-				if (ibuCalcMethod.equals("Tinseth"))
-					h.setIBU(calcTinseth(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg,
-							h.getMinutes(), h.getAlpha(), ibuHopUtil));
-				else if (ibuCalcMethod.equals("Rager"))
-					h.setIBU(CalcRager(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, h
-							.getMinutes(), h.getAlpha()));
-				else
-					h.setIBU(CalcGaretz(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg,
-							h.getMinutes(), preBoilVol.getValueAs("gal"), 1, h.getAlpha()));
-				if (h.getType().equalsIgnoreCase("Pellet")) {
-					h.setIBU(h.getIBU() * (1.0 + (pelletHopPct / 100)));
-
-				}
-				ibuTotal += h.getIBU();
+			int time = h.getMinutes();
+			if (h.getAdd().equalsIgnoreCase("FWH")) {
+				time = time - fwhTime;
+			} else if (h.getAdd().equalsIgnoreCase("Mash")) {
+				time = mashHopTime;
+			} else if (h.getAdd().equalsIgnoreCase("Dry")) {
+				time = dryHopTime;
 			}
+
+			if (h.getMinutes() > 0)
+				adjPreSize = postBoilVol.getValueAs("gal")
+						+ (preBoilVol.getValueAs("gal") - postBoilVol.getValueAs("gal"))
+						/ (boilMinutes / h.getMinutes());
+			else
+				adjPreSize = postBoilVol.getValueAs("gal");
+
+			aveOg = 1 + (((estOg - 1) + ((estOg - 1) / (adjPreSize / postBoilVol.getValueAs("gal")))) / 2);
+
+			if (ibuCalcMethod.equals("Tinseth"))
+				h.setIBU(calcTinseth(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg,
+						time, h.getAlpha(), ibuHopUtil));
+			else if (ibuCalcMethod.equals("Rager"))
+				h.setIBU(CalcRager(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, time,
+						h.getAlpha()));
+			else
+				h.setIBU(CalcGaretz(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg,
+						time, preBoilVol.getValueAs("gal"), 1, h.getAlpha()));
+			if (h.getType().equalsIgnoreCase("Pellet")) {
+				h.setIBU(h.getIBU() * (1.0 + (pelletHopPct / 100)));
+			}
+
+			ibuTotal += h.getIBU();
+			
 			totalHopsCost += h.getCostPerU() * h.getAmountAs(h.getUnits());
 			totalHopsOz += h.getAmountAs("oz");
 		}
@@ -1067,10 +1084,7 @@ public class Recipe {
 		// monitors.
 		// This is from the Windows version of SB
 		// typical values are: r=8, g=30, b=20
-		
-		
-		
-		
+
 		if (method == 1) {
 
 			int R = 0, G = 0, B = 0, A = aConst;
@@ -1133,14 +1147,14 @@ public class Recipe {
 			return new Color(r, g, b, aConst);
 		}
 	}
-	
-	private String addXMLHeader(String in){
-		in = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" + in; 
+
+	private String addXMLHeader(String in) {
+		in = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" + in;
 		return in;
 	}
 
 	public String toXML(String printOptions) {
-		StringBuffer sb = new StringBuffer();		
+		StringBuffer sb = new StringBuffer();
 		sb.append("<STRANGEBREWRECIPE version = \"" + version + "\">\n");
 		sb.append("<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->\n");
 		if (printOptions != null)
@@ -1187,7 +1201,8 @@ public class Recipe {
 
 		// fermentables list:
 		sb.append("  <FERMENTABLES>\n");
-		sb.append(SBStringUtils.xmlElement("TOTAL", ""+ Quantity.convertUnit("lb", maltUnits, totalMaltLbs), 4));
+		sb.append(SBStringUtils.xmlElement("TOTAL", ""
+				+ Quantity.convertUnit("lb", maltUnits, totalMaltLbs), 4));
 		for (int i = 0; i < fermentables.size(); i++) {
 			Fermentable m = (Fermentable) fermentables.get(i);
 			sb.append(m.toXML());
@@ -1196,7 +1211,8 @@ public class Recipe {
 
 		// hops list:
 		sb.append("  <HOPS>\n");
-		sb.append(SBStringUtils.xmlElement("TOTAL", ""+ Quantity.convertUnit("oz", hopUnits, totalHopsOz), 4));
+		sb.append(SBStringUtils.xmlElement("TOTAL", ""
+				+ Quantity.convertUnit("oz", hopUnits, totalHopsOz), 4));
 		for (int i = 0; i < hops.size(); i++) {
 			Hop h = (Hop) hops.get(i);
 			sb.append(h.toXML());
@@ -1219,13 +1235,12 @@ public class Recipe {
 			sb.append(((Note) notes.get(i)).toXML());
 		}
 		sb.append("  </NOTES>\n");
-		
+
 		// style xml:
 		sb.append(style.toXML());
 
 		sb.append("</STRANGEBREWRECIPE>");
 
-		
 		return addXMLHeader(sb.toString());
 	}
 
@@ -1272,8 +1287,7 @@ public class Recipe {
 
 			Object[] objf = {padLeft(f.getName(), 30, ' '),
 					padRight(" " + SBStringUtils.format(f.getAmountAs(f.getUnits()), 2), 6, ' '),
-					padRight(" " + f.getUnitsAbrv(), 5, ' '), 
-					new Double(f.getPppg()),
+					padRight(" " + f.getUnitsAbrv(), 5, ' '), new Double(f.getPppg()),
 					padRight(" " + SBStringUtils.format(f.getLov(), 1), 6, ' '),
 					padRight(" " + SBStringUtils.format(f.getPercent(), 1), 5, ' ')};
 			sb.append(mf.format(objf));
@@ -1289,8 +1303,7 @@ public class Recipe {
 
 			Object[] objh = {padLeft(h.getName(), 20, ' '),
 					padRight(" " + SBStringUtils.format(h.getAmountAs(h.getUnits()), 2), 6, ' '),
-					padRight(" " + h.getUnitsAbrv(), 5, ' '),
-					padRight(" " + h.getAlpha(), 6, ' '),
+					padRight(" " + h.getUnitsAbrv(), 5, ' '), padRight(" " + h.getAlpha(), 6, ' '),
 					padRight(" " + SBStringUtils.format(h.getMinutes(), 1), 6, ' '),
 					padRight(" " + SBStringUtils.format(h.getIBU(), 1), 5, ' ')};
 			sb.append(mf.format(objh));
@@ -1424,27 +1437,27 @@ public class Recipe {
 		}
 
 	}
-	
+
 	/*
 	 * Scale the recipe up or down, so that the new OG = old OG, and
 	 * new IBU = old IBU
 	 */
-	public void scaleRecipe(double newSize, String newUnits){
-		double currentSize =getPostBoilVol(getVolUnits());
+	public void scaleRecipe(double newSize, String newUnits) {
+		double currentSize = getPostBoilVol(getVolUnits());
 		currentSize = Quantity.convertUnit(getVolUnits(), newUnits, currentSize);
 		double conversionFactor = newSize / currentSize;
-		
-		if (conversionFactor != 1){
+
+		if (conversionFactor != 1) {
 			setPostBoil(newSize);
 			setVolUnits(newUnits);
-			
+
 			// TODO: figure out a way to make sure old IBU = new IBU
-			for (int i=0;i<getHopsListSize(); i++){
-				Hop h = getHop(i);				
+			for (int i = 0; i < getHopsListSize(); i++) {
+				Hop h = getHop(i);
 				h.setAmount(h.getAmountAs(h.getUnits()) * conversionFactor);
 			}
-			for (int i=0;i<getMaltListSize(); i++){
-				Fermentable f = getFermentable(i);				
+			for (int i = 0; i < getMaltListSize(); i++) {
+				Fermentable f = getFermentable(i);
 				f.setAmount(f.getAmountAs(f.getUnits()) * conversionFactor);
 			}
 			calcHopsTotals();

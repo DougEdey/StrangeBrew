@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.13 2006/06/07 20:12:48 andrew_avis Exp $
+ * $Id: Options.java,v 1.14 2006/06/21 20:13:02 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -147,27 +147,12 @@ public class Options {
 		loadProperties();
 	}
 	
-	private String getSep(){
-		String slash = System.getProperty("file.separator");
-		return slash;
-	}
-	
-	private String getPath(){		
-		String path = "";		
-		try {
-			path = new File(".").getCanonicalPath();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-		Debug.print(path);		
-		return path;
-	}
-	
+
 	private void loadProperties() {		
 		try {	
 			
-			String path = getPath();				
-			File inputFile = new File(path + getSep() + type + ".ini");
+			String path = SBStringUtils.getAppPath("ini");				
+			File inputFile = new File(path + type + ".ini");
 			if (inputFile.exists()){			
 				props.load(new FileInputStream(inputFile));
 				Debug.print(type + ".ini file read: " + inputFile.getAbsolutePath() +". Contents:");
@@ -183,12 +168,9 @@ public class Options {
 	public void saveProperties() {
 
 		try{
-			String path = getPath();
-
-			Debug.print("Storing props: " + path);			  
-
-			FileOutputStream out = new FileOutputStream(path + "\\" + type +".ini");
-
+			String path = SBStringUtils.getAppPath("ini");
+			Debug.print("Storing props: " + path);
+			FileOutputStream out = new FileOutputStream(path + type +".ini");
 
 			props.store(out, "/* properties updated */");
 		}
@@ -203,34 +185,9 @@ public class Options {
 			
 			for (int i = 0; i<optionString.length; i++) {
 				d.put(optionString[i][0], optionString[i][1]);
-			}
-			
+			}		
 			
 		} 
-		
-		/*else if (type.equals("mash")){
-			d.put("optMashVolU", "gallons US");
-			d.put("optMashTempU", "F");
-			d.put("optMashRatioU", "qt/lb");
-			d.put("optMashRatio", "1.25");
-			d.put("optGrainTemp", "68");
-			d.put("optTunLossF", "3");
-			d.put("optBoilTempF", "212");
-			d.put("optThickDecoctRatio", "0.6");
-			d.put("optThinDecoctRatio", "0.9");
-
-			// default ranges for mash steps - indicates the bottom of the range
-			d.put("optAcidTmpF", "85");
-			d.put("optGlucanTmpF", "95");
-			d.put("optProteinTmpF", "113");
-			d.put("optBetaTmpF", "131");
-			d.put("optAlphaTmpF", "151");
-			d.put("optMashoutTmpF", "161");
-			d.put("optSpargeTmpF", "170");
-			
-			d.put("optCerealMashTmpF", "155");
-
-		}*/
 
 	}
 	
