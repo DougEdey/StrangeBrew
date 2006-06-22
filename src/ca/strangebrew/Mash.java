@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.30 2006/06/09 15:23:28 andrew_avis Exp $
+ * $Id: Mash.java,v 1.31 2006/06/22 20:02:37 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -44,13 +44,13 @@ public class Mash {
 	// configurable temps, can be set by the user:
 	// target temps are 1/2 between temp + next temp
 
-	public float ACIDTMPF = 85;
-	public float GLUCANTMPF = 95;
-	public float PROTEINTMPF = 113;
-	public float BETATMPF = 131;
-	public float ALPHATMPF = 151;
-	public float MASHOUTTMPF = 161;
-	public float SPARGETMPF = 170;
+	private float ACIDTMPF = 85;
+	private float GLUCANTMPF = 95;
+	private float PROTEINTMPF = 113;
+	private float BETATMPF = 131;
+	private float ALPHATMPF = 151;
+	private float MASHOUTTMPF = 161;
+	private float SPARGETMPF = 170;
 	
 	
 	public Mash(Recipe r){
@@ -265,6 +265,16 @@ public class Mash {
 		calcMashSchedule();
 	}
 	
+	public void setTempRange(String type, double t){
+		if (tempUnits.equals("C"))
+			t = BrewCalcs.cToF(t);
+		if (type.equalsIgnoreCase("mashout"))
+			MASHOUTTMPF = (float)t;
+		if (type.equalsIgnoreCase("sparge"))
+			SPARGETMPF = (float)t;
+		
+	}
+	
 	public void setName(String s) { name = s; }
 	
 	/**
@@ -294,6 +304,18 @@ public class Mash {
 		else
 			return BrewCalcs.fToC(boilTempF);
 		}
+	
+	public double getTempRange(String type){
+		double t=0;
+		if (type.equals("mashout"))
+			t = MASHOUTTMPF;
+		else if (type.equals("sparge"))
+			t = SPARGETMPF;
+		if (tempUnits.equals("C"))
+			t = BrewCalcs.fToC(t);
+		
+		return t;
+	}
 	
 	public double getSpargeVol(){
 		return Quantity.convertUnit("qt", volUnits, spargeQTS);

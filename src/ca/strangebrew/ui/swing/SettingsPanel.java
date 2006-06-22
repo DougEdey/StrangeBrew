@@ -1,5 +1,5 @@
 /*
- * $Id: SettingsPanel.java,v 1.6 2006/06/02 19:44:26 andrew_avis Exp $
+ * $Id: SettingsPanel.java,v 1.7 2006/06/22 20:02:36 andrew_avis Exp $
  */
 
 package ca.strangebrew.ui.swing;
@@ -10,15 +10,19 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import javax.swing.BorderFactory;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import ca.strangebrew.Recipe;
-
-
+import ca.strangebrew.SBStringUtils;
 
 public class SettingsPanel extends javax.swing.JPanel implements ActionListener, FocusListener {
 	
@@ -26,6 +30,13 @@ public class SettingsPanel extends javax.swing.JPanel implements ActionListener,
 	private StrangeSwing.SBNotifier sbn;
 
 	private JLabel jLabel4;
+	private JLabel jLabel8;
+	private JTextField spargeTmpTxt;
+	private JLabel sprgtmpuLbl;
+	private JLabel mtmpuLbl;
+	private JTextField mashoutTmpTxt;
+	private JPanel jPanel1;
+	private JLabel jLabel7;
 	private JLabel jLabel6;
 	private JLabel jLabel5;
 	private JTextField thickDecoctTxt;
@@ -51,9 +62,17 @@ public class SettingsPanel extends javax.swing.JPanel implements ActionListener,
 	
 	public void setData(Recipe r){
 		myRecipe = r;
+		displaySettings();		
+	}
+	
+	public void displaySettings(){
 		pelletHopPctTxt.setText(new Double(myRecipe.getPelletHopPct()).toString());
 		thickDecoctTxt.setText(new Double(myRecipe.mash.getThickDecoctRatio()).toString());
 		thinDecoctTxt.setText(new Double(myRecipe.mash.getThinDecoctRatio()).toString());
+		mashoutTmpTxt.setText(SBStringUtils.format(myRecipe.mash.getTempRange("mashout"),2));
+		spargeTmpTxt.setText(SBStringUtils.format(myRecipe.mash.getTempRange("sparge"),2));
+		mtmpuLbl.setText(myRecipe.mash.getMashTempUnits());
+		sprgtmpuLbl.setText(myRecipe.mash.getMashTempUnits());
 	}
 	
 	private void initGUI() {
@@ -79,41 +98,86 @@ public class SettingsPanel extends javax.swing.JPanel implements ActionListener,
 		this.add(pelletHopPctTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		pelletHopPctTxt.setPreferredSize(new java.awt.Dimension(58, 20));
 
+		jPanel1 = new JPanel();
+		GridBagLayout jPanel1Layout = new GridBagLayout();
+		jPanel1Layout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1};
+		jPanel1Layout.rowHeights = new int[] {7, 7, 7, 7};
+		jPanel1Layout.columnWeights = new double[] {0.1, 0.1, 0.1, 0.1};
+		jPanel1Layout.columnWidths = new int[] {7, 7, 7, 7};
+		jPanel1.setLayout(jPanel1Layout);
+		this.add(jPanel1, new GridBagConstraints(0, 1, 3, 2, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel1.setBorder(BorderFactory.createTitledBorder(null, "Mash Settings", TitledBorder.LEADING, TitledBorder.TOP));
+
 		jLabel1 = new JLabel();
-		this.add(jLabel1, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel1.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		jLabel1.setText("Thin decoction:");
 
-		jLabel2 = new JLabel();
-		this.add(jLabel2, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-		jLabel2.setText("Thick decoction:");
-
 		thinDecoctTxt = new JTextField();
-		this.add(thinDecoctTxt, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel1.add(thinDecoctTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		thinDecoctTxt.setText(".9");
-		thinDecoctTxt.setPreferredSize(new java.awt.Dimension(58, 20));
-		thinDecoctTxt.addActionListener(this);
-		thinDecoctTxt.addFocusListener(this);
-		
-		thickDecoctTxt = new JTextField();
-		this.add(thickDecoctTxt, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-		thickDecoctTxt.setText(".6");
-		thickDecoctTxt.setPreferredSize(new java.awt.Dimension(58, 20));
-		thickDecoctTxt.addActionListener(this);
-		thickDecoctTxt.addFocusListener(this);
-		
+		thinDecoctTxt.setPreferredSize(new java.awt.Dimension(55, 20));
+
 		jLabel5 = new JLabel();
-		this.add(jLabel5, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel1.add(jLabel5, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		jLabel5.setText("qt/lb");
 
+		jLabel2 = new JLabel();
+		jPanel1.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jLabel2.setText("Thick decoction:");
+
+		thickDecoctTxt = new JTextField();
+		jPanel1.add(thickDecoctTxt, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		thickDecoctTxt.setText(".6");
+		thickDecoctTxt.setPreferredSize(new java.awt.Dimension(55, 20));
+
 		jLabel6 = new JLabel();
-		this.add(jLabel6, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel1.add(jLabel6, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		jLabel6.setText("qt/lb");
 
-		pelletHopPctTxt.addActionListener(this);
-		pelletHopPctTxt.addFocusListener(this);
-		
+		jLabel7 = new JLabel();
+		jPanel1.add(jLabel7, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jLabel7.setText("Mashout Temp:");
 
-			setPreferredSize(new Dimension(400, 300));
+		jLabel8 = new JLabel();
+		jPanel1.add(jLabel8, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jLabel8.setText("Sparge Temp:");
+
+		mashoutTmpTxt = new JTextField();
+		jPanel1.add(mashoutTmpTxt, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		mashoutTmpTxt.setText("0");
+		mashoutTmpTxt.setPreferredSize(new java.awt.Dimension(55, 20));
+
+		spargeTmpTxt = new JTextField();
+		jPanel1.add(spargeTmpTxt, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		spargeTmpTxt.setText("0");
+		spargeTmpTxt.setPreferredSize(new java.awt.Dimension(55, 20));
+
+		mtmpuLbl = new JLabel();
+		jPanel1.add(mtmpuLbl, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		mtmpuLbl.setText("F");
+
+		sprgtmpuLbl = new JLabel();
+		jPanel1.add(sprgtmpuLbl, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		sprgtmpuLbl.setText("F");
+
+		thickDecoctTxt.addActionListener(this);
+		thickDecoctTxt.addFocusListener(this);
+		thinDecoctTxt.addActionListener(this);
+		thinDecoctTxt.addFocusListener(this);
+		pelletHopPctTxt.addActionListener(this);
+		pelletHopPctTxt.addFocusListener(this);		
+		mashoutTmpTxt.addActionListener(this);
+		mashoutTmpTxt.addFocusListener(this);		
+		spargeTmpTxt.addActionListener(this);
+		spargeTmpTxt.addFocusListener(this);
+		
+		this.setPreferredSize(new Dimension(400, 300));
+		this.addComponentListener(new ComponentAdapter() {
+			public void componentShown(ComponentEvent evt) {
+				displaySettings();
+			}
+		});
+		
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -139,10 +203,18 @@ public class SettingsPanel extends javax.swing.JPanel implements ActionListener,
 			double u = Double.parseDouble( thinDecoctTxt.getText() );				
 			myRecipe.mash.setDecoctRatio("thin", u);
 		}
+		if (o == mashoutTmpTxt){
+			double u = Double.parseDouble( mashoutTmpTxt.getText() );				
+			myRecipe.mash.setTempRange("mashout", u);
+		}
+		if (o == spargeTmpTxt){
+			double u = Double.parseDouble( spargeTmpTxt.getText() );				
+			myRecipe.mash.setTempRange("sparge", u);
+		}
 	}
 	
 	public void focusGained(FocusEvent e) {
-		// do nothing, we don't need this event
+		// no action required
 	}
 
 	public void focusLost(FocusEvent e) {

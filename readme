@@ -190,13 +190,21 @@ What's New
 --------
 New Features:
 - StrangeBrew no longer uses the JGoodies Look And Feel by default, as this was
-causing some refresh issues on older versions of Mac OSX.  Instead, you can set
-the LAF yourself. (See the "Setting the Look And Feel" section above).
+  causing some refresh issues on older versions of Mac OSX.  Instead, you can set
+  the LAF yourself. (See the "Setting the Look And Feel" section above).
+- You can now set the bottom of temp ranges used to determine mashout and sparge
+  steps.  The defaults are 161F for mashout, and 170F for sparge.  This means that
+  when you add a mashout step, it uses the middle of the range (161 + 170 / 2, or
+  165.5F) when you add a mashout step, and if you change the start temp to <161, it
+  becomes a different step type.  You can adjust these numbers to suit your mashing
+  preferences.
+- More and better StrangeBrew Java-specific help.  
 
 Bugs Fixed:
 - FWH, mash hop, and dry hop IBU values are now correctly calculated.
 - The strangebrew.ini file is now saved and read from the correct location on 
   non-Windows machines.
+- HTML export now works again on non-Windows machines.  
 
 2.0.b7
 --------
