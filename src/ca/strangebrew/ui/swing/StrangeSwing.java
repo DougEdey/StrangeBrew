@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.44 2006/06/22 20:02:36 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.45 2006/06/27 18:25:47 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -149,7 +149,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JTextField brewerNameText;
 	private JButton btnAddHop;
 	private JButton btnAddMalt;
-	private JButton jButton2;
+	private JButton findButton;
 	private JButton saveButton;
 	private JToolBar mainToolBar;
 	private JButton btnDelHop;
@@ -1342,18 +1342,31 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 								}
 							});
 
-							jButton2 = new JButton();
-							mainToolBar.add(jButton2);
-							jButton2.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
+							findButton = new JButton();
+							mainToolBar.add(findButton);
+							findButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
 								"ca/strangebrew/icons/find.gif")));
 							final JFrame owner = this;
-							jButton2.addActionListener(new ActionListener() {
+							findButton.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									FindDialog fd = new FindDialog(owner);
 									fd.setModal(true);
 									fd.setVisible(true);
 								}
 							});
+							
+							JButton printButton = new JButton();
+							mainToolBar.add(printButton);
+							printButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
+							"ca/strangebrew/icons/print.gif")));
+							printButton.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									PrintDialog pd = new PrintDialog(owner);
+									pd.setModal(true);
+									pd.setVisible(true);
+								}
+							});
+							
 
 							{
 								lblName = new JLabel();

@@ -90,7 +90,10 @@
 						</tr>
 					</tbody>
 				</table>
-				<div id="footer">Produced by <a href="http://sourceforge.net/projects/strangebrew">Strangebrew Java</a> version <xsl:value-of select="STRANGEBREWRECIPE/@version"/>.</div>
+				<div id="footer">Produced by <a
+						href="http://sourceforge.net/projects/strangebrew">
+					Strangebrew Java</a> version
+					<xsl:value-of select="@version"/>.</div>
 			</body>
 		</html>
 	</xsl:template>
