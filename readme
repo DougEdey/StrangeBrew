@@ -2,7 +2,7 @@
 +                   README                     +
 ================================================
 
-StrangeBrew Java - 2.0b8
+StrangeBrew Java - 2.0rc1
 (c)2000-2006 Drew Avis - drew.avis@gmail.com
 
 Thank you for downloading and trying StrangeBrew Java.
@@ -27,10 +27,10 @@ This file contains:
  What is this?
 ===============
 
-This is a "beta" release of StrangeBrew Java, which means it's
-still in development and may have some bugs.  
-Please use it for your brewday planning, and let us know
-how you like it!
+This is a "release candidate" release of StrangeBrew Java, which means 
+it's feature-complete, and is pretty stable.  If you find bugs, please
+report them via the Sourceforge bug tracker, or email 
+bugs@strangebrew.ca.
 
 StrangeBrew Java is a Java port of the popular Windows homebrewing
 software, StrangeBrew (www.strangebrew.ca).
@@ -45,9 +45,7 @@ Recipes at bodensatz.com
 
 There is a repository of StrangeBrew recipes available for viewing and
 download at www.bodensatz.com/sb, hosted by Alan McKay.  Please feel free
-to download recipes to open with StrangeBrew Java.  However, please do not
-upload StrangeBrew Java files to bodensatz.  This is "Beta" software, and
-contains bugs, and the saved recipe file may cause problems for other users.
+to download recipes to open with StrangeBrew Java.  
 
 ==========================
  Running StrangeBrew Java
@@ -186,7 +184,7 @@ of reported bugs.  If you've found one that's not there, please report it!
 What's New
 ==========
 
-2.0.b8
+2.0.rc1
 --------
 New Features:
 - StrangeBrew no longer uses the JGoodies Look And Feel by default, as this was
@@ -199,6 +197,7 @@ New Features:
   becomes a different step type.  You can adjust these numbers to suit your mashing
   preferences.
 - More and better StrangeBrew Java-specific help.  
+- New Print toolbar button.
 
 Bugs Fixed:
 - FWH, mash hop, and dry hop IBU values are now correctly calculated.
