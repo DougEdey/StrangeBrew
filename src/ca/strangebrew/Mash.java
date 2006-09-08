@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.31 2006/06/22 20:02:37 andrew_avis Exp $
+ * $Id: Mash.java,v 1.32 2006/09/08 19:42:37 andrew_avis Exp $
  * @author aavis
  *
  */
@@ -218,9 +218,17 @@ public class Mash {
 		calcMashSchedule();
 	}	
 	
+	public double getMashRatio(){
+		return mashRatio;		
+	}
+	
 	public void setMashRatioU(String u){ 
 		mashRatioU = u;
 		calcMashSchedule();
+	}
+	
+	public String getMashRatioU(){
+		return mashRatioU;		
 	}
 	
 	public void setMashVolUnits(String u){ 

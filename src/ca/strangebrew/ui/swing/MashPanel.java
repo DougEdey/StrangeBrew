@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.17 2006/06/21 20:13:04 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.18 2006/09/08 19:42:45 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -81,6 +81,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	private JLabel volLabel;
 	private JLabel totalTimeLabel;
 	private JComboBox ratioUnitsCombo;
+	private ComboBoxModel ratioUnitsComboModel;
 	private JTextField ratioText;
 	// private ButtonGroup tempUnitsButtonGroup;
 	private JComboBox volUnitsCombo;
@@ -351,7 +352,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				boilTempTxt.addFocusListener(this);
 				boilTempTxt.addActionListener(this);
 				
-				ComboBoxModel ratioUnitsComboModel = new DefaultComboBoxModel(new String[]{"qt/lb",
+				ratioUnitsComboModel = new DefaultComboBoxModel(new String[]{"qt/lb",
 				"l/kg"});
 				ratioUnitsCombo = new JComboBox();
 				settingsPanel.add(ratioUnitsCombo, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
@@ -497,6 +498,9 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			grainTempULabel.setText(myRecipe.mash.getMashTempUnits());
 			tempLostULabel.setText(myRecipe.mash.getMashTempUnits());
 			boilTempULbl.setText(myRecipe.mash.getMashTempUnits());
+			ratioText.setText(new Double(myRecipe.mash.getMashRatio()).toString());
+			ratioUnitsComboModel.setSelectedItem(myRecipe.mash.getMashRatioU());
+			
 
 			// set totals:
 			String mashWeightTotal = SBStringUtils.format(myRecipe.getTotalMash(), 1) + " "

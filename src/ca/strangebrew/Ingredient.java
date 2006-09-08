@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * $Id: Ingredient.java,v 1.5 2006/05/18 17:34:42 andrew_avis Exp $
+ * $Id: Ingredient.java,v 1.6 2006/09/08 19:42:37 andrew_avis Exp $
  * Created on Oct 21, 2004
  * @author aavis
  *
@@ -16,7 +16,7 @@ public class Ingredient {
 	private Quantity amount = new Quantity();
 	private double costPerU;
 	private Date dateBought;
-	private String description;
+	private String description="";
 	private String name="";
 	private double stock;
 	private String type;

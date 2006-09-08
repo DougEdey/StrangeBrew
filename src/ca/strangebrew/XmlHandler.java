@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.15 2006/06/07 16:34:06 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.16 2006/09/08 19:42:37 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -449,7 +449,12 @@ public class XmlHandler extends DefaultHandler{
 				r.mash.setTunLoss(Double.parseDouble(s));
 			} else if (currentElement.equalsIgnoreCase("BOIL_TEMP")) {
 				r.mash.setBoilTemp(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("MASH_RATIO")) {
+				r.setMashRatio(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("MASH_RATIO_U")) {
+				r.setMashRatioU(s);				
 			}
+			
 		}
 
 		else if (currentList.equalsIgnoreCase("DETAILS")) {
@@ -474,8 +479,11 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentElement.equalsIgnoreCase("HOPS_UNITS")) {
 				r.setHopsUnits(s);
 			} else if (currentElement.equalsIgnoreCase("MALT_UNITS")) {
-				r.setMaltUnits(s);
-			} else if (currentElement.equalsIgnoreCase("MASH_RATIO")) {
+				r.setMaltUnits(s);				
+			} 
+			// leave this clause here to support older versions.  SB2.x puts this
+			// data in the mash section
+			else if (currentElement.equalsIgnoreCase("MASH_RATIO")) {
 				r.setMashRatio(Double.parseDouble(s));
 			} else if (currentElement.equalsIgnoreCase("MASH_RATIO_U")) {
 				r.setMashRatioU(s);				
