@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.36 2006/06/21 20:13:02 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.37 2007/06/26 17:59:15 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -1278,6 +1278,7 @@ public class Recipe {
 		Object[] objs = {new Double(estOg), new Double(estFg), new Double(alcohol), new Double(ibu)};
 		sb.append(mf.format(objs));
 		sb.append("(Alc method: by " + alcMethod + "; IBU method: " + ibuCalcMethod + ")\n");
+		sb.append("\nYeast: " + yeast + "\n");		
 		sb.append("\nFermentables:\n");
 		sb.append(padLeft("Name ", 30, ' ') + " amount units  pppg    lov   %\n");
 

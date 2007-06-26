@@ -1,5 +1,5 @@
 /*
- * $Id: XmlStyleHandler.java,v 1.6 2006/05/26 13:57:25 andrew_avis Exp $
+ * $Id: XmlStyleHandler.java,v 1.7 2007/06/26 17:59:15 andrew_avis Exp $
  * Created on Oct 14, 2004
  */
 package ca.strangebrew;
@@ -19,7 +19,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class XmlStyleHandler extends DefaultHandler {
 	private Style style = null;
-	private ArrayList styles = new ArrayList();
+	private ArrayList styles = new ArrayList();	
 
 	// private Attributes currentAttributes = null;
 	private String currentList = null; //current List name
@@ -35,6 +35,7 @@ public class XmlStyleHandler extends DefaultHandler {
 	public ArrayList getStyles() {
 		return styles;
 	}
+	
 
 	//===========================================================
 	// SAX DocumentHandler methods
@@ -47,9 +48,13 @@ public class XmlStyleHandler extends DefaultHandler {
 		System.out.flush();
 
 	}
-
-	// we don't do anything with the start of a document
+	
 	public void startDocument() throws SAXException {
+		// let's add one blank style to the style list, so when a new, empty
+		// recipe is viewed, the top of the list is seen first
+		style = new Style();
+		styles.add(style);
+		style = null;
 	}
 
 	// this is debug stuff, delete later

@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.46 2006/06/30 14:08:35 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.47 2007/06/26 17:59:15 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -131,7 +131,7 @@ import edu.stanford.ejalbert.exception.UnsupportedOperatingSystemException;
 public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener, WindowListener {
 
 
-	private String version = "2.0rc1";
+	public String version = "2.0.0";
 	
 	public JTable hopsTable;
 	public JTable maltTable;
@@ -742,7 +742,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		col.setPreferredWidth(200);
 		hopsTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 	}
-
+    
 	// add the listeners *after* all the data has been attached to speed
 	// up startup
 	private void addListeners(){
@@ -751,8 +751,8 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		txtName.addFocusListener(this);
 		brewerNameText.addFocusListener(this);
 		brewerNameText.addActionListener(this);
-		txtDate.addFocusListener(this);
-		txtDate.addActionListener(this);
+		//txtDate.addFocusListener(this);
+		//txtDate.addActionListener(this);
 		preBoilText.addFocusListener(this);
 		preBoilText.addActionListener(this);
 		postBoilText.addFocusListener(this);
@@ -761,7 +761,17 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		boilMinText.addActionListener(this);
 		evapText.addFocusListener(this);
 		evapText.addActionListener(this);
-
+                
+                txtDate.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        java.util.Date newDate = txtDate.getDate();
+                        java.util.Date oldDate = myRecipe.getCreated().getTime();
+                        if(!oldDate.equals(newDate))
+                        {
+                            myRecipe.setCreated(newDate);
+                        }
+                    }
+		});
 
 		cmbStyle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -1211,7 +1221,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 								txtComments.setWrapStyleWord(true);
 								// txtComments.setPreferredSize(new java.awt.Dimension(117, 42));
 								txtComments.setLineWrap(true);
-								txtComments.setPreferredSize(new java.awt.Dimension(263, 40));
+								scpComments.setPreferredSize(new java.awt.Dimension(263, 40));
 								txtComments.addFocusListener(new FocusAdapter() {
 									public void focusLost(FocusEvent evt) {
 										if (!txtComments.getText().equals(myRecipe.getComments())) {
@@ -1785,6 +1795,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 
 								// Show open dialog; this method does
 								// not return until the dialog is closed
+								fileChooser.resetChoosableFileFilters();
 								String[] ext = {"xml", "qbrew", "rec"};
 								String desc = "StrangBrew and importable formats";
 								sbFileFilter openFileFilter = new sbFileFilter(ext, desc);
@@ -1898,7 +1909,8 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 							exportHTMLmenu.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									// Show save dialog; this method does
-									// not return until the dialog is closed	
+									// not return until the dialog is closed
+									fileChooser.resetChoosableFileFilters();
 									String[] ext = {"html", "htm"};
 									sbFileFilter saveFileFilter = new sbFileFilter(ext, "HTML");
 									fileChooser.setFileFilter(saveFileFilter);
@@ -1929,6 +1941,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 								public void actionPerformed(ActionEvent evt) {
 									// Show save dialog; this method does
 									// not return until the dialog is closed
+									fileChooser.resetChoosableFileFilters();
 									String[] ext = {"txt"};
 									sbFileFilter saveFileFilter = new sbFileFilter(ext, "Text");
 									fileChooser.setFileFilter(saveFileFilter);
@@ -2201,6 +2214,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 	private void saveAs() {
 		// Show save dialog; this method does
 		// not return until the dialog is closed
+		fileChooser.resetChoosableFileFilters();
 		String[] ext = {"xml"};
 		sbFileFilter saveFileFilter = new sbFileFilter(ext, "StrangeBrew XML");
 		fileChooser.setFileFilter(saveFileFilter);

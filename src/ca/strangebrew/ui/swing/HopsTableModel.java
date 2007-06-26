@@ -59,7 +59,7 @@ class HopsTableModel extends AbstractTableModel {
 		try {
 			switch (col) {
 				case 0 :
-					return data.getHopName(row);
+					return data.getHop(row);
 				case 1 :
 					return data.getHopType(row);
 				case 2 :
@@ -122,7 +122,7 @@ class HopsTableModel extends AbstractTableModel {
 				data.setHopAdd(row, value.toString());
 				break;
 			case 6:
-				data.setHopMinutes(row, Integer.parseInt(value.toString()));
+				data.setHopMinutes(row, (int)Double.parseDouble(value.toString()));
 				break;
 			case 7:
 				break;

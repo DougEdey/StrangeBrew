@@ -124,7 +124,7 @@ public class PotentialExtractCalcDialog extends javax.swing.JDialog implements C
 	
 	/*
 	 * From http://www.brewingtechniques.com/bmg/noonan.html
-	 *  °P = (DBCG - MC - 0.002) X Brewhouse Efficiency X 11.486
+	 *  degr. P = (DBCG - MC - 0.002) X Brewhouse Efficiency X 11.486
 	 *  S.G. = (DBCG - MC - 0.002) X Brewhouse EfficiencyX 46.214 
 	 */
 	

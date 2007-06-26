@@ -61,7 +61,7 @@ class MaltTableModel extends AbstractTableModel {
 				case 1: // mash
 					return new Boolean (data.getMaltMashed(row));
 				case 2 :					
-					return data.getMaltName(row);
+					return data.getFermentable(row);
 				case 3 :
 					return SBStringUtils.format(data
 							.getMaltAmountAs(row, data.getMaltUnits(row)), 2);

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
+import ca.strangebrew.Debug;
 import ca.strangebrew.Fermentable;
 import ca.strangebrew.Hop;
 import ca.strangebrew.Style;
@@ -47,6 +48,8 @@ public class ComboModel extends AbstractListModel implements ComboBoxModel {
 				Style s2 = (Style) o;
 				found = s.getName().equalsIgnoreCase(s2.getName());
 				empty = s.getName().equals("");
+				Debug.print("s="+s.name + "s2="+s2.name);
+				
 			} else if (o.getClass().getName().toString().equals("java.lang.String")) {
 				String q = (String) list.get(i);
 				String q2 = (String) o;
