@@ -2,8 +2,8 @@
 +                   README                     +
 ================================================
 
-StrangeBrew Java - 2.0rc1
-(c)2000-2006 Drew Avis - drew.avis@gmail.com
+StrangeBrew Java - 2.0.0
+(c)2000-2007 Drew Avis - drew.avis@gmail.com
 
 Thank you for downloading and trying StrangeBrew Java.
 
@@ -88,6 +88,10 @@ When you reboot (or if you execute the preceding from a root prompt), you
 can chmod 755 strangeBrew_fat.jar and then run it with the following:
 
 ./strangeBrew_fat.jar
+
+NOTE: At least one person has experienced problems running StrangeBrew on Fedora
+using their 1.4.2 JRE, which is the GNU gcj.  The problem was solved by usin the
+1.5 JRE from Sun.  
 
 =========================
 Setting the Look and Feel
@@ -183,6 +187,19 @@ of reported bugs.  If you've found one that's not there, please report it!
 ==========
 What's New
 ==========
+
+2.0.0
+--------
+Bugs Fixed:
+- Mash ratio and ratio units are now properly displayed.
+- After storing ingredients from an imported recipe, the database is no longer corrupted.
+- Malt and hop drop-downs behave better (Bugs 1580524 and 1511954).
+- Selecting a date now permanently changes it (Bug 1581203).
+- The comments scrollbar now behaves correctly.
+- File extensions don't keep multiplying every time you open the Save/SaveAs/Export dialogs.
+- The Min column in the hops table is now handled correctly.
+- The style dropdown now displays from the top of the list, rather than the bottom, for an empty style (Bug 1493269).
+
 
 2.0.rc1
 --------
@@ -407,6 +424,7 @@ program:
 * Don Kelly - Promash recipe format decoding
 * Colin Kilburn - testing / bug fixes
 * Jason Landry - database updates
+* Jeroen Wouters - bug fixes
 
 ==========
 Copyrights
