@@ -1,5 +1,5 @@
 /*
- * $Id: XmlStyleHandler.java,v 1.7 2007/06/26 17:59:15 andrew_avis Exp $
+ * $Id: XmlStyleHandler.java,v 1.8 2007/07/11 14:49:15 andrew_avis Exp $
  * Created on Oct 14, 2004
  */
 package ca.strangebrew;
@@ -52,9 +52,10 @@ public class XmlStyleHandler extends DefaultHandler {
 	public void startDocument() throws SAXException {
 		// let's add one blank style to the style list, so when a new, empty
 		// recipe is viewed, the top of the list is seen first
+		// causes a problem w/ combomodel, style update:
 		style = new Style();
 		styles.add(style);
-		style = null;
+		style = null; 
 	}
 
 	// this is debug stuff, delete later

@@ -10,7 +10,6 @@ import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-import ca.strangebrew.Debug;
 import ca.strangebrew.Fermentable;
 import ca.strangebrew.Hop;
 import ca.strangebrew.Style;
@@ -32,23 +31,22 @@ public class ComboModel extends AbstractListModel implements ComboBoxModel {
 				Yeast y = (Yeast) list.get(i);
 				Yeast y2 = (Yeast) o;
 				found = y.getName().equalsIgnoreCase(y2.getName());
-				empty = y.getName().equals("");
+				// empty = y.getName().equals("");
 			} else if (o.getClass().getName().toString().equals("ca.strangebrew.Fermentable")) {
 				Fermentable f = (Fermentable) list.get(i);
 				Fermentable f2 = (Fermentable) o;
 				found = f.getName().equalsIgnoreCase(f2.getName());
-				empty = f.getName().equals("");
+				// empty = f.getName().equals("");
 			} else if (o.getClass().getName().toString().equals("ca.strangebrew.Hop")) {
 				Hop h = (Hop) list.get(i);
 				Hop h2 = (Hop) o;
 				found = h.getName().equalsIgnoreCase(h2.getName());
-				empty = h.getName().equals("");
+				// empty = h.getName().equals("");
 			} else if (o.getClass().getName().toString().equals("ca.strangebrew.Style")) {
 				Style s = (Style) list.get(i);
 				Style s2 = (Style) o;
 				found = s.getName().equalsIgnoreCase(s2.getName());
-				empty = s.getName().equals("");
-				Debug.print("s="+s.name + "s2="+s2.name);
+				// empty = s.getName().equals("");				
 				
 			} else if (o.getClass().getName().toString().equals("java.lang.String")) {
 				String q = (String) list.get(i);
@@ -64,7 +62,7 @@ public class ComboModel extends AbstractListModel implements ComboBoxModel {
 		// otherwise, set the found index to the selected index
 		
 		if (!found) {
-			list.add(o);
+			list.add(o);			
 			selected = o;
 		}
 		

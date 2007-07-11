@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.47 2007/06/26 17:59:15 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.48 2007/07/11 14:49:15 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -782,8 +782,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 
 				}
 
-				cmbStyle.setToolTipText(SBStringUtils.multiLineToolTip(50, s
-						.getDescription()));
+				cmbStyle.setToolTipText(SBStringUtils.multiLineToolTip(50, s.getDescription()));
 
 			}
 		});
