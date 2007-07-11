@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.37 2007/06/26 17:59:15 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.38 2007/07/11 14:48:49 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -1035,7 +1035,7 @@ public class Recipe {
 		// tanh:
 		double tanhx = (Math.exp(x) - Math.exp(-x)) / (Math.exp(x) + Math.exp(-x));
 		utilization = 18.11 + (13.86 * tanhx / 18.27);
-		ga = sg < 1.050 ? 0.0 : 0.2;
+		ga = sg < 1.050 ? 0.0 : ((sg - 1.050) / 0.2);
 		ibu = amount * (utilization / 100) * (AA / 100.0) * 7490;
 		ibu /= size * (1 + ga);
 		return ibu;
