@@ -35,7 +35,7 @@ public class OpenImport {
 						return "beerxml";
 					if (c.indexOf("STRANGEBREWRECIPE") > -1)
 						return "sb";
-					if (c.indexOf("generator=\"qbrew\"") > -1)
+					if ((c.indexOf("generator=\"qbrew\"") > -1) || (c.indexOf("application=\"qbrew\"") > -1))
 						return "qbrew";
 					i++;
 				}

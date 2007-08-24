@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.48 2007/07/11 14:49:15 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.49 2007/08/24 19:41:16 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -131,7 +131,7 @@ import edu.stanford.ejalbert.exception.UnsupportedOperatingSystemException;
 public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener, WindowListener {
 
 
-	public String version = "2.0.0";
+	public String version = "2.0.1";
 	
 	public JTable hopsTable;
 	public JTable maltTable;

@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.16 2006/09/08 19:42:37 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.17 2007/08/24 19:41:16 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -105,8 +105,8 @@ public class XmlHandler extends DefaultHandler{
 					String s = attrs.getLocalName(i); // Attr name
 					if ("".equalsIgnoreCase(s))
 						s = attrs.getQName(i);
-					if (s.equalsIgnoreCase("generator")&& 
-							"qbrew".equalsIgnoreCase(attrs.getValue(i))){
+					if ((s.equalsIgnoreCase("generator") || s.equalsIgnoreCase("application"))
+							&& "qbrew".equalsIgnoreCase(attrs.getValue(i))){
 						importType = "QBREW";
 						r = new Recipe();
 						r.setAllowRecalcs(false);
