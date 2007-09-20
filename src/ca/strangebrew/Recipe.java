@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.38 2007/07/11 14:48:49 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.39 2007/09/20 19:45:19 solid54 Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -176,7 +176,10 @@ public class Recipe {
 		return bottleSize;
 	}
 	public double getBUGU() {
-		double bugu = getIbu() / ((getEstOg() - 1) * 1000);
+		double bugu = 0.0;
+		if ( getEstOg() != 1.0 ) { 
+		   bugu = getIbu() / ((getEstOg() - 1) * 1000);
+		}		
 		return bugu;
 	}
 	public String getBrewer() {
@@ -294,6 +297,9 @@ public class Recipe {
 	public Yeast getYeastObj() {
 		return yeast;
 	}
+	public boolean isDiluted() {
+		return diluted;
+	}
 
 	// water
 	private double getVolConverted(double val) {
@@ -363,6 +369,9 @@ public class Recipe {
 	}
 	public void setCreated(Date d) {
 		created.setTime(d);
+	}
+	public void setDiluted(Boolean b){
+		diluted = b;
 	}
 	public void setEvap(double e) {
 		evap = e;
@@ -1180,6 +1189,7 @@ public class Recipe {
 		sb.append("  <PRESIZE>" + preBoilVol.getValue() + "</PRESIZE>\n");
 		sb.append("  <SIZE>" + postBoilVol.getValue() + "</SIZE>\n");
 		sb.append("  <SIZE_UNITS>" + postBoilVol.getUnits() + "</SIZE_UNITS>\n");
+		sb.append("  <ADDED_VOLUME>" + dilution.getAddVol() + "</ADDED_VOLUME>\n");
 		sb.append("  <MALT_UNITS>" + maltUnits + "</MALT_UNITS>\n");
 		sb.append("  <HOPS_UNITS>" + hopUnits + "</HOPS_UNITS>\n");
 		sb.append("  <YEAST>" + yeast.getName() + "</YEAST>\n");
@@ -1371,10 +1381,18 @@ public class Recipe {
 		}
 
 		public double getDilSrm() {
-			return dilSrm;
+			if ( addVol.getValue() > 0 ) {
+			   return dilSrm;
+			} else { 
+				return srm;
+			}
 		}
 		public double getAddVol() {
-			return addVol.getValueAs(getVolUnits());
+			if ( addVol.getValue() > 0 ) {
+			   return addVol.getValueAs(getVolUnits());
+			} else { 
+				return 0;
+			}
 		}
 
 		public void setAddVol(double a) {
@@ -1386,7 +1404,11 @@ public class Recipe {
 		}
 
 		public double getDilAlc() {
-			return dilAlc;
+			if ( addVol.getValue() > 0 ) {
+			    return dilAlc;
+			} else {
+				return alcohol;
+			}
 		}
 
 		public void setDilAlc(double dilAlc) {
@@ -1394,7 +1416,11 @@ public class Recipe {
 		}
 
 		public double getDilIbu() {
-			return dilIbu;
+			if ( addVol.getValue() >  0 ) {
+		    	return dilIbu;
+			} else {
+				return ibu;
+			}
 		}
 
 		public void setDilIbu(double d) {
@@ -1404,7 +1430,11 @@ public class Recipe {
 		}
 
 		public double getDilOG() {
-			return dilOG;
+			if ( addVol.getValue() > 0 ) {
+			    return dilOG;
+			} else {
+				return estOg;
+			}
 		}
 
 		public void setDilOG(double d) {
@@ -1413,7 +1443,11 @@ public class Recipe {
 		}
 
 		public double getDilVol() {
-			return dilVol.getValueAs(getVolUnits());
+			if ( addVol.getValue() > 0 ) {
+			    return dilVol.getValueAs(getVolUnits());
+			} else { 
+				return postBoilVol.getValueAs(getVolUnits());
+			}
 		}
 
 		public void setDilVol(double d) {
