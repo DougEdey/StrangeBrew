@@ -1,5 +1,5 @@
 /*
- * $Id: DilutionPanel.java,v 1.7 2006/05/23 19:17:58 andrew_avis Exp $
+ * $Id: DilutionPanel.java,v 1.8 2007/09/20 19:32:58 solid54 Exp $
  * Created on June 4, 2005
  * Dilution panel to help you figure out the results of diluting
  * your wort with water post-boil.
@@ -94,10 +94,11 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 	
 	public void setData(Recipe r){
 		myRecipe = r;
-		// displayDilution();
+	    //displayDilution();
 	}
 	
 	public void displayDilution(){
+		dilutedCheckBox.setSelected(myRecipe.isDiluted());
 		postBoilText.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
 		diluteWithText.setValue(new Double(myRecipe.dilution.getAddVol()));
 		totalVolumeSpinner.setValue(new Double(myRecipe.dilution.getDilVol()));
@@ -141,6 +142,7 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 					dilutedCheckBox = new JCheckBox();
 					infoPanel.add(dilutedCheckBox);
 					dilutedCheckBox.setText("Dilute Recipe");
+					dilutedCheckBox.addChangeListener(this);
 				}
 				{
 					postBoilPanel = new JPanel();
@@ -355,6 +357,10 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 	public void stateChanged(ChangeEvent e) {
 		Object o = e.getSource();	
 		
+		if (o == dilutedCheckBox ) {
+			myRecipe.setDiluted(dilutedCheckBox.isSelected());
+			displayDilution();
+		}
 		if (o == diluteWithText){
 			myRecipe.dilution.setAddVol(Double.parseDouble(diluteWithText.getValue().toString()));
 			displayDilution();
