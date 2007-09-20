@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.17 2007/08/24 19:41:16 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.18 2007/09/20 19:48:18 solid54 Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -472,7 +472,13 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentElement.equalsIgnoreCase("SIZE_UNITS")) {
 				// also sets postboil:
 				r.setVolUnits(s);				
-			} else if (currentElement.equalsIgnoreCase("STYLE")) {
+			} else if (currentElement.equalsIgnoreCase("ADDED_VOLUME")) {
+				double d = Double.parseDouble(s);
+				if ( d != 0 ) {
+					r.setDiluted(true);
+					r.dilution.setAddVol(d);
+				}
+		    } else if (currentElement.equalsIgnoreCase("STYLE")) {
 				r.setStyle(s);
 			} else if (currentElement.equalsIgnoreCase("BOIL_TIME")) {
 				r.setBoilMinutes(Integer.parseInt(s));
