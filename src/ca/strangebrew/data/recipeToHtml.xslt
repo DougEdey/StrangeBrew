@@ -175,6 +175,32 @@
 				</tr>
 			</tbody>
 		</table>
+		<xsl:if test="ADDED_VOLUME &gt; 0">
+		  <table class="vertical">
+            <thead>
+               <tr>
+                   <th colspan="12">Dilution Details</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  
+                  <th><abbr title="Dilution Amount">Added Volume</abbr></th>
+                  <td><xsl:value-of select="format-number(ADDED_VOLUME, '##.#')"/> gallons</td>
+                  <th><abbr title="Final Volume">Final Volume</abbr></th>
+                  <td><xsl:value-of select="format-number((SIZE + ADDED_VOLUME), '##.#')"/> gallons</td>
+                  <th><abbr title="IBU After Dilution"/>IBU</th>
+                  <td><xsl:value-of select="format-number(IBU div ((SIZE + ADDED_VOLUME) div SIZE), '###.#')"/></td>
+                  <th><abbr title="OG After Dilution"/>OG</th>
+                  <td><xsl:value-of select="format-number(((OG - 1.0) div ((SIZE + ADDED_VOLUME) div SIZE))+1, '#.000')"/></td>
+                  <th><abbr title="Alcohol After Dilution"/>ABV</th>
+                  <td><xsl:value-of select="format-number(ALC div ((SIZE + ADDED_VOLUME) div SIZE), '##.#')"/><xsl:text> %</xsl:text></td>
+                  <th><abbr title="SRM After Dilution"/>SRM</th>
+                  <td><xsl:value-of select="format-number(LOV div ((SIZE + ADDED_VOLUME) div SIZE), '##.0')"/></td>
+               </tr>
+             </tbody>
+          </table>	
+       </xsl:if>	
 	</xsl:template>
 
 	<xsl:template match="NOTES">
@@ -266,11 +292,11 @@
 			</tr>
 		</xsl:for-each>
 
-	</xsl:template>
-
+	</xsl:template> 
 	<xsl:template match="STRANGEBREWRECIPE/MASH">
 		<xsl:variable name="tempUnits" select="MASH_TMP_U"/>
-		<table>
+		<xsl:if test="MASH &gt; 0">
+		  <table>
 			<thead>
 				<tr>
 					<th colspan="7">Mash Schedule</th>
@@ -309,7 +335,8 @@
 					</tr>
 				</xsl:for-each>
 			</tbody>
-		</table>
+		  </table>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:template match="MISC">
