@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.39 2007/09/20 19:45:19 solid54 Exp $
+ * $Id: Recipe.java,v 1.40 2007/09/22 02:16:48 solid54 Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -370,7 +370,7 @@ public class Recipe {
 	public void setCreated(Date d) {
 		created.setTime(d);
 	}
-	public void setDiluted(Boolean b){
+	public void setDiluted(boolean b){
 		diluted = b;
 	}
 	public void setEvap(double e) {
