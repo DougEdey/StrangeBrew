@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.40 2007/09/22 02:16:48 solid54 Exp $
+ * $Id: Recipe.java,v 1.41 2007/12/10 15:53:18 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -39,6 +39,7 @@ public class Recipe {
 
 	private String version;
 
+	private boolean isDirty = false;
 	public boolean allowRecalcs = true;
 	private double alcohol;
 	private double attenuation;
@@ -321,8 +322,17 @@ public class Recipe {
 	public double getFinalWortVol() {
 		return (getVolConverted(finalWortVolQTS));
 	}
+	
+	public boolean getDirty() {
+		return isDirty;
+	}
 
 	// Setters:
+	
+	// Set saved flag
+	public void setDirty(boolean d) {
+		isDirty = d;
+	}
 
 	/*
 	 * Turn off allowRecalcs when you are importing a recipe, so that
@@ -337,6 +347,7 @@ public class Recipe {
 		calcAlcohol(alcMethod);
 	}
 	public void setBoilMinutes(int b) {
+		isDirty = true;
 		boilMinutes = b;
 		double post = 0;
 		// JvH changing the boiltime, changes the post boil volume (NOT the pre
@@ -352,28 +363,36 @@ public class Recipe {
 		setPostBoil(post);
 	}
 	public void setBottleSize(double b) {
+		isDirty = true;
 		bottleSize = b;
 	}
 	public void setBottleU(String u) {
+		isDirty = true;
 		bottleU = u;
 	}
 	public void setBrewer(String b) {
+		isDirty = true;
 		brewer = b;
 	}
 	public void setComments(String c) {
+		isDirty = true;
 		comments = c;
 	}
 	public void setColourMethod(String c) {
+		isDirty = true;
 		colourMethod = c;
 		calcMaltTotals();
 	}
 	public void setCreated(Date d) {
+		isDirty = true;
 		created.setTime(d);
 	}
 	public void setDiluted(boolean b){
+		isDirty = true;
 		diluted = b;
 	}
 	public void setEvap(double e) {
+		isDirty = true;
 		evap = e;
 		double post = 0;
 		// JvH changing the evaporation, changes the post boil volume (NOT the
@@ -389,69 +408,87 @@ public class Recipe {
 		calcHopsTotals();
 	}
 	public void setEvapMethod(String e) {
+		isDirty = true;
 		evapMethod = e;
 		setEvap(getEvap());
 	}
 
 	public void setHopsUnits(String h) {
+		isDirty = true;
 		hopUnits = h;
 	}
 	public void setIBUMethod(String s) {
+		isDirty = true;
 		ibuCalcMethod = s;
 		calcHopsTotals();
 	}
 	public void setKettleLoss(double k) {
+		isDirty = true;
 		kettleLoss = k;
 		calcMaltTotals();
 	}
 	public void setMaltUnits(String m) {
+		isDirty = true;
 		maltUnits = m;
 	}
 	public void setMashed(boolean m) {
+		isDirty = true;
 		mashed = m;
 	}
 	public void setMashRatio(double m) {
+		isDirty = true;
 		mash.setMashRatio(m);
 	}
 	public void setMashRatioU(String u) {
+		isDirty = true;
 		mash.setMashRatioU(u);
 	}
 	public void setMiscLoss(double m) {
+		isDirty = true;
 		miscLoss = m;
 		calcMaltTotals();
 	}
 	public void setName(String n) {
+		isDirty = true;
 		name = n;
 	}
 
 	public void setOtherCost(double c) {
+		isDirty = true;
 		otherCost = c;
 	}
 
 	public void setPelletHopPct(double p) {
+		isDirty = true;
 		pelletHopPct = p;
 		calcHopsTotals();
 	}
 	public void setStyle(String s) {
+		isDirty = true;
 		style.setName(s);
 	}
 
 	public void setStyle(Style s) {
+		isDirty = true;
 		style = s;
 	}
 
 	public void setTrubLoss(double t) {
+		isDirty = true;
 		trubLoss = t;
 		calcMaltTotals();
 	}
 	public void setYeastName(String s) {
+		isDirty = true;
 		yeast.setName(s);
 	}
 
 	public void setYeast(Yeast y) {
+		isDirty = true;
 		yeast = y;
 	}
 	public void setVersion(String v) {
+		isDirty = true;
 		version = v;
 	}
 
@@ -498,29 +535,37 @@ public class Recipe {
 
 	// hop list set functions
 	public void setHopUnits(int i, String u) {
+		isDirty = true;
 		((Hop) hops.get(i)).setUnits(u);
 	}
 	public void setHopName(int i, String n) {
+		isDirty = true;
 		((Hop) hops.get(i)).setName(n);
 	}
 	public void setHopType(int i, String t) {
+		isDirty = true;
 		((Hop) hops.get(i)).setType(t);
 	}
 	public void setHopAdd(int i, String a) {
+		isDirty = true;
 		((Hop) hops.get(i)).setAdd(a);
 	}
 	public void setHopAlpha(int i, double a) {
+		isDirty = true;
 		((Hop) hops.get(i)).setAlpha(a);
 	}
 	public void setHopMinutes(int i, int m) {
+		isDirty = true;
 		// have to re-sort hops
 		((Hop) hops.get(i)).setMinutes(m);
 		Collections.sort(hops, new ingrComparator());
 	}
 	public void setHopCost(int i, String c) {
+		isDirty = true;
 		((Hop) hops.get(i)).setCost(c);
 	}
 	public void setHopAmount(int i, double a) {
+		isDirty = true;
 		((Hop) hops.get(i)).setAmount(a);
 	}
 
@@ -569,34 +614,44 @@ public class Recipe {
 	// fermentable set methods
 	public void setMaltName(int i, String n) {
 		// have to re-sort
+		isDirty = true;
 		((Fermentable) fermentables.get(i)).setName(n);
 		Collections.sort(fermentables, new ingrComparator());
 	}
 	public void setMaltUnits(int i, String u) {
+		isDirty = true;
 		((Fermentable) fermentables.get(i)).setUnits(u);
 	}
 	public void setMaltAmount(int i, double a) {
+		isDirty = true;
 		((Fermentable) fermentables.get(i)).setAmount(a);
 	}
 	public void setMaltAmountAs(int i, double a, String u) {
+		isDirty = true;
 		((Ingredient) fermentables.get(i)).setAmountAs(a, u);
 	}
 	public void setMaltPppg(int i, double p) {
+		isDirty = true;
 		((Fermentable) fermentables.get(i)).setPppg(p);
 	}
 	public void setMaltLov(int i, double l) {
+		isDirty = true;
 		((Fermentable) fermentables.get(i)).setLov(l);
 	}
 	public void setMaltCost(int i, String c) {
+		isDirty = true;
 		((Fermentable) fermentables.get(i)).setCost(c);
 	}
 	public void setMaltPercent(int i, double p) {
+		isDirty = true;
 		((Fermentable) fermentables.get(i)).setPercent(p);
 	}
 	public void setMaltSteep(int i, boolean c) {
+		isDirty = true;
 		((Fermentable) fermentables.get(i)).setSteep(c);
 	}
 	public void setMaltMashed(int i, boolean c) {
+		isDirty = true;
 		((Fermentable) fermentables.get(i)).setMashed(c);
 	}
 
@@ -611,6 +666,7 @@ public class Recipe {
 		return ((Misc) misc.get(i)).getName();
 	}
 	public void setMiscName(int i, String n) {
+		isDirty = true;
 		((Misc) misc.get(i)).setName(n);
 	}
 	public double getMiscAmount(int i) {
@@ -618,6 +674,7 @@ public class Recipe {
 		return m.getAmountAs(m.getUnits());
 	}
 	public void setMiscAmount(int i, double a) {
+		isDirty = true;
 		((Misc) misc.get(i)).setAmount(a);
 		calcMiscCost();
 	}
@@ -625,6 +682,7 @@ public class Recipe {
 		return ((Misc) misc.get(i)).getUnits();
 	}
 	public void setMiscUnits(int i, String u) {
+		isDirty = true;
 		((Misc) misc.get(i)).setUnits(u);
 		calcMiscCost();
 	}
@@ -632,6 +690,7 @@ public class Recipe {
 		return ((Misc) misc.get(i)).getCostPerU();
 	}
 	public void setMiscCost(int i, double c) {
+		isDirty = true;
 		((Misc) misc.get(i)).setCost(c);
 		calcMiscCost();
 	}
@@ -639,18 +698,21 @@ public class Recipe {
 		return ((Misc) misc.get(i)).getStage();
 	}
 	public void setMiscStage(int i, String s) {
+		isDirty = true;
 		((Misc) misc.get(i)).setStage(s);
 	}
 	public int getMiscTime(int i) {
 		return ((Misc) misc.get(i)).getTime();
 	}
 	public void setMiscTime(int i, int t) {
+		isDirty = true;
 		((Misc) misc.get(i)).setTime(t);
 	}
 	public String getMiscDescription(int i) {
 		return ((Misc) misc.get(i)).getDescription();
 	}
 	public void setMiscComments(int i, String c) {
+		isDirty = true;
 		((Misc) misc.get(i)).setComments(c);
 	}
 	public String getMiscComments(int i) {
@@ -665,24 +727,28 @@ public class Recipe {
 		return ((Note) notes.get(i)).getDate();
 	}
 	public void setNoteDate(int i, Date d) {
+		isDirty = true;
 		((Note) notes.get(i)).setDate(d);
 	}
 	public String getNoteType(int i) {
 		return ((Note) notes.get(i)).getType();
 	}
 	public void setNoteType(int i, String t) {
+		isDirty = true;
 		((Note) notes.get(i)).setType(t);
 	}
 	public String getNoteNote(int i) {
 		return ((Note) notes.get(i)).getNote();
 	}
 	public void setNoteNote(int i, String n) {
+		isDirty = true;
 		((Note) notes.get(i)).setNote(n);
 	}
 
 	// Setters that need to do extra work:
 
 	public void setVolUnits(String v) {
+		isDirty = true;
 		preBoilVol.setUnits(v);
 		postBoilVol.setUnits(v);
 		calcMaltTotals();
@@ -691,6 +757,7 @@ public class Recipe {
 	}
 
 	public void setEstFg(double f) {
+		isDirty = true;
 		if (f != estFg && f > 0) {
 			estFg = f;
 			attenuation = 100 - ((estFg - 1) / (estOg - 1) * 100);
@@ -699,6 +766,7 @@ public class Recipe {
 	}
 
 	public void setEstOg(double o) {
+		isDirty = true;
 		if (o != estOg && o > 0) {
 			estOg = o;
 			attenuation = 100 - ((estFg - 1) / (estOg - 1) * 100);
@@ -708,6 +776,7 @@ public class Recipe {
 	}
 
 	public void setEfficiency(double e) {
+		isDirty = true;
 		if (e != efficiency && e > 0) {
 			efficiency = e;
 			calcMaltTotals();
@@ -715,6 +784,7 @@ public class Recipe {
 	}
 
 	public void setAttenuation(double a) {
+		isDirty = true;
 		if (a != attenuation && a > 0) {
 			attenuation = a;
 			calcMaltTotals();
@@ -722,6 +792,7 @@ public class Recipe {
 
 	}
 	public void setPreBoil(double p) {
+		isDirty = true;
 		preBoilVol.setAmount(p);
 
 		double post = 0;
@@ -738,6 +809,7 @@ public class Recipe {
 	}
 
 	public void setPostBoil(double p) {
+		isDirty = true;
 		postBoilVol.setAmount(p);
 
 		double pre = 0;
@@ -758,6 +830,7 @@ public class Recipe {
 	}
 
 	public void setFinalWortVol(double p) {
+		isDirty = true;
 		// convert to QTS and set the final vol
 		finalWortVolQTS = Quantity.convertUnit(getVolUnits(), "qt", p);
 		// now add in all the losses, and set the post-boil to force
@@ -774,33 +847,39 @@ public class Recipe {
 	 * Functions that add/remove from ingredient lists
 	 */
 	public void addMalt(Fermentable m) {
+		isDirty = true;
 		fermentables.add(m);
 		Collections.sort(fermentables, new ingrComparator());
 		calcMaltTotals();
 	}
 	public void delMalt(int i) {
+		isDirty = true;
 		if (!fermentables.isEmpty() && i > -1) {
 			fermentables.remove(i);
 			calcMaltTotals();
 		}
 	}
 	public void addHop(Hop h) {
+		isDirty = true;
 		hops.add(h);
 		Collections.sort(hops, new ingrComparator());
 		calcHopsTotals();
 	}
 	public void delHop(int i) {
+		isDirty = true;
 		if (!hops.isEmpty() && i > -1) {
 			hops.remove(i);
 			calcHopsTotals();
 		}
 	}
 	public void addMisc(Misc m) {
+		isDirty = true;
 		misc.add(m);
 		calcMiscCost();
 	}
 
 	public void delMisc(int i) {
+		isDirty = true;
 		if (!misc.isEmpty() && i > -1) {
 			misc.remove(i);
 			calcMiscCost();
@@ -816,10 +895,12 @@ public class Recipe {
 	}
 
 	public void addNote(Note n) {
+		isDirty = true;
 		notes.add(n);
 	}
 
 	public void delNote(int i) {
+		isDirty = true;
 		if (!notes.isEmpty() && i > -1) {
 			notes.remove(i);
 		}
@@ -832,6 +913,7 @@ public class Recipe {
 	 * @param a
 	 */
 	public void setAmountAndUnits(String a) {
+		isDirty = true;
 		int i = a.indexOf(" ");
 		String d = a.substring(0, i);
 		String u = a.substring(i);

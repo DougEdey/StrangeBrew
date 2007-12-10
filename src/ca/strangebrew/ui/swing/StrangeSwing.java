@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.50 2007/12/10 14:54:10 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.51 2007/12/10 15:53:18 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -308,42 +308,42 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	}
 
 	
-public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor {
-	/**
-	 * 
-	 */
-
-	final JSpinner spinner = new JSpinner();
-
-	// Initializes the spinner.
-	public SpinnerEditor() {
-
-	}
-
-	public SpinnerEditor(SpinnerNumberModel model) {
-		spinner.setModel(model);
-	}
-
-	// Returns the spinners current value.
-	public Object getCellEditorValue() {
-		return spinner.getValue();
-	}
-
-	// Prepares the spinner component and returns it.
-	public Component getTableCellEditorComponent(JTable table, Object value,
-			boolean isSelected, int row, int column) {
-		spinner.setValue(value);
-		return spinner;
-	}
-
-	// Enables the editor only for double-clicks.
-	public boolean isCellEditable(EventObject evt) {
-		if (evt instanceof MouseEvent) {
-			return ((MouseEvent) evt).getClickCount() >= 2;
+	public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor {
+		/**
+		 * 
+		 */
+	
+		final JSpinner spinner = new JSpinner();
+	
+		// Initializes the spinner.
+		public SpinnerEditor() {
+	
 		}
-		return true;
+	
+		public SpinnerEditor(SpinnerNumberModel model) {
+			spinner.setModel(model);
+		}
+	
+		// Returns the spinners current value.
+		public Object getCellEditorValue() {
+			return spinner.getValue();
+		}
+	
+		// Prepares the spinner component and returns it.
+		public Component getTableCellEditorComponent(JTable table, Object value,
+				boolean isSelected, int row, int column) {
+			spinner.setValue(value);
+			return spinner;
+		}
+	
+		// Enables the editor only for double-clicks.
+		public boolean isCellEditable(EventObject evt) {
+			if (evt instanceof MouseEvent) {
+				return ((MouseEvent) evt).getClickCount() >= 2;
+			}
+			return true;
+		}
 	}
-}
 	
 	private class sbFileFilter extends FileFilter {
 
@@ -451,10 +451,8 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		myRecipe.setVersion(version);
 		currentFile = null;
 		attachRecipeData();
+		myRecipe.setDirty(false);
 		displayRecipe();
-		
-		
-
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -489,9 +487,6 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 			myRecipe.setBoilMinutes(Integer.parseInt(s));
 			displayRecipe();
 		}
-
-
-
 	}
 
 	public void attachRecipeData() {
@@ -601,6 +596,24 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		mashPanel.displayMash();
 		dilutionPanel.displayDilution();
 
+		// Setup title bar
+		String title = "StrangeBrew " + version;
+		String file = "";
+		String dirty = "";			
+		
+		if (currentFile != null) {
+			file = " - [" + currentFile.getAbsolutePath();
+		} else {
+			file = " - [<new>";
+		}
+
+		if (myRecipe.getDirty()) {
+			dirty = " *]";
+		} else {
+			dirty = "]";
+		}
+
+		this.setTitle(title + file + dirty);		
 	}
 
 	public void focusGained(FocusEvent e) {
@@ -648,22 +661,23 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 	public void windowClosing(WindowEvent e) {
 		// displayMessage("WindowListener method called: windowClosing.");
 
-		int choice = 1;
-
-		choice = JOptionPane.showConfirmDialog(null,
-				"Do you wish to save the current recipe?",
-				"Save Recipe?", JOptionPane.YES_NO_OPTION);
-
-		if (choice == 0)
-			saveAs();
+		if (myRecipe.getDirty()) {
+			int choice = 1;
+	
+			choice = JOptionPane.showConfirmDialog(null,
+					"Do you wish to save the current recipe?",
+					"Save Recipe?", JOptionPane.YES_NO_OPTION);
+	
+			if (choice == 0)
+				saveAs();
+		}
 		
 		// save the window size and location:
 		preferences.setIProperty("winHeight", this.getHeight());
 		preferences.setIProperty("winWidth", this.getWidth());
 		preferences.setIProperty("winX", this.getX());
 		preferences.setIProperty("winY", this.getY());
-		preferences.saveProperties();
-		
+		preferences.saveProperties();		
 	}
 
 	public void windowDeactivated(WindowEvent e) { }
@@ -917,6 +931,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		});
 
 	}
+	
 	private void initGUI() {
 		try {
 
@@ -928,7 +943,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 			imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/sb2.gif");
 			icon = new ImageIcon(imgURL);
 			this.setIconImage(icon.getImage());
-			this.setTitle("StrangeBrew " + version);
+			this.setTitle("StrangeBrew " + version + " - [<new>]");
 			this.addWindowListener(new WindowAdapter() {
 				public void windowClosed(WindowEvent evt) {
 					System.exit(1);
@@ -1794,8 +1809,8 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 								myRecipe.setVersion(version);
 								currentFile = null;
 								attachRecipeData();
+								myRecipe.setDirty(false);
 								displayRecipe();
-
 							}
 						});
 					}
@@ -1857,9 +1872,8 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 									checkIngredientsInDB();
 									attachRecipeData();
 									currentFile = file;
+									myRecipe.setDirty(false);
 									displayRecipe();
-									
-
 								} else {
 									Debug.print("Open command cancelled by user.\n");
 								}
@@ -2170,7 +2184,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 						});
 					}
 				}
-			}
+			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -2188,7 +2202,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 				out.close();										
 				Debug.print("Saved: " + file.getAbsoluteFile());
 				currentFile = file;
-
+				myRecipe.setDirty(false);
 
 			} catch (Exception e) {
 				showError(e);
@@ -2226,6 +2240,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 
 		displayRecipe();
 	}
+	
 	private void saveAs() {
 		// Show save dialog; this method does
 		// not return until the dialog is closed
@@ -2245,6 +2260,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 				out.write(myRecipe.toXML(null));
 				out.close();
 				currentFile = file;
+				myRecipe.setDirty(false);
 
 				displayRecipe();
 
