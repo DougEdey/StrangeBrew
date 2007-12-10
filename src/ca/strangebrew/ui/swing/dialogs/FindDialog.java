@@ -1,5 +1,5 @@
 /*
- * $Id: FindDialog.java,v 1.2 2006/06/21 20:13:01 andrew_avis Exp $ 
+ * $Id: FindDialog.java,v 1.3 2007/12/10 14:54:10 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis find recipe window class
  */
 
@@ -33,7 +33,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;

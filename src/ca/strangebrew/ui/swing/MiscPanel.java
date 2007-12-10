@@ -37,6 +37,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumn;
@@ -45,6 +46,7 @@ import javax.swing.table.TableColumnModel;
 import ca.strangebrew.Misc;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
+import ca.strangebrew.ui.swing.SBCellEditor;
 
 
 public class MiscPanel extends javax.swing.JPanel {
@@ -62,7 +64,8 @@ public class MiscPanel extends javax.swing.JPanel {
 	private MiscTableModel miscTableModel;
 	private ComboModel miscComboModel;
 	private int selectedRow; // the selected row of the table
-	
+	private SBCellEditor miscAmountEditor;
+	private SBCellEditor miscTimeEditor;	
 	
 	public MiscPanel(Recipe r) {		
 		super();
@@ -137,6 +140,11 @@ public class MiscPanel extends javax.swing.JPanel {
 							}
 						});
 						
+						// set up misc amount editor
+						miscAmountEditor = new SBCellEditor(new JTextField());								
+						miscColumn = miscTable.getColumnModel().getColumn(1);
+						miscColumn.setCellEditor(miscAmountEditor);								
+						
 						// set up stage combo
 						String [] stage = {"Mash", "Boil", "Primary", "Secondary",
 								"Bottle", "Keg"	};
@@ -144,6 +152,10 @@ public class MiscPanel extends javax.swing.JPanel {
 						miscColumn = miscTable.getColumnModel().getColumn(4);
 						miscColumn.setCellEditor(new DefaultCellEditor(stageComboBox));
 						
+						// set up misc time editor
+						miscTimeEditor = new SBCellEditor(new JTextField());								
+						miscColumn = miscTable.getColumnModel().getColumn(5);
+						miscColumn.setCellEditor(miscTimeEditor);								
 					}
 				}
 				{

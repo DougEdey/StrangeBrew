@@ -30,6 +30,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import ca.strangebrew.BrewCalcs;
+import ca.strangebrew.Hop;
 import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
@@ -128,10 +129,14 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private JTextField batchSizeTxt;
 	private JComboBox volUnitsCombo;
 	private JComboBox hopsUnitsCombo;
+	private JComboBox hopsTypeCombo;
 	private JComboBox maltUnitsCombo;
 	private ComboModel maltUnitsComboModel;
 	private ComboModel hopsUnitsComboModel;
+	private ComboModel hopsTypeComboModel;
 	private ComboModel volUnitsComboModel;
+	private JPanel miscPanel;
+	private JLabel hopsTypeLabel;
 	private JLabel jLabel26;
 	private JLabel jLabel25;
 	private JLabel jLabel24;
@@ -231,6 +236,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		hopsUnitsComboModel.addOrInsert(opts.getProperty("optHopsU"));
 		volUnitsComboModel.addOrInsert(opts.getProperty("optSizeU"));
 		boilTimeTxt.setText(opts.getProperty("optBoilTime"));
+		hopsTypeComboModel.addOrInsert(opts.getProperty("optHopsType"));
 		
 		// TODO: convert boiltempF if c is selected
 		boilTempTxt.setText(opts.getProperty("optBoilTempF"));
@@ -339,6 +345,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		opts.setProperty("optHopsU", hopsUnitsComboModel.getSelectedItem().toString());
 		opts.setProperty("optSizeU", volUnitsComboModel.getSelectedItem().toString());
 		opts.setProperty("optBoilTime", boilTimeTxt.getText());
+		opts.setProperty("optHopsType", hopsTypeComboModel.getSelectedItem().toString());
 		
 		opts.setProperty("optMashVolU", mashVolComboModel.getSelectedItem().toString());
 		
@@ -697,15 +704,6 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				pnlDatabase.setVisible(false);
 			}
 
-			newRecipePanel = new JPanel();
-			GridBagLayout newRecipePanelLayout = new GridBagLayout();
-			newRecipePanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1};
-			newRecipePanelLayout.rowHeights = new int[] {7, 7, 7};
-			newRecipePanelLayout.columnWeights = new double[] {0.1, 0.1};
-			newRecipePanelLayout.columnWidths = new int[] {7, 7};
-			newRecipePanel.setLayout(newRecipePanelLayout);
-			jTabbedPane1.addTab("New Recipe Defaults", null, newRecipePanel, null);
-
 			appearancePanel = new JPanel();
 			BorderLayout appearancePanelLayout = new BorderLayout();
 			appearancePanel.setLayout(appearancePanelLayout);
@@ -838,6 +836,25 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			colourPanel.add(jLabel23, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel23.setText("Alpha:");
 
+			newRecipePanel = new JPanel();
+			GridBagLayout newRecipePanelLayout = new GridBagLayout();
+			newRecipePanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1};
+			newRecipePanelLayout.rowHeights = new int[] {7, 7, 7};
+			newRecipePanelLayout.columnWeights = new double[] {0.1, 0.1};
+			newRecipePanelLayout.columnWidths = new int[] {7, 7};
+			newRecipePanel.setLayout(newRecipePanelLayout);
+			jTabbedPane1.addTab("New Recipe Defaults", null, newRecipePanel, null);		
+			
+			miscPanel = new JPanel();
+			GridBagLayout miscPanelLayout = new GridBagLayout();
+			miscPanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1};
+			miscPanelLayout.rowHeights = new int[] {7, 7, 7, 7};
+			miscPanelLayout.columnWeights = new double[] {0.1, 0.1, 0.1, 0.1};
+			miscPanelLayout.columnWidths = new int[] {7, 7, 7, 7};
+			miscPanel.setLayout(miscPanelLayout);
+			newRecipePanel.add(miscPanel, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+			miscPanel.setBorder(BorderFactory.createTitledBorder("Misc"));
+
 			mashPanel = new JPanel();
 			GridBagLayout mashPanelLayout = new GridBagLayout();
 			mashPanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1};
@@ -969,6 +986,18 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			mashPanel.add(mashRatioUCombo, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			mashRatioUCombo.setModel(mashRatioUComboModel);
 			mashRatioUCombo.setPreferredSize(new java.awt.Dimension(71, 20));
+			
+			hopsTypeLabel = new JLabel();
+			miscPanel.add(hopsTypeLabel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			hopsTypeLabel.setText("Hop Type:");
+
+			hopsTypeCombo = new JComboBox();
+			hopsTypeComboModel = new ComboModel();
+			hopsTypeComboModel.setList(Hop.getHopTypes());
+			hopsTypeCombo.setModel(hopsTypeComboModel);
+			miscPanel.add(hopsTypeCombo, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+			hopsTypeCombo.setModel(hopsTypeComboModel);
+			hopsTypeCombo.setPreferredSize(new java.awt.Dimension(137, 20));
 
 		}
 		getContentPane().add(BorderLayout.CENTER, jTabbedPane1);

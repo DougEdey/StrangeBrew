@@ -336,7 +336,7 @@ public class CSVReader
       int state = SEEKING_START; /* start seeking, even if partway through a line */
       /* don't need to maintain state between fields. */
 
-      lineLoop:
+      //lineLoop:
       while ( true )
          {
 

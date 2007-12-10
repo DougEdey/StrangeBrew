@@ -96,4 +96,10 @@ public class ComboModel extends AbstractListModel implements ComboBoxModel {
 	public void setList(ArrayList l) {
 		list = l;
 	}
+	
+	public void setList(String[] sList) {
+		for (int i=0; i<sList.length; i++) {
+			list.add(sList[i]);
+		}
+	}
 }

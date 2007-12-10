@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.49 2007/08/24 19:41:16 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.50 2007/12/10 14:54:10 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -143,7 +143,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private DefaultComboBoxModel alcMethodComboModel;
 	private JLabel alcMethodLabel;
 	private JPanel alcMethodPanel;
-	private SBCellEditor amountEditor;
+	private SBCellEditor maltAmountEditor;
+	private SBCellEditor hopAmountEditor;
+	private SBCellEditor hopTimeEditor;
+	private SBCellEditor hopAcidEditor;
 	private JTextField boilMinText;
 	private JLabel boilTimeLable;
 	private JTextField brewerNameText;
@@ -1486,9 +1489,9 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 								maltColumn.setCellEditor(new DefaultCellEditor(maltComboBox));
 								
 								// set up malt amount editor
-								amountEditor = new SBCellEditor(new JTextField());								
+								maltAmountEditor = new SBCellEditor(new JTextField());								
 								maltColumn = maltTable.getColumnModel().getColumn(3);
-								maltColumn.setCellEditor(amountEditor);
+								maltColumn.setCellEditor(maltAmountEditor);
 
 								// set up malt units combo
 								maltUnitsComboBox = new JComboBox();
@@ -1638,8 +1641,17 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 								cmbHopsModel = new ComboModel();
 								hopComboBox.setModel(cmbHopsModel);
 								hopColumn.setCellEditor(new DefaultCellEditor(hopComboBox));
-
-
+								
+								// set up hop alpha acid editor
+								hopAcidEditor = new SBCellEditor(new JTextField());								
+								hopColumn = hopsTable.getColumnModel().getColumn(2);
+								hopColumn.setCellEditor(hopAcidEditor);
+								
+								// set up hop amount editor
+								hopAmountEditor = new SBCellEditor(new JTextField());								
+								hopColumn = hopsTable.getColumnModel().getColumn(3);
+								hopColumn.setCellEditor(hopAmountEditor);
+								
 								// set up hop units combo
 								hopsUnitsComboBox = new JComboBox();
 								cmbHopsUnitsModel = new ComboModel();
@@ -1649,10 +1661,10 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 
 
 								// set up hop type combo
-								String[] forms = {"Leaf", "Pellet", "Plug"};
+								String[] forms = Hop.getHopTypes();
 								JComboBox hopsFormComboBox = new JComboBox(forms);
 								hopColumn = hopsTable.getColumnModel().getColumn(1);
-								hopColumn.setCellEditor(new DefaultCellEditor(hopsFormComboBox));
+								hopColumn.setCellEditor(new DefaultCellEditor(hopsFormComboBox));								
 
 								//								 set up hop add combo
 								String[] add = {"Boil", "FWH", "Dry", "Mash"};
@@ -1660,6 +1672,10 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 								hopColumn = hopsTable.getColumnModel().getColumn(5);
 								hopColumn.setCellEditor(new DefaultCellEditor(hopsAddComboBox));
 
+								// set up hop amount editor
+								hopTimeEditor = new SBCellEditor(new JTextField());								
+								hopColumn = hopsTable.getColumnModel().getColumn(6);
+								hopColumn.setCellEditor(hopTimeEditor);								
 							}
 						}
 					}
@@ -1683,7 +1699,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 								btnAddHop.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
 										if (myRecipe != null) {
-											Hop h = new Hop(myRecipe.getHopUnits());
+											Hop h = new Hop(myRecipe.getHopUnits(), preferences.getProperty("optHopsType"));
 											myRecipe.addHop(h);
 											hopsTable.updateUI();
 											displayRecipe();
@@ -2295,21 +2311,7 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 		}
 		
 	}
-	
-	private class SBCellEditor extends DefaultCellEditor {
-		
-		public SBCellEditor(final JTextField textField) {
-		    super(textField);
-		    super.clickCountToStart = 1;
-		  } 
-		 public boolean shouldSelectCell(EventObject anEvent) {
-		        return true;
-
-		} 
-	}
-	
-
-    
+	   
     // This key selection manager will handle selections based on multiple keys.
     private class SBKeySelectionManager implements JComboBox.KeySelectionManager {
         long lastKeyTime = 0;

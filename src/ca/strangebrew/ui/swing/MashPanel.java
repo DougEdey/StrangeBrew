@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.18 2006/09/08 19:42:45 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.19 2007/12/10 14:54:10 jimcdiver Exp $
  *  @author aavis 
  */
 
@@ -91,6 +91,12 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	private ButtonGroup tempBg;
 	private JPanel settingsPanel;
 	private JPanel tablePanel;
+	
+	private SBCellEditor sTempEditor;								
+	private SBCellEditor eTempEditor;								
+	private SBCellEditor rampEditor;								
+	private SBCellEditor stepEditor;								
+	private SBCellEditor weightEditor;								
 
 	private Recipe myRecipe;
 	private MashTableModel mashModel;
@@ -178,6 +184,26 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 						JComboBox methodComboBox = new JComboBox(methods);
 						mashColumn = tblMash.getColumnModel().getColumn(1);
 						mashColumn.setCellEditor(new DefaultCellEditor(methodComboBox));
+						
+						sTempEditor = new SBCellEditor(new JTextField());								
+						mashColumn = tblMash.getColumnModel().getColumn(2);
+						mashColumn.setCellEditor(sTempEditor);
+								
+						eTempEditor = new SBCellEditor(new JTextField());								
+						mashColumn = tblMash.getColumnModel().getColumn(3);
+						mashColumn.setCellEditor(eTempEditor);
+								
+						rampEditor = new SBCellEditor(new JTextField());								
+						mashColumn = tblMash.getColumnModel().getColumn(4);
+						mashColumn.setCellEditor(rampEditor);
+								
+						stepEditor = new SBCellEditor(new JTextField());								
+						mashColumn = tblMash.getColumnModel().getColumn(5);
+						mashColumn.setCellEditor(stepEditor);
+								
+						weightEditor = new SBCellEditor(new JTextField());								
+						mashColumn = tblMash.getColumnModel().getColumn(6);
+						mashColumn.setCellEditor(weightEditor);
 					}
 				}
 			}

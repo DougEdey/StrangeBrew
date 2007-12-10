@@ -1,5 +1,5 @@
 /**
- * $Id: Hop.java,v 1.8 2006/06/01 20:46:53 andrew_avis Exp $
+ * $Id: Hop.java,v 1.9 2007/12/10 14:54:10 jimcdiver Exp $
  * Created on Oct 5, 2004
  *
  * Base class for hops.  This object doesn't do much except hold data and
@@ -16,6 +16,9 @@ public class Hop extends Ingredient{
 	private double storage;
 	private double IBU;
 
+	// Hops should know about hop types
+	private static String[] forms = {"Leaf", "Pellet", "Plug"};
+	
 	// Constructors:
 	
 	public Hop(){
@@ -25,10 +28,14 @@ public class Hop extends Ingredient{
 		setUnits("oz");
 	}
 	
-	public Hop(String u){
+	public Hop(String u, String t){
 		setUnits(u);
-		setType("Leaf");
+		setType(t);
 		setAdd("Boil");
+	}
+	
+	public static String[] getHopTypes() {
+		return forms;
 	}
 	
 	// get methods:

@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.14 2006/06/21 20:13:02 andrew_avis Exp $
+ * $Id: Options.java,v 1.15 2007/12/10 14:54:10 jimcdiver Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -51,6 +51,7 @@ public class Options {
 			{"optPostBoilVol", "5"},
 			{"optPreBoilVol", "6"},
 			{"optMash", "true"},
+			{"optHopsType", "Leaf"},
 
 			// carbonation:
 			{"optPrimingSugar", "dextrose"},
@@ -156,7 +157,7 @@ public class Options {
 			if (inputFile.exists()){			
 				props.load(new FileInputStream(inputFile));
 				Debug.print(type + ".ini file read: " + inputFile.getAbsolutePath() +". Contents:");
-
+				Debug.print(props.toString());
 			}
 			
 		}
