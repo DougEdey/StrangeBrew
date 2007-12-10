@@ -93,6 +93,17 @@ NOTE: At least one person has experienced problems running StrangeBrew on Fedora
 using their 1.4.2 JRE, which is the GNU gcj.  The problem was solved by usin the
 1.5 JRE from Sun.  
 
+For Ubuntu:
+Install Sun's JRE:
+	$ sudo apt-get install sun-java6-jre
+Update default system JVM:
+	$ sudo update-alternatives --config java
+  Select java-6 from the list
+	$ sudo update-alternatives --config jar
+  Select java-6 from the list
+
+See https://help.ubuntu.com/community/Java for more help with Ubuntu.
+
 =========================
 Setting the Look and Feel
 =========================
