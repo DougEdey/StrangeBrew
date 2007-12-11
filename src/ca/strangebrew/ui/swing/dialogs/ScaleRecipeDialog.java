@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.ui.swing.ComboModel;
+import ca.strangebrew.ui.swing.SmartComboBox;
 import ca.strangebrew.ui.swing.StrangeSwing;
 
 public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionListener {
@@ -82,6 +83,7 @@ public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionList
 					new Insets(0, 0, 0, 0), 0, 0));
 
 			sizeUnitsCombo = new JComboBox();
+			SmartComboBox.enable(sizeUnitsCombo);
 			jPanel1.add(sizeUnitsCombo, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
 					0));
@@ -128,6 +130,7 @@ public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionList
 			
 
 			maltUnitsCombo = new JComboBox();
+			SmartComboBox.enable(maltUnitsCombo);
 			jPanel4.add(maltUnitsCombo, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
 					0));
@@ -139,6 +142,7 @@ public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionList
 			hopsUnitsComboModel.addOrInsert(myRecipe.getHopUnits());
 
 			hopsUnitsCombo = new JComboBox();
+			SmartComboBox.enable(hopsUnitsCombo);
 			jPanel4.add(hopsUnitsCombo, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
 					0));

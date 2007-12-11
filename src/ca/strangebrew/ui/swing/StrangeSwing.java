@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.51 2007/12/10 15:53:18 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.52 2007/12/11 22:18:59 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -36,7 +36,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -59,9 +58,7 @@ import java.util.EventObject;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ComboBoxEditor;
 import javax.swing.ComboBoxModel;
-import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -1093,7 +1090,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							cmbStyleModel = new ComboModel();
 							cmbStyle = new JComboBox();
 							// Install the custom key selection manager
-							cmbStyle.setKeySelectionManager(new SBKeySelectionManager());
+							SmartComboBox.enable(cmbStyle);
 							
 							pnlDetails.add(cmbStyle, new GridBagConstraints(1, 2, 5, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
@@ -1253,7 +1250,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							cmbYeastModel = new ComboModel();
 							cmbYeast = new JComboBox();
 							// Install the custom key selection manager
-							cmbYeast.setKeySelectionManager(new SBKeySelectionManager());
+							SmartComboBox.enable(cmbYeast);
 							pnlDetails.add(cmbYeast, new GridBagConstraints(1, 3, 5, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
@@ -1264,6 +1261,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						{
 							cmbSizeUnitsModel = new ComboModel();
 							cmbSizeUnits = new JComboBox();
+							SmartComboBox.enable(cmbSizeUnits);							
 							pnlDetails.add(cmbSizeUnits, new GridBagConstraints(2, 4, 2, 1, 0.0,
 									0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
@@ -1310,7 +1308,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						}
 						{
 							alcMethodComboModel = new DefaultComboBoxModel(new String[]{"Volume", "Weight"});
-							alcMethodCombo = new JComboBox(alcMethodComboModel);							
+							alcMethodCombo = new JComboBox(alcMethodComboModel);	
+							SmartComboBox.enable(alcMethodCombo);
 							pnlDetails.add(alcMethodCombo, new GridBagConstraints(9, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 							alcMethodCombo.setPreferredSize(new java.awt.Dimension(71, 20));
 
@@ -1319,7 +1318,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							ibuMethodComboModel = new DefaultComboBoxModel(new String[]{"Tinseth", "Garetz",
 							"Rager"});
 							ibuMethodCombo = new JComboBox(ibuMethodComboModel);
-
+							SmartComboBox.enable(ibuMethodCombo);
 							pnlDetails.add(ibuMethodCombo, new GridBagConstraints(9, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 							ibuMethodCombo.setPreferredSize(new java.awt.Dimension(72, 20));
 
@@ -1327,6 +1326,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						{
 							colourMethodComboModel = new DefaultComboBoxModel(new String[]{"SRM", "EBC"});
 							colourMethodCombo = new JComboBox(colourMethodComboModel);
+							SmartComboBox.enable(colourMethodCombo);
 							pnlDetails.add(colourMethodCombo, new GridBagConstraints(9, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 							colourMethodCombo.setPreferredSize(new java.awt.Dimension(52, 20));
 
@@ -1411,6 +1411,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						}
 
 						evapMethodCombo = new JComboBox();
+						SmartComboBox.enable(evapMethodCombo);
 						pnlDetails.add(evapMethodCombo, new GridBagConstraints(6, 5, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 						evapMethodCombo.setModel(evapMethodComboModel);
 						evapMethodCombo.setPreferredSize(new java.awt.Dimension(64, 20));
@@ -1491,17 +1492,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 								// set up malt list combo
 								maltComboBox = new JComboBox();	
-								ComboBoxEditor editor = maltComboBox.getEditor();
-								editor.getEditorComponent().addKeyListener(new KeyAdapter(){
-								        public void keyPressed(KeyEvent evt){
-								        	// TODO: handle keypress
-								        }
-
-								}); 
-
+								SmartComboBox.enable(maltComboBox);
 								cmbMaltModel = new ComboModel();
 								maltComboBox.setModel(cmbMaltModel);
-								maltColumn.setCellEditor(new DefaultCellEditor(maltComboBox));
+								maltColumn.setCellEditor(new SBComboBoxCellEditor(maltComboBox));
 								
 								// set up malt amount editor
 								maltAmountEditor = new SBCellEditor(new JTextField());								
@@ -1510,10 +1504,11 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 								// set up malt units combo
 								maltUnitsComboBox = new JComboBox();
+								SmartComboBox.enable(maltUnitsComboBox);
 								cmbMaltUnitsModel = new ComboModel();
 								maltUnitsComboBox.setModel(cmbMaltUnitsModel);
 								maltColumn = maltTable.getColumnModel().getColumn(4);
-								maltColumn.setCellEditor(new DefaultCellEditor(maltUnitsComboBox));
+								maltColumn.setCellEditor(new SBComboBoxCellEditor(maltUnitsComboBox));
 
 
 
@@ -1531,11 +1526,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							
 							// set up the units combobox
 							maltTotalUnitsComboBox = new JComboBox();
+							SmartComboBox.enable(maltTotalUnitsComboBox);
 							maltTotalUnitsComboModel = new ComboModel();
 							maltTotalUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
 							maltTotalUnitsComboBox.setModel(maltTotalUnitsComboModel);
 							TableColumn t = tblMaltTotals.getColumnModel().getColumn(4);
-							t.setCellEditor(new DefaultCellEditor(maltTotalUnitsComboBox));
+							t.setCellEditor(new SBComboBoxCellEditor(maltTotalUnitsComboBox));
 							maltTotalUnitsComboBox.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									String u = (String) maltTotalUnitsComboModel.getSelectedItem();				
@@ -1614,11 +1610,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							
 							// set up the units combobox
 							hopsTotalUnitsComboBox = new JComboBox();
+							SmartComboBox.enable(hopsTotalUnitsComboBox);
 							hopsTotalUnitsComboModel = new ComboModel();
 							hopsTotalUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
 							hopsTotalUnitsComboBox.setModel(hopsTotalUnitsComboModel);
 							TableColumn t = tblHopsTotals.getColumnModel().getColumn(4);
-							t.setCellEditor(new DefaultCellEditor(hopsTotalUnitsComboBox));
+							t.setCellEditor(new SBComboBoxCellEditor(hopsTotalUnitsComboBox));
 							hopsTotalUnitsComboBox.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									String u = (String) hopsTotalUnitsComboModel.getSelectedItem();				
@@ -1652,10 +1649,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								TableColumn hopColumn = hopsTable.getColumnModel().getColumn(0);
 								hopComboBox = new JComboBox();
 								// Install the custom key selection manager
-								hopComboBox.setKeySelectionManager(new SBKeySelectionManager());
+								SmartComboBox.enable(hopComboBox);
 								cmbHopsModel = new ComboModel();
 								hopComboBox.setModel(cmbHopsModel);
-								hopColumn.setCellEditor(new DefaultCellEditor(hopComboBox));
+								hopColumn.setCellEditor(new SBComboBoxCellEditor(hopComboBox));
 								
 								// set up hop alpha acid editor
 								hopAcidEditor = new SBCellEditor(new JTextField());								
@@ -1669,23 +1666,26 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								
 								// set up hop units combo
 								hopsUnitsComboBox = new JComboBox();
+								SmartComboBox.enable(hopsUnitsComboBox);
 								cmbHopsUnitsModel = new ComboModel();
 								hopsUnitsComboBox.setModel(cmbHopsUnitsModel);
 								hopColumn = hopsTable.getColumnModel().getColumn(4);
-								hopColumn.setCellEditor(new DefaultCellEditor(hopsUnitsComboBox));
+								hopColumn.setCellEditor(new SBComboBoxCellEditor(hopsUnitsComboBox));
 
 
 								// set up hop type combo
 								String[] forms = Hop.getHopTypes();
 								JComboBox hopsFormComboBox = new JComboBox(forms);
+								SmartComboBox.enable(hopsFormComboBox);
 								hopColumn = hopsTable.getColumnModel().getColumn(1);
-								hopColumn.setCellEditor(new DefaultCellEditor(hopsFormComboBox));								
+								hopColumn.setCellEditor(new SBComboBoxCellEditor(hopsFormComboBox));								
 
 								//								 set up hop add combo
 								String[] add = {"Boil", "FWH", "Dry", "Mash"};
 								JComboBox hopsAddComboBox = new JComboBox(add);
+								SmartComboBox.enable(hopsAddComboBox);
 								hopColumn = hopsTable.getColumnModel().getColumn(5);
-								hopColumn.setCellEditor(new DefaultCellEditor(hopsAddComboBox));
+								hopColumn.setCellEditor(new SBComboBoxCellEditor(hopsAddComboBox));
 
 								// set up hop amount editor
 								hopTimeEditor = new SBCellEditor(new JTextField());								
@@ -2327,57 +2327,4 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		}
 		
 	}
-	   
-    // This key selection manager will handle selections based on multiple keys.
-    private class SBKeySelectionManager implements JComboBox.KeySelectionManager {
-        long lastKeyTime = 0;
-        String pattern = "";
-    
-        public int selectionForKey(char aKey, ComboBoxModel model) {
-            // Find index of selected item
-            int selIx = 01;
-            Object sel = model.getSelectedItem();
-            if (sel != null) {
-                for (int i=0; i<model.getSize(); i++) {
-                    if (sel.equals(model.getElementAt(i))) {
-                        selIx = i;
-                        break;
-                    }
-                }
-            }
-    
-            // Get the current time
-            long curTime = System.currentTimeMillis();
-    
-            // If last key was typed less than 300 ms ago, append to current pattern
-            if (curTime - lastKeyTime < 300) {
-                pattern += ("" + aKey).toLowerCase();
-            } else {
-                pattern = ("" + aKey).toLowerCase();
-            }
-    
-            // Save current time
-            lastKeyTime = curTime;
-    
-            // Search forward from current selection
-            for (int i=selIx+1; i<model.getSize(); i++) {
-                String s = model.getElementAt(i).toString().toLowerCase();
-                if (s.startsWith(pattern)) {
-                    return i;
-                }
-            }
-    
-            // Search from top to current selection
-            for (int i=0; i<selIx ; i++) {
-                if (model.getElementAt(i) != null) {
-                    String s = model.getElementAt(i).toString().toLowerCase();
-                    if (s.startsWith(pattern)) {
-                        return i;
-                    }
-                }
-            }
-            return -1;
-        }
-    }
-
 }

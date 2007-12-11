@@ -26,6 +26,7 @@ import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.ui.swing.ComboModel;
+import ca.strangebrew.ui.swing.SmartComboBox;
 import ca.strangebrew.ui.swing.StrangeSwing;
 
 
@@ -175,6 +176,7 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 		weightUComboModel.addOrInsert(myRecipe.getMaltUnits());
 
 		weightUCombo = new JComboBox();
+		SmartComboBox.enable(weightUCombo);
 		jPanel4.add(weightUCombo, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		weightUCombo.setModel(weightUComboModel);
 

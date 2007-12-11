@@ -33,7 +33,6 @@ import java.util.Date;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -101,8 +100,9 @@ public class NotesPanel extends javax.swing.JPanel {
 						String[] types = {"Planning", "Brewed", "Fermentation", "Racked", "Conditioned", "Kegged",
 								"Bottled", "Tasting", "Contest"};
 						JComboBox typeComboBox = new JComboBox(types);
+						SmartComboBox.enable(typeComboBox);
 						TableColumn noteColumn = notesTable.getColumnModel().getColumn(1);
-						noteColumn.setCellEditor(new DefaultCellEditor(typeComboBox));				
+						noteColumn.setCellEditor(new SBComboBoxCellEditor(typeComboBox));				
 
 						// set up the date picker
 						DateEditor dateEditor = new DateEditor();						

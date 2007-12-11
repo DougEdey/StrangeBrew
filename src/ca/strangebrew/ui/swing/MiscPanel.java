@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -46,7 +45,6 @@ import javax.swing.table.TableColumnModel;
 import ca.strangebrew.Misc;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
-import ca.strangebrew.ui.swing.SBCellEditor;
 
 
 public class MiscPanel extends javax.swing.JPanel {
@@ -122,10 +120,11 @@ public class MiscPanel extends javax.swing.JPanel {
 	
 						// set up name combo
 						JComboBox miscComboBox = new JComboBox();
+						SmartComboBox.enable(miscComboBox);
 						miscComboModel = new ComboModel();
 						miscComboBox.setModel(miscComboModel);
 						TableColumn miscColumn = miscTable.getColumnModel().getColumn(0);
-						miscColumn.setCellEditor(new DefaultCellEditor(miscComboBox));
+						miscColumn.setCellEditor(new SBComboBoxCellEditor(miscComboBox));
 						miscComboBox.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
 								Misc m = (Misc) miscComboModel.getSelectedItem();
@@ -148,9 +147,10 @@ public class MiscPanel extends javax.swing.JPanel {
 						// set up stage combo
 						String [] stage = {"Mash", "Boil", "Primary", "Secondary",
 								"Bottle", "Keg"	};
-						JComboBox stageComboBox = new JComboBox(stage);						
+						JComboBox stageComboBox = new JComboBox(stage);	
+						SmartComboBox.enable(stageComboBox);
 						miscColumn = miscTable.getColumnModel().getColumn(4);
-						miscColumn.setCellEditor(new DefaultCellEditor(stageComboBox));
+						miscColumn.setCellEditor(new SBComboBoxCellEditor(stageComboBox));
 						
 						// set up misc time editor
 						miscTimeEditor = new SBCellEditor(new JTextField());								

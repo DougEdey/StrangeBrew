@@ -35,6 +35,7 @@ import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.ui.swing.ComboModel;
+import ca.strangebrew.ui.swing.SmartComboBox;
 import ca.strangebrew.ui.swing.StrangeSwing;
 
 /**
@@ -615,6 +616,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					}
 					{
 						cmbBottleSize = new JComboBox();
+						SmartComboBox.enable(cmbBottleSize);
 						cmbBottleSizeModel = new ComboModel();
 						cmbBottleSizeModel.setList(new Quantity().getListofUnits("vol"));
 						cmbBottleSize.setModel(cmbBottleSizeModel);
@@ -880,6 +882,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			jLabel19.setText("Malt Units:");
 
 			maltUnitsCombo = new JComboBox();
+			SmartComboBox.enable(maltUnitsCombo);
 			jPanel1.add(maltUnitsCombo, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			maltUnitsComboModel = new ComboModel();
 			maltUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
@@ -890,6 +893,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			jLabel24.setText("Hops Units:");
 
 			hopsUnitsCombo = new JComboBox();
+			SmartComboBox.enable(hopsUnitsCombo);
 			jPanel1.add(hopsUnitsCombo, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			hopsUnitsComboModel = new ComboModel();
 			hopsUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
@@ -900,6 +904,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			jLabel25.setText("Vol Units:");
 
 			volUnitsCombo = new JComboBox();
+			SmartComboBox.enable(volUnitsCombo);
 			volUnitsCombo.addActionListener(new ActionListener() {
 				public void actionPerformed (ActionEvent e){
 					setEvapLable();
@@ -966,6 +971,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			mashVolComboModel.setList(new Quantity().getListofUnits("vol"));
 
 			mashVolCombo = new JComboBox();
+			SmartComboBox.enable(mashVolCombo);
 			mashPanel.add(mashVolCombo, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			mashVolCombo.setModel(mashVolComboModel);
 			mashVolCombo.setPreferredSize(new java.awt.Dimension(137, 20));
@@ -983,6 +989,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					"qt/l", "l/kg" });
 
 			mashRatioUCombo = new JComboBox();
+			SmartComboBox.enable(mashRatioUCombo);
 			mashPanel.add(mashRatioUCombo, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			mashRatioUCombo.setModel(mashRatioUComboModel);
 			mashRatioUCombo.setPreferredSize(new java.awt.Dimension(71, 20));
@@ -992,6 +999,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			hopsTypeLabel.setText("Hop Type:");
 
 			hopsTypeCombo = new JComboBox();
+			SmartComboBox.enable(hopsTypeCombo);
 			hopsTypeComboModel = new ComboModel();
 			hopsTypeComboModel.setList(Hop.getHopTypes());
 			hopsTypeCombo.setModel(hopsTypeComboModel);

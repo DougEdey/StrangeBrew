@@ -207,6 +207,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 			{
 				cmbStyleModel = new ComboModel();
 				cmbStyle = new JComboBox();
+				SmartComboBox.enable(cmbStyle);
 				this.add(cmbStyle, new GridBagConstraints(1, 2, 5, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0,
 								0, 0), 0, 0));
@@ -373,6 +374,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 			{
 				cmbYeastModel = new ComboModel();
 				cmbYeast = new JComboBox();
+				SmartComboBox.enable(cmbYeast);
 				this.add(cmbYeast, new GridBagConstraints(1, 3, 5, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0,
 								0, 0), 0, 0));
@@ -392,6 +394,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 			{
 				cmbSizeUnitsModel = new ComboModel();
 				cmbSizeUnits = new JComboBox();
+				SmartComboBox.enable(cmbSizeUnits);
 				this.add(cmbSizeUnits, new GridBagConstraints(2, 4, 2, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0,
 								0, 0), 0, 0));
@@ -449,6 +452,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 			{
 				alcMethodComboModel = new DefaultComboBoxModel(new String[]{"Volume", "Weight"});
 				alcMethodCombo = new JComboBox(alcMethodComboModel);
+				SmartComboBox.enable(alcMethodCombo);
 				this.add(alcMethodCombo, new GridBagConstraints(9, 0, 1, 1, 0.0, 0.0,
 						GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
 						0, 0));
@@ -462,6 +466,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 				ibuMethodComboModel = new DefaultComboBoxModel(new String[]{"Tinseth", "Garetz",
 				"Rager"});
 				ibuMethodCombo = new JComboBox(ibuMethodComboModel);
+				SmartComboBox.enable(ibuMethodCombo);
 
 				this.add(ibuMethodCombo, new GridBagConstraints(9, 1, 1, 1, 0.0, 0.0,
 						GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
@@ -475,6 +480,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 			{
 				colourMethodComboModel = new DefaultComboBoxModel(new String[]{"SRM", "EBC"});
 				colourMethodCombo = new JComboBox(colourMethodComboModel);
+				SmartComboBox.enable(colourMethodCombo);
 				this.add(colourMethodCombo, new GridBagConstraints(9, 2, 1, 1, 0.0, 0.0,
 						GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
 						0, 0));
@@ -489,6 +495,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 			"Percent"});
 
 			evapMethodCombo = new JComboBox();
+			SmartComboBox.enable(evapMethodCombo);
 			this.add(evapMethodCombo, new GridBagConstraints(6, 5, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
 					0));

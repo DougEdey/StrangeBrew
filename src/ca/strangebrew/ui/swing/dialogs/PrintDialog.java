@@ -22,6 +22,7 @@ import javax.swing.SpinnerNumberModel;
 import net.sf.wraplog.AbstractLogger;
 import net.sf.wraplog.SystemLogger;
 import ca.strangebrew.Debug;
+import ca.strangebrew.ui.swing.SmartComboBox;
 import ca.strangebrew.ui.swing.StrangeSwing;
 import edu.stanford.ejalbert.BrowserLauncher;
 import edu.stanford.ejalbert.BrowserLauncherRunner;
@@ -90,6 +91,7 @@ public class PrintDialog extends javax.swing.JDialog implements ActionListener {
 			fontComboModel.setSelectedItem("Dialog");
 
 			fontCombo = new JComboBox();
+			SmartComboBox.enable(fontCombo);
 			jPanel1.add(fontCombo, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
 					0));

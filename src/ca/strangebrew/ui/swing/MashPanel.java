@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.19 2007/12/10 14:54:10 jimcdiver Exp $
+ * $Id: MashPanel.java,v 1.20 2007/12/11 22:18:59 jimcdiver Exp $
  *  @author aavis 
  */
 
@@ -21,7 +21,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
-import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -175,15 +174,17 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 						String[] types = {"acid", "glucan", "protein", "beta", "alpha", "mashout",
 								"sparge"};
 						JComboBox typesComboBox = new JComboBox(types);
+						SmartComboBox.enable(typesComboBox);
 						TableColumn mashColumn = tblMash.getColumnModel().getColumn(0);
-						mashColumn.setCellEditor(new DefaultCellEditor(typesComboBox));
+						mashColumn.setCellEditor(new SBComboBoxCellEditor(typesComboBox));
 
 						// set up method combo
 						String[] methods = {"infusion", "decoction", "decoction thick",
 								"decoction thin", "direct", "cereal mash"};
 						JComboBox methodComboBox = new JComboBox(methods);
+						SmartComboBox.enable(methodComboBox);
 						mashColumn = tblMash.getColumnModel().getColumn(1);
-						mashColumn.setCellEditor(new DefaultCellEditor(methodComboBox));
+						mashColumn.setCellEditor(new SBComboBoxCellEditor(methodComboBox));
 						
 						sTempEditor = new SBCellEditor(new JTextField());								
 						mashColumn = tblMash.getColumnModel().getColumn(2);
@@ -361,6 +362,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 					volUnitsComboModel = new ComboModel();
 					volUnitsComboModel.setList(new Quantity().getListofUnits("vol", true));
 					volUnitsCombo = new JComboBox();
+					SmartComboBox.enable(volUnitsCombo);
 					settingsPanel.add(volUnitsCombo, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
@@ -381,6 +383,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				ratioUnitsComboModel = new DefaultComboBoxModel(new String[]{"qt/lb",
 				"l/kg"});
 				ratioUnitsCombo = new JComboBox();
+				SmartComboBox.enable(ratioUnitsCombo);
 				settingsPanel.add(ratioUnitsCombo, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
 						0, 0));

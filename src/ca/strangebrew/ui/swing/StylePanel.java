@@ -181,6 +181,7 @@ public class StylePanel extends javax.swing.JPanel {
 				{
 					cmbStyle2Model = new ComboModel();
 					cmbStyle2 = new JComboBox();
+					SmartComboBox.enable(cmbStyle2);
 					jPanel1.add(cmbStyle2);
 					cmbStyle2.setModel(cmbStyle2Model);
 					cmbStyle2.setMaximumSize(new java.awt.Dimension(100, 32767));
