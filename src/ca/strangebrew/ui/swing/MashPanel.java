@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.20 2007/12/11 22:18:59 jimcdiver Exp $
+ * $Id: MashPanel.java,v 1.21 2007/12/11 22:54:32 jimcdiver Exp $
  *  @author aavis 
  */
 
@@ -477,17 +477,6 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				jLabel17.setText("Total Vol:");
 
 				{
-					delStepButton = new JButton();
-					jToolBar1.add(delStepButton);
-					delStepButton.setText("-");
-
-					delStepButton.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent evt) {
-							delStepButtonActionPerformed(evt);
-						}
-					});
-				}
-				{
 					addStepButton = new JButton();
 					jToolBar1.add(addStepButton);
 					addStepButton.setText("+");
@@ -495,6 +484,17 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 					addStepButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							addStepButtonActionPerformed(evt);
+						}
+					});
+				}
+				{
+					delStepButton = new JButton();
+					jToolBar1.add(delStepButton);
+					delStepButton.setText("-");
+
+					delStepButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							delStepButtonActionPerformed(evt);
 						}
 					});
 				}

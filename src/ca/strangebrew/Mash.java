@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.32 2006/09/08 19:42:37 andrew_avis Exp $
+ * $Id: Mash.java,v 1.33 2007/12/11 22:54:32 jimcdiver Exp $
  * @author aavis
  *
  */
@@ -195,6 +195,14 @@ public class Mash {
 	
 	public int addStep(){
 		MashStep step = new MashStep();
+		// calcStepType(temp);
+		if (!steps.isEmpty()) {
+			MashStep lastStep = (Mash.MashStep)steps.get(steps.size() -1);	
+			step.setStartTemp(lastStep.getEndTemp() + 1);
+			step.setEndTemp(step.getStartTemp());
+			step.setType(calcStepType(step.getStartTemp()));
+		}
+		
 		steps.add(step);
 		int i = steps.size();
 		calcMashSchedule();
