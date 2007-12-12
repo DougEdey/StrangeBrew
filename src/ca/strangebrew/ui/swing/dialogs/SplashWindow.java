@@ -198,13 +198,13 @@ public class SplashWindow extends Window {
      * @param args the command line arguments
      */
     public static void invokeMain(String className, String[] args) {
-        try {
+        //try {
         	StrangeSwing inst = new StrangeSwing();
         	inst.setVisible(true);
-        } catch (Exception e) {
-            InternalError error = new InternalError("Failed to invoke main method");
-            error.initCause(e);
-            throw error;
-        }
+        //} catch (Exception e) {
+          //  InternalError error = new InternalError("Failed to invoke main method");
+//            error.initCause(e);
+//            throw error;
+//        }
     }
 }

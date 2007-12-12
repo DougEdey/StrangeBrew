@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.16 2007/12/12 14:39:23 jimcdiver Exp $
+ * $Id: Options.java,v 1.17 2007/12/12 18:33:29 jimcdiver Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -18,6 +18,7 @@ package ca.strangebrew;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.Locale;
 import java.util.Properties;
 
 
@@ -80,6 +81,9 @@ public class Options {
 			{"optClub", "Your Club"},
 			{"optCountry", "Your Country"},
 			{"optEmail", "Your Email"},
+			{"optLocaleLang", ""},
+			{"optLocaleCountry", ""},
+			{"optLocaleVariant", ""},		
 			
 			// appearance:
 			{"optMaltSortOrder", "By Name"},
@@ -237,5 +241,31 @@ public class Options {
 	public void setIProperty(String key, int value){
 		props.setProperty(key, String.valueOf(value));
 	}
+	
+	public Locale getLocale() {
+		Locale l = null;
+		String lang = getProperty("optLocaleLang");
+		
+		if (lang == null || lang.isEmpty()) {
+			l = Locale.getDefault();
+		} else {
+			l =  new Locale(lang,
+						getProperty("optLocaleCountry"),
+						getProperty("optLocaleVariant"));			
+		}
+		
+		return l;
+	}
 
+	public void setLocale(Locale l) {
+		if (l == null || l == Locale.getDefault()) {
+			props.setProperty("optLocaleLang", "");
+			props.setProperty("optLocaleCountry", "");
+			props.setProperty("optLocaleVariant", "");					
+		} else {
+			props.setProperty("optLocaleLang", l.getLanguage());
+			props.setProperty("optLocaleCountry", l.getCountry());
+			props.setProperty("opsLocaleVariant", l.getVariant());
+		}
+	}	
 }

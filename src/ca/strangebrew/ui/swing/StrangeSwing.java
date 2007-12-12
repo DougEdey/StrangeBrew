@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.53 2007/12/12 14:39:23 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.54 2007/12/12 18:33:29 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -129,160 +129,175 @@ import edu.stanford.ejalbert.exception.UnsupportedOperatingSystemException;
 public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener, WindowListener {
 
 
-	public String version = "2.0.1";
+	final public String version = "2.0.1";
 	
+	// Stuff that should be final
 	public JTable hopsTable;
 	public JTable maltTable;
-	public Recipe myRecipe;
+	private HopsTableModel hopsTableModel;
+	private MaltTableModel maltTableModel;
+	private Options preferences;
+	private AboutDialog aboutDlg;	
 
-	private AboutDialog aboutDlg;
-	private JMenuItem aboutMenuItem;
-	private JComboBox alcMethodCombo;
-	private DefaultComboBoxModel alcMethodComboModel;
-	private JLabel alcMethodLabel;
-	private JPanel alcMethodPanel;
-	private SBCellEditor maltAmountEditor;
-	private SBCellEditor hopAmountEditor;
-	private SBCellEditor hopTimeEditor;
-	private SBCellEditor hopAcidEditor;
-	private JTextField boilMinText;
-	private JLabel boilTimeLable;
-	private JTextField brewerNameText;
-	private JButton btnAddHop;
-	private JButton btnAddMalt;
-	private JButton findButton;
-	private JButton saveButton;
-	private JToolBar mainToolBar;
-	private JButton btnDelHop;
-	private JButton btnDelMalt;
-	private ComboModel cmbHopsModel;
-	private ComboModel cmbHopsUnitsModel;
-	private ComboModel cmbMaltModel;
-	private ComboModel cmbMaltUnitsModel;
-	private JComboBox cmbSizeUnits;
-	private ComboModel cmbSizeUnitsModel;
-	private JComboBox cmbStyle;
-	private ComboModel cmbStyleModel;
-	private JComboBox cmbYeast;
-	private ComboModel cmbYeastModel;
-	private JComboBox colourMethodCombo;
-	private DefaultComboBoxModel colourMethodComboModel;
-	private JPanel colourPanel;
-	private CostPanel costPanel;
+	// Mutable data members
+	public Recipe myRecipe;
 	private String Costs;
 	private File currentFile;
-	private JMenuItem deleteMenuItem;
-	private DilutionPanel dilutionPanel;
-	
-	private JMenuItem editPrefsMenuItem;
-	private JLabel evapLabel;
-	private JComboBox evapMethodCombo;
-	private JTextField evapText;
-	private JMenuItem exitMenuItem;
-	private JMenuItem exportHTMLmenu;
-	private JMenu exportMenu;
-	private JMenuItem exportTextMenuItem;
-	private JFileChooser fileChooser;
-	
-	private JMenu fileMenu;
-	private JLabel fileNameLabel;
-	private JPanel fileNamePanel;
-	private JMenuItem findFileMenuItem;
-	private JMenuItem helpMenuItem;
-	private JComboBox hopComboBox;
-	private HopsTableModel hopsTableModel;
-	private JComboBox hopsUnitsComboBox;
-	private JComboBox hopsTotalUnitsComboBox;
-	private ComboModel hopsTotalUnitsComboModel;
-	private JComboBox ibuMethodCombo;
-	
-	private DefaultComboBoxModel ibuMethodComboModel;
-	private JLabel ibuMethodLabel;
-	private JPanel ibuMethodPanel;
 	private ImageIcon icon;
 	private URL imgURL;
-	private JMenu jMenu4;
-	private JMenu jMenu5;
-	private JMenuBar jMenuBar1;
-	private JPanel jPanel1;
-	private JScrollPane jScrollPane1;
-	private JScrollPane jScrollPane2;
-	private JSeparator jSeparator1;
-	private JSeparator jSeparator2;
-	private JTabbedPane jTabbedPane1;
-	private JLabel lblAlc;
+	
+	// All the GUE elements are final, speeds app since the VM doesnt try and garbage collect these
+	final private SBNotifier sbn = new SBNotifier();
+	final private MashPanel mashPanel = new MashPanel(myRecipe);;
+	final private MiscPanel miscPanel = new MiscPanel(myRecipe);
+	final private NotesPanel notesPanel = new NotesPanel();
+	final private SettingsPanel settingsPanel = new SettingsPanel(sbn);
+	final private StylePanel stylePanel = new StylePanel(sbn);
+	final private WaterPanel waterPanel = new WaterPanel(sbn);
+	
+	final private JMenuItem aboutMenuItem = new JMenuItem();
+	final private DefaultComboBoxModel alcMethodComboModel = new DefaultComboBoxModel(
+			new String[]{"Volume", "Weight"});
+	final private JComboBox alcMethodCombo = new JComboBox(alcMethodComboModel);
+	final private JLabel alcMethodLabel = new JLabel();
+	final private JPanel alcMethodPanel = new JPanel();
+	final private SBCellEditor maltAmountEditor = new SBCellEditor(new JTextField());
+	final private SBCellEditor hopAmountEditor = new SBCellEditor(new JTextField());
+	final private SBCellEditor hopTimeEditor = new SBCellEditor(new JTextField());
+	final private SBCellEditor hopAcidEditor = new SBCellEditor(new JTextField());
+	final private JTextField boilMinText = new JTextField();
+	final private JLabel boilTimeLable = new JLabel();
+	final private JTextField brewerNameText = new JTextField();
+	final private JButton btnAddHop = new JButton();
+	final private JButton btnAddMalt = new JButton();
+	final private JButton findButton = new JButton();
+	final private JButton saveButton = new JButton();
+	final private JToolBar mainToolBar = new JToolBar();
+	final private JButton btnDelHop = new JButton();
+	final private JButton btnDelMalt = new JButton();
+	final private ComboModel cmbHopsModel = new ComboModel();
+	final private ComboModel cmbHopsUnitsModel = new ComboModel();
+	final private ComboModel cmbMaltModel = new ComboModel();
+	final private ComboModel cmbMaltUnitsModel = new ComboModel();
+	final private JComboBox cmbSizeUnits = new JComboBox();
+	final private ComboModel cmbSizeUnitsModel = new ComboModel();
+	final private JComboBox cmbStyle = new JComboBox();
+	final private ComboModel cmbStyleModel = new ComboModel();
+	final private JComboBox cmbYeast = new JComboBox();
+	final private ComboModel cmbYeastModel = new ComboModel();
+	final private DefaultComboBoxModel colourMethodComboModel = new DefaultComboBoxModel(
+			new String[]{"SRM", "EBC"});
+	final private JComboBox colourMethodCombo = new JComboBox(colourMethodComboModel);							
+	final private JPanel colourPanel = new JPanel();
+	final private CostPanel costPanel = new CostPanel();
+	final private JMenuItem deleteMenuItem = new JMenuItem();
+	final private DilutionPanel dilutionPanel = new DilutionPanel();
+	
+	final private JMenuItem editPrefsMenuItem = new JMenuItem();
+	final private JLabel evapLabel = new JLabel();
+	final private JComboBox evapMethodCombo = new JComboBox();
+	final private JTextField evapText = new JTextField();
+	final private JMenuItem exitMenuItem = new JMenuItem();
+	final private JMenuItem exportHTMLmenu = new JMenuItem();
+	final private JMenu exportMenu = new JMenu();
+	final private JMenuItem exportTextMenuItem = new JMenuItem();
+	final private JFileChooser fileChooser = new JFileChooser();
+	
+	final private JMenu fileMenu = new JMenu();
+	final private JLabel fileNameLabel = new JLabel();
+	final private JPanel fileNamePanel = new JPanel();
+	final private JMenuItem findFileMenuItem = new JMenuItem();
+	final private JMenuItem helpMenuItem = new JMenuItem();
+	final private JComboBox hopComboBox = new JComboBox();
+	final private JComboBox hopsUnitsComboBox = new JComboBox();
+	final private JComboBox hopsTotalUnitsComboBox = new JComboBox();
+	final private ComboModel hopsTotalUnitsComboModel = new ComboModel();
+	final private DefaultComboBoxModel ibuMethodComboModel = new DefaultComboBoxModel(
+			new String[]{"Tinseth", "Garetz",	"Rager"});
+	final private JComboBox ibuMethodCombo = new JComboBox(ibuMethodComboModel);
+	final private JLabel ibuMethodLabel = new JLabel();
+	final private JPanel ibuMethodPanel = new JPanel();
+	final private JMenu jMenu4 = new JMenu();
+	final private JMenu jMenu5 = new JMenu();
+	final private JMenuBar jMenuBar1 = new JMenuBar();
+	final private JPanel jPanel1 = new JPanel();
+	final private JScrollPane jScrollPane1 = new JScrollPane();
+	final private JScrollPane jScrollPane2 = new JScrollPane();
+	final private JSeparator jSeparator1 = new JSeparator();
+	final private JSeparator jSeparator2 = new JSeparator();
+	final private JTabbedPane jTabbedPane1 = new JTabbedPane();
+	final private JLabel lblAlc = new JLabel();
 
-	private JLabel lblAlcValue;
-	private JLabel lblAtten;
-	private JLabel lblBrewer;
-	private JLabel lblColour;
+	final private JLabel lblAlcValue = new JLabel();
+	final private JLabel lblAtten = new JLabel();
+	final private JLabel lblBrewer = new JLabel();
+	final private JLabel lblColour = new JLabel();
 
-	private JLabel lblColourValue;
-	private JLabel lblComments;
-	private JLabel lblDate;
-	private JLabel lblEffic;
-	private JLabel lblFG;
-	private JLabel lblIBU;
-	private JLabel lblIBUvalue;
-	private JLabel lblName;
-	private JLabel lblOG;
-	private JLabel lblPostBoil;
-	private JLabel lblPreBoil;
-	private JLabel lblSizeUnits;
-	private JLabel lblStyle;
-	private JLabel lblYeast;
-	private JComboBox maltComboBox;
-	private MaltTableModel maltTableModel;
-	private JComboBox maltTotalUnitsComboBox;
-	private ComboModel maltTotalUnitsComboModel;
-	private JComboBox maltUnitsComboBox;
-	private MashPanel mashPanel;
-	private MiscPanel miscPanel;
-	private JMenu mnuTools;
-	private JMenuItem newFileMenuItem;
-	private NotesPanel notesPanel;
-	private JMenuItem openFileMenuItem;
-	private JPanel pnlDetails;
-	private JPanel pnlHops;
-	private JPanel pnlHopsButtons;
-	private JPanel pnlMain;
-	private JPanel pnlMalt;
-	private JPanel pnlMaltButtons;
-	private JPanel pnlTables;
-	private JFormattedTextField postBoilText;
-	private Options preferences;
-	private JMenuItem saveAsMenuItem;
+	final private JLabel lblColourValue = new JLabel();
+	final private JLabel lblComments = new JLabel();
+	final private JLabel lblDate = new JLabel();
+	final private JLabel lblEffic = new JLabel();
+	final private JLabel lblFG = new JLabel();
+	final private JLabel lblIBU = new JLabel();
+	final private JLabel lblIBUvalue = new JLabel();
+	final private JLabel lblName = new JLabel();
+	final private JLabel lblOG = new JLabel();
+	final private JLabel lblPostBoil = new JLabel();
+	final private JLabel lblPreBoil = new JLabel();
+	final private JLabel lblSizeUnits = new JLabel();
+	final private JLabel lblStyle = new JLabel();
+	final private JLabel lblYeast = new JLabel();
+	final private JComboBox maltComboBox = new JComboBox();
+	final private JComboBox maltTotalUnitsComboBox = new JComboBox();
+	final private ComboModel maltTotalUnitsComboModel = new ComboModel();
+	final private JComboBox maltUnitsComboBox = new JComboBox();
+	final private JMenu mnuTools = new JMenu();
+	final private JMenuItem scalRecipeMenuItem = new JMenuItem();
+	final private JMenuItem extractPotentialMenuItem = new JMenuItem();
+	final private JMenuItem maltPercentMenuItem = new JMenuItem();
+	final private JMenuItem refractometerMenuItem = new JMenuItem();
+	final private JMenuItem hydrometerToolMenuItem = new JMenuItem();
+	
+	final private JMenuItem newFileMenuItem = new JMenuItem();
+	final private JMenuItem openFileMenuItem = new JMenuItem();
+	final private JPanel pnlDetails = new JPanel();
+	final private JPanel pnlHops = new JPanel();
+	final private JPanel pnlHopsButtons = new JPanel();
+	final private JPanel pnlMain = new JPanel();
+	final private JPanel pnlMalt = new JPanel();
+	final private JPanel pnlMaltButtons = new JPanel();
+	final private JPanel pnlTables = new JPanel();
+	final private JFormattedTextField postBoilText = new JFormattedTextField();
+	final private JMenuItem saveAsMenuItem = new JMenuItem();
 
-	private JMenuItem saveMenuItem;
-	private JScrollPane scpComments;
+	final private JMenuItem saveMenuItem = new JMenuItem();
+	final private JScrollPane scpComments = new JScrollPane();
 	// private JScrollPane scrMalts;
-	private SettingsPanel settingsPanel;
-	private JSpinner spnAtten;
-	private JSpinner spnEffic;
-	private JSpinner spnFG;
-	private JSpinner spnOG;
-	private JPanel statusPanel;
-	private StylePanel stylePanel;
-	private JTable tblHopsTotals;
-	private DefaultTableModel tblHopsTotalsModel;
-	private JTable tblMaltTotals;		
+	final private JSpinner spnAtten = new JSpinner();
+	final private JSpinner spnEffic = new JSpinner();
+	final private JSpinner spnFG = new JSpinner();
+	final private JSpinner spnOG = new JSpinner();
+	final private JPanel statusPanel = new JPanel();
+	final private JTable tblHopsTotals = new JTable();
+	final private DefaultTableModel tblHopsTotalsModel = new DefaultTableModel(
+			new String[][]{{""}},
+			new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"});
+	final private DefaultTableModel tblMaltTotalsModel = new DefaultTableModel(
+			new String[][]{{""}},
+			new String[]{"S", "M", "Malt", "Amount", "Units", "Points", "Lov", "Cost/U", "%"});
+	final private JTable tblMaltTotals = new JTable();		
 
-	private DefaultTableModel tblMaltTotalsModel;
+	final private JToolBar tlbHops = new JToolBar();
+	final private JToolBar tlbMalt = new JToolBar();
 
-	private JToolBar tlbHops;
-	private JToolBar tlbMalt;
-
-	private JTextArea txtComments;
+	final private JTextArea txtComments = new JTextArea();
 	// private JFormattedTextField txtDate;
-	private DatePicker txtDate;
-	private JTextField txtName;
-	private JFormattedTextField preBoilText;
-	
+	final private DatePicker txtDate = new DatePicker();
+	final private JTextField txtName = new JTextField();
+	final private JFormattedTextField preBoilText = new JFormattedTextField();
+	final private JButton printButton = new JButton();
 
-	private WaterPanel waterPanel;
-	public Database DB;
-	
-	
+	final public Database DB;
 	
 	// an object that you give to other gui objects so that they can set things on the main SB GUI
 	// used by style and settings panels
@@ -390,7 +405,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	 * Auto-generated main method to display this JFrame
 	 */
 	public static void main(String[] args) {
-		StrangeSwing inst = new StrangeSwing();
+		final StrangeSwing inst = new StrangeSwing();
 		inst.setVisible(true);
 	}
 
@@ -432,8 +447,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		path = SBStringUtils.getAppPath("recipes");
 		Debug.print("Recipes path:" + path);		
 		
-		fileChooser = new JFileChooser();
-
 		fileChooser.setCurrentDirectory(new File(path));
 
 		// link malt table and totals:
@@ -523,6 +536,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 	}
 
+	public void updateUI() {
+		txtDate.setLocale(preferences.getLocale());
+	}
+	
 	public void displayRecipe() {
 		if (myRecipe == null)
 			return;
@@ -950,7 +967,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			});
 
 			{
-				pnlMain = new JPanel();
 				GridBagLayout jPanel2Layout = new GridBagLayout();
 				jPanel2Layout.columnWeights = new double[]{0.1};
 				jPanel2Layout.columnWidths = new int[]{7};
@@ -959,12 +975,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				pnlMain.setLayout(jPanel2Layout);
 				this.getContentPane().add(pnlMain, BorderLayout.CENTER);
 				{
-					jTabbedPane1 = new JTabbedPane();
 					pnlMain.add(jTabbedPane1, new GridBagConstraints(0, 1, 1, 1, 0.1, 0.1,
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0,
 									0), 0, 0));
 					{
-						pnlDetails = new JPanel();
 						GridBagLayout pnlDetailsLayout = new GridBagLayout();
 						pnlDetailsLayout.columnWeights = new double[]{0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
 								0.1, 0.1, 0.1, 0.1};
@@ -976,15 +990,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						jTabbedPane1.addTab("Details", null, pnlDetails, null);
 						pnlDetails.setPreferredSize(new java.awt.Dimension(20, 16));
 						{
-							lblBrewer = new JLabel();
 							pnlDetails.add(lblBrewer, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
 											0, 0, 0), 0, 0));
 							lblBrewer.setText("Brewer:");
 						}
 						{
-							brewerNameText = new JTextField();
-							pnlDetails.add(brewerNameText, new GridBagConstraints(1, 0, 2, 1, 0.0,
+								pnlDetails.add(brewerNameText, new GridBagConstraints(1, 0, 2, 1, 0.0,
 									0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
 							brewerNameText.setPreferredSize(new java.awt.Dimension(69, 20));							
@@ -992,42 +1004,36 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 						}
 						{
-							lblDate = new JLabel();
 							pnlDetails.add(lblDate, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
 											0, 0, 0), 0, 0));
 							lblDate.setText("Date:");
 						}
 						{
-							lblStyle = new JLabel();
 							pnlDetails.add(lblStyle, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
 											0, 0, 0), 0, 0));
 							lblStyle.setText("Style:");
 						}
 						{
-							lblYeast = new JLabel();
 							pnlDetails.add(lblYeast, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
 											0, 0, 0), 0, 0));
 							lblYeast.setText("Yeast:");
 						}
 						{
-							lblPreBoil = new JLabel();
 							pnlDetails.add(lblPreBoil, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
 											0, 0, 0), 0, 0));
 							lblPreBoil.setText("Pre boil:");
 						}
 						{
-							lblPostBoil = new JLabel();
 							pnlDetails.add(lblPostBoil, new GridBagConstraints(0, 5, 1, 1, 0.0,
 									0.0, GridBagConstraints.EAST, GridBagConstraints.NONE,
 									new Insets(0, 0, 0, 0), 0, 0));
 							lblPostBoil.setText("Post boil:");
 						}
 						{
-							lblEffic = new JLabel();
 							pnlDetails.add(lblEffic, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
 											0, 0, 0), 0, 0));
@@ -1035,7 +1041,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							lblEffic.setPreferredSize(new java.awt.Dimension(31, 14));
 						}
 						{
-							lblAtten = new JLabel();
 							pnlDetails.add(lblAtten, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0,
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
 											0, 0, 0), 0, 0));
@@ -1043,35 +1048,30 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							lblAtten.setPreferredSize(new java.awt.Dimension(34, 14));
 						}
 						{
-							lblOG = new JLabel();
 							pnlDetails.add(lblOG, new GridBagConstraints(5, 0, 1, 1, 0.0, 0.0,
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
 											0, 0, 0), 0, 0));
 							lblOG.setText("OG:");
 						}
 						{
-							lblFG = new JLabel();
 							pnlDetails.add(lblFG, new GridBagConstraints(5, 1, 1, 1, 0.0, 0.0,
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
 											0, 0, 0), 0, 0));
 							lblFG.setText("FG:");
 						}
 						{
-							lblIBU = new JLabel();
 							pnlDetails.add(lblIBU, new GridBagConstraints(7, 1, 1, 1, 0.0, 0.0,
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
 											0, 0, 0), 0, 0));
 							lblIBU.setText("IBU:");
 						}
 						{
-							lblAlc = new JLabel();
 							pnlDetails.add(lblAlc, new GridBagConstraints(7, 0, 1, 1, 0.0, 0.0,
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
 											0, 0, 0), 0, 0));
 							lblAlc.setText("%Alc:");
 						}
 						{
-							lblColour = new JLabel();
 							pnlDetails.add(lblColour, new GridBagConstraints(7, 2, 1, 1, 0.0, 0.0,
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
 											0, 0, 0), 0, 0));
@@ -1079,21 +1079,16 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						}
 						{
 							//txtDate = new JFormattedTextField();
-							txtDate = new DatePicker();
 							pnlDetails.add(txtDate, new GridBagConstraints(1, 1, 2, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
 							// txtDate.setText("Date");
 							txtDate.setPreferredSize(new java.awt.Dimension(73, 20));
 							txtDate.setDateStyle(DateFormat.SHORT);
-
+							txtDate.setLocale(preferences.getLocale());
 						}
 						{
-							cmbStyleModel = new ComboModel();
-							cmbStyle = new JComboBox();
-							// Install the custom key selection manager
-							SmartComboBox.enable(cmbStyle);
-							
+							SmartComboBox.enable(cmbStyle);						
 							pnlDetails.add(cmbStyle, new GridBagConstraints(1, 2, 5, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
@@ -1103,7 +1098,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 						}
 						{
-							preBoilText = new JFormattedTextField();
 							pnlDetails.add(preBoilText, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
 									GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
@@ -1112,7 +1106,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 						}
 						{
-							postBoilText = new JFormattedTextField();
 							pnlDetails.add(postBoilText, new GridBagConstraints(1, 5, 1, 1, 0.0,
 									0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
@@ -1121,7 +1114,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 						}
 						{
-							lblComments = new JLabel();
 							pnlDetails.add(lblComments, new GridBagConstraints(6, 4, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 							lblComments.setText("Comments:");
 						}
@@ -1129,7 +1121,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						{
 							SpinnerNumberModel spnEfficModel = new SpinnerNumberModel(75.0, 0.0,
 									100.0, 1.0);
-							spnEffic = new JSpinner();
 							pnlDetails.add(spnEffic, new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
@@ -1150,7 +1141,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						{
 							SpinnerNumberModel spnAttenModel = new SpinnerNumberModel(75.0, 0.0,
 									100.0, 1.0);
-							spnAtten = new JSpinner();
 							pnlDetails.add(spnAtten, new GridBagConstraints(4, 1, 1, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
@@ -1169,7 +1159,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						{
 							SpinnerNumberModel spnOgModel = new SpinnerNumberModel(1.000, 0.900,
 									2.000, 0.001);
-							spnOG = new JSpinner();
 							pnlDetails.add(spnOG, new GridBagConstraints(6, 0, 1, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
@@ -1189,7 +1178,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						{
 							SpinnerNumberModel spnFgModel = new SpinnerNumberModel(1.000, 0.900,
 									2.000, 0.001);
-							spnFG = new JSpinner();
 							pnlDetails.add(spnFG, new GridBagConstraints(6, 1, 1, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
@@ -1207,31 +1195,26 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							});
 						}
 						{
-							lblIBUvalue = new JLabel();
 							pnlDetails.add(lblIBUvalue, new GridBagConstraints(8, 1, 1, 1, 0.0,
 									0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE,
 									new Insets(0, 0, 0, 0), 0, 0));
 							lblIBUvalue.setText("IBUs");
 						}
 						{
-							lblColourValue = new JLabel();
 							pnlDetails.add(lblColourValue, new GridBagConstraints(8, 2, 1, 1, 0.0,
 									0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE,
 									new Insets(0, 0, 0, 0), 0, 0));
 							lblColourValue.setText("Colour");
 						}
 						{
-							lblAlcValue = new JLabel();
 							pnlDetails.add(lblAlcValue, new GridBagConstraints(8, 0, 1, 1, 0.0,
 									0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE,
 									new Insets(0, 0, 0, 0), 0, 0));
 							lblAlcValue.setText("Alc");
 						}
 						{
-							scpComments = new JScrollPane();
 							pnlDetails.add(scpComments, new GridBagConstraints(7, 4, 3, 2, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 							{
-								txtComments = new JTextArea();
 								scpComments.setViewportView(txtComments);
 								txtComments.setText("Comments");
 								txtComments.setWrapStyleWord(true);
@@ -1249,8 +1232,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							}
 						}
 						{
-							cmbYeastModel = new ComboModel();
-							cmbYeast = new JComboBox();
 							// Install the custom key selection manager
 							SmartComboBox.enable(cmbYeast);
 							pnlDetails.add(cmbYeast, new GridBagConstraints(1, 3, 5, 1, 0.0, 0.0,
@@ -1261,8 +1242,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 						}
 						{
-							cmbSizeUnitsModel = new ComboModel();
-							cmbSizeUnits = new JComboBox();
 							SmartComboBox.enable(cmbSizeUnits);							
 							pnlDetails.add(cmbSizeUnits, new GridBagConstraints(2, 4, 2, 1, 0.0,
 									0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
@@ -1271,28 +1250,24 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 						}
 						{
-							lblSizeUnits = new JLabel();
 							pnlDetails.add(lblSizeUnits, new GridBagConstraints(2, 5, 2, 1, 0.0,
 									0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
 							lblSizeUnits.setText("Size Units");
 						}
 						{
-							boilTimeLable = new JLabel();
 							pnlDetails.add(boilTimeLable, new GridBagConstraints(4, 4, 1, 1, 0.0,
 									0.0, GridBagConstraints.EAST, GridBagConstraints.NONE,
 									new Insets(0, 0, 0, 0), 0, 0));
 							boilTimeLable.setText("Boil Min:");
 						}
 						{
-							evapLabel = new JLabel();
 							pnlDetails.add(evapLabel, new GridBagConstraints(4, 5, 1, 1, 0.0, 0.0,
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,
 											0, 0, 0), 0, 0));
 							evapLabel.setText("Evap/hr:");
 						}
 						{
-							boilMinText = new JTextField();
 							pnlDetails.add(boilMinText, new GridBagConstraints(5, 4, 1, 1, 0.0,
 									0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
@@ -1301,7 +1276,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 						}
 						{
-							evapText = new JTextField();
 							pnlDetails.add(evapText, new GridBagConstraints(5, 5, 1, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 									new Insets(0, 0, 0, 0), 0, 0));
@@ -1309,25 +1283,18 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							evapText.setPreferredSize(new java.awt.Dimension(23, 20));							
 						}
 						{
-							alcMethodComboModel = new DefaultComboBoxModel(new String[]{"Volume", "Weight"});
-							alcMethodCombo = new JComboBox(alcMethodComboModel);	
 							SmartComboBox.enable(alcMethodCombo);
 							pnlDetails.add(alcMethodCombo, new GridBagConstraints(9, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 							alcMethodCombo.setPreferredSize(new java.awt.Dimension(71, 20));
 
 						}
 						{
-							ibuMethodComboModel = new DefaultComboBoxModel(new String[]{"Tinseth", "Garetz",
-							"Rager"});
-							ibuMethodCombo = new JComboBox(ibuMethodComboModel);
 							SmartComboBox.enable(ibuMethodCombo);
 							pnlDetails.add(ibuMethodCombo, new GridBagConstraints(9, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 							ibuMethodCombo.setPreferredSize(new java.awt.Dimension(72, 20));
 
 						}
 						{
-							colourMethodComboModel = new DefaultComboBoxModel(new String[]{"SRM", "EBC"});
-							colourMethodCombo = new JComboBox(colourMethodComboModel);
 							SmartComboBox.enable(colourMethodCombo);
 							pnlDetails.add(colourMethodCombo, new GridBagConstraints(9, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 							colourMethodCombo.setPreferredSize(new java.awt.Dimension(52, 20));
@@ -1337,7 +1304,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						ComboBoxModel evapMethodComboModel = new DefaultComboBoxModel(new String[] {
 								"Constant", "Percent" });
 						{
-							jPanel1 = new JPanel();
 							pnlMain.add(jPanel1, new GridBagConstraints(
 								0,
 								0,
@@ -1354,12 +1320,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							jPanel1Layout.setAlignment(FlowLayout.LEFT);
 							jPanel1.setLayout(jPanel1Layout);
 
-							mainToolBar = new JToolBar();
 							getContentPane().add(mainToolBar, BorderLayout.NORTH);
 							mainToolBar.setFloatable(false);
 							mainToolBar.setRollover(true);
 
-							saveButton = new JButton();
 							mainToolBar.add(saveButton);
 							saveButton.setMnemonic(java.awt.event.KeyEvent.VK_S);
 							saveButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
@@ -1371,7 +1335,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								}
 							});
 
-							findButton = new JButton();
 							mainToolBar.add(findButton);
 							findButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
 								"ca/strangebrew/icons/find.gif")));
@@ -1384,7 +1347,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								}
 							});
 							
-							JButton printButton = new JButton();
 							mainToolBar.add(printButton);
 							printButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
 							"ca/strangebrew/icons/print.gif")));
@@ -1398,12 +1360,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							
 
 							{
-								lblName = new JLabel();
 								jPanel1.add(lblName);
 								lblName.setText("Name:");
 							}
 							{
-								txtName = new JTextField();
 								jPanel1.add(txtName);
 								txtName.setText("Name");
 								txtName.setPreferredSize(new java.awt.Dimension(297, 20));
@@ -1412,48 +1372,28 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 						}
 
-						evapMethodCombo = new JComboBox();
 						SmartComboBox.enable(evapMethodCombo);
 						pnlDetails.add(evapMethodCombo, new GridBagConstraints(6, 5, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 						evapMethodCombo.setModel(evapMethodComboModel);
 						evapMethodCombo.setPreferredSize(new java.awt.Dimension(64, 20));
 
-						colourPanel = new JPanel();
 						pnlDetails.add(colourPanel, new GridBagConstraints(9, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 						colourPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 						colourPanel.setPreferredSize(new java.awt.Dimension(93, 32));
 
 					}
 					{
-						SBNotifier sbn = new SBNotifier();
-						stylePanel = new StylePanel(sbn);
 						jTabbedPane1.addTab("Style", null, stylePanel, null);
-
-						miscPanel = new MiscPanel(myRecipe);
 						jTabbedPane1.addTab("Misc", null, miscPanel, null);
-
-						notesPanel = new NotesPanel();
 						jTabbedPane1.addTab("Notes", null, notesPanel, null);
-
-						dilutionPanel = new DilutionPanel();
 						jTabbedPane1.addTab("Dilution", null, dilutionPanel, null);
-
-						mashPanel = new MashPanel(myRecipe);
 						jTabbedPane1.addTab("Mash", null, mashPanel, null);
-
-						waterPanel = new WaterPanel(sbn);
 						jTabbedPane1.addTab("Water", null, waterPanel, null);
-
-						costPanel = new CostPanel();
 						jTabbedPane1.addTab("Cost", null, costPanel, null);
-						
-						// SBNotifier sbn = new SBNotifier();
-						settingsPanel = new SettingsPanel(sbn);
 						jTabbedPane1.addTab("Settings", null, settingsPanel, null);
 					}
 				}
 				{
-					pnlTables = new JPanel();
 					BoxLayout pnlMaltsLayout = new BoxLayout(pnlTables,
 							javax.swing.BoxLayout.Y_AXIS);
 					pnlMain.add(pnlTables, new GridBagConstraints(0, 2, 1, 1, 0.5, 0.5,
@@ -1462,7 +1402,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 					pnlTables.setLayout(pnlMaltsLayout);
 					{
-						pnlMalt = new JPanel();
 						pnlTables.add(pnlMalt);
 						BorderLayout pnlMaltLayout1 = new BorderLayout();
 						pnlMalt.setBorder(BorderFactory.createTitledBorder(new LineBorder(
@@ -1471,7 +1410,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 										1, 12), new java.awt.Color(51, 51, 51)));
 						pnlMalt.setLayout(pnlMaltLayout1);
 						{
-							jScrollPane1 = new JScrollPane();
 							pnlMalt.add(jScrollPane1, BorderLayout.CENTER);
 							{
 								maltTableModel = new MaltTableModel(this);
@@ -1493,21 +1431,16 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								TableColumn maltColumn = maltTable.getColumnModel().getColumn(2);
 
 								// set up malt list combo
-								maltComboBox = new JComboBox();	
 								SmartComboBox.enable(maltComboBox);
-								cmbMaltModel = new ComboModel();
 								maltComboBox.setModel(cmbMaltModel);
 								maltColumn.setCellEditor(new SBComboBoxCellEditor(maltComboBox));
 								
 								// set up malt amount editor
-								maltAmountEditor = new SBCellEditor(new JTextField());								
 								maltColumn = maltTable.getColumnModel().getColumn(3);
 								maltColumn.setCellEditor(maltAmountEditor);
 
 								// set up malt units combo
-								maltUnitsComboBox = new JComboBox();
 								SmartComboBox.enable(maltUnitsComboBox);
-								cmbMaltUnitsModel = new ComboModel();
 								maltUnitsComboBox.setModel(cmbMaltUnitsModel);
 								maltColumn = maltTable.getColumnModel().getColumn(4);
 								maltColumn.setCellEditor(new SBComboBoxCellEditor(maltUnitsComboBox));
@@ -1517,19 +1450,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							}
 						}
 						{
-							tblMaltTotalsModel = new DefaultTableModel(new String[][]{{""}},
-									new String[]{"S", "M", "Malt", "Amount", "Units", "Points", "Lov",
-									"Cost/U", "%"});
-							tblMaltTotals = new JTable();
 							pnlMalt.add(tblMaltTotals, BorderLayout.SOUTH);
 							tblMaltTotals.setModel(tblMaltTotalsModel);
 							tblMaltTotals.getTableHeader().setEnabled(false);
 							tblMaltTotals.setAutoCreateColumnsFromModel(false);
 							
 							// set up the units combobox
-							maltTotalUnitsComboBox = new JComboBox();
 							SmartComboBox.enable(maltTotalUnitsComboBox);
-							maltTotalUnitsComboModel = new ComboModel();
 							maltTotalUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
 							maltTotalUnitsComboBox.setModel(maltTotalUnitsComboModel);
 							TableColumn t = tblMaltTotals.getColumnModel().getColumn(4);
@@ -1548,7 +1475,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						}
 					}
 					{
-						pnlMaltButtons = new JPanel();
 						pnlTables.add(pnlMaltButtons);
 						FlowLayout pnlMaltButtonsLayout = new FlowLayout();
 						pnlMaltButtonsLayout.setAlignment(FlowLayout.LEFT);
@@ -1556,12 +1482,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						pnlMaltButtons.setLayout(pnlMaltButtonsLayout);
 						pnlMaltButtons.setPreferredSize(new java.awt.Dimension(592, 27));
 						{
-							tlbMalt = new JToolBar();
 							pnlMaltButtons.add(tlbMalt);
 							tlbMalt.setPreferredSize(new java.awt.Dimension(386, 20));
 							tlbMalt.setFloatable(false);
 							{
-								btnAddMalt = new JButton();
 								tlbMalt.add(btnAddMalt);
 								btnAddMalt.setText("+");
 								btnAddMalt.addActionListener(new ActionListener() {
@@ -1576,7 +1500,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								});
 							}
 							{
-								btnDelMalt = new JButton();
 								tlbMalt.add(btnDelMalt);
 								btnDelMalt.setText("-");
 								btnDelMalt.addActionListener(new ActionListener() {
@@ -1594,7 +1517,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						}
 					}
 					{
-						pnlHops = new JPanel();
 						BorderLayout pnlHopsLayout = new BorderLayout();
 						pnlHops.setBorder(BorderFactory.createTitledBorder(new LineBorder(
 								new java.awt.Color(0, 0, 0), 1, false), "Hops",
@@ -1603,17 +1525,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						pnlHops.setLayout(pnlHopsLayout);
 						pnlTables.add(pnlHops);
 						{
-							tblHopsTotalsModel = new DefaultTableModel(new String[][]{{""}},
-									new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"});
-							tblHopsTotals = new JTable();
 							pnlHops.add(tblHopsTotals, BorderLayout.SOUTH);
 							tblHopsTotals.setModel(tblHopsTotalsModel);
 							tblHopsTotals.setAutoCreateColumnsFromModel(false);
 							
 							// set up the units combobox
-							hopsTotalUnitsComboBox = new JComboBox();
 							SmartComboBox.enable(hopsTotalUnitsComboBox);
-							hopsTotalUnitsComboModel = new ComboModel();
 							hopsTotalUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
 							hopsTotalUnitsComboBox.setModel(hopsTotalUnitsComboModel);
 							TableColumn t = tblHopsTotals.getColumnModel().getColumn(4);
@@ -1631,7 +1548,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 						}
 						{
-							jScrollPane2 = new JScrollPane();
 							pnlHops.add(jScrollPane2, BorderLayout.CENTER);
 							{
 								hopsTableModel = new HopsTableModel(this);
@@ -1649,27 +1565,21 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								hopsTable.getTableHeader().setReorderingAllowed(false);
 
 								TableColumn hopColumn = hopsTable.getColumnModel().getColumn(0);
-								hopComboBox = new JComboBox();
 								// Install the custom key selection manager
 								SmartComboBox.enable(hopComboBox);
-								cmbHopsModel = new ComboModel();
 								hopComboBox.setModel(cmbHopsModel);
 								hopColumn.setCellEditor(new SBComboBoxCellEditor(hopComboBox));
 								
 								// set up hop alpha acid editor
-								hopAcidEditor = new SBCellEditor(new JTextField());								
 								hopColumn = hopsTable.getColumnModel().getColumn(2);
 								hopColumn.setCellEditor(hopAcidEditor);
 								
 								// set up hop amount editor
-								hopAmountEditor = new SBCellEditor(new JTextField());								
 								hopColumn = hopsTable.getColumnModel().getColumn(3);
 								hopColumn.setCellEditor(hopAmountEditor);
 								
 								// set up hop units combo
-								hopsUnitsComboBox = new JComboBox();
 								SmartComboBox.enable(hopsUnitsComboBox);
-								cmbHopsUnitsModel = new ComboModel();
 								hopsUnitsComboBox.setModel(cmbHopsUnitsModel);
 								hopColumn = hopsTable.getColumnModel().getColumn(4);
 								hopColumn.setCellEditor(new SBComboBoxCellEditor(hopsUnitsComboBox));
@@ -1690,14 +1600,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								hopColumn.setCellEditor(new SBComboBoxCellEditor(hopsAddComboBox));
 
 								// set up hop amount editor
-								hopTimeEditor = new SBCellEditor(new JTextField());								
 								hopColumn = hopsTable.getColumnModel().getColumn(6);
 								hopColumn.setCellEditor(hopTimeEditor);								
 							}
 						}
 					}
 					{
-						pnlHopsButtons = new JPanel();
 						FlowLayout pnlHopsButtonsLayout = new FlowLayout();
 						pnlHopsButtonsLayout.setAlignment(FlowLayout.LEFT);
 						pnlHopsButtonsLayout.setVgap(0);
@@ -1705,12 +1613,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						pnlTables.add(pnlHopsButtons);
 						pnlHopsButtons.setPreferredSize(new java.awt.Dimension(512, 16));
 						{
-							tlbHops = new JToolBar();
 							pnlHopsButtons.add(tlbHops);
 							tlbHops.setPreferredSize(new java.awt.Dimension(413, 19));
 							tlbHops.setFloatable(false);
 							{
-								btnAddHop = new JButton();
 								tlbHops.add(btnAddHop);
 								btnAddHop.setText("+");
 								btnAddHop.addActionListener(new ActionListener() {
@@ -1726,7 +1632,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								});
 							}
 							{
-								btnDelHop = new JButton();
 								tlbHops.add(btnDelHop);
 								btnDelHop.setText("-");
 								btnDelHop.addActionListener(new ActionListener() {
@@ -1745,7 +1650,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 				}
 				{
-					statusPanel = new JPanel();
 					FlowLayout statusPanelLayout = new FlowLayout();
 					statusPanelLayout.setAlignment(FlowLayout.LEFT);
 					statusPanelLayout.setHgap(2);
@@ -1755,36 +1659,30 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
 					{
-						fileNamePanel = new JPanel();
 						statusPanel.add(fileNamePanel);
 						fileNamePanel.setBorder(BorderFactory
 								.createBevelBorder(BevelBorder.LOWERED));
 						{
-							fileNameLabel = new JLabel();
 							fileNamePanel.add(fileNameLabel);
 							fileNameLabel.setText("File Name");
 							fileNameLabel.setFont(new java.awt.Font("Dialog", 1, 10));
 						}
 					}
 					{
-						ibuMethodPanel = new JPanel();
 						statusPanel.add(ibuMethodPanel);
 						ibuMethodPanel.setBorder(BorderFactory
 								.createBevelBorder(BevelBorder.LOWERED));
 						{
-							ibuMethodLabel = new JLabel();
 							ibuMethodPanel.add(ibuMethodLabel);
 							ibuMethodLabel.setText("IBU Method:");
 							ibuMethodLabel.setFont(new java.awt.Font("Dialog", 1, 10));
 						}
 					}
 					{
-						alcMethodPanel = new JPanel();
 						statusPanel.add(alcMethodPanel);
 						alcMethodPanel.setBorder(BorderFactory
 								.createBevelBorder(BevelBorder.LOWERED));
 						{
-							alcMethodLabel = new JLabel();
 							alcMethodPanel.add(alcMethodLabel);
 							alcMethodLabel.setText("Alc Method:");
 							alcMethodLabel.setFont(new java.awt.Font("Dialog", 1, 10));
@@ -1793,14 +1691,11 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				}
 			}
 			{
-				jMenuBar1 = new JMenuBar();
 				setJMenuBar(jMenuBar1);
 				{
-					fileMenu = new JMenu();
 					jMenuBar1.add(fileMenu);
 					fileMenu.setText("File");
 					{
-						newFileMenuItem = new JMenuItem();
 						fileMenu.add(newFileMenuItem);
 						newFileMenuItem.setText("New");
 						newFileMenuItem.addActionListener(new ActionListener() {
@@ -1817,7 +1712,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						});
 					}
 					{
-						openFileMenuItem = new JMenuItem();
 						fileMenu.add(openFileMenuItem);
 						openFileMenuItem.setText("Open");
 						openFileMenuItem.setAccelerator(KeyStroke.getKeyStroke(
@@ -1887,7 +1781,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					{
 						imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/find.gif");
 						icon = new ImageIcon(imgURL);
-						findFileMenuItem = new JMenuItem("Find", icon);						
+						findFileMenuItem.setIcon(icon);
+						findFileMenuItem.setText("Find");
 						findFileMenuItem.setAccelerator(KeyStroke.getKeyStroke(
 						        KeyEvent.VK_F, ActionEvent.CTRL_MASK));
 						
@@ -1906,7 +1801,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					{						
 						imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/save.gif");
 						icon = new ImageIcon(imgURL);
-						saveMenuItem = new JMenuItem("Save", icon);
+						saveMenuItem.setText("Save");
+						saveMenuItem.setIcon(icon);
 						fileMenu.add(saveMenuItem);						
 						saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(
 						        KeyEvent.VK_S, ActionEvent.CTRL_MASK));
@@ -1920,7 +1816,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					{
 						imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/saveas.gif");
 						icon = new ImageIcon(imgURL);
-						saveAsMenuItem = new JMenuItem("Save As ...", icon);						
+						saveAsMenuItem.setText("Save As ...");
+						saveAsMenuItem.setIcon(icon);
 						fileMenu.add(saveAsMenuItem);						
 						saveAsMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
@@ -1930,11 +1827,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 					{
 											
-						exportMenu = new JMenu();
 						fileMenu.add(exportMenu);
 						exportMenu.setText("Export");
 						{
-							exportHTMLmenu = new JMenuItem();
 							exportMenu.add(exportHTMLmenu);
 							exportHTMLmenu.setText("HTML");
 							exportHTMLmenu.addActionListener(new ActionListener() {
@@ -1965,7 +1860,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								}
 							});
 
-							exportTextMenuItem = new JMenuItem();
 							exportMenu.add(exportTextMenuItem);
 							exportTextMenuItem.setText("Text");
 							exportTextMenuItem.addActionListener(new ActionListener() {
@@ -2025,11 +1919,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						
 					}
 					{
-						jSeparator2 = new JSeparator();
 						fileMenu.add(jSeparator2);
 					}
 					{
-						exitMenuItem = new JMenuItem();
 						fileMenu.add(exitMenuItem);
 						exitMenuItem.setText("Exit");	
 						exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(
@@ -2047,17 +1939,15 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 				}
 				{
-					jMenu4 = new JMenu();
 					jMenuBar1.add(jMenu4);
 					jMenu4.setText("Edit");
 					{
 						final JFrame owner = this;
-						editPrefsMenuItem = new JMenuItem();
 						jMenu4.add(editPrefsMenuItem);
 						editPrefsMenuItem.setText("Preferences...");
 						editPrefsMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
-								PreferencesDialog d = new PreferencesDialog(owner, preferences);
+								PreferencesDialog d = new PreferencesDialog(owner);
 								d.setVisible(true);
 							}
 						});
@@ -2065,24 +1955,20 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 
 					{
-						jSeparator1 = new JSeparator();
 						jMenu4.add(jSeparator1);
 					}
 					{
-						deleteMenuItem = new JMenuItem();
 						jMenu4.add(deleteMenuItem);
 						deleteMenuItem.setText("Delete");
 						deleteMenuItem.setEnabled(false);
 					}
 				}
 				{
-					mnuTools = new JMenu();
 					jMenuBar1.add(mnuTools);
 					mnuTools.setText("Tools");
 					{
 						final JFrame owner = this;
 						
-						JMenuItem scalRecipeMenuItem = new JMenuItem();
 						mnuTools.add(scalRecipeMenuItem);
 						scalRecipeMenuItem.setText("Resize / Convert Recipe...");
 						scalRecipeMenuItem.setAccelerator(KeyStroke.getKeyStroke(
@@ -2097,7 +1983,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						});
 
 
-						JMenuItem maltPercentMenuItem = new JMenuItem();
 						mnuTools.add(maltPercentMenuItem);
 						maltPercentMenuItem.setText("Malt Percent...");
 						maltPercentMenuItem.setAccelerator(KeyStroke.getKeyStroke(
@@ -2111,7 +1996,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							}
 						});
 						
-						JMenuItem refractometerMenuItem = new JMenuItem();
 						mnuTools.add(refractometerMenuItem);
 						refractometerMenuItem.setText("Refractometer Utility...");
 												
@@ -2124,7 +2008,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						});					
 						
 						
-						JMenuItem extractPotentialMenuItem = new JMenuItem();
 						mnuTools.add(extractPotentialMenuItem);
 						extractPotentialMenuItem.setText("Extract Potential...");
 						extractPotentialMenuItem.addActionListener(new ActionListener() {
@@ -2135,10 +2018,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							}
 						});
 						
-						JMenuItem hydroMeterToolMenuItem = new JMenuItem();
-						mnuTools.add(hydroMeterToolMenuItem);
-						hydroMeterToolMenuItem.setText("Hydrometer Tool...");
-						hydroMeterToolMenuItem.addActionListener(new ActionListener() {
+						mnuTools.add(hydrometerToolMenuItem);
+						hydrometerToolMenuItem.setText("Hydrometer Tool...");
+						hydrometerToolMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
 								HydrometerToolDialog hydroTool = new HydrometerToolDialog(owner);
 								hydroTool.setModal(true);
@@ -2149,11 +2031,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 				}
 				{
-					jMenu5 = new JMenu();
 					jMenuBar1.add(jMenu5);
 					jMenu5.setText("Help");
 					{
-						helpMenuItem = new JMenuItem();
 						jMenu5.add(helpMenuItem);
 						helpMenuItem.setText("Help");						
 						helpMenuItem.addActionListener(new ActionListener() {
@@ -2183,7 +2063,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						
 					}
 					{
-						aboutMenuItem = new JMenuItem();
 						jMenu5.add(aboutMenuItem);
 						aboutMenuItem.setText("About...");
 						final JFrame owner = this;

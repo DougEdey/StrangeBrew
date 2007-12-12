@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -52,153 +53,156 @@ import ca.strangebrew.ui.swing.StrangeSwing;
  */
 public class PreferencesDialog extends javax.swing.JDialog implements ActionListener, ChangeListener {
 
-	
-	private Options opts = null;
+	// Mutables
+	private Options opts;
 
-	private JPanel pnlBrewer;
+	// Final UI elements
+	final private JPanel pnlBrewer = new JPanel();
 
-	private JTextField txtBottleSize;
+	final private JTextField txtBottleSize = new JTextField();
 
-	private JButton okButton;
-	private JButton cancelButton;
-	private JLabel jLabel8;
-	private JPanel pnlSortOrder;
-	private JLabel jLabel4;
-	private JPanel pnlCalculations;
-	private JTextField txtEmail;
-	private JLabel jLabel7;
-	private JTextField txtClubName;
-	private JLabel jLabel6;
-	private JTextField txtPhone;
-	private JLabel jLabel5;
-	private JTextField txtBrewerName;
-	private JLabel jLabel3;
-	private JPanel carbPanel;
-	private JComboBox cmbBottleSize;
-	private ComboModel cmbBottleSizeModel;
-	private JLabel jLabel2;
-	private JTextField txtOtherCost;
-	private JLabel jLabel1;
-	private JPanel jPanel2;
-	private JPanel costCarbPanel;
-	private JTabbedPane jTabbedPane1;
+	final private JButton okButton = new JButton();
+	final private JButton cancelButton = new JButton();
+	final private JLabel jLabel8 = new JLabel();
+	final private JPanel pnlSortOrder = new JPanel();
+	final private JLabel jLabel4 = new JLabel();
+	final private JPanel pnlCalculations = new JPanel();
+	final private JTextField txtEmail = new JTextField();
+	final private JLabel jLabel7 = new JLabel();
+	final private JTextField txtClubName = new JTextField();
+	final private JLabel jLabel6 = new JLabel();
+	final private JTextField txtPhone = new JTextField();
+	final private JLabel jLabel5 = new JLabel();
+	final private JTextField txtBrewerName = new JTextField();
+	final private JLabel jLabel3 = new JLabel();
+	final private JPanel carbPanel = new JPanel();
+	final private JComboBox cmbBottleSize = new JComboBox();
+	final private ComboModel cmbBottleSizeModel = new ComboModel();
+	final private JLabel jLabel2 = new JLabel();
+	final private JTextField txtOtherCost = new JTextField();
+	final private JLabel jLabel1 = new JLabel();
+	final private JPanel jPanel2 = new JPanel();
+	final private JPanel costCarbPanel = new JPanel();
+	final private JTabbedPane jTabbedPane1 = new JTabbedPane();
 
 	// calcs panel:
-	private JPanel pnlHopsCalc;
-	private ButtonGroup bgHopsCalc = new ButtonGroup();
-	private JRadioButton rbTinseth;
-	private JRadioButton rbGaretz;
-	private JRadioButton rbRager;
+	final private JPanel pnlHopsCalc = new JPanel();
+	final private ButtonGroup bgHopsCalc = new ButtonGroup();
+	final private JRadioButton rbTinseth = new JRadioButton();
+	final private JRadioButton rbGaretz = new JRadioButton();
+	final private JRadioButton rbRager = new JRadioButton();
 
-	private JPanel pnlAlc;
-	private ButtonGroup bgAlc = new ButtonGroup();
-	private JRadioButton rbABW;
-	private JRadioButton rbABV;
+	final private JPanel pnlAlc = new JPanel();
+	final private ButtonGroup bgAlc = new ButtonGroup();
+	final private JRadioButton rbABW = new JRadioButton();
+	final private JRadioButton rbABV = new JRadioButton();
 
-	private JPanel pnlEvaporation;
-	private ButtonGroup bgEvap = new ButtonGroup();
-	private JRadioButton rbConstant;
-	private JRadioButton rbPercent;
+	final private JPanel pnlEvaporation = new JPanel();
+	final private ButtonGroup bgEvap = new ButtonGroup();
+	final private JRadioButton rbConstant = new JRadioButton();
+	final private JRadioButton rbPercent = new JRadioButton();
 
-	private JPanel pnlColourOptions;
-	private ButtonGroup bgColour = new ButtonGroup();
-	private JRadioButton rbEBC;
-	private JRadioButton rbSRM;
+	final private JPanel pnlColourOptions = new JPanel();
+	final private ButtonGroup bgColour = new ButtonGroup();
+	final private JRadioButton rbEBC = new JRadioButton();
+	final private JRadioButton rbSRM = new JRadioButton();
 
-	private JPanel pnlHops;
-	private JTextField txtPellet;
-	private JLabel jLabelc2;
-	private JTextField txtTinsethUtil;
-	private JLabel jLabelc4;
-	private JTextField txtFWHTime;
-	private JTextField boilTimeTxt;
-	private JLabel jLabel30;
-	private JComboBox mashRatioUCombo;
-	private JTextField mashRatioTxt;
-	private JLabel jLabel29;
-	private JComboBox mashVolCombo;
-	private ComboModel mashVolComboModel;
-	private JLabel jLabel28;
-	private JRadioButton crb;
-	private JRadioButton frb;
-	private JLabel jLabel27;
-	private ButtonGroup tempUBG;
-	private JLabel boilTempULbl;
-	private JLabel evapAmountLbl;
-	private JTextField evapAmountTxt;
-	private JPanel jPanel3;
-	private JTextField batchSizeTxt;
-	private JComboBox volUnitsCombo;
-	private JComboBox hopsUnitsCombo;
-	private JComboBox hopsTypeCombo;
-	private JComboBox maltUnitsCombo;
-	private ComboModel maltUnitsComboModel;
-	private ComboModel hopsUnitsComboModel;
-	private ComboModel hopsTypeComboModel;
-	private ComboModel volUnitsComboModel;
-	private JPanel miscPanel;
-	private JLabel hopsTypeLabel;
-	private JLabel jLabel26;
-	private JLabel jLabel25;
-	private JLabel jLabel24;
-	private JPanel jPanel1;
-	private JLabel jLabel23;
-	private JLabel jLabel22;
-	private JLabel jLabel21;
-	private JLabel jLabel20;
-	private JSpinner alphaSpn;
-	private JSpinner blueSpn;
-	private JSpinner greenSpn;
-	private JSpinner redSpn;
-	private JLabel jLabel19;
-	private JPanel blackPanel;
-	private JPanel brownPanel;
-	private JPanel copperPanel;
-	private JPanel amberPanel;
-	private JPanel palePanel;
-	private JPanel stawPanel;
-	private JLabel jLabel18;
-	private JLabel jLabel17;
-	private JLabel jLabel16;
-	private JLabel jLabel15;
-	private JLabel jLabel14;
-	private JLabel jLabel13;
-	private JRadioButton colMethod2rb;
-	private JRadioButton colMethod1rb;
-	private ButtonGroup colourGroup = new ButtonGroup();
-	private JPanel colourPanel;
-	private JPanel appearancePanel;
-	private JTextField boilTempTxt;
-	private JLabel jLabel12;
-	private JPanel mashPanel;
-	private JPanel newRecipePanel;
-	private JTextField txtLostInTrub;
-	private JTextField txtMiscLosses;
-	private JTextField txtLeftInKettle;
-	private JLabel jLabel11;
-	private JLabel jLabel10;
-	private JLabel jLabel9;
-	private JPanel pnlWaterUsage;
-	private JPanel pnlDatabase;
-	private JTextField txtMashHopTime;
-	private JLabel jLabelc5;
-	private JTextField txtDryHopTime;
-	private JLabel jLabelc3;
-	private JPanel pnlHopTimes;
+	final private JPanel pnlHops = new JPanel();
+	final private JTextField txtPellet = new JTextField();
+	final private JLabel jLabelc2 = new JLabel();
+	final private JTextField txtTinsethUtil = new JTextField();
+	final private JLabel jLabelc4 = new JLabel();
+	final private JTextField txtFWHTime = new JTextField();
+	final private JTextField boilTimeTxt = new JTextField();
+	final private JLabel jLabel30 = new JLabel();
+	final private JComboBox mashRatioUCombo = new JComboBox();
+	final private JTextField mashRatioTxt = new JTextField();
+	final private JLabel jLabel29 = new JLabel();
+	final private JComboBox mashVolCombo = new JComboBox();
+	final private ComboModel mashVolComboModel = new ComboModel();
+	final private JLabel jLabel28 = new JLabel();
+	final private JRadioButton crb = new JRadioButton();
+	final private JRadioButton frb = new JRadioButton();
+	final private JLabel jLabel27 = new JLabel();
+	final private ButtonGroup tempUBG = new ButtonGroup();
+	final private JLabel boilTempULbl = new JLabel();
+	final private JLabel evapAmountLbl = new JLabel();
+	final private JTextField evapAmountTxt = new JTextField();
+	final private JPanel jPanel3 = new JPanel();
+	final private JTextField batchSizeTxt = new JTextField();
+	final private JComboBox volUnitsCombo = new JComboBox();
+	final private JComboBox hopsUnitsCombo = new JComboBox();
+	final private JComboBox hopsTypeCombo = new JComboBox();
+	final private JComboBox maltUnitsCombo = new JComboBox();
+	final private ComboModel maltUnitsComboModel = new ComboModel();
+	final private ComboModel hopsUnitsComboModel = new ComboModel();
+	final private ComboModel hopsTypeComboModel = new ComboModel();
+	final private ComboModel volUnitsComboModel = new ComboModel();
+	final private JPanel miscPanel = new JPanel();
+	final private JLabel hopsTypeLabel = new JLabel();
+	final private JLabel jLabel26 = new JLabel();
+	final private JLabel jLabel25 = new JLabel();
+	final private JLabel jLabel24 = new JLabel();
+	final private JPanel jPanel1 = new JPanel();
+	final private JLabel jLabel23 = new JLabel();
+	final private JLabel jLabel22 = new JLabel();
+	final private JLabel jLabel21 = new JLabel();
+	final private JLabel jLabel20 = new JLabel();
+	final private JSpinner alphaSpn = new JSpinner();
+	final private JSpinner blueSpn = new JSpinner();
+	final private JSpinner greenSpn = new JSpinner();
+	final private JSpinner redSpn = new JSpinner();
+	final private JLabel jLabel19 = new JLabel();
+	final private JPanel blackPanel = new JPanel();
+	final private JPanel brownPanel = new JPanel();
+	final private JPanel copperPanel = new JPanel();
+	final private JPanel amberPanel = new JPanel();
+	final private JPanel palePanel = new JPanel();
+	final private JPanel stawPanel = new JPanel();
+	final private JLabel jLabel18 = new JLabel();
+	final private JLabel jLabel17 = new JLabel();
+	final private JLabel jLabel16 = new JLabel();
+	final private JLabel jLabel15 = new JLabel();
+	final private JLabel jLabel14 = new JLabel();
+	final private JLabel jLabel13 = new JLabel();
+	final private JRadioButton colMethod2rb = new JRadioButton();
+	final private JRadioButton colMethod1rb = new JRadioButton();
+	final private ButtonGroup colourGroup = new ButtonGroup();
+	final private JPanel colourPanel = new JPanel();
+	final private JPanel appearancePanel = new JPanel();
+	final private JTextField boilTempTxt = new JTextField();
+	final private JLabel jLabel12 = new JLabel();
+	final private JPanel mashPanel = new JPanel();
+	final private JPanel newRecipePanel = new JPanel();
+	final private JTextField txtLostInTrub = new JTextField();
+	final private JTextField txtMiscLosses = new JTextField();
+	final private JTextField txtLeftInKettle = new JTextField();
+	final private JLabel jLabel11 = new JLabel();
+	final private JLabel jLabel10 = new JLabel();
+	final private JLabel jLabel9 = new JLabel();
+	final private JPanel pnlWaterUsage = new JPanel();
+	final private JPanel pnlDatabase = new JPanel();
+	final private JTextField txtMashHopTime = new JTextField();
+	final private JLabel jLabelc5 = new JLabel();
+	final private JTextField txtDryHopTime = new JTextField();
+	final private JLabel jLabelc3 = new JLabel();
+	final private JPanel pnlHopTimes = new JPanel();
 
-	private JLabel jLabelc1;
-
-	private JPanel pnlDefaultDB = null;
-	private JTextField txtDBLocation = null;
-	private JButton btnBrowse = null;
+	final private JLabel jLabelc1 = new JLabel();
+	final private JPanel pnlDefaultDB = new JPanel();
+	final private JTextField txtDBLocation = new JTextField();
+	final private JButton btnBrowse = new JButton();
 	
+	final private JLabel localeLabel = new JLabel();
+	final private JComboBox localeComboBox = new JComboBox();
+	final private JLabel defaultLocaleLable = new JLabel();
 /*	private ArrayList looks;*/
 	
-	private Frame sb;
+	final private Frame sb;
 
-	public PreferencesDialog(Frame owner, Options preferences) {
+	public PreferencesDialog(Frame owner) {
 		super(owner, "Recipe Preferences", true);
-		opts = preferences;
+		opts = Options.getInstance();
 		sb = owner;
 		
 /*		UIManager.LookAndFeelInfo[] installed =
@@ -257,6 +261,8 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		txtPhone.setText(opts.getProperty("optPhone"));
 		txtClubName.setText(opts.getProperty("optClub"));
 		txtEmail.setText(opts.getProperty("optEmail"));
+		// TODO
+		localeComboBox.setSelectedItem(opts.getLocale());		
 
 		// calculations tab:
 		rbTinseth.setSelected(opts.getProperty("optIBUCalcMethod").equalsIgnoreCase("Tinseth"));
@@ -305,6 +311,8 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		opts.setProperty("optPhone", txtPhone.getText());
 		opts.setProperty("optClub", txtClubName.getText());
 		opts.setProperty("optEmail", txtEmail.getText());
+		// TODO
+		opts.setLocale((Locale)localeComboBox.getSelectedItem());
 
 		// calculations tab:
 		if (rbTinseth.isSelected())
@@ -379,9 +387,9 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private void layoutUi() {
 
 		JPanel buttons = new JPanel();
-		okButton = new JButton("OK");
+		okButton.setText("OK");
 		okButton.addActionListener(this);
-		cancelButton = new JButton("Cancel");
+		cancelButton.setText("Cancel");
 		cancelButton.addActionListener(this);
 		buttons.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		buttons.add(cancelButton);
@@ -389,13 +397,9 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 		getContentPane().setLayout(new BorderLayout());
 		this.setFocusTraversalKeysEnabled(false);
-		{
-			
-			tempUBG = new ButtonGroup();
-			jTabbedPane1 = new JTabbedPane();
+		{			
 			getContentPane().add(jTabbedPane1, BorderLayout.CENTER);
 			{
-				pnlCalculations = new JPanel();
 				jTabbedPane1.addTab("Calculations", null, pnlCalculations, null);
 				{
 					try {
@@ -409,9 +413,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 							pnlCalculations.setPreferredSize(new java.awt.Dimension(524, 372));
 							{
 								{
-									bgHopsCalc = new ButtonGroup();
 									{
-										pnlHops = new JPanel();
 										GridLayout pnlHopsLayout = new GridLayout(2, 2);
 										pnlHopsLayout.setColumns(2);
 										pnlHopsLayout.setHgap(5);
@@ -426,29 +428,24 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 										.setBorder(BorderFactory
 												.createTitledBorder("Hops:"));
 										{
-											jLabelc1 = new JLabel();
 											pnlHops.add(jLabelc1);
 											jLabelc1.setText("Pellet Hops +%");
 										}
 										{
-											txtPellet = new JTextField();
 											pnlHops.add(txtPellet);
 											txtPellet.setPreferredSize(new java.awt.Dimension(20,
 													20));
 										}
 										{
-											jLabelc2 = new JLabel();
 											pnlHops.add(jLabelc2);
 											jLabelc2.setText("Tinseth Utilization Factor");
 										}
 										{
-											txtTinsethUtil = new JTextField();
 											pnlHops.add(txtTinsethUtil);
 											txtTinsethUtil.setText("4.15");
 										}
 									}
 									{
-										pnlAlc = new JPanel();
 										BoxLayout pnlAlcLayout = new BoxLayout(pnlAlc,
 												javax.swing.BoxLayout.Y_AXIS);
 										pnlAlc.setLayout(pnlAlcLayout);
@@ -459,20 +456,17 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 										pnlAlc.setBorder(BorderFactory
 												.createTitledBorder("Alcohol By:"));
 										{
-											rbABV = new JRadioButton();
 											pnlAlc.add(rbABV);
 											bgAlc.add(rbABV);
 											rbABV.setText("Volume");
 										}
 										{
-											rbABW = new JRadioButton();
 											pnlAlc.add(rbABW);
 											bgAlc.add(rbABW);
 											rbABW.setText("Weight");
 										}
 									}
 									{
-										pnlHopTimes = new JPanel();
 										GridLayout pnlHopTimesLayout = new GridLayout(3, 2);
 										pnlHopTimesLayout.setColumns(2);
 										pnlHopTimesLayout.setHgap(5);
@@ -486,38 +480,31 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 										pnlHopTimes.setBorder(BorderFactory
 												.createTitledBorder("Hop Times:"));
 										{
-											jLabelc3 = new JLabel();
 											pnlHopTimes.add(jLabelc3);
 											jLabelc3.setText("Dry (min):");
 										}
 										{
-											txtDryHopTime = new JTextField();
 											pnlHopTimes.add(txtDryHopTime);
 											txtDryHopTime.setText("0.0");
 										}
 										{
-											jLabelc4 = new JLabel();
 											pnlHopTimes.add(jLabelc4);
 											jLabelc4.setText("FWH, boil minus (min):");
 										}
 										{
-											txtFWHTime = new JTextField();
 											pnlHopTimes.add(txtFWHTime);
 											txtFWHTime.setText("20.0");
 										}
 										{
-											jLabelc5 = new JLabel();
 											pnlHopTimes.add(jLabelc5);
 											jLabelc5.setText("Mash Hop (min):");
 										}
 										{
-											txtMashHopTime = new JTextField();
 											pnlHopTimes.add(txtMashHopTime);
 											txtMashHopTime.setText("2.0");
 										}
 									}
 								}
-								pnlHopsCalc = new JPanel();
 								BoxLayout pnlHopsCalcLayout = new BoxLayout(pnlHopsCalc,
 										javax.swing.BoxLayout.Y_AXIS);
 								pnlHopsCalc.setLayout(pnlHopsCalcLayout);
@@ -526,17 +513,17 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 												GridBagConstraints.NORTH,
 												GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0,
 														0), 0, 0));
-								pnlCalculations.add(getPnlWaterUsage(),
+								pnlCalculations.add(pnlWaterUsage,
 										new GridBagConstraints(1, 2, 1, 2, 0.0, 0.0,
 												GridBagConstraints.NORTHWEST,
 												GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0,
 														0), 0, 0));
-								pnlCalculations.add(getPnlColourOptions(),
+								pnlCalculations.add(pnlColourOptions,
 										new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
 												GridBagConstraints.NORTH,
 												GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0,
 														0), 0, 0));
-								pnlCalculations.add(getPnlEvaporation(),
+								pnlCalculations.add(pnlEvaporation,
 										new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
 												GridBagConstraints.NORTH,
 												GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0,
@@ -545,19 +532,16 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 								pnlHopsCalc.setBorder(BorderFactory
 										.createTitledBorder("IBU Calc Method:"));
 								{
-									rbTinseth = new JRadioButton();
 									pnlHopsCalc.add(rbTinseth);
 									rbTinseth.setText("Tinseth");
 									bgHopsCalc.add(rbTinseth);
 								}
 								{
-									rbRager = new JRadioButton();
 									pnlHopsCalc.add(rbRager);
 									rbRager.setText("Rager");
 									bgHopsCalc.add(rbRager);
 								}
 								{
-									rbGaretz = new JRadioButton();
 									pnlHopsCalc.add(rbGaretz);
 									rbGaretz.setText("Garetz");
 									bgHopsCalc.add(rbGaretz);
@@ -571,23 +555,19 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			}
 
 			{
-				costCarbPanel = new JPanel();
 				BorderLayout costCarbPanelLayout = new BorderLayout();
 				costCarbPanel.setLayout(costCarbPanelLayout);
 				jTabbedPane1.addTab("Cost & Carb", null, costCarbPanel, null);
 				{
-					carbPanel = new JPanel();
 					costCarbPanel.add(carbPanel, BorderLayout.CENTER);
 					carbPanel.setBorder(BorderFactory.createTitledBorder(null, "Carbonation",
 							TitledBorder.LEADING, TitledBorder.TOP));
 					{
-						jLabel3 = new JLabel();
 						carbPanel.add(jLabel3);
 						jLabel3.setText("Not implemented");
 					}
 				}
 				{
-					jPanel2 = new JPanel();
 					costCarbPanel.add(jPanel2, BorderLayout.NORTH);
 					GridBagLayout jPanel2Layout = new GridBagLayout();
 					jPanel2Layout.rowWeights = new double[]{0.1, 0.1, 0.4};
@@ -599,30 +579,25 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					jPanel2.setBorder(BorderFactory.createTitledBorder("Cost"));
 					jPanel2.setLayout(jPanel2Layout);
 					{
-						jLabel1 = new JLabel();
-						jPanel2.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+							jPanel2.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 						jLabel1.setText("Other Cost:");
 					}
 					{
-						txtOtherCost = new JTextField();
 						jPanel2.add(txtOtherCost, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 						txtOtherCost.setText("$0.00");
 						txtOtherCost.setPreferredSize(new java.awt.Dimension(62, 20));
 					}
 					{
-						jLabel2 = new JLabel();
 						jPanel2.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 						jLabel2.setText("Bottle Size:");
 					}
 					{
-						cmbBottleSize = new JComboBox();
 						SmartComboBox.enable(cmbBottleSize);
-						cmbBottleSizeModel = new ComboModel();
 						cmbBottleSizeModel.setList(new Quantity().getListofUnits("vol"));
 						cmbBottleSize.setModel(cmbBottleSizeModel);
 						jPanel2.add(cmbBottleSize, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 						cmbBottleSize.setPreferredSize(new java.awt.Dimension(89, 20));
-						jPanel2.add(getTxtBottleSize(), new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+						jPanel2.add(txtBottleSize, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
 					}
 				}
@@ -631,7 +606,6 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				}
 			}
 			{
-				pnlBrewer = new JPanel();
 				GridBagLayout pnlBrewerLayout = new GridBagLayout();
 				pnlBrewerLayout.rowWeights = new double[]{0.1, 0.1, 0.3, 0.3};
 				pnlBrewerLayout.rowHeights = new int[]{2, 2, 7, 7};
@@ -640,73 +614,95 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				pnlBrewer.setLayout(pnlBrewerLayout);
 				jTabbedPane1.addTab("Brewer", null, pnlBrewer, null);
 				{
-					jLabel4 = new JLabel();
 					pnlBrewer.add(jLabel4, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, new Insets(0, 0,
 									0, 0), 0, 0));
 					jLabel4.setText("Name:");
 				}
 				{
-					txtBrewerName = new JTextField();
 					pnlBrewer.add(txtBrewerName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
 					txtBrewerName.setText("Your Name");
 				}
 				{
-					jLabel5 = new JLabel();
 					pnlBrewer.add(jLabel5, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, new Insets(0, 0,
 									0, 0), 0, 0));
 					jLabel5.setText("Phone:");
 				}
 				{
-					txtPhone = new JTextField();
 					pnlBrewer.add(txtPhone, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
 					txtPhone.setText("Your Phone");
 				}
 				{
-					jLabel6 = new JLabel();
 					pnlBrewer.add(jLabel6, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, new Insets(0, 0,
 									0, 0), 0, 0));
 					jLabel6.setText("Club Name:");
 				}
 				{
-					txtClubName = new JTextField();
 					pnlBrewer.add(txtClubName, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
 					txtClubName.setText("Club Name");
 				}
 				{
-					jLabel7 = new JLabel();
 					pnlBrewer.add(jLabel7, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, new Insets(0, 0,
 									0, 0), 0, 0));
 					jLabel7.setText("Email:");
 				}
 				{
-					txtEmail = new JTextField();
 					pnlBrewer.add(txtEmail, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
 					txtEmail.setText("Email");
 				}
+				{
+					pnlBrewer.add(localeLabel, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+							GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, new Insets(0, 0,
+									0, 0), 0, 0));
+					localeLabel.setText("Set Local:");
+				}
+				{
+					pnlBrewer.add(localeComboBox, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
+							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
+									0, 0, 0), 0, 0));					
+					Locale[] l = Locale.getAvailableLocales();
+					Locale t;
+					// Cheapass bubble sort to avoid using 1.5 <type>'s with a comparator
+					for (int i = 0; i < l.length - 1; i++) {
+						for (int j = 0; j < l.length -1 - i; j++) {
+							if (l[j+1].toString().compareTo(l[j].toString()) < 0) {
+								t = l[j];
+								l[j] = l[j+1];
+								l[j+1] = t;
+							}
+						}
+					}
+					for (int i = 0; i < l.length; i++) {
+						localeComboBox.addItem(l[i]);
+					}
+				}
+				{
+					pnlBrewer.add(defaultLocaleLable, new GridBagConstraints(2, 2, 2, 1, 0.0, 0.0,
+							GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0,
+									0, 0), 0, 0));
+					defaultLocaleLable.setText("System Locale is " + Locale.getDefault().toString());
+				}				
 			}
 			{
-				pnlDatabase = new JPanel();
 				BorderLayout pnlDatabaseLayout = new BorderLayout();
 				pnlDatabase.setLayout(pnlDatabaseLayout);
-				pnlDatabase.add(getPnlDefaultDB(), BorderLayout.NORTH);
-				pnlDatabase.add(getPnlSortOrder(), BorderLayout.WEST);
+				pnlDatabase.add(pnlDefaultDB, BorderLayout.NORTH);
+				pnlDatabase.add(pnlSortOrder, BorderLayout.WEST);
 				jTabbedPane1.addTab("Database", null, pnlDatabase, null);
 				pnlDatabase.setVisible(false);
 			}
 
-			appearancePanel = new JPanel();
 			BorderLayout appearancePanelLayout = new BorderLayout();
 			appearancePanel.setLayout(appearancePanelLayout);
 			jTabbedPane1.addTab("Appearance", null, appearancePanel, null);
@@ -723,7 +719,6 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			landfPanel.add(landfCombo);*/
 			
 			
-			colourPanel = new JPanel();
 			appearancePanel.add(colourPanel, BorderLayout.CENTER);
 			GridBagLayout colourPanelLayout = new GridBagLayout();
 			colourPanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
@@ -734,111 +729,88 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			colourPanel.setPreferredSize(new java.awt.Dimension(340, 223));
 			colourPanel.setBorder(BorderFactory.createTitledBorder("Colour Swatch"));
 
-			colMethod1rb = new JRadioButton();
 			colMethod1rb.addActionListener(this);
 			colourGroup.add(colMethod1rb);
 			colourPanel.add(colMethod1rb, new GridBagConstraints(0, 0, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			colMethod1rb.setText("Colour Method 1");
 
-			colMethod2rb = new JRadioButton();
 			colMethod2rb.addActionListener(this);
 			colourGroup.add(colMethod2rb);
 			colourPanel.add(colMethod2rb, new GridBagConstraints(3, 0, 3, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			colMethod2rb.setText("Colour Method 2");
 
-			jLabel13 = new JLabel();
 			colourPanel.add(jLabel13, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel13.setText("Straw \n(2)");
 
-			jLabel14 = new JLabel();
 			colourPanel.add(jLabel14, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel14.setText("Pale\n(4)");
 
-			jLabel15 = new JLabel();
 			colourPanel.add(jLabel15, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel15.setText("Amber\n(8)");
 
-			jLabel16 = new JLabel();
 			colourPanel.add(jLabel16, new GridBagConstraints(3, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel16.setText("Copper (15)");
 
-			jLabel17 = new JLabel();
 			colourPanel.add(jLabel17, new GridBagConstraints(4, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel17.setText("Brown (20)");
 
-			jLabel18 = new JLabel();
 			colourPanel.add(jLabel18, new GridBagConstraints(5, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel18.setText("Black (30)");
 
-			stawPanel = new JPanel();
 			colourPanel.add(stawPanel, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			stawPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
-			palePanel = new JPanel();
 			colourPanel.add(palePanel, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			palePanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
-			amberPanel = new JPanel();
 			colourPanel.add(amberPanel, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			amberPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
-			copperPanel = new JPanel();
 			colourPanel.add(copperPanel, new GridBagConstraints(3, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			copperPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
-			brownPanel = new JPanel();
 			colourPanel.add(brownPanel, new GridBagConstraints(4, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			brownPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
-			blackPanel = new JPanel();
 			colourPanel.add(blackPanel, new GridBagConstraints(5, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			blackPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
 			SpinnerNumberModel redSpnModel = new SpinnerNumberModel(8,0,255,1);
 
-			redSpn = new JSpinner();
 			colourPanel.add(redSpn, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			redSpn.setModel(redSpnModel);
 			redSpn.addChangeListener(this);
 
 			SpinnerNumberModel greenSpnModel = new SpinnerNumberModel(30,0,255,1);
 
-			greenSpn = new JSpinner();
 			colourPanel.add(greenSpn, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			greenSpn.setModel(greenSpnModel);
 			greenSpn.addChangeListener(this);
 
 			SpinnerNumberModel blueSpnModel = new SpinnerNumberModel(20,0,255,1);
 
-			blueSpn = new JSpinner();
 			colourPanel.add(blueSpn, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			blueSpn.setModel(blueSpnModel);
 			blueSpn.addChangeListener(this);
 
 			SpinnerNumberModel alphaSpnModel = new SpinnerNumberModel(255,0,255,1);
 
-			alphaSpn = new JSpinner();
 			colourPanel.add(alphaSpn, new GridBagConstraints(3, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			alphaSpn.setModel(alphaSpnModel);
 			alphaSpn.addChangeListener(this);
 
-			jLabel20 = new JLabel();
 			colourPanel.add(jLabel20, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel20.setText("Red:");
 
-			jLabel21 = new JLabel();
 			colourPanel.add(jLabel21, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel21.setText("Blue:");
 
-			jLabel22 = new JLabel();
 			colourPanel.add(jLabel22, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel22.setText("Green:");
 
-			jLabel23 = new JLabel();
 			colourPanel.add(jLabel23, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel23.setText("Alpha:");
 
-			newRecipePanel = new JPanel();
 			GridBagLayout newRecipePanelLayout = new GridBagLayout();
 			newRecipePanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1};
 			newRecipePanelLayout.rowHeights = new int[] {7, 7, 7};
@@ -847,7 +819,6 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			newRecipePanel.setLayout(newRecipePanelLayout);
 			jTabbedPane1.addTab("New Recipe Defaults", null, newRecipePanel, null);		
 			
-			miscPanel = new JPanel();
 			GridBagLayout miscPanelLayout = new GridBagLayout();
 			miscPanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1};
 			miscPanelLayout.rowHeights = new int[] {7, 7, 7, 7};
@@ -857,7 +828,6 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			newRecipePanel.add(miscPanel, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			miscPanel.setBorder(BorderFactory.createTitledBorder("Misc"));
 
-			mashPanel = new JPanel();
 			GridBagLayout mashPanelLayout = new GridBagLayout();
 			mashPanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1};
 			mashPanelLayout.rowHeights = new int[] {7, 7, 7, 7};
@@ -867,7 +837,6 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			newRecipePanel.add(mashPanel, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			mashPanel.setBorder(BorderFactory.createTitledBorder("Mash"));
 
-			jPanel1 = new JPanel();
 			GridBagLayout jPanel1Layout = new GridBagLayout();
 			jPanel1Layout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1};
 			jPanel1Layout.rowHeights = new int[] {7, 7, 7, 7};
@@ -877,33 +846,25 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			newRecipePanel.add(jPanel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 			jPanel1.setBorder(BorderFactory.createTitledBorder("Units"));
 
-			jLabel19 = new JLabel();
 			jPanel1.add(jLabel19, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel19.setText("Malt Units:");
 
-			maltUnitsCombo = new JComboBox();
 			SmartComboBox.enable(maltUnitsCombo);
 			jPanel1.add(maltUnitsCombo, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-			maltUnitsComboModel = new ComboModel();
 			maltUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
 			maltUnitsCombo.setModel(maltUnitsComboModel);
 
-			jLabel24 = new JLabel();
 			jPanel1.add(jLabel24, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel24.setText("Hops Units:");
 
-			hopsUnitsCombo = new JComboBox();
 			SmartComboBox.enable(hopsUnitsCombo);
 			jPanel1.add(hopsUnitsCombo, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-			hopsUnitsComboModel = new ComboModel();
 			hopsUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
 			hopsUnitsCombo.setModel(hopsUnitsComboModel);
 
-			jLabel25 = new JLabel();
 			jPanel1.add(jLabel25, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel25.setText("Vol Units:");
 
-			volUnitsCombo = new JComboBox();
 			SmartComboBox.enable(volUnitsCombo);
 			volUnitsCombo.addActionListener(new ActionListener() {
 				public void actionPerformed (ActionEvent e){
@@ -911,76 +872,60 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				}
 			});
 			jPanel1.add(volUnitsCombo, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-			volUnitsComboModel = new ComboModel();
 			volUnitsComboModel.setList(new Quantity().getListofUnits("vol"));
 			volUnitsCombo.setModel(volUnitsComboModel);
 
-			jLabel26 = new JLabel();
 			jPanel1.add(jLabel26, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel26.setText("Boil Time (min):");
 
-			batchSizeTxt = new JTextField();
 			jPanel1.add(batchSizeTxt, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			batchSizeTxt.setText("jTextField1");
 
-			jLabel30 = new JLabel();
 			jPanel1.add(jLabel30, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel30.setText("Batch Size:");
 
-			boilTimeTxt = new JTextField();
 			jPanel1.add(boilTimeTxt, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			boilTimeTxt.setText("60");
 			boilTimeTxt.setPreferredSize(new java.awt.Dimension(55, 20));
 
-			jLabel12 = new JLabel();
 			mashPanel.add(jLabel12, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel12.setText("Boil Temp:");
 
-			boilTempTxt = new JTextField();
 			mashPanel.add(boilTempTxt, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			boilTempTxt.setText("212");
 			boilTempTxt.setPreferredSize(new java.awt.Dimension(45, 20));
 
-			boilTempULbl = new JLabel();
 			mashPanel.add(boilTempULbl, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			boilTempULbl.setText("F");
 			boilTempULbl.setPreferredSize(new java.awt.Dimension(21, 14));
 
-			jLabel27 = new JLabel();
 			mashPanel.add(jLabel27, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel27.setText("Temp Units:");
 
-			frb = new JRadioButton();
 			mashPanel.add(frb, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			frb.setText("F");
 			tempUBG.add(frb);
 			frb.setSelected(true);
 			frb.addActionListener(this);
 
-			crb = new JRadioButton();
 			mashPanel.add(crb, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			crb.setText("C");
 			tempUBG.add(crb);
 			crb.addActionListener(this);
 
-			jLabel28 = new JLabel();
 			mashPanel.add(jLabel28, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel28.setText("Vol Units:");
 
-			mashVolComboModel = new ComboModel();
 			mashVolComboModel.setList(new Quantity().getListofUnits("vol"));
 
-			mashVolCombo = new JComboBox();
 			SmartComboBox.enable(mashVolCombo);
 			mashPanel.add(mashVolCombo, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			mashVolCombo.setModel(mashVolComboModel);
 			mashVolCombo.setPreferredSize(new java.awt.Dimension(137, 20));
 
-			jLabel29 = new JLabel();
 			mashPanel.add(jLabel29, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel29.setText("Ratio:");
 
-			mashRatioTxt = new JTextField();
 			mashPanel.add(mashRatioTxt, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			mashRatioTxt.setText("1.25");
 			mashRatioTxt.setPreferredSize(new java.awt.Dimension(45, 20));
@@ -988,19 +933,15 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			ComboBoxModel mashRatioUComboModel = new DefaultComboBoxModel(new String[] {
 					"qt/l", "l/kg" });
 
-			mashRatioUCombo = new JComboBox();
 			SmartComboBox.enable(mashRatioUCombo);
 			mashPanel.add(mashRatioUCombo, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			mashRatioUCombo.setModel(mashRatioUComboModel);
 			mashRatioUCombo.setPreferredSize(new java.awt.Dimension(71, 20));
 			
-			hopsTypeLabel = new JLabel();
 			miscPanel.add(hopsTypeLabel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			hopsTypeLabel.setText("Hop Type:");
 
-			hopsTypeCombo = new JComboBox();
 			SmartComboBox.enable(hopsTypeCombo);
-			hopsTypeComboModel = new ComboModel();
 			hopsTypeComboModel.setList(Hop.getHopTypes());
 			hopsTypeCombo.setModel(hopsTypeComboModel);
 			miscPanel.add(hopsTypeCombo, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -1008,249 +949,159 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			hopsTypeCombo.setPreferredSize(new java.awt.Dimension(137, 20));
 
 		}
+		// Layout the other tabs
+		{
+			{
+				BorderLayout pnlDefaultDBLayout = new BorderLayout();
+				pnlDefaultDB.setLayout(pnlDefaultDBLayout);
+				pnlDefaultDB.setPreferredSize(new java.awt.Dimension(387, 48));
+				pnlDefaultDB.setBorder(BorderFactory.createTitledBorder("Default Database:"));
+				pnlDefaultDB.add(btnBrowse, BorderLayout.EAST);
+				pnlDefaultDB.add(txtDBLocation, BorderLayout.CENTER);
+			}
+
+			{		
+				txtDBLocation.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+			}
+
+			{
+				btnBrowse.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			}
+
+			{
+				pnlSortOrder.setBorder(BorderFactory.createTitledBorder(null, "Recipe Sort Order",
+						TitledBorder.LEADING, TitledBorder.TOP));
+				pnlSortOrder.setPreferredSize(new java.awt.Dimension(167, 270));
+				pnlSortOrder.add(jLabel8);
+			}
+
+			{
+				jLabel8.setText("Not Implemented");
+			}
+
+			{
+				GridLayout pnlWaterUsageLayout = new GridLayout(3, 2);
+				pnlWaterUsageLayout.setColumns(2);
+				pnlWaterUsageLayout.setHgap(5);
+				pnlWaterUsageLayout.setVgap(5);
+				pnlWaterUsageLayout.setRows(3);
+				pnlWaterUsage.setLayout(pnlWaterUsageLayout);
+				pnlWaterUsage.setBorder(BorderFactory.createTitledBorder("Water Usage:"));
+				pnlWaterUsage.add(jLabel10);
+				pnlWaterUsage.add(txtLeftInKettle);
+				pnlWaterUsage.add(jLabel9);
+				pnlWaterUsage.add(txtMiscLosses);
+				pnlWaterUsage.add(jLabel11);
+				pnlWaterUsage.add(txtLostInTrub);
+			}
+
+			{
+				jLabel9.setText("Misc. Losses:");
+			}
+
+			{
+				jLabel10.setText("Water Left In Kettle:");
+			}
+
+			{
+				jLabel11.setText("Lost in Trub:");
+			}
+
+			{
+				txtLeftInKettle.setText("0");
+
+			}
+
+			{
+				txtMiscLosses.setText("0");
+			}
+
+			{
+				txtLostInTrub.setText("0");
+			}
+
+			{
+				BoxLayout pnlColourOptionsLayout = new BoxLayout(pnlColourOptions,
+						javax.swing.BoxLayout.Y_AXIS);
+				pnlColourOptions.setLayout(pnlColourOptionsLayout);
+				pnlColourOptions.setBorder(BorderFactory.createTitledBorder("Colour Method:"));
+				pnlColourOptions.add(rbSRM);
+				pnlColourOptions.add(rbEBC);
+				bgColour.add(rbSRM);
+				bgColour.add(rbEBC);
+			}
+
+			{
+				rbSRM.setText("SRM");
+			}
+
+			{
+				rbEBC.setText("EBC");
+			}
+
+			{
+				GridBagLayout pnlEvaporationLayout = new GridBagLayout();
+				pnlEvaporationLayout.rowWeights = new double[] {0.1, 0.1, 0.1};
+				pnlEvaporationLayout.rowHeights = new int[] {7, 7, 7};
+				pnlEvaporationLayout.columnWeights = new double[] {0.1, 0.1};
+				pnlEvaporationLayout.columnWidths = new int[] {7, 7};
+				pnlEvaporation.setLayout(pnlEvaporationLayout);
+				pnlEvaporation.setLayout(pnlEvaporationLayout);
+				pnlEvaporation.setBorder(BorderFactory.createTitledBorder("Evaporation:"));
+				pnlEvaporation.add(rbPercent, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+				pnlEvaporation.add(rbConstant, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
+				FlowLayout jPanel3Layout = new FlowLayout();
+				jPanel3Layout.setAlignment(FlowLayout.LEFT);
+				jPanel3.setLayout(jPanel3Layout);
+				pnlEvaporation.add(jPanel3, new GridBagConstraints(0, 2, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+
+				jPanel3.add(evapAmountTxt);
+				evapAmountTxt.setText("0");
+				evapAmountTxt.setPreferredSize(new java.awt.Dimension(56, 20));
+
+				jPanel3.add(evapAmountLbl);
+				evapAmountLbl.setPreferredSize(new java.awt.Dimension(39, 14));
+				evapAmountLbl.setText(Quantity.getVolAbrv(opts.getProperty("optVolUnits")));
+
+				bgEvap.add(rbPercent);
+				bgEvap.add(rbConstant);
+				rbPercent.addActionListener(this);
+				rbConstant.addActionListener(this);
+
+			}
+
+			{
+				rbPercent.setText("Percent");
+			}
+
+			{
+				rbConstant.setText("Constant");
+			}
+
+			{
+				txtBottleSize.setText("351");
+				txtBottleSize.setPreferredSize(new java.awt.Dimension(61, 20));
+			}			
+		}
 		getContentPane().add(BorderLayout.CENTER, jTabbedPane1);
 		getContentPane().add(BorderLayout.SOUTH, buttons);
 
 		setSize(500, 500);
 
-	}
-
-	/**
-	 * This method initializes pnlDefaultDB	
-	 * 	
-	 * @return javax.swing.JPanel	
-	 */
-	private JPanel getPnlDefaultDB() {
-		if (pnlDefaultDB == null) {
-			pnlDefaultDB = new JPanel();
-			BorderLayout pnlDefaultDBLayout = new BorderLayout();
-			pnlDefaultDB.setLayout(pnlDefaultDBLayout);
-			pnlDefaultDB.setPreferredSize(new java.awt.Dimension(387, 48));
-			pnlDefaultDB.setBorder(BorderFactory.createTitledBorder("Default Database:"));
-			pnlDefaultDB.add(getBtnBrowse(), BorderLayout.EAST);
-			pnlDefaultDB.add(getTxtDBLocation(), BorderLayout.CENTER);
-		}
-		return pnlDefaultDB;
-	}
-
-	/**
-	 * This method initializes txtDBLocation	
-	 * 	
-	 * @return javax.swing.JTextField	
-	 */
-	private JTextField getTxtDBLocation() {
-		if (txtDBLocation == null) {
-			txtDBLocation = new JTextField();
-			txtDBLocation.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-		}
-		return txtDBLocation;
-	}
-
-	/**
-	 * This method initializes btnBrowse	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */
-	private JButton getBtnBrowse() {
-		if (btnBrowse == null) {
-			btnBrowse = new JButton();
-			btnBrowse.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		}
-		return btnBrowse;
-	}
-
-	private JPanel getPnlSortOrder() {
-		if (pnlSortOrder == null) {
-			pnlSortOrder = new JPanel();
-			pnlSortOrder.setBorder(BorderFactory.createTitledBorder(null, "Recipe Sort Order",
-					TitledBorder.LEADING, TitledBorder.TOP));
-			pnlSortOrder.setPreferredSize(new java.awt.Dimension(167, 270));
-			pnlSortOrder.add(getJLabel8());
-		}
-		return pnlSortOrder;
-	}
-
-	private JLabel getJLabel8() {
-		if (jLabel8 == null) {
-			jLabel8 = new JLabel();
-			jLabel8.setText("Not Implemented");
-		}
-		return jLabel8;
-	}
-
-	private JPanel getPnlWaterUsage() {
-		if (pnlWaterUsage == null) {
-			pnlWaterUsage = new JPanel();
-			GridLayout pnlWaterUsageLayout = new GridLayout(3, 2);
-			pnlWaterUsageLayout.setColumns(2);
-			pnlWaterUsageLayout.setHgap(5);
-			pnlWaterUsageLayout.setVgap(5);
-			pnlWaterUsageLayout.setRows(3);
-			pnlWaterUsage.setLayout(pnlWaterUsageLayout);
-			pnlWaterUsage.setBorder(BorderFactory.createTitledBorder("Water Usage:"));
-			pnlWaterUsage.add(getJLabel10());
-			pnlWaterUsage.add(getTxtLeftInKettle());
-			pnlWaterUsage.add(getJLabel9());
-			pnlWaterUsage.add(getTxtMiscLosses());
-			pnlWaterUsage.add(getJLabel11());
-			pnlWaterUsage.add(getTxtLostInTrub());
-		}
-		return pnlWaterUsage;
-	}
-
-	private JLabel getJLabel9() {
-		if (jLabel9 == null) {
-			jLabel9 = new JLabel();
-			jLabel9.setText("Misc. Losses:");
-		}
-		return jLabel9;
-	}
-
-	private JLabel getJLabel10() {
-		if (jLabel10 == null) {
-			jLabel10 = new JLabel();
-			jLabel10.setText("Water Left In Kettle:");
-		}
-		return jLabel10;
-	}
-
-	private JLabel getJLabel11() {
-		if (jLabel11 == null) {
-			jLabel11 = new JLabel();
-			jLabel11.setText("Lost in Trub:");
-		}
-		return jLabel11;
-	}
-
-	private JTextField getTxtLeftInKettle() {
-		if (txtLeftInKettle == null) {
-			txtLeftInKettle = new JTextField();
-			txtLeftInKettle.setText("0");
-		}
-		return txtLeftInKettle;
-	}
-
-	private JTextField getTxtMiscLosses() {
-		if (txtMiscLosses == null) {
-			txtMiscLosses = new JTextField();
-			txtMiscLosses.setText("0");
-		}
-		return txtMiscLosses;
-	}
-
-	private JTextField getTxtLostInTrub() {
-		if (txtLostInTrub == null) {
-			txtLostInTrub = new JTextField();
-			txtLostInTrub.setText("0");
-		}
-		return txtLostInTrub;
-	}
-
-	private JPanel getPnlColourOptions() {
-		if (pnlColourOptions == null) {
-			pnlColourOptions = new JPanel();
-			BoxLayout pnlColourOptionsLayout = new BoxLayout(pnlColourOptions,
-					javax.swing.BoxLayout.Y_AXIS);
-			pnlColourOptions.setLayout(pnlColourOptionsLayout);
-			pnlColourOptions.setBorder(BorderFactory.createTitledBorder("Colour Method:"));
-			pnlColourOptions.add(getRbSRM());
-			pnlColourOptions.add(getRbEBC());
-			bgColour.add(rbSRM);
-			bgColour.add(rbEBC);
-		}
-		return pnlColourOptions;
-	}
-
-	private JRadioButton getRbSRM() {
-		if (rbSRM == null) {
-			rbSRM = new JRadioButton();
-			rbSRM.setText("SRM");
-		}
-		return rbSRM;
-	}
-
-	private JRadioButton getRbEBC() {
-		if (rbEBC == null) {
-			rbEBC = new JRadioButton();
-			rbEBC.setText("EBC");
-		}
-		return rbEBC;
-	}
-
-	private JPanel getPnlEvaporation() {
-		if (pnlEvaporation == null) {
-			pnlEvaporation = new JPanel();
-			GridBagLayout pnlEvaporationLayout = new GridBagLayout();
-			pnlEvaporationLayout.rowWeights = new double[] {0.1, 0.1, 0.1};
-			pnlEvaporationLayout.rowHeights = new int[] {7, 7, 7};
-			pnlEvaporationLayout.columnWeights = new double[] {0.1, 0.1};
-			pnlEvaporationLayout.columnWidths = new int[] {7, 7};
-			pnlEvaporation.setLayout(pnlEvaporationLayout);
-			pnlEvaporation.setLayout(pnlEvaporationLayout);
-			pnlEvaporation.setBorder(BorderFactory.createTitledBorder("Evaporation:"));
-			pnlEvaporation.add(getRbPercent(), new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			pnlEvaporation.add(getRbConstant(), new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
-			jPanel3 = new JPanel();
-			FlowLayout jPanel3Layout = new FlowLayout();
-			jPanel3Layout.setAlignment(FlowLayout.LEFT);
-			jPanel3.setLayout(jPanel3Layout);
-			pnlEvaporation.add(jPanel3, new GridBagConstraints(0, 2, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-
-			evapAmountTxt = new JTextField();
-			jPanel3.add(evapAmountTxt);
-			evapAmountTxt.setText("0");
-			evapAmountTxt.setPreferredSize(new java.awt.Dimension(56, 20));
-
-			evapAmountLbl = new JLabel();
-			jPanel3.add(evapAmountLbl);
-			evapAmountLbl.setPreferredSize(new java.awt.Dimension(39, 14));
-			evapAmountLbl.setText(Quantity.getVolAbrv(opts.getProperty("optVolUnits")));
-
-			bgEvap.add(rbPercent);
-			bgEvap.add(rbConstant);
-			rbPercent.addActionListener(this);
-			rbConstant.addActionListener(this);
-		}
-		return pnlEvaporation;
-	}
-
-	private JRadioButton getRbPercent() {
-		if (rbPercent == null) {
-			rbPercent = new JRadioButton();
-			rbPercent.setText("Percent");
-		}
-		return rbPercent;
-	}
-
-	private JRadioButton getRbConstant() {
-		if (rbConstant == null) {
-			rbConstant = new JRadioButton();
-			rbConstant.setText("Constant");
-		}
-
-		return rbConstant;
-	}
-
-	private JTextField getTxtBottleSize() {
-		if (txtBottleSize == null) {
-			txtBottleSize = new JTextField();
-			txtBottleSize.setText("351");
-			txtBottleSize.setPreferredSize(new java.awt.Dimension(61, 20));
-		}
-		return txtBottleSize;
-	}
+	}	
 
 	//	Action Performed 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();			
 		
 		if (o == okButton) {
-		saveOptions();
-		opts.saveProperties();
-		((StrangeSwing)sb).displayRecipe();
-		setVisible(false);
-		dispose();
+			saveOptions();
+			opts.saveProperties();
+			((StrangeSwing)sb).displayRecipe();
+			((StrangeSwing)sb).updateUI();
+			setVisible(false);
+			dispose();
 		}
 		else if (o == cancelButton){
 			setVisible(false);
@@ -1273,10 +1124,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				boilTempULbl.setText("C");
 			else
 				boilTempULbl.setText("F");				
-		}
-		
-		
-		
+		}		
 	}
 	
 	public void stateChanged(ChangeEvent e){
