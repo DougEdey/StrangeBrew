@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.17 2007/12/12 18:33:29 jimcdiver Exp $
+ * $Id: Options.java,v 1.18 2007/12/12 19:25:31 jimcdiver Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -58,9 +58,9 @@ public class Options {
 			// carbonation:
 			{"optPrimingSugar", "dextrose"},
 			{"optSugarU", "grams"},
-			{"optBottleU", "ml"},
+			{"optBottleU", "fl. ounces"},
 			{"optCarbTempU", "F"},
-			{"optBottleSize", "341"},
+			{"optBottleSize", "12"},
 			{"optBottleTemp", "68"},
 			{"optServeTemp", "45"},
 			{"optVolsCO2", "2.4"},
