@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.15 2007/12/10 14:54:10 jimcdiver Exp $
+ * $Id: Options.java,v 1.16 2007/12/12 14:39:23 jimcdiver Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -22,8 +22,9 @@ import java.util.Properties;
 
 
 public class Options {
-	//	declare global variables, set hard defaults		
-	
+	// Singelton Instance
+	private static Options instance = null;
+	//	declare global variables, set hard defaults			
 	private Properties props;
 	private String type;
 	
@@ -135,18 +136,33 @@ public class Options {
 	};
 	
 	// default constructor, create options for a recipe
-	public Options(){
-		this("strangebrew");
+	private Options() {}
+	
+	public static Options getInstance() {
+		if (instance == null)
+		{
+			instance = new Options();
+
+			instance.type = "strangebrew";
+			Properties d = new Properties();
+			instance.setDefaults(d);
+			instance.props = new Properties(d);		
+			instance.loadProperties();
+		}
+		
+		return instance;			
 	}
 	
 	// constructor for other option types
-	public Options(String t){
-		type = t;
-		Properties d = new Properties();
-		setDefaults(d);
-		props = new Properties(d);		
-		loadProperties();
-	}
+//	private Options(String t) {
+//		if (instance == null)
+//			instance = new
+//		type = t;
+//		Properties d = new Properties();
+//		setDefaults(d);
+//		props = new Properties(d);		
+//		loadProperties();
+//	}
 	
 
 	private void loadProperties() {		

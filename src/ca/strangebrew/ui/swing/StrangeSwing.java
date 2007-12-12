@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.52 2007/12/11 22:18:59 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.53 2007/12/12 14:39:23 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -116,6 +116,7 @@ import ca.strangebrew.ui.swing.dialogs.PreferencesDialog;
 import ca.strangebrew.ui.swing.dialogs.PrintDialog;
 import ca.strangebrew.ui.swing.dialogs.RefractometerDialog;
 import ca.strangebrew.ui.swing.dialogs.ScaleRecipeDialog;
+import ca.strangebrew.ui.swing.dialogs.HydrometerToolDialog;
 
 import com.michaelbaranov.microba.calendar.DatePicker;
 
@@ -249,7 +250,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private JPanel pnlMaltButtons;
 	private JPanel pnlTables;
 	private JFormattedTextField postBoilText;
-	private Options preferences = new Options();
+	private Options preferences;
 	private JMenuItem saveAsMenuItem;
 
 	private JMenuItem saveMenuItem;
@@ -410,6 +411,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	public StrangeSwing() {
 		super();	
 		
+		preferences = Options.getInstance();
 		initGUI();
 		// There has *got* to be a better way to do this:
 		DB = new Database();
@@ -2133,6 +2135,16 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							}
 						});
 						
+						JMenuItem hydroMeterToolMenuItem = new JMenuItem();
+						mnuTools.add(hydroMeterToolMenuItem);
+						hydroMeterToolMenuItem.setText("Hydrometer Tool...");
+						hydroMeterToolMenuItem.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								HydrometerToolDialog hydroTool = new HydrometerToolDialog(owner);
+								hydroTool.setModal(true);
+								hydroTool.setVisible(true);
+							}
+						});
 						
 					}
 				}

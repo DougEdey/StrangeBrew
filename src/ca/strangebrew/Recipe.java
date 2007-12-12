@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.41 2007/12/10 15:53:18 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.42 2007/12/12 14:39:23 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -114,7 +114,7 @@ public class Recipe {
 	// default constuctor
 	public Recipe() {
 
-		opts = new Options();
+		opts = Options.getInstance();
 		mash = new Mash(this);
 		name = "My Recipe";
 		created = new GregorianCalendar();
