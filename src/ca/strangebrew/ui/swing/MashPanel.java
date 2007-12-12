@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.21 2007/12/11 22:54:32 jimcdiver Exp $
+ * $Id: MashPanel.java,v 1.22 2007/12/12 20:32:36 jimcdiver Exp $
  *  @author aavis 
  */
 
@@ -22,10 +22,10 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -49,8 +49,6 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	private JScrollPane jScrollPane1;
 	private JTextField nameTxt;
 	private JButton defaultsButton;
-	private JMenuItem saveDefaultItem;
-	private JMenu applyDefaultMenu;
 	private JPopupMenu mashMenu;
 	private JPanel jPanel1;
 	private JLabel jLabel2;
@@ -90,6 +88,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	private ButtonGroup tempBg;
 	private JPanel settingsPanel;
 	private JPanel tablePanel;
+	private JButton saveButton;
 	
 	private SBCellEditor sTempEditor;								
 	private SBCellEditor eTempEditor;								
@@ -118,7 +117,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 		for (int i = 0; i < names.length; i++) {
 			JMenuItem m = new JMenuItem(names[i]);
 			m.addActionListener(this);
-			applyDefaultMenu.add(m);
+			mashMenu.add(m);
 		}
 	}
 
@@ -223,10 +222,6 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			{
 				
 				this.setPreferredSize(new java.awt.Dimension(502, 276));
-
-				
-
-
 				this.addFocusListener(new FocusAdapter() {
 					public void focusGained(FocusEvent evt) {
 						displayMash();
@@ -241,21 +236,17 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			nameTxt.setPreferredSize(new java.awt.Dimension(211, 20));
 			nameTxt.addActionListener(this);
 			
+			saveButton = new JButton();
+			jPanel1.add(saveButton);
+			saveButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ca/strangebrew/icons/save.gif")));
+			saveButton.addActionListener(this);
+			
 			defaultsButton = new JButton();
 			jPanel1.add(defaultsButton);
 			defaultsButton.setText("Defaults >");
 			defaultsButton.addActionListener(this);
+			mashMenu = new JPopupMenu();
 			
-			mashMenu = new JPopupMenu();				
-			applyDefaultMenu = new JMenu("Apply Default");
-			mashMenu.add(applyDefaultMenu);			
-			saveDefaultItem = new JMenuItem("Save as Default");
-			mashMenu.add(saveDefaultItem);			
-			saveDefaultItem.addActionListener(this);
-
-			
-		
-
 			{
 				settingsPanel = new JPanel();
 				jTabbedPane1.addTab("Settings", null, settingsPanel, null);
@@ -572,7 +563,6 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 		} else if (o == volUnitsCombo) {
 			String s = (String) volUnitsComboModel.getSelectedItem();
 			myRecipe.mash.setMashVolUnits(s);
-
 		} else if (o == ratioUnitsCombo) {
 			String s = (String) ratioUnitsCombo.getSelectedItem();
 			myRecipe.mash.setMashRatioU(s);
@@ -595,15 +585,17 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			myRecipe.mash.setName(nameTxt.getText());
 		} else if (o == defaultsButton){
 			mashMenu.show(defaultsButton, 10, 10);
-		} else if (o == saveDefaultItem){
+		} else if (o == saveButton) {
+			myRecipe.mash.setName(nameTxt.getText());
 			md.add(myRecipe.mash, nameTxt.getText());
+			JMenuItem m = new JMenuItem(nameTxt.getText());
+			m.addActionListener(this);
+			mashMenu.add(m);			
 		} else if (o.getClass().getName().endsWith("JMenuItem")){
 			String name = ((JMenuItem)o).getText();
 			md.set(name, myRecipe);	
-			mashModel.setData(myRecipe.getMash());	
-			
+			mashModel.setData(myRecipe.getMash());				
 		}
-		
 
 		tblMash.updateUI();
 		displayMash();
@@ -627,3 +619,4 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	}
 
 }
+
