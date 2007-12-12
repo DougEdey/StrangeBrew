@@ -1,0 +1,15 @@
+Change Log:
+
+Wed 12, 2008 - Jim Clark
+Changes to Date from 2.0.1
+- Applied Patch 1845484
+  - Request 1489276 - Addes configurable default hop type (Leaf, Pellet, Plug)
+- Applied Patch 1845847
+  - Fixes 1489252 - Text field auto selection 
+- Fixed 1493279 - Implimented custom combobox and combobox cell editor to allow better
+   UI on tabled combo boxes and to support keyboard navigation
+- Request 1497970 - Mash Steps insert at end of list
+- Request 1222300 - Added Gravity Teperature Tool Dialog
+- Fixes 1480514 - Added selectable user locale which affects date format
+- Fixes 1493267 - Changed default bottle unit and size to imperal
+- UI improvments to the saved "default" mash shceduals; TODO impliment a delete function
