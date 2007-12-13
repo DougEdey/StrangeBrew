@@ -1,6 +1,10 @@
 Change Log:
 
-Wed 12, 2008 - Jim Clark
+Dec 13, 2008 - Jim Clark
+- Added fermentation schedual tab and infrastructure. Commented out of StrangeSwing 
+   because it is missing save and pring functionality.
+
+Dec 12, 2008 - Jim Clark
 Changes to Date from 2.0.1
 - Applied Patch 1845484
   - Request 1489276 - Addes configurable default hop type (Leaf, Pellet, Plug)
