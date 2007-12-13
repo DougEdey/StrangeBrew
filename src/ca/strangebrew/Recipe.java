@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.43 2007/12/13 17:50:52 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.44 2007/12/13 20:23:28 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -86,6 +86,15 @@ public class Recipe {
 	// dilution:
 	private boolean diluted = false;
 	public DilutedRecipe dilution;
+	
+	// Carbonation
+	private double bottleTemp;
+	private double servTemp;
+	private double targetVol;
+	private String primeSugarType;
+	private String primeSugarU;
+	private String carbTempU;
+	private boolean kegged;
 
 	// options:
 	public Options opts;
@@ -167,6 +176,14 @@ public class Recipe {
 		secondaryTemp = opts.getDProperty("optFermentTempS");
 		tertiaryTemp = opts.getDProperty("optFermentTempT");
 
+		bottleTemp = opts.getDProperty("optBottleTemp");
+		servTemp = opts.getDProperty("optServeTemp");
+		targetVol = opts.getDProperty("optVolsCO2");
+		primeSugarType = opts.getProperty("optPrimingSugar");
+		primeSugarU = opts.getProperty("optSugarU");
+		carbTempU = opts.getProperty("optCarbTempU");
+		kegged = opts.getBProperty("optKegged");
+		
 		dilution = new DilutedRecipe();
 		version = "";
 
@@ -1673,6 +1690,69 @@ public class Recipe {
 			calcMaltTotals();
 
 		}
+	}
+
+	public double getBottleTemp() {
+		return bottleTemp;
+	}
+
+	public void setBottleTemp(double bottleTemp) {
+		isDirty = true;
+		this.bottleTemp = bottleTemp;
+	}
+
+	public String getCarbTempU() {
+		return carbTempU;
+	}
+
+	public void setCarbTempU(String carbU) {
+		isDirty = true;
+		this.carbTempU = carbU;
+	}
+
+	public boolean isKegged() {
+		return kegged;
+	}
+
+	public void setKegged(boolean kegged) {
+		isDirty = true;
+		this.kegged = kegged;
+	}
+
+	public String getPrimeSugarType() {
+		return primeSugarType;
+	}
+
+	public void setPrimeSugarType(String primeType) {
+		isDirty = true;
+		this.primeSugarType = primeType;
+	}
+
+	public String getPrimeSugarU() {
+		return primeSugarU;
+	}
+
+	public void setPrimeSugarU(String primeU) {
+		isDirty = true;
+		this.primeSugarU = primeU;
+	}
+
+	public double getServTemp() {
+		return servTemp;
+	}
+
+	public void setServTemp(double servTemp) {
+		isDirty = true;
+		this.servTemp = servTemp;
+	}
+
+	public double getTargetVol() {
+		return targetVol;
+	}
+
+	public void setTargetVol(double targetVol) {
+		isDirty = true;
+		this.targetVol = targetVol;
 	}
 
 }

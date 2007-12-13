@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.19 2007/12/13 17:50:52 jimcdiver Exp $
+ * $Id: Options.java,v 1.20 2007/12/13 20:23:28 jimcdiver Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -201,6 +201,7 @@ public class Options {
 			String path = SBStringUtils.getAppPath("ini");
 			Debug.print("Storing props: " + path);
 			FileOutputStream out = new FileOutputStream(path + type +".ini");
+			Debug.print(props.toString());
 
 			props.store(out, "/* properties updated */");
 		}
@@ -238,6 +239,14 @@ public class Options {
 		return Integer.parseInt(props.getProperty(key));
 	}
 	
+	public boolean getBProperty(String key) {
+		String s = props.getProperty(key);
+		if (s.equalsIgnoreCase("true")) {
+			return true;
+		}
+		return false;
+	}
+	
 	// set methods:	
 	public void setProperty(String key, String value){
 		props.setProperty(key, value);
@@ -249,6 +258,13 @@ public class Options {
 	
 	public void setIProperty(String key, int value){
 		props.setProperty(key, String.valueOf(value));
+	}
+	
+	public void setBProperty(String key, boolean value) {
+		if (value) {
+			props.setProperty(key, "true");
+		}
+		props.setProperty(key, "false");
 	}
 	
 	public Locale getLocale() {
