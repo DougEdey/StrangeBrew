@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.23 2007/12/12 22:02:37 jimcdiver Exp $
+ * $Id: MashPanel.java,v 1.24 2007/12/13 14:46:16 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -106,12 +106,13 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 
 	public MashPanel(Recipe r) {
 		super();
-		initGUI();
 		myRecipe = r;
+		mashModel = new MashTableModel();			
 		if (myRecipe != null) {
 			mashModel.setData(myRecipe.getMash());
 
 		}
+		initGUI();
 		displayMash();
 		tblMash.updateUI();
 
