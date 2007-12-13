@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.42 2007/12/12 14:39:23 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.43 2007/12/13 17:50:52 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -61,6 +61,16 @@ public class Recipe {
 	private Style style = new Style();
 	private Yeast yeast = new Yeast();
 	public Mash mash;
+	
+	// Fermentation
+	private String fermentType;
+	private String fermentU;
+	private int primaryTime;
+	private int secondaryTime;
+	private int tertiayTime;
+	private double primaryTemp;
+	private double secondaryTemp;
+	private double tertiaryTemp;
 
 	// water use:
 	private double chillShrinkQTS;
@@ -147,6 +157,15 @@ public class Recipe {
 		bottleU = opts.getProperty("optBottleU");
 		bottleSize = opts.getDProperty("optBottleSize");
 		otherCost = opts.getDProperty("optMiscCost");
+		
+		fermentType = opts.getProperty("optFermentType");
+		fermentU = opts.getProperty("optFermentTempU");
+		primaryTime = opts.getIProperty("optFermentTimeP");
+		secondaryTime = opts.getIProperty("optFermentTimeS");
+		tertiayTime = opts.getIProperty("optFermentTimeT");
+		primaryTemp = opts.getDProperty("optFermentTempP");
+		secondaryTemp = opts.getDProperty("optFermentTempS");
+		tertiaryTemp = opts.getDProperty("optFermentTempT");
 
 		dilution = new DilutedRecipe();
 		version = "";
@@ -154,7 +173,6 @@ public class Recipe {
 		// trigger the first re-calc:
 		setPostBoil(opts.getDProperty("optPostBoilVol"));
 		setVolUnits(opts.getProperty("optSizeU"));
-
 	}
 
 	// Getters:
@@ -327,6 +345,39 @@ public class Recipe {
 		return isDirty;
 	}
 
+	public String getFermentType() {
+		return fermentType;
+	}
+	
+	public String getFermentU() {
+		return fermentU;
+	}
+	
+	public int getPrimaryTime() {
+		return primaryTime;
+	}
+
+	public int getSecondaryTime() {
+		return secondaryTime;
+	}
+
+	public int getTertiaryTime() {
+		return tertiayTime;
+	}
+
+	public double getPrimaryTemp() {
+		return primaryTemp;
+	}
+
+	public double getSecondaryTemp() {
+		return secondaryTemp;
+	}
+
+	public double getTertiaryTemp() {
+		return tertiaryTemp;
+	}
+
+	
 	// Setters:
 	
 	// Set saved flag
@@ -491,6 +542,47 @@ public class Recipe {
 		isDirty = true;
 		version = v;
 	}
+	
+	public void setFermentType(String s) {
+		isDirty = true;
+		 fermentType = s;
+	}
+	
+	public void setFermentU(String s) {
+		isDirty = true;
+		fermentU = s;
+	}
+	
+	public void setPrimaryTime(int i) {
+		isDirty = true;
+		primaryTime = i;
+	}
+
+	public void setSecondaryTime(int i) {
+		isDirty = true;
+		secondaryTime = i;
+	}
+
+	public void setTertiaryTime(int i) {
+		isDirty = true;
+		tertiayTime = i;
+	}
+
+	public void setPrimaryTemp(double d) {
+		isDirty = true;
+		primaryTemp = d;
+	}
+
+	public void setSecondaryTemp(double d) {
+		isDirty = true;
+		secondaryTemp = d;
+	}
+
+	public void setTertiaryTemp(double d) {
+		isDirty = true;
+		tertiaryTemp = d;
+	}
+
 
 	// hop list get functions:
 	public String getHopUnits() {

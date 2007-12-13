@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.54 2007/12/12 18:33:29 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.55 2007/12/13 17:50:53 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -154,6 +154,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private SettingsPanel settingsPanel = new SettingsPanel(sbn);
 	final private StylePanel stylePanel = new StylePanel(sbn);
 	final private WaterPanel waterPanel = new WaterPanel(sbn);
+	// TODO
+	//final private FermentPanel fermentPanel = new FermentPanel();
 	
 	final private JMenuItem aboutMenuItem = new JMenuItem();
 	final private DefaultComboBoxModel alcMethodComboModel = new DefaultComboBoxModel(
@@ -518,6 +520,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		waterPanel.setData(myRecipe);
 		costPanel.setData(myRecipe);
 		settingsPanel.setData(myRecipe);
+		// TODO
+		//fermentPanel.setData(myRecipe);
 		maltTable.updateUI();
 		hopsTable.updateUI();
 
@@ -611,6 +615,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		waterPanel.displayWater();
 		mashPanel.displayMash();
 		dilutionPanel.displayDilution();
+		// TODO
+		//fermentPanel.displayFerment();
 
 		// Setup title bar
 		String title = "StrangeBrew " + version;
@@ -1388,6 +1394,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						jTabbedPane1.addTab("Notes", null, notesPanel, null);
 						jTabbedPane1.addTab("Dilution", null, dilutionPanel, null);
 						jTabbedPane1.addTab("Mash", null, mashPanel, null);
+						// TODO
+						//jTabbedPane1.addTab("Ferment", null, fermentPanel, null);
 						jTabbedPane1.addTab("Water", null, waterPanel, null);
 						jTabbedPane1.addTab("Cost", null, costPanel, null);
 						jTabbedPane1.addTab("Settings", null, settingsPanel, null);
