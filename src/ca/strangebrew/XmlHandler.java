@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.18 2007/09/20 19:48:18 solid54 Exp $
+ * $Id: XmlHandler.java,v 1.19 2007/12/14 17:17:26 jimcdiver Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -34,6 +34,7 @@ public class XmlHandler extends DefaultHandler{
 	private Misc misc = null;
 	private Note note = new Note();
 	private Attributes currentAttributes = null;
+	private FermentStep ferm = null;
 
 	private String currentList = null; //current List name
 	private String currentElement = null; // current element name
@@ -191,6 +192,8 @@ public class XmlHandler extends DefaultHandler{
 			currentList = "MASH";
 		} else if (eName.equalsIgnoreCase("MISC")) {
 			currentList = "MISC";
+		} else if (eName.equalsIgnoreCase("FERMENTATION_SCHEDUAL")) {
+			currentList = "FERMENTATION_SCHEDUAL";
 		} else if (eName.equalsIgnoreCase("NOTES") && !currentList.equals("DETAILS")) {
 			// two freaking elments named NOTES - make sure we're not looking at the 
 			// recipe notes in <DETAILS>
@@ -204,8 +207,9 @@ public class XmlHandler extends DefaultHandler{
 				h = new Hop();
 			} else if (currentList.equals("MISC")) {
 				misc = new Misc();
-			}
-			else if (currentList.equals("NOTES")) {				
+			} else if (currentList.equals("FERMENTATION_SCHEDUAL")) {
+				ferm = new FermentStep();
+			} else if (currentList.equals("NOTES")) {				
 				note = new Note();
 			}
 
@@ -256,13 +260,16 @@ public class XmlHandler extends DefaultHandler{
 			
 			} else if (qName.equalsIgnoreCase("ITEM")
 						&& currentList.equalsIgnoreCase("MASH")) {
-					r.mash.addStep(type, startTemp, endTemp, method, minutes, rampMin, weightLbs);				
-				
+					r.mash.addStep(type, startTemp, endTemp, method, minutes, rampMin, weightLbs);		
+			} else if (qName.equalsIgnoreCase("ITEM") &&
+					currentList.equalsIgnoreCase("FERMENTATION_SCHEDUAL")) {
+				r.addFermentStep(ferm);								
 			} // there's a problem with having two elements named "NOTES" : 
 			  else if (qName.equalsIgnoreCase("FERMENTABLS")
 					|| qName.equalsIgnoreCase("HOPS")
 					|| qName.equalsIgnoreCase("DETAILS")
 					|| qName.equalsIgnoreCase("MISC")
+					|| qName.equalsIgnoreCase("FERMENTATION_SCHEDUAL")
 					|| (qName.equalsIgnoreCase("NOTES") && !currentList.equalsIgnoreCase("DETAILS"))
 					) {
 				currentList = "";
@@ -509,7 +516,7 @@ public class XmlHandler extends DefaultHandler{
 			         System.out.println("Unable to parse " + s);
 			      }
 				
-			// These are SBJ1.0 Extensions:      
+			// These are SBJ1.0 Extensions:   
 			} else if (currentElement.equalsIgnoreCase("ALC_METHOD")) {
 				r.setAlcMethod(s);
 			} else if (currentElement.equalsIgnoreCase("IBU_METHOD")) {
@@ -540,6 +547,16 @@ public class XmlHandler extends DefaultHandler{
 				r.setOtherCost(Double.parseDouble(s));
 			}
 
+		} else if (currentList.equalsIgnoreCase("FERMENTATION_SCHEDUAL")) {
+			if (currentElement.equalsIgnoreCase("TYPE")) {
+				ferm.setType(s);
+			} else if (currentElement.equalsIgnoreCase("TEMP")) {
+				ferm.setTemp(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("TEMPU")) {
+				ferm.setTempU(s);
+			} else if (currentElement.equalsIgnoreCase("TIME")) {
+				ferm.setTime(Integer.parseInt(s));
+			}
 		}
 		else
 			s = "";

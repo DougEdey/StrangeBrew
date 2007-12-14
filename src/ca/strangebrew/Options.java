@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.20 2007/12/13 20:23:28 jimcdiver Exp $
+ * $Id: Options.java,v 1.21 2007/12/14 17:17:26 jimcdiver Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -71,13 +71,9 @@ public class Options {
 			{"optTargetWater", ""},
 			
 			// Fermentation
-			{"optFermentType", "two stage"},
-			{"optFermentTimeP", "4"},
-			{"optFermentTempP", "68.0"},
-			{"optFermentTimeS", "7"},
-			{"optFermentTempS", "68.0"},
-			{"optFermentTimeT", "0"},
-			{"optFermentTempT", "68.0"},
+			{"optFermentType", "Primary"},
+			{"optFermentTime", "7"},
+			{"optFermentTemp", "68.0"},
 			{"optFermentTempU", "F"},
 			
 			// labels:

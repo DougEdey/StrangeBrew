@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.44 2007/12/13 20:23:28 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.45 2007/12/14 17:17:26 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -63,14 +63,7 @@ public class Recipe {
 	public Mash mash;
 	
 	// Fermentation
-	private String fermentType;
-	private String fermentU;
-	private int primaryTime;
-	private int secondaryTime;
-	private int tertiayTime;
-	private double primaryTemp;
-	private double secondaryTemp;
-	private double tertiaryTemp;
+	private ArrayList fermentationSteps = new ArrayList();
 
 	// water use:
 	private double chillShrinkQTS;
@@ -121,7 +114,8 @@ public class Recipe {
 	private double totalMaltLbs;
 	private double totalHopsOz;
 	private double totalMashLbs;
-
+	private int totalFermentTime;
+	
 	// ingredients
 	private ArrayList hops = new ArrayList();
 	private ArrayList fermentables = new ArrayList();
@@ -167,15 +161,6 @@ public class Recipe {
 		bottleSize = opts.getDProperty("optBottleSize");
 		otherCost = opts.getDProperty("optMiscCost");
 		
-		fermentType = opts.getProperty("optFermentType");
-		fermentU = opts.getProperty("optFermentTempU");
-		primaryTime = opts.getIProperty("optFermentTimeP");
-		secondaryTime = opts.getIProperty("optFermentTimeS");
-		tertiayTime = opts.getIProperty("optFermentTimeT");
-		primaryTemp = opts.getDProperty("optFermentTempP");
-		secondaryTemp = opts.getDProperty("optFermentTempS");
-		tertiaryTemp = opts.getDProperty("optFermentTempT");
-
 		bottleTemp = opts.getDProperty("optBottleTemp");
 		servTemp = opts.getDProperty("optServeTemp");
 		targetVol = opts.getDProperty("optVolsCO2");
@@ -361,39 +346,6 @@ public class Recipe {
 	public boolean getDirty() {
 		return isDirty;
 	}
-
-	public String getFermentType() {
-		return fermentType;
-	}
-	
-	public String getFermentU() {
-		return fermentU;
-	}
-	
-	public int getPrimaryTime() {
-		return primaryTime;
-	}
-
-	public int getSecondaryTime() {
-		return secondaryTime;
-	}
-
-	public int getTertiaryTime() {
-		return tertiayTime;
-	}
-
-	public double getPrimaryTemp() {
-		return primaryTemp;
-	}
-
-	public double getSecondaryTemp() {
-		return secondaryTemp;
-	}
-
-	public double getTertiaryTemp() {
-		return tertiaryTemp;
-	}
-
 	
 	// Setters:
 	
@@ -559,48 +511,73 @@ public class Recipe {
 		isDirty = true;
 		version = v;
 	}
+
+	// Fermentation Steps
+	// Getters
+	public int getFermentStepSize() {
+		return fermentationSteps.size();
+	}
+	public String getFermentStepType(int i) {
+		return ((FermentStep)fermentationSteps.get(i)).getType();
+	}
+	public int getFermentStepTime(int i) {
+		return ((FermentStep)fermentationSteps.get(i)).getTime();
+	}
+	public double getFermentStepTemp(int i) {
+		return ((FermentStep)fermentationSteps.get(i)).getTemp();
+	}
+	public String getFermentStepTempU(int i) {
+		return ((FermentStep)fermentationSteps.get(i)).getTempU();
+	}
+	public FermentStep getFermentStep(int i) {
+		return (FermentStep)fermentationSteps.get(i);
+	}
+	public int getTotalFermentTime() {
+		return totalFermentTime;
+	}
+	// Setters
+	public void setFermentStepType(int i, String s) {
+		isDirty = true;
+		((FermentStep)fermentationSteps.get(i)).setType(s);
+		Collections.sort(fermentationSteps, new ingrComparator());		
+	}
+	public void setFermentStepTime(int i, int t) {
+		isDirty = true;
+		((FermentStep)fermentationSteps.get(i)).setTime(t);
+		Collections.sort(fermentationSteps, new ingrComparator());		
+	}
+	public void setFermentStepTemp(int i, double d) {
+		isDirty = true;
+		((FermentStep)fermentationSteps.get(i)).setTemp(d);
+	}
+	public void setFermentStepTemptU(int i, String s) {
+		isDirty = true;
+		((FermentStep)fermentationSteps.get(i)).setTempU(s);
+	}
+	public void addFermentStep(FermentStep fs) {
+		isDirty = true;
+		fermentationSteps.add(fs);
+		Collections.sort(fermentationSteps, new ingrComparator());
+		calcFermentTotals();
+	}
+	public FermentStep delFermentStep(int i) {
+		isDirty = true;
+		FermentStep temp = null;
+		if (!fermentationSteps.isEmpty() && i > -1) {
+			temp = (FermentStep)fermentationSteps.remove(i);
+			Collections.sort(fermentationSteps, new ingrComparator());
+			calcFermentTotals();
+		}
+		
+		return temp;
+	}
+	public void calcFermentTotals() {
+		totalFermentTime = 0;
+		for (int i = 0; i < fermentationSteps.size(); i++) {
+			totalFermentTime += ((FermentStep)fermentationSteps.get(i)).getTime();
+		}
+	}
 	
-	public void setFermentType(String s) {
-		isDirty = true;
-		 fermentType = s;
-	}
-	
-	public void setFermentU(String s) {
-		isDirty = true;
-		fermentU = s;
-	}
-	
-	public void setPrimaryTime(int i) {
-		isDirty = true;
-		primaryTime = i;
-	}
-
-	public void setSecondaryTime(int i) {
-		isDirty = true;
-		secondaryTime = i;
-	}
-
-	public void setTertiaryTime(int i) {
-		isDirty = true;
-		tertiayTime = i;
-	}
-
-	public void setPrimaryTemp(double d) {
-		isDirty = true;
-		primaryTemp = d;
-	}
-
-	public void setSecondaryTemp(double d) {
-		isDirty = true;
-		secondaryTemp = d;
-	}
-
-	public void setTertiaryTemp(double d) {
-		isDirty = true;
-		tertiaryTemp = d;
-	}
-
-
 	// hop list get functions:
 	public String getHopUnits() {
 		return hopUnits;
@@ -1108,7 +1085,7 @@ public class Recipe {
 						.convertUnit(getVolUnits(), "qt", miscLoss));
 
 	}
-
+	
 	public void calcHopsTotals() {
 
 		if (!allowRecalcs)
@@ -1430,6 +1407,13 @@ public class Recipe {
 
 		sb.append(mash.toXml());
 
+		// Fermentation Schedual
+		sb.append("   <FERMENTATION_SCHEDUAL>\n");
+		for (int i = 0; i < fermentationSteps.size(); i++ ) {
+			sb.append(((FermentStep)fermentationSteps.get(i)).toXML());
+		}
+		sb.append("   </FERMENTATION_SCHEDUAL>\n");
+
 		// notes list:
 		sb.append("  <NOTES>\n");
 		for (int i = 0; i < notes.size(); i++) {
@@ -1525,10 +1509,27 @@ public class Recipe {
 					padRight(" " + mash.getStepMin(i), 6, ' ')};
 			sb.append(mf.format(objm));
 		}
+		
+		// Fermentation Schedual
+		sb.append("\nFermentation Schedual:\n");
+		sb.append(padLeft("Step ", 10, ' ') + "  Time   Days\n");
+		mf = new MessageFormat("{0} {1} {2}\n");
+		for (int i = 0; i < fermentationSteps.size(); i++ ) {
+			FermentStep f = (FermentStep)fermentationSteps.get(i);
+				Object[] objm = {padLeft(f.getType(), 10, ' '),
+								padRight(" " + f.getTime(), 6, ' '),
+								padRight(" " + f.getTemp() + f.getTempU(), 6, ' ')};
+			sb.append(mf.format(objm));
+		}
+		
+		sb.append("\nNotes:\n");
+		for (int i = 0; i < notes.size(); i++) {
+			sb.append(((Note) notes.get(i)).toString());
+		}
 
 		return sb.toString();
 	}
-
+		
 	/**
 	 * 
 	 * @author aavis
@@ -1550,6 +1551,17 @@ public class Recipe {
 				Integer b1 = new Integer(((Hop) b).getMinutes());
 				int result = a1.compareTo(b1);
 				return (result == 0 ? -1 : result);
+			} else if (a.getClass().getName().contains("FermentStep")) {
+				// Turned off for now.. some wierdness with GUI
+//				// Sort by type then by time
+//				FermentStep fA = (FermentStep)a;
+//				FermentStep fB = (FermentStep)b;
+//				int result = FermentStep.getTypeIndex(fA.getType()) - FermentStep.getTypeIndex(fB.getType());
+//				
+//				if (result == 0) {
+//					result = fA.getTime() - fB.getTime();
+//				}				
+				return 0;
 			} else
 				return 0;
 		}

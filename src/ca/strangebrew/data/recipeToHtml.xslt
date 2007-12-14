@@ -41,55 +41,13 @@
 			</head>
 			<body>
 				<xsl:apply-templates select="DETAILS"/>
-				<xsl:apply-templates select="FERMENTABLES"/>
+				<xsl:apply-templates select="NOTES"/>
 				<xsl:apply-templates select="MASH"/>
-				<table>
-					<thead>
-						<tr>
-							<th colspan="7">Flavor Addition Schedule</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th>Name</th>
-							<th>Quantity</th>
-							<th>Form</th>
-							<th>Alpha</th>
-							<th>Stage</th>
-							<th>Time</th>
-						</tr>
-						<xsl:apply-templates select="HOPS"/>
-						<xsl:apply-templates select="MISC"/>	
-			 			<tr>
-							<th>Hop totals:</th>
-							<th>
-							<xsl:value-of select="HOPS/TOTAL"/>
-							<xsl:text> </xsl:text>
-							<xsl:value-of select="DETAILS/HOPS_UNITS"/>
-						</th>
-						<th></th>
-						<th><xsl:value-of select="DETAILS/IBU"/></th>
-						<th></th>
-						<th></th>
-					</tr>	
-					</tbody>
-				</table>
-
-				<table>
-					<thead>
-						<tr>
-							<th colspan="4">Fermentation Schedule</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th>Yeast</th>
-							<td><xsl:value-of select="DETAILS/YEAST"/></td>
-							<th>Fermentation temperature</th>
-							<td><xsl:value-of select="DETAILS/FERMENTATION_TEMP"/></td>
-						</tr>
-					</tbody>
-				</table>
+				<xsl:apply-templates select="FERMENTABLES"/>
+				<xsl:apply-templates select="MISC"/>
+				<xsl:apply-templates select="HOPS"/>
+				<xsl:apply-templates select="FERMENTATION_SCHEDUAL"/>
+	
 				<div id="footer">Produced by <a
 						href="http://sourceforge.net/projects/strangebrew">
 					Strangebrew Java</a> version
@@ -156,8 +114,8 @@
 					</td>
 					<th>Boil Time</th>
 					<td><xsl:value-of select="BOIL_TIME"/><xsl:text> min</xsl:text></td>
-					<th>Attenuation</th>
-					<td><xsl:value-of select="ATTENUATION"/><xsl:text> %</xsl:text></td>
+					<th>Yeast</th>
+					<td><xsl:value-of select="YEAST"/></td>
 				</tr>
 				<tr>
 					<th><abbr title="Alcohol By Volume">ABV</abbr></th>
@@ -170,8 +128,8 @@
 					</td>
 					<th>Evaporation</th>
 					<td><xsl:value-of select="format-number(EVAP, '##.#')"/> gallons</td>
-					<th></th>
-					<td></td>
+					<th>Attenuation</th>
+					<td><xsl:value-of select="ATTENUATION"/><xsl:text> %</xsl:text></td>
 				</tr>
 			</tbody>
 		</table>
@@ -225,7 +183,7 @@
 				</tr>
 				<xsl:for-each select="ITEM">
 					<tr>
-						<xsl:if test="(position() mod 2 = 0)">
+						<xsl:if test="(position() mod 2 = 1)">
 							<xsl:attribute name="class">even</xsl:attribute>
 						</xsl:if>
 						<td><xsl:value-of select="MALT"/></td>
@@ -265,37 +223,64 @@
 						<xsl:value-of
 							select="/STRANGEBREWRECIPE/DETAILS/LOV"/>
 					</th>
-					<th></th>
-					
-				</tr>
-				
+					<th></th>					
+				</tr>				
 			</tbody>
 		</table>
 	</xsl:template>
 
 	<xsl:template match="HOPS">
-		<xsl:for-each select="ITEM">
-			<tr>
-				<xsl:if test="(position() mod 2 = 0)">
-					<xsl:attribute name="class">even</xsl:attribute>
-				</xsl:if>
-				<td><xsl:value-of select="HOP"/></td>
-				<td>
-					<xsl:value-of select="format-number(AMOUNT, '#0.##')"/>
-					<xsl:text> </xsl:text>
-					<xsl:value-of select="UNITS"/>
-				</td>
-				<td><xsl:value-of select="FORM"/></td>
-				<td><xsl:value-of select="ALPHA"/></td>
-				<td><xsl:value-of select="ADD"/></td>
-				<td><xsl:value-of select="TIME"/></td>
-			</tr>
-		</xsl:for-each>
-
+		<table xmlns="http://www.w3.org/1999/xhtml">
+			<thead>
+				<tr>
+					<th colspan="7">Hops</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>Name</th>
+					<th>Quantity</th>
+					<th>Form</th>
+					<th>Alpha</th>
+					<th>Stage</th>					
+					<th>Time</th>
+				</tr>
+				<xsl:for-each select="ITEM">
+					<tr>
+						<xsl:if test="(position() mod 2 = 1)">
+							<xsl:attribute name="class">even</xsl:attribute>
+						</xsl:if>
+						<td><xsl:value-of select="HOP"/></td>
+						<td>
+							<xsl:value-of select="format-number(AMOUNT, '#0.##')"/>
+							<xsl:text> </xsl:text>
+							<xsl:value-of select="UNITS"/>
+						</td>
+						<td><xsl:value-of select="FORM"/></td>
+						<td><xsl:value-of select="ALPHA"/></td>
+						<td><xsl:value-of select="ADD"/></td>
+						<td><xsl:value-of select="TIME"/></td>
+					</tr>
+				</xsl:for-each>
+				<tr>
+					<th>Totals:</th>
+					<th>
+						<xsl:value-of select="format-number(TOTAL, '#0.##')"/>
+						<xsl:text> </xsl:text>
+						<xsl:value-of select="/STRANGEBREWRECIPE/DETAILS/HOPS_UNITS"/>						
+					</th>
+					<th></th>
+					<th><xsl:value-of select="/STRANGEBREWRECIPE/DETAILS/IBU"/> IBU</th>
+					<th></th>			
+					<th></th>			
+				</tr>				
+			</tbody>
+		</table>
 	</xsl:template> 
-	<xsl:template match="STRANGEBREWRECIPE/MASH">
+	
+	<xsl:template match="MASH">
 		<xsl:variable name="tempUnits" select="MASH_TMP_U"/>
-		<xsl:if test="MASH &gt; 0">
+		<xsl:if test="/STRANGEBREWRECIPE/MASH/NAME">
 		  <table>
 			<thead>
 				<tr>
@@ -314,7 +299,7 @@
 				</tr>
 				<xsl:for-each select="ITEM">
 					<tr>
-						<xsl:if test="(position() mod 2 = 0)">
+						<xsl:if test="(position() mod 2 = 1)">
 							<xsl:attribute name="class">even</xsl:attribute>
 						</xsl:if>
 						<td><xsl:value-of select="TYPE"/></td>
@@ -340,23 +325,67 @@
 	</xsl:template>
 
 	<xsl:template match="MISC">
-		<xsl:for-each select="ITEM">
-			<tr>
-				<xsl:if test="(position() mod 2 = 0)">
-					<xsl:attribute name="class">even</xsl:attribute>
-				</xsl:if>
-				<td><xsl:value-of select="NAME"/></td>
-				<td>
-					<xsl:value-of select="format-number(AMOUNT, '#0.##')"/>
-					<xsl:text> </xsl:text>
-					<xsl:value-of select="UNITS"/>
-				</td>
-				<td></td>
-				<td></td>
-				<td><xsl:value-of select="STAGE"/></td>
-				<td><xsl:value-of select="TIME"/></td>
-			</tr>
-		</xsl:for-each>
+		<xsl:if test="/STRANGEBREWRECIPE/MISC/ITEM">
+			<table>
+				<thead>
+					<tr>
+						<th colspan="4">Misc</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>Name</th>
+						<th>Amount</th>
+						<th>Stage</th>
+						<th>Time</th>
+					</tr>
+					<xsl:for-each select="ITEM">
+						<tr>
+							<xsl:if test="(position() mod 2 = 0)">
+								<xsl:attribute name="class">even</xsl:attribute>
+							</xsl:if>
+							<td><xsl:value-of select="NAME"/></td>
+							<td>
+								<xsl:value-of select="format-number(AMOUNT, '#0.##')"/>
+								<xsl:text> </xsl:text>
+								<xsl:value-of select="UNITS"/>
+							</td>
+							<td><xsl:value-of select="STAGE"/></td>
+							<td><xsl:value-of select="TIME"/></td>
+						</tr>
+					</xsl:for-each>
+				</tbody>
+			</table>
+		</xsl:if>
+	</xsl:template>
+	
+	<xsl:template match="FERMENTATION_SCHEDUAL">
+		<xsl:if test="/STRANGEBREWRECIPE/FERMENTATION_SCHEDUAL/ITEM">
+		  <table>
+			<thead>
+				<tr>
+					<th colspan="3">Fermentation</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>Stage</th>
+					<th>Time</th>
+					<th>Temp</th>
+				</tr>
+					<xsl:for-each select="ITEM">
+					<tr>
+						<xsl:if test="(position() mod 2 = 1)">
+							<xsl:attribute name="class">even</xsl:attribute>
+						</xsl:if>
+						<td><xsl:value-of select="TYPE"/></td>
+						<td><xsl:value-of select="TIME"/></td>
+						<td><xsl:value-of select="TEMP"/><xsl:value-of select="TMEPU"/></td>
+					</tr>
+				</xsl:for-each>
+			</tbody>
+		  </table>
+		</xsl:if>	
 	</xsl:template>
 
 	<xsl:template match="PRINT">

@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.56 2007/12/13 20:23:28 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.57 2007/12/14 17:17:26 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -155,7 +155,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private StylePanel stylePanel = new StylePanel(sbn);
 	final private WaterPanel waterPanel = new WaterPanel(sbn);
 	// TODO : implement save/print for ferment and print/caluclations for carb
-	//final private FermentPanel fermentPanel = new FermentPanel();
+	final private FermentPanel fermentPanel = new FermentPanel();
 	//final private CarbonationPanel carbPanel = new CarbonationPanel();
 	
 	final private JMenuItem aboutMenuItem = new JMenuItem();
@@ -522,7 +522,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		costPanel.setData(myRecipe);
 		settingsPanel.setData(myRecipe);
 		// TODO
-		//fermentPanel.setData(myRecipe);
+		fermentPanel.setData(myRecipe);
 		//carbPanel.setData(myRecipe);
 		maltTable.updateUI();
 		hopsTable.updateUI();
@@ -618,7 +618,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		mashPanel.displayMash();
 		dilutionPanel.displayDilution();
 		// TODO
-		//fermentPanel.displayFerment();
+		fermentPanel.displayFerment();
 		//carbPanel.displayCarb();
 
 		// Setup title bar
@@ -1398,7 +1398,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						jTabbedPane1.addTab("Dilution", null, dilutionPanel, null);
 						jTabbedPane1.addTab("Mash", null, mashPanel, null);
 						// TODO
-						//jTabbedPane1.addTab("Ferment", null, fermentPanel, null);
+						jTabbedPane1.addTab("Ferment", null, fermentPanel, null);
 						//jTabbedPane1.addTab("Carbonation", null, carbPanel, null);
 						jTabbedPane1.addTab("Water", null, waterPanel, null);
 						jTabbedPane1.addTab("Cost", null, costPanel, null);
