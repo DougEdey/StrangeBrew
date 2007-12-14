@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
@@ -14,8 +15,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import ca.strangebrew.Database;
+import ca.strangebrew.Fermentable;
 import ca.strangebrew.Recipe;
 
+// TODO
+// Make selections reflect in myrecipe.primeSugar
+// Calculations
+// HTML display
 
 public class CarbonationPanel extends javax.swing.JPanel implements ActionListener, FocusListener {
 	
@@ -51,8 +58,7 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 	final private JTextField textDissolvedVol = new JTextField();
 	final private JTextField textPrimeAmount = new JTextField();
 	final private JTextField textKegPresure = new JTextField();
-	final private JComboBox comboPrime = new JComboBox(
-			new String[]{"dextrose", "table sugar", "brown sugar", "DME", "LME", "honey", "maple syrup", "molasses"});
+	final private JComboBox comboPrime = new JComboBox();
 	final private JCheckBox checkKegged = new JCheckBox("Kegged");
 	
 	public CarbonationPanel() {
@@ -62,6 +68,12 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 	
 	public void setData(Recipe r) {
 		myRecipe = r;
+
+		// Populate combo	
+		ArrayList db = Database.getInstance().primeSugarDB;
+		for (int i = 0; i < db.size(); i++) {
+			comboPrime.addItem(((Fermentable)db.get(i)).getName());
+		}
 	}
 	
 	public void displayCarb(){	

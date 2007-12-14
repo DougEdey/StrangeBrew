@@ -1,6 +1,6 @@
 /**
  * Created on Oct 4, 2004
- * $Id: Fermentable.java,v 1.8 2006/06/01 20:46:53 andrew_avis Exp $
+ * $Id: Fermentable.java,v 1.9 2007/12/14 20:33:38 jimcdiver Exp $
  * @author aavis
  *
  * This is the base malt class.  It doesn't do much, except hold data
@@ -16,6 +16,7 @@ public class Fermentable extends Ingredient {
 	private boolean mashed;
 	private boolean steeped;
 	private double percent;
+	private boolean prime;
 
 	// constructors:
 	public Fermentable(String n, double p, double l, double a, String u) {
@@ -25,13 +26,24 @@ public class Fermentable extends Ingredient {
 		setAmount(a);
 		setUnits(u);
 		mashed = true;
+		prime = false;
 	}
+	
+	public Fermentable(Fermentable f) {
+		setName(f.getName());
+		pppg = f.getPppg();
+		lov = f.getLov();
+		setAmount(f.getAmountAs(f.getUnits()));
+		setUnits(f.getUnits());
+		mashed = f.getMashed();
+		prime = f.getPrime();
+		percent = f.getPercent();
+	}	
 	
 	public Fermentable(String u) {
 		setName("");
 		pppg = 1.000;
 		setUnits(u);
-		
 	}
 	
 	public Fermentable(){
@@ -40,12 +52,9 @@ public class Fermentable extends Ingredient {
 		pppg = 0;
 		lov = 0;
 		setAmount(1.0);
-		setUnits("pounds");
+		setUnits(Options.getInstance().getProperty("optMaltU"));
 		mashed = true;
-			// I want to get options working sometime,
-			// but can't figure out how:
-			// myOptions.getProperty("optMaltUnits");
-			
+		prime = false;			
 	}
 	
 	// getter methods:
@@ -54,14 +63,15 @@ public class Fermentable extends Ingredient {
 	public double getPercent() { return percent; }
 	public double getPppg(){ return pppg; }
 	public boolean getSteep(){return steeped; }
-		
+	public boolean getPrime() { return prime; }
+
 	// setter methods:	
 	public void setLov(double l){ lov = l; }
 	public void setMashed(boolean m){ mashed = m; }
 	public void setPercent(double p){ percent = p; }
 	public void setPppg(double p){ pppg = p; }
 	public void setSteep(boolean s){ steeped = s; }
-	
+	public void setPrime(boolean b) { prime = b; }
 	
 	// Need to add the spaces and type attributes to make this
 	// backwards-compatible with SB1.8:

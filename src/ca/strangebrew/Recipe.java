@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.45 2007/12/14 17:17:26 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.46 2007/12/14 20:33:38 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -84,10 +84,10 @@ public class Recipe {
 	private double bottleTemp;
 	private double servTemp;
 	private double targetVol;
-	private String primeSugarType;
-	private String primeSugarU;
+	private Fermentable primeSugar = new Fermentable();
 	private String carbTempU;
 	private boolean kegged;
+	private double kegPSI;
 
 	// options:
 	public Options opts;
@@ -164,8 +164,13 @@ public class Recipe {
 		bottleTemp = opts.getDProperty("optBottleTemp");
 		servTemp = opts.getDProperty("optServeTemp");
 		targetVol = opts.getDProperty("optVolsCO2");
-		primeSugarType = opts.getProperty("optPrimingSugar");
-		primeSugarU = opts.getProperty("optSugarU");
+		// Its ugly, but eligant
+		for (int i = 0; i < Database.getInstance().primeSugarDB.size(); i++) {
+			if (((Fermentable)Database.getInstance().primeSugarDB.get(i)).getName().equals(opts.getProperty("optPrimingSugar"))) {
+				primeSugar = ((Fermentable)Database.getInstance().primeSugarDB.get(i));
+			}
+		}
+		primeSugar.setUnits(opts.getProperty("optSugarU"));
 		carbTempU = opts.getProperty("optCarbTempU");
 		kegged = opts.getBProperty("optKegged");
 		
@@ -1414,6 +1419,19 @@ public class Recipe {
 		}
 		sb.append("   </FERMENTATION_SCHEDUAL>\n");
 
+		// Carb
+		sb.append("   <CARB>\n");
+		sb.append("      <BOTTLETEMP>" + bottleTemp + "</BOTTLETEMP>\n");
+		sb.append("      <SERVTEMP>" + servTemp + "</SERVTEMP>\n");
+		sb.append("      <VOL>" + targetVol + "</VOL>\n");
+		sb.append("      <SUGAR>" + primeSugar.getName() + "</SUGAR>\n");
+		sb.append("      <AMOUNT>" + primeSugar.getAmountAs(primeSugar.getUnits()) + "</AMOUNT>\n");
+		sb.append("      <SUGARU>" + primeSugar.getUnitsAbrv() + "</SUGARU>\n");
+		sb.append("      <TEMPU>" + carbTempU + "</TEMPU>\n");
+		sb.append("      <KEG>" + kegged + "</KEG>\n");
+		sb.append("      <PSI>" + kegPSI + "</PSI>\n");
+		sb.append("   </CARB>\n");	
+	
 		// notes list:
 		sb.append("  <NOTES>\n");
 		for (int i = 0; i < notes.size(); i++) {
@@ -1521,6 +1539,13 @@ public class Recipe {
 								padRight(" " + f.getTemp() + f.getTempU(), 6, ' ')};
 			sb.append(mf.format(objm));
 		}
+		
+		// Carb
+		sb.append("\nCarbonation:  " + targetVol + " volumes CO2\n");
+		sb.append(" Bottle Temp: " + bottleTemp + carbTempU + "  Serving Temp:" + servTemp + carbTempU + "\n");
+		sb.append(" Primeing: " + primeSugar.getAmountAs(primeSugar.getUnits()) + primeSugar.getUnitsAbrv() +
+				" of " + primeSugar.getName() + "\n");
+		sb.append(" Or keg at: " + kegPSI + "PSI\n");
 		
 		sb.append("\nNotes:\n");
 		for (int i = 0; i < notes.size(); i++) {
@@ -1731,22 +1756,22 @@ public class Recipe {
 		this.kegged = kegged;
 	}
 
-	public String getPrimeSugarType() {
-		return primeSugarType;
+	public Fermentable getPrimeSugarType() {
+		return primeSugar;
 	}
 
-	public void setPrimeSugarType(String primeType) {
+	public void setPrimeSugarType(Fermentable primeType) {
 		isDirty = true;
-		this.primeSugarType = primeType;
+		this.primeSugar = primeType;
 	}
 
 	public String getPrimeSugarU() {
-		return primeSugarU;
+		return primeSugar.getUnitsAbrv();
 	}
 
 	public void setPrimeSugarU(String primeU) {
 		isDirty = true;
-		this.primeSugarU = primeU;
+		this.primeSugar.setUnits(primeU);
 	}
 
 	public double getServTemp() {
@@ -1765,6 +1790,14 @@ public class Recipe {
 	public void setTargetVol(double targetVol) {
 		isDirty = true;
 		this.targetVol = targetVol;
+	}
+
+	public Fermentable getPrimeSugar() {
+		return primeSugar;
+	}
+
+	public void setPrimeSugar(Fermentable primeSugar) {
+		this.primeSugar = primeSugar;
 	}
 
 }

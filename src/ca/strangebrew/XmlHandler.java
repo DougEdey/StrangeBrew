@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.19 2007/12/14 17:17:26 jimcdiver Exp $
+ * $Id: XmlHandler.java,v 1.20 2007/12/14 20:33:38 jimcdiver Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -12,6 +12,7 @@ package ca.strangebrew;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.xml.sax.Attributes;
@@ -35,6 +36,7 @@ public class XmlHandler extends DefaultHandler{
 	private Note note = new Note();
 	private Attributes currentAttributes = null;
 	private FermentStep ferm = null;
+	private Fermentable primeSugar = null;
 
 	private String currentList = null; //current List name
 	private String currentElement = null; // current element name
@@ -184,6 +186,8 @@ public class XmlHandler extends DefaultHandler{
 	void sbStartElement(String eName) {
 		if (eName.equalsIgnoreCase("DETAILS")) {
 			currentList = "DETAILS";
+		} else if (eName.equalsIgnoreCase("CARB")) {
+			currentList = "CARB";
 		} else if (eName.equalsIgnoreCase("FERMENTABLES")) {
 			currentList = "FERMENTABLES";
 		} else if (eName.equalsIgnoreCase("HOPS")) {
@@ -268,6 +272,7 @@ public class XmlHandler extends DefaultHandler{
 			  else if (qName.equalsIgnoreCase("FERMENTABLS")
 					|| qName.equalsIgnoreCase("HOPS")
 					|| qName.equalsIgnoreCase("DETAILS")
+					|| qName.equalsIgnoreCase("CARB")
 					|| qName.equalsIgnoreCase("MISC")
 					|| qName.equalsIgnoreCase("FERMENTATION_SCHEDUAL")
 					|| (qName.equalsIgnoreCase("NOTES") && !currentList.equalsIgnoreCase("DETAILS"))
@@ -462,9 +467,31 @@ public class XmlHandler extends DefaultHandler{
 				r.setMashRatioU(s);				
 			}
 			
-		}
-
-		else if (currentList.equalsIgnoreCase("DETAILS")) {
+		} else if (currentList.equalsIgnoreCase("CARB")) {
+			if (currentElement.equalsIgnoreCase("BOTTLETEMP")) {
+				r.setBottleTemp(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("SERVTEMP")) {
+				r.setServTemp(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("VOL")) {
+				r.setTargetVol(Double.parseDouble(s));
+			} else if (currentElement.equalsIgnoreCase("SUGAR")) {
+				// Copy base data out of DB
+				ArrayList db = Database.getInstance().primeSugarDB;
+				for (int i = 0; i < db.size(); i++) {
+					Fermentable dbItem = (Fermentable)db.get(i);
+					if (s.equals(dbItem.getName())) {
+						primeSugar = new Fermentable(dbItem);
+						r.setPrimeSugar(primeSugar);
+					}
+				}				
+			} else if (currentElement.equalsIgnoreCase("SUGARU")) {
+				r.setPrimeSugarU(s);
+			} else if (currentElement.equalsIgnoreCase("TEMPU")) {
+				r.setCarbTempU(s);
+			} else if (currentElement.equalsIgnoreCase("KEG")) {
+				r.setKegged(Boolean.valueOf(s).booleanValue());
+			}			
+		} else if (currentList.equalsIgnoreCase("DETAILS")) {
 			if (currentElement.equalsIgnoreCase("NAME")) {
 				// r.setName(s);
 				buffer = buffer + s;

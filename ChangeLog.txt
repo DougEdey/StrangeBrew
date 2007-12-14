@@ -5,6 +5,11 @@ Dec 14, 2007 - Jim Clark
 - Revamped xlst to include all data on sheet. Much nicer output now, usable for a brewday sheet.
 - Fixed note display and UI panel
 - Moved some string lists into their prespective 'home' classes (mash types in Mash for example)
+- Added a field to malts.csv to determine if the malt/adjuct is suitable for use as a primeing sugar
+- Turned Database into a singleton
+- Carbonation prime sugar list comes from malts.cvs
+- Saveing and Loading carb data - NOTE does not reflect in carb tab
+- Carb tab has lots of TODO left!!!!  It is currently non-functional
 
 Dec 13, 2007 - Jim Clark
 - Added fermentation schedual tab and infrastructure. Commented out of StrangeSwing 
@@ -23,3 +28,5 @@ Changes to Date from 2.0.1
 - Fixes 1480514 - Added selectable user locale which affects date format
 - Fixes 1493267 - Changed default bottle unit and size to imperal
 - UI improvments to the saved "default" mash shceduals; TODO impliment a delete function
+- Turned Options into a singleton
+- added isDirty tag to Recipe to determine if it needs saveing or not

@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.58 2007/12/14 18:40:27 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.59 2007/12/14 20:33:36 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -154,9 +154,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private SettingsPanel settingsPanel = new SettingsPanel(sbn);
 	final private StylePanel stylePanel = new StylePanel(sbn);
 	final private WaterPanel waterPanel = new WaterPanel(sbn);
-	// TODO : implement save/print for ferment and print/caluclations for carb
 	final private FermentPanel fermentPanel = new FermentPanel();
-	//final private CarbonationPanel carbPanel = new CarbonationPanel();
+	final private CarbonationPanel carbPanel = new CarbonationPanel();
 	
 	final private JMenuItem aboutMenuItem = new JMenuItem();
 	final private DefaultComboBoxModel alcMethodComboModel = new DefaultComboBoxModel(
@@ -430,13 +429,22 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		super();	
 		
 		preferences = Options.getInstance();
-		initGUI();
-		// There has *got* to be a better way to do this:
-		DB = new Database();
+		
+		// There has *got* to be a better way to do this: (yeah, singleton it for starters)
+		// Later this singleton should be propigated though out such that the "setList()" 
+		// functions are not needed. Each Model can call up the one and only Database instance
+		// at any time
+		// On the same note, StrangeSwing could be singeltoned which would allow all the sub
+		// windows to pull up the public data stored here
+		// TODO
+		DB = Database.getInstance();
 		String path = SBStringUtils.getAppPath("data");
 		Debug.print("DB Path: " + path);
 		
 		DB.readDB(path);
+
+		// Load DB first
+		initGUI();
 
 		cmbStyleModel.setList(DB.styleDB);
 		cmbYeastModel.setList(DB.yeastDB);
@@ -521,9 +529,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		waterPanel.setData(myRecipe);
 		costPanel.setData(myRecipe);
 		settingsPanel.setData(myRecipe);
-		// TODO
 		fermentPanel.setData(myRecipe);
-		//carbPanel.setData(myRecipe);
+		carbPanel.setData(myRecipe);
 		maltTable.updateUI();
 		hopsTable.updateUI();
 
@@ -617,9 +624,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		waterPanel.displayWater();
 		mashPanel.displayMash();
 		dilutionPanel.displayDilution();
-		// TODO
 		fermentPanel.displayFerment();
-		//carbPanel.displayCarb();
+		carbPanel.displayCarb();
 
 		// Setup title bar
 		String title = "StrangeBrew " + version;
@@ -1397,9 +1403,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						jTabbedPane1.addTab("Notes", null, notesPanel, null);
 						jTabbedPane1.addTab("Dilution", null, dilutionPanel, null);
 						jTabbedPane1.addTab("Mash", null, mashPanel, null);
-						// TODO
 						jTabbedPane1.addTab("Ferment", null, fermentPanel, null);
-						//jTabbedPane1.addTab("Carbonation", null, carbPanel, null);
+						jTabbedPane1.addTab("Carbonation", null, carbPanel, null);
 						jTabbedPane1.addTab("Water", null, waterPanel, null);
 						jTabbedPane1.addTab("Cost", null, costPanel, null);
 						jTabbedPane1.addTab("Settings", null, settingsPanel, null);

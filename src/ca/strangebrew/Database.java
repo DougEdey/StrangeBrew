@@ -15,7 +15,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.12 2006/05/26 17:30:53 andrew_avis Exp $
+ * $Id: Database.java,v 1.13 2007/12/14 20:33:38 jimcdiver Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -31,15 +31,26 @@ public class Database {
 	// read from the csv files.
 	// I suspect that binary files will be faster, and
 	// we might want to move that way in the future.
-	
+	private static Database instance = null;
 	
 	public ArrayList fermDB = new ArrayList();
 	public ArrayList hopsDB = new ArrayList();
 	public ArrayList yeastDB = new ArrayList();
 	public ArrayList styleDB = new ArrayList();
 	public ArrayList miscDB = new ArrayList();
+	public ArrayList primeSugarDB = new ArrayList();
 	public String dbPath;
 
+	// This is now a singleton
+	private Database() {}
+	
+	public static Database getInstance() {
+		if (instance == null) {
+			instance = new Database();
+		}
+		
+		return instance;
+	}
 	
 	public int inDB(Object o){		
 		if (o.getClass().getName().equals("ca.strangebrew.Yeast")) {
@@ -89,6 +100,7 @@ public class Database {
 	public void readDB(String path){
 		dbPath = path;
 		fermDB = new ArrayList();
+		primeSugarDB = new ArrayList();
 		readFermentables(dbPath);
 		hopsDB = new ArrayList();
 		readHops(dbPath);
@@ -127,6 +139,7 @@ public class Database {
 				int descrIdx = getIndex(fields, "Descr");
 				int steepIdx = getIndex(fields, "Steep");
 				int modIdx = getIndex(fields, "Modified");
+				int primeIdx = getIndex(fields, "Prime");
 
 				while (true) {
 					Fermentable f = new Fermentable();
@@ -144,8 +157,27 @@ public class Database {
 						f.setAmount(0);
 					f.setDescription(fields[descrIdx]);
 					f.setModified(Boolean.valueOf(fields[modIdx]).booleanValue());
+					f.setPrime(Boolean.valueOf(fields[primeIdx]).booleanValue());
 					fermDB.add(f);		
 					
+					if (f.getPrime()) {
+						Fermentable prime = new Fermentable();
+						prime.setName(fields[nameIdx]);
+						prime.setPppg(Double.parseDouble(fields[pppgIdx]));
+						prime.setLov(Double.parseDouble(fields[lovIdx]));
+						prime.setCost(Double.parseDouble(fields[costIdx]));
+						prime.setUnits(fields[unitsIdx]);
+						prime.setMashed(Boolean.valueOf(fields[mashIdx]).booleanValue());
+						prime.setSteep(Boolean.valueOf(fields[steepIdx]).booleanValue());
+						if (!fields[stockIdx].equals(""))
+							prime.setAmount(Double.parseDouble(fields[stockIdx]));
+						else
+							prime.setAmount(0);
+						prime.setDescription(fields[descrIdx]);
+						prime.setModified(Boolean.valueOf(fields[modIdx]).booleanValue());
+						prime.setPrime(Boolean.valueOf(fields[primeIdx]).booleanValue());
+						primeSugarDB.add(prime);		
+					}
 				}
 			} catch (EOFException e) {
 			}
@@ -178,6 +210,7 @@ public class Database {
 			writer.put("Descr");			
 			writer.put("Steep");
 			writer.put("Modified");
+			writer.put("Prime");
 			writer.nl();
 			int i = 0, j = 0, k = 0;
 			while (i < fermDB.size() || j < newIngr.size()) {
@@ -205,6 +238,7 @@ public class Database {
 					writer.put(f.getDescription());
 					writer.put("" + f.getSteep());
 					writer.put("" + f.getModified());
+					writer.put("" + f.getPrime());
 					writer.nl();
 				}
 
@@ -592,7 +626,7 @@ public class Database {
 		else
 			return i;
 	}
-
+	
 	public class ObjComparator implements Comparator {
 
 		/* (non-Javadoc)
