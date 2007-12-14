@@ -47,24 +47,31 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 
 import ca.strangebrew.Note;
+import ca.strangebrew.Options;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 
 import com.michaelbaranov.microba.calendar.DatePicker;
 
-public class NotesPanel extends javax.swing.JPanel {
-	private JTable notesTable;
-	private JPanel tablePanel;
-	private JPanel notePanel;
-	private JTextArea noteTextArea;
-	private JScrollPane noteScroll;
-	private JScrollPane notesTableScroll;
-	private JButton delNoteButton;
-	private JButton addNoteButton;
-	private JPanel buttonsPanel;
-	private Recipe myRecipe;
-	private NotesTableModel notesTableModel;
+public class NotesPanel extends javax.swing.JPanel implements ActionListener {
+	// Mutables
 	private int selectedRow;
+	private Recipe myRecipe;
+	
+	// Final GUI Stuff
+	final private JTable notesTable = new JTable();
+	final private JPanel tablePanel = new JPanel();
+	final private JPanel notePanel = new JPanel();
+	final private JTextArea noteTextArea = new JTextArea();
+	final private JScrollPane noteScroll = new JScrollPane();
+	final private JScrollPane notesTableScroll = new JScrollPane();
+	final private JButton delNoteButton = new JButton();
+	final private JButton addNoteButton = new JButton();
+	final private JPanel buttonsPanel = new JPanel();
+	final private NotesTableModel notesTableModel = new NotesTableModel();
+	final private JComboBox typeComboBox = new JComboBox(Note.getTypes());
+	final private DateEditor dateEditor = new DateEditor();						
+	final private FlowLayout buttonsPanelLayout = new FlowLayout();
 
 	public NotesPanel() {
 		super();
@@ -78,34 +85,25 @@ public class NotesPanel extends javax.swing.JPanel {
 
 	private void initGUI() {
 		try {
-			BoxLayout thisLayout = new BoxLayout(this, javax.swing.BoxLayout.X_AXIS);
-			this.setLayout(thisLayout);
-			setPreferredSize(new Dimension(400, 300));
+			this.setLayout(new BoxLayout(this, javax.swing.BoxLayout.X_AXIS));
+			this.setPreferredSize(new Dimension(400, 300));
 			{
-				tablePanel = new JPanel();
-				BoxLayout tablePanelLayout = new BoxLayout(tablePanel, javax.swing.BoxLayout.Y_AXIS);
-				tablePanel.setLayout(tablePanelLayout);
+				tablePanel.setLayout(new BoxLayout(tablePanel, javax.swing.BoxLayout.Y_AXIS));
 				this.add(tablePanel);
 				{
-					notesTableScroll = new JScrollPane();
 					tablePanel.add(notesTableScroll);
 					notesTableScroll.setPreferredSize(new java.awt.Dimension(235, 264));
 					{
-						notesTableModel = new NotesTableModel(myRecipe);
-						notesTable = new JTable();
 						notesTableScroll.setViewportView(notesTable);
 						notesTable.setModel(notesTableModel);
 
 						// set up type combo
-						String[] types = {"Planning", "Brewed", "Fermentation", "Racked", "Conditioned", "Kegged",
-								"Bottled", "Tasting", "Contest"};
-						JComboBox typeComboBox = new JComboBox(types);
 						SmartComboBox.enable(typeComboBox);
 						TableColumn noteColumn = notesTable.getColumnModel().getColumn(1);
-						noteColumn.setCellEditor(new SBComboBoxCellEditor(typeComboBox));				
+						noteColumn.setCellEditor(new SBComboBoxCellEditor(typeComboBox));	
+						typeComboBox.addActionListener(this);
 
 						// set up the date picker
-						DateEditor dateEditor = new DateEditor();						
 						noteColumn = notesTable.getColumnModel().getColumn(0);
 						noteColumn.setCellEditor(dateEditor);
 						
@@ -133,54 +131,28 @@ public class NotesPanel extends javax.swing.JPanel {
 					}
 				}
 				{
-					buttonsPanel = new JPanel();
 					tablePanel.add(buttonsPanel);
-					FlowLayout buttonsPanelLayout = new FlowLayout();
 					buttonsPanelLayout.setAlignment(FlowLayout.LEFT);
 					buttonsPanel.setLayout(buttonsPanelLayout);
 					{
-						addNoteButton = new JButton();
 						buttonsPanel.add(addNoteButton);
 						addNoteButton.setText("+");
-						addNoteButton.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {
-								if (myRecipe != null) {
-									Note n = new Note();
-									myRecipe.addNote(n);
-									notesTable.updateUI();
-								}
-
-							}
-						});
+						addNoteButton.addActionListener(this);
 					}
 					{
-						delNoteButton = new JButton();
 						buttonsPanel.add(delNoteButton);
 						delNoteButton.setText("-");
-						delNoteButton.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {
-								if (myRecipe != null) {
-									int i = notesTable.getSelectedRow();
-									myRecipe.delNote(i);
-									notesTable.updateUI();
-								}
-
-							}
-						});
-					}
+						delNoteButton.addActionListener(this);					}
 				}
 			}
 			{
-				notePanel = new JPanel();
 				BoxLayout notePanelLayout = new BoxLayout(notePanel, javax.swing.BoxLayout.Y_AXIS);
 				notePanel.setLayout(notePanelLayout);
 				this.add(notePanel);
 				notePanel.setBorder(BorderFactory.createTitledBorder("Note:"));
 				{
-					noteScroll = new JScrollPane();
 					notePanel.add(noteScroll);
 					{
-						noteTextArea = new JTextArea();
 						noteScroll.setViewportView(noteTextArea);
 						noteTextArea.setWrapStyleWord(true);
 						noteTextArea.setLineWrap(true);
@@ -200,15 +172,36 @@ public class NotesPanel extends javax.swing.JPanel {
 			e.printStackTrace();
 		}
 	}
+	
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		
+		if (o == typeComboBox) {
+			if (myRecipe != null) {
+				int i = notesTable.getSelectedRow();
+				myRecipe.setNoteType(i, (String)typeComboBox.getSelectedItem());
+			}
+		} else if (o == addNoteButton) {
+			if (myRecipe != null) {
+				Note n = new Note();
+				myRecipe.addNote(n);
+				notesTable.updateUI();
+			}			
+		} else if (o == delNoteButton) {
+			if (myRecipe != null) {
+				int i = notesTable.getSelectedRow();
+				myRecipe.delNote(i);
+				notesTable.updateUI();
+			}			
+		}
+	}
+	
 
 	class NotesTableModel extends AbstractTableModel {
-
-		private String[] columnNames = {"Date", "Type"};
-
+		final private String[] columnNames = {"Date", "Type"};
 		private Recipe data = null;
 
-		public NotesTableModel(Recipe r) {
-			data = r;
+		public NotesTableModel() {
 		}
 
 		public void addRow() {
@@ -313,6 +306,7 @@ public class NotesPanel extends javax.swing.JPanel {
 		public DateEditor() {
 			datePicker = new DatePicker();
 			datePicker.setDateStyle(DateFormat.SHORT);
+			datePicker.setLocale(Options.getInstance().getLocale());
 		}
 
 		

@@ -22,11 +22,19 @@ public class Note {
 	private Date date;
 	private String type;
 	private String note;
+	static final private String[] types = {"Planning", "Brewed", "Fermentation", "Racked",
+		"Conditioned", "Kegged", "Bottled", "Tasting", "Contest"};
 	
 	public Note() {
 		date = new Date();
-		
+		type = types[0];
+		note = "";
 	}
+	
+	static public String[] getTypes() {
+		return types;
+	}
+	
 	/**
 	 * @return Returns the date.
 	 */

@@ -133,7 +133,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<xsl:if test="ADDED_VOLUME &gt; 0">
+		<xsl:if test="/STRANGEBREWRECIPE/ADDED_VOLUME">
 		  <table class="vertical">
             <thead>
                <tr>
@@ -162,7 +162,28 @@
 	</xsl:template>
 
 	<xsl:template match="NOTES">
-		<div id="notes"><xsl:value-of select="."/><xsl:text> </xsl:text></div>
+		<xsl:if test="/STRANGEBREWRECIPE/MASH/NAME">
+			<table xmlns="http://www.w3.org/1999/xhtml">
+				<thead>
+					<tr>
+						<th colspan="4">Notes</th>
+					</tr>
+				</thead>
+				<tbody>
+					<xsl:for-each select="ITEM">
+						<tr>
+							<th>Date</th>
+							<td><xsl:value-of select="DATE"/></td>
+							<th>Type</th>
+							<td><xsl:value-of select="TYPE"/></td>
+						</tr>
+						<tr>
+							<td colspan="4"><xsl:value-of select="NOTE"/></td>
+						</tr>
+					</xsl:for-each>
+				</tbody>
+			</table>
+		</xsl:if>			
 	</xsl:template>
 
 	<xsl:template match="FERMENTABLES">
