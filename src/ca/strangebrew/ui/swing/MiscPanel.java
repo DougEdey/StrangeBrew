@@ -48,22 +48,27 @@ import ca.strangebrew.SBStringUtils;
 
 
 public class MiscPanel extends javax.swing.JPanel {
-	private JTable miscTable;
-	private JScrollPane jScrollPane1;
-	private JPanel buttonPanel;
-	private JPanel commentsPanel;
-	private JScrollPane miscTableScrollPane;
-	private JButton delButton;
-	private JButton addButton;
-	private JPanel tablePanel;
-	private JTextArea miscCommentsTextArea;
-	
+	final private JScrollPane jScrollPane1 = new JScrollPane();
+	final private JPanel buttonPanel = new JPanel();
+	final private JPanel commentsPanel = new JPanel();
+	final private JScrollPane miscTableScrollPane = new JScrollPane();
+	final private JButton delButton = new JButton();
+	final private JButton addButton = new JButton();
+	final private JPanel tablePanel = new JPanel();
+	final private JTextArea miscCommentsTextArea = new JTextArea();
+	final private JComboBox stageComboBox = new JComboBox(Misc.getStages());	
+	final private JComboBox miscComboBox = new JComboBox();
+	final private SBCellEditor miscAmountEditor = new SBCellEditor(new JTextField());
+	final private SBCellEditor miscTimeEditor = new SBCellEditor(new JTextField());	
+	final private MiscTableModel miscTableModel = new MiscTableModel();
+	final private ComboModel miscComboModel = new ComboModel();
+	final private FlowLayout buttonPanelLayout = new FlowLayout();
+
+
 	private Recipe myRecipe;
-	private MiscTableModel miscTableModel;
-	private ComboModel miscComboModel;
 	private int selectedRow; // the selected row of the table
-	private SBCellEditor miscAmountEditor;
-	private SBCellEditor miscTimeEditor;	
+	private JTable miscTable;
+
 	
 	public MiscPanel(Recipe r) {		
 		super();
@@ -83,20 +88,15 @@ public class MiscPanel extends javax.swing.JPanel {
 
 	private void initGUI() {
 		try {
-			BoxLayout thisLayout = new BoxLayout(this, javax.swing.BoxLayout.X_AXIS);
-			this.setLayout(thisLayout);
-			setPreferredSize(new Dimension(400, 300));
+			this.setLayout(new BoxLayout(this, javax.swing.BoxLayout.X_AXIS));
+			this.setPreferredSize(new Dimension(400, 300));
 			{
-				tablePanel = new JPanel();
 				this.add(tablePanel);
-				BoxLayout tablePanelLayout = new BoxLayout(tablePanel, javax.swing.BoxLayout.Y_AXIS);
-				tablePanel.setLayout(tablePanelLayout);
+				tablePanel.setLayout(new BoxLayout(tablePanel, javax.swing.BoxLayout.Y_AXIS));
 				tablePanel.setPreferredSize(new java.awt.Dimension(261, 175));
 				{
-					miscTableScrollPane = new JScrollPane();
 					tablePanel.add(miscTableScrollPane);
 					{
-						miscTableModel = new MiscTableModel(myRecipe);
 						miscTable = new JTable() {						
 							public String getToolTipText(MouseEvent e) {
 								java.awt.Point p = e.getPoint();
@@ -119,9 +119,7 @@ public class MiscPanel extends javax.swing.JPanel {
 						
 	
 						// set up name combo
-						JComboBox miscComboBox = new JComboBox();
 						SmartComboBox.enable(miscComboBox);
-						miscComboModel = new ComboModel();
 						miscComboBox.setModel(miscComboModel);
 						TableColumn miscColumn = miscTable.getColumnModel().getColumn(0);
 						miscColumn.setCellEditor(new SBComboBoxCellEditor(miscComboBox));
@@ -140,32 +138,24 @@ public class MiscPanel extends javax.swing.JPanel {
 						});
 						
 						// set up misc amount editor
-						miscAmountEditor = new SBCellEditor(new JTextField());								
 						miscColumn = miscTable.getColumnModel().getColumn(1);
 						miscColumn.setCellEditor(miscAmountEditor);								
 						
 						// set up stage combo
-						String [] stage = {"Mash", "Boil", "Primary", "Secondary",
-								"Bottle", "Keg"	};
-						JComboBox stageComboBox = new JComboBox(stage);	
 						SmartComboBox.enable(stageComboBox);
 						miscColumn = miscTable.getColumnModel().getColumn(4);
 						miscColumn.setCellEditor(new SBComboBoxCellEditor(stageComboBox));
 						
 						// set up misc time editor
-						miscTimeEditor = new SBCellEditor(new JTextField());								
 						miscColumn = miscTable.getColumnModel().getColumn(5);
 						miscColumn.setCellEditor(miscTimeEditor);								
 					}
 				}
 				{
-					buttonPanel = new JPanel();
-					FlowLayout buttonPanelLayout = new FlowLayout();
 					buttonPanelLayout.setAlignment(FlowLayout.LEFT);
 					buttonPanel.setLayout(buttonPanelLayout);
 					tablePanel.add(buttonPanel);
 					{
-						addButton = new JButton();
 						buttonPanel.add(addButton);
 						addButton.setText("+");
 						addButton.addActionListener(new ActionListener() {
@@ -180,7 +170,6 @@ public class MiscPanel extends javax.swing.JPanel {
 						});
 					}
 					{
-						delButton = new JButton();
 						buttonPanel.add(delButton);
 						delButton.setText("-");
 						delButton.addActionListener(new ActionListener() {
@@ -197,17 +186,13 @@ public class MiscPanel extends javax.swing.JPanel {
 				}
 			}
 			{
-				commentsPanel = new JPanel();
-				BoxLayout commentsPanelLayout = new BoxLayout(commentsPanel, javax.swing.BoxLayout.Y_AXIS);
-				commentsPanel.setLayout(commentsPanelLayout);
+				commentsPanel.setLayout(new BoxLayout(commentsPanel, javax.swing.BoxLayout.Y_AXIS));
 				this.add(commentsPanel);
 				commentsPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false), "Comments", TitledBorder.LEADING, TitledBorder.TOP));
 				commentsPanel.setPreferredSize(new java.awt.Dimension(147, 300));
 				{
-					jScrollPane1 = new JScrollPane();
 					commentsPanel.add(jScrollPane1);
 					{
-						miscCommentsTextArea = new JTextArea();
 						jScrollPane1.setViewportView(miscCommentsTextArea);						
 						miscCommentsTextArea.setLineWrap(true);
 						miscCommentsTextArea.setWrapStyleWord(true);

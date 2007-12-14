@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.24 2007/12/13 14:46:16 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.25 2007/12/14 18:40:27 jimcdiver Exp $
  *  @author aavis 
  */
 
@@ -38,6 +38,7 @@ import javax.swing.JToolBar;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableColumn;
 
+import ca.strangebrew.Mash;
 import ca.strangebrew.MashDefaults;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
@@ -84,7 +85,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	final private JLabel volLabel = new JLabel();
 	final private JLabel totalTimeLabel = new JLabel();
 	final private JComboBox ratioUnitsCombo = new JComboBox();
-	final private ComboBoxModel ratioUnitsComboModel = new DefaultComboBoxModel(new String[]{"qt/lb", "l/kg"});
+	final private ComboBoxModel ratioUnitsComboModel = new DefaultComboBoxModel(Mash.getRatioUnits());
 	final private JTextField ratioText = new JTextField();
 	// private ButtonGroup tempUnitsButtonGroup;
 	final private JComboBox volUnitsCombo = new JComboBox();
@@ -169,17 +170,13 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 						tblMash.getTableHeader().setReorderingAllowed(false);
 
 						// set up type combo
-						String[] types = {"acid", "glucan", "protein", "beta", "alpha", "mashout",
-								"sparge"};
-						JComboBox typesComboBox = new JComboBox(types);
+						JComboBox typesComboBox = new JComboBox(Mash.getTypes());
 						SmartComboBox.enable(typesComboBox);
 						TableColumn mashColumn = tblMash.getColumnModel().getColumn(0);
 						mashColumn.setCellEditor(new SBComboBoxCellEditor(typesComboBox));
 
-						// set up method combo
-						String[] methods = {"infusion", "decoction", "decoction thick",
-								"decoction thin", "direct", "cereal mash"};
-						JComboBox methodComboBox = new JComboBox(methods);
+						// set up method combo;
+						JComboBox methodComboBox = new JComboBox(Mash.getMethods());
 						SmartComboBox.enable(methodComboBox);
 						mashColumn = tblMash.getColumnModel().getColumn(1);
 						mashColumn.setCellEditor(new SBComboBoxCellEditor(methodComboBox));

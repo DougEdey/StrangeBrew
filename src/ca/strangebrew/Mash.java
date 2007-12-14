@@ -5,13 +5,12 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.33 2007/12/11 22:54:32 jimcdiver Exp $
+ * $Id: Mash.java,v 1.34 2007/12/14 18:40:28 jimcdiver Exp $
  * @author aavis
  *
  */
 
 public class Mash {
-	
 	// set this:
 	private double maltWeightLbs;
 	private Recipe myRecipe;
@@ -52,9 +51,12 @@ public class Mash {
 	private float MASHOUTTMPF = 161;
 	private float SPARGETMPF = 170;
 	
+	static final private String[] ratioUnits = {"qt/lb", "l/kg"};
+	static final private String[] types = {"acid", "glucan", "protein", "beta", "alpha", "mashout",	"sparge"};
+	static final private String[] methods = {"infusion", "decoction", "decoction thick", "decoction thin", "direct", "cereal mash"};
+	
 	
 	public Mash(Recipe r){
-
 		 Options opts = r.opts;
 		 mashRatio = opts.getDProperty("optMashRatio");
 		 mashRatioU = opts.getProperty("optMashRatioU");;
@@ -77,6 +79,16 @@ public class Mash {
 		 myRecipe = r;
 	}
 
+	static public String[] getRatioUnits() {
+		return ratioUnits;
+	}
+	static public String[] getTypes() {
+		return types;
+	}
+	static public String[] getMethods() {
+		return methods;
+	}
+	
 	public class MashStep {
 		private String type;
 		private double startTemp;

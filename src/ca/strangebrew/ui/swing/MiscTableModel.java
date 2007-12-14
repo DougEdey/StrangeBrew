@@ -19,13 +19,11 @@ import ca.strangebrew.SBStringUtils;
 class MiscTableModel extends AbstractTableModel {
 	
 
-	private String[] columnNames = {"Ingredient", "Amount", "Units", "Cost/U",
-            "Stage", "Time"};
+	static final private String[] columnNames = {"Ingredient", "Amount", "Units", "Cost/U", "Stage", "Time"};
 
 	private Recipe data = null;
 
-	public MiscTableModel(Recipe r) {
-		data = r;		
+	public MiscTableModel() {
 	}
 
 	public void addRow() {

@@ -1,5 +1,5 @@
 /**
- * $Id: Hop.java,v 1.9 2007/12/10 14:54:10 jimcdiver Exp $
+ * $Id: Hop.java,v 1.10 2007/12/14 18:40:28 jimcdiver Exp $
  * Created on Oct 5, 2004
  *
  * Base class for hops.  This object doesn't do much except hold data and
@@ -17,7 +17,8 @@ public class Hop extends Ingredient{
 	private double IBU;
 
 	// Hops should know about hop types
-	private static String[] forms = {"Leaf", "Pellet", "Plug"};
+	static final private String[] forms = {"Leaf", "Pellet", "Plug"};
+	static final private String[] addTypes = {"Boil", "FWH", "Dry", "Mash"};
 	
 	// Constructors:
 	
@@ -34,8 +35,11 @@ public class Hop extends Ingredient{
 		setAdd("Boil");
 	}
 	
-	public static String[] getHopTypes() {
+	static public String[] getHopTypes() {
 		return forms;
+	}
+	static public String[] getAddTypes() {
+		return addTypes;
 	}
 	
 	// get methods:

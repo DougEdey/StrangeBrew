@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.57 2007/12/14 17:17:26 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.58 2007/12/14 18:40:27 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -1598,15 +1598,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 
 								// set up hop type combo
-								String[] forms = Hop.getHopTypes();
-								JComboBox hopsFormComboBox = new JComboBox(forms);
+								JComboBox hopsFormComboBox = new JComboBox(Hop.getHopTypes());
 								SmartComboBox.enable(hopsFormComboBox);
 								hopColumn = hopsTable.getColumnModel().getColumn(1);
 								hopColumn.setCellEditor(new SBComboBoxCellEditor(hopsFormComboBox));								
 
 								//								 set up hop add combo
-								String[] add = {"Boil", "FWH", "Dry", "Mash"};
-								JComboBox hopsAddComboBox = new JComboBox(add);
+								JComboBox hopsAddComboBox = new JComboBox(Hop.getAddTypes());
 								SmartComboBox.enable(hopsAddComboBox);
 								hopColumn = hopsTable.getColumnModel().getColumn(5);
 								hopColumn.setCellEditor(new SBComboBoxCellEditor(hopsAddComboBox));

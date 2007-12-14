@@ -11,9 +11,8 @@ import ca.strangebrew.SBStringUtils;
 
 
 class MaltTableModel extends AbstractTableModel {
-	private final StrangeSwing app;
-
-	private String[] columnNames = {"S", "M", "Malt", "Amount", "Units", "Points",
+	final private StrangeSwing app;
+	static final private String[] columnNames = {"S", "M", "Malt", "Amount", "Units", "Points",
 			"Lov", "Cost/U", "%"};
 
 	private Recipe data = null;

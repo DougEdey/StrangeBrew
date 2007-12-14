@@ -10,6 +10,7 @@ public class Misc extends Ingredient {
 	private String comments;
 	private String stage;
 	private int time;
+	static final private String[] stages = {"Mash", "Boil", "Primary", "Secondary", "Bottle", "Keg"};
 	
 	// default constructor
 	public  Misc() {
@@ -17,6 +18,10 @@ public class Misc extends Ingredient {
 		setCost(0);
 		setDescription("");
 		setUnits("gr");
+	}
+	
+	static public String[] getStages() {
+		return stages;
 	}
 	
 	// get methods

@@ -13,9 +13,8 @@ import ca.strangebrew.SBStringUtils;
 
 
 class HopsTableModel extends AbstractTableModel {
-	private final StrangeSwing app;
-
-	private String[] columnNames = {"Hop", "Form", "Alpha", "Amount",
+	final private StrangeSwing app;
+	static final private String[] columnNames = {"Hop", "Form", "Alpha", "Amount",
 			"Units", "Add", "Min", "IBU", "Cost/u"};
 
 	private Recipe data = null;
