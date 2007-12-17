@@ -49,7 +49,7 @@ public class BrewCalcs {
 
 	public static double platoToSG(double plato)
 	{  // function to convert a value in Plato to SG
-	   // equation baesd on HBD#3723 post by AJ DeLange
+	   // equation based on HBD#3723 post by AJ DeLange
 	   double SG;
 	   SG = 1.0000131 + 0.00386777*plato + 1.27447E-5*plato*plato + 6.34964E-8*plato*plato*plato;
 	   return SG;
@@ -98,5 +98,50 @@ public class BrewCalcs {
 	public static double cToF(double tempC) {
 		// routine to convert Celcius to Farenheit
 		return ((tempC * 9) / 5) + 32;
+	}
+	
+	/*
+	 *  Carbonation calculations	 * 
+	 */
+	
+	public static double dissolvedCO2(double BottleTemp)
+	  {
+	  // returns the amount of dissolved CO2 in beer at BottleTemp
+	   double disCO2 = (1.266789*BottleTemp) + 31.00342576 - (0.0000009243372*
+	        (Math.sqrt((1898155717178L* Math.pow(BottleTemp,2)) +
+	        91762600000000L*BottleTemp + 839352900000000L - 1710565000000L*14.5)));
+	   return disCO2;
+	  }
+
+	public static double  KegPSI(double Temp, double VolsCO2)
+	{
+	  // returns the PSI needed to carbonate beer at Temp at VolsCO2
+		double PSI = -16.6999 - (0.0101059 * Temp) + (0.00116512 * Math.pow(Temp,2)) + (0.173354 * Temp * VolsCO2)
+	    + (4.24267 * VolsCO2) - (0.0684226 * Math.pow(VolsCO2,2));
+		return PSI;
+	}
+
+	public static double PrimingSugarGL(double DisVolsCO2, double TargetVolsCO2, String SugarType)
+	{
+	  // returns the priming sugar in grams/litre needed to
+	  // carbonate beer w/ a dissolved vols CO2 to reach the target vols CO2
+	  // based on an article by Dave Draper in the July/August 1996 issue of Brewing Techniques.
+		double GramsPerLitre = (TargetVolsCO2 - DisVolsCO2) / 0.286;   
+
+	  if (SugarType == "dextrose")
+	    GramsPerLitre *= 1.15; // add 15%
+	  if (SugarType == "honey")
+	    GramsPerLitre *= 1.40; // add 40%
+	  if (SugarType == "maple syrup")
+	    GramsPerLitre *= 1.50; // add 50%
+	  if (SugarType == "molasses")
+	    GramsPerLitre *= 1.80; // add 80%
+	  if (SugarType == "DME")
+	    GramsPerLitre *= 1.30; // add 30%
+	  if (SugarType == "LME")
+	    GramsPerLitre *= 1.40; // add 40%
+	  // brown sugar is the same as table sugar
+
+	  return GramsPerLitre;
 	}
 }
