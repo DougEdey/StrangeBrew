@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 
 import ca.strangebrew.Options;
 import ca.strangebrew.SBStringUtils;
+import ca.strangebrew.BrewCalcs;
 
 public class HydrometerToolDialog extends javax.swing.JDialog implements ActionListener, FocusListener,KeyListener {
 	private final JPanel mainPanel = new JPanel();
@@ -38,12 +39,6 @@ public class HydrometerToolDialog extends javax.swing.JDialog implements ActionL
 	private final JButton okButton = new JButton();
 	private final Options opts = Options.getInstance();
 	
-	// This should be a setable option, and then reflected in the caclulation
-	// Currently, it is displayed and ignored!
-	private final static double FCALTEMP = 60.0;
-	private final static double CCALTEMP = 15.0;
-	
-	
 	public static void main(String[] args) {
 		final JFrame frame = new JFrame();
 		HydrometerToolDialog inst = new HydrometerToolDialog(frame);
@@ -59,32 +54,26 @@ public class HydrometerToolDialog extends javax.swing.JDialog implements ActionL
 	private void displayCalcs() {
 		double mT = 0;
 		double mSG = 0;
-		final double correction;
-		final double cSG;
+		double calT = 0; 
+		double cSG;
 		
 		// Just ignore bad input
 		try {
 			mSG = Double.parseDouble(measuredGravity.getText());
 			mT = Double.parseDouble(measuredTemp.getText());
+			calT = Double.parseDouble(calibratedTemp.getText());
 		} catch (Exception e) {	
 			correctedGravity.setText("Invalid");
 			return;
 		}
-				
+			
 		if (opts.getProperty("optMashTempU").equals("F")) {
-			correction = (1.313454 - 
-					(0.132674 * mT) + 
-					(0.002057793 * mT * mT) - 
-					(0.000002627634 * mT * mT * mT)) *
-					0.001;
-		} else {
-			correction = -0.0008031922 - 
-					(0.0000473773 * mT) +
-					(0.000007231263 * mT * mT) - 
-					(0.00000003078278 * mT * mT * mT);
+			mT = BrewCalcs.fToC(mT);
+			calT = BrewCalcs.fToC(calT);
 		}
+		
+		cSG = BrewCalcs.hydrometerCorrection(mT, mSG, calT);
 
-		cSG = mSG + correction;		
 		correctedGravity.setText(SBStringUtils.format(cSG, 3));		
 	}
 	
@@ -167,14 +156,12 @@ public class HydrometerToolDialog extends javax.swing.JDialog implements ActionL
 			c.gridwidth = 1;
 			mainPanel.add(lCalibratedTemp, c);
 			lCalibratedTemp.setText("Calibrated Temp: ");
-
-			mainPanel.add(calibratedTemp, c);
 			if (opts.getProperty("optMashTempU").equals("F")) {
-				calibratedTemp.setText(Double.toString(FCALTEMP));
+				calibratedTemp.setText("60.0");
 			} else {
-				calibratedTemp.setText(Double.toString(CCALTEMP));			
-			}		
-			calibratedTemp.setEditable(false);
+				calibratedTemp.setText("15.0");
+			}
+			mainPanel.add(calibratedTemp, c);	
 			calibratedTemp.setPreferredSize(new java.awt.Dimension(55, 20));
 			calibratedTemp.addFocusListener(this);
 			calibratedTemp.addActionListener(this);		

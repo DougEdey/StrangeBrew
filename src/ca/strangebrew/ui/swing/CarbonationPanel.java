@@ -15,8 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import ca.strangebrew.BrewCalcs;
 import ca.strangebrew.Database;
 import ca.strangebrew.Fermentable;
+import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 
 // TODO
@@ -61,6 +63,21 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 	final private JComboBox comboPrime = new JComboBox();
 	final private JCheckBox checkKegged = new JCheckBox("Kegged");
 	
+	// Resitual CO2 Volumn Formula Constants
+	final static private double cM = 1.69648934463088;
+	final static private double cB = 0.9672731854783;
+	// Vol = log(temp/cM) / log(cB)
+	
+	// Primeing constants
+	final static private double ozPerGalPerVol = 0.5;
+	final static private double basePppg = 1.046;
+	
+	// Force carbing
+	// P = -16.6999 - 0.0101059 * T + 0.00116512 * T2 + 0.173354 * T * V + 4.24267 * V - 0.0684226 * V2
+	//  *  P = Pressure needed (psi)
+    //	* T = Temperature of keg in °F
+    // 	* V = Volumes of CO2 desired 
+	
 	public CarbonationPanel() {
 		super();
 		initGUI();
@@ -83,9 +100,41 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 		textServTemp.setText(Double.toString(myRecipe.getServTemp()));
 		textTargetVol.setText(Double.toString(myRecipe.getTargetVol()));
 		textStyleVol.setText("calc");
-		textDissolvedVol.setText("calc");
-		textPrimeAmount.setText("calc");
-		textKegPresure.setText("calc");
+		
+		// Extrapolated from http://hbd.org/brewery/library/YPrimerMH.html useing normal geometry line y=mx+b
+		double disolvedCO2 = 0.0;
+		double tempInC = myRecipe.getBottleTemp();
+		
+		if (myRecipe.getCarbTempU().equals("F")) {
+			tempInC = BrewCalcs.fToC(tempInC);
+		}		
+		
+		// NOT Working!
+		disolvedCO2 = Math.log(tempInC/cM) / Math.log(cB);
+		textDissolvedVol.setText(Double.toString(disolvedCO2));
+
+		// Calc prime sugar needed
+		double neededVol = myRecipe.getTargetVol() - disolvedCO2;
+		double volumnInGal = myRecipe.getFinalWortVol() / 4.0;
+		double primeSugarInOZ = neededVol * ozPerGalPerVol * volumnInGal;
+		double pppgFactor = basePppg / myRecipe.getPrimeSugar().getPppg();
+		double atenuation = myRecipe.getPrimeSugar().getPercent();
+		
+		primeSugarInOZ = primeSugarInOZ / atenuation;
+		primeSugarInOZ = primeSugarInOZ * pppgFactor;
+		
+		// Convert to selecteed Units
+		double neededPrime = Quantity.convertUnit("oz", myRecipe.getPrimeSugarU(), primeSugarInOZ);
+		textPrimeAmount.setText(Double.toHexString(neededPrime));
+		
+		// Force carb
+		double psi = -16.6999 - 
+				(0.0101059 * myRecipe.getServTemp()) +
+				(0.00116512 * myRecipe.getServTemp() * myRecipe.getServTemp()) + 
+				(0.173354 * myRecipe.getServTemp() * myRecipe.getTargetVol()) +
+				(4.24267 * myRecipe.getTargetVol()) - 
+				(0.0684226 * myRecipe.getTargetVol() * myRecipe.getTargetVol());
+		textKegPresure.setText(Double.toString(psi));
 		comboPrime.setSelectedItem(myRecipe.getPrimeSugarType());
 		lPrimeU.setText(myRecipe.getPrimeSugarU());
 		checkKegged.setSelected(myRecipe.isKegged());
