@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.59 2007/12/14 20:33:36 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.60 2007/12/18 17:54:01 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -443,14 +443,14 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		
 		DB.readDB(path);
 
-		// Load DB first
-		initGUI();
-
 		cmbStyleModel.setList(DB.styleDB);
 		cmbYeastModel.setList(DB.yeastDB);
 		cmbMaltModel.setList(DB.fermDB);
 		cmbHopsModel.setList(DB.hopsDB);
+		carbPanel.setList(DB.primeSugarDB);
 
+		initGUI();
+		
 		cmbSizeUnitsModel.setList(new Quantity().getListofUnits("vol"));
 		cmbMaltUnitsModel.setList(new Quantity().getListofUnits("weight"));
 		cmbHopsUnitsModel.setList(new Quantity().getListofUnits("weight"));

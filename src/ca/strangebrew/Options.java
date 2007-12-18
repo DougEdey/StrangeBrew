@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.21 2007/12/14 17:17:26 jimcdiver Exp $
+ * $Id: Options.java,v 1.22 2007/12/18 17:54:01 jimcdiver Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -56,7 +56,7 @@ public class Options {
 			{"optHopsType", "Leaf"},
 
 			// carbonation:
-			{"optPrimingSugar", "dextrose"},
+			{"optPrimingSugar", "Corn Sugar"},
 			{"optSugarU", "grams"},
 			{"optBottleU", "fl. ounces"},
 			{"optCarbTempU", "F"},

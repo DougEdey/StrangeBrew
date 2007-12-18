@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.20 2007/12/14 20:33:38 jimcdiver Exp $
+ * $Id: XmlHandler.java,v 1.21 2007/12/18 17:54:01 jimcdiver Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -12,7 +12,6 @@ package ca.strangebrew;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import org.xml.sax.Attributes;
@@ -36,8 +35,7 @@ public class XmlHandler extends DefaultHandler{
 	private Note note = new Note();
 	private Attributes currentAttributes = null;
 	private FermentStep ferm = null;
-	private Fermentable primeSugar = null;
-
+	
 	private String currentList = null; //current List name
 	private String currentElement = null; // current element name
 	private String importType = null; // the type of recipe we're importing
@@ -475,15 +473,7 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentElement.equalsIgnoreCase("VOL")) {
 				r.setTargetVol(Double.parseDouble(s));
 			} else if (currentElement.equalsIgnoreCase("SUGAR")) {
-				// Copy base data out of DB
-				ArrayList db = Database.getInstance().primeSugarDB;
-				for (int i = 0; i < db.size(); i++) {
-					Fermentable dbItem = (Fermentable)db.get(i);
-					if (s.equals(dbItem.getName())) {
-						primeSugar = new Fermentable(dbItem);
-						r.setPrimeSugar(primeSugar);
-					}
-				}				
+				r.setPrimeSugarName(s);
 			} else if (currentElement.equalsIgnoreCase("SUGARU")) {
 				r.setPrimeSugarU(s);
 			} else if (currentElement.equalsIgnoreCase("TEMPU")) {

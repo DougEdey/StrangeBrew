@@ -1,5 +1,10 @@
 Change Log:
 
+Dec 18, 2007 - Jim Clark
+- Completed functionality of carbonation panel, still doesn't have selectable default settings in
+   options dialog.
+- Rolled back useing malts.csv and added a new prime_sugar.csv, which is used.
+
 Dec 14, 2007 - Jim Clark
 - Completed fermentation schedual functionality (save and xml->html export)
 - Revamped xlst to include all data on sheet. Much nicer output now, usable for a brewday sheet.

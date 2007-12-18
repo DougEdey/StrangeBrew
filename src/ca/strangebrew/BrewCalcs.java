@@ -121,27 +121,15 @@ public class BrewCalcs {
 		return PSI;
 	}
 
-	public static double PrimingSugarGL(double DisVolsCO2, double TargetVolsCO2, String SugarType)
+	public static double PrimingSugarGL(double DisVolsCO2, double TargetVolsCO2, PrimeSugar sugar)
 	{
-	  // returns the priming sugar in grams/litre needed to
-	  // carbonate beer w/ a dissolved vols CO2 to reach the target vols CO2
-	  // based on an article by Dave Draper in the July/August 1996 issue of Brewing Techniques.
+		// returns the priming sugar in grams/litre needed to
+		// carbonate beer w/ a dissolved vols CO2 to reach the target vols CO2
+		// based on an article by Dave Draper in the July/August 1996 issue of Brewing Techniques.
 		double GramsPerLitre = (TargetVolsCO2 - DisVolsCO2) / 0.286;   
 
-	  if (SugarType == "dextrose")
-	    GramsPerLitre *= 1.15; // add 15%
-	  if (SugarType == "honey")
-	    GramsPerLitre *= 1.40; // add 40%
-	  if (SugarType == "maple syrup")
-	    GramsPerLitre *= 1.50; // add 50%
-	  if (SugarType == "molasses")
-	    GramsPerLitre *= 1.80; // add 80%
-	  if (SugarType == "DME")
-	    GramsPerLitre *= 1.30; // add 30%
-	  if (SugarType == "LME")
-	    GramsPerLitre *= 1.40; // add 40%
-	  // brown sugar is the same as table sugar
+		GramsPerLitre /= sugar.getYield();
 
-	  return GramsPerLitre;
+		return GramsPerLitre;
 	}
 }

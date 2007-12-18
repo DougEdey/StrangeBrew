@@ -1,6 +1,6 @@
 /**
  * Created on Oct 4, 2004
- * $Id: Fermentable.java,v 1.9 2007/12/14 20:33:38 jimcdiver Exp $
+ * $Id: Fermentable.java,v 1.10 2007/12/18 17:54:01 jimcdiver Exp $
  * @author aavis
  *
  * This is the base malt class.  It doesn't do much, except hold data
@@ -17,6 +17,8 @@ public class Fermentable extends Ingredient {
 	private boolean steeped;
 	private double percent;
 	private boolean prime;
+	
+	final static private double basePppg = 1.047;
 
 	// constructors:
 	public Fermentable(String n, double p, double l, double a, String u) {
@@ -55,6 +57,10 @@ public class Fermentable extends Ingredient {
 		setUnits(Options.getInstance().getProperty("optMaltU"));
 		mashed = true;
 		prime = false;			
+	}
+	
+	static public double getBasePppg() {
+		return basePppg;
 	}
 	
 	// getter methods:

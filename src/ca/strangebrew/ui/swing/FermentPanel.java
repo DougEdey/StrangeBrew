@@ -169,35 +169,7 @@ public class FermentPanel extends javax.swing.JPanel implements ActionListener, 
 				fermentTable.updateUI();
 				displayFerment();
 			}			
-		}
-//		if (o == textPrimaryTime) {
-//			String s = textPrimaryTime.getText();
-//			myRecipe.setPrimaryTime(Integer.parseInt(s));
-//		} else if (o == textPrimaryTemp) {
-//			String s = textPrimaryTemp.getText();
-//			myRecipe.setPrimaryTemp(Double.parseDouble(s));
-//		} else if (o == textSecondaryTime) {
-//			String s = textSecondaryTime.getText();
-//			myRecipe.setSecondaryTime(Integer.parseInt(s));
-//		} else if (o == textSecondaryTemp) {
-//			String s = textSecondaryTemp.getText();
-//			myRecipe.setSecondaryTemp(Double.parseDouble(s));
-//		} else if (o == textTertiaryTime) {
-//			String s = textTertiaryTime.getText();
-//			myRecipe.setTertiaryTime(Integer.parseInt(s));
-//		} else if (o == textTertiaryTemp) {
-//			String s = textTertiaryTemp.getText();
-//			myRecipe.setTertiaryTemp(Double.parseDouble(s));
-//		} else if (o == comboType) {
-//			String s = (String)comboType.getSelectedItem();
-//			myRecipe.setFermentType(s);
-			
-//			}
-//		}
-//		
-		// don't do display water here call displrecipe on the SB notifier to fortce a refresh of the whole recipe. this will call display water from inside Strangeswing.displayrecipe.
-		//displayWater(); 
-		//sbn.displRecipe();		
+		}		
 	}
 	
 	

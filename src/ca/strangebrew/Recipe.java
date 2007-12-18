@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.46 2007/12/14 20:33:38 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.47 2007/12/18 17:54:01 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -84,7 +84,7 @@ public class Recipe {
 	private double bottleTemp;
 	private double servTemp;
 	private double targetVol;
-	private Fermentable primeSugar = new Fermentable();
+	private PrimeSugar primeSugar = new PrimeSugar();
 	private String carbTempU;
 	private boolean kegged;
 	private double kegPSI;
@@ -166,8 +166,8 @@ public class Recipe {
 		targetVol = opts.getDProperty("optVolsCO2");
 		// Its ugly, but eligant
 		for (int i = 0; i < Database.getInstance().primeSugarDB.size(); i++) {
-			if (((Fermentable)Database.getInstance().primeSugarDB.get(i)).getName().equals(opts.getProperty("optPrimingSugar"))) {
-				primeSugar = ((Fermentable)Database.getInstance().primeSugarDB.get(i));
+			if (((PrimeSugar)Database.getInstance().primeSugarDB.get(i)).getName().equals(opts.getProperty("optPrimingSugar"))) {
+				primeSugar = ((PrimeSugar)Database.getInstance().primeSugarDB.get(i));
 			}
 		}
 		primeSugar.setUnits(opts.getProperty("optSugarU"));
@@ -1756,15 +1756,10 @@ public class Recipe {
 		this.kegged = kegged;
 	}
 
-	public Fermentable getPrimeSugarType() {
-		return primeSugar;
+	public String getPrimeSugarName() {
+		return primeSugar.getName();
 	}
-
-	public void setPrimeSugarType(Fermentable primeType) {
-		isDirty = true;
-		this.primeSugar = primeType;
-	}
-
+	
 	public String getPrimeSugarU() {
 		return primeSugar.getUnitsAbrv();
 	}
@@ -1774,6 +1769,23 @@ public class Recipe {
 		this.primeSugar.setUnits(primeU);
 	}
 
+	public void setPrimeSugarName(String n) {
+		isDirty = true;
+		this.primeSugar.setName(n);
+		// Name comes with Yeild! set it too
+		ArrayList db = Database.getInstance().primeSugarDB;
+		for (int i = 0; i < db.size(); i++) {
+			if (n.equals(((PrimeSugar)db.get(i)).getName())) {
+				this.primeSugar.setYield(((PrimeSugar)db.get(i)).getYield());
+			}
+		}
+	}
+	
+	public void setPrimeSugarAmount(double q) {
+		isDirty = true;
+		this.primeSugar.setAmount(q);
+	}
+	
 	public double getServTemp() {
 		return servTemp;
 	}
@@ -1792,11 +1804,11 @@ public class Recipe {
 		this.targetVol = targetVol;
 	}
 
-	public Fermentable getPrimeSugar() {
+	public PrimeSugar getPrimeSugar() {
 		return primeSugar;
 	}
 
-	public void setPrimeSugar(Fermentable primeSugar) {
+	public void setPrimeSugar(PrimeSugar primeSugar) {
 		this.primeSugar = primeSugar;
 	}
 

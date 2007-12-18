@@ -17,9 +17,10 @@ import javax.swing.border.TitledBorder;
 
 import ca.strangebrew.BrewCalcs;
 import ca.strangebrew.Database;
-import ca.strangebrew.Fermentable;
+import ca.strangebrew.PrimeSugar;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
+import ca.strangebrew.SBStringUtils;
 
 // TODO
 // Make selections reflect in myrecipe.primeSugar
@@ -43,101 +44,82 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 	final private JPanel infoPanel = new JPanel();
 	final private GridBagLayout pnlInfoLayout = new GridBagLayout();
 	final private JLabel lBottleTemp  = new JLabel("Bottle Temp");
-	final private JLabel lBottleTempU  = new JLabel();
+	final private JLabel lBottleTempU  = new JLabel("F");
 	final private JLabel lServTemp  = new JLabel("Serving Temp");
-	final private JLabel lServTempU  = new JLabel();
+	final private JLabel lServTempU  = new JLabel("F");
 	final private JLabel lTargetVol  = new JLabel("Target CO2 Volumn");
 	final private JLabel lStyleVol  = new JLabel("Style CO2 Volumn");
 	final private JLabel lDissolvedVol  = new JLabel("Dissolved CO2 at Bottling: ");
 	final private JLabel lKegPresure  = new JLabel("Keg Presure: ");
 	final private JLabel lKegPSI  = new JLabel("PSI");
 	final private JLabel lBatchSize = new JLabel("Batch Size: ");
-	final private JLabel lPrimeU = new JLabel("");
-	final private JTextField textBottleTemp = new JTextField();
-	final private JTextField textServTemp = new JTextField();
-	final private JTextField textTargetVol = new JTextField();
-	final private JTextField textStyleVol = new JTextField();
-	final private JTextField textDissolvedVol = new JTextField();
-	final private JTextField textPrimeAmount = new JTextField();
-	final private JTextField textKegPresure = new JTextField();
+	final private JLabel lPrimeU = new JLabel("oz");
+	final private JTextField textBottleTemp = new JTextField("60.0");
+	final private JTextField textServTemp = new JTextField("40.0");
+	final private JTextField textTargetVol = new JTextField("2.0");
+	final private JTextField textStyleVol = new JTextField("0.0");
+	final private JTextField textDissolvedVol = new JTextField("0.8");
+	final private JTextField textPrimeAmount = new JTextField("100.0");
+	final private JTextField textKegPresure = new JTextField("12.0");
 	final private JComboBox comboPrime = new JComboBox();
 	final private JCheckBox checkKegged = new JCheckBox("Kegged");
-	
-	// Resitual CO2 Volumn Formula Constants
-	final static private double cM = 1.69648934463088;
-	final static private double cB = 0.9672731854783;
-	// Vol = log(temp/cM) / log(cB)
-	
-	// Primeing constants
-	final static private double ozPerGalPerVol = 0.5;
-	final static private double basePppg = 1.046;
-	
-	// Force carbing
-	// P = -16.6999 - 0.0101059 * T + 0.00116512 * T2 + 0.173354 * T * V + 4.24267 * V - 0.0684226 * V2
-	//  *  P = Pressure needed (psi)
-    //	* T = Temperature of keg in °F
-    // 	* V = Volumes of CO2 desired 
 	
 	public CarbonationPanel() {
 		super();
 		initGUI();
 	}
 	
+	public void setList(ArrayList primeDB) {
+		// Populate combo	
+		ArrayList db = primeDB;
+		for (int i = 0; i < db.size(); i++) {
+			comboPrime.addItem(((PrimeSugar)db.get(i)).getName());
+		}
+	}
+	
 	public void setData(Recipe r) {
 		myRecipe = r;
-
-		// Populate combo	
-		ArrayList db = Database.getInstance().primeSugarDB;
-		for (int i = 0; i < db.size(); i++) {
-			comboPrime.addItem(((Fermentable)db.get(i)).getName());
-		}
 	}
 	
 	public void displayCarb(){	
 		lServTempU.setText(myRecipe.getCarbTempU());
-		lBottleTempU.setText(myRecipe.getCarbTempU());
-		textBottleTemp.setText(Double.toString(myRecipe.getBottleTemp()));
-		textServTemp.setText(Double.toString(myRecipe.getServTemp()));
-		textTargetVol.setText(Double.toString(myRecipe.getTargetVol()));
-		textStyleVol.setText("calc");
-		
-		// Extrapolated from http://hbd.org/brewery/library/YPrimerMH.html useing normal geometry line y=mx+b
-		double disolvedCO2 = 0.0;
-		double tempInC = myRecipe.getBottleTemp();
-		
-		if (myRecipe.getCarbTempU().equals("F")) {
-			tempInC = BrewCalcs.fToC(tempInC);
-		}		
-		
-		// NOT Working!
-		disolvedCO2 = Math.log(tempInC/cM) / Math.log(cB);
-		textDissolvedVol.setText(Double.toString(disolvedCO2));
-
-		// Calc prime sugar needed
-		double neededVol = myRecipe.getTargetVol() - disolvedCO2;
-		double volumnInGal = myRecipe.getFinalWortVol() / 4.0;
-		double primeSugarInOZ = neededVol * ozPerGalPerVol * volumnInGal;
-		double pppgFactor = basePppg / myRecipe.getPrimeSugar().getPppg();
-		double atenuation = myRecipe.getPrimeSugar().getPercent();
-		
-		primeSugarInOZ = primeSugarInOZ / atenuation;
-		primeSugarInOZ = primeSugarInOZ * pppgFactor;
-		
-		// Convert to selecteed Units
-		double neededPrime = Quantity.convertUnit("oz", myRecipe.getPrimeSugarU(), primeSugarInOZ);
-		textPrimeAmount.setText(Double.toHexString(neededPrime));
-		
-		// Force carb
-		double psi = -16.6999 - 
-				(0.0101059 * myRecipe.getServTemp()) +
-				(0.00116512 * myRecipe.getServTemp() * myRecipe.getServTemp()) + 
-				(0.173354 * myRecipe.getServTemp() * myRecipe.getTargetVol()) +
-				(4.24267 * myRecipe.getTargetVol()) - 
-				(0.0684226 * myRecipe.getTargetVol() * myRecipe.getTargetVol());
-		textKegPresure.setText(Double.toString(psi));
-		comboPrime.setSelectedItem(myRecipe.getPrimeSugarType());
+		lBottleTempU.setText(myRecipe.getCarbTempU());	
+		textBottleTemp.setText(SBStringUtils.format(myRecipe.getBottleTemp(), 1));
+		textServTemp.setText(SBStringUtils.format(myRecipe.getServTemp(), 1));
+		textTargetVol.setText(SBStringUtils.format(myRecipe.getTargetVol(), 1));
+		textStyleVol.setText("0.0");
+		comboPrime.setSelectedItem(myRecipe.getPrimeSugarName());
 		lPrimeU.setText(myRecipe.getPrimeSugarU());
 		checkKegged.setSelected(myRecipe.isKegged());
+		lBatchSize.setText("Batch Size: " + myRecipe.getFinalWortVol() + 
+				" " + myRecipe.getVolUnits());
+		
+		double dissolvedCO2 = 0.0;
+		double bottleTemp = myRecipe.getBottleTemp();
+		double servTemp = myRecipe.getServTemp();
+		
+		if (myRecipe.getCarbTempU().equals("C")) {
+			bottleTemp = BrewCalcs.cToF(bottleTemp);
+			servTemp =  BrewCalcs.cToF(servTemp);
+		}		
+		
+		dissolvedCO2 = BrewCalcs.dissolvedCO2(bottleTemp);
+		textDissolvedVol.setText(SBStringUtils.format(dissolvedCO2, 1));
+
+		// Calc prime sugar needed
+		double primeSugarGL = BrewCalcs.PrimingSugarGL(dissolvedCO2, myRecipe.getTargetVol(), myRecipe.getPrimeSugar());
+		
+		// Convert to selecteed Units
+		double neededPrime = Quantity.convertUnit("g", myRecipe.getPrimeSugarU(), primeSugarGL);
+		neededPrime *= Quantity.convertUnit("l", myRecipe.getVolUnits(), primeSugarGL);
+		neededPrime *= myRecipe.getFinalWortVol();
+		textPrimeAmount.setText(SBStringUtils.format(neededPrime, 2));
+		
+		// Force carb
+		double psi = BrewCalcs.KegPSI(servTemp, myRecipe.getTargetVol());
+		textKegPresure.setText(SBStringUtils.format(psi, 1));
+		lPrimeU.setText(myRecipe.getPrimeSugarU());
+		checkKegged.setSelected(myRecipe.isKegged());		
 	}
 	
 	private void initGUI() {
@@ -170,6 +152,9 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 				infoPanel.add(lBottleTemp, constraints);
 				constraints.gridx = 1;
 				infoPanel.add(textBottleTemp, constraints);
+				textBottleTemp.addActionListener(this);
+				textBottleTemp.addFocusListener(this);
+				textBottleTemp.setPreferredSize(new java.awt.Dimension(85, 20));
 				constraints.gridx = 2;
 				infoPanel.add(lBottleTempU, constraints);
 				
@@ -179,6 +164,8 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 				infoPanel.add(lServTemp, constraints);
 				constraints.gridx = 1;
 				infoPanel.add(textServTemp, constraints);
+				textServTemp.addActionListener(this);
+				textServTemp.addFocusListener(this);
 				constraints.gridx = 2;
 				infoPanel.add(lServTempU, constraints);
 
@@ -188,6 +175,8 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 				infoPanel.add(lTargetVol, constraints);
 				constraints.gridx = 1;
 				infoPanel.add(textTargetVol, constraints);
+				textTargetVol.addActionListener(this);
+				textTargetVol.addFocusListener(this);
 
 				// Line 4
 				constraints.gridx = 0;
@@ -247,6 +236,8 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 					constraints.gridy = 0;
 					constraints.gridwidth = 2;
 					primePanel.add(comboPrime, constraints);
+					comboPrime.addActionListener(this);
+					comboPrime.addFocusListener(this);					
 					constraints.gridwidth = 1;
 					
 					constraints.gridx = 0;
@@ -276,7 +267,9 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 					constraints.gridx = 2;
 					constraints.gridy = 1;
 					constraints.gridwidth = 3;
-					kegPanel.add(checkKegged, constraints);					
+					kegPanel.add(checkKegged, constraints);		
+					checkKegged.addActionListener(this);
+					checkKegged.addFocusListener(this);
 					constraints.gridwidth = 1;
 				}
 			}
@@ -286,10 +279,45 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		//Object o = e.getSource();		
+		Object o = e.getSource();
+		if (myRecipe != null) {
+			if (o == comboPrime) {
+				updatePrimeSugar((String)comboPrime.getSelectedItem(), 
+					Double.parseDouble(textPrimeAmount.getText()),
+					myRecipe.getPrimeSugarU());			
+				displayCarb();
+			} else if (o == textBottleTemp) {
+				myRecipe.setBottleTemp(Double.parseDouble(textBottleTemp.getText()));
+				displayCarb();
+				updatePrimeSugar((String)comboPrime.getSelectedItem(), 
+					Double.parseDouble(textPrimeAmount.getText()),
+					myRecipe.getPrimeSugarU());			
+			} else if (o == textServTemp) {			
+				myRecipe.setServTemp(Double.parseDouble(textServTemp.getText()));
+				displayCarb();
+				updatePrimeSugar((String)comboPrime.getSelectedItem(), 
+					Double.parseDouble(textPrimeAmount.getText()),
+					myRecipe.getPrimeSugarU());			
+			} else if (o == checkKegged) {			
+				myRecipe.setKegged(checkKegged.isSelected());
+				displayCarb();
+			}
+		}
 	}
 	
-	
+	private void updatePrimeSugar(String name, double quantity, String unit) {
+		PrimeSugar newF = new PrimeSugar();
+		ArrayList ar = Database.getInstance().primeSugarDB;
+		for (int i = 0; i < ar.size(); i++) {
+			if (name.equals(((PrimeSugar)ar.get(i)).getName())) {
+				newF = (PrimeSugar)ar.get(i);
+			}
+		}
+		
+		myRecipe.setPrimeSugar(newF);
+		myRecipe.setPrimeSugarU(unit);
+		myRecipe.setPrimeSugarAmount(quantity);
+	}
 	
 	public void focusLost(FocusEvent e) {		
 		Object o = e.getSource();

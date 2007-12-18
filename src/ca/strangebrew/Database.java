@@ -15,7 +15,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.13 2007/12/14 20:33:38 jimcdiver Exp $
+ * $Id: Database.java,v 1.14 2007/12/18 17:54:01 jimcdiver Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -33,12 +33,12 @@ public class Database {
 	// we might want to move that way in the future.
 	private static Database instance = null;
 	
-	public ArrayList fermDB = new ArrayList();
-	public ArrayList hopsDB = new ArrayList();
-	public ArrayList yeastDB = new ArrayList();
+	final public ArrayList fermDB = new ArrayList();
+	final public ArrayList hopsDB = new ArrayList();
+	final public ArrayList yeastDB = new ArrayList();
 	public ArrayList styleDB = new ArrayList();
-	public ArrayList miscDB = new ArrayList();
-	public ArrayList primeSugarDB = new ArrayList();
+	final public ArrayList miscDB = new ArrayList();
+	final public ArrayList primeSugarDB = new ArrayList();
 	public String dbPath;
 
 	// This is now a singleton
@@ -93,23 +93,26 @@ public class Database {
 					return i;			
 				}
 			}
+		} else if (o.getClass().getName().equals("ca.strangebrew.PrimeSugar")) {
+			for (int i=0; i<styleDB.size(); i++){
+				Style y1 = (Style)o;
+				Style y2 = (Style)styleDB.get(i);
+				if (y1.equals(y2)) {					
+					return i;			
+				}
+			}
 		}
+		
 		return -1;
 	}
 	
 	public void readDB(String path){
 		dbPath = path;
-		fermDB = new ArrayList();
-		primeSugarDB = new ArrayList();
 		readFermentables(dbPath);
-		hopsDB = new ArrayList();
+		readPrimeSugar(dbPath);
 		readHops(dbPath);
-		yeastDB = new ArrayList();
 		readYeast(dbPath);
-		// readStyles(dbPath);
-		miscDB = new ArrayList();
 		readMisc(dbPath);
-		styleDB = new ArrayList();
 		importStyles(dbPath);
 		
 		// sort
@@ -119,6 +122,7 @@ public class Database {
 		Collections.sort(hopsDB,  sc);
 		Collections.sort(yeastDB,  sc);
 	}
+	
 	public void readFermentables(String path) {
 		// read the fermentables from the csv file
 		try {
@@ -139,7 +143,6 @@ public class Database {
 				int descrIdx = getIndex(fields, "Descr");
 				int steepIdx = getIndex(fields, "Steep");
 				int modIdx = getIndex(fields, "Modified");
-				int primeIdx = getIndex(fields, "Prime");
 
 				while (true) {
 					Fermentable f = new Fermentable();
@@ -157,27 +160,7 @@ public class Database {
 						f.setAmount(0);
 					f.setDescription(fields[descrIdx]);
 					f.setModified(Boolean.valueOf(fields[modIdx]).booleanValue());
-					f.setPrime(Boolean.valueOf(fields[primeIdx]).booleanValue());
 					fermDB.add(f);		
-					
-					if (f.getPrime()) {
-						Fermentable prime = new Fermentable();
-						prime.setName(fields[nameIdx]);
-						prime.setPppg(Double.parseDouble(fields[pppgIdx]));
-						prime.setLov(Double.parseDouble(fields[lovIdx]));
-						prime.setCost(Double.parseDouble(fields[costIdx]));
-						prime.setUnits(fields[unitsIdx]);
-						prime.setMashed(Boolean.valueOf(fields[mashIdx]).booleanValue());
-						prime.setSteep(Boolean.valueOf(fields[steepIdx]).booleanValue());
-						if (!fields[stockIdx].equals(""))
-							prime.setAmount(Double.parseDouble(fields[stockIdx]));
-						else
-							prime.setAmount(0);
-						prime.setDescription(fields[descrIdx]);
-						prime.setModified(Boolean.valueOf(fields[modIdx]).booleanValue());
-						prime.setPrime(Boolean.valueOf(fields[primeIdx]).booleanValue());
-						primeSugarDB.add(prime);		
-					}
 				}
 			} catch (EOFException e) {
 			}
@@ -210,7 +193,6 @@ public class Database {
 			writer.put("Descr");			
 			writer.put("Steep");
 			writer.put("Modified");
-			writer.put("Prime");
 			writer.nl();
 			int i = 0, j = 0, k = 0;
 			while (i < fermDB.size() || j < newIngr.size()) {
@@ -238,7 +220,6 @@ public class Database {
 					writer.put(f.getDescription());
 					writer.put("" + f.getSteep());
 					writer.put("" + f.getModified());
-					writer.put("" + f.getPrime());
 					writer.nl();
 				}
 
@@ -512,9 +493,7 @@ public class Database {
 		File yeastFile = new File(path, "styleguide.xml");
 		Debug.print("Opening: " + yeastFile.getName() + ".\n");
 		ImportXml imp = new ImportXml(yeastFile.toString(), "style");
-		styleDB = imp.styleHandler.getStyles();		
-
-
+		styleDB = imp.styleHandler.getStyles();
 	}
 	
 	public void readMisc(String path) {
@@ -615,6 +594,41 @@ public class Database {
 		}
 
 	}
+
+	public void readPrimeSugar(String path) {
+		// read the fermentables from the csv file
+		try {
+			File primeFile = new File(path, "prime_sugar.csv");
+			CSVReader reader = new CSVReader(new FileReader(
+					primeFile), ',', '\"', true, false);
+
+			try {
+				// get the first line and set up the index:
+				String[] fields = reader.getAllFieldsInLine();
+				int nameIdx = getIndex(fields, "Name");
+				int yieldIdx = getIndex(fields, "Yield");
+				int unitsIdx = getIndex(fields, "Units");
+				int descrIdx = getIndex(fields, "Descr");
+				
+				while (true) {
+					PrimeSugar p = new PrimeSugar();
+					fields = reader.getAllFieldsInLine();
+					p.setName(fields[nameIdx]);
+					p.setYield(Double.parseDouble(fields[yieldIdx]));
+					p.setUnits(fields[unitsIdx]);
+					p.setAmount(0);
+					p.setDescription(fields[descrIdx]);
+					primeSugarDB.add(p);		
+				}
+			} catch (EOFException e) {
+			}
+			reader.close();	
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+
+	}
 	
 	private int getIndex(String[] fields, String key) {
 		int i = 0;
@@ -640,7 +654,8 @@ public class Database {
 				return (result == 0 ? -1 : result);
 			} else if (a.getClass().getName().equalsIgnoreCase("ca.strangebrew.Yeast") ||
 					a.getClass().getName().equalsIgnoreCase("ca.strangebrew.Fermentable") ||
-					a.getClass().getName().equalsIgnoreCase("ca.strangebrew.Misc")) {
+					a.getClass().getName().equalsIgnoreCase("ca.strangebrew.Misc") ||
+					a.getClass().getName().equalsIgnoreCase("ca.strangebrew.PrimeSugar")) {
 				Ingredient a1 = (Ingredient) a;
 				Ingredient b1 = (Ingredient) b;
 				int result = a1.getName().compareToIgnoreCase(b1.getName());				
