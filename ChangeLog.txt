@@ -1,4 +1,9 @@
 Change Log:
+Dec 19, 2007 - Jim Clark
+- Properties for carb panel implemented
+- Export to html for carb implemented
+- Quantity.Converter and ilk now static so a nre Quanity object doesn't need to be instantiated to 
+   convert a weight or volume
 
 Dec 18, 2007 - Jim Clark
 - Completed functionality of carbonation panel, still doesn't have selectable default settings in

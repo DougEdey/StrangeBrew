@@ -47,6 +47,7 @@
 				<xsl:apply-templates select="MISC"/>
 				<xsl:apply-templates select="HOPS"/>
 				<xsl:apply-templates select="FERMENTATION_SCHEDUAL"/>
+				<xsl:apply-templates select="CARB"/>
 	
 				<div id="footer">Produced by <a
 						href="http://sourceforge.net/projects/strangebrew">
@@ -409,6 +410,57 @@
 		</xsl:if>	
 	</xsl:template>
 
+	<xsl:template match="CARB">
+		<xsl:if test="/STRANGEBREWRECIPE/CARB">
+   	 	 <table>
+			<xsl:choose>
+				<xsl:when test="KEG = 'true'">
+					<thead>
+						<tr>
+							<th colspan="3">Carbonation</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>CO2 Volume</th>
+							<th>Presure</th>
+							<th>Serving Temp</th>
+						</tr>
+						<tr>
+							<td><xsl:value-of select="VOL"/></td>
+							<td><xsl:value-of select="PSI"/> psi</td>
+							<td><xsl:value-of select="SERVTEMP"/> <xsl:value-of select="TEMPU"/></td>
+						</tr>
+					</tbody>
+				</xsl:when>
+				<xsl:otherwise>
+					<thead>
+						<tr>
+							<th colspan="5">Carbonation</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>CO2 Volume</th>
+							<th>Priming Sugar</th>
+							<th>Amount</th>
+							<th>Bottle Temp</th>
+							<th>Serving Temp</th>							
+						</tr>
+						<tr>
+							<td><xsl:value-of select="VOL"/></td>
+							<td><xsl:value-of select="SUGAR"/></td>
+							<td><xsl:value-of select="AMOUNT"/> <xsl:value-of select="SUGARU"/></td>
+							<td><xsl:value-of select="BOTTLETEMP"/> <xsl:value-of select="TEMPU"/></td>
+							<td><xsl:value-of select="SERVTEMP"/> <xsl:value-of select="TEMPU"/></td>
+						</tr>
+					</tbody>
+				</xsl:otherwise>
+			</xsl:choose>
+		  </table>
+		</xsl:if>	
+	</xsl:template>
+	
 	<xsl:template match="PRINT">
 		body,th,td{font-size:<xsl:value-of select="@FONTSIZE"/>;font-family:"<xsl:value-of select="@FONTFACE"/>";}
 	</xsl:template>

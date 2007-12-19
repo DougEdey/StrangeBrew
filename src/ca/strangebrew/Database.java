@@ -15,7 +15,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.14 2007/12/18 17:54:01 jimcdiver Exp $
+ * $Id: Database.java,v 1.15 2007/12/19 16:59:00 jimcdiver Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -628,6 +628,16 @@ public class Database {
 			System.out.println(e.getMessage());
 		}
 
+	}
+	
+	public String[] getPrimeSugarNameList() {
+		String[] names = new String[primeSugarDB.size()];
+		
+		for (int i = 0; i < primeSugarDB.size(); i++) {
+			names[i] = ((PrimeSugar)primeSugarDB.get(i)).getName();
+		}
+	
+		return names;
 	}
 	
 	private int getIndex(String[] fields, String key) {

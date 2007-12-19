@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.25 2007/12/14 18:40:27 jimcdiver Exp $
+ * $Id: MashPanel.java,v 1.26 2007/12/19 16:58:59 jimcdiver Exp $
  *  @author aavis 
  */
 
@@ -321,7 +321,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				jLabel1.setText("Lost in Tun:");
 				{
 
-					volUnitsComboModel.setList(new Quantity().getListofUnits("vol", true));
+					volUnitsComboModel.setList(Quantity.getListofUnits("vol", true));
 					SmartComboBox.enable(volUnitsCombo);
 					settingsPanel.add(volUnitsCombo, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,

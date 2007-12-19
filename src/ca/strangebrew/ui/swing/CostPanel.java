@@ -190,7 +190,7 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener, Foc
 			bottleSizeTxt.addActionListener(this);
 
 			bottleSizeUCmbModel = new ComboModel();
-			bottleSizeUCmbModel.setList(new Quantity().getListofUnits("vol"));
+			bottleSizeUCmbModel.setList(Quantity.getListofUnits("vol"));
 
 			bottleSizeUCmb = new JComboBox();
 			SmartComboBox.enable(bottleSizeUCmb);

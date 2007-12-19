@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.60 2007/12/18 17:54:01 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.61 2007/12/19 16:58:59 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -451,9 +451,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 		initGUI();
 		
-		cmbSizeUnitsModel.setList(new Quantity().getListofUnits("vol"));
-		cmbMaltUnitsModel.setList(new Quantity().getListofUnits("weight"));
-		cmbHopsUnitsModel.setList(new Quantity().getListofUnits("weight"));
+		cmbSizeUnitsModel.setList(Quantity.getListofUnits("vol"));
+		cmbMaltUnitsModel.setList(Quantity.getListofUnits("weight"));
+		cmbHopsUnitsModel.setList(Quantity.getListofUnits("weight"));
 
 		path = SBStringUtils.getAppPath("recipes");
 		Debug.print("Recipes path:" + path);		
@@ -1474,7 +1474,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							
 							// set up the units combobox
 							SmartComboBox.enable(maltTotalUnitsComboBox);
-							maltTotalUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
+							maltTotalUnitsComboModel.setList(Quantity.getListofUnits("weight"));
 							maltTotalUnitsComboBox.setModel(maltTotalUnitsComboModel);
 							TableColumn t = tblMaltTotals.getColumnModel().getColumn(4);
 							t.setCellEditor(new SBComboBoxCellEditor(maltTotalUnitsComboBox));
@@ -1548,7 +1548,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							
 							// set up the units combobox
 							SmartComboBox.enable(hopsTotalUnitsComboBox);
-							hopsTotalUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
+							hopsTotalUnitsComboModel.setList(Quantity.getListofUnits("weight"));
 							hopsTotalUnitsComboBox.setModel(hopsTotalUnitsComboModel);
 							TableColumn t = tblHopsTotals.getColumnModel().getColumn(4);
 							t.setCellEditor(new SBComboBoxCellEditor(hopsTotalUnitsComboBox));

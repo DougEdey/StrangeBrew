@@ -301,6 +301,7 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 			} else if (o == checkKegged) {			
 				myRecipe.setKegged(checkKegged.isSelected());
 				displayCarb();
+				myRecipe.setKegPSI(Double.parseDouble(textKegPresure.getText()));
 			}
 		}
 	}

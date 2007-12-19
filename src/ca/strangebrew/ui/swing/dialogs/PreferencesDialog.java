@@ -17,6 +17,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,6 +32,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import ca.strangebrew.BrewCalcs;
+import ca.strangebrew.Database;
 import ca.strangebrew.Hop;
 import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
@@ -58,9 +60,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 	// Final UI elements
 	final private JPanel pnlBrewer = new JPanel();
-
 	final private JTextField txtBottleSize = new JTextField();
-
 	final private JButton okButton = new JButton();
 	final private JButton cancelButton = new JButton();
 	final private JLabel jLabel8 = new JLabel();
@@ -74,7 +74,6 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JTextField txtPhone = new JTextField();
 	final private JLabel jLabel5 = new JLabel();
 	final private JTextField txtBrewerName = new JTextField();
-	final private JLabel jLabel3 = new JLabel();
 	final private JPanel carbPanel = new JPanel();
 	final private JComboBox cmbBottleSize = new JComboBox();
 	final private ComboModel cmbBottleSizeModel = new ComboModel();
@@ -196,6 +195,25 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JLabel localeLabel = new JLabel();
 	final private JComboBox localeComboBox = new JComboBox();
 	final private JLabel defaultLocaleLable = new JLabel();
+	// Carb
+	final private GridBagLayout layoutCarbPanel = new GridBagLayout();
+	final private GridBagConstraints constraints = new GridBagConstraints();
+	final private JLabel labelPrimeSugar = new JLabel("Prime Sugar: ");
+	final private JLabel labelSugarU = new JLabel("Sugar Weight Unit: ");
+	final private JLabel labelCarbTempU = new JLabel("Carb Temp Unit: ");
+	final private JLabel labelServTemp = new JLabel("Serving Temp: ");
+	final private JLabel labelBottleTemp = new JLabel("Bottle Temp: ");
+	final private JLabel labelVol = new JLabel("Target C02 Volumn: ");
+	final private JComboBox comboPrimeSugar = new JComboBox(Database.getInstance().getPrimeSugarNameList());
+	// TODO come back and fix all the temperature selection everywhere to use some sort of static list from
+	// somewhere. Probably Recipie, Options or Database!
+	final private JComboBox comboCarbTempU = new JComboBox(new String[] {"F", "C"});
+	final private JComboBox comboSugarU = new JComboBox(Quantity.getListofUnits("weight").toArray());
+	final private JTextField txtServTemp = new JTextField();
+	final private JTextField txtBottleTemp = new JTextField();
+	final private JTextField txtVol = new JTextField();
+	final private JCheckBox checkKegged = new JCheckBox("Kegged");
+	
 /*	private ArrayList looks;*/
 	
 	final private Frame sb;
@@ -251,17 +269,23 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		mashRatioUCombo.setSelectedItem(opts.getProperty("optMashRatioU"));
 		mashRatioTxt.setText(opts.getProperty("optMashRatio"));
 		
-		// cost tab:
+		// cost/carb tab:
 		txtOtherCost.setText(opts.getProperty("optMiscCost"));
 		txtBottleSize.setText(opts.getProperty("optBottleSize"));
 		cmbBottleSizeModel.addOrInsert(opts.getProperty("optBottleU"));
-
+		comboPrimeSugar.setSelectedItem(opts.getProperty("optPrimingSugar"));
+		comboSugarU.setSelectedItem(opts.getProperty("optSugarU"));
+		comboCarbTempU.setSelectedItem(opts.getProperty("optCarbTempU"));
+		txtBottleTemp.setText(opts.getProperty("optBottleTemp"));
+		txtServTemp.setText(opts.getProperty("optServTemp"));
+		txtVol.setText(opts.getProperty("optVolsCO2"));
+		checkKegged.setSelected(opts.getBProperty("optKegged"));
+		
 		// brewer tab:
 		txtBrewerName.setText(opts.getProperty("optBrewer"));
 		txtPhone.setText(opts.getProperty("optPhone"));
 		txtClubName.setText(opts.getProperty("optClub"));
 		txtEmail.setText(opts.getProperty("optEmail"));
-		// TODO
 		localeComboBox.setSelectedItem(opts.getLocale());		
 
 		// calculations tab:
@@ -301,10 +325,21 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	}
 
 	private void saveOptions() {
-		// cost tab:
+		// cost/carb tab:
 		opts.setProperty("optMiscCost", txtOtherCost.getText());
 		opts.setProperty("optBottleSize", txtBottleSize.getText());
-		opts.setProperty("optBottleU", (String) cmbBottleSize.getSelectedItem());
+		opts.setProperty("optBottleU", (String)cmbBottleSizeModel.getSelectedItem());
+		opts.setProperty("optPrimingSugar", (String)comboPrimeSugar.getSelectedItem());
+		opts.setProperty("optSugarU", (String)comboSugarU.getSelectedItem());
+		opts.setProperty("optCarbTempU", (String)comboCarbTempU.getSelectedItem());
+		opts.setProperty("optBottleTemp", txtBottleTemp.getText());
+		opts.setProperty("optServTemp", txtServTemp.getText());
+		opts.setProperty("optVolsCO2", txtVol.getText());
+		if (checkKegged.isSelected()) {
+			opts.setProperty("optKegged", "true");			
+		} else {
+			opts.setProperty("optKegged", "false");
+		}
 
 		// Brewer tab:
 		opts.setProperty("optBrewer", txtBrewerName.getText());
@@ -559,12 +594,72 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				costCarbPanel.setLayout(costCarbPanelLayout);
 				jTabbedPane1.addTab("Cost & Carb", null, costCarbPanel, null);
 				{
-					costCarbPanel.add(carbPanel, BorderLayout.CENTER);
+					costCarbPanel.add(carbPanel, BorderLayout.CENTER);					
+					layoutCarbPanel.rowWeights = new double[]{0.1, 0.1, 0.4};
+					layoutCarbPanel.rowHeights = new int[]{7, 7, 7};
+					layoutCarbPanel.columnWeights = new double[]{0.1, 0.1, 0.1};
+					layoutCarbPanel.columnWidths = new int[]{7, 7, 7};
+					carbPanel.setLayout(layoutCarbPanel);				
 					carbPanel.setBorder(BorderFactory.createTitledBorder(null, "Carbonation",
 							TitledBorder.LEADING, TitledBorder.TOP));
 					{
-						carbPanel.add(jLabel3);
-						jLabel3.setText("Not implemented");
+						// carbPanel
+						constraints.gridx = 0;
+						constraints.gridy = 0;
+						carbPanel.add(labelPrimeSugar, constraints);
+						constraints.gridx = 1;
+						carbPanel.add(comboPrimeSugar, constraints);						
+						constraints.gridx = 2;
+						carbPanel.add(labelSugarU, constraints);
+						constraints.gridx = 3;
+						carbPanel.add(comboSugarU, constraints);
+						
+						constraints.gridx = 0;
+						constraints.gridy = 1;
+						carbPanel.add(labelServTemp, constraints);
+						constraints.ipadx = 60;
+						constraints.gridx = 1;
+						carbPanel.add(txtServTemp, constraints);
+						constraints.ipadx = 0;
+						constraints.gridx = 2;
+						carbPanel.add(labelCarbTempU, constraints);
+						constraints.gridx = 3;
+						carbPanel.add(comboCarbTempU, constraints);
+
+						constraints.gridx = 0;
+						constraints.gridy = 2;
+						carbPanel.add(labelBottleTemp, constraints);
+						constraints.gridx = 1;
+						constraints.ipadx = 60;
+						carbPanel.add(txtBottleTemp, constraints);
+						constraints.ipadx = 0;
+						constraints.gridx = 3;
+						constraints.gridwidth = 2;
+						carbPanel.add(checkKegged, constraints);						
+						constraints.gridwidth = 1;
+						
+						constraints.gridx = 0;
+						constraints.gridy = 3;
+						carbPanel.add(labelVol, constraints);
+						constraints.gridx = 1;
+						constraints.ipadx = 60;
+						carbPanel.add(txtVol, constraints);
+						constraints.ipadx = 0;
+
+//labelPrimeSugar
+//labelSugarU
+//labelCarbTempU
+//labelServTemp
+//labelBottleTemp
+//labelVol
+//comboPrimeSugar
+//comboCarbTempU
+//comboSugarU
+//txtServTemp
+//txtBottleTemp 
+//txtVol
+//checkKegged
+
 					}
 				}
 				{
@@ -579,7 +674,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					jPanel2.setBorder(BorderFactory.createTitledBorder("Cost"));
 					jPanel2.setLayout(jPanel2Layout);
 					{
-							jPanel2.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+						jPanel2.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 						jLabel1.setText("Other Cost:");
 					}
 					{
@@ -593,7 +688,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					}
 					{
 						SmartComboBox.enable(cmbBottleSize);
-						cmbBottleSizeModel.setList(new Quantity().getListofUnits("vol"));
+						cmbBottleSizeModel.setList(Quantity.getListofUnits("vol"));
 						cmbBottleSize.setModel(cmbBottleSizeModel);
 						jPanel2.add(cmbBottleSize, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 						cmbBottleSize.setPreferredSize(new java.awt.Dimension(89, 20));
@@ -851,7 +946,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 			SmartComboBox.enable(maltUnitsCombo);
 			jPanel1.add(maltUnitsCombo, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-			maltUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
+			maltUnitsComboModel.setList(Quantity.getListofUnits("weight"));
 			maltUnitsCombo.setModel(maltUnitsComboModel);
 
 			jPanel1.add(jLabel24, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -859,7 +954,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 			SmartComboBox.enable(hopsUnitsCombo);
 			jPanel1.add(hopsUnitsCombo, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-			hopsUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
+			hopsUnitsComboModel.setList(Quantity.getListofUnits("weight"));
 			hopsUnitsCombo.setModel(hopsUnitsComboModel);
 
 			jPanel1.add(jLabel25, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -872,7 +967,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				}
 			});
 			jPanel1.add(volUnitsCombo, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-			volUnitsComboModel.setList(new Quantity().getListofUnits("vol"));
+			volUnitsComboModel.setList(Quantity.getListofUnits("vol"));
 			volUnitsCombo.setModel(volUnitsComboModel);
 
 			jPanel1.add(jLabel26, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -916,7 +1011,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			mashPanel.add(jLabel28, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel28.setText("Vol Units:");
 
-			mashVolComboModel.setList(new Quantity().getListofUnits("vol"));
+			mashVolComboModel.setList(Quantity.getListofUnits("vol"));
 
 			SmartComboBox.enable(mashVolCombo);
 			mashPanel.add(mashVolCombo, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));

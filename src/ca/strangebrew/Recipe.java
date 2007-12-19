@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.47 2007/12/18 17:54:01 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.48 2007/12/19 16:59:00 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -162,7 +162,7 @@ public class Recipe {
 		otherCost = opts.getDProperty("optMiscCost");
 		
 		bottleTemp = opts.getDProperty("optBottleTemp");
-		servTemp = opts.getDProperty("optServeTemp");
+		servTemp = opts.getDProperty("optServTemp");
 		targetVol = opts.getDProperty("optVolsCO2");
 		// Its ugly, but eligant
 		for (int i = 0; i < Database.getInstance().primeSugarDB.size(); i++) {
@@ -1421,15 +1421,15 @@ public class Recipe {
 
 		// Carb
 		sb.append("   <CARB>\n");
-		sb.append("      <BOTTLETEMP>" + bottleTemp + "</BOTTLETEMP>\n");
-		sb.append("      <SERVTEMP>" + servTemp + "</SERVTEMP>\n");
-		sb.append("      <VOL>" + targetVol + "</VOL>\n");
+		sb.append("      <BOTTLETEMP>" + SBStringUtils.format(bottleTemp, 1) + "</BOTTLETEMP>\n");
+		sb.append("      <SERVTEMP>" + SBStringUtils.format(servTemp, 1) + "</SERVTEMP>\n");
+		sb.append("      <VOL>" + SBStringUtils.format(targetVol, 1) + "</VOL>\n");
 		sb.append("      <SUGAR>" + primeSugar.getName() + "</SUGAR>\n");
-		sb.append("      <AMOUNT>" + primeSugar.getAmountAs(primeSugar.getUnits()) + "</AMOUNT>\n");
+		sb.append("      <AMOUNT>" + SBStringUtils.format(primeSugar.getAmountAs(primeSugar.getUnits()), 1) + "</AMOUNT>\n");
 		sb.append("      <SUGARU>" + primeSugar.getUnitsAbrv() + "</SUGARU>\n");
 		sb.append("      <TEMPU>" + carbTempU + "</TEMPU>\n");
-		sb.append("      <KEG>" + kegged + "</KEG>\n");
-		sb.append("      <PSI>" + kegPSI + "</PSI>\n");
+		sb.append("      <KEG>" + Boolean.toString(kegged) + "</KEG>\n");
+		sb.append("      <PSI>" + SBStringUtils.format(kegPSI, 2) + "</PSI>\n");
 		sb.append("   </CARB>\n");	
 	
 		// notes list:
@@ -1754,6 +1754,15 @@ public class Recipe {
 	public void setKegged(boolean kegged) {
 		isDirty = true;
 		this.kegged = kegged;
+	}
+	
+	public double getKetPSI() {
+		return this.kegPSI;
+	}
+	
+	public void setKegPSI(double psi) {
+		isDirty = true;
+		this.kegPSI = psi;
 	}
 
 	public String getPrimeSugarName() {

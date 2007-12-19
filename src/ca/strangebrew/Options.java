@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.22 2007/12/18 17:54:01 jimcdiver Exp $
+ * $Id: Options.java,v 1.23 2007/12/19 16:59:00 jimcdiver Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -62,7 +62,7 @@ public class Options {
 			{"optCarbTempU", "F"},
 			{"optBottleSize", "12"},
 			{"optBottleTemp", "68"},
-			{"optServeTemp", "45"},
+			{"optServTemp", "45"},
 			{"optVolsCO2", "2.4"},
 			{"optKegged", "true"},
 

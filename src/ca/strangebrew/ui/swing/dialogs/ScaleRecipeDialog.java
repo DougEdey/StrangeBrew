@@ -88,7 +88,7 @@ public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionList
 					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
 					0));
 			sizeUnitsComboModel = new ComboModel();
-			sizeUnitsComboModel.setList(new Quantity().getListofUnits("vol"));
+			sizeUnitsComboModel.setList(Quantity.getListofUnits("vol"));
 			sizeUnitsComboModel.addOrInsert(myRecipe.getVolUnits());
 			sizeUnitsCombo.setModel(sizeUnitsComboModel);
 
@@ -125,7 +125,7 @@ public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionList
 			convHopsChk.setText("Convert Hops:");
 
 			maltUnitsComboModel = new ComboModel();
-			maltUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
+			maltUnitsComboModel.setList(Quantity.getListofUnits("weight"));
 			maltUnitsComboModel.addOrInsert(myRecipe.getMaltUnits());
 			
 
@@ -138,7 +138,7 @@ public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionList
 			maltUnitsCombo.setPreferredSize(new java.awt.Dimension(96, 20));
 
 			hopsUnitsComboModel = new ComboModel();
-			hopsUnitsComboModel.setList(new Quantity().getListofUnits("weight"));
+			hopsUnitsComboModel.setList(Quantity.getListofUnits("weight"));
 			hopsUnitsComboModel.addOrInsert(myRecipe.getHopUnits());
 
 			hopsUnitsCombo = new JComboBox();
