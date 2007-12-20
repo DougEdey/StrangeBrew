@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.11 2007/12/19 16:59:00 jimcdiver Exp $
+ * $Id: Quantity.java,v 1.12 2007/12/20 19:31:29 jimcdiver Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -27,10 +27,10 @@ public class Quantity {
 
 	// why can't we have structs?????
 	// because a static class is better for what we are trying to acomplish here!
-	private static class Converter {
-		String abrv;
-		String unit;
-		double toBase;
+	public static class Converter {
+		public String abrv;
+		public String unit;
+		public double toBase;
 
 		public Converter(String n, String a, double t) {
 			unit = n;
@@ -62,6 +62,13 @@ public class Quantity {
 		new Converter("tonne SI", "T SI", 0.000453592)
 	};
 
+	final static private Converter pressureUnits[] = 
+	{
+		new Converter("pounds per square inch", "psi", 1),
+		new Converter("kilopascals", "KPa", 6.8947624),
+		new Converter("bar", "bar", 0.068947635),
+		new Converter("atmospheres", "atm", 0.0680460253)
+	};
 	// Get/Set:
 
 	public Quantity() {
@@ -113,6 +120,8 @@ public class Quantity {
 
 		if (type == "vol")
 			u = volUnits;
+		else if (type == "pressure")
+			u = pressureUnits;
 		else // assume weight
 			u = weightUnits;
 
@@ -161,6 +170,8 @@ public class Quantity {
 
 		if (t == "vol")
 			u = volUnits;
+		else if ( t == "pressure")
+			u = pressureUnits;
 		else // assume weight
 			u = weightUnits;
 
@@ -181,6 +192,8 @@ public class Quantity {
 		String t = getTypeFromUnit(a);
 		if (t == "vol")
 			u = volUnits;
+		else if ( t == "pressure")
+			u = pressureUnits;
 		else // assume weight
 			u = weightUnits;
 
@@ -199,6 +212,8 @@ public class Quantity {
 
 		if (t == "vol")
 			u = volUnits;
+		else if (t == "pressure")
+			u = pressureUnits;
 		else // assume weight
 			u = weightUnits;
 
@@ -213,17 +228,29 @@ public class Quantity {
 	}
 
 	static private String getTypeFromUnit(String s){
-		int i=0;
-		while (i < weightUnits.length
-				&& !weightUnits[i].unit.equalsIgnoreCase(s)
-				&& !weightUnits[i].abrv.equalsIgnoreCase(s)) {
-			i++;
+		
+		for (int i = 0; i < weightUnits.length; i++) {
+			if (weightUnits[i].unit.equalsIgnoreCase(s) ||
+					weightUnits[i].abrv.equalsIgnoreCase(s)) {
+				return "weight";
+			}
 		}
-		if (i >= weightUnits.length)
-			return "vol";
-		else 
-			return "weight";
+		
+		for (int i = 0; i < volUnits.length; i++) {
+			if (volUnits[i].unit.equalsIgnoreCase(s) ||
+					volUnits[i].abrv.equalsIgnoreCase(s)) {
+				return "vol";
+			}
+		}
+		
+		for (int i = 0; i < pressureUnits.length; i++) {
+			if (pressureUnits[i].unit.equalsIgnoreCase(s) ||
+					pressureUnits[i].abrv.equalsIgnoreCase(s)) {
+				return "pressure";
+			}
+		}
 
+		return "undefined";
 	}
 
 	/*
@@ -236,14 +263,18 @@ public class Quantity {
 		ArrayList list = new ArrayList();
 		int i = 0;
 		if (type.equals("weight")) {
-
 			for (i = 0; i < weightUnits.length; i++) 
 				if (abrv)
 					list.add(weightUnits[i].abrv);
 				else
 					list.add(weightUnits[i].unit);
-		}
-		else {
+		} else if (type.equals("pressure")) {
+			for (i = 0; i < pressureUnits.length; i++) 
+				if (abrv)
+					list.add(pressureUnits[i].abrv);
+				else
+					list.add(pressureUnits[i].unit);
+		} else {
 			for (i = 0; i < volUnits.length; i++)
 				if (abrv)
 					list.add(volUnits[i].abrv);
@@ -269,5 +300,16 @@ public class Quantity {
 		Quantity q = new Quantity(from,value);
 		return q.getValueAs(to);
 	}
-
+	
+	public static Converter[] getWeights() {
+		return weightUnits;
+	}
+	
+	public static Converter[] getVols() {
+		return volUnits;
+	}
+	
+	public static Converter[] getPressures() {
+		return pressureUnits;
+	}
 }

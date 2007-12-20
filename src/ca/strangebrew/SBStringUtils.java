@@ -135,11 +135,17 @@ public class SBStringUtils {
 		return path;
 	}
 	
-	
-	
-	
-	
-	
-	
-
+	static public String capitalize(String orig) {
+		StringBuffer buf = new StringBuffer(orig);
+		for (int i = 0; i < orig.length(); i++ ) {
+			if (i == 0 || orig.charAt(i - 1) == ' ')  {
+				if (Character.isLowerCase(orig.charAt(i))) {
+					buf.setCharAt(i, Character.toUpperCase(orig.charAt(i)));
+				}
+			}
+		}
+		
+		String r = new String(buf);
+		return r;
+	}
 }

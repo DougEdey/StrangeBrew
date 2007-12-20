@@ -54,6 +54,14 @@ public class BrewCalcs {
 	   SG = 1.0000131 + 0.00386777*plato + 1.27447E-5*plato*plato + 6.34964E-8*plato*plato*plato;
 	   return SG;
 	}
+	
+	public static double sgToGU(double sg) {
+		return (sg - 1) * 1000;
+	}
+	
+	public static double guToSG(double gu) {
+		return (gu * 1000 )+ 1;
+	}
 
 	public static double hydrometerCorrection(double tempC, double SG, double refTempC)
 	{

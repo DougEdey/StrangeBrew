@@ -2,6 +2,7 @@ Change Log:
 
 Dec 20, 2007 - Jim Clark
 - Added keg line length to carb panel and options
+- Added conversion tool dialog for pressure, temp, gravity, volume and weight
 
 Dec 19, 2007 - Jim Clark
 - Properties for carb panel implemented
