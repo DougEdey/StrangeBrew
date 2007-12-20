@@ -1,4 +1,8 @@
 Change Log:
+
+Dec 20, 2007 - Jim Clark
+- Added keg line length to carb panel and options
+
 Dec 19, 2007 - Jim Clark
 - Properties for carb panel implemented
 - Export to html for carb implemented

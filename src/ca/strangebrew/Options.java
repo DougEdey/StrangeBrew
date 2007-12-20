@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.23 2007/12/19 16:59:00 jimcdiver Exp $
+ * $Id: Options.java,v 1.24 2007/12/20 15:03:00 jimcdiver Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -65,6 +65,8 @@ public class Options {
 			{"optServTemp", "45"},
 			{"optVolsCO2", "2.4"},
 			{"optKegged", "true"},
+			{"optTubingID", "3/16"},
+			{"optHeightAboveKeg", "1"},
 
 			// water:
 			{"optSourceWater", ""},

@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 
 import ca.strangebrew.BrewCalcs;
 import ca.strangebrew.Database;
+import ca.strangebrew.Options;
 import ca.strangebrew.PrimeSugar;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
@@ -54,15 +55,32 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 	final private JLabel lKegPSI  = new JLabel("PSI");
 	final private JLabel lBatchSize = new JLabel("Batch Size: ");
 	final private JLabel lPrimeU = new JLabel("oz");
-	final private JTextField textBottleTemp = new JTextField("60.0");
-	final private JTextField textServTemp = new JTextField("40.0");
-	final private JTextField textTargetVol = new JTextField("2.0");
-	final private JTextField textStyleVol = new JTextField("0.0");
-	final private JTextField textDissolvedVol = new JTextField("0.8");
-	final private JTextField textPrimeAmount = new JTextField("100.0");
-	final private JTextField textKegPresure = new JTextField("12.0");
+	final private JLabel lHeight = new JLabel("Height to Faucet: ");
+	final private JLabel lTubingFeet = new JLabel("Feet of Tubing: ");
+	final private JLabel lTubingID = new JLabel("Tubing Inner Diameter: ");
+	final private JLabel lTubingVol = new JLabel("Volume in Tubing: ");
+	// Should be configurable!
+	final private JLabel lWasteU = new JLabel("ml");
+	final private JTextField textBottleTemp = new JTextField();
+	final private JTextField textServTemp = new JTextField();
+	final private JTextField textTargetVol = new JTextField();
+	final private JTextField textStyleVol = new JTextField();
+	final private JTextField textDissolvedVol = new JTextField("1");
+	final private JTextField textPrimeAmount = new JTextField("1");
+	final private JTextField textKegPresure = new JTextField("1");
+	final private JTextField textTubingFeet = new JTextField("1");
+	final private JTextField textTubingVol = new JTextField("1");
+	final private JTextField textHeight = new JTextField();
 	final private JComboBox comboPrime = new JComboBox();
+	// TODO needs to be pulled out of some equipment class we don't have
+	// from the equipment managemnt that we haven't done yet!
+	final private JComboBox comboTubingID = new JComboBox(new String[] {"3/16", "1/4"});
 	final private JCheckBox checkKegged = new JCheckBox("Kegged");
+	
+	// mutables
+	private double height = 0;
+	private String tubeID = "3/16";
+
 	
 	public CarbonationPanel() {
 		super();
@@ -79,6 +97,9 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 	
 	public void setData(Recipe r) {
 		myRecipe = r;
+		height = Options.getInstance().getDProperty("optHeightAboveKeg");
+		tubeID = Options.getInstance().getProperty("optTubingID");
+		displayCarb();
 	}
 	
 	public void displayCarb(){	
@@ -119,7 +140,26 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 		double psi = BrewCalcs.KegPSI(servTemp, myRecipe.getTargetVol());
 		textKegPresure.setText(SBStringUtils.format(psi, 1));
 		lPrimeU.setText(myRecipe.getPrimeSugarU());
-		checkKegged.setSelected(myRecipe.isKegged());		
+		checkKegged.setSelected(myRecipe.isKegged());	
+		
+		// Tubing Length
+		// Again resistance and volumn / foot need to come from an equipment style class!
+		double feet = 1;;
+		double resistance = 1;
+		double mlPerFoot = 1;
+		comboTubingID.setSelectedItem(tubeID);
+		textHeight.setText(SBStringUtils.format(height, 1));
+		if (tubeID.equals("3/16")) {
+			resistance = 2.4;
+			mlPerFoot = 4.9; 
+		} else {
+			resistance = 0.7;
+			mlPerFoot = 9.9;
+		}
+		
+		feet = (psi - (height * 0.5) - 1) / resistance;
+		textTubingFeet.setText(SBStringUtils.format(feet, 1));
+		textTubingVol.setText(SBStringUtils.format(feet * mlPerFoot, 1));
 	}
 	
 	private void initGUI() {
@@ -151,10 +191,11 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 				constraints.gridy = 0;
 				infoPanel.add(lBottleTemp, constraints);
 				constraints.gridx = 1;
+				constraints.ipadx = 80;
 				infoPanel.add(textBottleTemp, constraints);
 				textBottleTemp.addActionListener(this);
 				textBottleTemp.addFocusListener(this);
-				textBottleTemp.setPreferredSize(new java.awt.Dimension(85, 20));
+				constraints.ipadx = 0;
 				constraints.gridx = 2;
 				infoPanel.add(lBottleTempU, constraints);
 				
@@ -163,9 +204,11 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 				constraints.gridy = 1;
 				infoPanel.add(lServTemp, constraints);
 				constraints.gridx = 1;
+				constraints.ipadx = 80;
 				infoPanel.add(textServTemp, constraints);
 				textServTemp.addActionListener(this);
 				textServTemp.addFocusListener(this);
+				constraints.ipadx = 0;
 				constraints.gridx = 2;
 				infoPanel.add(lServTempU, constraints);
 
@@ -174,25 +217,31 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 				constraints.gridy = 2;
 				infoPanel.add(lTargetVol, constraints);
 				constraints.gridx = 1;
+				constraints.ipadx = 80;
 				infoPanel.add(textTargetVol, constraints);
 				textTargetVol.addActionListener(this);
 				textTargetVol.addFocusListener(this);
+				constraints.ipadx = 0;
 
 				// Line 4
 				constraints.gridx = 0;
 				constraints.gridy = 3;
 				infoPanel.add(lStyleVol, constraints);
 				constraints.gridx = 1;
+				constraints.ipadx = 80;
 				infoPanel.add(textStyleVol, constraints);
 				textStyleVol.setEditable(false);
+				constraints.ipadx = 0;
 
 				// Line 5
 				constraints.gridx = 0;
 				constraints.gridy = 4;
 				infoPanel.add(lDissolvedVol, constraints);
 				constraints.gridx = 1;
+				constraints.ipadx = 80;
 				infoPanel.add(textDissolvedVol, constraints);
 				textDissolvedVol.setEditable(false);
+				constraints.ipadx = 0;
 			}
 			
 			// Setup carb panel
@@ -228,7 +277,7 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 				constraints.weighty = 1.0;
 				carbTypePanel.add(kegPanel, constraints);
 				constraints.weighty = 0.0;
-				constraints.fill = GridBagConstraints.NONE;
+				constraints.fill = GridBagConstraints.HORIZONTAL;
 				
 				// set up prime panel
 				{
@@ -244,9 +293,7 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 					constraints.gridy = 1;
 					primePanel.add(textPrimeAmount, constraints);
 					textPrimeAmount.setEditable(false);
-					
 					constraints.gridx = 1;
-					constraints.gridy = 1;
 					primePanel.add(lPrimeU, constraints);
 				}
 				// set up force panel
@@ -254,18 +301,56 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 					constraints.gridx = 0;
 					constraints.gridy = 0;
 					kegPanel.add(lKegPresure, constraints);
-
 					constraints.gridx = 1;
-					constraints.gridy = 0;
+					constraints.ipadx = 80;
 					kegPanel.add(textKegPresure, constraints);
-					textKegPresure.setEditable(false);
-					
+					textKegPresure.setEditable(false);					
+					constraints.ipadx = 0;
 					constraints.gridx = 2;
-					constraints.gridy = 0;
 					kegPanel.add(lKegPSI, constraints);
 					
-					constraints.gridx = 2;
+					constraints.gridx = 0;
 					constraints.gridy = 1;
+					kegPanel.add(lTubingID, constraints);
+					constraints.gridx = 1;
+					constraints.ipadx = 80;
+					kegPanel.add(comboTubingID, constraints);
+					comboTubingID.addActionListener(this);
+					comboTubingID.addFocusListener(this);
+					constraints.ipadx = 0;
+
+					constraints.gridx = 0;
+					constraints.gridy = 2;
+					kegPanel.add(lHeight, constraints);
+					constraints.gridx = 1;
+					constraints.ipadx = 80;
+					kegPanel.add(textHeight, constraints);
+					textHeight.addActionListener(this);
+					textHeight.addFocusListener(this);
+					constraints.ipadx = 0;
+					
+					constraints.gridx = 0;
+					constraints.gridy = 3;
+					kegPanel.add(lTubingFeet, constraints);
+					constraints.gridx = 1;
+					constraints.ipadx = 80;
+					kegPanel.add(textTubingFeet, constraints);
+					constraints.ipadx = 0;
+					textTubingFeet.setEditable(false);
+					
+					constraints.gridx = 0;
+					constraints.gridy = 4;
+					kegPanel.add(lTubingVol, constraints);
+					constraints.gridx = 1;
+					constraints.ipadx = 80;
+					kegPanel.add(textTubingVol, constraints);
+					textTubingVol.setEditable(false);
+					constraints.ipadx = 0;
+					constraints.gridx = 2;
+					kegPanel.add(lWasteU, constraints);
+					
+					constraints.gridx = 0;
+					constraints.gridy = 5;
 					constraints.gridwidth = 3;
 					kegPanel.add(checkKegged, constraints);		
 					checkKegged.addActionListener(this);
@@ -302,6 +387,14 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 				myRecipe.setKegged(checkKegged.isSelected());
 				displayCarb();
 				myRecipe.setKegPSI(Double.parseDouble(textKegPresure.getText()));
+			} else if (o == comboTubingID) {
+				tubeID = (String)comboTubingID.getSelectedItem();
+				Options.getInstance().setProperty("optTubingID", tubeID);
+				displayCarb();
+			} else if (o == textHeight) {
+				height = Double.parseDouble(textHeight.getText());
+				Options.getInstance().setDProperty("optHeightAboveKeg", height);
+				displayCarb();
 			}
 		}
 	}

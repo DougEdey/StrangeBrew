@@ -213,6 +213,12 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JTextField txtBottleTemp = new JTextField();
 	final private JTextField txtVol = new JTextField();
 	final private JCheckBox checkKegged = new JCheckBox("Kegged");
+	final private JLabel lHeight = new JLabel("Height to Faucet: ");
+	final private JLabel lTubingID = new JLabel("Tubing ID: ");
+	final private JTextField textHeight = new JTextField();
+	// TODO needs to be pulled out of some equipment class we don't have
+	// from the equipment managemnt that we haven't done yet!
+	final private JComboBox comboTubingID = new JComboBox(new String[] {"3/16", "1/4"});	
 	
 /*	private ArrayList looks;*/
 	
@@ -280,6 +286,8 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		txtServTemp.setText(opts.getProperty("optServTemp"));
 		txtVol.setText(opts.getProperty("optVolsCO2"));
 		checkKegged.setSelected(opts.getBProperty("optKegged"));
+		comboTubingID.setSelectedItem(opts.getProperty("optTubingID"));
+		textHeight.setText(opts.getProperty("optHeightAboveKeg"));
 		
 		// brewer tab:
 		txtBrewerName.setText(opts.getProperty("optBrewer"));
@@ -335,6 +343,8 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		opts.setProperty("optBottleTemp", txtBottleTemp.getText());
 		opts.setProperty("optServTemp", txtServTemp.getText());
 		opts.setProperty("optVolsCO2", txtVol.getText());
+		opts.setProperty("optTubingID", (String)comboTubingID.getSelectedItem());
+		opts.setProperty("optHeightAboveKeg", textHeight.getText());
 		if (checkKegged.isSelected()) {
 			opts.setProperty("optKegged", "true");			
 		} else {
@@ -604,6 +614,8 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 							TitledBorder.LEADING, TitledBorder.TOP));
 					{
 						// carbPanel
+						constraints.fill = GridBagConstraints.HORIZONTAL;
+						// Prime Sugar and U - line 1
 						constraints.gridx = 0;
 						constraints.gridy = 0;
 						carbPanel.add(labelPrimeSugar, constraints);
@@ -614,52 +626,57 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 						constraints.gridx = 3;
 						carbPanel.add(comboSugarU, constraints);
 						
+						// Serv temp and U - line 2
 						constraints.gridx = 0;
 						constraints.gridy = 1;
 						carbPanel.add(labelServTemp, constraints);
-						constraints.ipadx = 60;
+						constraints.ipadx = 30;
 						constraints.gridx = 1;
 						carbPanel.add(txtServTemp, constraints);
 						constraints.ipadx = 0;
 						constraints.gridx = 2;
 						carbPanel.add(labelCarbTempU, constraints);
 						constraints.gridx = 3;
+						constraints.ipadx = 30;
 						carbPanel.add(comboCarbTempU, constraints);
-
+						constraints.ipadx = 0;
+						
+						// Bottle temp, Co2 Vol - line 3
 						constraints.gridx = 0;
 						constraints.gridy = 2;
 						carbPanel.add(labelBottleTemp, constraints);
 						constraints.gridx = 1;
-						constraints.ipadx = 60;
+						constraints.ipadx = 30;
 						carbPanel.add(txtBottleTemp, constraints);
-						constraints.ipadx = 0;
-						constraints.gridx = 3;
-						constraints.gridwidth = 2;
-						carbPanel.add(checkKegged, constraints);						
-						constraints.gridwidth = 1;
-						
-						constraints.gridx = 0;
-						constraints.gridy = 3;
+						constraints.gridx = 2;
 						carbPanel.add(labelVol, constraints);
-						constraints.gridx = 1;
-						constraints.ipadx = 60;
+						constraints.gridx = 3;
+						constraints.ipadx = 30;
 						carbPanel.add(txtVol, constraints);
 						constraints.ipadx = 0;
 
-//labelPrimeSugar
-//labelSugarU
-//labelCarbTempU
-//labelServTemp
-//labelBottleTemp
-//labelVol
-//comboPrimeSugar
-//comboCarbTempU
-//comboSugarU
-//txtServTemp
-//txtBottleTemp 
-//txtVol
-//checkKegged
+						// height and tube ID - line 4
+						constraints.gridx = 0;
+						constraints.gridy = 3;
+						carbPanel.add(lHeight, constraints);
+						constraints.gridx = 1;
+						constraints.ipadx = 30;
+						carbPanel.add(textHeight, constraints);
+						constraints.ipadx = 0;						
+						constraints.gridx = 2;
+						carbPanel.add(lTubingID, constraints);
+						constraints.gridx = 3;
+						constraints.ipadx = 30;
+						carbPanel.add(comboTubingID, constraints);
+						constraints.ipadx = 0;
 
+						// Kegged - line 5
+						constraints.ipadx = 0;			
+						constraints.gridx = 0;
+						constraints.gridy = 5;
+						constraints.gridwidth = 2;
+						carbPanel.add(checkKegged, constraints);						
+						constraints.gridwidth = 1;
 					}
 				}
 				{
