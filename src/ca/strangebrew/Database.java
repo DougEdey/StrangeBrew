@@ -15,7 +15,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.15 2007/12/19 16:59:00 jimcdiver Exp $
+ * $Id: Database.java,v 1.16 2007/12/24 15:06:22 jimcdiver Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -39,6 +39,8 @@ public class Database {
 	public ArrayList styleDB = new ArrayList();
 	final public ArrayList miscDB = new ArrayList();
 	final public ArrayList primeSugarDB = new ArrayList();
+	final public ArrayList waterDB = new ArrayList();
+	final public ArrayList saltDB = new ArrayList();
 	public String dbPath;
 
 	// This is now a singleton
@@ -94,9 +96,25 @@ public class Database {
 				}
 			}
 		} else if (o.getClass().getName().equals("ca.strangebrew.PrimeSugar")) {
-			for (int i=0; i<styleDB.size(); i++){
-				Style y1 = (Style)o;
-				Style y2 = (Style)styleDB.get(i);
+			for (int i=0; i<primeSugarDB.size(); i++){
+				PrimeSugar y1 = (PrimeSugar)o;
+				PrimeSugar y2 = (PrimeSugar)primeSugarDB.get(i);
+				if (y1.equals(y2)) {					
+					return i;			
+				}
+			}
+		} else if (o.getClass().getName().equals("ca.strangebrew.WaterProfile")) {
+			for (int i=0; i<waterDB.size(); i++){
+				WaterProfile y1 = (WaterProfile)o;
+				WaterProfile y2 = (WaterProfile)waterDB.get(i);
+				if (y1.equals(y2)) {					
+					return i;			
+				}
+			}
+		} else if (o.getClass().getName().equals("ca.strangebrew.Salt")) {
+			for (int i=0; i<saltDB.size(); i++){
+				Salt y1 = (Salt)o;
+				Salt y2 = (Salt)saltDB.get(i);
 				if (y1.equals(y2)) {					
 					return i;			
 				}
@@ -114,6 +132,8 @@ public class Database {
 		readYeast(dbPath);
 		readMisc(dbPath);
 		importStyles(dbPath);
+		readWater(dbPath);
+		readSalt(dbPath);
 		
 		// sort
 		ObjComparator sc = new ObjComparator();
@@ -121,6 +141,7 @@ public class Database {
 		Collections.sort(fermDB,  sc);
 		Collections.sort(hopsDB,  sc);
 		Collections.sort(yeastDB,  sc);
+		Collections.sort(waterDB, sc);
 	}
 	
 	public void readFermentables(String path) {
@@ -627,7 +648,130 @@ public class Database {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	public void readWater(String path) {
+		// read the fermentables from the csv file
+		try {
+			File primeFile = new File(path, "water_profiles.csv");
+			CSVReader reader = new CSVReader(new FileReader(
+					primeFile), ',', '\"', true, false);
 
+			try {
+				// get the first line and set up the index:
+				String[] fields = reader.getAllFieldsInLine();
+				int nameIdx = getIndex(fields, "NAME");
+				int descrIdx = getIndex(fields, "DESCR");
+				int caIdx = getIndex(fields, "Ca");
+				int mgIdx = getIndex(fields, "Mg");
+				int naIdx = getIndex(fields, "Na");
+				int so4Idx = getIndex(fields, "SO4");
+				int hco3Idx = getIndex(fields, "HCO3");
+				int clIdx = getIndex(fields, "Cl");
+				int hardnessIdx = getIndex(fields, "Hardness");
+				int tdsIdx = getIndex(fields, "TDS");
+				int phIdx = getIndex(fields, "PH");
+				int alkIdx = getIndex(fields, "Alk");
+				
+				while (true) {
+					WaterProfile w = new WaterProfile();
+					fields = reader.getAllFieldsInLine();
+					w.setName(fields[nameIdx]);
+					w.setDescription(fields[descrIdx]);
+					w.setCa(Double.parseDouble(fields[caIdx]));
+					w.setMg(Double.parseDouble(fields[mgIdx]));
+					w.setNa(Double.parseDouble(fields[naIdx]));
+					w.setSo4(Double.parseDouble(fields[so4Idx]));
+					w.setHco3(Double.parseDouble(fields[hco3Idx]));
+					w.setCl(Double.parseDouble(fields[clIdx]));
+					w.setHardness(Double.parseDouble(fields[hardnessIdx]));
+					w.setTds(Double.parseDouble(fields[tdsIdx]));
+					w.setPh(Double.parseDouble(fields[phIdx]));
+					w.setAlkalinity(Double.parseDouble(fields[alkIdx]));
+									
+					waterDB.add(w);		
+				}
+			} catch (EOFException e) {
+			}
+			reader.close();	
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+	}	
+
+	public void readSalt(String path) {
+		// read the fermentables from the csv file
+		try {
+			File primeFile = new File(path, "brewing_salts.csv");
+			CSVReader reader = new CSVReader(new FileReader(
+					primeFile), ',', '\"', true, false);
+
+			try {
+				// get the first line and set up the index:
+				String[] fields = reader.getAllFieldsInLine();
+				int nameIdx = getIndex(fields, "Name");
+				int commonNameIdx = getIndex(fields, "CommonName");
+				int chemNameIdx = getIndex(fields, "ChemicalName");
+				int caIdx = getIndex(fields, "Ca");
+				int so4Idx = getIndex(fields, "So4");
+				int mgIdx = getIndex(fields, "Mg");
+				int naIdx = getIndex(fields, "Na");
+				int clIdx = getIndex(fields, "Cl");
+				int co3Idx = getIndex(fields, "Co3");
+				int hardIdx = getIndex(fields, "Hardness");
+				int alkIdx = getIndex(fields, "Alk");
+				
+				while (true) {
+					Salt s = new Salt();
+					double val = 0;
+					
+					fields = reader.getAllFieldsInLine();
+					s.setName(fields[nameIdx]);
+					s.setCommonName(fields[commonNameIdx]);
+					s.setChemicalName(fields[chemNameIdx]);
+					val = Double.parseDouble(fields[caIdx]);
+					if (val != 0) {
+						s.addChemicalEffect("Ca", val);
+					}
+					val = Double.parseDouble(fields[so4Idx]);
+					if (val != 0) {
+						s.addChemicalEffect("So4", val);
+					}
+					val = Double.parseDouble(fields[mgIdx]);
+					if (val != 0) {
+						s.addChemicalEffect("Mg", val);
+					}
+					val = Double.parseDouble(fields[naIdx]);
+					if (val != 0) {
+						s.addChemicalEffect("Na", val);
+					}
+					val = Double.parseDouble(fields[clIdx]);
+					if (val != 0) {
+						s.addChemicalEffect("Cl", val);
+					}
+					val = Double.parseDouble(fields[co3Idx]);
+					if (val != 0) {
+						s.addChemicalEffect("Co3", val);
+					}
+					val = Double.parseDouble(fields[hardIdx]);
+					if (val != 0) {
+						s.addChemicalEffect("Hardness", val);
+					}
+					val = Double.parseDouble(fields[alkIdx]);
+					if (val != 0) {
+						s.addChemicalEffect("Alkalinity", val);
+					}					
+					
+					saltDB.add(s);		
+				}
+			} catch (EOFException e) {
+			}
+			reader.close();	
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public String[] getPrimeSugarNameList() {
@@ -660,6 +804,11 @@ public class Database {
 			if (a.getClass().getName().equalsIgnoreCase("ca.strangebrew.Style")) {
 				Style a1 = (Style) a;
 				Style b1 = (Style) b;
+				int result = a1.getName().compareTo(b1.getName());
+				return (result == 0 ? -1 : result);
+			} else if (a.getClass().getName().equalsIgnoreCase("ca.strangebrew.WaterProfile")) {
+				WaterProfile a1 = (WaterProfile) a;
+				WaterProfile b1 = (WaterProfile) b;
 				int result = a1.getName().compareTo(b1.getName());
 				return (result == 0 ? -1 : result);
 			} else if (a.getClass().getName().equalsIgnoreCase("ca.strangebrew.Yeast") ||

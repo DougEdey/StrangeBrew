@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.48 2007/12/19 16:59:00 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.49 2007/12/24 15:06:22 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -60,6 +60,9 @@ public class Recipe {
 	private double ebc;
 	private Style style = new Style();
 	private Yeast yeast = new Yeast();
+	private WaterProfile sourceWater = new WaterProfile();
+	private WaterProfile targetWater = new WaterProfile();
+	private ArrayList brewingSalts = new ArrayList();
 	public Mash mash;
 	
 	// Fermentation
@@ -170,6 +173,9 @@ public class Recipe {
 				primeSugar = ((PrimeSugar)Database.getInstance().primeSugarDB.get(i));
 			}
 		}
+		
+		//brewingSalts.addAll(Database.getInstance().saltDB);
+
 		primeSugar.setUnits(opts.getProperty("optSugarU"));
 		carbTempU = opts.getProperty("optCarbTempU");
 		kegged = opts.getBProperty("optKegged");
@@ -1821,4 +1827,39 @@ public class Recipe {
 		this.primeSugar = primeSugar;
 	}
 
+	public WaterProfile getSourceWater() {
+		return sourceWater;
+	}
+
+	public WaterProfile getTargetWater() {
+		return targetWater;
+	}
+
+	public void setSourceWater(WaterProfile sourceWater) {
+		this.sourceWater = sourceWater;
+	}
+
+	public void setTargetWater(WaterProfile targetWater) {
+		this.targetWater = targetWater;
+	}
+
+	public void addSalt(Salt s) {
+		this.brewingSalts.add(s);
+	}
+	
+	public void delSalt(Salt s) {
+		this.brewingSalts.remove(s);
+	}
+	
+	public void delSalt(int i) {
+		this.brewingSalts.remove(i);
+	}
+	
+	public ArrayList getSalts() {
+		return this.brewingSalts;
+	}
+	
+	public Salt getSalt(int i) {
+		return (Salt)this.brewingSalts.get(i);
+	}
 }

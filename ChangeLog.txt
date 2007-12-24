@@ -1,5 +1,12 @@
 Change Log:
 
+Dec 25, 2007 - Jim Clark
+- Basic structure for Water Treatment and Brewing Salts
+  - GUI started
+  - Water and salt database implemented
+  - Water and salts added to Recipe
+  - TODO: salt calulcations, acid calcs/gui, save/load into xml, xlst printing, options
+
 Dec 20, 2007 - Jim Clark
 - Added keg line length to carb panel and options
 - Added conversion tool dialog for pressure, temp, gravity, volume and weight

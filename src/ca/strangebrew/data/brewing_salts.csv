@@ -1,0 +1,7 @@
+Item,Name,CommonName,ChemicalName,Ca,So4,Mg,Na,Cl,Co3,Hardness,Alk
+1,"Calcium Sulphate","Chalk","CaSo4",105.8,0,0,0,0,158.4,264.2,264.2
+2,"Calcium Carbonate","Gypsum","CaCO3",61.5,147.4,0,0,0,0,153.6,0
+3,"Sodium Chloride","Salt","NaCl",0,0,0,103.9,160.3,0,0,0
+4,"Magnesium Sulfate","Epsom Salt","MgSO4",0,103.0,26.1,0,0,0,107.8,0
+5,"Sodium Bicarbonate","Baking Soda","NaHCO3",0,0,0,72.3,0,188.7,0,157.4
+6,"Calcium Chloride","Calcium Chloride",CaCl2,72.0,0,0,0,127.4,0,179.8,0
