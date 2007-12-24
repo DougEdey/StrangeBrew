@@ -5,6 +5,8 @@
  */
 package ca.strangebrew;
 
+import java.util.ArrayList;
+
 public class BrewCalcs {
 
 	//	 Hydrometer correction formula
@@ -140,4 +142,95 @@ public class BrewCalcs {
 
 		return GramsPerLitre;
 	}
+	
+	public static double waterChemistryDiff(double s, double t) {
+		double r = s - t;
+		if (r < 0) {
+			r = r * -1;
+		}
+		
+		return r;
+	}
+	
+	public static WaterProfile calculateSalts(ArrayList salts, WaterProfile waterNeeds) {
+		// Start with Epsom and set for Mg
+		WaterProfile result = new WaterProfile();
+
+		if (waterNeeds.getMg() > 0) {
+			Salt epsom = Salt.getSaltByName(salts, "Magnesium Sulfate");
+			if (epsom != null) {
+				epsom.setAmount(waterNeeds.getMg() / epsom.getEffectByChem(Salt.MAGNESIUM));
+				updateWater(result, epsom);
+			}
+		}
+		
+		if (waterNeeds.getSo4() > 0 &&
+			result.getSo4() < waterNeeds.getSo4()) {
+			Salt gypsum = Salt.getSaltByName(salts, "Calcium Carbonate");
+			if (gypsum != null) {
+				gypsum.setAmount((waterNeeds.getSo4() - result.getSo4()) / gypsum.getEffectByChem(Salt.SULPHATE));
+				updateWater(result, gypsum);
+			}
+		}
+		
+		// This stuff needs work!
+		// TODO
+		// It shoudl do some sort of itterative process to find ideal levels
+		
+		if (waterNeeds.getNa() > 0 &&
+			result.getNa() < waterNeeds.getNa()) {
+			Salt salt = Salt.getSaltByName(salts, "Sodium Chloride");
+			if (salt != null) {
+				salt.setAmount((waterNeeds.getNa() - result.getNa()) / salt.getEffectByChem(Salt.SODIUM));
+				updateWater(result, salt);
+			}
+		}
+
+		if (waterNeeds.getHco3() > 0 &&
+			result.getHco3() < waterNeeds.getHco3()) {
+			Salt soda = Salt.getSaltByName(salts, "Sodium Bicarbonate");
+			if (soda != null) {
+				soda.setAmount((waterNeeds.getHco3() - result.getHco3()) / soda.getEffectByChem(Salt.CARBONATE));
+				updateWater(result, soda);
+			}
+		}
+
+		if (waterNeeds.getCa() > 0 &&
+			result.getCa() < waterNeeds.getCa()) {
+			Salt chalk = Salt.getSaltByName(salts, "Calcium Sulphate");
+			if (chalk != null) {
+				chalk.setAmount((waterNeeds.getCa() - result.getCa()) / chalk.getEffectByChem(Salt.CALCIUM));
+				updateWater(result, chalk);
+			}
+		}
+		
+		// Missing CaCl2
+		
+		return result;
+	}
+	
+	public static void updateWater(WaterProfile w, Salt s) {
+		ArrayList effs = s.getChemicalEffects();
+		for (int i = 0; i < effs.size(); i++) {
+			Salt.ChemicalEffect eff = (Salt.ChemicalEffect)effs.get(i);
+			
+			if (eff.getElem().equals(Salt.MAGNESIUM)) {
+				w.setMg(w.getMg() + (eff.getEffect() *  s.getAmount()));
+			} else if (eff.getElem().equals(Salt.CHLORINE)) {
+				w.setCl(w.getCl() + (eff.getEffect() *  s.getAmount()));
+			} else if (eff.getElem().equals(Salt.SODIUM)) {
+				w.setNa(w.getNa() + (eff.getEffect() *  s.getAmount()));
+			} else if (eff.getElem().equals(Salt.SULPHATE)) {
+				w.setSo4(w.getSo4() + (eff.getEffect() *  s.getAmount()));
+			} else if (eff.getElem().equals(Salt.CARBONATE)) {
+				w.setHco3(w.getHco3() + (eff.getEffect() *  s.getAmount()));
+			} else if (eff.getElem().equals(Salt.CALCIUM)) {
+				w.setCa(w.getCa() + (eff.getEffect() *  s.getAmount()));
+			} else if (eff.getElem().equals(Salt.HARDNESS)) {
+				w.setHardness(w.getHardness() + (eff.getEffect() *  s.getAmount()));
+			} else if (eff.getElem().equals(Salt.ALKALINITY)) {
+				w.setAlkalinity(w.getAlkalinity() + (eff.getEffect() * s.getAmount()));
+			}
+		}
+	}	
 }

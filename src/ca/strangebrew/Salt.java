@@ -10,6 +10,15 @@ public class Salt {
 	private String amountU = "gr";
 	private ArrayList chemicalEffects = new ArrayList();
 	
+	public static final String MAGNESIUM = "Mg";
+	public static final String CHLORINE = "Cl";
+	public static final String SODIUM = "Na";
+	public static final String SULPHATE = "So4"; 
+	public static final String CARBONATE = "Co3";
+	public static final String CALCIUM = "Ca";
+	public static final String HARDNESS = "Hardness";
+	public static final String ALKALINITY = "Alkalinity";
+	
 	public Salt() { 
 	}
 
@@ -19,14 +28,6 @@ public class Salt {
 
 	public String getAmountU() {
 		return amountU;
-	}
-
-	public ArrayList getChemicalEffects() {
-		return chemicalEffects;
-	}
-	
-	public ChemicalEffect getChemicalEffect(int i) {
-		return (ChemicalEffect)chemicalEffects.get(i);
 	}
 
 	public String getChemicalName() {
@@ -41,11 +42,15 @@ public class Salt {
 		return name;
 	}
 
+	public ArrayList getChemicalEffects() {
+		return chemicalEffects;
+	}
+	
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 
-	// TODO
+	// TODO currently only in grams
 	/*public void setAmountU(String amountU) {
 		this.amountU = amountU;
 	}*/
@@ -83,5 +88,26 @@ public class Salt {
 		public String getElem() {
 			return elem;
 		}
+	}
+
+
+	public double getEffectByChem(String chem) {
+		for (int i = 0; i < chemicalEffects.size(); i++) {
+			if (((ChemicalEffect)chemicalEffects.get(i)).getElem().equals(chem)) {
+				return ((ChemicalEffect)chemicalEffects.get(i)).getEffect();
+			}
+		}
+		
+		return 0;
+	}
+	
+	static public Salt getSaltByName(ArrayList salts, String name) {
+		for (int i = 0; i < salts.size(); i++) {
+			if (((Salt)salts.get(i)).getName().equals(name)) {
+				return (Salt)salts.get(i);
+			}
+		}
+		
+		return null;
 	}
 }

@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import ca.strangebrew.BrewCalcs;
 import ca.strangebrew.Database;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
@@ -108,7 +109,7 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 	private JLabel[] lSaltsU = null;
 	private JTextField[] textSaltsAmount = null;
 	private JCheckBox[] checkSaltsUse = null;
-	
+	private String[] saltName = null; 
 	
 	public WaterTreatmentPanel() {
 		super();
@@ -121,23 +122,40 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 		// testing hack
 		r.setSourceWater((WaterProfile)Database.getInstance().waterDB.get(0));
 		r.setTargetWater((WaterProfile)Database.getInstance().waterDB.get(0));
+		
+		for (int i = 0; i < saltName.length; i++) {
+			if (r.getSaltByName(saltName[i]) != null) {
+				checkSaltsUse[i].setSelected(true);
+			}
+		}
+	}
+
+	public void setList(ArrayList waterDB) {
+		// Populate combo	
+		ArrayList db = waterDB;
+		for (int i = 0; i < db.size(); i++) {
+			comboSource.addItem(((WaterProfile)db.get(i)).getName());
+			comboTarget.addItem(((WaterProfile)db.get(i)).getName());
+		}
 
 		// have to have the DB loaded for these boys to work!
 		lSalts = new JLabel[Database.getInstance().saltDB.size()];
 		lSaltsU = new JLabel[Database.getInstance().saltDB.size()];
 		textSaltsAmount = new JTextField[Database.getInstance().saltDB.size()];
 		checkSaltsUse = new JCheckBox[Database.getInstance().saltDB.size()];
+		saltName = new String[Database.getInstance().saltDB.size()];
 
 		// Setup special arrays
 		ArrayList salts = Database.getInstance().saltDB;
 		for (int i = 0; i < salts.size(); i++) {
 			Salt salt = (Salt)salts.get(i);
 							
+			saltName[i] = new String(salt.getName());
 			lSalts[i] = new JLabel(salt.getCommonName() + " (" + salt.getChemicalName() + "): ");
 			lSaltsU[i] = new JLabel(salt.getAmountU());
 			textSaltsAmount[i] = new JTextField("0.0");
 			checkSaltsUse[i] = new JCheckBox();
-			checkSaltsUse[i].setSelected(true);
+			checkSaltsUse[i].setSelected(false);
 					
 			// Add to panel
 			constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -152,16 +170,7 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 			constraints.ipadx = 0;
 			constraints.gridx = 3;
 			panelSalt.add(lSaltsU[i], constraints);
-		}		
-	}
-
-	public void setList(ArrayList waterDB) {
-		// Populate combo	
-		ArrayList db = waterDB;
-		for (int i = 0; i < db.size(); i++) {
-			comboSource.addItem(((WaterProfile)db.get(i)).getName());
-			comboTarget.addItem(((WaterProfile)db.get(i)).getName());
-		}
+		}				
 	}
 	
 	public void displayWaterTreatment() {
@@ -188,7 +197,53 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 		textHardnessT.setText(SBStringUtils.format(target.getHardness(), 1));
 		textAlkT.setText(SBStringUtils.format(target.getAlkalinity(), 1));
 		textTDST.setText(SBStringUtils.format(target.getTds(), 1));
-		textMashPHT.setText(SBStringUtils.format(target.getPh(), 1));		
+		textMashPHT.setText(SBStringUtils.format(target.getPh(), 1));	
+		
+		// Chemistry diff
+		WaterProfile diff = new WaterProfile();
+		diff.setCa(BrewCalcs.waterChemistryDiff(source.getCa(), target.getCa()));
+		diff.setCl(BrewCalcs.waterChemistryDiff(source.getCl(), target.getCl()));
+		diff.setMg(BrewCalcs.waterChemistryDiff(source.getMg(), target.getMg()));
+		diff.setNa(BrewCalcs.waterChemistryDiff(source.getNa(), target.getNa()));
+		diff.setSo4(BrewCalcs.waterChemistryDiff(source.getSo4(), target.getSo4()));
+		diff.setHco3(BrewCalcs.waterChemistryDiff(source.getHco3(), target.getHco3()));
+		diff.setHardness(BrewCalcs.waterChemistryDiff(source.getHardness(), target.getHardness()));
+		diff.setAlkalinity(BrewCalcs.waterChemistryDiff(source.getAlkalinity(), target.getAlkalinity()));
+		diff.setTds(BrewCalcs.waterChemistryDiff(source.getTds(), target.getTds()));
+		diff.setPh(BrewCalcs.waterChemistryDiff(source.getPh(), target.getPh()));
+		
+		textCaD.setText(SBStringUtils.format(diff.getCa(), 1));
+		textClD.setText(SBStringUtils.format(diff.getCl(), 1));
+		textMgD.setText(SBStringUtils.format(diff.getMg(), 1));
+		textNaD.setText(SBStringUtils.format(diff.getNa(), 1));
+		textSo4D.setText(SBStringUtils.format(diff.getSo4(), 1));
+		textCarbonateD.setText(SBStringUtils.format(diff.getHco3(), 1));
+		textHardnessD.setText(SBStringUtils.format(diff.getHardness(), 1));
+		textAlkD.setText(SBStringUtils.format(diff.getAlkalinity(), 1));
+		textTDSD.setText(SBStringUtils.format(diff.getTds(), 1));
+		textMashPHD.setText(SBStringUtils.format(diff.getPh(), 1));
+		
+		// Calculate brewing salts!
+		WaterProfile resultWater;
+		resultWater = BrewCalcs.calculateSalts(myRecipe.getSalts(), diff);
+		
+		textCaR.setText(SBStringUtils.format(resultWater.getCa(), 1));
+		textClR.setText(SBStringUtils.format(resultWater.getCl(), 1));
+		textMgR.setText(SBStringUtils.format(resultWater.getMg(), 1));
+		textNaR.setText(SBStringUtils.format(resultWater.getNa(), 1));
+		textSo4R.setText(SBStringUtils.format(resultWater.getSo4(), 1));
+		textCarbonateR.setText(SBStringUtils.format(resultWater.getHco3(), 1));
+		textHardnessR.setText(SBStringUtils.format(resultWater.getHardness(), 1));
+		textAlkR.setText(SBStringUtils.format(resultWater.getAlkalinity(), 1));
+		textTDSR.setText(SBStringUtils.format(resultWater.getTds(), 1));
+		textMashPHR.setText(SBStringUtils.format(resultWater.getPh(), 1));	
+		
+		for (int i = 0; i < saltName.length; i++) {
+			Salt s = myRecipe.getSaltByName(saltName[i]);
+			if (myRecipe.getSaltByName(saltName[i]) != null) {
+				textSaltsAmount[i].setText(SBStringUtils.format(s.getAmount(), 2)); 	
+			}			
+		}
 	}
 	
 	private void initGUI() {
@@ -204,7 +259,7 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 			this.add(panelSalt);
 			panelSalt.setLayout(saltGridBag);
 			panelSalt.setBorder(BorderFactory.createTitledBorder(new LineBorder(
-							new java.awt.Color(0, 0, 0), 1, false), "Brewing Salts",
+							new java.awt.Color(0, 0, 0), 1, false), "Brewing Salts (per gallon)",
 								TitledBorder.LEADING, TitledBorder.TOP, new java.awt.Font("Dialog",
 										1, 12), new java.awt.Color(51, 51, 51)));
 			

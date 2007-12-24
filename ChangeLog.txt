@@ -5,7 +5,8 @@ Dec 25, 2007 - Jim Clark
   - GUI started
   - Water and salt database implemented
   - Water and salts added to Recipe
-  - TODO: salt calulcations, acid calcs/gui, save/load into xml, xlst printing, options
+  - Basic salt calulations
+  - TODO: acid calcs/gui, save/load into xml, xlst printing, options
 
 Dec 20, 2007 - Jim Clark
 - Added keg line length to carb panel and options

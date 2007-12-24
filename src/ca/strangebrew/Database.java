@@ -15,7 +15,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.16 2007/12/24 15:06:22 jimcdiver Exp $
+ * $Id: Database.java,v 1.17 2007/12/24 18:47:54 jimcdiver Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -732,35 +732,35 @@ public class Database {
 					s.setChemicalName(fields[chemNameIdx]);
 					val = Double.parseDouble(fields[caIdx]);
 					if (val != 0) {
-						s.addChemicalEffect("Ca", val);
+						s.addChemicalEffect(Salt.CALCIUM, val);
 					}
 					val = Double.parseDouble(fields[so4Idx]);
 					if (val != 0) {
-						s.addChemicalEffect("So4", val);
+						s.addChemicalEffect(Salt.SULPHATE, val);
 					}
 					val = Double.parseDouble(fields[mgIdx]);
 					if (val != 0) {
-						s.addChemicalEffect("Mg", val);
+						s.addChemicalEffect(Salt.MAGNESIUM, val);
 					}
-					val = Double.parseDouble(fields[naIdx]);
+					val = Double.parseDouble(fields[naIdx]);				
 					if (val != 0) {
-						s.addChemicalEffect("Na", val);
+						s.addChemicalEffect(Salt.SODIUM, val);
 					}
 					val = Double.parseDouble(fields[clIdx]);
 					if (val != 0) {
-						s.addChemicalEffect("Cl", val);
+						s.addChemicalEffect(Salt.CHLORINE, val);
 					}
 					val = Double.parseDouble(fields[co3Idx]);
 					if (val != 0) {
-						s.addChemicalEffect("Co3", val);
+						s.addChemicalEffect(Salt.CARBONATE, val);
 					}
 					val = Double.parseDouble(fields[hardIdx]);
 					if (val != 0) {
-						s.addChemicalEffect("Hardness", val);
+						s.addChemicalEffect(Salt.HARDNESS, val);
 					}
 					val = Double.parseDouble(fields[alkIdx]);
 					if (val != 0) {
-						s.addChemicalEffect("Alkalinity", val);
+						s.addChemicalEffect(Salt.ALKALINITY, val);
 					}					
 					
 					saltDB.add(s);		

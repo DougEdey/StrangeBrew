@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.49 2007/12/24 15:06:22 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.50 2007/12/24 18:47:54 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -174,7 +174,7 @@ public class Recipe {
 			}
 		}
 		
-		//brewingSalts.addAll(Database.getInstance().saltDB);
+		brewingSalts.addAll(Database.getInstance().saltDB);
 
 		primeSugar.setUnits(opts.getProperty("optSugarU"));
 		carbTempU = opts.getProperty("optCarbTempU");
@@ -1855,11 +1855,26 @@ public class Recipe {
 		this.brewingSalts.remove(i);
 	}
 	
+	public void setSalts(ArrayList s) {
+		this.brewingSalts = s;
+	}
+	
 	public ArrayList getSalts() {
 		return this.brewingSalts;
 	}
 	
 	public Salt getSalt(int i) {
 		return (Salt)this.brewingSalts.get(i);
+	}
+	
+	public Salt getSaltByName(String name) {
+		for (int i = 0; i < brewingSalts.size(); i++) {
+			Salt s = (Salt)brewingSalts.get(i);
+			if (s.getName().equals(name)) {
+				return s;
+			}
+		}
+		
+		return null;
 	}
 }
