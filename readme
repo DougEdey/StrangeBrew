@@ -186,6 +186,10 @@ gravity contribution is calculated using the recipe efficiency, rather than
 100%.  You should uncheck the "M" (for mashed) column, which indicates that
 the ingredient is a sugar.  This applies to all sugar-type fermentables, such
 as honey, DME, LME, maple syrup, and sugars.
+* There is no way to add or modify ingredients from within SB Java. Currently 
+any custom data for hops, malts, water profiles, yeast, salts and primeing sugars
+must be entered by hand into the cvs files. *WARNING* These cvs files will be 
+over writen with each new install.
 
 ==============
 Reporting Bugs
