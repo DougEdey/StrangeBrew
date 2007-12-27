@@ -117,11 +117,7 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 	}
 	
 	public void setData(Recipe r) {
-		myRecipe = r;	
-		
-		// testing hack
-		r.setSourceWater((WaterProfile)Database.getInstance().waterDB.get(0));
-		r.setTargetWater((WaterProfile)Database.getInstance().waterDB.get(0));
+		myRecipe = r;		
 		
 		for (int i = 0; i < saltName.length; i++) {
 			if (r.getSaltByName(saltName[i]) != null) {
@@ -176,6 +172,9 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 	public void displayWaterTreatment() {
 		WaterProfile source = myRecipe.getSourceWater();
 		WaterProfile target = myRecipe.getTargetWater();
+		
+		comboSource.setSelectedItem(source.getName());
+		comboTarget.setSelectedItem(target.getName());
 		
 		textCaS.setText(SBStringUtils.format(source.getCa(), 1));
 		textClS.setText(SBStringUtils.format(source.getCl(), 1));

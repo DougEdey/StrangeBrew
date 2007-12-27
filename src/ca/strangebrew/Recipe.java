@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.50 2007/12/24 18:47:54 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.51 2007/12/27 19:01:44 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -174,7 +174,9 @@ public class Recipe {
 			}
 		}
 		
-		brewingSalts.addAll(Database.getInstance().saltDB);
+		// TODO Load default Salt options!
+		sourceWater = new WaterProfile(opts.getProperty("optWaterProfile"));
+		//brewingSalts.addAll(Database.getInstance().saltDB);
 
 		primeSugar.setUnits(opts.getProperty("optSugarU"));
 		carbTempU = opts.getProperty("optCarbTempU");
@@ -1437,7 +1439,33 @@ public class Recipe {
 		sb.append("      <KEG>" + Boolean.toString(kegged) + "</KEG>\n");
 		sb.append("      <PSI>" + SBStringUtils.format(kegPSI, 2) + "</PSI>\n");
 		sb.append("   </CARB>\n");	
-	
+
+		if (!sourceWater.getName().isEmpty() ||
+			!targetWater.getName().isEmpty()) {
+			sb.append("   <WATER_PROFILE>\n");
+			if (!sourceWater.getName().isEmpty()) {
+				sb.append("      <SOURCE_WATER>\n");
+				sb.append(sourceWater.toXML(9));
+				sb.append("      </SOURCE_WATER>\n");
+			}
+			if (!targetWater.getName().isEmpty()) {
+				sb.append("      <TARGET_WATER>\n");
+				sb.append(targetWater.toXML(9));
+				sb.append("      </TARGET_WATER>\n");
+			}
+			
+			if (brewingSalts.size() > 0) {
+				sb.append("      <SALTS>\n");
+				for (int i = 0; i < brewingSalts.size(); i++ ) {
+					sb.append("         <SALT>\n");
+					sb.append(((Salt)brewingSalts.get(i)).toXML(12));
+					sb.append("         </SALT>\n");
+				}
+				sb.append("      </SALTS>\n");
+			}
+			sb.append("   </WATER_PROFILE>\n");			
+		}		
+		
 		// notes list:
 		sb.append("  <NOTES>\n");
 		for (int i = 0; i < notes.size(); i++) {
@@ -1556,6 +1584,20 @@ public class Recipe {
 		sb.append("\nNotes:\n");
 		for (int i = 0; i < notes.size(); i++) {
 			sb.append(((Note) notes.get(i)).toString());
+		}
+		
+		if (!sourceWater.getName().isEmpty() ||
+			!targetWater.getName().isEmpty()) {
+			sb.append("\nWater Profile\n");
+			sb.append(" Source Water: " + sourceWater.toString() + "\n");
+			sb.append(" Target Water: " + targetWater.toString() + "\n");
+			
+			if (brewingSalts.size() > 0) {
+				sb.append(" Salt Addisions\n");
+				for (int i = 0; i < brewingSalts.size(); i++ ) {
+					sb.append("  " + ((Salt)brewingSalts.get(i)).toString() + "\n");
+				}
+			}
 		}
 
 		return sb.toString();
@@ -1844,6 +1886,11 @@ public class Recipe {
 	}
 
 	public void addSalt(Salt s) {
+		// Check if ths salt already exists!
+		Salt temp = getSaltByName(s.getName());
+		if (temp != null) {
+			this.delSalt(temp);
+		}
 		this.brewingSalts.add(s);
 	}
 	

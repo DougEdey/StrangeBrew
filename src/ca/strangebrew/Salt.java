@@ -49,6 +49,27 @@ public class Salt {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
+	
+	public String toString() {
+		String str = String.format("%s (%s) %3.1d%s",
+				new Object[] {name,
+				commonName,
+				new Double(amount),
+				amountU});
+		return str;
+	}
+	
+	public String toXML(int indent) {
+		String xml = "";
+		
+		xml += SBStringUtils.xmlElement("NAME", name, indent);
+		xml += SBStringUtils.xmlElement("COMMONNAME", commonName, indent);
+		xml += SBStringUtils.xmlElement("CHEM", chemicalName, indent);
+		xml += SBStringUtils.xmlElement("AMOUNT", SBStringUtils.format(amount, 2), indent);
+		xml += SBStringUtils.xmlElement("AMOUNTU", amountU, indent);		
+			
+		return xml;
+	}
 
 	// TODO currently only in grams
 	/*public void setAmountU(String amountU) {
@@ -56,8 +77,22 @@ public class Salt {
 	}*/
 
 	public void addChemicalEffect(String elem, double val) {
+		// Remove old effect of same name first!
+		for (int i = 0; i < this.chemicalEffects.size(); i++) {
+			ChemicalEffect temp = (ChemicalEffect)this.chemicalEffects.get(i);
+			if (temp.getElem().equals(elem)) {
+				this.chemicalEffects.remove(i);
+				break;
+			}
+		}
+
 		ChemicalEffect e = new ChemicalEffect(elem, val);
 		this.chemicalEffects.add(e);
+	}
+	
+	public void setChemicalEffects(ArrayList effs) {
+		this.chemicalEffects.clear();
+		this.chemicalEffects.addAll(effs);
 	}
 
 	public void setChemicalName(String chemicalName) {

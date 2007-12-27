@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.swing.BorderFactory;
@@ -37,6 +38,7 @@ import ca.strangebrew.Hop;
 import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
+import ca.strangebrew.WaterProfile;
 import ca.strangebrew.ui.swing.ComboModel;
 import ca.strangebrew.ui.swing.SmartComboBox;
 import ca.strangebrew.ui.swing.StrangeSwing;
@@ -59,6 +61,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	private Options opts;
 
 	// Final UI elements
+	final private GridBagLayout gridBag = new GridBagLayout();
 	final private JPanel pnlBrewer = new JPanel();
 	final private JTextField txtBottleSize = new JTextField();
 	final private JButton okButton = new JButton();
@@ -142,7 +145,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JLabel jLabel26 = new JLabel();
 	final private JLabel jLabel25 = new JLabel();
 	final private JLabel jLabel24 = new JLabel();
-	final private JPanel jPanel1 = new JPanel();
+	final private JPanel unitsPanel = new JPanel();
 	final private JLabel jLabel23 = new JLabel();
 	final private JLabel jLabel22 = new JLabel();
 	final private JLabel jLabel21 = new JLabel();
@@ -220,6 +223,10 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	// from the equipment managemnt that we haven't done yet!
 	final private JComboBox comboTubingID = new JComboBox(new String[] {"3/16", "1/4"});	
 	
+	// default water profile and selected salts
+	final private JLabel lWaterProfile = new JLabel("Water Profile: ");
+	final private JComboBox comboWaterProfile = new JComboBox();
+	
 /*	private ArrayList looks;*/
 	
 	final private Frame sb;
@@ -266,6 +273,11 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		volUnitsComboModel.addOrInsert(opts.getProperty("optSizeU"));
 		boilTimeTxt.setText(opts.getProperty("optBoilTime"));
 		hopsTypeComboModel.addOrInsert(opts.getProperty("optHopsType"));
+		ArrayList db = Database.getInstance().waterDB;
+		for (int i = 0; i < db.size(); i++) {
+			comboWaterProfile.addItem(((WaterProfile)db.get(i)).getName());
+		}		
+		comboWaterProfile.setSelectedItem(opts.getProperty("optWaterProfile"));
 		
 		// TODO: convert boiltempF if c is selected
 		boilTempTxt.setText(opts.getProperty("optBoilTempF"));
@@ -400,8 +412,8 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		opts.setProperty("optSizeU", volUnitsComboModel.getSelectedItem().toString());
 		opts.setProperty("optBoilTime", boilTimeTxt.getText());
 		opts.setProperty("optHopsType", hopsTypeComboModel.getSelectedItem().toString());
-		
 		opts.setProperty("optMashVolU", mashVolComboModel.getSelectedItem().toString());
+		opts.setProperty("optWaterProfile", comboWaterProfile.getSelectedItem().toString());
 		
 		if (frb.isSelected()){
 			opts.setProperty("optMashTempU", "F");
@@ -922,144 +934,180 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 			colourPanel.add(jLabel23, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel23.setText("Alpha:");
-
-			GridBagLayout newRecipePanelLayout = new GridBagLayout();
-			newRecipePanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1};
-			newRecipePanelLayout.rowHeights = new int[] {7, 7, 7};
-			newRecipePanelLayout.columnWeights = new double[] {0.1, 0.1};
-			newRecipePanelLayout.columnWidths = new int[] {7, 7};
-			newRecipePanel.setLayout(newRecipePanelLayout);
-			jTabbedPane1.addTab("New Recipe Defaults", null, newRecipePanel, null);		
 			
-			GridBagLayout miscPanelLayout = new GridBagLayout();
-			miscPanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1};
-			miscPanelLayout.rowHeights = new int[] {7, 7, 7, 7};
-			miscPanelLayout.columnWeights = new double[] {0.1, 0.1, 0.1, 0.1};
-			miscPanelLayout.columnWidths = new int[] {7, 7, 7, 7};
-			miscPanel.setLayout(miscPanelLayout);
-			newRecipePanel.add(miscPanel, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-			miscPanel.setBorder(BorderFactory.createTitledBorder("Misc"));
-
-			GridBagLayout mashPanelLayout = new GridBagLayout();
-			mashPanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1};
-			mashPanelLayout.rowHeights = new int[] {7, 7, 7, 7};
-			mashPanelLayout.columnWeights = new double[] {0.1, 0.1, 0.1, 0.1};
-			mashPanelLayout.columnWidths = new int[] {7, 7, 7, 7};
-			mashPanel.setLayout(mashPanelLayout);
-			newRecipePanel.add(mashPanel, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-			mashPanel.setBorder(BorderFactory.createTitledBorder("Mash"));
-
-			GridBagLayout jPanel1Layout = new GridBagLayout();
-			jPanel1Layout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1};
-			jPanel1Layout.rowHeights = new int[] {7, 7, 7, 7};
-			jPanel1Layout.columnWeights = new double[] {0.1, 0.1};
-			jPanel1Layout.columnWidths = new int[] {7, 7};
-			jPanel1.setLayout(jPanel1Layout);
-			newRecipePanel.add(jPanel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-			jPanel1.setBorder(BorderFactory.createTitledBorder("Units"));
-
-			jPanel1.add(jLabel19, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			jLabel19.setText("Malt Units:");
-
-			SmartComboBox.enable(maltUnitsCombo);
-			jPanel1.add(maltUnitsCombo, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-			maltUnitsComboModel.setList(Quantity.getListofUnits("weight"));
-			maltUnitsCombo.setModel(maltUnitsComboModel);
-
-			jPanel1.add(jLabel24, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			jLabel24.setText("Hops Units:");
-
-			SmartComboBox.enable(hopsUnitsCombo);
-			jPanel1.add(hopsUnitsCombo, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-			hopsUnitsComboModel.setList(Quantity.getListofUnits("weight"));
-			hopsUnitsCombo.setModel(hopsUnitsComboModel);
-
-			jPanel1.add(jLabel25, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			jLabel25.setText("Vol Units:");
-
-			SmartComboBox.enable(volUnitsCombo);
-			volUnitsCombo.addActionListener(new ActionListener() {
-				public void actionPerformed (ActionEvent e){
-					setEvapLable();
+			// New recipe panel
+			{
+				// Setup main panel
+				newRecipePanel.setLayout(new GridLayout(3,0));
+				jTabbedPane1.addTab("New Recipe Defaults", null, newRecipePanel, null);	
+				
+				gridBag.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1};
+				gridBag.rowHeights = new int[] {7, 7, 7, 7};
+				gridBag.columnWeights = new double[] {0.1, 0.1, 0.1, 0.1};
+				gridBag.columnWidths = new int[] {7, 7, 7, 7};				
+				
+				// Set up units
+				{
+					unitsPanel.setLayout(gridBag);
+					newRecipePanel.add(unitsPanel);
+					unitsPanel.setBorder(BorderFactory.createTitledBorder("Units"));			
+								
+					// Malt units
+					constraints.fill = GridBagConstraints.HORIZONTAL;
+					constraints.gridx = 0;
+					constraints.gridy = 0;
+					unitsPanel.add(jLabel19, constraints);							
+					jLabel19.setText("Malt Units:");
+					SmartComboBox.enable(maltUnitsCombo);
+					constraints.gridx = 1;
+					unitsPanel.add(maltUnitsCombo, constraints);
+					maltUnitsComboModel.setList(Quantity.getListofUnits("weight"));
+					maltUnitsCombo.setModel(maltUnitsComboModel);
+		
+					// Hop Units
+					constraints.gridx = 0;
+					constraints.gridy = 1;
+					unitsPanel.add(jLabel24, constraints);
+					jLabel24.setText("Hops Units:");		
+					constraints.gridx = 1;
+					SmartComboBox.enable(hopsUnitsCombo);
+					unitsPanel.add(hopsUnitsCombo, constraints);
+					hopsUnitsComboModel.setList(Quantity.getListofUnits("weight"));
+					hopsUnitsCombo.setModel(hopsUnitsComboModel);
+		
+					// Vol units
+					constraints.gridx = 0;
+					constraints.gridy = 2;
+					unitsPanel.add(jLabel25, constraints);
+					jLabel25.setText("Vol Units:");
+					constraints.gridx = 1;
+					SmartComboBox.enable(volUnitsCombo);
+					volUnitsCombo.addActionListener(new ActionListener() {
+						public void actionPerformed (ActionEvent e){
+							setEvapLable();
+						}
+					});
+					unitsPanel.add(volUnitsCombo, constraints);
+					volUnitsComboModel.setList(Quantity.getListofUnits("vol"));
+					volUnitsCombo.setModel(volUnitsComboModel);
+		
+					// batch size
+					constraints.gridx = 0;
+					constraints.gridy = 3;
+					unitsPanel.add(jLabel30, constraints);
+					jLabel30.setText("Batch Size:");
+					constraints.gridx = 1;
+					unitsPanel.add(batchSizeTxt, constraints);
+					batchSizeTxt.setText("jTextField1");
+		
+					// Boil Time
+					constraints.gridx = 0;
+					constraints.gridy = 4;
+					unitsPanel.add(jLabel26, constraints);
+					jLabel26.setText("Boil Time (min):");
+					constraints.gridx = 1;
+					unitsPanel.add(boilTimeTxt, constraints);
+					boilTimeTxt.setText("60");
+					boilTimeTxt.setPreferredSize(new java.awt.Dimension(55, 20));
 				}
-			});
-			jPanel1.add(volUnitsCombo, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-			volUnitsComboModel.setList(Quantity.getListofUnits("vol"));
-			volUnitsCombo.setModel(volUnitsComboModel);
+				
+				// Mash
+				{
+					mashPanel.setLayout(gridBag);
+					newRecipePanel.add(mashPanel);
+					mashPanel.setBorder(BorderFactory.createTitledBorder("Mash"));					
 
-			jPanel1.add(jLabel26, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			jLabel26.setText("Boil Time (min):");
+					// Vol units
+					constraints.gridx = 0;
+					constraints.gridy = 0;
+					mashPanel.add(jLabel28, constraints);
+					jLabel28.setText("Vol Units:");		
+					mashVolComboModel.setList(Quantity.getListofUnits("vol"));
+					SmartComboBox.enable(mashVolCombo);
+					constraints.gridx = 1;
+					constraints.gridwidth = 2;
+					mashPanel.add(mashVolCombo, constraints);
+					constraints.gridwidth = 1;
+					mashVolCombo.setModel(mashVolComboModel);
+					mashVolCombo.setPreferredSize(new java.awt.Dimension(137, 20));
+					
+					// Temp units
+					constraints.gridx = 0;
+					constraints.gridy = 1;
+					mashPanel.add(jLabel27, constraints);
+					jLabel27.setText("Temp Units:");		
+					mashPanel.add(frb, constraints);
+					frb.setText("F");
+					tempUBG.add(frb);
+					frb.setSelected(true);
+					frb.addActionListener(this);		
+					constraints.gridx = 1;
+					mashPanel.add(crb, constraints);
+					crb.setText("C");
+					constraints.gridx = 2;
+					tempUBG.add(crb);
+					crb.addActionListener(this);
+					
+					// Temp
+					constraints.gridx = 0;
+					constraints.gridy = 2;
+					mashPanel.add(jLabel12, constraints);
+					jLabel12.setText("Boil Temp:");
+					constraints.gridx = 1;
+					mashPanel.add(boilTempTxt, constraints);
+					boilTempTxt.setText("212");
+					boilTempTxt.setPreferredSize(new java.awt.Dimension(45, 20));
+					constraints.gridx = 2;
+					mashPanel.add(boilTempULbl, constraints);
+					boilTempULbl.setText("F");
+					boilTempULbl.setPreferredSize(new java.awt.Dimension(21, 14));
+					
+					// Ratio
+					constraints.gridx = 0;
+					constraints.gridy = 3;
+					mashPanel.add(jLabel29, constraints);
+					jLabel29.setText("Ratio:");	
+					constraints.gridx = 1;
+					mashPanel.add(mashRatioTxt, constraints);
+					mashRatioTxt.setText("1.25");
+					mashRatioTxt.setPreferredSize(new java.awt.Dimension(45, 20));		
+					ComboBoxModel mashRatioUComboModel = new DefaultComboBoxModel(new String[] {
+							"qt/l", "l/kg" });		
+					SmartComboBox.enable(mashRatioUCombo);
+					constraints.gridx = 2;
+					mashPanel.add(mashRatioUCombo, constraints);
+					mashRatioUCombo.setModel(mashRatioUComboModel);
+					mashRatioUCombo.setPreferredSize(new java.awt.Dimension(71, 20));				
+				}
+				
+				// Misc
+				{
+					miscPanel.setLayout(gridBag);
+					newRecipePanel.add(miscPanel);
+					miscPanel.setBorder(BorderFactory.createTitledBorder("Misc"));					
 
-			jPanel1.add(batchSizeTxt, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-			batchSizeTxt.setText("jTextField1");
+					// Hop Type
+					constraints.gridx = 0;
+					constraints.gridy = 0;				
+					miscPanel.add(hopsTypeLabel, constraints);
+					hopsTypeLabel.setText("Hop Type:");
+					SmartComboBox.enable(hopsTypeCombo);
+					hopsTypeComboModel.setList(Hop.getHopTypes());
+					hopsTypeCombo.setModel(hopsTypeComboModel);
+					constraints.gridx = 1;
+					miscPanel.add(hopsTypeCombo, constraints);
+					hopsTypeCombo.setModel(hopsTypeComboModel);
+					hopsTypeCombo.setPreferredSize(new java.awt.Dimension(137, 20));
 
-			jPanel1.add(jLabel30, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			jLabel30.setText("Batch Size:");
-
-			jPanel1.add(boilTimeTxt, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-			boilTimeTxt.setText("60");
-			boilTimeTxt.setPreferredSize(new java.awt.Dimension(55, 20));
-
-			mashPanel.add(jLabel12, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			jLabel12.setText("Boil Temp:");
-
-			mashPanel.add(boilTempTxt, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			boilTempTxt.setText("212");
-			boilTempTxt.setPreferredSize(new java.awt.Dimension(45, 20));
-
-			mashPanel.add(boilTempULbl, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			boilTempULbl.setText("F");
-			boilTempULbl.setPreferredSize(new java.awt.Dimension(21, 14));
-
-			mashPanel.add(jLabel27, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			jLabel27.setText("Temp Units:");
-
-			mashPanel.add(frb, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			frb.setText("F");
-			tempUBG.add(frb);
-			frb.setSelected(true);
-			frb.addActionListener(this);
-
-			mashPanel.add(crb, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			crb.setText("C");
-			tempUBG.add(crb);
-			crb.addActionListener(this);
-
-			mashPanel.add(jLabel28, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			jLabel28.setText("Vol Units:");
-
-			mashVolComboModel.setList(Quantity.getListofUnits("vol"));
-
-			SmartComboBox.enable(mashVolCombo);
-			mashPanel.add(mashVolCombo, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-			mashVolCombo.setModel(mashVolComboModel);
-			mashVolCombo.setPreferredSize(new java.awt.Dimension(137, 20));
-
-			mashPanel.add(jLabel29, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			jLabel29.setText("Ratio:");
-
-			mashPanel.add(mashRatioTxt, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			mashRatioTxt.setText("1.25");
-			mashRatioTxt.setPreferredSize(new java.awt.Dimension(45, 20));
-
-			ComboBoxModel mashRatioUComboModel = new DefaultComboBoxModel(new String[] {
-					"qt/l", "l/kg" });
-
-			SmartComboBox.enable(mashRatioUCombo);
-			mashPanel.add(mashRatioUCombo, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			mashRatioUCombo.setModel(mashRatioUComboModel);
-			mashRatioUCombo.setPreferredSize(new java.awt.Dimension(71, 20));
-			
-			miscPanel.add(hopsTypeLabel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			hopsTypeLabel.setText("Hop Type:");
-
-			SmartComboBox.enable(hopsTypeCombo);
-			hopsTypeComboModel.setList(Hop.getHopTypes());
-			hopsTypeCombo.setModel(hopsTypeComboModel);
-			miscPanel.add(hopsTypeCombo, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-			hopsTypeCombo.setModel(hopsTypeComboModel);
-			hopsTypeCombo.setPreferredSize(new java.awt.Dimension(137, 20));
-
+					// Water Profile
+					SmartComboBox.enable(comboWaterProfile);
+					constraints.gridx = 0;
+					constraints.gridy = 1;
+					miscPanel.add(lWaterProfile, constraints);
+					constraints.gridx = 1;
+					miscPanel.add(comboWaterProfile, constraints);
+				}	
+			}
 		}
 		// Layout the other tabs
 		{

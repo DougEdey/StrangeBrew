@@ -1,5 +1,7 @@
 package ca.strangebrew;
 
+import java.util.ArrayList;
+
 public class WaterProfile {
 	private String name;
 	private String description;
@@ -15,6 +17,36 @@ public class WaterProfile {
 	private double alkalinity;
 	
 	public WaterProfile() {
+		name = "Distilled/RO";
+		ph = 5.80000019073486;
+	}
+	
+	public WaterProfile(String name) {
+		// Creates a new water profile based on the name from the db
+		ArrayList profiles = Database.getInstance().waterDB;
+		
+		for (int i = 0; i < profiles.size(); i++) {
+			WaterProfile p = (WaterProfile)profiles.get(i);
+			if (p.getName().equals(name)) {
+				this.name = p.getName();
+				this.description = p.getDescription();
+				this.ca = p.getCa();
+				this.mg = p.getMg();
+				this.na = p.getNa();
+				this.so4 = p.getSo4();
+				this.hco3 = p.getHco3();
+				this.cl = p.getCl();
+				this.hardness = p.getHardness();
+				this.tds = p.getTds();
+				this.ph = p.getPh();
+				this.alkalinity = p.getAlkalinity();				
+				
+				return;
+			}
+		}
+		
+		this.name = "Distilled/RO";
+		this.ph = 5.80000019073486;
 	}
 
 	public double getAlkalinity() {
@@ -111,5 +143,40 @@ public class WaterProfile {
 
 	public void setTds(double tds) {
 		this.tds = tds;
+	}
+	
+	public String toString() {
+		String str = String.format("%s => %3.1dca %3.1dmg %3.1dna %3.1dso4 %3.1dhc03 %3.1dcl %3.1dhardness %3.1dtds %3.1dph %3.1dalk",
+				new Object[] {name,
+				new Double(ca),
+				new Double(mg),
+				new Double(na),
+				new Double(so4),
+				new Double(hco3),
+				new Double(cl),
+				new Double(hardness),
+				new Double(tds),
+				new Double(ph),
+				new Double(alkalinity)});
+		
+		return str;
+	}
+	
+	public String toXML(int indent) {
+		String xml = "";
+
+		xml += SBStringUtils.xmlElement("NAME", name, indent);
+		xml += SBStringUtils.xmlElement("CA", Double.toString(ca), indent);
+		xml += SBStringUtils.xmlElement("MG", Double.toString(mg), indent);
+		xml += SBStringUtils.xmlElement("NA", Double.toString(na), indent);
+		xml += SBStringUtils.xmlElement("SO4", Double.toString(so4), indent);
+		xml += SBStringUtils.xmlElement("HCO3", Double.toString(hco3), indent);
+		xml += SBStringUtils.xmlElement("CL", Double.toString(cl), indent);
+		xml += SBStringUtils.xmlElement("HARDNESS", Double.toString(hardness), indent);
+		xml += SBStringUtils.xmlElement("TDS", Double.toString(tds), indent);
+		xml += SBStringUtils.xmlElement("PH", Double.toString(ph), indent);
+		xml += SBStringUtils.xmlElement("ALKALINITY", Double.toString(alkalinity), indent);
+
+		return xml;
 	}
 }

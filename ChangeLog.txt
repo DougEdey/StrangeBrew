@@ -1,5 +1,12 @@
 Change Log:
 
+Dec 27, 2007 - Jim Clark
+- Save/load/export added for water profile and salts
+- A few bugs with implementation of water treatment cleaned up
+- A bug with notes display in xlst fixed 
+- Default Water profile in options and prefs dialog
+- TODO: allow user to add water profiles without having to manual edit DB files
+
 Dec 25, 2007 - Jim Clark
 - Basic structure for Water Treatment and Brewing Salts
   - GUI started

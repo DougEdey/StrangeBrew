@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.24 2007/12/20 15:03:00 jimcdiver Exp $
+ * $Id: Options.java,v 1.25 2007/12/27 19:01:44 jimcdiver Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -54,6 +54,7 @@ public class Options {
 			{"optPreBoilVol", "6"},
 			{"optMash", "true"},
 			{"optHopsType", "Leaf"},
+			{"optWaterProfile", "Distilled/RO"},
 
 			// carbonation:
 			{"optPrimingSugar", "Corn Sugar"},

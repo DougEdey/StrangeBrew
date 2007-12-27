@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.21 2007/12/18 17:54:01 jimcdiver Exp $
+ * $Id: XmlHandler.java,v 1.22 2007/12/27 19:01:44 jimcdiver Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -12,6 +12,7 @@ package ca.strangebrew;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.xml.sax.Attributes;
@@ -35,8 +36,11 @@ public class XmlHandler extends DefaultHandler{
 	private Note note = new Note();
 	private Attributes currentAttributes = null;
 	private FermentStep ferm = null;
+	private Salt salt = null;
+	private WaterProfile water = null;
 	
 	private String currentList = null; //current List name
+	private String currentSubList = null;
 	private String currentElement = null; // current element name
 	private String importType = null; // the type of recipe we're importing
 	private String descrBuf = ""; // buffer to hold long descriptions
@@ -196,12 +200,24 @@ public class XmlHandler extends DefaultHandler{
 			currentList = "MISC";
 		} else if (eName.equalsIgnoreCase("FERMENTATION_SCHEDUAL")) {
 			currentList = "FERMENTATION_SCHEDUAL";
+		} else if (eName.equalsIgnoreCase("WATER_PROFILE")) {
+			currentList = "WATER_PROFILE";
 		} else if (eName.equalsIgnoreCase("NOTES") && !currentList.equals("DETAILS")) {
 			// two freaking elments named NOTES - make sure we're not looking at the 
 			// recipe notes in <DETAILS>
 			currentList = "NOTES";
-		} 
-		else if (eName.equalsIgnoreCase("ITEM")) { // this is an item in a
+		} else if (currentList.equals("WATER_PROFILE") && eName.equalsIgnoreCase("SOURCE_WATER")) {
+			currentSubList = "SOURCE_WATER";
+			water = new WaterProfile();
+		} else if (currentList.equals("WATER_PROFILE") && eName.equalsIgnoreCase("TARGET_WATER")) {
+			currentSubList = "TARGET_WATER";
+			water = new WaterProfile();
+		} else if (currentList.equals("WATER_PROFILE") && eName.equalsIgnoreCase("SALTS")) {
+			currentSubList = "SALTS";		
+		} else if (currentList.equals("WATER_PROFILE") && 
+				currentSubList.equals("SALTS") && eName.equalsIgnoreCase("SALT")) {
+			salt = new Salt();
+		} else if (eName.equalsIgnoreCase("ITEM")) { // this is an item in a
 			// list
 			if (currentList.equals("FERMENTABLES")) {
 				m = new Fermentable();
@@ -214,8 +230,6 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentList.equals("NOTES")) {				
 				note = new Note();
 			}
-
-
 		} 
 	}
 
@@ -265,7 +279,26 @@ public class XmlHandler extends DefaultHandler{
 					r.mash.addStep(type, startTemp, endTemp, method, minutes, rampMin, weightLbs);		
 			} else if (qName.equalsIgnoreCase("ITEM") &&
 					currentList.equalsIgnoreCase("FERMENTATION_SCHEDUAL")) {
-				r.addFermentStep(ferm);								
+				r.addFermentStep(ferm);	
+			} else if (qName.equalsIgnoreCase("SALT")) {
+				// look up the effects of this salt from the DB
+				ArrayList db = Database.getInstance().saltDB;
+				Salt dbSalt = Salt.getSaltByName(db, salt.getName());
+				if (dbSalt != null) {
+					salt.setChemicalEffects(dbSalt.getChemicalEffects());
+				}
+				r.addSalt(salt);				
+				salt = null;
+			} else if (qName.equalsIgnoreCase("SOURCE_WATER")) {
+				currentSubList = "";
+				r.setSourceWater(water);
+				water = null;
+			} else if (qName.equalsIgnoreCase("TARGET_WATER")) {
+				currentSubList = "";
+				r.setTargetWater(water);
+				water = null;
+			} else if (qName.equalsIgnoreCase("SALTS")) {
+				currentSubList = "";
 			} // there's a problem with having two elements named "NOTES" : 
 			  else if (qName.equalsIgnoreCase("FERMENTABLS")
 					|| qName.equalsIgnoreCase("HOPS")
@@ -273,6 +306,7 @@ public class XmlHandler extends DefaultHandler{
 					|| qName.equalsIgnoreCase("CARB")
 					|| qName.equalsIgnoreCase("MISC")
 					|| qName.equalsIgnoreCase("FERMENTATION_SCHEDUAL")
+					|| qName.equalsIgnoreCase("WATER_PROFILE")
 					|| (qName.equalsIgnoreCase("NOTES") && !currentList.equalsIgnoreCase("DETAILS"))
 					) {
 				currentList = "";
@@ -573,6 +607,45 @@ public class XmlHandler extends DefaultHandler{
 				ferm.setTempU(s);
 			} else if (currentElement.equalsIgnoreCase("TIME")) {
 				ferm.setTime(Integer.parseInt(s));
+			}
+		} else if (currentList.equalsIgnoreCase("WATER_PROFILE")) {
+			if (currentSubList.equalsIgnoreCase("SALTS")) {
+				// Read in a salt
+				if (currentElement.equalsIgnoreCase("NAME")) {
+					salt.setName(s);
+				} else if (currentElement.equalsIgnoreCase("COMMONNAME")) {
+					salt.setCommonName(s); 
+				} else if (currentElement.equalsIgnoreCase("CHEM")) {
+					salt.setChemicalName(s); 
+				} else if (currentElement.equalsIgnoreCase("AMMOUNT")) {
+					salt.setAmount(Double.parseDouble(s));
+				}
+				// TODO units!!!!
+			} else {
+				// Source or Target water
+				if (currentElement.equalsIgnoreCase("NAME")) {
+					water.setName(s);
+				} else if (currentElement.equalsIgnoreCase("CA")) {
+					water.setCa(Double.parseDouble(s));
+				} else if (currentElement.equalsIgnoreCase("MG")) {
+					water.setMg(Double.parseDouble(s));
+				} else if (currentElement.equalsIgnoreCase("NA")) {
+					water.setNa(Double.parseDouble(s));
+				} else if (currentElement.equalsIgnoreCase("SO4")) {
+					water.setSo4(Double.parseDouble(s));
+				} else if (currentElement.equalsIgnoreCase("HCO3")) {
+					water.setHco3(Double.parseDouble(s));
+				} else if (currentElement.equalsIgnoreCase("CL")) {
+					water.setCl(Double.parseDouble(s));
+				} else if (currentElement.equalsIgnoreCase("HARDNESS")) {
+					water.setHardness(Double.parseDouble(s));
+				} else if (currentElement.equalsIgnoreCase("TDS")) {
+					water.setTds(Double.parseDouble(s));
+				} else if (currentElement.equalsIgnoreCase("PH")) {
+					water.setPh(Double.parseDouble(s));
+				} else if (currentElement.equalsIgnoreCase("ALKALINITY")) {
+					water.setAlkalinity(Double.parseDouble(s));
+				}
 			}
 		}
 		else

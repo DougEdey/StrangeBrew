@@ -42,6 +42,7 @@
 			<body>
 				<xsl:apply-templates select="DETAILS"/>
 				<xsl:apply-templates select="NOTES"/>
+				<xsl:apply-templates select="WATER_PROFILE"/>
 				<xsl:apply-templates select="MASH"/>
 				<xsl:apply-templates select="FERMENTABLES"/>
 				<xsl:apply-templates select="MISC"/>
@@ -61,7 +62,6 @@
 		<h1><xsl:value-of select="NAME"/></h1>
 		<div id="meta">
 			<h3 id="author">Created by <xsl:value-of select="BREWER"/> on <xsl:value-of select="RECIPE_DATE"/></h3>
-			<xsl:apply-templates select="NOTES"/>
 		</div>
 		<table class="vertical">
 			<thead>
@@ -142,8 +142,7 @@
                </tr>
             </thead>
             <tbody>
-               <tr>
-                  
+               <tr>                  
                   <th><abbr title="Dilution Amount">Added Volume</abbr></th>
                   <td><xsl:value-of select="format-number(ADDED_VOLUME, '##.#')"/> gallons</td>
                   <th><abbr title="Final Volume">Final Volume</abbr></th>
@@ -163,7 +162,7 @@
 	</xsl:template>
 
 	<xsl:template match="NOTES">
-		<xsl:if test="/STRANGEBREWRECIPE/MASH/NAME">
+		<xsl:if test="/STRANGEBREWRECIPE/MASH/NOTES">
 			<table xmlns="http://www.w3.org/1999/xhtml">
 				<thead>
 					<tr>
@@ -461,6 +460,93 @@
 		</xsl:if>	
 	</xsl:template>
 	
+	<xsl:template match="WATER_PROFILE">
+		<xsl:if test="/STRANGEBREWRECIPE/WATER_PROFILE">
+   	 	 <table>
+   	 	 	<thead>
+				<tr>
+					<th colspan="11">Water Profile and Brewing Salts</th>
+				</tr>
+			</thead>
+			<tbody>
+				<xsl:if test="/STRANGEBREWRECIPE/WATER_PROFILE/SOURCE_WATER">
+					<tr>
+						<th>Source Water</th>
+						<th>Ca</th>
+						<th>Mg</th>
+						<th>Na</th>
+						<th>So4</th>
+						<th>HCo3</th>
+						<th>Cl</th>
+						<th>Hardness</th>
+						<th>TDS</th>
+						<th>pH</th>
+						<th>Alk</th>
+					</tr>
+					<tr>
+						<xsl:attribute name="class">even</xsl:attribute>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/SOURCE_WATER/NAME"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/SOURCE_WATER/CA"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/SOURCE_WATER/MG"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/SOURCE_WATER/NA"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/SOURCE_WATER/SO4"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/SOURCE_WATER/HCO3"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/SOURCE_WATER/CL"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/SOURCE_WATER/HARDNESS"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/SOURCE_WATER/TDS"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/SOURCE_WATER/PH"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/SOURCE_WATER/ALKALINITY"/></td>
+					</tr>
+				</xsl:if>
+				<xsl:if test="/STRANGEBREWRECIPE/WATER_PROFILE/TARGET_WATER">
+					<tr>
+						<th>Target Water</th>
+						<th>Ca</th>
+						<th>Mg</th>
+						<th>Na</th>
+						<th>So4</th>
+						<th>HCo3</th>
+						<th>Cl</th>
+						<th>Hardness</th>
+						<th>TDS</th>
+						<th>pH</th>
+						<th>Alk</th>
+					</tr>
+					<tr>
+						<xsl:attribute name="class">even</xsl:attribute>					
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/TARGET_WATER/NAME"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/TARGET_WATER/CA"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/TARGET_WATER/MG"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/TARGET_WATER/NA"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/TARGET_WATER/SO4"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/TARGET_WATER/HCO3"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/TARGET_WATER/CL"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/TARGET_WATER/HARDNESS"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/TARGET_WATER/TDS"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/TARGET_WATER/PH"/></td>
+						<td><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/TARGET_WATER/ALKALINITY"/></td>
+					</tr>
+				</xsl:if>
+				<xsl:if test="/STRANGEBREWRECIPE/WATER_PROFILE/SALTS">
+					<tr>
+						<th colspan="7">Salt</th>
+						<th colspan="4">Amount</th>
+					</tr>
+					<xsl:for-each select="/STRANGEBREWRECIPE/WATER_PROFILE/SALTS/SALT">
+						<xsl:if test="(position() mod 2 = 1)">
+							<xsl:attribute name="class">even</xsl:attribute>
+						</xsl:if>
+						<tr>
+							<td colspan="7"><xsl:value-of select="COMMONNAME"/> (<xsl:value-of select="NAME"/>)</td>
+							<td colspan="4"><xsl:value-of select="AMOUNT"/> <xsl:value-of select="AMOUNTU"/></td>
+						</tr>
+					</xsl:for-each>					
+				</xsl:if>
+			</tbody>
+		  </table>
+		</xsl:if>	
+	</xsl:template>
+		
 	<xsl:template match="PRINT">
 		body,th,td{font-size:<xsl:value-of select="@FONTSIZE"/>;font-family:"<xsl:value-of select="@FONTFACE"/>";}
 	</xsl:template>
