@@ -196,7 +196,14 @@ public class BrewCalcs {
 			}
 		}
 		
-		// Missing CaCl2
+		if (waterNeeds.getCa() > 0 &&
+			result.getCa() < waterNeeds.getCa()) {
+			Salt calChloride = Salt.getSaltByName(salts, Salt.CALCIUM_CHLORIDE);
+			if (calChloride != null) {
+				calChloride.setAmount((waterNeeds.getCa() - result.getCa()) / calChloride.getEffectByChem(Salt.CALCIUM));
+				updateWater(result, calChloride);
+			}
+		}		
 		
 		return result;
 	}

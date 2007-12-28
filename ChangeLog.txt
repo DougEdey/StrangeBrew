@@ -7,6 +7,7 @@ Dec 28, 2007 - Jim Clark
 - Fixed bug with Salt check boxes not adding/removeing salt from recipe (addActionListner())
 - Fixed water calc bug where app was telling user to add salts when they already had the target
    value or higher.
+- Fixed shallow copy of Salt out of database into (partial) deep copy
 
 Dec 27, 2007 - Jim Clark
 - Save/load/export added for water profile and salts

@@ -7,7 +7,7 @@ public class Salt {
 	private String commonName;
 	private String chemicalName;
 	private double amount = 0.0;
-	private String amountU = "gr";
+	private String amountU = Quantity.G;
 	private ArrayList chemicalEffects = new ArrayList();
 	
 	public static final String MAGNESIUM = "Mg";
@@ -27,6 +27,16 @@ public class Salt {
 	public static final String CALCIUM_CHLORIDE = "Calcium Chloride";
 	
 	public Salt() { 
+	}
+	
+	public Salt(Salt s) {
+		this.name = s.getName();
+		this.commonName = s.getCommonName();
+		this.chemicalName = s.getChemicalName();
+		this.amount = s.getAmount();
+		this.amountU = s.getAmountU();
+		// Shallow copy! This should be ok, since this stuff should 'never' change on the fly
+		this.chemicalEffects = s.getChemicalEffects();
 	}
 
 	public double getAmount() {

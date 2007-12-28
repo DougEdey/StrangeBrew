@@ -242,7 +242,9 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 			Salt s = myRecipe.getSaltByName(saltName[i]);
 			if (myRecipe.getSaltByName(saltName[i]) != null) {
 				textSaltsAmount[i].setText(SBStringUtils.format(s.getAmount(), 2)); 	
-			}			
+			} else {
+				textSaltsAmount[i].setText("0.0");
+			}
 		}
 	}
 	
@@ -487,7 +489,7 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 				if (o == checkSaltsUse[i]) {
 					if (checkSaltsUse[i].isSelected()) {
 						// Add this salt to recipe
-						Salt s = Salt.getSaltByName(Database.getInstance().saltDB, saltName[i]);
+						Salt s = new Salt(Salt.getSaltByName(Database.getInstance().saltDB, saltName[i]));
 						myRecipe.addSalt(s);
 					} else {
 						// Remove this salt from recipe
