@@ -4,5 +4,6 @@
 	<classpathentry kind="lib" path="lib/microba.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/BrowserLauncher2-all-10rc4.jar"/>
+	<classpathentry kind="lib" path="/usr/share/java/looks-2.1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,5 +1,13 @@
 Change Log:
 
+Dec 28, 2007 - Jim Clark
+- Consolidated a lot of fixed strings scatetred though out app into static strings to
+   help prevent fat fingers and what not and to create more readable code. Still more to
+   do, especialy in Quantity(), but I got most of them.
+- Fixed bug with Salt check boxes not adding/removeing salt from recipe (addActionListner())
+- Fixed water calc bug where app was telling user to add salts when they already had the target
+   value or higher.
+
 Dec 27, 2007 - Jim Clark
 - Save/load/export added for water profile and salts
 - A few bugs with implementation of water treatment cleaned up

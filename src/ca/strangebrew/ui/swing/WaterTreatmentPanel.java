@@ -160,6 +160,7 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 			panelSalt.add(lSalts[i], constraints);
 			constraints.gridx = 1;
 			panelSalt.add(checkSaltsUse[i], constraints);
+			checkSaltsUse[i].addActionListener(this);
 			constraints.gridx = 2;
 			constraints.ipadx = 60;
 			panelSalt.add(textSaltsAmount[i], constraints);
@@ -200,16 +201,16 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 		
 		// Chemistry diff
 		WaterProfile diff = new WaterProfile();
-		diff.setCa(BrewCalcs.waterChemistryDiff(source.getCa(), target.getCa()));
-		diff.setCl(BrewCalcs.waterChemistryDiff(source.getCl(), target.getCl()));
-		diff.setMg(BrewCalcs.waterChemistryDiff(source.getMg(), target.getMg()));
-		diff.setNa(BrewCalcs.waterChemistryDiff(source.getNa(), target.getNa()));
-		diff.setSo4(BrewCalcs.waterChemistryDiff(source.getSo4(), target.getSo4()));
-		diff.setHco3(BrewCalcs.waterChemistryDiff(source.getHco3(), target.getHco3()));
-		diff.setHardness(BrewCalcs.waterChemistryDiff(source.getHardness(), target.getHardness()));
-		diff.setAlkalinity(BrewCalcs.waterChemistryDiff(source.getAlkalinity(), target.getAlkalinity()));
-		diff.setTds(BrewCalcs.waterChemistryDiff(source.getTds(), target.getTds()));
-		diff.setPh(BrewCalcs.waterChemistryDiff(source.getPh(), target.getPh()));
+		diff.setCa(target.getCa() - source.getCa());
+		diff.setCl(target.getCl() - source.getCl());
+		diff.setMg(target.getMg() - source.getMg());
+		diff.setNa(target.getNa() - source.getNa());
+		diff.setSo4(target.getSo4() - source.getSo4());
+		diff.setHco3(target.getHco3() - source.getHco3());
+		diff.setHardness(target.getHardness() - source.getHardness());
+		diff.setAlkalinity(target.getAlkalinity() - source.getAlkalinity());
+		diff.setTds(target.getTds() - source.getTds());
+		diff.setPh(source.getPh() - source.getPh());
 		
 		textCaD.setText(SBStringUtils.format(diff.getCa(), 1));
 		textClD.setText(SBStringUtils.format(diff.getCl(), 1));
@@ -481,6 +482,19 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 					myRecipe.setTargetWater(w);					
 				}
 			}
+		} else {
+			for (int i = 0; i < checkSaltsUse.length; i++) {
+				if (o == checkSaltsUse[i]) {
+					if (checkSaltsUse[i].isSelected()) {
+						// Add this salt to recipe
+						Salt s = Salt.getSaltByName(Database.getInstance().saltDB, saltName[i]);
+						myRecipe.addSalt(s);
+					} else {
+						// Remove this salt from recipe
+						myRecipe.delSalt(myRecipe.getSaltByName(saltName[i]));
+					}
+				}
+			}			
 		}
 		
 		displayWaterTreatment();
