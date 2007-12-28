@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.13 2007/12/28 16:41:22 jimcdiver Exp $
+ * $Id: Quantity.java,v 1.14 2007/12/28 19:49:33 jimcdiver Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -40,33 +40,42 @@ public class Quantity {
 	}
 
 	// TODO public static string all of this stuff!
-	final static public String QT = "qt";
+	final static public String FL_OUNCES = "fl. ounces";
+	final static public String OZ = "oz";
 	final static public String GALLONS_US = "gallons US";
 	final static public String GAL = "gal";
-	final static public String FL_OUNCES = "fl. ounces";
+	final static public String LITRES = "litres";
+	final static public String L = "l";
+	final static public String MILLILITERS = "milliliters";
+	final static public String ML = "ml";
+	final static public String QUART_US = "quart US";
+	final static public String QT = "qt";	
 	final static public String OUNCES = "ounces";
-	final static public String OZ = "oz";
+//	final static public String OZ = "oz";
 	final static public String POUNDS = "pounds";
 	final static public String LB = "lb";
+	final static public String MILLIGRAMS = "milligrams";
+	final static public String MG = "mg";
 	final static public String GRAMS = "grams";
 	final static public String G = "g";
 	
-	final static public Quantity.Converter volUnits[] =
+	final static public Converter volUnits[] =
 	{
-		new Quantity.Converter("barrel IMP", "bbl Imp", 0.023129837),
+		new Converter("barrel IMP", "bbl Imp", 0.023129837),
 		new Converter("barrel US", "bbl", 0.032258065),
 		new Converter(FL_OUNCES, OZ, 128),
 		new Converter("gallons IMP", "gal Imp", 0.8327),
 		new Converter(GALLONS_US, GAL, 1),
-		new Converter("litres", "l", 3.7854),
-		new Converter("millilitres", "ml", 3785.4118),
+		new Converter(LITRES, L, 3.7854),
+		new Converter(MILLILITERS, ML, 3785.4118),
 		new Converter("pint US", "pt", 8),
-		new Converter("quart US", QT, 4)
+		new Converter(QUART_US, QT, 4)
 	};
 	
 
 	final static public Converter weightUnits[] =
 	{
+		new Converter(MILLIGRAMS, MG, 4535.9237),
 		new Converter(GRAMS, G, 453.59237),
 		new Converter("kilograms", "kg", 0.45359237),
 		new Converter(OUNCES, OZ, 16),

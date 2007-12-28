@@ -144,7 +144,7 @@ public class BrewCalcs {
 		return GramsPerLitre;
 	}
 	
-	public static WaterProfile calculateSalts(ArrayList salts, WaterProfile waterNeeds) {
+	public static WaterProfile calculateSalts(ArrayList salts, WaterProfile waterNeeds, double sizeInGal) {
 		// Start with Epsom and set for Mg
 		WaterProfile result = new WaterProfile();
 
@@ -152,7 +152,7 @@ public class BrewCalcs {
 			Salt epsom = Salt.getSaltByName(salts, Salt.MAGNESIUM_SULPHATE);
 			if (epsom != null) {
 				epsom.setAmount(waterNeeds.getMg() / epsom.getEffectByChem(Salt.MAGNESIUM));
-				updateWater(result, epsom);
+				updateWater(result, epsom, sizeInGal);
 			}
 		}
 		
@@ -161,7 +161,7 @@ public class BrewCalcs {
 			Salt gypsum = Salt.getSaltByName(salts, Salt.CALCIUM_CARBONATE);
 			if (gypsum != null) {
 				gypsum.setAmount((waterNeeds.getSo4() - result.getSo4()) / gypsum.getEffectByChem(Salt.SULPHATE));
-				updateWater(result, gypsum);
+				updateWater(result, gypsum, sizeInGal);
 			}
 		}
 		
@@ -174,7 +174,7 @@ public class BrewCalcs {
 			Salt salt = Salt.getSaltByName(salts, Salt.SODIUM_CHLORIDE);
 			if (salt != null) {
 				salt.setAmount((waterNeeds.getNa() - result.getNa()) / salt.getEffectByChem(Salt.SODIUM));
-				updateWater(result, salt);
+				updateWater(result, salt, sizeInGal);
 			}
 		}
 
@@ -183,7 +183,7 @@ public class BrewCalcs {
 			Salt soda = Salt.getSaltByName(salts, Salt.SODIUM_BICARBONATE);
 			if (soda != null) {
 				soda.setAmount((waterNeeds.getHco3() - result.getHco3()) / soda.getEffectByChem(Salt.CARBONATE));
-				updateWater(result, soda);
+				updateWater(result, soda, sizeInGal);
 			}
 		}
 
@@ -192,7 +192,7 @@ public class BrewCalcs {
 			Salt chalk = Salt.getSaltByName(salts, Salt.CALCIUM_SULPHATE);
 			if (chalk != null) {
 				chalk.setAmount((waterNeeds.getCa() - result.getCa()) / chalk.getEffectByChem(Salt.CALCIUM));
-				updateWater(result, chalk);
+				updateWater(result, chalk, sizeInGal);
 			}
 		}
 		
@@ -201,34 +201,34 @@ public class BrewCalcs {
 			Salt calChloride = Salt.getSaltByName(salts, Salt.CALCIUM_CHLORIDE);
 			if (calChloride != null) {
 				calChloride.setAmount((waterNeeds.getCa() - result.getCa()) / calChloride.getEffectByChem(Salt.CALCIUM));
-				updateWater(result, calChloride);
+				updateWater(result, calChloride, sizeInGal);
 			}
 		}		
 		
 		return result;
 	}
 	
-	public static void updateWater(WaterProfile w, Salt s) {
+	public static void updateWater(WaterProfile w, Salt s, double sizeInGal) {
 		ArrayList effs = s.getChemicalEffects();
 		for (int i = 0; i < effs.size(); i++) {
 			Salt.ChemicalEffect eff = (Salt.ChemicalEffect)effs.get(i);
 			
 			if (eff.getElem().equals(Salt.MAGNESIUM)) {
-				w.setMg(w.getMg() + (eff.getEffect() *  s.getAmount()));
+				w.setMg((w.getMg() + (eff.getEffect() *  s.getAmount())) * sizeInGal);
 			} else if (eff.getElem().equals(Salt.CHLORINE)) {
-				w.setCl(w.getCl() + (eff.getEffect() *  s.getAmount()));
+				w.setCl((w.getCl() + (eff.getEffect() *  s.getAmount())) * sizeInGal);
 			} else if (eff.getElem().equals(Salt.SODIUM)) {
-				w.setNa(w.getNa() + (eff.getEffect() *  s.getAmount()));
+				w.setNa((w.getNa() + (eff.getEffect() *  s.getAmount())) * sizeInGal);
 			} else if (eff.getElem().equals(Salt.SULPHATE)) {
-				w.setSo4(w.getSo4() + (eff.getEffect() *  s.getAmount()));
+				w.setSo4((w.getSo4() + (eff.getEffect() *  s.getAmount())) * sizeInGal);
 			} else if (eff.getElem().equals(Salt.CARBONATE)) {
-				w.setHco3(w.getHco3() + (eff.getEffect() *  s.getAmount()));
+				w.setHco3((w.getHco3() + (eff.getEffect() *  s.getAmount())) * sizeInGal);
 			} else if (eff.getElem().equals(Salt.CALCIUM)) {
-				w.setCa(w.getCa() + (eff.getEffect() *  s.getAmount()));
+				w.setCa((w.getCa() + (eff.getEffect() *  s.getAmount())) * sizeInGal);
 			} else if (eff.getElem().equals(Salt.HARDNESS)) {
-				w.setHardness(w.getHardness() + (eff.getEffect() *  s.getAmount()));
+				w.setHardness((w.getHardness() + (eff.getEffect() *  s.getAmount())) * sizeInGal);
 			} else if (eff.getElem().equals(Salt.ALKALINITY)) {
-				w.setAlkalinity(w.getAlkalinity() + (eff.getEffect() * s.getAmount()));
+				w.setAlkalinity((w.getAlkalinity() + (eff.getEffect() * s.getAmount())) * sizeInGal);
 			}
 		}
 	}	
@@ -403,4 +403,72 @@ public class BrewCalcs {
 
 		return ibu;
 	}	
+	
+	// Acid calcs
+	// From http://hbd.org/brewery/library/AcidifWaterAJD0497.html by A.J. deLange
+	//
+	// Determines acid millequivelants per liter needed to alter ph to target
+	static public double acidMillequivelantsPerLiter(double pHo, double alko, double pHTarget) {
+		// Compute the mole fractions of carbonic (f1o), bicarbonate (f2o) and carbonate(f3o)
+		// at the water sample's pH
+		double r1o = Math.pow(10, pHo - 6.38);
+		double r2o = Math.pow(10, pHo - 10.33);
+		double d_o = 1 + r1o + (r1o * r2o);
+		double f1o = 1 / d_o;
+		//double f2o = r1o / d_o;
+		double f3o = r1o * r2o / d_o;
+
+		// Compute the mole fractions at pHb = 4.3 (the pH which defines alkalinity).
+		double pHb = 4.3;
+		double r1b = Math.pow(10, pHb - 6.38);
+		double r2b = Math.pow(10, pHb - 10.33);
+		double db = 1 + r1b + (r1b * r2b);
+		double f1b = 1 / db;
+		//double f2b = r1b / db;
+		double f3b = r1b * r2b / db;
+
+		// Convert the sample alkalinity (in ppm CoCO3 to milliequivalents/L
+		double alk = alko / 50;
+		double Ct = alk / ((f1b - f1o) + (f3o - f3b));
+
+		// Compute mole fractions at desired pH (example: pH 5)
+		double r1c = Math.pow(10, pHTarget - 6.38);
+		double r2c = Math.pow(10, pHTarget - 10.33);
+		double dc = 1 + r1c + r1c*r2c;
+		double f1c = 1 / dc;
+		//double f2c = r1c / dc;
+		double f3c = r1c * r2c / dc;
+
+		// Use these to compute the milliequivalents acid required per liter (mEq/L)
+		double acidMillies = Ct * (  ( f1c - f1o) + (f3o - f3c) ) + 
+					Math.pow(10, -pHTarget) - Math.pow(10, -pHo);
+
+		return acidMillies;
+	}
+	
+	// Determines moles of given acid required to shift to target ph given amount of acid millieuivelants 
+	static public double molesByAcid(Acid acid, double millequivs, double pH) {
+		double r1d = Math.pow(10, pH - acid.getPK1());
+		double r2d = Math.pow(10, pH - acid.getPK2());
+		double r3d = Math.pow(10, pH - acid.getPK3());
+		double dd = 1/(1 + r1d + (r1d * r2d) + (r1d * r2d * r3d));
+		//double f1d = dd;
+		double f2d = r1d * dd;
+		double f3d = r1d * r2d * dd;
+		double f4d = r1d * r2d * r3d * dd;
+		double frac = f2d + (2 * f3d) + (3 * f4d);
+		double moles = millequivs / frac;
+
+		return moles;
+	}
+	
+	// Determines weight or volume of acid in ml or mg from moles
+	static public double acidAmountPerL(Acid acid, double moles) {
+		double amnt = moles * acid.getMolWt();
+		if (acid.isLiquid()) {
+			amnt = amnt / acid.getMgPerL();
+		}
+
+		return amnt;
+	}
 }

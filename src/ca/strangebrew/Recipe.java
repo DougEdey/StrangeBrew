@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.52 2007/12/28 16:41:22 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.53 2007/12/28 19:49:33 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -62,6 +62,7 @@ public class Recipe {
 	private WaterProfile sourceWater = new WaterProfile();
 	private WaterProfile targetWater = new WaterProfile();
 	private ArrayList brewingSalts = new ArrayList();
+	private Acid acid = Acid.getAcidByName(Acid.CITRIC);
 	public Mash mash;
 	
 	// Fermentation
@@ -1756,5 +1757,13 @@ public class Recipe {
 		}
 		
 		return null;
+	}
+
+	public Acid getAcid() {
+		return acid;
+	}
+
+	public void setAcid(Acid acid) {
+		this.acid = acid;
 	}
 }

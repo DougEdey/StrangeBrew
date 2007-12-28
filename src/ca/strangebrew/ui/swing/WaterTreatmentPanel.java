@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -18,14 +20,16 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import ca.strangebrew.Acid;
 import ca.strangebrew.BrewCalcs;
 import ca.strangebrew.Database;
+import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.Salt;
 import ca.strangebrew.WaterProfile;
 
-public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionListener, FocusListener {
+public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionListener, FocusListener, KeyListener {
 	
 	// Mutables
 	private Recipe myRecipe = null;
@@ -110,6 +114,20 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 	private JTextField[] textSaltsAmount = null;
 	private JCheckBox[] checkSaltsUse = null;
 	private String[] saltName = null; 
+	
+	// Acidification
+	final private JPanel panelAcid = new JPanel();
+	final private JLabel lSourcePH = new JLabel("Source pH: ");
+	final private JLabel lSourceAlk = new JLabel("Source Alk: ");
+	final private JLabel lTargetPH = new JLabel("Target pH: ");
+	final private JLabel lAcid = new JLabel("Acid: ");
+	final private JLabel lAdd = new JLabel("Add: ");
+	final private JLabel lAcidUnit = new JLabel();
+	final private JTextField textSourcePH = new JTextField();
+	final private JTextField textSourceAlk = new JTextField();
+	final private JTextField textTargetPH = new JTextField();
+	final private JTextField textAcidAmount = new JTextField();
+	final private JComboBox comboAcid = new JComboBox(Acid.acidNames);
 	
 	public WaterTreatmentPanel() {
 		super();
@@ -225,7 +243,8 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 		
 		// Calculate brewing salts!
 		WaterProfile resultWater;
-		resultWater = BrewCalcs.calculateSalts(myRecipe.getSalts(), diff);
+		resultWater = BrewCalcs.calculateSalts(myRecipe.getSalts(), diff, 1);
+				//Quantity.convertUnit(myRecipe.getVolUnits(), Quantity.GAL, myRecipe.getFinalWortVol()));
 		
 		textCaR.setText(SBStringUtils.format(resultWater.getCa(), 1));
 		textClR.setText(SBStringUtils.format(resultWater.getCl(), 1));
@@ -246,6 +265,17 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 				textSaltsAmount[i].setText("0.0");
 			}
 		}
+		
+		// TODO save/load/options!!!
+		textSourcePH.setText(SBStringUtils.format(8.5, 1));
+		textSourceAlk.setText(SBStringUtils.format(300, 1));
+		textTargetPH.setText(SBStringUtils.format(5.4,1));
+		comboAcid.setSelectedItem(myRecipe.getAcid().getName());
+		lAcidUnit.setText(myRecipe.getAcid().getAcidUnit());
+		double millEs = BrewCalcs.acidMillequivelantsPerLiter(8.5, 300, 5.4);
+		double moles = BrewCalcs.molesByAcid(myRecipe.getAcid(), millEs, 5.4);
+		double acidPerL = BrewCalcs.acidAmountPerL(myRecipe.getAcid(), moles);
+		textAcidAmount.setText(SBStringUtils.format(Quantity.convertUnit(Quantity.L, Quantity.GAL, acidPerL), 2));	
 	}
 	
 	private void initGUI() {
@@ -264,6 +294,13 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 							new java.awt.Color(0, 0, 0), 1, false), "Brewing Salts (per gallon)",
 								TitledBorder.LEADING, TitledBorder.TOP, new java.awt.Font("Dialog",
 										1, 12), new java.awt.Color(51, 51, 51)));
+			this.add(panelAcid);
+			panelAcid.setLayout(saltGridBag);
+			panelAcid.setBorder(BorderFactory.createTitledBorder(new LineBorder(
+							new java.awt.Color(0, 0, 0), 1, false), "Acidification (per gallon)",
+								TitledBorder.LEADING, TitledBorder.TOP, new java.awt.Font("Dialog",
+										1, 12), new java.awt.Color(51, 51, 51)));
+			
 			
 			// Water Panel
 			{
@@ -452,6 +489,57 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 			{
 				// see setList()
 			}
+			
+			// Acidification
+			{
+				constraints.gridx = 0;
+				constraints.gridy = 0;
+				panelAcid.add(lSourcePH, constraints);
+				constraints.gridx = 1;
+				constraints.gridwidth = 2;
+				panelAcid.add(textSourcePH, constraints);
+				textSourcePH.addActionListener(this);
+				textSourcePH.addKeyListener(this);
+				constraints.gridwidth = 1;
+
+				constraints.gridx = 0;
+				constraints.gridy = 1;
+				panelAcid.add(lSourceAlk, constraints);
+				constraints.gridx = 1;
+				constraints.gridwidth = 2;
+				panelAcid.add(textSourceAlk, constraints);
+				textSourceAlk.addActionListener(this);
+				textSourceAlk.addKeyListener(this);
+				constraints.gridwidth = 1;
+
+				constraints.gridx = 0;
+				constraints.gridy = 2;
+				panelAcid.add(lTargetPH, constraints);
+				constraints.gridx = 1;
+				constraints.gridwidth = 2;
+				panelAcid.add(textTargetPH, constraints);
+				textTargetPH.addActionListener(this);
+				textTargetPH.addKeyListener(this);
+				constraints.gridwidth = 1;
+				
+				constraints.gridx = 0;
+				constraints.gridy = 3;
+				panelAcid.add(lAcid, constraints);
+				constraints.gridx = 1;
+				constraints.gridwidth = 2;
+				panelAcid.add(comboAcid, constraints);
+				comboAcid.addActionListener(this);
+				constraints.gridwidth = 1;
+				
+				constraints.gridx = 0;
+				constraints.gridy = 4;
+				panelAcid.add(lAdd, constraints);
+				constraints.gridx = 1;
+				panelAcid.add(textAcidAmount, constraints);
+				textAcidAmount.setEditable(false);
+				constraints.gridx = 2;
+				panelAcid.add(lAcidUnit, constraints);					
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -484,6 +572,12 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 					myRecipe.setTargetWater(w);					
 				}
 			}
+		} else if (o == textSourcePH) {
+		} else if (o == textSourceAlk) {
+		} else if (o == textTargetPH) {
+		} else if (o == comboAcid) {
+			Acid a = Acid.getAcidByName((String)comboAcid.getSelectedItem());
+			myRecipe.setAcid(a);
 		} else {
 			for (int i = 0; i < checkSaltsUse.length; i++) {
 				if (o == checkSaltsUse[i]) {
@@ -512,6 +606,24 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 	
 	public void focusGained(FocusEvent e) {
 		// do nothing, we don't need this event
+	}
+
+	public void keyPressed(KeyEvent e) {
+		Object o = e.getSource();
+		ActionEvent evt = new ActionEvent(o, 1, "");
+		actionPerformed(evt);	
+	}
+
+	public void keyTyped(KeyEvent e) {
+		Object o = e.getSource();
+		ActionEvent evt = new ActionEvent(o, 1, "");
+		actionPerformed(evt);		
+	}
+
+	public void keyReleased(KeyEvent e) {
+		Object o = e.getSource();
+		ActionEvent evt = new ActionEvent(o, 1, "");
+		actionPerformed(evt);	
 	}
 }
 
