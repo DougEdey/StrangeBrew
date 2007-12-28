@@ -1,5 +1,5 @@
 /*
- * $Id: SettingsPanel.java,v 1.7 2006/06/22 20:02:36 andrew_avis Exp $
+ * $Id: SettingsPanel.java,v 1.8 2007/12/28 16:41:23 jimcdiver Exp $
  */
 
 package ca.strangebrew.ui.swing;
@@ -14,14 +14,15 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import javax.swing.BorderFactory;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import ca.strangebrew.Recipe;
+import ca.strangebrew.Mash;
 import ca.strangebrew.SBStringUtils;
 
 public class SettingsPanel extends javax.swing.JPanel implements ActionListener, FocusListener {
@@ -69,8 +70,8 @@ public class SettingsPanel extends javax.swing.JPanel implements ActionListener,
 		pelletHopPctTxt.setText(new Double(myRecipe.getPelletHopPct()).toString());
 		thickDecoctTxt.setText(new Double(myRecipe.mash.getThickDecoctRatio()).toString());
 		thinDecoctTxt.setText(new Double(myRecipe.mash.getThinDecoctRatio()).toString());
-		mashoutTmpTxt.setText(SBStringUtils.format(myRecipe.mash.getTempRange("mashout"),2));
-		spargeTmpTxt.setText(SBStringUtils.format(myRecipe.mash.getTempRange("sparge"),2));
+		mashoutTmpTxt.setText(SBStringUtils.format(myRecipe.mash.getTempRange(Mash.MASHOUT),2));
+		spargeTmpTxt.setText(SBStringUtils.format(myRecipe.mash.getTempRange(Mash.SPARGE),2));
 		mtmpuLbl.setText(myRecipe.mash.getMashTempUnits());
 		sprgtmpuLbl.setText(myRecipe.mash.getMashTempUnits());
 	}

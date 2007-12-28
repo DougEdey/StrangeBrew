@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.12 2007/12/20 19:31:29 jimcdiver Exp $
+ * $Id: Quantity.java,v 1.13 2007/12/28 16:41:22 jimcdiver Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -39,30 +39,43 @@ public class Quantity {
 		}
 	}
 
-	final static private Quantity.Converter volUnits[] =
+	// TODO public static string all of this stuff!
+	final static public String QT = "qt";
+	final static public String GALLONS_US = "gallons US";
+	final static public String GAL = "gal";
+	final static public String FL_OUNCES = "fl. ounces";
+	final static public String OUNCES = "ounces";
+	final static public String OZ = "oz";
+	final static public String POUNDS = "pounds";
+	final static public String LB = "lb";
+	final static public String GRAMS = "grams";
+	final static public String G = "g";
+	
+	final static public Quantity.Converter volUnits[] =
 	{
 		new Quantity.Converter("barrel IMP", "bbl Imp", 0.023129837),
 		new Converter("barrel US", "bbl", 0.032258065),
-		new Converter("fl. ounces", "oz", 128),
+		new Converter(FL_OUNCES, OZ, 128),
 		new Converter("gallons IMP", "gal Imp", 0.8327),
-		new Converter("gallons US", "gal", 1),
+		new Converter(GALLONS_US, GAL, 1),
 		new Converter("litres", "l", 3.7854),
 		new Converter("millilitres", "ml", 3785.4118),
 		new Converter("pint US", "pt", 8),
-		new Converter("quart US", "qt", 4)
+		new Converter("quart US", QT, 4)
 	};
+	
 
-	final static private Converter weightUnits[] =
+	final static public Converter weightUnits[] =
 	{
-		new Converter("grams", "g", 453.59237),
+		new Converter(GRAMS, G, 453.59237),
 		new Converter("kilograms", "kg", 0.45359237),
-		new Converter("ounces", "oz", 16),
-		new Converter("pounds", "lb", 1),
+		new Converter(OUNCES, OZ, 16),
+		new Converter(POUNDS, LB, 1),
 		new Converter("ton S", "T", 0.0005),
 		new Converter("tonne SI", "T SI", 0.000453592)
 	};
 
-	final static private Converter pressureUnits[] = 
+	final static public Converter pressureUnits[] = 
 	{
 		new Converter("pounds per square inch", "psi", 1),
 		new Converter("kilopascals", "KPa", 6.8947624),
@@ -299,17 +312,5 @@ public class Quantity {
 	public static double convertUnit(String from, String to, double value){
 		Quantity q = new Quantity(from,value);
 		return q.getValueAs(to);
-	}
-	
-	public static Converter[] getWeights() {
-		return weightUnits;
-	}
-	
-	public static Converter[] getVols() {
-		return volUnits;
-	}
-	
-	public static Converter[] getPressures() {
-		return pressureUnits;
 	}
 }

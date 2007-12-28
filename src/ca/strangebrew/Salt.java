@@ -19,6 +19,13 @@ public class Salt {
 	public static final String HARDNESS = "Hardness";
 	public static final String ALKALINITY = "Alkalinity";
 	
+	public static final String MAGNESIUM_SULPHATE = "Magnesium Sulfate";
+	public static final String CALCIUM_CARBONATE = "Calcium Carbonate";
+	public static final String SODIUM_CHLORIDE = "Sodium Chloride";
+	public static final String SODIUM_BICARBONATE = "Sodium Bicarbonate";
+	public static final String CALCIUM_SULPHATE = "Calcium Sulphate";
+	public static final String CALCIUM_CHLORIDE = "Calcium Chloride";
+	
 	public Salt() { 
 	}
 

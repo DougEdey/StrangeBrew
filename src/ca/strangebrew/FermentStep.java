@@ -5,7 +5,11 @@ public class FermentStep {
 	private String tempU;
 	private int time;
 	private double temp;
-	static final private String[] types = {"Primary", "Secondary", "Clearing", "Ageing"};  
+	static final public String PRIMARY = "Primary";
+	static final public String SECONDARY = "Secondary";
+	static final public String CLEARING = "Clearing";
+	static final public String AGEING = "Ageing";
+	static final public String[] types = {PRIMARY, SECONDARY, CLEARING, AGEING};
 	static final Options opts = Options.getInstance();
 	
 	public FermentStep() {		
@@ -24,10 +28,6 @@ public class FermentStep {
 		}
 
 		return 0; 
-	}
-	
-	static public String[] getTypes() {
-		return types;
 	}
 	
 	public String toXML() {

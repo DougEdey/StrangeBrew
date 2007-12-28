@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.25 2007/12/27 19:01:44 jimcdiver Exp $
+ * $Id: Options.java,v 1.26 2007/12/28 16:41:22 jimcdiver Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -31,10 +31,11 @@ public class Options {
 	
 	private String optionString[][] = { 
 			// calculations:
-			{"optIBUCalcMethod", "Tinseth"},
+			{"optIBUCalcMethod", BrewCalcs.TINSETH},
+			// TODO
 			{"optAlcCalcMethod", "Volume"},
 			{"optEvapCalcMethod", "Constant"},
-			{"optColourMethod", "SRM"},
+			{"optColourMethod", BrewCalcs.SRM},
 			{"optEfficiency", "75"},
 			{"optAttenuation", "75"},
 			{"optEvaporation", "1.5"},
@@ -44,22 +45,22 @@ public class Options {
 			{"optMashHopTime", "2"},
 			{"optHopsUtil", "4.15"},
 			{"optColourEfficiency", "false"},
-			{"optHopForm", "Leaf"},
+			{"optHopForm", Hop.LEAF},
 			
 			// recipe basics:
-			{"optSizeU", "gallons US"},
-			{"optMaltU", "pounds"},
-			{"optHopsU", "ounces"},
+			{"optSizeU", Quantity.GALLONS_US},
+			{"optMaltU", Quantity.POUNDS},
+			{"optHopsU", Quantity.OUNCES},
 			{"optPostBoilVol", "5"},
 			{"optPreBoilVol", "6"},
 			{"optMash", "true"},
-			{"optHopsType", "Leaf"},
+			{"optHopsType", Hop.LEAF},
 			{"optWaterProfile", "Distilled/RO"},
 
 			// carbonation:
 			{"optPrimingSugar", "Corn Sugar"},
-			{"optSugarU", "grams"},
-			{"optBottleU", "fl. ounces"},
+			{"optSugarU", Quantity.GRAMS},
+			{"optBottleU", Quantity.FL_OUNCES},
 			{"optCarbTempU", "F"},
 			{"optBottleSize", "12"},
 			{"optBottleTemp", "68"},
@@ -74,7 +75,7 @@ public class Options {
 			{"optTargetWater", ""},
 			
 			// Fermentation
-			{"optFermentType", "Primary"},
+			{"optFermentType", FermentStep.PRIMARY},
 			{"optFermentTime", "7"},
 			{"optFermentTemp", "68.0"},
 			{"optFermentTempU", "F"},
@@ -120,9 +121,9 @@ public class Options {
 			{"optMiscCost", "5.0"},
 			
 			// mash:
-			{"optMashVolU", "gallons US"},
+			{"optMashVolU", Quantity.GALLONS_US},
 			{"optMashTempU", "F"},
-			{"optMashRatioU", "qt/lb"},
+			{"optMashRatioU", Mash.QT_PER_LB},
 			{"optMashRatio", "1.25"},
 			{"optGrainTemp", "68"},
 			{"optTunLossF", "3"},

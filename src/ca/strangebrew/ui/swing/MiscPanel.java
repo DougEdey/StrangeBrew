@@ -56,7 +56,7 @@ public class MiscPanel extends javax.swing.JPanel {
 	final private JButton addButton = new JButton();
 	final private JPanel tablePanel = new JPanel();
 	final private JTextArea miscCommentsTextArea = new JTextArea();
-	final private JComboBox stageComboBox = new JComboBox(Misc.getStages());	
+	final private JComboBox stageComboBox = new JComboBox(Misc.stages);	
 	final private JComboBox miscComboBox = new JComboBox();
 	final private SBCellEditor miscAmountEditor = new SBCellEditor(new JTextField());
 	final private SBCellEditor miscTimeEditor = new SBCellEditor(new JTextField());	

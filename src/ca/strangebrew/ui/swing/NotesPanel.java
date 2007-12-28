@@ -69,7 +69,7 @@ public class NotesPanel extends javax.swing.JPanel implements ActionListener {
 	final private JButton addNoteButton = new JButton();
 	final private JPanel buttonsPanel = new JPanel();
 	final private NotesTableModel notesTableModel = new NotesTableModel();
-	final private JComboBox typeComboBox = new JComboBox(Note.getTypes());
+	final private JComboBox typeComboBox = new JComboBox(Note.types);
 	final private DateEditor dateEditor = new DateEditor();						
 	final private FlowLayout buttonsPanelLayout = new FlowLayout();
 

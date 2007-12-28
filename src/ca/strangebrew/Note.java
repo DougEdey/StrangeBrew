@@ -22,17 +22,21 @@ public class Note {
 	private Date date;
 	private String type;
 	private String note;
-	static final private String[] types = {"Planning", "Brewed", "Fermentation", "Racked",
-		"Conditioned", "Kegged", "Bottled", "Tasting", "Contest"};
+	static final public String PLANNING = "Planning";
+	static final public String BREWED = "Brewed";
+	static final public String FERMENTATION = "Fermentation";
+	static final public String RACKED = "Racked";
+	static final public String CONDITIONED = "Conditioned";
+	static final public String KEGGED = "Kegged";
+	static final public String BOTTLED = "Bottled";
+	static final public String TASTING = "Tasting";
+	static final public String CONTEST = "Contest";
+	static final public String[] types = {PLANNING, BREWED, FERMENTATION, RACKED, CONDITIONED, KEGGED, BOTTLED, TASTING, CONTEST};
 	
 	public Note() {
 		date = new Date();
-		type = types[0];
+		type = PLANNING;
 		note = "";
-	}
-	
-	static public String[] getTypes() {
-		return types;
 	}
 	
 	/**

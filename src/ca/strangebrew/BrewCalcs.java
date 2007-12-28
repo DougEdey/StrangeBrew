@@ -5,6 +5,7 @@
  */
 package ca.strangebrew;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class BrewCalcs {
@@ -157,7 +158,7 @@ public class BrewCalcs {
 		WaterProfile result = new WaterProfile();
 
 		if (waterNeeds.getMg() > 0) {
-			Salt epsom = Salt.getSaltByName(salts, "Magnesium Sulfate");
+			Salt epsom = Salt.getSaltByName(salts, Salt.MAGNESIUM_SULPHATE);
 			if (epsom != null) {
 				epsom.setAmount(waterNeeds.getMg() / epsom.getEffectByChem(Salt.MAGNESIUM));
 				updateWater(result, epsom);
@@ -166,7 +167,7 @@ public class BrewCalcs {
 		
 		if (waterNeeds.getSo4() > 0 &&
 			result.getSo4() < waterNeeds.getSo4()) {
-			Salt gypsum = Salt.getSaltByName(salts, "Calcium Carbonate");
+			Salt gypsum = Salt.getSaltByName(salts, Salt.CALCIUM_CARBONATE);
 			if (gypsum != null) {
 				gypsum.setAmount((waterNeeds.getSo4() - result.getSo4()) / gypsum.getEffectByChem(Salt.SULPHATE));
 				updateWater(result, gypsum);
@@ -179,7 +180,7 @@ public class BrewCalcs {
 		
 		if (waterNeeds.getNa() > 0 &&
 			result.getNa() < waterNeeds.getNa()) {
-			Salt salt = Salt.getSaltByName(salts, "Sodium Chloride");
+			Salt salt = Salt.getSaltByName(salts, Salt.SODIUM_CHLORIDE);
 			if (salt != null) {
 				salt.setAmount((waterNeeds.getNa() - result.getNa()) / salt.getEffectByChem(Salt.SODIUM));
 				updateWater(result, salt);
@@ -188,7 +189,7 @@ public class BrewCalcs {
 
 		if (waterNeeds.getHco3() > 0 &&
 			result.getHco3() < waterNeeds.getHco3()) {
-			Salt soda = Salt.getSaltByName(salts, "Sodium Bicarbonate");
+			Salt soda = Salt.getSaltByName(salts, Salt.SODIUM_BICARBONATE);
 			if (soda != null) {
 				soda.setAmount((waterNeeds.getHco3() - result.getHco3()) / soda.getEffectByChem(Salt.CARBONATE));
 				updateWater(result, soda);
@@ -197,7 +198,7 @@ public class BrewCalcs {
 
 		if (waterNeeds.getCa() > 0 &&
 			result.getCa() < waterNeeds.getCa()) {
-			Salt chalk = Salt.getSaltByName(salts, "Calcium Sulphate");
+			Salt chalk = Salt.getSaltByName(salts, Salt.CALCIUM_SULPHATE);
 			if (chalk != null) {
 				chalk.setAmount((waterNeeds.getCa() - result.getCa()) / chalk.getEffectByChem(Salt.CALCIUM));
 				updateWater(result, chalk);
@@ -232,5 +233,176 @@ public class BrewCalcs {
 				w.setAlkalinity(w.getAlkalinity() + (eff.getEffect() * s.getAmount()));
 			}
 		}
+	}	
+	
+	static final public String EBC = "EBC";
+	static final public String SRM = "SRM";
+	static final public String[] colourMethods = {EBC, SRM};
+	
+	static public double calcColour(double lov, String method) {
+		double colour = 0;
+
+		// TODO
+		if (method.equals(EBC)) {
+			// From Greg Noonan's article at
+			// http://brewingtechniques.com/bmg/noonan.html
+			colour = 1.4922 * Math.pow(lov, 0.6859); // SRM
+			// EBC is apr. SRM * 2.65 - 1.2
+			colour = (colour * 2.65) - 1.2;
+		} else {
+			// calculates SRM based on MCU (degrees LOV)
+			if (lov > 0)
+				colour = 1.4922 * Math.pow(lov, 0.6859);
+			else
+				colour = 0;
+		}
+
+		return colour;
+
+	}
+	
+	// RGB estimation:
+	static public Color calcRGB(int method, double srm, int rConst, int gConst, int bConst,
+			int aConst) {
+		// estimates the RGB equivalent colour for beer based on SRM
+		// NOTE: optRed, optGreen and optBlue need to be adjusted for different
+		// monitors.
+		// This is from the Windows version of SB
+		// typical values are: r=8, g=30, b=20
+
+		if (method == 1) {
+
+			int R = 0, G = 0, B = 0, A = aConst;
+
+			if (srm < 10) {
+				R = 255;
+			} else {
+				R = new Double(255 - ((srm - rConst) * 10)).intValue();
+			}
+
+			if (gConst != 0)
+				G = new Double(250 - ((srm / gConst) * 250)).intValue();
+			else
+				G = new Double((250 - ((srm / 30) * 250))).intValue();
+			B = new Double(200 - (srm * bConst)).intValue();
+
+			if (R < 0)
+				R = 1;
+			if (G < 0)
+				G = 1;
+			if (B < 0)
+				B = 1;
+
+			return new Color(R, G, B, A);
+
+		} else {
+			// this is the "new" way, based on rbg screen samples from Gibby
+			double R, G, B;
+
+			if (srm < 11) {
+				R = 259.13 + -7.42 * srm;
+				G = 278.87 + -15.12 * srm;
+				B = 82.73 + -4.48 * srm;
+			} else if (srm >= 11 && srm < 21) {
+				R = 335.27 + -11.73 * srm;
+				G = 203.42 + -7.58 * srm;
+				B = 92.50 + -2.90 * srm;
+			} else {
+				R = 220.20 + -7.20 * srm;
+				G = 109.42 + -3.42 * srm;
+				B = 50.75 + -1.33 * srm;
+			}
+
+			int r = new Double(R).intValue();
+			int b = new Double(B).intValue();
+			int g = new Double(G).intValue();
+			if (r < 0)
+				r = 0;
+			if (r > 255)
+				r = 255;
+			if (g < 0)
+				g = 0;
+			if (g > 255)
+				g = 255;
+			if (b < 0)
+				b = 0;
+			if (b > 255)
+				b = 255;
+
+			return new Color(r, g, b, aConst);
+		}
+	}
+	
+	static final public String TINSETH = "Tinseth";
+	static final public String RAGER = "Rager";
+	static final public String GARTEZ = "Garetz";
+	static final public String[] ibuMethods = {TINSETH, RAGER, GARTEZ};
+	
+	/*
+	 * Hop IBU calculation methods:
+	 */
+	static public double calcTinseth(double amount, double size, double sg, double time, double aa,
+			double HopsUtil) {
+		double daautil; // decimal alpha acid utilization
+		double bigness; // bigness factor
+		double boil_fact; // boil time factor
+		double mgl_aaa; // mg/l of added alpha units
+		double ibu;
+
+		bigness = 1.65 * (Math.pow(0.000125, (sg - 1))); // 0.000125 original
+		boil_fact = (1 - (Math.exp(-0.04 * time))) / HopsUtil;
+		daautil = bigness * boil_fact;
+		mgl_aaa = (aa / 100) * amount * 7490 / size;
+		ibu = daautil * mgl_aaa;
+		return ibu;
+	}
+
+	// rager method of ibu calculation
+	// constant 7962 is corrected to 7490 as per hop faq
+	static public double CalcRager(double amount, double size, double sg, double time, double AA) {
+		double ibu, utilization, ga;
+		// should be tanh:
+		double x = (time - 31.32) / 18.27;
+		// tanh:
+		double tanhx = (Math.exp(x) - Math.exp(-x)) / (Math.exp(x) + Math.exp(-x));
+		utilization = 18.11 + (13.86 * tanhx / 18.27);
+		ga = sg < 1.050 ? 0.0 : ((sg - 1.050) / 0.2);
+		ibu = amount * (utilization / 100) * (AA / 100.0) * 7490;
+		ibu /= size * (1 + ga);
+		return ibu;
+	}
+
+	// utilization table for average floc yeast
+	static private int util[] = {0, 0, 0, 0, 0, 0, 1, 1, 1, 3, 4, 5, 5, 6, 7, 9, 11, 13, 11, 13, 16, 13, 16, 19,
+			15, 19, 23, 16, 20, 24, 17, 21, 25};
+
+	static public double CalcGaretz(double amount, double size, double sg, double time, double start_vol,
+			int yeast_flocc, double AA) {
+		// iterative value seed - adjust to loop through value
+		double desired_ibu = CalcRager(amount, size, sg, time, AA);
+		int elevation = 500; // elevation in feet - change for user setting
+		double concentration_f = size / start_vol;
+		double boil_gravity = (concentration_f * (sg - 1)) + 1;
+		double gravity_f = ((boil_gravity - 1.050) / 0.2) + 1;
+		double temp_f = (elevation / 550 * 0.02) + 1;
+
+		// iterative loop, uses desired_ibu to define hopping_f, then seeds
+		// itself
+		double hopping_f, utilization, combined_f;
+		double ibu = desired_ibu;
+		int util_index;
+		for (int i = 0; i < 5; i++) { // iterate loop 5 times
+			hopping_f = ((concentration_f * desired_ibu) / 260) + 1;
+			if (time > 50)
+				util_index = 10;
+			else
+				util_index = (int) (time / 5.0);
+			utilization = util[(util_index * 3) + yeast_flocc];
+			combined_f = gravity_f * temp_f * hopping_f;
+			ibu = (utilization * AA * amount * 0.749) / (size * combined_f);
+			desired_ibu = ibu;
+		}
+
+		return ibu;
 	}	
 }

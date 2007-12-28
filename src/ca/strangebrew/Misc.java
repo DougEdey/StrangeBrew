@@ -10,18 +10,20 @@ public class Misc extends Ingredient {
 	private String comments;
 	private String stage;
 	private int time;
-	static final private String[] stages = {"Mash", "Boil", "Primary", "Secondary", "Bottle", "Keg"};
+	static final public String MASH = "Mash";
+	static final public String BOIL = "Boil";
+	static final public String PRIMARY = "Primary";
+	static final public String SECONDARY = "Secondary";
+	static final public String BOTTLE = "Bottle";
+	static final public String KEG = "Keg";
+	static final public String[] stages = {MASH, BOIL, PRIMARY, SECONDARY, BOTTLE, KEG};
 	
 	// default constructor
 	public  Misc() {
-		setName("");;
+		setName("");
 		setCost(0);
 		setDescription("");
-		setUnits("gr");
-	}
-	
-	static public String[] getStages() {
-		return stages;
+		setUnits(Quantity.G);
 	}
 	
 	// get methods

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.34 2007/12/14 18:40:28 jimcdiver Exp $
+ * $Id: Mash.java,v 1.35 2007/12/28 16:41:22 jimcdiver Exp $
  * @author aavis
  *
  */
@@ -51,9 +51,28 @@ public class Mash {
 	private float MASHOUTTMPF = 161;
 	private float SPARGETMPF = 170;
 	
-	static final private String[] ratioUnits = {"qt/lb", "l/kg"};
-	static final private String[] types = {"acid", "glucan", "protein", "beta", "alpha", "mashout",	"sparge"};
-	static final private String[] methods = {"infusion", "decoction", "decoction thick", "decoction thin", "direct", "cereal mash"};
+	static final public String QT_PER_LB = "qt/lb";
+	static final public String L_PER_KG = "l/kg";
+	static final public String ACID = "acid";
+	static final public String GLUCAN = "glucan";
+	static final public String PROTEIN = "protein";
+	static final public String BETA = "beta";
+	static final public String ALPHA = "alpha";
+	static final public String MASHOUT = "mashout";
+	static final public String SPARGE = "sparge";
+	static final public String INFUSION = "infusion";
+	static final public String DECOCTION = "decoction";
+	static final public String DECOCTION_THICK = "decoction thick";
+	static final public String DECOCTION_THIN = "decoction thin";
+	static final public String DIRECT = "direct";
+	static final public String CEREAL_MASH = "cereal mash";
+	static final public String FLY = "fly";
+	static final public String BATCH = "batch";
+	
+	static final public String[] ratioUnits = {QT_PER_LB, L_PER_KG};
+	static final public String[] types = {ACID, GLUCAN, PROTEIN, BETA, ALPHA, MASHOUT, SPARGE};
+	static final public String[] methods = {INFUSION, DECOCTION, DECOCTION_THICK, DECOCTION_THIN, DIRECT, CEREAL_MASH};
+	static final public String[] spargeMethods = {FLY, BATCH};
 	
 	
 	public Mash(Recipe r){
@@ -77,16 +96,6 @@ public class Mash {
 		 name = "Mash";
 
 		 myRecipe = r;
-	}
-
-	static public String[] getRatioUnits() {
-		return ratioUnits;
-	}
-	static public String[] getTypes() {
-		return types;
-	}
-	static public String[] getMethods() {
-		return methods;
 	}
 	
 	public class MashStep {
@@ -118,11 +127,11 @@ public class Mash {
 		// default constructor:
 		public MashStep() {
 			rampMin = 0;
-			endTemp = 152;
-			startTemp = 152;
+			endTemp = ALPHATMPF + 1;
+			startTemp = ALPHATMPF + 1;
 			minutes = 60;
-			method = "infusion";
-			type = "alpha";
+			method = INFUSION;
+			type = ALPHA;
 			weightLbs = 0;
 
 		}
@@ -199,7 +208,7 @@ public class Mash {
 	public void addStep(String type, double st, double et, String m, int min,
 			int rmin, double weight) {
 		MashStep step = new MashStep(type, st, et, m, min, rmin);
-		if (m.equals("cereal mash"))
+		if (m.equals(CEREAL_MASH))
 			step.weightLbs = weight;
 		steps.add(step);		
 		calcMashSchedule();
@@ -261,6 +270,7 @@ public class Mash {
 		calcMashSchedule();
 	}
 	
+	// TODO hardcoded temp strings should be a static somewhere
 	public void setGrainTemp(double t){
 		if (tempUnits.equals("F"))
 			grainTempF = t;
@@ -296,9 +306,9 @@ public class Mash {
 	public void setTempRange(String type, double t){
 		if (tempUnits.equals("C"))
 			t = BrewCalcs.cToF(t);
-		if (type.equalsIgnoreCase("mashout"))
+		if (type.equalsIgnoreCase(MASHOUT))
 			MASHOUTTMPF = (float)t;
-		if (type.equalsIgnoreCase("sparge"))
+		if (type.equalsIgnoreCase(SPARGE))
 			SPARGETMPF = (float)t;
 		
 	}
@@ -311,7 +321,7 @@ public class Mash {
 	 * @return Val converted to the mash vol, formated to 1 decimal
 	 */
 	private String getVolConverted(double val){
-		double d = Quantity.convertUnit("qt", volUnits, val); 
+		double d = Quantity.convertUnit(Quantity.QT, volUnits, val); 
 		String s = SBStringUtils.format(d, 1);
 		return s;
 	}
@@ -335,9 +345,9 @@ public class Mash {
 	
 	public double getTempRange(String type){
 		double t=0;
-		if (type.equals("mashout"))
+		if (type.equals(MASHOUT))
 			t = MASHOUTTMPF;
-		else if (type.equals("sparge"))
+		else if (type.equals(SPARGE))
 			t = SPARGETMPF;
 		if (tempUnits.equals("C"))
 			t = BrewCalcs.fToC(t);
@@ -346,7 +356,7 @@ public class Mash {
 	}
 	
 	public double getSpargeVol(){
-		return Quantity.convertUnit("qt", volUnits, spargeQTS);
+		return Quantity.convertUnit(Quantity.QT, volUnits, spargeQTS);
 	}
 	
 	public double getSpargeQts(){ return spargeQTS; }
@@ -364,7 +374,7 @@ public class Mash {
 	 * + the units.
 	 */
 	public String getMashTotalVol() {
-		double d = Quantity.convertUnit("qt", volUnits, volQts);
+		double d = Quantity.convertUnit(Quantity.QT, volUnits, volQts);
 		String s = SBStringUtils.format(d, 1) + " " + volUnits;
 		return s;	
 	}	
@@ -419,7 +429,7 @@ public class Mash {
 	
 	public void setStepMethod(int i, String m){
 		((MashStep)steps.get(i)).setMethod(m);
-		if (m.equals("cereal mash"))
+		if (m.equals(CEREAL_MASH))
 			((MashStep)steps.get(i)).weightLbs = 0;
 		calcMashSchedule();
 	}
@@ -482,15 +492,15 @@ public class Mash {
 	
 	public double getStepWeight(int i) {
 		double w = 	((MashStep)steps.get(i)).weightLbs;
-		return Quantity.convertUnit("lb", myRecipe.getMaltUnits(), w);
+		return Quantity.convertUnit(Quantity.LB, myRecipe.getMaltUnits(), w);
 
 	}
 	
 	public void setStepWeight(int i, double w){
 		// you can only set the weight on a cereal mash step
 		MashStep s = (MashStep)steps.get(i);
-		if (s.method.equals("cereal mash")){
-			double w2 = Quantity.convertUnit(myRecipe.getMaltUnits(), "lb", w);
+		if (s.method.equals(CEREAL_MASH)){
+			double w2 = Quantity.convertUnit(myRecipe.getMaltUnits(), Quantity.LB, w);
 			s.weightLbs = w2;
 			calcMashSchedule();
 		}			
@@ -506,7 +516,7 @@ public class Mash {
 
 	public double getStepVol(int i) {
 		double vol = ((MashStep)steps.get(i)).getVol().getValue();
-		return Quantity.convertUnit("qt", volUnits, vol);
+		return Quantity.convertUnit(Quantity.QT, volUnits, vol);
 	
 	}
 	
@@ -544,7 +554,7 @@ public class Mash {
 		maltWeightLbs = myRecipe.getTotalMashLbs();
 		
 		// convert mash ratio to qts/lb if in l/kg
-		if (mashRatioU.equalsIgnoreCase("l/kg")) {
+		if (mashRatioU.equalsIgnoreCase(L_PER_KG)) {
 			mr *= 0.479325;
 		}
 
@@ -583,10 +593,10 @@ public class Mash {
 		mashVolQTS = calcMashVol(totalWeightLbs, mr);
 		totalMashTime += stp.minutes;
 		mashWaterQTS += waterAddedQTS;		
-		stp.vol.setUnits("qt");
+		stp.vol.setUnits(Quantity.QT);
 		stp.vol.setAmount(waterAddedQTS);
 		stp.temp = strikeTemp;
-		stp.method = "infusion";
+		stp.method = INFUSION;
 		stp.weightLbs = totalWeightLbs;
 
 		// subtract the water added from the Water Equiv so that they are correct when added in the next part of the loop
@@ -609,11 +619,11 @@ public class Mash {
 			
 			// if this is a former sparge step that's been changed, change
 			// the method to infusion
-			if (!stp.type.equals("sparge") && ( stp.method.equals("fly") || stp.method.equals("batch")))
-					stp.method = "infusion";
+			if (!stp.type.equals(SPARGE) && ( stp.method.equals(FLY) || stp.method.equals(BATCH)))
+					stp.method = INFUSION;
 			
 			// do calcs
-			if (stp.method.equals("infusion")) { // calculate an infusion step
+			if (stp.method.equals(INFUSION)) { // calculate an infusion step
 				decoct = 0;
 				waterEquiv += waterAddedQTS; // add previous addition to get WE
 				strikeTemp = boilTempF; // boiling water 
@@ -622,7 +632,7 @@ public class Mash {
 				waterAddedQTS = calcWaterAddition(targetTemp, currentTemp,
 						waterEquiv, boilTempF);
 				
-				stp.vol.setUnits("qt");
+				stp.vol.setUnits(Quantity.QT);
 				stp.vol.setAmount(waterAddedQTS);
 				stp.temp = strikeTemp;
 				stp.weightLbs = totalWeightLbs;
@@ -636,20 +646,20 @@ public class Mash {
 
 			}
 
-			else if (stp.method.indexOf("decoction") > -1) { // calculate a decoction step
+			else if (stp.method.indexOf(DECOCTION) > -1) { // calculate a decoction step
 
 				waterEquiv += waterAddedQTS; // add previous addition to get WE
 				waterAddedQTS = 0;
 				strikeTemp = boilTempF; // boiling water
 				double ratio=0.75;
 
-				if (stp.method.indexOf("thick") > -1)
+				if (stp.method.indexOf(DECOCTION_THICK) > -1)
 					ratio = thickDecoctRatio;
-				else if (stp.method.indexOf("thin") > -1)
+				else if (stp.method.indexOf(DECOCTION_THIN) > -1)
 					ratio = thinDecoctRatio;
 				// Calculate volume (qts) of mash to remove
 				decoct = calcDecoction2(targetTemp, currentTemp, mashWaterQTS, ratio, totalWeightLbs);				
-				stp.vol.setUnits("qt");
+				stp.vol.setUnits(Quantity.QT);
 				stp.vol.setAmount(decoct);
 				stp.temp = boilTempF;
 				stp.weightLbs = totalWeightLbs;
@@ -658,7 +668,7 @@ public class Mash {
 				stp.directions = "Remove " + SBStringUtils.format(stp.vol.getValueAs(volUnits), 1) + " " + volUnits
 						+ " of mash, boil, and return to mash.";
 
-			} else if (stp.method.equals("direct")) { // calculate a direct heat step
+			} else if (stp.method.equals(DIRECT)) { // calculate a direct heat step
 				decoct = 0;
 				waterEquiv += waterAddedQTS; // add previous addition to get WE
 				waterAddedQTS = 0;
@@ -671,7 +681,7 @@ public class Mash {
 				stp.temp = 0;
 				stp.weightLbs = totalWeightLbs;
 				
-			} else if (stp.method.indexOf("cereal mash") > -1) { // calculate a cereal mash step
+			} else if (stp.method.indexOf(CEREAL_MASH) > -1) { // calculate a cereal mash step
 
 				waterEquiv += waterAddedQTS; // add previous addition to get WE
 				waterAddedQTS = 0;	
@@ -709,15 +719,15 @@ public class Mash {
 
 				totalMashTime += stp.minutes;				
 				mashWaterQTS += waterAddedQTS + extraWaterQTS;		
-				stp.vol.setUnits("qt");
+				stp.vol.setUnits(Quantity.QT);
 				stp.vol.setAmount(waterAddedQTS);				
 				stp.temp = strikeTemp;				
 				
 				// make directions
 				
-				String weightStr = SBStringUtils.format(Quantity.convertUnit("lb", myRecipe.getMaltUnits(), stp.weightLbs), 1) 
+				String weightStr = SBStringUtils.format(Quantity.convertUnit(Quantity.LB, myRecipe.getMaltUnits(), stp.weightLbs), 1) 
 				+ " " + myRecipe.getMaltUnits(); 
-				String volStr = SBStringUtils.format(Quantity.convertUnit("qt", volUnits, waterAddedQTS), 1) 
+				String volStr = SBStringUtils.format(Quantity.convertUnit(Quantity.QT, volUnits, waterAddedQTS), 1) 
 				+ " " + volUnits;				
 				if (tempUnits == "C"){
 					strikeTemp = BrewCalcs.fToC(strikeTemp);
@@ -739,7 +749,7 @@ public class Mash {
 
 			}
 
-			if (stp.type.equals("sparge")) 
+			if (stp.type.equals(SPARGE)) 
 				numSparge++;
 
 		    else {
@@ -759,17 +769,17 @@ public class Mash {
 		
 		// spargeTotalQTS = (myRecipe.getPreBoilVol("qt")) - (mashWaterQTS - absorbedQTS);
 		totalWaterQTS = mashWaterQTS;
-		spargeQTS = myRecipe.getPreBoilVol("qt") - (mashWaterQTS - absorbedQTS);		
+		spargeQTS = myRecipe.getPreBoilVol(Quantity.QT) - (mashWaterQTS - absorbedQTS);		
 		
 		
 		// Now let's figure out the sparging:		
 		if (numSparge == 0)
 			return;
 		
-		double col = myRecipe.getPreBoilVol("qt") / numSparge;
+		double col = myRecipe.getPreBoilVol(Quantity.QT) / numSparge;
 		double charge[] = new double[numSparge];
 	    double collect[] = new double[numSparge];
-	    double totalCollectQts = myRecipe.getPreBoilVol("qt");
+	    double totalCollectQts = myRecipe.getPreBoilVol(Quantity.QT);
 	    
 	    if (col < mashWaterQTS - absorbedQTS) {
 		     charge[0] = 0;
@@ -795,31 +805,30 @@ public class Mash {
 	    int j=0;
 		for (int i = 1; i < steps.size(); i++) {
 			stp = ((MashStep) steps.get(i));			
-			if (stp.getType().equals("sparge")){	
-				stp.vol.setUnits("qt");
+			if (stp.getType().equals(SPARGE)) {	
+				stp.vol.setUnits(Quantity.QT);
 				stp.vol.setAmount(collect[j]);
 				stp.temp = SPARGETMPF;
 				totalSpargeTime += stp.getMinutes();
-				String collectStr = SBStringUtils.format(Quantity.convertUnit("qt", volUnits, collect[j]), 1) +
+				String collectStr = SBStringUtils.format(Quantity.convertUnit(Quantity.QT, volUnits, collect[j]), 1) +
 				" " + volUnits;
 				String tempStr;
 				if (tempUnits.equals("F")){
 					tempStr = "" + SBStringUtils.format(SPARGETMPF, 1) + "F";					
-				}
-				else { 
+				} else { 
 					tempStr = SBStringUtils.format(BrewCalcs.fToC(SPARGETMPF), 1) + "C";
 				}
+				
 				if (numSparge > 1){
-					stp.setMethod("batch");
-					String add = SBStringUtils.format(Quantity.convertUnit("qt", volUnits, charge[j]), 1) +
+					stp.setMethod(BATCH);
+					String add = SBStringUtils.format(Quantity.convertUnit(Quantity.QT, volUnits, charge[j]), 1) +
 					" " + volUnits;			
 					stp.setDirections("Add " + add + " at " + tempStr + " to collect " + collectStr);
 					
-				}
-				else {
-					stp.vol.setUnits("qt");
+				} else {
+					stp.vol.setUnits(Quantity.QT);
 					stp.vol.setAmount(spargeQTS);
-					stp.setMethod("fly");					
+					stp.setMethod(FLY);					
 					stp.setDirections("Sparge with " + 
 							SBStringUtils.format(Quantity.convertUnit("qt", volUnits, spargeQTS), 1) +
 							" " + volUnits + " at " + tempStr + " to collect " + collectStr);
@@ -868,44 +877,44 @@ public class Mash {
 		// less than 90, none
 		// 86 - 95 - acid
 		if (temp >= ACIDTMPF && temp < GLUCANTMPF)
-			stepType = "acid";
+			stepType = ACID;
 		// 95 - 113 - glucan
 		else if (temp < PROTEINTMPF)
-			stepType = "glucan";
+			stepType = GLUCAN;
 		// 113 - 131 protein
 		else if (temp < BETATMPF)
-			stepType = "protein";
+			stepType = PROTEIN;
 		// 131 - 150 beta
 		else if (temp < ALPHATMPF)
-			stepType = "beta";
+			stepType = BETA;
 		// 150-162 alpha
 		else if (temp < MASHOUTTMPF)
-			stepType = "alpha";
+			stepType = ALPHA;
 		// 163-169, mashout
 		else if (temp < SPARGETMPF)
-			stepType = "mashout";
+			stepType = MASHOUT;
 		// over 170, sparge
 		else if (temp >= SPARGETMPF)
-			stepType = "sparge";
+			stepType = SPARGE;
 
 		return stepType;
 	}
 
 	private double calcStepTemp(String stepType) {
 		float stepTempF = 0;
-		if (stepType == "acid")
+		if (stepType == ACID)
 			stepTempF = (ACIDTMPF + GLUCANTMPF) / 2;
-		else if (stepType == "glucan")
+		else if (stepType == GLUCAN)
 			stepTempF = (GLUCANTMPF + PROTEINTMPF) / 2;
-		else if (stepType == "protein")
+		else if (stepType == PROTEIN)
 			stepTempF = (PROTEINTMPF + BETATMPF) / 2;
-		else if (stepType == "beta")
+		else if (stepType == BETA)
 			stepTempF = (BETATMPF + ALPHATMPF) / 2;
-		else if (stepType == "alpha")
+		else if (stepType == ALPHA)
 			stepTempF = (ALPHATMPF + MASHOUTTMPF) / 2;
-		else if (stepType == "mashout")
+		else if (stepType == MASHOUT)
 			stepTempF = (MASHOUTTMPF + SPARGETMPF) / 2;
-		else if (stepType == "sparge")
+		else if (stepType == SPARGE)
 			stepTempF = SPARGETMPF;
 
 		return stepTempF;

@@ -62,7 +62,7 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 			double points = (myRecipe.getMaltPercent(i) / 100) 
 				* weightLbs 
 				* (myRecipe.getMaltPppg(i) - 1.0)
-				/ myRecipe.getPostBoilVol("gal");
+				/ myRecipe.getPostBoilVol(Quantity.GAL);
 			if (myRecipe.getMaltMashed(i))
 				points *= myRecipe.getEfficiency() / 100;
 			OG += points;
@@ -78,10 +78,10 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 		if (weightBtn.isSelected()) {
 			double totalWeight = Double.parseDouble(weightSpn.getValue().toString());
 			// convert to lbs
-			totalWeight = Quantity.convertUnit(weightUCombo.getSelectedItem().toString(), "lb", totalWeight);
+			totalWeight = Quantity.convertUnit(weightUCombo.getSelectedItem().toString(), Quantity.LB, totalWeight);
 			for (int i = 0; i < myRecipe.getMaltListSize(); i++) {
 				double newAmount = totalWeight * myRecipe.getMaltPercent(i) / 100;
-				myRecipe.setMaltAmountAs(i, newAmount, "lb");
+				myRecipe.setMaltAmountAs(i, newAmount, Quantity.LB);
 			}
 		}
 		
@@ -91,7 +91,7 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 			double targOG = Double.parseDouble(OGSpn.getValue().toString());
 			
 			// "seed" value -- assume conservative 30 ppppg
-			double totalPoints = (targOG - 1) * 1000 * myRecipe.getPostBoilVol("gal");
+			double totalPoints = (targOG - 1) * 1000 * myRecipe.getPostBoilVol(Quantity.GAL);
 			double totalWeightLbs = (totalPoints / 30) * (myRecipe.getEfficiency() / 100);
 
 			// brute force - just keep incrementing the total grain bill
@@ -107,7 +107,7 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 	
 			for (int k = 0; k < myRecipe.getMaltListSize(); k++) {
 				double newAmount = totalWeightLbs * (myRecipe.getMaltPercent(k)/ 100); 
-				myRecipe.setMaltAmountAs(k, newAmount, "lb");
+				myRecipe.setMaltAmountAs(k, newAmount, Quantity.LB);
 			}
 
 			

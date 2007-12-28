@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.62 2007/12/24 15:06:22 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.63 2007/12/28 16:41:23 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -95,6 +95,7 @@ import javax.swing.table.TableColumnModel;
 
 import net.sf.wraplog.AbstractLogger;
 import net.sf.wraplog.SystemLogger;
+import ca.strangebrew.BrewCalcs;
 import ca.strangebrew.Database;
 import ca.strangebrew.Debug;
 import ca.strangebrew.Fermentable;
@@ -159,6 +160,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private WaterTreatmentPanel waterTreatmentPanel = new WaterTreatmentPanel();
 	
 	final private JMenuItem aboutMenuItem = new JMenuItem();
+	// TODO
 	final private DefaultComboBoxModel alcMethodComboModel = new DefaultComboBoxModel(
 			new String[]{"Volume", "Weight"});
 	final private JComboBox alcMethodCombo = new JComboBox(alcMethodComboModel);
@@ -188,8 +190,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private ComboModel cmbStyleModel = new ComboModel();
 	final private JComboBox cmbYeast = new JComboBox();
 	final private ComboModel cmbYeastModel = new ComboModel();
-	final private DefaultComboBoxModel colourMethodComboModel = new DefaultComboBoxModel(
-			new String[]{"SRM", "EBC"});
+	final private DefaultComboBoxModel colourMethodComboModel = new DefaultComboBoxModel(BrewCalcs.colourMethods);
 	final private JComboBox colourMethodCombo = new JComboBox(colourMethodComboModel);							
 	final private JPanel colourPanel = new JPanel();
 	final private CostPanel costPanel = new CostPanel();
@@ -215,8 +216,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JComboBox hopsUnitsComboBox = new JComboBox();
 	final private JComboBox hopsTotalUnitsComboBox = new JComboBox();
 	final private ComboModel hopsTotalUnitsComboModel = new ComboModel();
-	final private DefaultComboBoxModel ibuMethodComboModel = new DefaultComboBoxModel(
-			new String[]{"Tinseth", "Garetz",	"Rager"});
+	final private DefaultComboBoxModel ibuMethodComboModel = new DefaultComboBoxModel(BrewCalcs.ibuMethods);
 	final private JComboBox ibuMethodCombo = new JComboBox(ibuMethodComboModel);
 	final private JLabel ibuMethodLabel = new JLabel();
 	final private JPanel ibuMethodPanel = new JPanel();
@@ -609,13 +609,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		double colour = myRecipe.getSrm();
 		
 		if (preferences.getProperty("optRGBMethod").equals("1"))
-			colourPanel.setBackground(Recipe.calcRGB(1, colour, 
+			colourPanel.setBackground(BrewCalcs.calcRGB(1, colour, 
 					preferences.getIProperty("optRed"),
 					preferences.getIProperty("optGreen"),
 					preferences.getIProperty("optBlue"),
 					preferences.getIProperty("optAlpha")));	
 		else
-			colourPanel.setBackground(Recipe.calcRGB(2, colour, 
+			colourPanel.setBackground(BrewCalcs.calcRGB(2, colour, 
 					preferences.getIProperty("optRed"),
 					preferences.getIProperty("optGreen"),
 					preferences.getIProperty("optBlue"),
@@ -1608,13 +1608,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 
 								// set up hop type combo
-								JComboBox hopsFormComboBox = new JComboBox(Hop.getHopTypes());
+								JComboBox hopsFormComboBox = new JComboBox(Hop.forms);
 								SmartComboBox.enable(hopsFormComboBox);
 								hopColumn = hopsTable.getColumnModel().getColumn(1);
 								hopColumn.setCellEditor(new SBComboBoxCellEditor(hopsFormComboBox));								
 
 								//								 set up hop add combo
-								JComboBox hopsAddComboBox = new JComboBox(Hop.getAddTypes());
+								JComboBox hopsAddComboBox = new JComboBox(Hop.addTypes);
 								SmartComboBox.enable(hopsAddComboBox);
 								hopColumn = hopsTable.getColumnModel().getColumn(5);
 								hopColumn.setCellEditor(new SBComboBoxCellEditor(hopsAddComboBox));

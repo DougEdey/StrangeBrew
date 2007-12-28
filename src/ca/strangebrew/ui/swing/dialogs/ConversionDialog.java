@@ -37,9 +37,9 @@ public class ConversionDialog extends JDialog implements ActionListener, FocusLi
 	
 	// Pressure
 	// TODO Yes, this SHOULD be an array of structures with 3 fields.. blah blah
-	final private JLabel lPres[] = new JLabel[Quantity.getPressures().length];
-	final private JTextField textPres[] = new JTextField[Quantity.getPressures().length];
-	final private JLabel lPresU[] = new JLabel[Quantity.getPressures().length];
+	final private JLabel lPres[] = new JLabel[Quantity.pressureUnits.length];
+	final private JTextField textPres[] = new JTextField[Quantity.pressureUnits.length];
+	final private JLabel lPresU[] = new JLabel[Quantity.pressureUnits.length];
 	
 	// Temp
 	final private JLabel lF = new JLabel("Fahrenhiet: ");
@@ -62,15 +62,15 @@ public class ConversionDialog extends JDialog implements ActionListener, FocusLi
 
 	// Vol
 	// TODO Dito with pressure
-	final private JLabel[] lVols = new JLabel[Quantity.getVols().length];
-	final private JTextField[] textVols = new JTextField[Quantity.getVols().length];
-	final private JLabel[] lVolsU = new JLabel[Quantity.getVols().length];
+	final private JLabel[] lVols = new JLabel[Quantity.volUnits.length];
+	final private JTextField[] textVols = new JTextField[Quantity.volUnits.length];
+	final private JLabel[] lVolsU = new JLabel[Quantity.volUnits.length];
 
 	// Weight
 	// TODO dito
-	final private JLabel[] lWeights = new JLabel[Quantity.getWeights().length];
-	final private JTextField[] textWeights = new JTextField[Quantity.getWeights().length];
-	final private JLabel[] lWeightsU = new JLabel[Quantity.getWeights().length];
+	final private JLabel[] lWeights = new JLabel[Quantity.weightUnits.length];
+	final private JTextField[] textWeights = new JTextField[Quantity.weightUnits.length];
+	final private JLabel[] lWeightsU = new JLabel[Quantity.weightUnits.length];
 	
 	// Debugging main func
 	public static void main(String[] args) {
@@ -86,7 +86,8 @@ public class ConversionDialog extends JDialog implements ActionListener, FocusLi
 	}
 	
 	private void setDefaults() {
-		// Bad assumption, but it works until someone attempts to use
+		// TODO   hack allert
+		// Bad assumption, but it works until someone attempts to modify
 		// the Quantity static Convertion structs ;)
 		// psi
 		textPres[0].setText("12.0");
@@ -127,7 +128,7 @@ public class ConversionDialog extends JDialog implements ActionListener, FocusLi
 				constraints.fill = GridBagConstraints.HORIZONTAL;
 
 				// Setup special arrays
-				Quantity.Converter[] pres = Quantity.getPressures();
+				Quantity.Converter[] pres = Quantity.pressureUnits;
 				for (int i = 0; i < pres.length; i++) {
 					lPres[i] = new JLabel(SBStringUtils.capitalize(pres[i].unit));
 					textPres[i] = new JTextField("0");
@@ -236,7 +237,7 @@ public class ConversionDialog extends JDialog implements ActionListener, FocusLi
 				constraints.fill = GridBagConstraints.HORIZONTAL;
 				
 				// Setup special arrays
-				Quantity.Converter[] vols = Quantity.getVols();
+				Quantity.Converter[] vols = Quantity.volUnits;
 				for (int i = 0; i < vols.length; i++) {
 					lVols[i] = new JLabel(SBStringUtils.capitalize(vols[i].unit));
 					textVols[i] = new JTextField("0");
@@ -266,7 +267,7 @@ public class ConversionDialog extends JDialog implements ActionListener, FocusLi
 				constraints.fill = GridBagConstraints.HORIZONTAL;
 				
 				// Setup special arrays
-				Quantity.Converter[] weights = Quantity.getWeights();
+				Quantity.Converter[] weights = Quantity.weightUnits;
 				for (int i = 0; i < weights.length; i++) {
 					lWeights[i] = new JLabel(SBStringUtils.capitalize(weights[i].unit));
 					textWeights[i] = new JTextField("0");

@@ -40,7 +40,7 @@ public class FermentPanel extends javax.swing.JPanel implements ActionListener, 
 	final private JTable fermentTotalsTable = new JTable();
 	final private DefaultTableModel fermentTotalsTableModel = new DefaultTableModel(
 			FermentTableModel.getColumnNames(), 1);		
-	final private JComboBox comboType = new JComboBox(FermentStep.getTypes());
+	final private JComboBox comboType = new JComboBox(FermentStep.types);
 	final private SBCellEditor timeEditor = new SBCellEditor(new JTextField());
 	final private SBCellEditor tempEditor = new SBCellEditor(new JTextField());
 	final private JToolBar fermentButtonBar = new JToolBar();

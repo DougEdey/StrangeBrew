@@ -37,7 +37,6 @@ import ca.strangebrew.Database;
 import ca.strangebrew.Hop;
 import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
-import ca.strangebrew.Recipe;
 import ca.strangebrew.WaterProfile;
 import ca.strangebrew.ui.swing.ComboModel;
 import ca.strangebrew.ui.swing.SmartComboBox;
@@ -309,15 +308,15 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		localeComboBox.setSelectedItem(opts.getLocale());		
 
 		// calculations tab:
-		rbTinseth.setSelected(opts.getProperty("optIBUCalcMethod").equalsIgnoreCase("Tinseth"));
-		rbRager.setSelected(opts.getProperty("optIBUCalcMethod").equalsIgnoreCase("Rager"));
-		rbGaretz.setSelected(opts.getProperty("optIBUCalcMethod").equalsIgnoreCase("Garetz"));
+		rbTinseth.setSelected(opts.getProperty("optIBUCalcMethod").equalsIgnoreCase(BrewCalcs.TINSETH));
+		rbRager.setSelected(opts.getProperty("optIBUCalcMethod").equalsIgnoreCase(BrewCalcs.RAGER));
+		rbGaretz.setSelected(opts.getProperty("optIBUCalcMethod").equalsIgnoreCase(BrewCalcs.GARTEZ));
 
 		rbABV.setSelected((opts.getProperty("optAlcCalcMethod").equalsIgnoreCase("Volume")));
 		rbABW.setSelected((opts.getProperty("optAlcCalcMethod").equalsIgnoreCase("Weight")));
 
-		rbSRM.setSelected((opts.getProperty("optColourMethod").equalsIgnoreCase("SRM")));
-		rbEBC.setSelected((opts.getProperty("optColourMethod").equalsIgnoreCase("EBC")));
+		rbSRM.setSelected((opts.getProperty("optColourMethod").equalsIgnoreCase(BrewCalcs.SRM)));
+		rbEBC.setSelected((opts.getProperty("optColourMethod").equalsIgnoreCase(BrewCalcs.EBC)));
 
 		rbPercent.setSelected((opts.getProperty("optEvapCalcMethod").equalsIgnoreCase("Percent")));
 		rbConstant.setSelected((opts.getProperty("optEvapCalcMethod").equalsIgnoreCase("Constant")));
@@ -373,11 +372,11 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 		// calculations tab:
 		if (rbTinseth.isSelected())
-			opts.setProperty("optIBUCalcMethod", "Tinseth");
+			opts.setProperty("optIBUCalcMethod", BrewCalcs.TINSETH);
 		if (rbRager.isSelected())
-			opts.setProperty("optIBUCalcMethod", "Rager");
+			opts.setProperty("optIBUCalcMethod", BrewCalcs.RAGER);
 		if (rbGaretz.isSelected())
-			opts.setProperty("optIBUCalcMethod", "Garetz");
+			opts.setProperty("optIBUCalcMethod", BrewCalcs.GARTEZ);
 
 		if (rbABV.isSelected())
 			opts.setProperty("optAlcCalcMethod", "Volume");
@@ -385,9 +384,9 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			opts.setProperty("optAlcCalcMethod", "Weight");
 
 		if (rbSRM.isSelected())
-			opts.setProperty("optColourMethod", "SRM");
+			opts.setProperty("optColourMethod", BrewCalcs.SRM);
 		if (rbEBC.isSelected())
-			opts.setProperty("optColourMethod", "EBC");
+			opts.setProperty("optColourMethod", BrewCalcs.EBC);
 
 		if (rbPercent.isSelected())
 			opts.setProperty("optEvapCalcMethod", "Percent");
@@ -1092,7 +1091,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					miscPanel.add(hopsTypeLabel, constraints);
 					hopsTypeLabel.setText("Hop Type:");
 					SmartComboBox.enable(hopsTypeCombo);
-					hopsTypeComboModel.setList(Hop.getHopTypes());
+					hopsTypeComboModel.setList(Hop.forms);
 					hopsTypeCombo.setModel(hopsTypeComboModel);
 					constraints.gridx = 1;
 					miscPanel.add(hopsTypeCombo, constraints);
@@ -1299,20 +1298,20 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		int a = Integer.parseInt(alphaSpn.getValue().toString());
 		
 		if (colMethod1rb.isSelected()){
-			stawPanel.setBackground(Recipe.calcRGB(1, 2, r, g, b, a));
-			palePanel.setBackground(Recipe.calcRGB(1, 4, r, g, b, a));
-			amberPanel.setBackground(Recipe.calcRGB(1,8, r, g, b, a));
-			copperPanel.setBackground(Recipe.calcRGB(1,15, r, g, b, a));
-			brownPanel.setBackground(Recipe.calcRGB(1,20, r, g, b, a));
-			blackPanel.setBackground(Recipe.calcRGB(1,30, r, g, b, a));
+			stawPanel.setBackground(BrewCalcs.calcRGB(1, 2, r, g, b, a));
+			palePanel.setBackground(BrewCalcs.calcRGB(1, 4, r, g, b, a));
+			amberPanel.setBackground(BrewCalcs.calcRGB(1,8, r, g, b, a));
+			copperPanel.setBackground(BrewCalcs.calcRGB(1,15, r, g, b, a));
+			brownPanel.setBackground(BrewCalcs.calcRGB(1,20, r, g, b, a));
+			blackPanel.setBackground(BrewCalcs.calcRGB(1,30, r, g, b, a));
 		}
 		else {
-			stawPanel.setBackground(Recipe.calcRGB(2, 2, r, g, b, a));
-			palePanel.setBackground(Recipe.calcRGB(2, 4, r, g, b, a));
-			amberPanel.setBackground(Recipe.calcRGB(2, 8, r, g, b, a));
-			copperPanel.setBackground(Recipe.calcRGB(2, 15, r, g, b, a));
-			brownPanel.setBackground(Recipe.calcRGB(2, 20, r, g, b, a));
-			blackPanel.setBackground(Recipe.calcRGB(2, 30, r, g, b, a));
+			stawPanel.setBackground(BrewCalcs.calcRGB(2, 2, r, g, b, a));
+			palePanel.setBackground(BrewCalcs.calcRGB(2, 4, r, g, b, a));
+			amberPanel.setBackground(BrewCalcs.calcRGB(2, 8, r, g, b, a));
+			copperPanel.setBackground(BrewCalcs.calcRGB(2, 15, r, g, b, a));
+			brownPanel.setBackground(BrewCalcs.calcRGB(2, 20, r, g, b, a));
+			blackPanel.setBackground(BrewCalcs.calcRGB(2, 30, r, g, b, a));
 			
 		}
 	}

@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.26 2007/12/19 16:58:59 jimcdiver Exp $
+ * $Id: MashPanel.java,v 1.27 2007/12/28 16:41:23 jimcdiver Exp $
  *  @author aavis 
  */
 
@@ -85,7 +85,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	final private JLabel volLabel = new JLabel();
 	final private JLabel totalTimeLabel = new JLabel();
 	final private JComboBox ratioUnitsCombo = new JComboBox();
-	final private ComboBoxModel ratioUnitsComboModel = new DefaultComboBoxModel(Mash.getRatioUnits());
+	final private ComboBoxModel ratioUnitsComboModel = new DefaultComboBoxModel(Mash.ratioUnits);
 	final private JTextField ratioText = new JTextField();
 	// private ButtonGroup tempUnitsButtonGroup;
 	final private JComboBox volUnitsCombo = new JComboBox();
@@ -170,13 +170,13 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 						tblMash.getTableHeader().setReorderingAllowed(false);
 
 						// set up type combo
-						JComboBox typesComboBox = new JComboBox(Mash.getTypes());
+						JComboBox typesComboBox = new JComboBox(Mash.types);
 						SmartComboBox.enable(typesComboBox);
 						TableColumn mashColumn = tblMash.getColumnModel().getColumn(0);
 						mashColumn.setCellEditor(new SBComboBoxCellEditor(typesComboBox));
 
 						// set up method combo;
-						JComboBox methodComboBox = new JComboBox(Mash.getMethods());
+						JComboBox methodComboBox = new JComboBox(Mash.methods);
 						SmartComboBox.enable(methodComboBox);
 						mashColumn = tblMash.getColumnModel().getColumn(1);
 						mashColumn.setCellEditor(new SBComboBoxCellEditor(methodComboBox));

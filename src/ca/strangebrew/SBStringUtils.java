@@ -76,11 +76,11 @@ public class SBStringUtils {
 	}
 	
 	
-	public static NumberFormat nf = NumberFormat.getNumberInstance();
-	public static DecimalFormat df = (DecimalFormat)nf; 
-	public static NumberFormat myNF = NumberFormat.getCurrencyInstance(); // Use the country currency
-	public static DateFormat dateFormatShort = DateFormat.getDateInstance(DateFormat.SHORT);
-	public static DateFormat dateFormatFull = DateFormat.getDateInstance(DateFormat.FULL);
+	final public static NumberFormat nf = NumberFormat.getNumberInstance();
+	final public static DecimalFormat df = (DecimalFormat)nf; 
+	final public static NumberFormat myNF = NumberFormat.getCurrencyInstance(); // Use the country currency
+	final public static DateFormat dateFormatShort = DateFormat.getDateInstance(DateFormat.SHORT);
+	final public static DateFormat dateFormatFull = DateFormat.getDateInstance(DateFormat.FULL);
 	
 	public static String format(double value, int decimal){
 		

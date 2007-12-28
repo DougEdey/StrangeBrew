@@ -1,5 +1,5 @@
 Item,Name,CommonName,ChemicalName,Ca,So4,Mg,Na,Cl,Co3,Hardness,Alk
-1,"Magnesium Sulfate","Epsom Salt","MgSO4",0,103.0,26.1,0,0,0,107.8,0
+1,"Magnesium Sulfate","Epsom Salt","MgSo4",0,103.0,26.1,0,0,0,107.8,0
 2,"Calcium Carbonate","Gypsum","CaCO3",61.5,147.4,0,0,0,0,153.6,0
 3,"Sodium Chloride","Salt","NaCl",0,0,0,103.9,160.3,0,0,0
 4,"Sodium Bicarbonate","Baking Soda","NaHCO3",0,0,0,72.3,0,188.7,0,157.4

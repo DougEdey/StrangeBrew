@@ -1,5 +1,5 @@
 /**
- * $Id: ImportXml.java,v 1.3 2006/05/02 16:49:26 andrew_avis Exp $
+ * $Id: ImportXml.java,v 1.4 2007/12/28 16:41:22 jimcdiver Exp $
  *
  * This is the "driver" for xml import.  It sets up the parser, catches
  * exceptions, and associates our XmlHandler class with the parser so 
@@ -31,8 +31,7 @@ public class ImportXml  {
 		
 		// Use the default (non-validating) parser
 		SAXParserFactory factory = SAXParserFactory.newInstance();
-		// debug:
-		System.out.println("Using Sax Parser factory: " + factory.getClass());
+		Debug.print("Using Sax Parser factory: " + factory.getClass() + "\n");
 		try {
 
 			// Parse the input

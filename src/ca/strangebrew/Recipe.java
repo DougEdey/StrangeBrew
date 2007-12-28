@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.51 2007/12/27 19:01:44 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.52 2007/12/28 16:41:22 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -24,7 +24,6 @@
 
 package ca.strangebrew;
 
-import java.awt.Color;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -223,7 +222,7 @@ public class Recipe {
 		return comments;
 	}
 	public double getColour() {
-		if (colourMethod.equals("SRM"))
+		if (colourMethod.equals(BrewCalcs.SRM))
 			return srm;
 		else
 			return ebc;
@@ -296,7 +295,7 @@ public class Recipe {
 		return totalHopsOz;
 	}
 	public double getTotalHops() {
-		return Quantity.convertUnit("oz", hopUnits, totalHopsOz);
+		return Quantity.convertUnit(Quantity.OZ, hopUnits, totalHopsOz);
 	}
 	public double getTotalHopsCost() {
 		return totalHopsCost;
@@ -308,13 +307,13 @@ public class Recipe {
 		return totalMashLbs;
 	}
 	public double getTotalMash() {
-		return Quantity.convertUnit("lb", getMaltUnits(), totalMashLbs);
+		return Quantity.convertUnit(Quantity.LB, getMaltUnits(), totalMashLbs);
 	}
 	public double getTotalMaltLbs() {
 		return totalMaltLbs;
 	}
 	public double getTotalMalt() {
-		return Quantity.convertUnit("lb", maltUnits, totalMaltLbs);
+		return Quantity.convertUnit(Quantity.LB, maltUnits, totalMaltLbs);
 	}
 	public double getTotalMiscCost() {
 		return totalMiscCost;
@@ -337,7 +336,7 @@ public class Recipe {
 
 	// water
 	private double getVolConverted(double val) {
-		double d = Quantity.convertUnit("qt", getVolUnits(), val);
+		double d = Quantity.convertUnit(Quantity.QT, getVolUnits(), val);
 		// String s = SBStringUtils.format(d, 1).toString();
 		return d;
 	}
@@ -385,6 +384,7 @@ public class Recipe {
 		double post = 0;
 		// JvH changing the boiltime, changes the post boil volume (NOT the pre
 		// boil)
+		// TODO
 		if (evapMethod.equals("Constant")) {
 			post = preBoilVol.getValue() - (evap * boilMinutes / 60);
 		} else { // %
@@ -430,6 +430,7 @@ public class Recipe {
 		double post = 0;
 		// JvH changing the evaporation, changes the post boil volume (NOT the
 		// pre boil)
+		// TODO
 		if (evapMethod.equals("Constant")) {
 			post = preBoilVol.getValue() - (evap * boilMinutes / 60);
 		} else { // %
@@ -895,6 +896,7 @@ public class Recipe {
 		preBoilVol.setAmount(p);
 
 		double post = 0;
+		// TODO
 		if (evapMethod.equals("Constant")) {
 			post = p - (evap * boilMinutes / 60);
 		} else {
@@ -912,6 +914,7 @@ public class Recipe {
 		postBoilVol.setAmount(p);
 
 		double pre = 0;
+		// TODO
 		if (evapMethod.equals("Constant")) {
 			pre = p + (evap * boilMinutes / 60);
 		} else {
@@ -931,15 +934,15 @@ public class Recipe {
 	public void setFinalWortVol(double p) {
 		isDirty = true;
 		// convert to QTS and set the final vol
-		finalWortVolQTS = Quantity.convertUnit(getVolUnits(), "qt", p);
+		finalWortVolQTS = Quantity.convertUnit(getVolUnits(), Quantity.QT, p);
 		// now add in all the losses, and set the post-boil to force
 		// a recalc:
-		double d = finalWortVolQTS + Quantity.convertUnit(getVolUnits(), "qt", kettleLoss)
-				+ Quantity.convertUnit(getVolUnits(), "qt", trubLoss)
-				+ Quantity.convertUnit(getVolUnits(), "qt", miscLoss);
+		double d = finalWortVolQTS + Quantity.convertUnit(getVolUnits(), Quantity.QT, kettleLoss)
+				+ Quantity.convertUnit(getVolUnits(), Quantity.QT, trubLoss)
+				+ Quantity.convertUnit(getVolUnits(), Quantity.QT, miscLoss);
 		// add in chill shrink:
 		d = d / (1 - CHILLPERCENT);
-		setPostBoil(Quantity.convertUnit("qt", getVolUnits(), d));
+		setPostBoil(Quantity.convertUnit(Quantity.QT, getVolUnits(), d));
 	}
 
 	/*
@@ -1037,8 +1040,8 @@ public class Recipe {
 		double possiblePoints = 0;
 		for (int i = 0; i < fermentables.size(); i++) {
 			Fermentable m = ((Fermentable) fermentables.get(i));
-			possiblePoints += (m.getPppg() - 1) * m.getAmountAs("lb")
-					/ postBoilVol.getValueAs("gal");
+			possiblePoints += (m.getPppg() - 1) * m.getAmountAs(Quantity.LB)
+					/ postBoilVol.getValueAs(Quantity.GAL);
 		}
 		efficiency = (estOg - 1) / possiblePoints * 100;
 	}
@@ -1056,46 +1059,47 @@ public class Recipe {
 		// first figure out the total we're dealing with
 		for (int i = 0; i < fermentables.size(); i++) {
 			Fermentable m = ((Fermentable) fermentables.get(i));
-			totalMaltLbs += (m.getAmountAs("lb"));
+			totalMaltLbs += (m.getAmountAs(Quantity.LB));
 			if (m.getMashed()) { // apply efficiency and add to mash weight
-				maltPoints += (m.getPppg() - 1) * m.getAmountAs("lb") * efficiency
-						/ postBoilVol.getValueAs("gal");
-				totalMashLbs += (m.getAmountAs("lb"));
+				maltPoints += (m.getPppg() - 1) * m.getAmountAs(Quantity.LB) * efficiency
+						/ postBoilVol.getValueAs(Quantity.GAL);
+				totalMashLbs += (m.getAmountAs(Quantity.LB));
 			} else
-				maltPoints += (m.getPppg() - 1) * m.getAmountAs("lb") * 100
-						/ postBoilVol.getValueAs("gal");
+				maltPoints += (m.getPppg() - 1) * m.getAmountAs(Quantity.LB) * 100
+						/ postBoilVol.getValueAs(Quantity.GAL);
 
-			mcu += m.getLov() * m.getAmountAs("lb") / postBoilVol.getValueAs("gal");
+			mcu += m.getLov() * m.getAmountAs(Quantity.LB) / postBoilVol.getValueAs(Quantity.GAL);
 			totalMaltCost += m.getCostPerU() * m.getAmountAs(m.getUnits());
 		}
 
 		// now set the malt % by weight:
 		for (int i = 0; i < fermentables.size(); i++) {
 			Fermentable m = ((Fermentable) fermentables.get(i));
-			if (m.getAmountAs("lb") == 0)
+			if (m.getAmountAs(Quantity.LB) == 0)
 				m.setPercent(0);
 			else
-				m.setPercent((m.getAmountAs("lb") / totalMaltLbs * 100));
+				m.setPercent((m.getAmountAs(Quantity.LB) / totalMaltLbs * 100));
 		}
 
 		// set the fields in the object
 		estOg = (maltPoints / 100) + 1;
 		estFg = 1 + ((estOg - 1) * ((100 - attenuation) / 100));
-		srm = calcColour(mcu, "SRM");
-		ebc = calcColour(mcu, "EBC");
+
+		srm = BrewCalcs.calcColour(mcu, BrewCalcs.SRM);
+		ebc = BrewCalcs.calcColour(mcu, BrewCalcs.EBC);
 		// mash.setMaltWeight(totalMashLbs);
 
 		calcAlcohol(getAlcMethod());
 
 		// do the water calcs w/ the updated mash:
-		chillShrinkQTS = getPostBoilVol("qt") * CHILLPERCENT;
+		chillShrinkQTS = getPostBoilVol(Quantity.QT) * CHILLPERCENT;
 		// spargeQTS = getPreBoilVol("qt") - (mash.getTotalWaterQts() - mash.getAbsorbedQts());
 		totalWaterQTS = mash.getTotalWaterQts() + mash.getSpargeVol();
 
-		finalWortVolQTS = postBoilVol.getValueAs("qt")
-				- (chillShrinkQTS + Quantity.convertUnit(getVolUnits(), "qt", kettleLoss)
-						+ Quantity.convertUnit(getVolUnits(), "qt", trubLoss) + Quantity
-						.convertUnit(getVolUnits(), "qt", miscLoss));
+		finalWortVolQTS = postBoilVol.getValueAs(Quantity.QT)
+				- (chillShrinkQTS + Quantity.convertUnit(getVolUnits(), Quantity.QT, kettleLoss)
+						+ Quantity.convertUnit(getVolUnits(), Quantity.QT, trubLoss) + Quantity
+						.convertUnit(getVolUnits(), Quantity.QT, miscLoss));
 
 	}
 	
@@ -1114,228 +1118,57 @@ public class Recipe {
 			Hop h = ((Hop) hops.get(i));			
 
 			int time = h.getMinutes();
-			if (h.getAdd().equalsIgnoreCase("FWH")) {
+			if (h.getAdd().equalsIgnoreCase(Hop.FWH)) {
 				time = time - fwhTime;
-			} else if (h.getAdd().equalsIgnoreCase("Mash")) {
+			} else if (h.getAdd().equalsIgnoreCase(Hop.MASH)) {
 				time = mashHopTime;
-			} else if (h.getAdd().equalsIgnoreCase("Dry")) {
+			} else if (h.getAdd().equalsIgnoreCase(Hop.DRY)) {
 				time = dryHopTime;
 			}
 
 			if (h.getMinutes() > 0)
-				adjPreSize = postBoilVol.getValueAs("gal")
-						+ (preBoilVol.getValueAs("gal") - postBoilVol.getValueAs("gal"))
+				adjPreSize = postBoilVol.getValueAs(Quantity.GAL)
+						+ (preBoilVol.getValueAs(Quantity.GAL) - postBoilVol.getValueAs(Quantity.GAL))
 						/ (boilMinutes / h.getMinutes());
 			else
-				adjPreSize = postBoilVol.getValueAs("gal");
+				adjPreSize = postBoilVol.getValueAs(Quantity.GAL);
 
-			aveOg = 1 + (((estOg - 1) + ((estOg - 1) / (adjPreSize / postBoilVol.getValueAs("gal")))) / 2);
+			aveOg = 1 + (((estOg - 1) + ((estOg - 1) / (adjPreSize / postBoilVol.getValueAs(Quantity.GAL)))) / 2);
 
-			if (ibuCalcMethod.equals("Tinseth"))
-				h.setIBU(calcTinseth(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg,
+			if (ibuCalcMethod.equals(BrewCalcs.TINSETH))
+				h.setIBU(BrewCalcs.calcTinseth(h.getAmountAs(Quantity.OZ), postBoilVol.getValueAs(Quantity.GAL), aveOg,
 						time, h.getAlpha(), ibuHopUtil));
-			else if (ibuCalcMethod.equals("Rager"))
-				h.setIBU(CalcRager(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg, time,
+			else if (ibuCalcMethod.equals(BrewCalcs.RAGER))
+				h.setIBU(BrewCalcs.CalcRager(h.getAmountAs(Quantity.OZ), postBoilVol.getValueAs(Quantity.GAL), aveOg, time,
 						h.getAlpha()));
 			else
-				h.setIBU(CalcGaretz(h.getAmountAs("oz"), postBoilVol.getValueAs("gal"), aveOg,
-						time, preBoilVol.getValueAs("gal"), 1, h.getAlpha()));
-			if (h.getType().equalsIgnoreCase("Pellet")) {
+				h.setIBU(BrewCalcs.CalcGaretz(h.getAmountAs(Quantity.OZ), postBoilVol.getValueAs(Quantity.GAL), aveOg,
+						time, preBoilVol.getValueAs(Quantity.GAL), 1, h.getAlpha()));
+			if (h.getType().equalsIgnoreCase(Hop.PELLET)) {
 				h.setIBU(h.getIBU() * (1.0 + (pelletHopPct / 100)));
 			}
 
 			ibuTotal += h.getIBU();
 			
 			totalHopsCost += h.getCostPerU() * h.getAmountAs(h.getUnits());
-			totalHopsOz += h.getAmountAs("oz");
+			totalHopsOz += h.getAmountAs(Quantity.OZ);
 		}
 
 		ibu = ibuTotal;
 
 	}
 
-	// private calculation functions:
-	private double calcColour(double lov, String method) {
-		double colour = 0;
-
-		if (method.equals("EBC")) {
-			// From Greg Noonan's article at
-			// http://brewingtechniques.com/bmg/noonan.html
-			colour = 1.4922 * Math.pow(lov, 0.6859); // SRM
-			// EBC is apr. SRM * 2.65 - 1.2
-			colour = (colour * 2.65) - 1.2;
-		} else {
-			// calculates SRM based on MCU (degrees LOV)
-			if (lov > 0)
-				colour = 1.4922 * Math.pow(lov, 0.6859);
-			else
-				colour = 0;
-		}
-
-		return colour;
-
-	}
-
+	// TODO should be in BrewCalcs
 	private void calcAlcohol(String method) {
-		double oPlato = sGToPlato(estOg);
-		double fPlato = sGToPlato(estFg);
+		double oPlato = BrewCalcs.SGToPlato(estOg);
+		double fPlato = BrewCalcs.SGToPlato(estFg);
 		double q = 0.22 + 0.001 * oPlato;
 		double re = (q * oPlato + fPlato) / (1.0 + q);
 		// calculate by weight:
 		alcohol = (oPlato - re) / (2.0665 - 0.010665 * oPlato);
+		// TODO
 		if (method.equalsIgnoreCase("Volume")) // convert to by volume
 			alcohol = alcohol * estFg / 0.794;
-
-	}
-
-	private double sGToPlato(double sg) {
-		// function to convert a value in specific
-		// gravity as plato
-		// equation based on HBD#3204 post by AJ DeLange
-		double Plato;
-		Plato = -616.989 + 1111.488 * sg - 630.606 * sg * sg + 136.10305 * sg * sg * sg;
-		return Plato;
-	}
-
-	/*
-	 * Hop IBU calculation methods:
-	 */
-	private double calcTinseth(double amount, double size, double sg, double time, double aa,
-			double HopsUtil) {
-		double daautil; // decimal alpha acid utilization
-		double bigness; // bigness factor
-		double boil_fact; // boil time factor
-		double mgl_aaa; // mg/l of added alpha units
-		double ibu;
-
-		bigness = 1.65 * (Math.pow(0.000125, (sg - 1))); // 0.000125 original
-		boil_fact = (1 - (Math.exp(-0.04 * time))) / HopsUtil;
-		daautil = bigness * boil_fact;
-		mgl_aaa = (aa / 100) * amount * 7490 / size;
-		ibu = daautil * mgl_aaa;
-		return ibu;
-	}
-
-	// rager method of ibu calculation
-	// constant 7962 is corrected to 7490 as per hop faq
-	double CalcRager(double amount, double size, double sg, double time, double AA) {
-		double ibu, utilization, ga;
-		// should be tanh:
-		double x = (time - 31.32) / 18.27;
-		// tanh:
-		double tanhx = (Math.exp(x) - Math.exp(-x)) / (Math.exp(x) + Math.exp(-x));
-		utilization = 18.11 + (13.86 * tanhx / 18.27);
-		ga = sg < 1.050 ? 0.0 : ((sg - 1.050) / 0.2);
-		ibu = amount * (utilization / 100) * (AA / 100.0) * 7490;
-		ibu /= size * (1 + ga);
-		return ibu;
-	}
-
-	// utilization table for average floc yeast
-	int util[] = {0, 0, 0, 0, 0, 0, 1, 1, 1, 3, 4, 5, 5, 6, 7, 9, 11, 13, 11, 13, 16, 13, 16, 19,
-			15, 19, 23, 16, 20, 24, 17, 21, 25};
-
-	double CalcGaretz(double amount, double size, double sg, double time, double start_vol,
-			int yeast_flocc, double AA) {
-		// iterative value seed - adjust to loop through value
-		double desired_ibu = CalcRager(amount, size, sg, time, AA);
-		int elevation = 500; // elevation in feet - change for user setting
-		double concentration_f = size / start_vol;
-		double boil_gravity = (concentration_f * (sg - 1)) + 1;
-		double gravity_f = ((boil_gravity - 1.050) / 0.2) + 1;
-		double temp_f = (elevation / 550 * 0.02) + 1;
-
-		// iterative loop, uses desired_ibu to define hopping_f, then seeds
-		// itself
-		double hopping_f, utilization, combined_f;
-		double ibu = desired_ibu;
-		int util_index;
-		for (int i = 0; i < 5; i++) { // iterate loop 5 times
-			hopping_f = ((concentration_f * desired_ibu) / 260) + 1;
-			if (time > 50)
-				util_index = 10;
-			else
-				util_index = (int) (time / 5.0);
-			utilization = util[(util_index * 3) + yeast_flocc];
-			combined_f = gravity_f * temp_f * hopping_f;
-			ibu = (utilization * AA * amount * 0.749) / (size * combined_f);
-			desired_ibu = ibu;
-		}
-
-		return ibu;
-	}
-
-	// RGB estimation:
-
-	public static Color calcRGB(int method, double srm, int rConst, int gConst, int bConst,
-			int aConst) {
-		// estimates the RGB equivalent colour for beer based on SRM
-		// NOTE: optRed, optGreen and optBlue need to be adjusted for different
-		// monitors.
-		// This is from the Windows version of SB
-		// typical values are: r=8, g=30, b=20
-
-		if (method == 1) {
-
-			int R = 0, G = 0, B = 0, A = aConst;
-
-			if (srm < 10) {
-				R = 255;
-			} else {
-				R = new Double(255 - ((srm - rConst) * 10)).intValue();
-			}
-
-			if (gConst != 0)
-				G = new Double(250 - ((srm / gConst) * 250)).intValue();
-			else
-				G = new Double((250 - ((srm / 30) * 250))).intValue();
-			B = new Double(200 - (srm * bConst)).intValue();
-
-			if (R < 0)
-				R = 1;
-			if (G < 0)
-				G = 1;
-			if (B < 0)
-				B = 1;
-
-			return new Color(R, G, B, A);
-
-		} else {
-			// this is the "new" way, based on rbg screen samples from Gibby
-			double R, G, B;
-
-			if (srm < 11) {
-				R = 259.13 + -7.42 * srm;
-				G = 278.87 + -15.12 * srm;
-				B = 82.73 + -4.48 * srm;
-			} else if (srm >= 11 && srm < 21) {
-				R = 335.27 + -11.73 * srm;
-				G = 203.42 + -7.58 * srm;
-				B = 92.50 + -2.90 * srm;
-			} else {
-				R = 220.20 + -7.20 * srm;
-				G = 109.42 + -3.42 * srm;
-				B = 50.75 + -1.33 * srm;
-			}
-
-			int r = new Double(R).intValue();
-			int b = new Double(B).intValue();
-			int g = new Double(G).intValue();
-			if (r < 0)
-				r = 0;
-			if (r > 255)
-				r = 255;
-			if (g < 0)
-				g = 0;
-			if (g > 255)
-				g = 255;
-			if (b < 0)
-				b = 0;
-			if (b > 255)
-				b = 255;
-
-			return new Color(r, g, b, aConst);
-		}
 	}
 
 	private String addXMLHeader(String in) {
@@ -1403,7 +1236,7 @@ public class Recipe {
 		// hops list:
 		sb.append("  <HOPS>\n");
 		sb.append(SBStringUtils.xmlElement("TOTAL", ""
-				+ Quantity.convertUnit("oz", hopUnits, totalHopsOz), 4));
+				+ Quantity.convertUnit(Quantity.OZ, hopUnits, totalHopsOz), 4));
 		for (int i = 0; i < hops.size(); i++) {
 			Hop h = (Hop) hops.get(i);
 			sb.append(h.toXML());
