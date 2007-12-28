@@ -123,9 +123,9 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 	final private JLabel lAcid = new JLabel("Acid: ");
 	final private JLabel lAdd = new JLabel("Add: ");
 	final private JLabel lAcidUnit = new JLabel();
-	final private JTextField textSourcePH = new JTextField();
-	final private JTextField textSourceAlk = new JTextField();
-	final private JTextField textTargetPH = new JTextField();
+	final private JTextField textSourcePH = new JTextField("8.3");
+	final private JTextField textSourceAlk = new JTextField("100");
+	final private JTextField textTargetPH = new JTextField("5.0");
 	final private JTextField textAcidAmount = new JTextField();
 	final private JComboBox comboAcid = new JComboBox(Acid.acidNames);
 	
@@ -267,15 +267,20 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 		}
 		
 		// TODO save/load/options!!!
-		textSourcePH.setText(SBStringUtils.format(8.5, 1));
-		textSourceAlk.setText(SBStringUtils.format(300, 1));
-		textTargetPH.setText(SBStringUtils.format(5.4,1));
+		//textSourcePH.setText(SBStringUtils.format(8.5, 1));
+		//textSourceAlk.setText(SBStringUtils.format(300, 1));
+		//textTargetPH.setText(SBStringUtils.format(5.4,1));
 		comboAcid.setSelectedItem(myRecipe.getAcid().getName());
 		lAcidUnit.setText(myRecipe.getAcid().getAcidUnit());
-		double millEs = BrewCalcs.acidMillequivelantsPerLiter(8.5, 300, 5.4);
-		double moles = BrewCalcs.molesByAcid(myRecipe.getAcid(), millEs, 5.4);
+		double millEs = BrewCalcs.acidMillequivelantsPerLiter(
+				Double.parseDouble(textSourcePH.getText()), 
+				Double.parseDouble(textSourceAlk.getText()),
+				Double.parseDouble(textTargetPH.getText()));
+		double moles = BrewCalcs.molesByAcid(myRecipe.getAcid(), millEs, Double.parseDouble(textTargetPH.getText()));
 		double acidPerL = BrewCalcs.acidAmountPerL(myRecipe.getAcid(), moles);
-		textAcidAmount.setText(SBStringUtils.format(Quantity.convertUnit(Quantity.L, Quantity.GAL, acidPerL), 2));	
+		// This seems backwards but, its not if you think about it
+		// basicaly, I am cheating the function to get the conversion I want
+		textAcidAmount.setText(SBStringUtils.format(Quantity.convertUnit(Quantity.GAL, Quantity.L, acidPerL), 2));	
 	}
 	
 	private void initGUI() {
@@ -535,7 +540,9 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 				constraints.gridy = 4;
 				panelAcid.add(lAdd, constraints);
 				constraints.gridx = 1;
+				constraints.weightx = 1;
 				panelAcid.add(textAcidAmount, constraints);
+				constraints.weightx = 0;
 				textAcidAmount.setEditable(false);
 				constraints.gridx = 2;
 				panelAcid.add(lAcidUnit, constraints);					
