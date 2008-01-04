@@ -15,7 +15,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.17 2007/12/24 18:47:54 jimcdiver Exp $
+ * $Id: Database.java,v 1.18 2008/01/04 13:43:40 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -33,14 +33,14 @@ public class Database {
 	// we might want to move that way in the future.
 	private static Database instance = null;
 	
-	final public ArrayList fermDB = new ArrayList();
-	final public ArrayList hopsDB = new ArrayList();
-	final public ArrayList yeastDB = new ArrayList();
-	public ArrayList styleDB = new ArrayList();
-	final public ArrayList miscDB = new ArrayList();
-	final public ArrayList primeSugarDB = new ArrayList();
-	final public ArrayList waterDB = new ArrayList();
-	final public ArrayList saltDB = new ArrayList();
+	final public ArrayList<Fermentable> fermDB = new ArrayList<Fermentable>();
+	final public ArrayList<Hop> hopsDB = new ArrayList<Hop>();
+	final public ArrayList<Yeast> yeastDB = new ArrayList<Yeast>();
+	public ArrayList<Style> styleDB = new ArrayList<Style>();
+	final public ArrayList<Misc> miscDB = new ArrayList<Misc>();
+	final public ArrayList<PrimeSugar> primeSugarDB = new ArrayList<PrimeSugar>();
+	final public ArrayList<WaterProfile> waterDB = new ArrayList<WaterProfile>();
+	final public ArrayList<Salt> saltDB = new ArrayList<Salt>();
 	public String dbPath;
 
 	// This is now a singleton
@@ -196,7 +196,7 @@ public class Database {
 
 	}
 	
-	public void writeFermentables(ArrayList newIngr, boolean[] add) {		
+	public void writeFermentables(ArrayList<Fermentable> newIngr, boolean[] add) {		
 		
 		File maltsFile = new File(dbPath, "malts.csv");
 		backupFile(maltsFile);
@@ -304,7 +304,7 @@ public class Database {
 
 	}
 	
-	public void writeHops(ArrayList newIngr, boolean[] add) {		
+	public void writeHops(ArrayList<Hop> newIngr, boolean[] add) {		
 			
 		if (!(newIngr.size() > 0))
 			return;
@@ -404,7 +404,7 @@ public class Database {
 
 	}
 	
-	public void writeYeast(ArrayList newIngr, boolean[] add) {		
+	public void writeYeast(ArrayList<Yeast> newIngr, boolean[] add) {		
 		
 		if (!(newIngr.size() > 0))
 			return;
@@ -563,7 +563,7 @@ public class Database {
 
 	}
 	
-	public void writeMisc(ArrayList newIngr, boolean[] add) {		
+	public void writeMisc(ArrayList<Ingredient> newIngr, boolean[] add) {		
 		
 		if (!(newIngr.size() > 0))
 			return;

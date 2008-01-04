@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.14 2007/12/28 19:49:33 jimcdiver Exp $
+ * $Id: Quantity.java,v 1.15 2008/01/04 13:43:40 andrew_avis Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -278,11 +278,11 @@ public class Quantity {
 	/*
 	 * These are "generic" functions you can call on any quantity object (or just
 	 * create a new one).  No!.. we have static functions for a reason. Creating and garbage
-	 * colelcting objects bad.
+	 * collecting objects bad.
 	 */
 
-	static public ArrayList getListofUnits(String type, boolean abrv) {
-		ArrayList list = new ArrayList();
+	static public ArrayList<String> getListofUnits(String type, boolean abrv) {
+		ArrayList<String> list = new ArrayList<String>();
 		int i = 0;
 		if (type.equals("weight")) {
 			for (i = 0; i < weightUnits.length; i++) 
@@ -307,7 +307,7 @@ public class Quantity {
 		return list;
 	}
 
-	static public ArrayList getListofUnits(String type) {
+	static public ArrayList<String> getListofUnits(String type) {
 		return (getListofUnits(type, false));
 	}
 	

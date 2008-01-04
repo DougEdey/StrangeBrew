@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.53 2007/12/28 19:49:33 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.54 2008/01/04 13:43:40 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -1274,15 +1274,15 @@ public class Recipe {
 		sb.append("      <PSI>" + SBStringUtils.format(kegPSI, 2) + "</PSI>\n");
 		sb.append("   </CARB>\n");	
 
-		if (!sourceWater.getName().isEmpty() ||
-			!targetWater.getName().isEmpty()) {
+		if (sourceWater.getName() != "" ||
+			targetWater.getName() != "") {
 			sb.append("   <WATER_PROFILE>\n");
-			if (!sourceWater.getName().isEmpty()) {
+			if (sourceWater.getName() != "") {
 				sb.append("      <SOURCE_WATER>\n");
 				sb.append(sourceWater.toXML(9));
 				sb.append("      </SOURCE_WATER>\n");
 			}
-			if (!targetWater.getName().isEmpty()) {
+			if (targetWater.getName() != "") {
 				sb.append("      <TARGET_WATER>\n");
 				sb.append(targetWater.toXML(9));
 				sb.append("      </TARGET_WATER>\n");
@@ -1420,8 +1420,8 @@ public class Recipe {
 			sb.append(((Note) notes.get(i)).toString());
 		}
 		
-		if (!sourceWater.getName().isEmpty() ||
-			!targetWater.getName().isEmpty()) {
+		if (sourceWater.getName() !="" ||
+			targetWater.getName() !="" ) {
 			sb.append("\nWater Profile\n");
 			sb.append(" Source Water: " + sourceWater.toString() + "\n");
 			sb.append(" Target Water: " + targetWater.toString() + "\n");

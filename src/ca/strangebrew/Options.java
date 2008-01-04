@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.26 2007/12/28 16:41:22 jimcdiver Exp $
+ * $Id: Options.java,v 1.27 2008/01/04 13:43:40 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -271,7 +271,7 @@ public class Options {
 		Locale l = null;
 		String lang = getProperty("optLocaleLang");
 		
-		if (lang == null || lang.isEmpty()) {
+		if (lang == null || lang == "") {
 			l = Locale.getDefault();
 		} else {
 			l =  new Locale(lang,
