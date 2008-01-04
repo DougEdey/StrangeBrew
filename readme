@@ -2,8 +2,8 @@
 +                   README                     +
 ================================================
 
-StrangeBrew Java - 2.0.0
-(c)2000-2007 Drew Avis - drew.avis@gmail.com
+StrangeBrew Java - 2.0.1
+(c)2000-2008 Drew Avis - drew.avis@gmail.com
 
 Thank you for downloading and trying StrangeBrew Java.
 
@@ -27,7 +27,7 @@ This file contains:
  What is this?
 ===============
 
-This is a "release candidate" release of StrangeBrew Java, which means 
+This is a "release quality" release of StrangeBrew Java, which means 
 it's feature-complete, and is pretty stable.  If you find bugs, please
 report them via the Sourceforge bug tracker, or email 
 bugs@strangebrew.ca.
@@ -52,13 +52,13 @@ to download recipes to open with StrangeBrew Java.
 ==========================
 
 Running StrangeBrew:
-1. Unzip the sb_XXX.zip file (where XXX is the latest version, eg: "beta1").
+1. Unzip the sb_XXX.zip file (where XXX is the latest version, eg: "strangebrew2.0.1").
 Be sure to preserve the directory structure.
-2. Type "java -jar StrangeBrew_fat.jar" at the command line.  Under Windows,
+2. Type "java -jar strangebrew.jar" at the command line.  Under Windows,
 you can right-click this file, select "Open With > " and select a Java
 installation. You can also just double-click the file, if ".jar" files
-are associated with javaw.exe.  There's probably a Mac/Linux way to do this, 
-but I don't know what it is.
+are associated with javaw.exe.  Double-clicking reportedly also works on
+Mac OSX.  There's probably a Linux way to do this, but I don't know what it is.
 
 NOTE: StrangeBrew loads data (ingredients, styles, etc) from:
 src/ca/strangebrew/data/
@@ -90,7 +90,7 @@ can chmod 755 strangeBrew_fat.jar and then run it with the following:
 ./strangeBrew_fat.jar
 
 NOTE: At least one person has experienced problems running StrangeBrew on Fedora
-using their 1.4.2 JRE, which is the GNU gcj.  The problem was solved by usin the
+using their 1.4.2 JRE, which is the GNU gcj.  The problem was solved by using the
 1.5 JRE from Sun.  
 
 For Ubuntu:
@@ -130,7 +130,7 @@ You can set the Look and Feel in a couple of ways:
 1. From the Command-line:
 Use the -Dswing.defaultlaf= option when starting the application.
 Here's an example of starting StrangeBrew using the Synthetica LAF:
-java -Dswing.defaultlaf=de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel -jar strangebrew_fat.jar
+java -Dswing.defaultlaf=de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel -jar strangebrew.jar
 
 The "de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel" bit is the full class 
 name of the Look And Feel -- you'll have to read the documentation for each LAF to find 
@@ -152,7 +152,7 @@ Files
 ==========
 
 The file you downloaded should contain these files (at least):
-  * Strangebrew_fat.jar: a Fat Jar file which you can run (see above).  This
+  * strangebrew.jar: a Fat Jar file which you can run (see above).  This
     file also contains the complete Java source for the application.  To
     view the source, decompress this file with an archive utility.
   * gpl.txt: the GPL license this software is distributed under
@@ -173,8 +173,7 @@ Required JRE
 You require a Java Runtime Environment (JRE) on your system to run
 StrangeBrew.  It should run with versions 1.4 and up; I'm using
 1.5.06. (See http://java.sun.com/j2se/1.5.0/index.jsp).  StrangeBrew has
-been tested and runs on Linux, MacOS-X, and Windows.  MacOS-X users may 
-have to install the one-jar library from http://one-jar.sourceforge.net/.
+been tested and runs on Linux, MacOS-X, and Windows.  
 
 ============
 Known Issues
@@ -186,6 +185,7 @@ gravity contribution is calculated using the recipe efficiency, rather than
 100%.  You should uncheck the "M" (for mashed) column, which indicates that
 the ingredient is a sugar.  This applies to all sugar-type fermentables, such
 as honey, DME, LME, maple syrup, and sugars.
+
 * There is no way to add or modify ingredients from within SB Java. Currently 
 any custom data for hops, malts, water profiles, yeast, salts and primeing sugars
 must be entered by hand into the cvs files. *WARNING* These cvs files will be 
@@ -202,6 +202,24 @@ of reported bugs.  If you've found one that's not there, please report it!
 ==========
 What's New
 ==========
+
+2.0.1
+--------
+New Features:
+- New Gravity Teperature Tool Dialog (Request 1222300)
+- New selectable user locale, which affects date format (Bug 1480514)
+- New Fermentation Schedule tab
+- New Carbonation tab
+- New Water Treatment tab
+
+Bugs Fixed:
+- Default hop type (Leaf, Pellet, Plug) is now configurable (Request 1489276) 
+- Text field auto selection (Bug 1489252)
+- You can now select-by-typing in malt and hop lists (Bug 1493279)
+- Mash Steps now insert at end of list (Request 1497970)
+- Changed default bottle unit and size to imperal (Bug 1493267) 
+- UI improvments to the saved "default" mash shceduals
+
 
 2.0.0
 --------
@@ -290,95 +308,6 @@ Bugs Fixed:
   tab. (Bug 1493266)
 - Mash tab now shows step volume and temp. (Bug 1489258)  
 
-Beta 0.6
---------
-New Features:
-- New File > Copy to Clipboard sends the recipe to the system clipboard, so you can
-  easily paste it into another application (such as an email message).
-- Database files are now backed up before new ingredients are added.
-- Hop and Fermentables tables are tweaked for easier viewing of ingredient names.
-- The Fermentables table now has indicators for "Steep" and "Mashed".  A "Steeped" grain
-  can be used in a partial mash or extract session by steeping in warm water - for example,
-  crystal malt.  Mashed malts must be mashed.  If a fermentable is neither steeped nor
-  mashed, it is considered a sugar, and is calculated as contributing 100% of its 
-  potential.
-- New BU:GU indicator on the Style tab (Bug 1489262).  
-- File > Print now launches a web browser with a printable recipe output.
-- Help now launches a web browser with some useless help.
-
-Bugs Fixed:
-- Numbers are now formatted according to local settings, which fixes a NumberFormatException
-  on startup for some regional settings. 
-- New notes now have a default date (current date), which prevents a crash when saving
-  the recipe (Bug 1489273 & 1489269).  
-- You can now specify the total target weight in different units (Bug 1489275).
-- Date fields now have a date picker widget (Bug 1489264).
-- The comments area is now smaller on the Misc tab (Bug 1489254).  
-- Cost and carb boxes are larger on the Prefs dialog (Bug 1489251).
-- You can now set the evaporation default value on the Prefs dialog (Bug 1489248).
-- Various temperatures now convert correctly when you change the temp units 
-  (Bug 1489257 and 1489279).
-- Styles now sorted alphabetically (Bug 1490617).  
-- Batch size now imports correctly.
-- Hop and Fermentables now convert their amount and cost when you change the units.
-
-
-Beta 0.5.1
-----------
-- Made compatible with 1.4 JREs.
-- Water and mash tabs are now updated appropriately when data changes.
-
-Beta 0.5
---------
-- Some menu items now have keyboard shortcuts and pretty icons.
-- You can now set default units for hops, malts, and volume, as well as default
-  batch size.
-- StrangeBrew now remembers its window size and location when you re-start.  
-- You can now set the malt and hops units with a drop-down in the totals area.
-- "New" ingredients are now detected when you open a recipe.  You can choose to
-  add them permanently to your existing ingredient databases.  NOTE: this is currently
-  just a comparison between the ingredient name and the list in the database, so 
-  you could end up with two nearly identical ingredients (eg "pils malt" and 
-  "pilsner malt").
-  
-Fixed in Beta 0.5:
-- Hop and fermentable costs are calculated by using the units for the ingredient,
-  not oz and lbs.
-- Mash table now displays temps to only 1 decimal when you convert between F and C.
-- The colour patch now displays correctly when the colour method is set to EBC.
-- The colour patch now uses new RBG settings when you close the Preferences dialog.
-- When you select "Save" or "Save As...", StrangeBrew now suggests a file name, and
-  adds ".xml" to the file name for you.
-- Fermentables that are not mashed or steeped are now read correctly from a saved
-  file (bug 1483173).
-- SB 1.8 and earlier recipes now import correctly (bug 1483523).
-- XML entities are now saved correctly in descriptions (bug 1483143).    
-- The misc. ingredients in Promash recipes are now read.
-- Values no longer are "jumping" around when you click in different fields on the 
-  water tab.
-- XML import is improved so that malt and hop names aren't occasionally truncated.  
-
-
-Beta 0.4
---------
-- You can now import Promash and BeerXML (BeerSmith) recipes.  Just select
-  the file from the "Open" dialog.  Note: not all Promash data is imported. 
-  This is a short list of items not read: misc ingredients; decoction steps;
-  style data; water details; custom mash schedules.
-  BeerXML files can contain multiple recipes; using File > Open opens just
-  the last recipe in the file.  When you point the Find dialog at a directory
-  containing a BeerXML file with multiple recipes, all the recipes show up in the
-  list.  Use this dialog to select other recipes in a BeerXML file.
-- The cost panel is now fully implemented.  
-- The colour preferences are now fully implemented.  Depending on your system,
-  one of RGB calculation methods may work better than the other.
-- New Resize Dialog to scale your recipe. Note: With some IBU estimation methods
-  (Tinseth and Garetz), IBUs change slightly on resize - this will be fixed in 
-  a future release.
-- Example recipes and data files are now located two different locations.  
-- The UI now uses the JGoodies Plastic3D Look and Feel.
-
-
   
 =========
  Roadmap
@@ -412,7 +341,7 @@ Comments or questions should be directed to drew.avis@gmail.com.
 Building the project
 ====================
 
-Complete StrangeBrew Java source is included in the strangebrew_fat.jar file.
+Complete StrangeBrew Java source is included in the strangebrew.jar file.
 StrangeBrew Java source is also available via CVS via an annonymous pserver 
 connection (see http://sourceforge.net/cvs/?group_id=121177 for more information).
 
@@ -432,6 +361,7 @@ Contributors
 The following people have contributed to the development of this 
 program:
 * Mike Charlton - SWT gui development / Java consulting
+* Jim Clark - bug fixing and new feature development
 * Chris Cook - xslt development
 * Andy Davison - testing
 * Mike Gibson - testing and the splash screen / logo
@@ -459,7 +389,7 @@ Parts of this program are copyright by:
 License
 =======
 
-        Copyright (C) 2006  Drew Avis
+        Copyright (C) 2006-2008  Drew Avis
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
