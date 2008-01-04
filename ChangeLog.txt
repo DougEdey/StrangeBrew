@@ -1,6 +1,9 @@
 Change Log:
 
 Jan 3-4, 2008 - Drew Avis
+- Added some tooltips for toolbar buttons
+- Added copy to clipboard toolbar button
+- Fixed bug where a new hop had Add and Type switched
 - You can now set target vol on the carbonation tab
 - Tried to get priming sugar amount to re-calculate when you set targetVol on the recipe, but gave up
 - Cleaned up some Java 1.6 things (String.isEmpty)

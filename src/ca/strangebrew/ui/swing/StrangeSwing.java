@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.63 2007/12/28 16:41:23 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.64 2008/01/04 21:36:29 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -299,6 +299,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JTextField txtName = new JTextField();
 	final private JFormattedTextField preBoilText = new JFormattedTextField();
 	final private JButton printButton = new JButton();
+	final private JButton copyButton = new JButton();
 
 	final public Database DB;
 	
@@ -1347,7 +1348,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							saveButton.setMnemonic(java.awt.event.KeyEvent.VK_S);
 							saveButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
 								"ca/strangebrew/icons/save.gif")));			
-							
+							saveButton.setToolTipText("Save Recipe");
 							saveButton.addActionListener(new ActionListener(){
 								public void actionPerformed(ActionEvent evt) {
 									saveFile(evt);
@@ -1357,6 +1358,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							mainToolBar.add(findButton);
 							findButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
 								"ca/strangebrew/icons/find.gif")));
+							findButton.setToolTipText("Find Recipes");
 							final JFrame owner = this;
 							findButton.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -1369,11 +1371,25 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							mainToolBar.add(printButton);
 							printButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
 							"ca/strangebrew/icons/print.gif")));
+							printButton.setToolTipText("Print Recipe");
 							printButton.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									PrintDialog pd = new PrintDialog(owner);
 									pd.setModal(true);
 									pd.setVisible(true);
+								}
+							});
+							
+							mainToolBar.add(copyButton);
+							copyButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
+							"ca/strangebrew/icons/copy.gif")));
+							copyButton.setToolTipText("Copy to clipboard");
+							copyButton.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									// Copy current recipe to clipboard
+									 Clipboard clipboard = getToolkit ().getSystemClipboard ();
+									 StringSelection s = new StringSelection(myRecipe.toText());
+									 clipboard.setContents(s, s);
 								}
 							});
 							
@@ -1926,6 +1942,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						});
 						
 						JMenuItem printMenuItem = new JMenuItem("Print...");
+						imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/print.gif");
+						icon = new ImageIcon(imgURL);						
+						printMenuItem.setIcon(icon);						
 						fileMenu.add(printMenuItem);
 						final JFrame owner = this;
 						printMenuItem.addActionListener(new ActionListener() {

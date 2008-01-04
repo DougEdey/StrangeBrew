@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.55 2008/01/04 18:56:13 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.56 2008/01/04 21:36:29 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -1423,8 +1423,8 @@ public class Recipe {
 		if (sourceWater.getName() !="" ||
 			targetWater.getName() !="" ) {
 			sb.append("\nWater Profile\n");
-			sb.append(" Source Water: " + sourceWater.toString() + "\n");
-			sb.append(" Target Water: " + targetWater.toString() + "\n");
+			// sb.append(" Source Water: " + sourceWater.toString() + "\n");
+			// sb.append(" Target Water: " + targetWater.toString() + "\n");
 			
 			if (brewingSalts.size() > 0) {
 				sb.append(" Salt Addisions\n");
