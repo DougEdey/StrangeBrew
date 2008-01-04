@@ -1,5 +1,11 @@
 Change Log:
 
+Jan 3-4, 2008 - Drew Avis
+- You can now set target vol on the carbonation tab
+- Tried to get priming sugar amount to re-calculate when you set targetVol on the recipe, but gave up
+- Cleaned up some Java 1.6 things (String.isEmpty)
+- Made a few changes to reduce compiler warnings (use of raw ArrayList)
+
 Dec 28, 2007 - Jim Clark
 - Consolidated a lot of fixed strings scatetred though out app into static strings to
    help prevent fat fingers and what not and to create more readable code. Still more to

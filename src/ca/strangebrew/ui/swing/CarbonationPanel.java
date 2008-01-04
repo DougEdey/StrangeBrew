@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 
 import ca.strangebrew.BrewCalcs;
 import ca.strangebrew.Database;
+import ca.strangebrew.Debug;
 import ca.strangebrew.Options;
 import ca.strangebrew.PrimeSugar;
 import ca.strangebrew.Quantity;
@@ -48,8 +49,8 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 	final private JLabel lBottleTempU  = new JLabel("F");
 	final private JLabel lServTemp  = new JLabel("Serving Temp");
 	final private JLabel lServTempU  = new JLabel("F");
-	final private JLabel lTargetVol  = new JLabel("Target CO2 Volumn");
-	final private JLabel lStyleVol  = new JLabel("Style CO2 Volumn");
+	final private JLabel lTargetVol  = new JLabel("Target CO2 Volume");
+	final private JLabel lStyleVol  = new JLabel("Style CO2 Volume");
 	final private JLabel lDissolvedVol  = new JLabel("Dissolved CO2 at Bottling: ");
 	final private JLabel lKegPresure  = new JLabel("Keg Presure: ");
 	final private JLabel lKegPSI  = new JLabel("PSI");
@@ -73,7 +74,7 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 	final private JTextField textHeight = new JTextField();
 	final private JComboBox comboPrime = new JComboBox();
 	// TODO needs to be pulled out of some equipment class we don't have
-	// from the equipment managemnt that we haven't done yet!
+	// from the equipment management that we haven't done yet!
 	final private JComboBox comboTubingID = new JComboBox(new String[] {"3/16", "1/4"});
 	final private JCheckBox checkKegged = new JCheckBox("Kegged");
 	
@@ -110,7 +111,7 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 		textTargetVol.setText(SBStringUtils.format(myRecipe.getTargetVol(), 1));
 		textStyleVol.setText("0.0");
 		comboPrime.setSelectedItem(myRecipe.getPrimeSugarName());
-		lPrimeU.setText(myRecipe.getPrimeSugarU());
+		
 		checkKegged.setSelected(myRecipe.isKegged());
 		lBatchSize.setText("Batch Size: " + myRecipe.getFinalWortVol() + 
 				" " + myRecipe.getVolUnits());
@@ -128,13 +129,20 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 		textDissolvedVol.setText(SBStringUtils.format(dissolvedCO2, 1));
 
 		// Calc prime sugar needed
+		// should be done in the recipe object when targetVol is set
+	
+		
 		double primeSugarGL = BrewCalcs.PrimingSugarGL(dissolvedCO2, myRecipe.getTargetVol(), myRecipe.getPrimeSugar());
 		
-		// Convert to selecteed Units
+		
+		// Convert to selected Units
 		double neededPrime = Quantity.convertUnit("g", myRecipe.getPrimeSugarU(), primeSugarGL);
 		neededPrime *= Quantity.convertUnit("l", myRecipe.getVolUnits(), primeSugarGL);
 		neededPrime *= myRecipe.getFinalWortVol();
-		textPrimeAmount.setText(SBStringUtils.format(neededPrime, 2));
+		
+		
+		textPrimeAmount.setText(SBStringUtils.format(neededPrime, 2));		
+		lPrimeU.setText(myRecipe.getPrimeSugarU());
 		
 		// Force carb
 		double psi = BrewCalcs.KegPSI(servTemp, myRecipe.getTargetVol());
@@ -143,7 +151,7 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 		checkKegged.setSelected(myRecipe.isKegged());	
 		
 		// Tubing Length
-		// Again resistance and volumn / foot need to come from an equipment style class!
+		// Again resistance and volume / foot need to come from an equipment style class!
 		double feet = 1;;
 		double resistance = 1;
 		double mlPerFoot = 1;
@@ -394,6 +402,9 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 			} else if (o == textHeight) {
 				height = Double.parseDouble(textHeight.getText());
 				Options.getInstance().setDProperty("optHeightAboveKeg", height);
+				displayCarb();
+			} else if (o == textTargetVol) {
+				myRecipe.setTargetVol(Double.parseDouble(textTargetVol.getText()));
 				displayCarb();
 			}
 		}

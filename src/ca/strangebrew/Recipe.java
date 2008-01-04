@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.54 2008/01/04 13:43:40 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.55 2008/01/04 18:56:13 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -61,12 +61,12 @@ public class Recipe {
 	private Yeast yeast = new Yeast();
 	private WaterProfile sourceWater = new WaterProfile();
 	private WaterProfile targetWater = new WaterProfile();
-	private ArrayList brewingSalts = new ArrayList();
+	private ArrayList<Salt> brewingSalts = new ArrayList<Salt>();
 	private Acid acid = Acid.getAcidByName(Acid.CITRIC);
 	public Mash mash;
 	
 	// Fermentation
-	private ArrayList fermentationSteps = new ArrayList();
+	private ArrayList<FermentStep> fermentationSteps = new ArrayList<FermentStep>();
 
 	// water use:
 	private double chillShrinkQTS;
@@ -120,12 +120,12 @@ public class Recipe {
 	private int totalFermentTime;
 	
 	// ingredients
-	private ArrayList hops = new ArrayList();
-	private ArrayList fermentables = new ArrayList();
-	private ArrayList misc = new ArrayList();
+	private ArrayList<Hop> hops = new ArrayList<Hop>();
+	private ArrayList<Fermentable> fermentables = new ArrayList<Fermentable>();
+	private ArrayList<Misc> misc = new ArrayList<Misc>();
 
 	// notes
-	private ArrayList notes = new ArrayList();
+	private ArrayList<Note> notes = new ArrayList<Note>();
 
 	// default constuctor
 	public Recipe() {
@@ -1693,6 +1693,18 @@ public class Recipe {
 	public void setTargetVol(double targetVol) {
 		isDirty = true;
 		this.targetVol = targetVol;
+		/*
+		double dissolvedCO2 = BrewCalcs.dissolvedCO2(bottleTemp);
+		double primeSugarGL = BrewCalcs.PrimingSugarGL(dissolvedCO2, this.targetVol, this.getPrimeSugar());		
+		
+		// Convert to selected Units
+		double neededPrime = Quantity.convertUnit("g", this.getPrimeSugarU(), primeSugarGL);
+		neededPrime *= Quantity.convertUnit("l", this.getVolUnits(), primeSugarGL);
+		neededPrime *= this.getFinalWortVol();
+		this.primeSugar.setAmountAs(neededPrime, this.getPrimeSugarU());
+		Debug.print("Primesugar set to: " + this.primeSugar.getAmountAs("g"));
+		*/
+
 	}
 
 	public PrimeSugar getPrimeSugar() {

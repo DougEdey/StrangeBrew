@@ -144,7 +144,7 @@ public class BrewCalcs {
 		return GramsPerLitre;
 	}
 	
-	public static WaterProfile calculateSalts(ArrayList salts, WaterProfile waterNeeds, double sizeInGal) {
+	public static WaterProfile calculateSalts(ArrayList<Salt> salts, WaterProfile waterNeeds, double sizeInGal) {
 		// Start with Epsom and set for Mg
 		WaterProfile result = new WaterProfile();
 
