@@ -126,7 +126,7 @@ public class NewIngrDialog extends javax.swing.JDialog {
 		
 		private String[] columnNames = {"Add?", "Type", "Name"};
 
-		private ArrayList data = null;			
+		private ArrayList<Ingredient> data = null;			
 
 		
 		public NewIngrTableModel() {

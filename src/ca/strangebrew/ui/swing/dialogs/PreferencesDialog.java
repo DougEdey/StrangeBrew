@@ -272,9 +272,9 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		volUnitsComboModel.addOrInsert(opts.getProperty("optSizeU"));
 		boilTimeTxt.setText(opts.getProperty("optBoilTime"));
 		hopsTypeComboModel.addOrInsert(opts.getProperty("optHopsType"));
-		ArrayList db = Database.getInstance().waterDB;
+		ArrayList<WaterProfile> db = Database.getInstance().waterDB;
 		for (int i = 0; i < db.size(); i++) {
-			comboWaterProfile.addItem(((WaterProfile)db.get(i)).getName());
+			comboWaterProfile.addItem(db.get(i).getName());
 		}		
 		comboWaterProfile.setSelectedItem(opts.getProperty("optWaterProfile"));
 		
