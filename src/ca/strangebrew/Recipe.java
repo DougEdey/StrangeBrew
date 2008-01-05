@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.60 2008/01/05 20:52:02 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.61 2008/01/05 21:12:20 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -532,19 +532,19 @@ public class Recipe {
 		return fermentationSteps.size();
 	}
 	public String getFermentStepType(int i) {
-		return ((FermentStep)fermentationSteps.get(i)).getType();
+		return fermentationSteps.get(i).getType();
 	}
 	public int getFermentStepTime(int i) {
-		return ((FermentStep)fermentationSteps.get(i)).getTime();
+		return fermentationSteps.get(i).getTime();
 	}
 	public double getFermentStepTemp(int i) {
-		return ((FermentStep)fermentationSteps.get(i)).getTemp();
+		return fermentationSteps.get(i).getTemp();
 	}
 	public String getFermentStepTempU(int i) {
-		return ((FermentStep)fermentationSteps.get(i)).getTempU();
+		return fermentationSteps.get(i).getTempU();
 	}
 	public FermentStep getFermentStep(int i) {
-		return (FermentStep)fermentationSteps.get(i);
+		return fermentationSteps.get(i);
 	}
 	public int getTotalFermentTime() {
 		return totalFermentTime;
@@ -552,21 +552,21 @@ public class Recipe {
 	// Setters
 	public void setFermentStepType(int i, String s) {
 		isDirty = true;
-		((FermentStep)fermentationSteps.get(i)).setType(s);
+		fermentationSteps.get(i).setType(s);
 		Collections.sort(fermentationSteps);		
 	}
 	public void setFermentStepTime(int i, int t) {
 		isDirty = true;
-		((FermentStep)fermentationSteps.get(i)).setTime(t);
+		fermentationSteps.get(i).setTime(t);
 		Collections.sort(fermentationSteps);		
 	}
 	public void setFermentStepTemp(int i, double d) {
 		isDirty = true;
-		((FermentStep)fermentationSteps.get(i)).setTemp(d);
+		fermentationSteps.get(i).setTemp(d);
 	}
 	public void setFermentStepTemptU(int i, String s) {
 		isDirty = true;
-		((FermentStep)fermentationSteps.get(i)).setTempU(s);
+		fermentationSteps.get(i).setTempU(s);
 	}
 	public void addFermentStep(FermentStep fs) {
 		isDirty = true;
@@ -578,7 +578,7 @@ public class Recipe {
 		isDirty = true;
 		FermentStep temp = null;
 		if (!fermentationSteps.isEmpty() && i > -1) {
-			temp = (FermentStep)fermentationSteps.remove(i);
+			temp = fermentationSteps.remove(i);
 			Collections.sort(fermentationSteps);
 			calcFermentTotals();
 		}
@@ -588,7 +588,7 @@ public class Recipe {
 	public void calcFermentTotals() {
 		totalFermentTime = 0;
 		for (int i = 0; i < fermentationSteps.size(); i++) {
-			totalFermentTime += ((FermentStep)fermentationSteps.get(i)).getTime();
+			totalFermentTime += fermentationSteps.get(i).getTime();
 		}
 	}
 	
@@ -597,76 +597,76 @@ public class Recipe {
 		return hopUnits;
 	}
 	public Hop getHop(int i) {
-		return (Hop) hops.get(i);
+		return hops.get(i);
 	}
 	public int getHopsListSize() {
 		return hops.size();
 	}
 	public String getHopName(int i) {
-		return ((Hop) hops.get(i)).getName();
+		return hops.get(i).getName();
 	}
 	public String getHopType(int i) {
-		return ((Hop) hops.get(i)).getType();
+		return hops.get(i).getType();
 	}
 	public double getHopAlpha(int i) {
-		return ((Hop) hops.get(i)).getAlpha();
+		return hops.get(i).getAlpha();
 	}
 	public String getHopUnits(int i) {
-		return ((Hop) hops.get(i)).getUnits();
+		return hops.get(i).getUnits();
 	}
 	public String getHopAdd(int i) {
-		return ((Hop) hops.get(i)).getAdd();
+		return hops.get(i).getAdd();
 	}
 	public int getHopMinutes(int i) {
-		return ((Hop) hops.get(i)).getMinutes();
+		return hops.get(i).getMinutes();
 	}
 	public double getHopIBU(int i) {
-		return ((Hop) hops.get(i)).getIBU();
+		return  hops.get(i).getIBU();
 	}
 	public double getHopCostPerU(int i) {
-		return ((Hop) hops.get(i)).getCostPerU();
+		return hops.get(i).getCostPerU();
 	}
 	public double getHopAmountAs(int i, String s) {
-		return ((Hop) hops.get(i)).getAmountAs(s);
+		return hops.get(i).getAmountAs(s);
 	}
 	public String getHopDescription(int i) {
-		return ((Hop) hops.get(i)).getDescription();
+		return hops.get(i).getDescription();
 	}
 
 	// hop list set functions
 	public void setHopUnits(int i, String u) {
 		isDirty = true;
-		((Hop) hops.get(i)).setUnits(u);
+		hops.get(i).setUnits(u);
 	}
 	public void setHopName(int i, String n) {
 		isDirty = true;
-		((Hop) hops.get(i)).setName(n);
+		hops.get(i).setName(n);
 	}
 	public void setHopType(int i, String t) {
 		isDirty = true;
-		((Hop) hops.get(i)).setType(t);
+		hops.get(i).setType(t);
 	}
 	public void setHopAdd(int i, String a) {
 		isDirty = true;
-		((Hop) hops.get(i)).setAdd(a);
+		hops.get(i).setAdd(a);
 	}
 	public void setHopAlpha(int i, double a) {
 		isDirty = true;
-		((Hop) hops.get(i)).setAlpha(a);
+		hops.get(i).setAlpha(a);
 	}
 	public void setHopMinutes(int i, int m) {
 		isDirty = true;
 		// have to re-sort hops
-		((Hop) hops.get(i)).setMinutes(m);
+		hops.get(i).setMinutes(m);
 		Collections.sort(hops);
 	}
 	public void setHopCost(int i, String c) {
 		isDirty = true;
-		((Hop) hops.get(i)).setCost(c);
+		hops.get(i).setCost(c);
 	}
 	public void setHopAmount(int i, double a) {
 		isDirty = true;
-		((Hop) hops.get(i)).setAmount(a);
+		hops.get(i).setAmount(a);
 	}
 
 	// fermentable get methods
@@ -681,50 +681,50 @@ public class Recipe {
 		return fermentables.size();
 	}
 	public String getMaltName(int i) {
-		return ((Fermentable) fermentables.get(i)).getName();
+		return fermentables.get(i).getName();
 	}
 	public String getMaltUnits(int i) {
-		return ((Fermentable) fermentables.get(i)).getUnits();
+		return fermentables.get(i).getUnits();
 	}
 	public double getMaltPppg(int i) {
-		return ((Fermentable) fermentables.get(i)).getPppg();
+		return fermentables.get(i).getPppg();
 	}
 	public double getMaltLov(int i) {
-		return ((Fermentable) fermentables.get(i)).getLov();
+		return fermentables.get(i).getLov();
 	}
 	public double getMaltCostPerU(int i) {
-		return ((Fermentable) fermentables.get(i)).getCostPerU();
+		return fermentables.get(i).getCostPerU();
 	}
 	public double getMaltPercent(int i) {
-		return ((Fermentable) fermentables.get(i)).getPercent();
+		return fermentables.get(i).getPercent();
 	}
 	public double getMaltAmountAs(int i, String s) {
-		return ((Fermentable) fermentables.get(i)).getAmountAs(s);
+		return fermentables.get(i).getAmountAs(s);
 	}
 	public String getMaltDescription(int i) {
-		return ((Fermentable) fermentables.get(i)).getDescription();
+		return fermentables.get(i).getDescription();
 	}
 	public boolean getMaltMashed(int i) {
-		return ((Fermentable) fermentables.get(i)).getMashed();
+		return fermentables.get(i).getMashed();
 	}
 	public boolean getMaltSteep(int i) {
-		return ((Fermentable) fermentables.get(i)).getSteep();
+		return fermentables.get(i).getSteep();
 	}
 
 	// fermentable set methods
 	public void setMaltName(int i, String n) {
 		// have to re-sort
 		isDirty = true;
-		((Fermentable) fermentables.get(i)).setName(n);
+		fermentables.get(i).setName(n);
 		Collections.sort(fermentables);
 	}
 	public void setMaltUnits(int i, String u) {
 		isDirty = true;
-		((Fermentable) fermentables.get(i)).setUnits(u);
+		fermentables.get(i).setUnits(u);
 	}
 	public void setMaltAmount(int i, double a) {
 		isDirty = true;
-		((Fermentable) fermentables.get(i)).setAmount(a);
+		fermentables.get(i).setAmount(a);
 	}
 	public void setMaltAmountAs(int i, double a, String u) {
 		isDirty = true;
@@ -732,27 +732,27 @@ public class Recipe {
 	}
 	public void setMaltPppg(int i, double p) {
 		isDirty = true;
-		((Fermentable) fermentables.get(i)).setPppg(p);
+		fermentables.get(i).setPppg(p);
 	}
 	public void setMaltLov(int i, double l) {
 		isDirty = true;
-		((Fermentable) fermentables.get(i)).setLov(l);
+		fermentables.get(i).setLov(l);
 	}
 	public void setMaltCost(int i, String c) {
 		isDirty = true;
-		((Fermentable) fermentables.get(i)).setCost(c);
+		fermentables.get(i).setCost(c);
 	}
 	public void setMaltPercent(int i, double p) {
 		isDirty = true;
-		((Fermentable) fermentables.get(i)).setPercent(p);
+		fermentables.get(i).setPercent(p);
 	}
 	public void setMaltSteep(int i, boolean c) {
 		isDirty = true;
-		((Fermentable) fermentables.get(i)).setSteep(c);
+		fermentables.get(i).setSteep(c);
 	}
 	public void setMaltMashed(int i, boolean c) {
 		isDirty = true;
-		((Fermentable) fermentables.get(i)).setMashed(c);
+		fermentables.get(i).setMashed(c);
 	}
 
 	// misc get/set functions
@@ -1042,7 +1042,7 @@ public class Recipe {
 	private void calcEfficiency() {
 		double possiblePoints = 0;
 		for (int i = 0; i < fermentables.size(); i++) {
-			Fermentable m = ((Fermentable) fermentables.get(i));
+			Fermentable m = fermentables.get(i);
 			possiblePoints += (m.getPppg() - 1) * m.getAmountAs(Quantity.LB)
 					/ postBoilVol.getValueAs(Quantity.GAL);
 		}
@@ -1061,7 +1061,7 @@ public class Recipe {
 
 		// first figure out the total we're dealing with
 		for (int i = 0; i < fermentables.size(); i++) {
-			Fermentable m = ((Fermentable) fermentables.get(i));
+			Fermentable m = fermentables.get(i);
 			totalMaltLbs += (m.getAmountAs(Quantity.LB));
 			if (m.getMashed()) { // apply efficiency and add to mash weight
 				maltPoints += (m.getPppg() - 1) * m.getAmountAs(Quantity.LB) * efficiency
@@ -1077,7 +1077,7 @@ public class Recipe {
 
 		// now set the malt % by weight:
 		for (int i = 0; i < fermentables.size(); i++) {
-			Fermentable m = ((Fermentable) fermentables.get(i));
+			Fermentable m = fermentables.get(i);
 			if (m.getAmountAs(Quantity.LB) == 0)
 				m.setPercent(0);
 			else
@@ -1118,7 +1118,7 @@ public class Recipe {
 			// calculate the average OG of the boil
 			// first, the OG at the time of addition:
 			double adjPreSize, aveOg = 0;
-			Hop h = ((Hop) hops.get(i));			
+			Hop h = hops.get(i);			
 
 			int time = h.getMinutes();
 			if (h.getAdd().equalsIgnoreCase(Hop.FWH)) {
@@ -1231,7 +1231,7 @@ public class Recipe {
 		sb.append(SBStringUtils.xmlElement("TOTAL", ""
 				+ Quantity.convertUnit("lb", maltUnits, totalMaltLbs), 4));
 		for (int i = 0; i < fermentables.size(); i++) {
-			Fermentable m = (Fermentable) fermentables.get(i);
+			Fermentable m = fermentables.get(i);
 			sb.append(m.toXML());
 		}
 		sb.append("  </FERMENTABLES>\n");
@@ -1241,7 +1241,7 @@ public class Recipe {
 		sb.append(SBStringUtils.xmlElement("TOTAL", ""
 				+ Quantity.convertUnit(Quantity.OZ, hopUnits, totalHopsOz), 4));
 		for (int i = 0; i < hops.size(); i++) {
-			Hop h = (Hop) hops.get(i);
+			Hop h = hops.get(i);
 			sb.append(h.toXML());
 		}
 		sb.append("  </HOPS>\n");
@@ -1249,7 +1249,7 @@ public class Recipe {
 		// misc ingredients list:
 		sb.append("  <MISC>\n");
 		for (int i = 0; i < misc.size(); i++) {
-			Misc mi = (Misc) misc.get(i);
+			Misc mi = misc.get(i);
 			sb.append(mi.toXML());
 		}
 		sb.append("  </MISC>\n");
@@ -1259,7 +1259,7 @@ public class Recipe {
 		// Fermentation Schedual
 		sb.append("   <FERMENTATION_SCHEDUAL>\n");
 		for (int i = 0; i < fermentationSteps.size(); i++ ) {
-			sb.append(((FermentStep)fermentationSteps.get(i)).toXML());
+			sb.append(fermentationSteps.get(i).toXML());
 		}
 		sb.append("   </FERMENTATION_SCHEDUAL>\n");
 
@@ -1311,7 +1311,7 @@ public class Recipe {
 		// notes list:
 		sb.append("  <NOTES>\n");
 		for (int i = 0; i < notes.size(); i++) {
-			sb.append(((Note) notes.get(i)).toXML());
+			sb.append(notes.get(i).toXML());
 		}
 		sb.append("  </NOTES>\n");
 

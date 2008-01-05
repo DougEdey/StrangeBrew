@@ -1,5 +1,5 @@
 /**
- * $Id: Hop.java,v 1.13 2008/01/05 14:42:04 jimcdiver Exp $
+ * $Id: Hop.java,v 1.14 2008/01/05 21:12:20 jimcdiver Exp $
  * Created on Oct 5, 2004
  *
  * Base class for hops.  This object doesn't do much except hold data and
@@ -78,12 +78,20 @@ public class Hop extends Ingredient {
 	    return sb.toString();
 	}
 	
+	public int compareTo(Ingredient i) {
+		if (i instanceof Hop) {
+			return compareTo((Hop)i);
+		} else {
+			return super.compareTo(i);
+		}
+	}
+	
 	public int compareTo(Hop h) {
 		if (this.getMinutes() == 0 && h.getMinutes() == 0) {
 			return super.compareTo(h);
 		} else {
-			int result = ((Integer)this.getMinutes()).compareTo((Integer)h.getMinutes());
-			return (result == 0 ? -1 : result);			
-		}		
+			int result = ((Integer)h.getMinutes()).compareTo((Integer)this.getMinutes());
+			return (result == 0 ? -1 : result);
+		}
 	}
 }
