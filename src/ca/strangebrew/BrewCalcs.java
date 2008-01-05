@@ -209,9 +209,9 @@ public class BrewCalcs {
 	}
 	
 	public static void updateWater(WaterProfile w, Salt s, double sizeInGal) {
-		ArrayList effs = s.getChemicalEffects();
+		ArrayList<Salt.ChemicalEffect> effs = s.getChemicalEffects();
 		for (int i = 0; i < effs.size(); i++) {
-			Salt.ChemicalEffect eff = (Salt.ChemicalEffect)effs.get(i);
+			Salt.ChemicalEffect eff = effs.get(i);
 			
 			if (eff.getElem().equals(Salt.MAGNESIUM)) {
 				w.setMg((w.getMg() + (eff.getEffect() *  s.getAmount())) * sizeInGal);

@@ -23,10 +23,10 @@ public class WaterProfile implements Comparable<WaterProfile> {
 	
 	public WaterProfile(String name) {
 		// Creates a new water profile based on the name from the db
-		ArrayList profiles = Database.getInstance().waterDB;
+		ArrayList<WaterProfile> profiles = Database.getInstance().waterDB;
 		
 		for (int i = 0; i < profiles.size(); i++) {
-			WaterProfile p = (WaterProfile)profiles.get(i);
+			WaterProfile p = profiles.get(i);
 			if (p.getName().equals(name)) {
 				this.name = p.getName();
 				this.description = p.getDescription();

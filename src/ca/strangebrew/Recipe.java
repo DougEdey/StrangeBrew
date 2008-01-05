@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.61 2008/01/05 21:12:20 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.62 2008/01/05 22:51:07 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -728,7 +728,7 @@ public class Recipe {
 	}
 	public void setMaltAmountAs(int i, double a, String u) {
 		isDirty = true;
-		((Ingredient) fermentables.get(i)).setAmountAs(a, u);
+		fermentables.get(i).setAmountAs(a, u);
 	}
 	public void setMaltPppg(int i, double p) {
 		isDirty = true;
@@ -760,63 +760,63 @@ public class Recipe {
 		return misc.size();
 	}
 	public Misc getMisc(int i) {
-		return (Misc) misc.get(i);
+		return misc.get(i);
 	}
 	public String getMiscName(int i) {
-		return ((Misc) misc.get(i)).getName();
+		return  misc.get(i).getName();
 	}
 	public void setMiscName(int i, String n) {
 		isDirty = true;
-		((Misc) misc.get(i)).setName(n);
+		 misc.get(i).setName(n);
 	}
 	public double getMiscAmount(int i) {
-		Misc m = ((Misc) misc.get(i));
+		Misc m =  misc.get(i);
 		return m.getAmountAs(m.getUnits());
 	}
 	public void setMiscAmount(int i, double a) {
 		isDirty = true;
-		((Misc) misc.get(i)).setAmount(a);
+		 misc.get(i).setAmount(a);
 		calcMiscCost();
 	}
 	public String getMiscUnits(int i) {
-		return ((Misc) misc.get(i)).getUnits();
+		return  misc.get(i).getUnits();
 	}
 	public void setMiscUnits(int i, String u) {
 		isDirty = true;
-		((Misc) misc.get(i)).setUnits(u);
+		 misc.get(i).setUnits(u);
 		calcMiscCost();
 	}
 	public double getMiscCost(int i) {
-		return ((Misc) misc.get(i)).getCostPerU();
+		return  misc.get(i).getCostPerU();
 	}
 	public void setMiscCost(int i, double c) {
 		isDirty = true;
-		((Misc) misc.get(i)).setCost(c);
+		 misc.get(i).setCost(c);
 		calcMiscCost();
 	}
 	public String getMiscStage(int i) {
-		return ((Misc) misc.get(i)).getStage();
+		return  misc.get(i).getStage();
 	}
 	public void setMiscStage(int i, String s) {
 		isDirty = true;
-		((Misc) misc.get(i)).setStage(s);
+		 misc.get(i).setStage(s);
 	}
 	public int getMiscTime(int i) {
-		return ((Misc) misc.get(i)).getTime();
+		return  misc.get(i).getTime();
 	}
 	public void setMiscTime(int i, int t) {
 		isDirty = true;
-		((Misc) misc.get(i)).setTime(t);
+		 misc.get(i).setTime(t);
 	}
 	public String getMiscDescription(int i) {
-		return ((Misc) misc.get(i)).getDescription();
+		return  misc.get(i).getDescription();
 	}
 	public void setMiscComments(int i, String c) {
 		isDirty = true;
-		((Misc) misc.get(i)).setComments(c);
+		 misc.get(i).setComments(c);
 	}
 	public String getMiscComments(int i) {
-		return ((Misc) misc.get(i)).getComments();
+		return  misc.get(i).getComments();
 	}
 
 	// notes get/set methods
@@ -824,25 +824,25 @@ public class Recipe {
 		return notes.size();
 	}
 	public Date getNoteDate(int i) {
-		return ((Note) notes.get(i)).getDate();
+		return  notes.get(i).getDate();
 	}
 	public void setNoteDate(int i, Date d) {
 		isDirty = true;
-		((Note) notes.get(i)).setDate(d);
+		 notes.get(i).setDate(d);
 	}
 	public String getNoteType(int i) {
-		return ((Note) notes.get(i)).getType();
+		return  notes.get(i).getType();
 	}
 	public void setNoteType(int i, String t) {
 		isDirty = true;
-		((Note) notes.get(i)).setType(t);
+		 notes.get(i).setType(t);
 	}
 	public String getNoteNote(int i) {
-		return ((Note) notes.get(i)).getNote();
+		return  notes.get(i).getNote();
 	}
 	public void setNoteNote(int i, String n) {
 		isDirty = true;
-		((Note) notes.get(i)).setNote(n);
+		 notes.get(i).setNote(n);
 	}
 
 	// Setters that need to do extra work:
@@ -994,7 +994,7 @@ public class Recipe {
 	private void calcMiscCost() {
 		totalMiscCost = 0;
 		for (int i = 0; i < misc.size(); i++) {
-			Misc m = (Misc) misc.get(i);
+			Misc m = misc.get(i);
 			totalMiscCost += m.getAmountAs(m.getUnits()) * m.getCostPerU();
 		}
 	}
@@ -1294,7 +1294,7 @@ public class Recipe {
 				sb.append("      <SALTS>\n");
 				for (int i = 0; i < brewingSalts.size(); i++ ) {
 					sb.append("         <SALT>\n");
-					sb.append(((Salt)brewingSalts.get(i)).toXML(12));
+					sb.append(brewingSalts.get(i).toXML(12));
 					sb.append("         </SALT>\n");
 				}
 				sb.append("      </SALTS>\n");
@@ -1379,7 +1379,7 @@ public class Recipe {
 
 		mf = new MessageFormat("{0} {1} {2} {3} {4} {5}\n");
 		for (int i = 0; i < hops.size(); i++) {
-			Hop h = (Hop) hops.get(i);
+			Hop h = hops.get(i);
 
 			Object[] objh = {padLeft(h.getName(), 20, ' '),
 					padRight(" " + SBStringUtils.format(h.getAmountAs(h.getUnits()), 2), 6, ' '),
@@ -1409,7 +1409,7 @@ public class Recipe {
 		sb.append(padLeft("Step ", 10, ' ') + "  Time   Days\n");
 		mf = new MessageFormat("{0} {1} {2}\n");
 		for (int i = 0; i < fermentationSteps.size(); i++ ) {
-			FermentStep f = (FermentStep)fermentationSteps.get(i);
+			FermentStep f = fermentationSteps.get(i);
 				Object[] objm = {padLeft(f.getType(), 10, ' '),
 								padRight(" " + f.getTime(), 6, ' '),
 								padRight(" " + f.getTemp() + f.getTempU(), 6, ' ')};
@@ -1425,7 +1425,7 @@ public class Recipe {
 		
 		sb.append("\nNotes:\n");
 		for (int i = 0; i < notes.size(); i++) {
-			sb.append(((Note) notes.get(i)).toString());
+			sb.append( notes.get(i).toString());
 		}
 		
 		if (sourceWater.getName() !="" ||
@@ -1790,12 +1790,12 @@ public class Recipe {
 	}
 	
 	public Salt getSalt(int i) {
-		return (Salt)this.brewingSalts.get(i);
+		return this.brewingSalts.get(i);
 	}
 	
 	public Salt getSaltByName(String name) {
 		for (int i = 0; i < brewingSalts.size(); i++) {
-			Salt s = (Salt)brewingSalts.get(i);
+			Salt s = brewingSalts.get(i);
 			if (s.getName().equals(name)) {
 				return s;
 			}
