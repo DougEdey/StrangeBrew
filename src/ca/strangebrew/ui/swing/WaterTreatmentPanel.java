@@ -144,12 +144,12 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 		}
 	}
 
-	public void setList(ArrayList waterDB) {
+	public void setList(ArrayList<WaterProfile> waterDB) {
 		// Populate combo	
-		ArrayList db = waterDB;
+		ArrayList<WaterProfile> db = waterDB;
 		for (int i = 0; i < db.size(); i++) {
-			comboSource.addItem(((WaterProfile)db.get(i)).getName());
-			comboTarget.addItem(((WaterProfile)db.get(i)).getName());
+			comboSource.addItem(db.get(i).getName());
+			comboTarget.addItem(db.get(i).getName());
 		}
 
 		// have to have the DB loaded for these boys to work!
@@ -160,9 +160,9 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 		saltName = new String[Database.getInstance().saltDB.size()];
 
 		// Setup special arrays
-		ArrayList salts = Database.getInstance().saltDB;
+		ArrayList<Salt> salts = Database.getInstance().saltDB;
 		for (int i = 0; i < salts.size(); i++) {
-			Salt salt = (Salt)salts.get(i);
+			Salt salt = salts.get(i);
 							
 			saltName[i] = new String(salt.getName());
 			lSalts[i] = new JLabel(salt.getCommonName() + " (" + salt.getChemicalName() + "): ");
@@ -561,20 +561,20 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 		
 		if (o == comboSource) {
 			String s = (String)comboSource.getSelectedItem();
-			ArrayList a = Database.getInstance().waterDB;
+			ArrayList<WaterProfile> a = Database.getInstance().waterDB;
 			WaterProfile w = null;
 			for (int i = 0; i < a.size(); i++) {
-				w = (WaterProfile)a.get(i);
+				w = a.get(i);
 				if (w.getName().equals(s)) {
 					myRecipe.setSourceWater(w);					
 				}
 			}
 		} else if (o == comboTarget) {
 			String s = (String)comboTarget.getSelectedItem();
-			ArrayList a = Database.getInstance().waterDB;
+			ArrayList<WaterProfile> a = Database.getInstance().waterDB;
 			WaterProfile w = null;
 			for (int i = 0; i < a.size(); i++) {
-				w = (WaterProfile)a.get(i);
+				w = a.get(i);
 				if (w.getName().equals(s)) {
 					myRecipe.setTargetWater(w);					
 				}

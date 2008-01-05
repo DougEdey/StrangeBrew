@@ -75,7 +75,7 @@ public class StylePanel extends javax.swing.JPanel {
 		// setStyleData();
 	}
 	
-	public void setList(ArrayList styleList){
+	public void setList(ArrayList<Style> styleList){
 		cmbStyle2Model.setList(styleList);
 	}
 	
@@ -109,7 +109,7 @@ public class StylePanel extends javax.swing.JPanel {
 	}
 	
 	public void checkStyleConformance(){
-		Style s = (Style) cmbStyle2Model.getSelectedItem();
+		Style s = (Style)cmbStyle2Model.getSelectedItem();
 		if (myRecipe.getEstOg() < s.ogLow || 
 				myRecipe.getEstOg() > s.ogHigh)
 			stlRcpOG.setForeground(Color.red);

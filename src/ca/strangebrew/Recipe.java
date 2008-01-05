@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.58 2008/01/05 15:59:04 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.59 2008/01/05 16:35:05 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -925,6 +925,7 @@ public class Recipe {
 		calcMaltTotals();
 		calcHopsTotals();
 		calcPrimeSugar();
+		calcKegPSI();
 		
 		if (!diluted) {
 			dilution.setDilVol(p);
@@ -1600,6 +1601,7 @@ public class Recipe {
 	public void setKegged(boolean kegged) {
 		isDirty = true;
 		this.kegged = kegged;
+		calcKegPSI();
 	}
 	
 	public double getKegPSI() {
@@ -1610,7 +1612,36 @@ public class Recipe {
 		isDirty = true;
 		this.kegPSI = psi;
 	}
-
+	
+	public double getKegTubeLength() {
+		double resistance = 1;
+		if (getKegTubeID().equals("3/16")) {
+			resistance = 2.4;
+		} else {
+			resistance = 0.7;
+		}
+		return (getKegPSI() - (getKegTubeHeight() * 0.5) - 1) / resistance;			
+	}
+	
+	public double getKegTubeVol() {
+		double mlPerFoot = 1;
+		if (getKegTubeID().equals("3/16")) {
+			mlPerFoot = 4.9; 
+		} else {
+			mlPerFoot = 9.9;
+		}
+		
+		return getKegTubeLength() * mlPerFoot; 
+	}
+	
+	public double getKegTubeHeight() {
+		return Options.getInstance().getDProperty("optHeightAboveKeg");
+	}
+	
+	public String getKegTubeID() {
+		return Options.getInstance().getProperty("optTubingID");		
+	}
+	
 	public String getPrimeSugarName() {
 		return primeSugar.getName();
 	}
