@@ -2,10 +2,9 @@ package ca.strangebrew;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 /**
- * $Id: Mash.java,v 1.35 2007/12/28 16:41:22 jimcdiver Exp $
+ * $Id: Mash.java,v 1.36 2008/01/05 14:42:04 jimcdiver Exp $
  * @author aavis
  *
  */
@@ -38,7 +37,7 @@ public class Mash {
 	private double spargeQTS;
 	
 	// steps:
-	private ArrayList steps = new ArrayList();
+	private ArrayList<MashStep> steps = new ArrayList<MashStep>();
 	
 	// configurable temps, can be set by the user:
 	// target temps are 1/2 between temp + next temp
@@ -98,7 +97,7 @@ public class Mash {
 		 myRecipe = r;
 	}
 	
-	public class MashStep {
+	public class MashStep implements Comparable<MashStep> {
 		private String type;
 		private double startTemp;
 		private double endTemp;		
@@ -202,7 +201,14 @@ public class Mash {
 			return type;
 		}
 		
-		public void setType(String s){ type = s; }
+		public void setType(String s) {
+			type = s; 
+		}
+		
+		public int compareTo(MashStep m) {
+				int result = ((Double)this.getStartTemp()).compareTo((Double)m.getStartTemp());
+				return (result == 0 ? -1 : result);
+		}		
 	}
 
 	public void addStep(String type, double st, double et, String m, int min,
@@ -571,7 +577,7 @@ public class Mash {
 			return;
 		
 		// sort the list
-		Collections.sort(steps, new stepComparator());
+		Collections.sort(steps);
 		
 		// add up the cereal mash lbs
 		for (int i=0; i<steps.size(); i++){
@@ -997,22 +1003,4 @@ public class Mash {
 		sb.append("  </MASH>\n");
 		return sb.toString();
 	}
-	
-	 /**
-		 * 
-		 * @author aavis
-		 *
-		 * step comparator to help sort mash steps
-		 * 
-		 */
-		public class stepComparator implements Comparator {			
-			public int compare(Object a, Object b) {
-				Double a1 = new Double(((MashStep)a).getStartTemp());
-				Double b1 = new Double(((MashStep)b).getStartTemp());				
-				int result = a1.compareTo(b1);
-				return (result == 0 ? -1 : result);
-				
-			}
-		}
-
 }

@@ -1,5 +1,5 @@
 /*
- * $Id: XmlBeerXmlHandler.java,v 1.5 2007/09/20 19:46:24 solid54 Exp $
+ * $Id: XmlBeerXmlHandler.java,v 1.6 2008/01/05 14:42:04 jimcdiver Exp $
  * Created on Oct 14, 2004
  */
 package ca.strangebrew;
@@ -22,7 +22,7 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 	private Hop h;
 	private Fermentable f;
 	private Misc m;
-	private ArrayList recipes = new ArrayList();
+	private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 	
 	// private Attributes currentAttributes = null;
 	private String currentList = null; //current List name
@@ -37,7 +37,7 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 		return myRecipe;
 	}
 	
-	public ArrayList getRecipes(){
+	public ArrayList<Recipe> getRecipes(){
 		return recipes;
 	}
 

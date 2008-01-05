@@ -299,7 +299,7 @@ public class CSVReader
     */
    public String[] getAllFieldsInLine() throws EOFException, IOException
    {
-      ArrayList al = new ArrayList( 30 );
+      ArrayList<String> al = new ArrayList<String>( 30 );
       do
          {
          String field = get();

@@ -1,6 +1,6 @@
 package ca.strangebrew;
 
-public class FermentStep {
+public class FermentStep implements Comparable<FermentStep> {
 	private String type;
 	private String tempU;
 	private int time;
@@ -67,4 +67,16 @@ public class FermentStep {
 		this.type = type;
 	}
 	
+	public int compareTo(FermentStep f) {
+		return 0;
+// Broken for some reason.. causes weirdness with UI
+//				// Sort by type then by time
+//				FermentStep fA = (FermentStep)a;
+//				FermentStep fB = (FermentStep)b;
+//				int result = FermentStep.getTypeIndex(fA.getType()) - FermentStep.getTypeIndex(fB.getType());
+//				
+//				if (result == 0) {
+//					result = fA.getTime() - fB.getTime();
+//				}			
+	}
 }

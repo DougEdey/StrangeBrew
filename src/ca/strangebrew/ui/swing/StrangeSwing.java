@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.64 2008/01/04 21:36:29 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.65 2008/01/05 14:42:04 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -100,6 +100,7 @@ import ca.strangebrew.Database;
 import ca.strangebrew.Debug;
 import ca.strangebrew.Fermentable;
 import ca.strangebrew.Hop;
+import ca.strangebrew.Ingredient;
 import ca.strangebrew.OpenImport;
 import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
@@ -110,6 +111,7 @@ import ca.strangebrew.XmlTransformer;
 import ca.strangebrew.Yeast;
 import ca.strangebrew.ui.swing.dialogs.AboutDialog;
 import ca.strangebrew.ui.swing.dialogs.FindDialog;
+import ca.strangebrew.ui.swing.dialogs.HydrometerToolDialog;
 import ca.strangebrew.ui.swing.dialogs.MaltPercentDialog;
 import ca.strangebrew.ui.swing.dialogs.NewIngrDialog;
 import ca.strangebrew.ui.swing.dialogs.PotentialExtractCalcDialog;
@@ -117,7 +119,6 @@ import ca.strangebrew.ui.swing.dialogs.PreferencesDialog;
 import ca.strangebrew.ui.swing.dialogs.PrintDialog;
 import ca.strangebrew.ui.swing.dialogs.RefractometerDialog;
 import ca.strangebrew.ui.swing.dialogs.ScaleRecipeDialog;
-import ca.strangebrew.ui.swing.dialogs.HydrometerToolDialog;
 
 import com.michaelbaranov.microba.calendar.DatePicker;
 
@@ -2227,7 +2228,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			myRecipe.setStyle((Style)DB.styleDB.get(j));
 		// TODO: dialog w/ close matches to this style
 		
-		ArrayList newIngr = new ArrayList();
+		ArrayList<Ingredient> newIngr = new ArrayList<Ingredient>();
 		
 		// check yeast
 		if(DB.inDB(myRecipe.getYeastObj())<0){

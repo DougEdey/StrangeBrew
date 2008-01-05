@@ -1,5 +1,5 @@
 /**
- * $Id: Hop.java,v 1.12 2008/01/04 21:36:29 andrew_avis Exp $
+ * $Id: Hop.java,v 1.13 2008/01/05 14:42:04 jimcdiver Exp $
  * Created on Oct 5, 2004
  *
  * Base class for hops.  This object doesn't do much except hold data and
@@ -9,7 +9,7 @@
 package ca.strangebrew;
 
 
-public class Hop extends Ingredient{
+public class Hop extends Ingredient {
 	private double alpha;
 	private String add;
 	private int minutes;
@@ -76,5 +76,14 @@ public class Hop extends Ingredient{
 	    sb.append( "      <DATE>"+getDate()+"</DATE>\n" );
 	    sb.append( "    </ITEM>\n" );
 	    return sb.toString();
+	}
+	
+	public int compareTo(Hop h) {
+		if (this.getMinutes() == 0 && h.getMinutes() == 0) {
+			return super.compareTo(h);
+		} else {
+			int result = ((Integer)this.getMinutes()).compareTo((Integer)h.getMinutes());
+			return (result == 0 ? -1 : result);			
+		}		
 	}
 }

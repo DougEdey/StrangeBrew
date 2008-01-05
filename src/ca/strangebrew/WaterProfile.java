@@ -2,7 +2,7 @@ package ca.strangebrew;
 
 import java.util.ArrayList;
 
-public class WaterProfile {
+public class WaterProfile implements Comparable<WaterProfile> {
 	private String name;
 	private String description;
 	private double ca;
@@ -179,5 +179,10 @@ public class WaterProfile {
 		xml += SBStringUtils.xmlElement("ALKALINITY", Double.toString(alkalinity), indent);
 
 		return xml;
+	}
+	
+	public int compareTo(WaterProfile w) {
+		int result = this.getName().compareToIgnoreCase(w.getName());				
+		return (result == 0 ? -1 : result);		
 	}
 }

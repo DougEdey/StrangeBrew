@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.56 2008/01/04 21:36:29 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.57 2008/01/05 14:42:04 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -28,7 +28,6 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -554,12 +553,12 @@ public class Recipe {
 	public void setFermentStepType(int i, String s) {
 		isDirty = true;
 		((FermentStep)fermentationSteps.get(i)).setType(s);
-		Collections.sort(fermentationSteps, new ingrComparator());		
+		Collections.sort(fermentationSteps);		
 	}
 	public void setFermentStepTime(int i, int t) {
 		isDirty = true;
 		((FermentStep)fermentationSteps.get(i)).setTime(t);
-		Collections.sort(fermentationSteps, new ingrComparator());		
+		Collections.sort(fermentationSteps);		
 	}
 	public void setFermentStepTemp(int i, double d) {
 		isDirty = true;
@@ -572,7 +571,7 @@ public class Recipe {
 	public void addFermentStep(FermentStep fs) {
 		isDirty = true;
 		fermentationSteps.add(fs);
-		Collections.sort(fermentationSteps, new ingrComparator());
+		Collections.sort(fermentationSteps);
 		calcFermentTotals();
 	}
 	public FermentStep delFermentStep(int i) {
@@ -580,7 +579,7 @@ public class Recipe {
 		FermentStep temp = null;
 		if (!fermentationSteps.isEmpty() && i > -1) {
 			temp = (FermentStep)fermentationSteps.remove(i);
-			Collections.sort(fermentationSteps, new ingrComparator());
+			Collections.sort(fermentationSteps);
 			calcFermentTotals();
 		}
 		
@@ -659,7 +658,7 @@ public class Recipe {
 		isDirty = true;
 		// have to re-sort hops
 		((Hop) hops.get(i)).setMinutes(m);
-		Collections.sort(hops, new ingrComparator());
+		Collections.sort(hops);
 	}
 	public void setHopCost(int i, String c) {
 		isDirty = true;
@@ -717,7 +716,7 @@ public class Recipe {
 		// have to re-sort
 		isDirty = true;
 		((Fermentable) fermentables.get(i)).setName(n);
-		Collections.sort(fermentables, new ingrComparator());
+		Collections.sort(fermentables);
 	}
 	public void setMaltUnits(int i, String u) {
 		isDirty = true;
@@ -952,7 +951,7 @@ public class Recipe {
 	public void addMalt(Fermentable m) {
 		isDirty = true;
 		fermentables.add(m);
-		Collections.sort(fermentables, new ingrComparator());
+		Collections.sort(fermentables);
 		calcMaltTotals();
 	}
 	public void delMalt(int i) {
@@ -965,7 +964,7 @@ public class Recipe {
 	public void addHop(Hop h) {
 		isDirty = true;
 		hops.add(h);
-		Collections.sort(hops, new ingrComparator());
+		Collections.sort(hops);
 		calcHopsTotals();
 	}
 	public void delHop(int i) {
@@ -1437,44 +1436,6 @@ public class Recipe {
 		return sb.toString();
 	}
 		
-	/**
-	 * 
-	 * @author aavis
-	 * 
-	 * ingredient comparator to help sort lists of malts / hops
-	 * 
-	 */
-	private class ingrComparator implements Comparator {
-
-		public int compare(Object a, Object b) {
-			if (a.getClass().getName().equalsIgnoreCase("strangebrew.Fermentable")) {
-				// sort malts by name, default
-				// TODO: read sort order option to sort by other parameters
-				int result = ((Fermentable) a).getName().compareTo(((Fermentable) b).getName());
-				return (result == 0 ? -1 : result);
-			} else if (a.getClass().getName().equalsIgnoreCase("strangebrew.Hop")) {
-				// sort hop additions by minutes
-				Integer a1 = new Integer(((Hop) a).getMinutes());
-				Integer b1 = new Integer(((Hop) b).getMinutes());
-				int result = a1.compareTo(b1);
-				return (result == 0 ? -1 : result);
-			} else if (a.getClass().getName().contains("FermentStep")) {
-				// Turned off for now.. some wierdness with GUI
-//				// Sort by type then by time
-//				FermentStep fA = (FermentStep)a;
-//				FermentStep fB = (FermentStep)b;
-//				int result = FermentStep.getTypeIndex(fA.getType()) - FermentStep.getTypeIndex(fB.getType());
-//				
-//				if (result == 0) {
-//					result = fA.getTime() - fB.getTime();
-//				}				
-				return 0;
-			} else
-				return 0;
-		}
-
-	}
-
 	public class DilutedRecipe {
 		private double dilOG;
 		private double dilIbu;
@@ -1748,11 +1709,11 @@ public class Recipe {
 		this.brewingSalts.remove(i);
 	}
 	
-	public void setSalts(ArrayList s) {
+	public void setSalts(ArrayList<Salt> s) {
 		this.brewingSalts = s;
 	}
 	
-	public ArrayList getSalts() {
+	public ArrayList<Salt> getSalts() {
 		return this.brewingSalts;
 	}
 	

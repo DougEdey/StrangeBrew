@@ -8,7 +8,7 @@ public class Salt {
 	private String chemicalName;
 	private double amount = 0.0;
 	private String amountU = Quantity.G;
-	private ArrayList chemicalEffects = new ArrayList();
+	private ArrayList<ChemicalEffect> chemicalEffects = new ArrayList<ChemicalEffect>();
 	
 	public static final String MAGNESIUM = "Mg";
 	public static final String CHLORINE = "Cl";
@@ -59,7 +59,7 @@ public class Salt {
 		return name;
 	}
 
-	public ArrayList getChemicalEffects() {
+	public ArrayList<ChemicalEffect> getChemicalEffects() {
 		return chemicalEffects;
 	}
 	
@@ -96,7 +96,7 @@ public class Salt {
 	public void addChemicalEffect(String elem, double val) {
 		// Remove old effect of same name first!
 		for (int i = 0; i < this.chemicalEffects.size(); i++) {
-			ChemicalEffect temp = (ChemicalEffect)this.chemicalEffects.get(i);
+			ChemicalEffect temp = this.chemicalEffects.get(i);
 			if (temp.getElem().equals(elem)) {
 				this.chemicalEffects.remove(i);
 				break;
@@ -107,7 +107,7 @@ public class Salt {
 		this.chemicalEffects.add(e);
 	}
 	
-	public void setChemicalEffects(ArrayList effs) {
+	public void setChemicalEffects(ArrayList<ChemicalEffect> effs) {
 		this.chemicalEffects.clear();
 		this.chemicalEffects.addAll(effs);
 	}
@@ -153,10 +153,10 @@ public class Salt {
 		return 0;
 	}
 	
-	static public Salt getSaltByName(ArrayList salts, String name) {
+	static public Salt getSaltByName(ArrayList<Salt> salts, String name) {
 		for (int i = 0; i < salts.size(); i++) {
-			if (((Salt)salts.get(i)).getName().equals(name)) {
-				return (Salt)salts.get(i);
+			if (salts.get(i).getName().equals(name)) {
+				return salts.get(i);
 			}
 		}
 		

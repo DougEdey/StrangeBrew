@@ -5,14 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * $Id: Ingredient.java,v 1.6 2006/09/08 19:42:37 andrew_avis Exp $
+ * $Id: Ingredient.java,v 1.7 2008/01/05 14:42:04 jimcdiver Exp $
  * Created on Oct 21, 2004
  * @author aavis
  *
  * Base class for all ingredients.  Dunno why I didn't do this
  * in the first place.
  */
-public class Ingredient {
+public class Ingredient implements Comparable<Ingredient> {
 	private Quantity amount = new Quantity();
 	private double costPerU;
 	private Date dateBought;
@@ -115,7 +115,8 @@ public class Ingredient {
 		return name;
 	}
 
-	
-	
-
+	public int compareTo(Ingredient i) {
+		int result = this.getName().compareToIgnoreCase(i.getName());				
+		return (result == 0 ? -1 : result);				
+	}
 }

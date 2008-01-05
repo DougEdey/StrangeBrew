@@ -1,14 +1,14 @@
 package ca.strangebrew;
 
 /**
- * $Id: Style.java,v 1.6 2006/05/26 17:30:53 andrew_avis Exp $
+ * $Id: Style.java,v 1.7 2008/01/05 14:42:04 jimcdiver Exp $
  * Created on Oct 21, 2004
  * @author aavis
  * This is a class to create a style object
  * Yes, it would be better as a struct, but what can you do?
  */
 
-public class Style {
+public class Style implements Comparable<Style> {
 
 	public String name = "";
 	public String category;
@@ -290,5 +290,9 @@ public class Style {
 	public String toString() {
 		return getName();
 	}
-
+	
+	public int compareTo(Style s) {
+		int result = this.getName().compareTo(s.getName());
+		return (result == 0 ? -1 : result);
+	}
 }

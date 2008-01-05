@@ -9,13 +9,12 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.18 2008/01/04 13:43:40 andrew_avis Exp $
+ * $Id: Database.java,v 1.19 2008/01/05 14:42:04 jimcdiver Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -136,12 +135,11 @@ public class Database {
 		readSalt(dbPath);
 		
 		// sort
-		ObjComparator sc = new ObjComparator();
-		Collections.sort(styleDB,  sc);
-		Collections.sort(fermDB,  sc);
-		Collections.sort(hopsDB,  sc);
-		Collections.sort(yeastDB,  sc);
-		Collections.sort(waterDB, sc);
+		Collections.sort(styleDB);
+		Collections.sort(fermDB);
+		Collections.sort(hopsDB);
+		Collections.sort(yeastDB);
+		Collections.sort(waterDB);
 	}
 	
 	public void readFermentables(String path) {
@@ -793,38 +791,6 @@ public class Database {
 			return -1;
 		else
 			return i;
-	}
-	
-	public class ObjComparator implements Comparator {
-
-		/* (non-Javadoc)
-		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-		 */
-		public int compare(Object a, Object b) {
-			if (a.getClass().getName().equalsIgnoreCase("ca.strangebrew.Style")) {
-				Style a1 = (Style) a;
-				Style b1 = (Style) b;
-				int result = a1.getName().compareTo(b1.getName());
-				return (result == 0 ? -1 : result);
-			} else if (a.getClass().getName().equalsIgnoreCase("ca.strangebrew.WaterProfile")) {
-				WaterProfile a1 = (WaterProfile) a;
-				WaterProfile b1 = (WaterProfile) b;
-				int result = a1.getName().compareTo(b1.getName());
-				return (result == 0 ? -1 : result);
-			} else if (a.getClass().getName().equalsIgnoreCase("ca.strangebrew.Yeast") ||
-					a.getClass().getName().equalsIgnoreCase("ca.strangebrew.Fermentable") ||
-					a.getClass().getName().equalsIgnoreCase("ca.strangebrew.Misc") ||
-					a.getClass().getName().equalsIgnoreCase("ca.strangebrew.PrimeSugar")) {
-				Ingredient a1 = (Ingredient) a;
-				Ingredient b1 = (Ingredient) b;
-				int result = a1.getName().compareToIgnoreCase(b1.getName());				
-				// Debug.print("a1:" + a1.getName() + "b1:" + b1.getName() + "result:" + result);
-				return (result == 0 ? -1 : result);				
-			} 
-			
-			else return 0;
-		}
-
 	}
 	
 	public void backupFile(File in){

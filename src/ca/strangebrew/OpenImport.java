@@ -14,7 +14,7 @@ public class OpenImport {
 
 	private String fileType = "";
 	private Recipe myRecipe;
-	private ArrayList recipes = null;
+	private ArrayList<Recipe> recipes = null;
 
 	private String checkFileType(File f) {
 
@@ -49,7 +49,7 @@ public class OpenImport {
 	public String getFileType() {
 		return fileType;
 	}
-	public ArrayList getRecipes() {
+	public ArrayList<Recipe> getRecipes() {
 		return recipes;
 	}
 

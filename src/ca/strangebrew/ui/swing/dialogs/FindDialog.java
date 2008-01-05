@@ -1,5 +1,5 @@
 /*
- * $Id: FindDialog.java,v 1.3 2007/12/10 14:54:10 jimcdiver Exp $ 
+ * $Id: FindDialog.java,v 1.4 2008/01/05 14:42:04 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis find recipe window class
  */
 
@@ -65,15 +65,13 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 	private FindTableModel recipeTableModel;
 
 	private Recipe r;
-	private ArrayList recipes;
-	private ArrayList files;
+	private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+	private ArrayList<File> files = new ArrayList<File>();
 	private File currentDir;
 	private StrangeSwing inst;
 
 	public FindDialog(JFrame frame) {
 		super(frame);
-		recipes = new ArrayList();
-		files = new ArrayList();
 		inst = (StrangeSwing) frame;
 		currentDir = new File(SBStringUtils.getAppPath("recipes"));
 		
@@ -208,7 +206,7 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 					files.add(file);
 
 				} else if (openImport.getFileType().equals("beerxml")) {
-					ArrayList rs = openImport.getRecipes();
+					ArrayList<Recipe> rs = openImport.getRecipes();
 					for (int j=0; j<rs.size(); j++){
 						recipes.add(rs.get(j));
 						files.add(file);
@@ -243,13 +241,13 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 
 		private String[] columnNames = {"Recipe", "Style", "Brewer", "Date"};
 
-		private ArrayList data;
+		private ArrayList<Recipe> data;
 
 		public FindTableModel() {
 			// data = new ArrayList();
 		}
 
-		public void setData(ArrayList l) {
+		public void setData(ArrayList<Recipe> l) {
 			data = l;
 		}
 
@@ -271,7 +269,7 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 		public Object getValueAt(int row, int col) {
 
 			try {
-				Recipe r = (Recipe) data.get(row);
+				Recipe r = data.get(row);
 				switch (col) {
 					case 0 :
 						return r.getName();

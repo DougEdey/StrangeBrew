@@ -200,7 +200,7 @@ public class NewIngrDialog extends javax.swing.JDialog {
 		}
 		
 		// makes the boolean into a checkbox
-		public Class getColumnClass(int c) {
+		public Class<?> getColumnClass(int c) {
 	        return getValueAt(0, c).getClass();
 	    }
 

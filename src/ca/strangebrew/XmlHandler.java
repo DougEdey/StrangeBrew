@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.22 2007/12/27 19:01:44 jimcdiver Exp $
+ * $Id: XmlHandler.java,v 1.23 2008/01/05 14:42:04 jimcdiver Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -282,7 +282,7 @@ public class XmlHandler extends DefaultHandler{
 				r.addFermentStep(ferm);	
 			} else if (qName.equalsIgnoreCase("SALT")) {
 				// look up the effects of this salt from the DB
-				ArrayList db = Database.getInstance().saltDB;
+				ArrayList<Salt> db = Database.getInstance().saltDB;
 				Salt dbSalt = Salt.getSaltByName(db, salt.getName());
 				if (dbSalt != null) {
 					salt.setChemicalEffects(dbSalt.getChemicalEffects());

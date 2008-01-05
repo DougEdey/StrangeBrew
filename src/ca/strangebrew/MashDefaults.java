@@ -18,15 +18,14 @@ public class MashDefaults {
 	String fileName = "mashdefaults.csv";
 	
 	// an array of arrays:
-	public ArrayList defaults;		
+	public ArrayList<ArrayList<String>> defaults = new ArrayList<ArrayList<String>>();	
 	
 	public MashDefaults(){		
-		defaults = new ArrayList();		
 		load();
 	}
 	
 	public void add(Mash m, String name){
-		ArrayList def = new ArrayList();
+		ArrayList<String> def = new ArrayList<String>();
 		def.add(name);
 		def.add("" + m.getStepSize());				
 		for (int i=0;i<m.getStepSize(); i++){
@@ -36,8 +35,7 @@ public class MashDefaults {
 			def.add("" + m.getStepMethod(i));					
 		}
 		defaults.add(def);
-		save();
-		
+		save();		
 	}
 	
 	public void set(String name, Recipe r){
@@ -47,7 +45,7 @@ public class MashDefaults {
 		
 		r.allowRecalcs = false;
 		for (int x=0;x<defaults.size();x++){
-			ArrayList d = (ArrayList)defaults.get(x);
+			ArrayList<String> d = defaults.get(x);
 			if (d.contains(name)){				
 				int size = Integer.parseInt(d.get(1).toString());				
 				int j = 2;
@@ -68,7 +66,7 @@ public class MashDefaults {
 	public String[] getNames() {
 		String[] names = new String[defaults.size()];
 		for (int i=0;i<defaults.size();i++){
-			ArrayList d = (ArrayList)defaults.get(i);
+			ArrayList<String> d = defaults.get(i);
 			names[i] = d.get(0).toString();
 		}
 		
@@ -84,7 +82,7 @@ public class MashDefaults {
 			File file = new File(path, fileName);
 			CSVWriter writer = new CSVWriter(new FileWriter(file));
 			for (int i=0;i<defaults.size();i++){
-				ArrayList d = (ArrayList)defaults.get(i);
+				ArrayList<String> d = defaults.get(i);
 				for (int j=0;j<d.size();j++)
 					writer.put(d.get(j).toString());
 				writer.nl();
@@ -98,7 +96,7 @@ public class MashDefaults {
 	
 	private void load(){
 		String path="";
-		defaults = new ArrayList();
+		defaults = new ArrayList<ArrayList<String>>();
 		try {
 			path = SBStringUtils.getAppPath("data");						
 			File file = new File(path, fileName);
@@ -107,7 +105,7 @@ public class MashDefaults {
 				try {					
 					while (true){
 						String[] fields = reader.getAllFieldsInLine();
-						ArrayList d = new ArrayList();
+						ArrayList<String> d = new ArrayList<String>();
 						for (int i=0;i<fields.length;i++){
 							d.add(fields[i]);
 						}

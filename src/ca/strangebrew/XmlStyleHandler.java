@@ -1,5 +1,5 @@
 /*
- * $Id: XmlStyleHandler.java,v 1.8 2007/07/11 14:49:15 andrew_avis Exp $
+ * $Id: XmlStyleHandler.java,v 1.9 2008/01/05 14:42:04 jimcdiver Exp $
  * Created on Oct 14, 2004
  */
 package ca.strangebrew;
@@ -19,7 +19,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class XmlStyleHandler extends DefaultHandler {
 	private Style style = null;
-	private ArrayList styles = new ArrayList();	
+	private ArrayList<Style> styles = new ArrayList<Style>();	
 
 	// private Attributes currentAttributes = null;
 	private String currentList = null; //current List name
@@ -32,7 +32,7 @@ public class XmlStyleHandler extends DefaultHandler {
 
 	private String category = "";
 
-	public ArrayList getStyles() {
+	public ArrayList<Style> getStyles() {
 		return styles;
 	}
 	
