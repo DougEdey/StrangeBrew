@@ -27,28 +27,28 @@ public class ComboModel extends AbstractListModel implements ComboBoxModel {
 		boolean found = false;
 		boolean empty = false;
 		while (i < list.size() && !found && !empty) {			
-			if (o.getClass().getName().toString().equals("ca.strangebrew.Yeast")) {
+			if (o instanceof Yeast) {
 				Yeast y = (Yeast) list.get(i);
 				Yeast y2 = (Yeast) o;
 				found = y.getName().equalsIgnoreCase(y2.getName());
 				// empty = y.getName().equals("");
-			} else if (o.getClass().getName().toString().equals("ca.strangebrew.Fermentable")) {
+			} else if (o instanceof Fermentable) {
 				Fermentable f = (Fermentable) list.get(i);
 				Fermentable f2 = (Fermentable) o;
 				found = f.getName().equalsIgnoreCase(f2.getName());
 				// empty = f.getName().equals("");
-			} else if (o.getClass().getName().toString().equals("ca.strangebrew.Hop")) {
+			} else if (o instanceof Hop) {
 				Hop h = (Hop) list.get(i);
 				Hop h2 = (Hop) o;
 				found = h.getName().equalsIgnoreCase(h2.getName());
 				// empty = h.getName().equals("");
-			} else if (o.getClass().getName().toString().equals("ca.strangebrew.Style")) {
+			} else if (o instanceof Style) {
 				Style s = (Style) list.get(i);
 				Style s2 = (Style) o;
 				found = s.getName().equalsIgnoreCase(s2.getName());
 				// empty = s.getName().equals("");				
 				
-			} else if (o.getClass().getName().toString().equals("java.lang.String")) {
+			} else if (o instanceof String) {
 				String q = (String) list.get(i);
 				String q2 = (String) o;
 				found = q.equalsIgnoreCase(q2);

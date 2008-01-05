@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.27 2007/12/28 16:41:23 jimcdiver Exp $
+ * $Id: MashPanel.java,v 1.28 2008/01/05 21:24:12 jimcdiver Exp $
  *  @author aavis 
  */
 
@@ -541,7 +541,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			JMenuItem m = new JMenuItem(nameTxt.getText());
 			m.addActionListener(this);
 			mashMenu.add(m);			
-		} else if (o.getClass().getName().endsWith("JMenuItem")){
+		} else if (o instanceof JMenuItem) {
 			String name = ((JMenuItem)o).getText();
 			md.set(name, myRecipe);	
 			mashModel.setData(myRecipe.getMash());				

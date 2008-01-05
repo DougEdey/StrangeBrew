@@ -17,8 +17,12 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.AbstractTableModel;
 
 import ca.strangebrew.Database;
+import ca.strangebrew.Fermentable;
+import ca.strangebrew.Hop;
 import ca.strangebrew.Ingredient;
+import ca.strangebrew.Misc;
 import ca.strangebrew.SBStringUtils;
+import ca.strangebrew.Yeast;
 import ca.strangebrew.ui.swing.StrangeSwing;
 
 
@@ -241,16 +245,16 @@ public class NewIngrDialog extends javax.swing.JDialog {
 		boolean addYeast = false;
 		boolean addMisc = false;
 		for (int i=0;i<newIngrList.size();i++){
-			if (newIngrList.get(i).getClass().getName().equals("ca.strangebrew.Hop") &&
+			if (newIngrList.get(i) instanceof Hop &&
 					add[i])
 					addHops = true;	
-			if (newIngrList.get(i).getClass().getName().equals("ca.strangebrew.Fermentable") &&
+			if (newIngrList.get(i) instanceof Fermentable &&
 					add[i])
 					addFerm = true;
-			if (newIngrList.get(i).getClass().getName().equals("ca.strangebrew.Yeast") &&
+			if (newIngrList.get(i) instanceof Yeast &&
 					add[i])
 					addYeast = true;
-			if (newIngrList.get(i).getClass().getName().equals("ca.strangebrew.Misc") &&
+			if (newIngrList.get(i) instanceof Misc &&
 					add[i])
 					addMisc = true;
 		}

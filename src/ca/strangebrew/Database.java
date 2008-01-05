@@ -14,7 +14,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.19 2008/01/05 14:42:04 jimcdiver Exp $
+ * $Id: Database.java,v 1.20 2008/01/05 21:24:12 jimcdiver Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -54,7 +54,7 @@ public class Database {
 	}
 	
 	public int inDB(Object o){		
-		if (o.getClass().getName().equals("ca.strangebrew.Yeast")) {
+		if (o instanceof Yeast) {
 			for (int i=0; i<yeastDB.size(); i++){
 				Yeast y1 = (Yeast)o;
 				Yeast y2 = (Yeast)yeastDB.get(i);
@@ -62,7 +62,7 @@ public class Database {
 					return i;			
 				}
 			}			
-		} else if (o.getClass().getName().equals("ca.strangebrew.Fermentable")) {
+		} else if (o instanceof Fermentable) {
 			for (int i=0; i<fermDB.size(); i++){
 				Fermentable y1 = (Fermentable)o;
 				Fermentable y2 = (Fermentable)fermDB.get(i);
@@ -70,7 +70,7 @@ public class Database {
 					return i;			
 				}
 			}
-		} else if (o.getClass().getName().equals("ca.strangebrew.Hop")) {
+		} else if (o instanceof Hop) {
 			for (int i=0; i<hopsDB.size(); i++){
 				Hop y1 = (Hop)o;
 				Hop y2 = (Hop)hopsDB.get(i);
@@ -78,7 +78,7 @@ public class Database {
 					return i;			
 				}
 			}
-		} else if (o.getClass().getName().equals("ca.strangebrew.Misc")) {
+		} else if (o instanceof Misc) {
 			for (int i=0; i<miscDB.size(); i++){
 				Misc y1 = (Misc)o;
 				Misc y2 = (Misc)miscDB.get(i);
@@ -86,7 +86,7 @@ public class Database {
 					return i;			
 				}
 			}
-		} else if (o.getClass().getName().equals("ca.strangebrew.Style")) {
+		} else if (o instanceof Style) {
 			for (int i=0; i<styleDB.size(); i++){
 				Style y1 = (Style)o;
 				Style y2 = (Style)styleDB.get(i);
@@ -94,7 +94,7 @@ public class Database {
 					return i;			
 				}
 			}
-		} else if (o.getClass().getName().equals("ca.strangebrew.PrimeSugar")) {
+		} else if (o instanceof PrimeSugar) {
 			for (int i=0; i<primeSugarDB.size(); i++){
 				PrimeSugar y1 = (PrimeSugar)o;
 				PrimeSugar y2 = (PrimeSugar)primeSugarDB.get(i);
@@ -102,7 +102,7 @@ public class Database {
 					return i;			
 				}
 			}
-		} else if (o.getClass().getName().equals("ca.strangebrew.WaterProfile")) {
+		} else if (o instanceof WaterProfile) {
 			for (int i=0; i<waterDB.size(); i++){
 				WaterProfile y1 = (WaterProfile)o;
 				WaterProfile y2 = (WaterProfile)waterDB.get(i);
@@ -110,7 +110,7 @@ public class Database {
 					return i;			
 				}
 			}
-		} else if (o.getClass().getName().equals("ca.strangebrew.Salt")) {
+		} else if (o instanceof Salt) {
 			for (int i=0; i<saltDB.size(); i++){
 				Salt y1 = (Salt)o;
 				Salt y2 = (Salt)saltDB.get(i);
@@ -220,7 +220,7 @@ public class Database {
 					f = (Fermentable) fermDB.get(i);
 					i++;					
 				} else if (j < newIngr.size()) {
-					if (newIngr.get(j).getClass().getName().equals("ca.strangebrew.Fermentable")
+					if (newIngr.get(j) instanceof Fermentable
 							&& add[j]){
 						f = (Fermentable) newIngr.get(j);						
 					}
@@ -329,7 +329,7 @@ public class Database {
 					h = (Hop) hopsDB.get(i);
 					i++;					
 				} else if (j < newIngr.size()) {
-					if (newIngr.get(j).getClass().getName().equals("ca.strangebrew.Hop")
+					if (newIngr.get(j) instanceof Hop
 							&& add[j]){
 						h = (Hop) newIngr.get(j);						
 					}
@@ -424,7 +424,7 @@ public class Database {
 					y = (Yeast) yeastDB.get(i);
 					i++;					
 				} else if (j < newIngr.size()) {
-					if (newIngr.get(j).getClass().getName().equals("ca.strangebrew.Yeast")
+					if (newIngr.get(j) instanceof Yeast
 							&& add[j]){
 						y = (Yeast) newIngr.get(j);						
 					}
@@ -585,7 +585,7 @@ public class Database {
 					m = (Misc) miscDB.get(i);
 					i++;					
 				} else if (j < newIngr.size()) {
-					if (newIngr.get(j).getClass().getName().equals("ca.strangebrew.Misc")
+					if (newIngr.get(j) instanceof Misc
 							&& add[j]){
 						m = (Misc) newIngr.get(j);						
 					}

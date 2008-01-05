@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.65 2008/01/05 14:42:04 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.66 2008/01/05 21:24:12 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -487,7 +487,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		String s = "";
 		// String t = "";
 		
-		if (!o.getClass().getName().endsWith("TextField"))
+		if (!(o instanceof JTextField))
 			return;
 		
 		s = ((JTextField) o).getText();

@@ -8,6 +8,7 @@ Jan 5, 2008 - Jim Clark
 - Moved water treatment/acid/salt calcs into recipe
 - Added acid to save/load/xlst printing
 - Acid pulls values from source and target water (perhaps a bad thing?)
+- Changed some class comparisons to use instanceof keyword instead of string compareing the class name
 
 Jan 3-4, 2008 - Drew Avis
 - Added some tooltips for toolbar buttons
