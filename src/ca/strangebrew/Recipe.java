@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.57 2008/01/05 14:42:04 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.58 2008/01/05 15:59:04 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -924,6 +924,8 @@ public class Recipe {
 		preBoilVol.setAmount(pre);
 		calcMaltTotals();
 		calcHopsTotals();
+		calcPrimeSugar();
+		
 		if (!diluted) {
 			dilution.setDilVol(p);
 		} else {
@@ -1579,6 +1581,7 @@ public class Recipe {
 	public void setBottleTemp(double bottleTemp) {
 		isDirty = true;
 		this.bottleTemp = bottleTemp;
+		calcPrimeSugar();
 	}
 
 	public String getCarbTempU() {
@@ -1599,8 +1602,8 @@ public class Recipe {
 		this.kegged = kegged;
 	}
 	
-	public double getKetPSI() {
-		return this.kegPSI;
+	public double getKegPSI() {
+		return this.kegPSI;	
 	}
 	
 	public void setKegPSI(double psi) {
@@ -1619,23 +1622,46 @@ public class Recipe {
 	public void setPrimeSugarU(String primeU) {
 		isDirty = true;
 		this.primeSugar.setUnits(primeU);
+		calcPrimeSugar();	
+	}
+
+	public double getPrimeSugarAmt() {
+		return primeSugar.getAmountAs(primeSugar.getUnitsAbrv());
+	}
+		
+	public void calcPrimeSugar() {
+		double dissolvedCO2 = BrewCalcs.dissolvedCO2(getBottleTemp());
+		double primeSugarGL = BrewCalcs.PrimingSugarGL(dissolvedCO2, getTargetVol(), getPrimeSugar());
+				
+		// Convert to selected Units
+		double neededPrime = Quantity.convertUnit(Quantity.G, getPrimeSugarU(), primeSugarGL);
+		neededPrime *= Quantity.convertUnit(Quantity.L, getVolUnits(), primeSugarGL);
+		neededPrime *= getFinalWortVol();
+		
+		primeSugar.setAmount(neededPrime);
+	}
+	
+	public void calcKegPSI() {
+		double psi = BrewCalcs.KegPSI(servTemp, getTargetVol());
+		kegPSI = psi;
 	}
 
 	public void setPrimeSugarName(String n) {
 		isDirty = true;
 		this.primeSugar.setName(n);
 		// Name comes with Yeild! set it too
-		ArrayList db = Database.getInstance().primeSugarDB;
+		ArrayList<PrimeSugar> db = Database.getInstance().primeSugarDB;
 		for (int i = 0; i < db.size(); i++) {
-			if (n.equals(((PrimeSugar)db.get(i)).getName())) {
-				this.primeSugar.setYield(((PrimeSugar)db.get(i)).getYield());
+			if (n.equals(db.get(i).getName())) {
+				this.primeSugar.setYield(db.get(i).getYield());
+				calcPrimeSugar();	
 			}
 		}
 	}
 	
 	public void setPrimeSugarAmount(double q) {
 		isDirty = true;
-		this.primeSugar.setAmount(q);
+		this.primeSugar.setAmount(q);		
 	}
 	
 	public double getServTemp() {
@@ -1645,27 +1671,18 @@ public class Recipe {
 	public void setServTemp(double servTemp) {
 		isDirty = true;
 		this.servTemp = servTemp;
+		calcKegPSI();
 	}
 
 	public double getTargetVol() {
-		return targetVol;
+		return targetVol;	
 	}
 
 	public void setTargetVol(double targetVol) {
 		isDirty = true;
 		this.targetVol = targetVol;
-		/*
-		double dissolvedCO2 = BrewCalcs.dissolvedCO2(bottleTemp);
-		double primeSugarGL = BrewCalcs.PrimingSugarGL(dissolvedCO2, this.targetVol, this.getPrimeSugar());		
-		
-		// Convert to selected Units
-		double neededPrime = Quantity.convertUnit("g", this.getPrimeSugarU(), primeSugarGL);
-		neededPrime *= Quantity.convertUnit("l", this.getVolUnits(), primeSugarGL);
-		neededPrime *= this.getFinalWortVol();
-		this.primeSugar.setAmountAs(neededPrime, this.getPrimeSugarU());
-		Debug.print("Primesugar set to: " + this.primeSugar.getAmountAs("g"));
-		*/
-
+		calcPrimeSugar();
+		calcKegPSI();
 	}
 
 	public PrimeSugar getPrimeSugar() {
@@ -1674,6 +1691,7 @@ public class Recipe {
 
 	public void setPrimeSugar(PrimeSugar primeSugar) {
 		this.primeSugar = primeSugar;
+		calcPrimeSugar();			
 	}
 
 	public WaterProfile getSourceWater() {

@@ -20,7 +20,6 @@ import ca.strangebrew.Database;
 import ca.strangebrew.Debug;
 import ca.strangebrew.Options;
 import ca.strangebrew.PrimeSugar;
-import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 
@@ -100,6 +99,7 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 		myRecipe = r;
 		height = Options.getInstance().getDProperty("optHeightAboveKeg");
 		tubeID = Options.getInstance().getProperty("optTubingID");
+	
 		displayCarb();
 	}
 	
@@ -118,35 +118,19 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 		
 		double dissolvedCO2 = 0.0;
 		double bottleTemp = myRecipe.getBottleTemp();
-		double servTemp = myRecipe.getServTemp();
 		
 		if (myRecipe.getCarbTempU().equals("C")) {
 			bottleTemp = BrewCalcs.cToF(bottleTemp);
-			servTemp =  BrewCalcs.cToF(servTemp);
 		}		
 		
 		dissolvedCO2 = BrewCalcs.dissolvedCO2(bottleTemp);
-		textDissolvedVol.setText(SBStringUtils.format(dissolvedCO2, 1));
-
-		// Calc prime sugar needed
-		// should be done in the recipe object when targetVol is set
-	
-		
-		double primeSugarGL = BrewCalcs.PrimingSugarGL(dissolvedCO2, myRecipe.getTargetVol(), myRecipe.getPrimeSugar());
-		
-		
-		// Convert to selected Units
-		double neededPrime = Quantity.convertUnit("g", myRecipe.getPrimeSugarU(), primeSugarGL);
-		neededPrime *= Quantity.convertUnit("l", myRecipe.getVolUnits(), primeSugarGL);
-		neededPrime *= myRecipe.getFinalWortVol();
-		
-		
-		textPrimeAmount.setText(SBStringUtils.format(neededPrime, 2));		
+		textDissolvedVol.setText(SBStringUtils.format(dissolvedCO2, 1));	
+//		myRecipe.calcPrimeSugar();
+		textPrimeAmount.setText(SBStringUtils.format(myRecipe.getPrimeSugarAmt(), 2));		
 		lPrimeU.setText(myRecipe.getPrimeSugarU());
 		
 		// Force carb
-		double psi = BrewCalcs.KegPSI(servTemp, myRecipe.getTargetVol());
-		textKegPresure.setText(SBStringUtils.format(psi, 1));
+		textKegPresure.setText(SBStringUtils.format(myRecipe.getKegPSI(), 1));
 		lPrimeU.setText(myRecipe.getPrimeSugarU());
 		checkKegged.setSelected(myRecipe.isKegged());	
 		
@@ -165,7 +149,7 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 			mlPerFoot = 9.9;
 		}
 		
-		feet = (psi - (height * 0.5) - 1) / resistance;
+		feet = (myRecipe.getKegPSI() - (height * 0.5) - 1) / resistance;
 		textTubingFeet.setText(SBStringUtils.format(feet, 1));
 		textTubingVol.setText(SBStringUtils.format(feet * mlPerFoot, 1));
 	}
@@ -375,22 +359,16 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 		Object o = e.getSource();
 		if (myRecipe != null) {
 			if (o == comboPrime) {
-				updatePrimeSugar((String)comboPrime.getSelectedItem(), 
-					Double.parseDouble(textPrimeAmount.getText()),
-					myRecipe.getPrimeSugarU());			
+				updatePrimeSugar((String)comboPrime.getSelectedItem(), myRecipe.getPrimeSugarU());			
 				displayCarb();
 			} else if (o == textBottleTemp) {
 				myRecipe.setBottleTemp(Double.parseDouble(textBottleTemp.getText()));
 				displayCarb();
-				updatePrimeSugar((String)comboPrime.getSelectedItem(), 
-					Double.parseDouble(textPrimeAmount.getText()),
-					myRecipe.getPrimeSugarU());			
+				updatePrimeSugar((String)comboPrime.getSelectedItem(), myRecipe.getPrimeSugarU());			
 			} else if (o == textServTemp) {			
 				myRecipe.setServTemp(Double.parseDouble(textServTemp.getText()));
 				displayCarb();
-				updatePrimeSugar((String)comboPrime.getSelectedItem(), 
-					Double.parseDouble(textPrimeAmount.getText()),
-					myRecipe.getPrimeSugarU());			
+				updatePrimeSugar((String)comboPrime.getSelectedItem(), myRecipe.getPrimeSugarU());			
 			} else if (o == checkKegged) {			
 				myRecipe.setKegged(checkKegged.isSelected());
 				displayCarb();
@@ -410,7 +388,7 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 		}
 	}
 	
-	private void updatePrimeSugar(String name, double quantity, String unit) {
+	private void updatePrimeSugar(String name, String unit) {
 		PrimeSugar newF = new PrimeSugar();
 		ArrayList ar = Database.getInstance().primeSugarDB;
 		for (int i = 0; i < ar.size(); i++) {
@@ -421,7 +399,6 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 		
 		myRecipe.setPrimeSugar(newF);
 		myRecipe.setPrimeSugarU(unit);
-		myRecipe.setPrimeSugarAmount(quantity);
 	}
 	
 	public void focusLost(FocusEvent e) {		

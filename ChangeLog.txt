@@ -4,6 +4,7 @@ Jan 5, 2008 - Jim Clark
 - Down to 8 Type safty warrnings by implemeing various Collection<Type> stuff. The ones that are
    left are because of type casting wierdness that isn't Java best pratices.. but still works. They
    will have to be reimplemented to fix.
+- Moved prime sugar and keg presure calcs into Recipe from UI
 
 Jan 3-4, 2008 - Drew Avis
 - Added some tooltips for toolbar buttons
