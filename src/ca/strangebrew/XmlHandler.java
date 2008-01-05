@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.23 2008/01/05 14:42:04 jimcdiver Exp $
+ * $Id: XmlHandler.java,v 1.24 2008/01/05 20:52:02 jimcdiver Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -214,6 +214,8 @@ public class XmlHandler extends DefaultHandler{
 			water = new WaterProfile();
 		} else if (currentList.equals("WATER_PROFILE") && eName.equalsIgnoreCase("SALTS")) {
 			currentSubList = "SALTS";		
+		} else if (currentList.equals("WATER_PROFILE") && eName.equalsIgnoreCase("ACID")) {
+			currentSubList = "ACID";		
 		} else if (currentList.equals("WATER_PROFILE") && 
 				currentSubList.equals("SALTS") && eName.equalsIgnoreCase("SALT")) {
 			salt = new Salt();
@@ -298,6 +300,8 @@ public class XmlHandler extends DefaultHandler{
 				r.setTargetWater(water);
 				water = null;
 			} else if (qName.equalsIgnoreCase("SALTS")) {
+				currentSubList = "";
+			} else if (qName.equalsIgnoreCase("ACID")) {
 				currentSubList = "";
 			} // there's a problem with having two elements named "NOTES" : 
 			  else if (qName.equalsIgnoreCase("FERMENTABLS")
@@ -609,7 +613,11 @@ public class XmlHandler extends DefaultHandler{
 				ferm.setTime(Integer.parseInt(s));
 			}
 		} else if (currentList.equalsIgnoreCase("WATER_PROFILE")) {
-			if (currentSubList.equalsIgnoreCase("SALTS")) {
+			if (currentSubList.equalsIgnoreCase("ACID")) {
+				if (currentElement.equalsIgnoreCase("NAME")) {
+					r.setAcid(Acid.getAcidByName(s));
+				}
+			} else if (currentSubList.equalsIgnoreCase("SALTS")) {
 				// Read in a salt
 				if (currentElement.equalsIgnoreCase("NAME")) {
 					salt.setName(s);

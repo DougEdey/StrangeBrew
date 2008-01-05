@@ -23,7 +23,6 @@ import javax.swing.border.TitledBorder;
 import ca.strangebrew.Acid;
 import ca.strangebrew.BrewCalcs;
 import ca.strangebrew.Database;
-import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.Salt;
@@ -191,6 +190,8 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 	public void displayWaterTreatment() {
 		WaterProfile source = myRecipe.getSourceWater();
 		WaterProfile target = myRecipe.getTargetWater();
+		WaterProfile diff = myRecipe.getWaterDifference();
+		WaterProfile resultWater = BrewCalcs.calculateSalts(myRecipe.getSalts(), diff, 1);
 		
 		comboSource.setSelectedItem(source.getName());
 		comboTarget.setSelectedItem(target.getName());
@@ -217,19 +218,6 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 		textTDST.setText(SBStringUtils.format(target.getTds(), 1));
 		textMashPHT.setText(SBStringUtils.format(target.getPh(), 1));	
 		
-		// Chemistry diff
-		WaterProfile diff = new WaterProfile();
-		diff.setCa(target.getCa() - source.getCa());
-		diff.setCl(target.getCl() - source.getCl());
-		diff.setMg(target.getMg() - source.getMg());
-		diff.setNa(target.getNa() - source.getNa());
-		diff.setSo4(target.getSo4() - source.getSo4());
-		diff.setHco3(target.getHco3() - source.getHco3());
-		diff.setHardness(target.getHardness() - source.getHardness());
-		diff.setAlkalinity(target.getAlkalinity() - source.getAlkalinity());
-		diff.setTds(target.getTds() - source.getTds());
-		diff.setPh(source.getPh() - source.getPh());
-		
 		textCaD.setText(SBStringUtils.format(diff.getCa(), 1));
 		textClD.setText(SBStringUtils.format(diff.getCl(), 1));
 		textMgD.setText(SBStringUtils.format(diff.getMg(), 1));
@@ -240,11 +228,6 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 		textAlkD.setText(SBStringUtils.format(diff.getAlkalinity(), 1));
 		textTDSD.setText(SBStringUtils.format(diff.getTds(), 1));
 		textMashPHD.setText(SBStringUtils.format(diff.getPh(), 1));
-		
-		// Calculate brewing salts!
-		WaterProfile resultWater;
-		resultWater = BrewCalcs.calculateSalts(myRecipe.getSalts(), diff, 1);
-				//Quantity.convertUnit(myRecipe.getVolUnits(), Quantity.GAL, myRecipe.getFinalWortVol()));
 		
 		textCaR.setText(SBStringUtils.format(resultWater.getCa(), 1));
 		textClR.setText(SBStringUtils.format(resultWater.getCl(), 1));
@@ -267,20 +250,14 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 		}
 		
 		// TODO save/load/options!!!
-		//textSourcePH.setText(SBStringUtils.format(8.5, 1));
-		//textSourceAlk.setText(SBStringUtils.format(300, 1));
-		//textTargetPH.setText(SBStringUtils.format(5.4,1));
+		textSourcePH.setText(SBStringUtils.format(source.getPh(), 1));
+		textSourceAlk.setText(SBStringUtils.format(source.getAlkalinity(), 1));
+		textTargetPH.setText(SBStringUtils.format(target.getPh(), 1));
 		comboAcid.setSelectedItem(myRecipe.getAcid().getName());
 		lAcidUnit.setText(myRecipe.getAcid().getAcidUnit());
-		double millEs = BrewCalcs.acidMillequivelantsPerLiter(
-				Double.parseDouble(textSourcePH.getText()), 
-				Double.parseDouble(textSourceAlk.getText()),
-				Double.parseDouble(textTargetPH.getText()));
-		double moles = BrewCalcs.molesByAcid(myRecipe.getAcid(), millEs, Double.parseDouble(textTargetPH.getText()));
-		double acidPerL = BrewCalcs.acidAmountPerL(myRecipe.getAcid(), moles);
 		// This seems backwards but, its not if you think about it
 		// basicaly, I am cheating the function to get the conversion I want
-		textAcidAmount.setText(SBStringUtils.format(Quantity.convertUnit(Quantity.GAL, Quantity.L, acidPerL), 2));	
+		textAcidAmount.setText(SBStringUtils.format(myRecipe.getAcidAmount(), 2));	
 	}
 	
 	private void initGUI() {
@@ -503,8 +480,7 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 				constraints.gridx = 1;
 				constraints.gridwidth = 2;
 				panelAcid.add(textSourcePH, constraints);
-				textSourcePH.addActionListener(this);
-				textSourcePH.addKeyListener(this);
+				textSourcePH.setEditable(false);
 				constraints.gridwidth = 1;
 
 				constraints.gridx = 0;
@@ -513,8 +489,7 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 				constraints.gridx = 1;
 				constraints.gridwidth = 2;
 				panelAcid.add(textSourceAlk, constraints);
-				textSourceAlk.addActionListener(this);
-				textSourceAlk.addKeyListener(this);
+				textSourceAlk.setEditable(false);
 				constraints.gridwidth = 1;
 
 				constraints.gridx = 0;
@@ -523,8 +498,7 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 				constraints.gridx = 1;
 				constraints.gridwidth = 2;
 				panelAcid.add(textTargetPH, constraints);
-				textTargetPH.addActionListener(this);
-				textTargetPH.addKeyListener(this);
+				textTargetPH.setEditable(false);
 				constraints.gridwidth = 1;
 				
 				constraints.gridx = 0;

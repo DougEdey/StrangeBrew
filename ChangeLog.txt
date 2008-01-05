@@ -5,6 +5,9 @@ Jan 5, 2008 - Jim Clark
    left are because of type casting wierdness that isn't Java best pratices.. but still works. They
    will have to be reimplemented to fix.
 - Moved prime sugar and keg presure calcs into Recipe from UI
+- Moved water treatment/acid/salt calcs into recipe
+- Added acid to save/load/xlst printing
+- Acid pulls values from source and target water (perhaps a bad thing?)
 
 Jan 3-4, 2008 - Drew Avis
 - Added some tooltips for toolbar buttons

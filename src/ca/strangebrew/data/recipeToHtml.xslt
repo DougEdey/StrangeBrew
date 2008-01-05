@@ -533,14 +533,26 @@
 						<th colspan="4">Amount</th>
 					</tr>
 					<xsl:for-each select="/STRANGEBREWRECIPE/WATER_PROFILE/SALTS/SALT">
-						<xsl:if test="(position() mod 2 = 1)">
-							<xsl:attribute name="class">even</xsl:attribute>
-						</xsl:if>
 						<tr>
+							<xsl:if test="(position() mod 2 = 1)">
+								<xsl:attribute name="class">even</xsl:attribute>
+							</xsl:if>
 							<td colspan="7"><xsl:value-of select="COMMONNAME"/> (<xsl:value-of select="NAME"/>)</td>
 							<td colspan="4"><xsl:value-of select="AMOUNT"/> <xsl:value-of select="AMOUNTU"/></td>
 						</tr>
 					</xsl:for-each>					
+				</xsl:if>
+				<xsl:if test="/STRANGEBREWRECIPE/WATER_PROFILE/ACID">
+					<tr>
+						<th colspan="7">Acid</th>
+						<th colspan="4">Amount</th>
+					</tr>
+					<tr>
+						<xsl:attribute name="class">even</xsl:attribute>
+						<td colspan="7"><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/ACID/NAME"/></td>
+						<td colspan="4"><xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/ACID/AMT"/> 
+							<xsl:value-of select="/STRANGEBREWRECIPE/WATER_PROFILE/ACID/ACIDU"/></td>
+					</tr>
 				</xsl:if>
 			</tbody>
 		  </table>

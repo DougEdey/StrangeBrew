@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.59 2008/01/05 16:35:05 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.60 2008/01/05 20:52:02 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -1299,6 +1299,12 @@ public class Recipe {
 				}
 				sb.append("      </SALTS>\n");
 			}
+			sb.append("      <ACID>\n");
+			sb.append("         <NAME>" + acid.getName() + "</NAME>\n");
+			sb.append("         <AMT>" + SBStringUtils.format(getAcidAmount(), 2) + "</AMT>\n");
+			sb.append("         <ACIDU>" + acid.getAcidUnit() + "</ACIDU>\n");
+			sb.append("      </ACID>\n");
+			
 			sb.append("   </WATER_PROFILE>\n");			
 		}		
 		
@@ -1425,15 +1431,16 @@ public class Recipe {
 		if (sourceWater.getName() !="" ||
 			targetWater.getName() !="" ) {
 			sb.append("\nWater Profile\n");
-			// sb.append(" Source Water: " + sourceWater.toString() + "\n");
-			// sb.append(" Target Water: " + targetWater.toString() + "\n");
+			sb.append(" Source Water: " + sourceWater.toString() + "\n");
+			sb.append(" Target Water: " + targetWater.toString() + "\n");
 			
 			if (brewingSalts.size() > 0) {
 				sb.append(" Salt Addisions\n");
 				for (int i = 0; i < brewingSalts.size(); i++ ) {
-					sb.append("  " + ((Salt)brewingSalts.get(i)).toString() + "\n");
+					sb.append("  " + brewingSalts.get(i).toString() + "\n");
 				}
-			}
+			}			
+			sb.append(" Acid: " + SBStringUtils.format(getAcidAmount(), 2) + acid.getAcidUnit() + " of" + acid.getName() + "\n");
 		}
 
 		return sb.toString();
@@ -1740,6 +1747,22 @@ public class Recipe {
 	public void setTargetWater(WaterProfile targetWater) {
 		this.targetWater = targetWater;
 	}
+	
+	public WaterProfile getWaterDifference() {
+		WaterProfile diff = new WaterProfile();
+		diff.setCa(getTargetWater().getCa() - getSourceWater().getCa());
+		diff.setCl(getTargetWater().getCl() - getSourceWater().getCl());
+		diff.setMg(getTargetWater().getMg() - getSourceWater().getMg());
+		diff.setNa(getTargetWater().getNa() - getSourceWater().getNa());
+		diff.setSo4(getTargetWater().getSo4() - getSourceWater().getSo4());
+		diff.setHco3(getTargetWater().getHco3() - getSourceWater().getHco3());
+		diff.setHardness(getTargetWater().getHardness() - getSourceWater().getHardness());
+		diff.setAlkalinity(getTargetWater().getAlkalinity() - getSourceWater().getAlkalinity());
+		diff.setTds(getTargetWater().getTds() - getSourceWater().getTds());
+		diff.setPh(getTargetWater().getPh() - getSourceWater().getPh());
+		
+		return diff;
+	}
 
 	public void addSalt(Salt s) {
 		// Check if ths salt already exists!
@@ -1787,5 +1810,13 @@ public class Recipe {
 
 	public void setAcid(Acid acid) {
 		this.acid = acid;
+	}
+	
+	public double getAcidAmount() {
+		double millEs = BrewCalcs.acidMillequivelantsPerLiter(getSourceWater().getPh(), 
+				getSourceWater().getAlkalinity(), getTargetWater().getPh());
+		double moles = BrewCalcs.molesByAcid(getAcid(), millEs,  getTargetWater().getPh());
+		double acidPerL = BrewCalcs.acidAmountPerL(getAcid(), moles);
+		return Quantity.convertUnit(Quantity.GAL, Quantity.L, acidPerL);
 	}
 }
