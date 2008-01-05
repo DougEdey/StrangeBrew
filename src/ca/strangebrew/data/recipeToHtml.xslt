@@ -530,7 +530,7 @@
 				<xsl:if test="/STRANGEBREWRECIPE/WATER_PROFILE/SALTS">
 					<tr>
 						<th colspan="7">Salt</th>
-						<th colspan="4">Amount</th>
+						<th colspan="4">Amount / Gallon</th>
 					</tr>
 					<xsl:for-each select="/STRANGEBREWRECIPE/WATER_PROFILE/SALTS/SALT">
 						<tr>
@@ -545,7 +545,7 @@
 				<xsl:if test="/STRANGEBREWRECIPE/WATER_PROFILE/ACID">
 					<tr>
 						<th colspan="7">Acid</th>
-						<th colspan="4">Amount</th>
+						<th colspan="4">Amount / Gallon</th>
 					</tr>
 					<tr>
 						<xsl:attribute name="class">even</xsl:attribute>
