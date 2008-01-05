@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.28 2008/01/05 21:24:12 jimcdiver Exp $
+ * $Id: MashPanel.java,v 1.29 2008/01/05 22:06:54 jimcdiver Exp $
  *  @author aavis 
  */
 
@@ -89,7 +89,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	final private JTextField ratioText = new JTextField();
 	// private ButtonGroup tempUnitsButtonGroup;
 	final private JComboBox volUnitsCombo = new JComboBox();
-	final private ComboModel volUnitsComboModel = new ComboModel();
+	final private ComboModel<String> volUnitsComboModel = new ComboModel<String>();
 	final private JRadioButton tempCrb = new JRadioButton();
 	final private JRadioButton tempFrb = new JRadioButton();
 	final private ButtonGroup tempBg = new ButtonGroup();

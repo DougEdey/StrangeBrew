@@ -16,12 +16,12 @@ import ca.strangebrew.Style;
 import ca.strangebrew.Yeast;
 
 
-public class ComboModel extends AbstractListModel implements ComboBoxModel {
+public class ComboModel<T> extends AbstractListModel implements ComboBoxModel {
 	
-	List list = new ArrayList();
-	Object selected = null;
+	List<T> list = new ArrayList<T>();
+	T selected = null;
 
-	public void addOrInsert(Object o) {
+	public void addOrInsert(T o) {
 
 		int i = 0;
 		boolean found = false;
@@ -72,14 +72,15 @@ public class ComboModel extends AbstractListModel implements ComboBoxModel {
 
 	}
 	
-	public Object getSelectedItem() {
+	public T getSelectedItem() {
 		return selected;
 	}
 	
 	public void setSelectedItem(Object item) {
 		if ((selected != null && !selected.equals(item))
 				|| (selected == null && item != null)) {
-			selected = item;
+			// YUCK from useing generics + old SWING stuff
+			selected = (T)item;
 			fireContentsChanged(this, -1, -1);
 		}
 	}
@@ -93,11 +94,11 @@ public class ComboModel extends AbstractListModel implements ComboBoxModel {
 		return list.get(index);
 	}
 
-	public void setList(ArrayList l) {
+	public void setList(ArrayList<T> l) {
 		list = l;
 	}
 	
-	public void setList(String[] sList) {
+	public void setList(T[] sList) {
 		for (int i=0; i<sList.length; i++) {
 			list.add(sList[i]);
 		}

@@ -29,7 +29,7 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener, Foc
 	private JLabel numBottlesLbl;
 	private JLabel finalVolLbl;
 	private JComboBox bottleSizeUCmb;
-	private ComboModel bottleSizeUCmbModel;
+	private ComboModel<String> bottleSizeUCmbModel;
 	private JTextField bottleSizeTxt;
 	private JTextField yeastTxt;
 	private JLabel hopsLbl;
@@ -189,7 +189,7 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener, Foc
 			bottleSizeTxt.addFocusListener(this);
 			bottleSizeTxt.addActionListener(this);
 
-			bottleSizeUCmbModel = new ComboModel();
+			bottleSizeUCmbModel = new ComboModel<String>();
 			bottleSizeUCmbModel.setList(Quantity.getListofUnits("vol"));
 
 			bottleSizeUCmb = new JComboBox();

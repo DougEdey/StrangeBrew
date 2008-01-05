@@ -171,7 +171,7 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 		jPanel4.add(OGSpn, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		OGSpn.setModel(OGSpnModel);
 
-		ComboModel weightUComboModel = new ComboModel();
+		ComboModel<String> weightUComboModel = new ComboModel<String>();
 		weightUComboModel.setList(Quantity.getListofUnits("weight"));
 		weightUComboModel.addOrInsert(myRecipe.getMaltUnits());
 

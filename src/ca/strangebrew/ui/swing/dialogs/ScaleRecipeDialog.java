@@ -28,13 +28,13 @@ public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionList
 	private JComboBox sizeUnitsCombo;
 	private JComboBox hopsUnitsCombo;
 	private JComboBox maltUnitsCombo;
-	private ComboModel maltUnitsComboModel;
-	private ComboModel hopsUnitsComboModel;	
+	private ComboModel<String> maltUnitsComboModel;
+	private ComboModel<String> hopsUnitsComboModel;	
 	private JCheckBox convHopsChk;
 	private JCheckBox convMaltsChk;
 	private JPanel jPanel4;
 	private JPanel jPanel3;
-	private ComboModel sizeUnitsComboModel;
+	private ComboModel<String> sizeUnitsComboModel;
 	private JTextField sizeTxt;
 	private JLabel jLabel1;
 	private JButton cancelButton;
@@ -87,7 +87,7 @@ public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionList
 			jPanel1.add(sizeUnitsCombo, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
 					0));
-			sizeUnitsComboModel = new ComboModel();
+			sizeUnitsComboModel = new ComboModel<String>();
 			sizeUnitsComboModel.setList(Quantity.getListofUnits("vol"));
 			sizeUnitsComboModel.addOrInsert(myRecipe.getVolUnits());
 			sizeUnitsCombo.setModel(sizeUnitsComboModel);
@@ -124,7 +124,7 @@ public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionList
 					0));
 			convHopsChk.setText("Convert Hops:");
 
-			maltUnitsComboModel = new ComboModel();
+			maltUnitsComboModel = new ComboModel<String>();
 			maltUnitsComboModel.setList(Quantity.getListofUnits("weight"));
 			maltUnitsComboModel.addOrInsert(myRecipe.getMaltUnits());
 			
@@ -137,7 +137,7 @@ public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionList
 			maltUnitsCombo.setModel(maltUnitsComboModel);
 			maltUnitsCombo.setPreferredSize(new java.awt.Dimension(96, 20));
 
-			hopsUnitsComboModel = new ComboModel();
+			hopsUnitsComboModel = new ComboModel<String>();
 			hopsUnitsComboModel.setList(Quantity.getListofUnits("weight"));
 			hopsUnitsComboModel.addOrInsert(myRecipe.getHopUnits());
 

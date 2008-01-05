@@ -38,7 +38,7 @@ public class StylePanel extends javax.swing.JPanel {
 	private JLabel stlRcpABV;
 	private JLabel stlRcpIBU;
 	private JLabel stlRcpColour;
-	private ComboModel cmbStyle2Model;
+	private ComboModel<Style> cmbStyle2Model;
 	private JComboBox cmbStyle2;
 	private JLabel jLabel7;
 	private JLabel jLabel6;
@@ -179,7 +179,7 @@ public class StylePanel extends javax.swing.JPanel {
 					lblStyle2.setText("Style:");
 				}
 				{
-					cmbStyle2Model = new ComboModel();
+					cmbStyle2Model = new ComboModel<Style>();
 					cmbStyle2 = new JComboBox();
 					SmartComboBox.enable(cmbStyle2);
 					jPanel1.add(cmbStyle2);

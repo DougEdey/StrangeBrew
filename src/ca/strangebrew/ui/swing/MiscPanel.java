@@ -61,7 +61,7 @@ public class MiscPanel extends javax.swing.JPanel {
 	final private SBCellEditor miscAmountEditor = new SBCellEditor(new JTextField());
 	final private SBCellEditor miscTimeEditor = new SBCellEditor(new JTextField());	
 	final private MiscTableModel miscTableModel = new MiscTableModel();
-	final private ComboModel miscComboModel = new ComboModel();
+	final private ComboModel<Misc> miscComboModel = new ComboModel<Misc>();
 	final private FlowLayout buttonPanelLayout = new FlowLayout();
 
 
@@ -81,7 +81,7 @@ public class MiscPanel extends javax.swing.JPanel {
 		miscTableModel.setData(myRecipe);
 	}
 	
-	public void setList(ArrayList miscList){
+	public void setList(ArrayList<Misc> miscList){
 		miscComboModel.setList(miscList);
 	}
 

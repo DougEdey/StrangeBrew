@@ -17,7 +17,6 @@ import javax.swing.border.TitledBorder;
 
 import ca.strangebrew.BrewCalcs;
 import ca.strangebrew.Database;
-import ca.strangebrew.Debug;
 import ca.strangebrew.Options;
 import ca.strangebrew.PrimeSugar;
 import ca.strangebrew.Recipe;

@@ -14,7 +14,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.20 2008/01/05 21:24:12 jimcdiver Exp $
+ * $Id: Database.java,v 1.21 2008/01/05 22:06:54 jimcdiver Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -194,7 +194,7 @@ public class Database {
 
 	}
 	
-	public void writeFermentables(ArrayList<Fermentable> newIngr, boolean[] add) {		
+	public void writeFermentables(ArrayList<Ingredient> newIngr, boolean[] add) {		
 		
 		File maltsFile = new File(dbPath, "malts.csv");
 		backupFile(maltsFile);
@@ -220,8 +220,7 @@ public class Database {
 					f = (Fermentable) fermDB.get(i);
 					i++;					
 				} else if (j < newIngr.size()) {
-					if (newIngr.get(j) instanceof Fermentable
-							&& add[j]){
+					if (newIngr.get(j) instanceof Fermentable && add[j]){
 						f = (Fermentable) newIngr.get(j);						
 					}
 					j++;
@@ -302,7 +301,7 @@ public class Database {
 
 	}
 	
-	public void writeHops(ArrayList<Hop> newIngr, boolean[] add) {		
+	public void writeHops(ArrayList<Ingredient> newIngr, boolean[] add) {		
 			
 		if (!(newIngr.size() > 0))
 			return;
@@ -329,8 +328,7 @@ public class Database {
 					h = (Hop) hopsDB.get(i);
 					i++;					
 				} else if (j < newIngr.size()) {
-					if (newIngr.get(j) instanceof Hop
-							&& add[j]){
+					if (newIngr.get(j) instanceof Hop && add[j]){
 						h = (Hop) newIngr.get(j);						
 					}
 					j++;
@@ -402,7 +400,7 @@ public class Database {
 
 	}
 	
-	public void writeYeast(ArrayList<Yeast> newIngr, boolean[] add) {		
+	public void writeYeast(ArrayList<Ingredient> newIngr, boolean[] add) {		
 		
 		if (!(newIngr.size() > 0))
 			return;
@@ -424,8 +422,7 @@ public class Database {
 					y = (Yeast) yeastDB.get(i);
 					i++;					
 				} else if (j < newIngr.size()) {
-					if (newIngr.get(j) instanceof Yeast
-							&& add[j]){
+					if (newIngr.get(j) instanceof Yeast && add[j]){
 						y = (Yeast) newIngr.get(j);						
 					}
 					j++;

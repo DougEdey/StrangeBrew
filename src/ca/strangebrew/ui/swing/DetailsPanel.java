@@ -48,7 +48,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 	private JLabel lblColour;
 	private JFormattedTextField txtDate;
 	private JComboBox cmbStyle;
-	private ComboModel cmbStyleModel;
+	private ComboModel<Style> cmbStyleModel;
 	private JFormattedTextField txtPreBoil;
 	private JTextField postBoilText;
 	private JSpinner spnEffic;
@@ -60,7 +60,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 	private JLabel lblColourValue;
 	private JScrollPane scpComments;
 	private JTextArea txtComments;
-	private ComboModel cmbYeastModel;
+	private ComboModel<Yeast> cmbYeastModel;
 	private JComboBox cmbYeast;
 	private JComboBox cmbSizeUnits;
 	private JLabel lblSizeUnits;
@@ -205,7 +205,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 				txtDate.addActionListener(this);
 			}
 			{
-				cmbStyleModel = new ComboModel();
+				cmbStyleModel = new ComboModel<Style>();
 				cmbStyle = new JComboBox();
 				SmartComboBox.enable(cmbStyle);
 				this.add(cmbStyle, new GridBagConstraints(1, 2, 5, 1, 0.0, 0.0,
@@ -372,7 +372,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 				}
 			}
 			{
-				cmbYeastModel = new ComboModel();
+				cmbYeastModel = new ComboModel<Yeast>();
 				cmbYeast = new JComboBox();
 				SmartComboBox.enable(cmbYeast);
 				this.add(cmbYeast, new GridBagConstraints(1, 3, 5, 1, 0.0, 0.0,

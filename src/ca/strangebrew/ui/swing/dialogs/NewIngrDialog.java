@@ -35,7 +35,7 @@ public class NewIngrDialog extends javax.swing.JDialog {
 	private JButton cancelButton;
 	private JButton okButton;
 	private JPanel jPanel2;
-	private ArrayList newIngrList;
+	private ArrayList<Ingredient> newIngrList;
 	private boolean [] add;
 	private Database db;
 	private NewIngrTableModel jTable1Model;
@@ -47,7 +47,7 @@ public class NewIngrDialog extends javax.swing.JDialog {
 		initGUI();
 	}
 	
-	public NewIngrDialog(JFrame frame, ArrayList list) {		
+	public NewIngrDialog(JFrame frame, ArrayList<Ingredient> list) {		
 		super(frame);
 		newIngrList = list;
 		db = ((StrangeSwing)frame).DB;
@@ -245,17 +245,13 @@ public class NewIngrDialog extends javax.swing.JDialog {
 		boolean addYeast = false;
 		boolean addMisc = false;
 		for (int i=0;i<newIngrList.size();i++){
-			if (newIngrList.get(i) instanceof Hop &&
-					add[i])
+			if (newIngrList.get(i) instanceof Hop && add[i])
 					addHops = true;	
-			if (newIngrList.get(i) instanceof Fermentable &&
-					add[i])
+			if (newIngrList.get(i) instanceof Fermentable && add[i])
 					addFerm = true;
-			if (newIngrList.get(i) instanceof Yeast &&
-					add[i])
+			if (newIngrList.get(i) instanceof Yeast && add[i])
 					addYeast = true;
-			if (newIngrList.get(i) instanceof Misc &&
-					add[i])
+			if (newIngrList.get(i) instanceof Misc && add[i])
 					addMisc = true;
 		}
 		

@@ -78,7 +78,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JTextField txtBrewerName = new JTextField();
 	final private JPanel carbPanel = new JPanel();
 	final private JComboBox cmbBottleSize = new JComboBox();
-	final private ComboModel cmbBottleSizeModel = new ComboModel();
+	final private ComboModel<String> cmbBottleSizeModel = new ComboModel<String>();
 	final private JLabel jLabel2 = new JLabel();
 	final private JTextField txtOtherCost = new JTextField();
 	final private JLabel jLabel1 = new JLabel();
@@ -120,7 +120,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JTextField mashRatioTxt = new JTextField();
 	final private JLabel jLabel29 = new JLabel();
 	final private JComboBox mashVolCombo = new JComboBox();
-	final private ComboModel mashVolComboModel = new ComboModel();
+	final private ComboModel<String> mashVolComboModel = new ComboModel<String>();
 	final private JLabel jLabel28 = new JLabel();
 	final private JRadioButton crb = new JRadioButton();
 	final private JRadioButton frb = new JRadioButton();
@@ -135,10 +135,10 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JComboBox hopsUnitsCombo = new JComboBox();
 	final private JComboBox hopsTypeCombo = new JComboBox();
 	final private JComboBox maltUnitsCombo = new JComboBox();
-	final private ComboModel maltUnitsComboModel = new ComboModel();
-	final private ComboModel hopsUnitsComboModel = new ComboModel();
-	final private ComboModel hopsTypeComboModel = new ComboModel();
-	final private ComboModel volUnitsComboModel = new ComboModel();
+	final private ComboModel<String> maltUnitsComboModel = new ComboModel<String>();
+	final private ComboModel<String> hopsUnitsComboModel = new ComboModel<String>();
+	final private ComboModel<String> hopsTypeComboModel = new ComboModel<String>();
+	final private ComboModel<String> volUnitsComboModel = new ComboModel<String>();
 	final private JPanel miscPanel = new JPanel();
 	final private JLabel hopsTypeLabel = new JLabel();
 	final private JLabel jLabel26 = new JLabel();

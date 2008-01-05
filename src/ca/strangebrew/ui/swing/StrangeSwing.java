@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.66 2008/01/05 21:24:12 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.67 2008/01/05 22:06:54 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -181,16 +181,16 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JToolBar mainToolBar = new JToolBar();
 	final private JButton btnDelHop = new JButton();
 	final private JButton btnDelMalt = new JButton();
-	final private ComboModel cmbHopsModel = new ComboModel();
-	final private ComboModel cmbHopsUnitsModel = new ComboModel();
-	final private ComboModel cmbMaltModel = new ComboModel();
-	final private ComboModel cmbMaltUnitsModel = new ComboModel();
+	final private ComboModel<Hop> cmbHopsModel = new ComboModel<Hop>();
+	final private ComboModel<String> cmbHopsUnitsModel = new ComboModel<String>();
+	final private ComboModel<Fermentable> cmbMaltModel = new ComboModel<Fermentable>();
+	final private ComboModel<String> cmbMaltUnitsModel = new ComboModel<String>();
 	final private JComboBox cmbSizeUnits = new JComboBox();
-	final private ComboModel cmbSizeUnitsModel = new ComboModel();
+	final private ComboModel<String> cmbSizeUnitsModel = new ComboModel<String>();
 	final private JComboBox cmbStyle = new JComboBox();
-	final private ComboModel cmbStyleModel = new ComboModel();
+	final private ComboModel<Style> cmbStyleModel = new ComboModel<Style>();
 	final private JComboBox cmbYeast = new JComboBox();
-	final private ComboModel cmbYeastModel = new ComboModel();
+	final private ComboModel<Yeast> cmbYeastModel = new ComboModel<Yeast>();
 	final private DefaultComboBoxModel colourMethodComboModel = new DefaultComboBoxModel(BrewCalcs.colourMethods);
 	final private JComboBox colourMethodCombo = new JComboBox(colourMethodComboModel);							
 	final private JPanel colourPanel = new JPanel();
@@ -216,7 +216,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JComboBox hopComboBox = new JComboBox();
 	final private JComboBox hopsUnitsComboBox = new JComboBox();
 	final private JComboBox hopsTotalUnitsComboBox = new JComboBox();
-	final private ComboModel hopsTotalUnitsComboModel = new ComboModel();
+	final private ComboModel<String> hopsTotalUnitsComboModel = new ComboModel<String>();
 	final private DefaultComboBoxModel ibuMethodComboModel = new DefaultComboBoxModel(BrewCalcs.ibuMethods);
 	final private JComboBox ibuMethodCombo = new JComboBox(ibuMethodComboModel);
 	final private JLabel ibuMethodLabel = new JLabel();
@@ -253,7 +253,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JLabel lblYeast = new JLabel();
 	final private JComboBox maltComboBox = new JComboBox();
 	final private JComboBox maltTotalUnitsComboBox = new JComboBox();
-	final private ComboModel maltTotalUnitsComboModel = new ComboModel();
+	final private ComboModel<String> maltTotalUnitsComboModel = new ComboModel<String>();
 	final private JComboBox maltUnitsComboBox = new JComboBox();
 	final private JMenu mnuTools = new JMenu();
 	final private JMenuItem scalRecipeMenuItem = new JMenuItem();
