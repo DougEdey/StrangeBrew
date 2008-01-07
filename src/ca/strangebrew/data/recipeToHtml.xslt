@@ -75,7 +75,7 @@
 					<td><xsl:value-of select="STYLE"/></td>
 					<th>Efficiency</th>
 					<td>
-						<xsl:value-of select="EFFICIENCY"/>
+						<xsl:value-of select="format-number(EFFICIENCY, '#.00')"/>
 						<xsl:text> %</xsl:text>
 					</td>
 					<th>Pre-boil Volume</th>
@@ -130,7 +130,7 @@
 					<th>Evaporation</th>
 					<td><xsl:value-of select="format-number(EVAP, '##.#')"/> gallons</td>
 					<th>Attenuation</th>
-					<td><xsl:value-of select="ATTENUATION"/><xsl:text> %</xsl:text></td>
+					<td><xsl:value-of select="format-number(ATTENUATION, '#.00')"/><xsl:text> %</xsl:text></td>
 				</tr>
 			</tbody>
 		</table>

@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.67 2008/01/05 22:06:54 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.68 2008/01/07 18:16:55 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -412,6 +412,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	public static void main(String[] args) {
 		final StrangeSwing inst = new StrangeSwing();
 		inst.setVisible(true);
+		if (args.length > 0){
+			// only one arg now:
+			if (args[0].equals("-d")){
+				Debug.set(true);				
+			}
+		}
+		
 	}
 
 	{

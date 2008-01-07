@@ -46,6 +46,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 
+import ca.strangebrew.Debug;
 import ca.strangebrew.Note;
 import ca.strangebrew.Options;
 import ca.strangebrew.Recipe;
@@ -55,7 +56,7 @@ import com.michaelbaranov.microba.calendar.DatePicker;
 
 public class NotesPanel extends javax.swing.JPanel implements ActionListener {
 	// Mutables
-	private int selectedRow;
+	private int selectedRow = -1;
 	private Recipe myRecipe;
 	
 	// Final GUI Stuff
@@ -111,9 +112,9 @@ public class NotesPanel extends javax.swing.JPanel implements ActionListener {
 						ListSelectionModel rowSM = notesTable.getSelectionModel();						
 						notesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 						
-						// Ask to be notified of selection changes.
-						
-						rowSM.addListSelectionListener(new ListSelectionListener() {
+						// Ask to be notified of selection changes.						
+						rowSM.addListSelectionListener(new ListSelectionListener() {					
+							
 						    public void valueChanged(ListSelectionEvent e) {
 						        //Ignore extra messages.
 						        if (e.getValueIsAdjusting()) return;
@@ -122,11 +123,13 @@ public class NotesPanel extends javax.swing.JPanel implements ActionListener {
 						        if (lsm.isSelectionEmpty()) {
 						            // ...//no rows are selected
 						        } else {
-						            int selectedRow = lsm.getMinSelectionIndex();
+						            selectedRow = lsm.getMinSelectionIndex();
 						            noteTextArea.setText(myRecipe.getNoteNote(selectedRow));
 						        }
 						    }
 						});
+						
+						
 
 					}
 				}
@@ -157,9 +160,9 @@ public class NotesPanel extends javax.swing.JPanel implements ActionListener {
 						noteTextArea.setWrapStyleWord(true);
 						noteTextArea.setLineWrap(true);
 						noteTextArea.addFocusListener(new FocusAdapter() {
-							public void focusLost(FocusEvent evt) {
-								selectedRow = notesTable.getSelectedRow();
+							public void focusLost(FocusEvent evt) {								
 								if (selectedRow > -1) {
+									Debug.print("Selected row: " + selectedRow);
 									myRecipe.setNoteNote(selectedRow, noteTextArea.getText());
 								}
 							}
@@ -178,14 +181,20 @@ public class NotesPanel extends javax.swing.JPanel implements ActionListener {
 		
 		if (o == typeComboBox) {
 			if (myRecipe != null) {
-				int i = notesTable.getSelectedRow();
-				myRecipe.setNoteType(i, (String)typeComboBox.getSelectedItem());
+				selectedRow = notesTable.getSelectedRow();
+				myRecipe.setNoteType(selectedRow, (String)typeComboBox.getSelectedItem());
 			}
 		} else if (o == addNoteButton) {
 			if (myRecipe != null) {
 				Note n = new Note();
 				myRecipe.addNote(n);
+				// select the new note so the text is associated with it:
+				ListSelectionModel selectionModel = notesTable.getSelectionModel();
+				int i = notesTableModel.getRowCount() -1;
+				selectionModel.setSelectionInterval(i, i);
+				
 				notesTable.updateUI();
+				
 			}			
 		} else if (o == delNoteButton) {
 			if (myRecipe != null) {

@@ -80,7 +80,7 @@ public class FermentPanel extends javax.swing.JPanel implements ActionListener, 
 			
 			// Setup ferment panel
 			fermentPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(
-							new java.awt.Color(0, 0, 0), 1, false), "Fermentation Schedual",
+							new java.awt.Color(0, 0, 0), 1, false), "Fermentation Schedule",
 								TitledBorder.LEADING, TitledBorder.TOP, new java.awt.Font("Dialog",
 										1, 12), new java.awt.Color(51, 51, 51)));
 			fermentPanel.setLayout(fermentPanelLayout);

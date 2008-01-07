@@ -145,9 +145,9 @@ public class WaterProfile implements Comparable<WaterProfile> {
 		this.tds = tds;
 	}
 	
-	public String toString() {
-		// this is broken:
-		String str = String.format("%s => %3.1dca %3.1dmg %3.1dna %3.1dso4 %3.1dhc03 %3.1dcl %3.1dhardness %3.1dtds %3.1dph %3.1dalk",
+	public String toString() {		
+		
+		String str = String.format("%s => %3.1fCa %3.1fMg %3.1fNa %3.1fSo4 %3.1fHCO3 %3.1fCl %3.1fHardness %3.1fTDS %3.1fpH %3.1fAlk",
 				new Object[] {name,
 				new Double(ca),
 				new Double(mg),
@@ -158,7 +158,9 @@ public class WaterProfile implements Comparable<WaterProfile> {
 				new Double(hardness),
 				new Double(tds),
 				new Double(ph),
-				new Double(alkalinity)});
+				new Double(alkalinity)
+				});
+
 		
 		return str;
 	}

@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.62 2008/01/05 22:51:07 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.63 2008/01/07 18:16:55 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -835,7 +835,8 @@ public class Recipe {
 	}
 	public void setNoteType(int i, String t) {
 		isDirty = true;
-		 notes.get(i).setType(t);
+		if (i > -1)
+			notes.get(i).setType(t);
 	}
 	public String getNoteNote(int i) {
 		return  notes.get(i).getNote();
@@ -1389,43 +1390,49 @@ public class Recipe {
 			sb.append(mf.format(objh));
 
 		}
-
-		sb.append("\nMash:\n");
-		sb.append(padLeft("Step ", 10, ' ') + "  Temp   End    Ramp    Min\n");
-
-		mf = new MessageFormat("{0} {1} {2} {3} {4}\n");
-		for (int i = 0; i < mash.getStepSize(); i++) {
-
-			Object[] objm = {padLeft(mash.getStepType(i), 10, ' '),
-					padRight(" " + mash.getStepStartTemp(i), 6, ' '),
-					padRight(" " + mash.getStepEndTemp(i), 6, ' '),
-					padRight(" " + mash.getStepRampMin(i), 4, ' '),
-					padRight(" " + mash.getStepMin(i), 6, ' ')};
-			sb.append(mf.format(objm));
+		
+		if (mash.getStepSize() > 0){
+			sb.append("\nMash:\n");
+			sb.append(padLeft("Step ", 10, ' ') + "  Temp   End    Ramp    Min\n");
+	
+			mf = new MessageFormat("{0} {1} {2} {3} {4}\n");
+			for (int i = 0; i < mash.getStepSize(); i++) {
+	
+				Object[] objm = {padLeft(mash.getStepType(i), 10, ' '),
+						padRight(" " + mash.getStepStartTemp(i), 6, ' '),
+						padRight(" " + mash.getStepEndTemp(i), 6, ' '),
+						padRight(" " + mash.getStepRampMin(i), 4, ' '),
+						padRight(" " + mash.getStepMin(i), 6, ' ')};
+				sb.append(mf.format(objm));
+			}
 		}
 		
-		// Fermentation Schedual
-		sb.append("\nFermentation Schedual:\n");
-		sb.append(padLeft("Step ", 10, ' ') + "  Time   Days\n");
-		mf = new MessageFormat("{0} {1} {2}\n");
-		for (int i = 0; i < fermentationSteps.size(); i++ ) {
-			FermentStep f = fermentationSteps.get(i);
-				Object[] objm = {padLeft(f.getType(), 10, ' '),
-								padRight(" " + f.getTime(), 6, ' '),
-								padRight(" " + f.getTemp() + f.getTempU(), 6, ' ')};
-			sb.append(mf.format(objm));
+		// Fermentation Schedule
+		if (fermentationSteps.size() > 0){
+			sb.append("\nFermentation Schedual:\n");
+			sb.append(padLeft("Step ", 10, ' ') + "  Time   Days\n");
+			mf = new MessageFormat("{0} {1} {2}\n");
+			for (int i = 0; i < fermentationSteps.size(); i++ ) {
+				FermentStep f = fermentationSteps.get(i);
+					Object[] objm = {padLeft(f.getType(), 10, ' '),
+									padRight(" " + f.getTime(), 6, ' '),
+									padRight(" " + f.getTemp() + f.getTempU(), 6, ' ')};
+				sb.append(mf.format(objm));
+			}
 		}
 		
 		// Carb
 		sb.append("\nCarbonation:  " + targetVol + " volumes CO2\n");
 		sb.append(" Bottle Temp: " + bottleTemp + carbTempU + "  Serving Temp:" + servTemp + carbTempU + "\n");
-		sb.append(" Primeing: " + primeSugar.getAmountAs(primeSugar.getUnits()) + primeSugar.getUnitsAbrv() +
+		sb.append(" Priming: " + SBStringUtils.format(primeSugar.getAmountAs(primeSugar.getUnits()),1) + primeSugar.getUnitsAbrv() +
 				" of " + primeSugar.getName() + "\n");
 		sb.append(" Or keg at: " + kegPSI + "PSI\n");
 		
-		sb.append("\nNotes:\n");
-		for (int i = 0; i < notes.size(); i++) {
-			sb.append( notes.get(i).toString());
+		if (notes.size() > 0){
+			sb.append("\nNotes:\n");
+			for (int i = 0; i < notes.size(); i++) {
+				sb.append( notes.get(i).toString());
+			}
 		}
 		
 		if (sourceWater.getName() !="" ||

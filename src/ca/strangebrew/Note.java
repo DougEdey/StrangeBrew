@@ -55,7 +55,7 @@ public class Note {
 	 * @return Returns the note.
 	 */
 	public String getNote() {
-		return note;
+		return this.note;
 	}
 	/**
 	 * @param note The note to set.
@@ -85,6 +85,15 @@ public class Note {
 		    sb.append( "      <NOTE>"+getNote()+"</NOTE>\n" );
 		    sb.append( "    </ITEM>\n" );
 		    return sb.toString();
+	}
+	
+	public String toString(){
+		StringBuffer sb = new StringBuffer();
+	    sb.append( getType()+": " );
+	    sb.append( getNote() );
+	    SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");		
+	    sb.append( " ("+df.format(getDate())+")\n" );
+	    return sb.toString();
 	}
 	
 	

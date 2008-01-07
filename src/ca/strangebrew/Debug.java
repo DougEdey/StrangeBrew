@@ -10,7 +10,13 @@ package ca.strangebrew;
  *
  */
 public class Debug {
-	private static final boolean DEBUG = true;
+	// private static final boolean DEBUG = true;
+	private static boolean DEBUG = false;
+	
+	public static void set(boolean s){
+		DEBUG = s;
+		Debug.print("Debugging is on.\n");
+	}
 	
 	public static void print(Object msg){
 		if (DEBUG){

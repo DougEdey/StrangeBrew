@@ -1,5 +1,10 @@
 Change Log:
 
+Jan 7, 2008 - Drew Avis
+- Fixed broken format string in WaterProfile.toString().
+- Fixed a bug on the Note tab where notes were being lost.
+- Made debug output optional (w/ -d command line option)
+
 Jan 5, 2008 - Jim Clark
 - Down to 1 Type safty warrnings by implemeing various Collection<Type> stuff in various places.
    The one remaining is due to calling Generics unfrinedly SWING code.
