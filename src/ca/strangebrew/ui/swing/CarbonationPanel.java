@@ -75,6 +75,7 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 	// from the equipment management that we haven't done yet!
 	final private JComboBox comboTubingID = new JComboBox(new String[] {"3/16", "1/4"});
 	final private JCheckBox checkKegged = new JCheckBox("Kegged");
+	private boolean dontUpdate = false;
 	
 	public CarbonationPanel() {
 		super();
@@ -95,6 +96,10 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 	}
 	
 	public void displayCarb(){	
+		//todo
+		// A bit cludgy, but we don't want this to fire off ann update on the recipe, so uninstall the handler
+		dontUpdate = true;
+		
 		lServTempU.setText(myRecipe.getCarbTempU());
 		lBottleTempU.setText(myRecipe.getCarbTempU());	
 		textBottleTemp.setText(SBStringUtils.format(myRecipe.getBottleTemp(), 1));
@@ -128,6 +133,7 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 		comboTubingID.setSelectedItem(myRecipe.getKegTubeID());
 		textTubingFeet.setText(SBStringUtils.format(myRecipe.getKegTubeLength(), 1));
 		textTubingVol.setText(SBStringUtils.format(myRecipe.getKegTubeVol(), 1));
+		dontUpdate = false;
 	}
 	
 	private void initGUI() {
@@ -364,16 +370,18 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 	}
 	
 	private void updatePrimeSugar(String name, String unit) {
-		PrimeSugar newF = new PrimeSugar();
-		ArrayList<PrimeSugar> ar = Database.getInstance().primeSugarDB;
-		for (int i = 0; i < ar.size(); i++) {
-			if (name.equals(ar.get(i).getName())) {
-				newF = (PrimeSugar)ar.get(i);
+		if (dontUpdate == false) {
+			PrimeSugar newF = new PrimeSugar();
+			ArrayList<PrimeSugar> ar = Database.getInstance().primeSugarDB;
+			for (int i = 0; i < ar.size(); i++) {
+				if (name.equals(ar.get(i).getName())) {
+					newF = (PrimeSugar)ar.get(i);
+				}
 			}
+			
+			myRecipe.setPrimeSugar(newF);
+			myRecipe.setPrimeSugarU(unit);
 		}
-		
-		myRecipe.setPrimeSugar(newF);
-		myRecipe.setPrimeSugarU(unit);
 	}
 	
 	public void focusLost(FocusEvent e) {		

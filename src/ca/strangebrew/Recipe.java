@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.63 2008/01/07 18:16:55 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.64 2008/01/07 18:40:15 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -1442,12 +1442,12 @@ public class Recipe {
 			sb.append(" Target Water: " + targetWater.toString() + "\n");
 			
 			if (brewingSalts.size() > 0) {
-				sb.append(" Salt Addisions\n");
+				sb.append(" Salt Addisions per Gal\n");
 				for (int i = 0; i < brewingSalts.size(); i++ ) {
 					sb.append("  " + brewingSalts.get(i).toString() + "\n");
 				}
 			}			
-			sb.append(" Acid: " + SBStringUtils.format(getAcidAmount(), 2) + acid.getAcidUnit() + " of" + acid.getName() + "\n");
+			sb.append(" Acid: " + SBStringUtils.format(getAcidAmount(), 2) + acid.getAcidUnit() + " per gal of " + acid.getName() + " Acid\n");
 		}
 
 		return sb.toString();

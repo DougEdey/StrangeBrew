@@ -1,5 +1,6 @@
 package ca.strangebrew;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 public class Salt {
@@ -68,12 +69,12 @@ public class Salt {
 	}
 	
 	public String toString() {
-		String str = String.format("%s (%s) %3.1d%s",
-				new Object[] {name,
-				commonName,
-				new Double(amount),
-				amountU});
-		return str;
+		MessageFormat mf;
+		
+		mf = new MessageFormat(name + "(" + commonName + ") {0,number,0.000}" + amountU);		
+		Object[] objs = {new Double(amount)};
+				
+		return mf.format(objs);
 	}
 	
 	public String toXML(int indent) {
