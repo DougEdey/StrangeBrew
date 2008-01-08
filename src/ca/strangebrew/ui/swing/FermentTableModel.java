@@ -79,7 +79,7 @@ public class FermentTableModel extends AbstractTableModel {
 	public boolean isCellEditable(int row, int col) {
 		//Note that the data/cell address is constant,
 		//no matter where the cell appears onscreen.
-		if (col == 0 || col == 1 || col == 2)
+		if (col == 0 || col == 1 || col == 2 || col == 3)
 			return true;
 		
 		return false;
@@ -102,6 +102,9 @@ public class FermentTableModel extends AbstractTableModel {
 				case 2 :
 					data.setFermentStepTemp(row, Double.parseDouble(value.toString()));
 					break;
+				case 3 :
+					data.setFermentStepTempU(row, value.toString());
+					break;	
 			}
 		} catch (Exception e) {
 		};

@@ -41,6 +41,7 @@ public class FermentPanel extends javax.swing.JPanel implements ActionListener, 
 	final private DefaultTableModel fermentTotalsTableModel = new DefaultTableModel(
 			FermentTableModel.getColumnNames(), 1);		
 	final private JComboBox comboType = new JComboBox(FermentStep.types);
+	final private JComboBox comboUnits = new JComboBox(new String[] {"F","C"});
 	final private SBCellEditor timeEditor = new SBCellEditor(new JTextField());
 	final private SBCellEditor tempEditor = new SBCellEditor(new JTextField());
 	final private JToolBar fermentButtonBar = new JToolBar();
@@ -112,6 +113,12 @@ public class FermentPanel extends javax.swing.JPanel implements ActionListener, 
 				// temp editor
 				col = fermentTable.getColumnModel().getColumn(2);
 				col.setCellEditor(tempEditor);
+				
+				// units editor
+				col = fermentTable.getColumnModel().getColumn(3);
+				// SmartComboBox.enable(comboUnits);
+				col.setCellEditor(new SBComboBoxCellEditor(comboUnits));
+				comboUnits.addActionListener(this);
 			}						
 
 			// Setup totals table column stamps
@@ -169,7 +176,16 @@ public class FermentPanel extends javax.swing.JPanel implements ActionListener, 
 				fermentTable.updateUI();
 				displayFerment();
 			}			
-		}		
+		} else if (o == comboUnits) {
+			String newUnit = (String)comboUnits.getSelectedItem();
+			int index = fermentTable.getSelectedRow();
+			if (myRecipe != null && index >= 0)
+			{
+				myRecipe.setFermentStepTempU(index, newUnit);
+				fermentTable.updateUI();
+				displayFerment();
+			}	
+		}
 	}
 	
 	

@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.29 2008/01/05 22:06:54 jimcdiver Exp $
+ * $Id: MashPanel.java,v 1.30 2008/01/08 13:37:07 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -152,7 +152,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 
 				{
 					tablePanel.add(jScrollPane1, BorderLayout.CENTER);
-					jScrollPane1.setPreferredSize(new java.awt.Dimension(344, 145));
+					// jScrollPane1.setPreferredSize(new java.awt.Dimension(344, 145));
 
 					{
 						tblMash = new JTable() {
@@ -240,7 +240,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				settingsPanelLayout.columnWeights = new double[]{0.3};
 				settingsPanelLayout.columnWidths = new int[]{7};
 				settingsPanel.setLayout(settingsPanelLayout);
-				settingsPanel.setPreferredSize(new java.awt.Dimension(157, 208));
+				settingsPanel.setPreferredSize(new java.awt.Dimension(170, 208));
 
 				settingsPanel.add(jLabel14, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
 						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),

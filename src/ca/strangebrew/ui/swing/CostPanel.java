@@ -1,3 +1,9 @@
+/*
+ * Created on May 25, 2005
+ * $Id: CostPanel.java,v 1.11 2008/01/08 13:37:07 andrew_avis Exp $
+ *  @author aavis 
+ */
+
 package ca.strangebrew.ui.swing;
 
 import java.awt.Dimension;

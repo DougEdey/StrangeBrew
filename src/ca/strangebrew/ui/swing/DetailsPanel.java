@@ -1,3 +1,9 @@
+/*
+ * Created on May 25, 2005
+ * $Id: DetailsPanel.java,v 1.5 2008/01/08 13:37:07 andrew_avis Exp $
+ *  @author aavis 
+ */
+
 package ca.strangebrew.ui.swing;
 
 import java.awt.Dimension;
