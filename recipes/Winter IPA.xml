@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "2.0.1">
+<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
+  <DETAILS>
+  <NAME>Frozen Moron IPA</NAME>
+  <BREWER>Drew</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>74.78324016818664</EFFICIENCY>
+  <OG>1.062</OG>
+  <FG>1.014</FG>
+  <STYLE>American IPA</STYLE>
+  <MASH>false</MASH>
+  <LOV>11.7</LOV>
+  <IBU>59.2</IBU>
+  <ALC>6.3</ALC>
+  <!-- SBJ1.0 Extensions: -->
+  <EVAP>1.5</EVAP>
+  <EVAP_METHOD>Constant</EVAP_METHOD>
+  <!-- END SBJ1.0 Extensions -->
+  <BOIL_TIME>60</BOIL_TIME>
+  <PRESIZE>16.5</PRESIZE>
+  <SIZE>15.0</SIZE>
+  <SIZE_UNITS>gallons US</SIZE_UNITS>
+  <ADDED_VOLUME>0.0</ADDED_VOLUME>
+  <MALT_UNITS>pounds</MALT_UNITS>
+  <HOPS_UNITS>ounces</HOPS_UNITS>
+  <YEAST>Safale S-04</YEAST>
+  <RECIPE_DATE>12/28/2007</RECIPE_DATE>
+  <ATTENUATION>76.76695141374572</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Volume</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>SRM</COLOUR_METHOD>
+  <KETTLE_LOSS>1.0</KETTLE_LOSS>
+  <TRUB_LOSS>1.0</TRUB_LOSS>
+  <MISC_LOSS>1.0</MISC_LOSS>
+  <PELLET_HOP_PCT>6.0</PELLET_HOP_PCT>
+  <YEAST_COST>0.75</YEAST_COST>
+  <OTHER_COST>5.0</OTHER_COST>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <TOTAL>34.20462262184878</TOTAL>
+    <ITEM>
+      <MALT>British Carastan</MALT>
+      <AMOUNT>3.0</AMOUNT>
+      <PERCENT>8.8</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.035</POINTS>
+      <LOV>34.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>British Carastan: Also known as CaraStan, use 5 to 20% of English Crystal to add color and a full, toffee/sweet flavor to Bitters, Pale Ales and Porters.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Crystal 120</MALT>
+      <AMOUNT>1.0</AMOUNT>
+      <PERCENT>2.9</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.029</POINTS>
+      <LOV>120.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>true</STEEPED>
+      <COSTLB>1.58</COSTLB>
+      <DESCRIPTION>Crystal 120: 5 to 15% will lend a complex bitter/sweet caramel flavor and aroma to beers. Used in smaller quantities this malt will add color and slight sweetness to beers, while heavier concentrations are well suited to strong beers such as Barley Wines and Old Ales.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Marris Otter</MALT>
+      <AMOUNT>25.0</AMOUNT>
+      <PERCENT>73.1</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.036</POINTS>
+      <LOV>3.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>The classic British ale malt, prized by the finest brewers in Britain. Made from fully modified two-row winter Maris Otter. This malt has a wide optimum temperature and pH range, making it very forgiving in the brewery and popular with small-scale brewers. Very low protein (9.5%), high flavour malt, perfect for lower gravity Bitters</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Wheat Malt</MALT>
+      <AMOUNT>3.0</AMOUNT>
+      <PERCENT>8.8</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.039</POINTS>
+      <LOV>1.7</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.47</COSTLB>
+      <DESCRIPTION>Wheat Malt: Use to make wheat and weizen beers. Also, small amounts (3-6%) aid in head retention to any beer without altering final flavor. Use 5 to 70% in the mash, 40 to 70% being the norm for wheat beers, combined with a high enzyme malt such as Klages.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>White Cane Sugar (Gran)</MALT>
+      <AMOUNT>1.0</AMOUNT>
+      <PERCENT>6.4</PERCENT>
+      <UNITS>kg</UNITS>
+      <POINTS>1.042</POINTS>
+      <LOV>0.0</LOV>
+      <MASHED>false</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.0</COSTLB>
+      <DESCRIPTION>Because it has a tendency to add a �cidery� taste to beer, white sugar is not a particularly good brewing adjunct and should be used in moderation.</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <TOTAL>8.0</TOTAL>
+    <ITEM>
+      <HOP>Simcoe</HOP>
+      <AMOUNT>4.0</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>12.4</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Simcoe: Like Cascades on steroids. Known as a hop with good bittering qualities and excellent aroma  characteristics. Has a unique mahogany/walnut wood aroma, with some resinous/candilike character and some citrus. 
+</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Cascade</HOP>
+      <AMOUNT>2.0</AMOUNT>
+      <TIME>15</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Plug</FORM>
+      <ALPHA>5.9</ALPHA>
+      <COSTOZ>1.6</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Cascade: Cascade, while a good bittering hop, is best known for its pronounced, very  distinctive&quot;perfumey&quot;aroma and flavor.  Used by many micro breweries.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Cascade</HOP>
+      <AMOUNT>2.0</AMOUNT>
+      <TIME>1</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Plug</FORM>
+      <ALPHA>5.5</ALPHA>
+      <COSTOZ>1.6</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Cascade: Cascade, while a good bittering hop, is best known for its pronounced, very  distinctive&quot;perfumey&quot;aroma and flavor.  Used by many micro breweries.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+    <ITEM>
+      <NAME>Irish Moss</NAME>
+      <AMOUNT>10.0</AMOUNT>
+      <UNITS>grams</UNITS>
+      <STAGE>Boil</STAGE>
+      <TIME>0</TIME>
+      <COMMENTS>Added 3 whirlfloc tablets.  Amazing hot/cold break.  Must get more.</COMMENTS>
+    </ITEM>
+    <ITEM>
+      <NAME></NAME>
+      <AMOUNT>0.0</AMOUNT>
+      <UNITS>grams</UNITS>
+      <STAGE>null</STAGE>
+      <TIME>0</TIME>
+      <COMMENTS></COMMENTS>
+    </ITEM>
+  </MISC>
+  <MASH>
+    <NAME>Mash</NAME>
+    <MASH_VOLUME>45.30</MASH_VOLUME>
+    <MASH_VOL_U>gallons US</MASH_VOL_U>
+    <MASH_RATIO>1.0</MASH_RATIO>
+    <MASH_RATIO_U>qt/lb</MASH_RATIO_U>
+    <MASH_TIME>70</MASH_TIME>
+    <MASH_TMP_U>F</MASH_TMP_U>
+    <THICK_DECOCT_RATIO>0.6</THICK_DECOCT_RATIO>
+    <THIN_DECOCT_RATIO>0.9</THIN_DECOCT_RATIO>
+    <MASH_TUNLOSS_TEMP>0.0</MASH_TUNLOSS_TEMP>
+    <GRAIN_TEMP>60.0</GRAIN_TEMP>
+    <BOIL_TEMP>212.0</BOIL_TEMP>
+    <ITEM>
+      <TYPE>alpha</TYPE>
+      <TEMP>151.0</TEMP>
+      <DISPL_TEMP>151.0</DISPL_TEMP>
+      <END_TEMP>0.0</END_TEMP>
+      <DISPL_END_TEMP>0.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <WEIGHT_LBS>32.0</WEIGHT_LBS>
+      <DIRECTIONS>Mash in with 8.0 gallons US of water at 168.5 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>mashout</TYPE>
+      <TEMP>165.5</TEMP>
+      <DISPL_TEMP>165.5</DISPL_TEMP>
+      <END_TEMP>165.5</END_TEMP>
+      <DISPL_END_TEMP>165.5</DISPL_END_TEMP>
+      <MIN>10</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <WEIGHT_LBS>32.0</WEIGHT_LBS>
+      <DIRECTIONS>Add 33.9 gallons US of water at 212.0 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>sparge</TYPE>
+      <TEMP>171.0</TEMP>
+      <DISPL_TEMP>171.0</DISPL_TEMP>
+      <END_TEMP>171.0</END_TEMP>
+      <DISPL_END_TEMP>171.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>fly</METHOD>
+      <WEIGHT_LBS>0.0</WEIGHT_LBS>
+      <DIRECTIONS>Sparge with -21.0 gallons US at 170.0F to collect 37.5 gallons US</DIRECTIONS>
+    </ITEM>
+  </MASH>
+   <FERMENTATION_SCHEDUAL>
+      <ITEM>
+          <TYPE>Primary</TYPE>
+          <TIME>7</TIME>
+          <TEMP>68.0</TEMP>
+          <TEMPU>F</TEMPU>
+      </ITEM>
+      <ITEM>
+          <TYPE>Secondary</TYPE>
+          <TIME>14</TIME>
+          <TEMP>68.0</TEMP>
+          <TEMPU>F</TEMPU>
+      </ITEM>
+   </FERMENTATION_SCHEDUAL>
+   <CARB>
+      <BOTTLETEMP>68.0</BOTTLETEMP>
+      <SERVTEMP>45.0</SERVTEMP>
+      <VOL>2.4</VOL>
+      <SUGAR>Corn Sugar</SUGAR>
+      <AMOUNT>125.3</AMOUNT>
+      <SUGARU>g</SUGARU>
+      <TEMPU>F</TEMPU>
+      <KEG>true</KEG>
+      <PSI>13.72</PSI>
+   </CARB>
+   <WATER_PROFILE>
+      <SOURCE_WATER>
+         <NAME>Distilled/RO</NAME>
+         <CA>0.0</CA>
+         <MG>0.0</MG>
+         <NA>0.0</NA>
+         <SO4>0.0</SO4>
+         <HCO3>0.0</HCO3>
+         <CL>0.0</CL>
+         <HARDNESS>0.0</HARDNESS>
+         <TDS>0.0</TDS>
+         <PH>5.80000019073486</PH>
+         <ALKALINITY>0.0</ALKALINITY>
+      </SOURCE_WATER>
+      <TARGET_WATER>
+         <NAME>Distilled/RO</NAME>
+         <CA>0.0</CA>
+         <MG>0.0</MG>
+         <NA>0.0</NA>
+         <SO4>0.0</SO4>
+         <HCO3>0.0</HCO3>
+         <CL>0.0</CL>
+         <HARDNESS>0.0</HARDNESS>
+         <TDS>0.0</TDS>
+         <PH>5.80000019073486</PH>
+         <ALKALINITY>0.0</ALKALINITY>
+      </TARGET_WATER>
+      <ACID>
+         <NAME>Citric</NAME>
+         <AMT>0.00</AMT>
+         <ACIDU>mg</ACIDU>
+      </ACID>
+   </WATER_PROFILE>
+  <NOTES>
+    <ITEM>
+      <DATE>12/28/2007</DATE>
+      <TYPE>Brewed</TYPE>
+      <NOTE>Brewed outside, made brunch at the same time.  Mash was at least 2 hours, lost at least 3C due to cool weather.</NOTE>
+    </ITEM>
+    <ITEM>
+      <DATE>01/04/2008</DATE>
+      <TYPE>Racked</TYPE>
+      <NOTE>Tasted Great</NOTE>
+    </ITEM>
+  </NOTES>
+ <style>
+  <subcategory id="14B">    <name>American IPA</name>
+    <aroma>
+A prominent to intense hop aroma with a citrusy, floral, perfume-like, resinous, piney, and/or fruity character derived from American hops. Many versions are dry hopped and can have an additional grassy aroma, although this is not required. Some clean malty sweetness may be found in the background, but should be at a lower level than in English examples. Fruitiness, either from esters or hops, may also be detected in some versions, although a neutral fermentation character is also acceptable. Some alcohol may be noted.</aroma>
+    <appearance>
+Color ranges from medium gold to medium reddish copper; some versions can have an orange-ish tint. Should be clear, although unfiltered dry-hopped versions may be a bit hazy. Good head stand should persist.</appearance>
+    <flavor>
+Hop flavor is medium to high, and should reflect an American hop character with citrusy, floral, resinous, piney or fruity aspects. Medium-high to very high hop bitterness, although the malt backbone will support the strong hop character and provide the best balance. Malt flavor should be low to medium, and is generally clean and malty sweet although some caramel or toasty flavors are acceptable at low levels. No diacetyl. Low fruitiness is acceptable but not required. The bitterness may linger into the aftertaste but should not be harsh. Medium-dry to dry finish. Some clean alcohol flavor can be noted in stronger versions. Oak is inappropriate in this style. Some sulfur may be present if sulfate water is used, but most examples do not exhibit this character.</flavor>
+    <mouthfeel>
+Smooth, medium-light to medium-bodied mouthfeel without hop-derived astringency, although moderate to medium-high carbonation can combine to render an overall dry sensation in the presence of malt sweetness. Some smooth alcohol warming can and should be sensed in stronger (but not all) versions. Body is generally less than in English counterparts.</mouthfeel>
+    <impression>
+A decidedly hoppy and bitter, moderately strong American pale ale.</impression>
+    <comments>null</comments>
+    <ingredients>
+Pale ale malt (well-modified and suitable for single-temperature infusion mashing); American hops; American yeast that can give a clean or slightly fruity profile. Generally all-malt, but mashed at lower temperatures for high attenuation. Water character varies from soft to moderately sulfate.</ingredients>
+ <stats>
+  <og flexible="false">
+      <low>1.056</low>
+      <high>1.075</high>
+  </og>
+  <fg flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </fg>
+  <ibu flexible="true">
+      <low>40.0</low>
+      <high>60.0</high>
+  </ibu>
+  <srm flexible="false">
+      <low>6.0</low>
+      <high>15.0</high>
+  </srm>
+  <abv flexible="false">
+      <low>5.5</low>
+      <high>7.5</high>
+  </abv>
+</stats>
+    <examples>
+Stone IPA, Victory Hop Devil, Anderson Valley Hop Ottin', Anchor Liberty Ale, Sierra Nevada Celebration Ale, Three Floyds Alpha King, Harpoon IPA, Bell's Two-Hearted Ale, Avery IPA, Founder's Centennial IPA, Mendocino White Hawk Select IPA</examples>
+  </subcategory>
+ </style>
+</STRANGEBREWRECIPE>

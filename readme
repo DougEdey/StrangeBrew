@@ -35,6 +35,8 @@ bugs@strangebrew.ca.
 StrangeBrew Java is a Java port of the popular Windows homebrewing
 software, StrangeBrew (www.strangebrew.ca).
 
+Donations are accepted on the SourceForge project homepage.
+
 NOTE: We've changed the numbering of Java releases to 2.0, based on 
 the idea that this is a continuation of the Windows version 1.8.
 
@@ -52,7 +54,7 @@ to download recipes to open with StrangeBrew Java.
 ==========================
 
 Running StrangeBrew:
-1. Unzip the sb_XXX.zip file (where XXX is the latest version, eg: "strangebrew2.0.1").
+1. Unzip the sb_XXX.zip file (where XXX is the latest version, eg: "sb_2.0.1").
 Be sure to preserve the directory structure.
 2. Type "java -jar strangebrew.jar" at the command line.  Under Windows,
 you can right-click this file, select "Open With > " and select a Java
@@ -162,8 +164,9 @@ The file you downloaded should contain these files (at least):
     you want to customize the look of the HTML.
   * help/: help files.  These files are under development.
   * recipes/: example recipe files in various formats.    
-  * lib/: support files and libraries for the application from third parties.  
-    Open each .jar file to view its particular license.
+  * src/*: all the Java files you need to build and run StrangeBrew yourself.  
+    You will need to either download or extract a couple of other .jar files 
+    that StrangeBrew requires.
 
 
 ============
@@ -171,8 +174,9 @@ Required JRE
 ============
 
 You require a Java Runtime Environment (JRE) on your system to run
-StrangeBrew.  It should run with versions 1.4 and up; I'm using
-1.5.06. (See http://java.sun.com/j2se/1.5.0/index.jsp).  StrangeBrew has
+StrangeBrew.  It requires versions 1.5 and up (See 
+http://java.sun.com/j2se/1.5.0/index.jsp). As of version 2.0.1, 
+StrangeBrew no longer runs under version 1.4.   StrangeBrew has
 been tested and runs on Linux, MacOS-X, and Windows.  
 
 ============
@@ -218,7 +222,7 @@ Bugs Fixed:
 - You can now select-by-typing in malt and hop lists (Bug 1493279)
 - Mash Steps now insert at end of list (Request 1497970)
 - Changed default bottle unit and size to imperal (Bug 1493267) 
-- UI improvments to the saved "default" mash shceduals
+- UI improvments to the saved "default" mash schedules
 
 
 2.0.0
@@ -322,14 +326,14 @@ Features on the "TODO List":
 - cereal mash
 
 Planned StrangeBrew Java Pro Features:
-- water profiling
-- carbonation
+- advanced water profiling
 - inventory tracking
 - brewday timeline generation
 - brew sessions (vs recipes)
 - saved mash schedules
 - alternate malt/hop selection dialog
 - ingredient database editing
+- equipment databases
 
 (StrangeBrew Java will be released under a "dual-license": a free 
 Open Source version and a commercial "Pro" version that will 
@@ -348,8 +352,9 @@ connection (see http://sourceforge.net/cvs/?group_id=121177 for more information
 I'm building the project in Eclipse, which is freely available at eclipse.org.  
 Once you've un-archived the source from the jar file (or obtained it from cvs), you
 can import it as a new project into Eclipse.  You'll need to:
-- add the 3rd party .jar files in /lib to the project libraries
-- add an appropriate Sun JRE (1.4+) to the project libraries, if one is not already
+- add the 3rd party .jar files in /lib (in the strangebrew.jar archive) to the 
+  project libraries
+- add an appropriate Sun JRE (1.5+) to the project libraries, if one is not already
   selected
 
 That should be all you need to build and run the program.

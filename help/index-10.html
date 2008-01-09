@@ -1,0 +1,3871 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org" />
+    <meta http-equiv="Content-Type"
+    content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR"
+    content="Adobe FrameMaker 7.0/HTML Export Filter" />
+    <link rel="STYLESHEET" href="index.css" charset="ISO-8859-1"
+    type="text/css" />
+    <title>
+      Calculations
+    </title>
+  </head>
+  <body bgcolor="#ffffff">
+    <div>
+      <p>
+        <a href="index.html">^</a> | <a
+        href="index-9.html">&lt;</a> | <a href="none">&gt;</a>
+      </p>
+      <hr />
+    </div>
+    <h1 class="Heading1">
+      <a id="pgfId-999541" name="pgfId-999541"></a><a id="19594"
+      name="19594"></a>Calculations
+    </h1>
+    <p class="Body">
+      <a id="pgfId-999555" name="pgfId-999555"></a><a
+      href="http://sourceforge.net/projects/strangebrew"
+      class="URL">This group of topics discusses the calculations
+      in general, including the source for the formulae. The
+      implementation of these formulae in Java is available as a
+      source code file by anonymous cvs access to the project
+      archive at sourceforge.net/projects/strangebrew.</a>
+    </p>
+    <p class="Body">
+      <a id="pgfId-999556" name="pgfId-999556"></a>The following
+      topics are covered in this chapter:
+    </p>
+    <p class="Body">
+      <a id="pgfId-999557" name="pgfId-999557"></a><a
+      href="index-10.html#58515" class="XRef">See Calculating
+      Alcohol</a>
+    </p>
+    <p class="Body">
+      <a id="pgfId-1014276" name="pgfId-1014276"></a><a
+      href="index-10.html#64142" class="XRef">See Calculating
+      Colour</a>
+    </p>
+    <p class="Body">
+      <a id="pgfId-1014290" name="pgfId-1014290"></a><a
+      href="index-10.html#65286" class="XRef">See Calculating Hop
+      Bitterness</a>
+    </p>
+    <p class="Body">
+      <a id="pgfId-1014294" name="pgfId-1014294"></a><a
+      href="index-10.html#84801" class="XRef">See Calculating Mash
+      Steps</a>
+    </p>
+    <p class="Body">
+      <a id="pgfId-1014299" name="pgfId-1014299"></a><a
+      href="index-10.html#25430" class="XRef">See Calculating
+      Carbonation</a>
+    </p>
+    <p class="Body">
+      <a id="pgfId-999560" name="pgfId-999560"></a><a
+      href="index-10.html#85308" class="XRef">See Calculating
+      Hydrometer Correction</a>
+    </p>
+    <p class="Body">
+      <a id="pgfId-1014307" name="pgfId-1014307"></a><a
+      href="index-10.html#13509" class="XRef">See Water
+      Calculations</a>
+    </p>
+    <div>
+      <h3 class="Heading2">
+        <a id="pgfId-999576" name="pgfId-999576"></a><a id="58515"
+        name="58515"></a>Calculating Alcohol
+      </h3>
+      <p class="Body">
+        <a id="pgfId-999578" name="pgfId-999578"></a>StrangeBrew
+        uses George Fix's formulae, as posted in HBD #1319 -
+      </p>
+      <p class="post">
+        <a id="pgfId-999580" name="pgfId-999580"></a>&gt; alcohol
+        by vol. = 1.25*F1*(OG - FG),
+      </p>
+      <p class="post">
+        <a id="pgfId-999581" name="pgfId-999581"></a>&gt; where
+      </p>
+      <p class="post">
+        <a id="pgfId-999582" name="pgfId-999582"></a>&gt; F1 =
+        99/(1. - 1.3*(OG -1.))
+      </p>
+      <p class="Body">
+        <a id="pgfId-999583" name="pgfId-999583"></a>Fix writes:
+      </p>
+      <p class="post">
+        <a id="pgfId-999584" name="pgfId-999584"></a>&gt; Note that
+        this and the rule 1.25*105*(OG-FG) give the same results
+        for OG = 1.048 and FG = 1.010, namely 5%. However as OG -FG
+        increases the factor 105 becomes less accurate.
+      </p>
+      <p class="Body">
+        <a id="pgfId-999585" name="pgfId-999585"></a>Alcohol by
+        weight in this formula is simply F1*(OG-FG).
+      </p>
+    </div>
+    <div>
+      <h3 class="Heading2">
+        <a id="pgfId-999599" name="pgfId-999599"></a><a id="64142"
+        name="64142"></a>Calculating Colour
+      </h3>
+      <p class="Body">
+        <a id="pgfId-999601" name="pgfId-999601"></a>An interesting
+        colour table was posted to HBD:
+      </p>
+      <h6 class="TableTitle">
+      </h6>
+      <a id="pgfId-1010929" name="pgfId-1010929"></a>
+      <p>
+        Beer colour  
+      </p>
+      <table>
+        <tr>
+          <th rowspan="1" colspan="1">
+            <ol>
+              <li class="CellHeading">
+                <a id="pgfId-1011029" name="pgfId-1011029"></a>
+                <p>
+                  SRM
+                </p>
+              </li>
+            </ol>
+          </th>
+          <th rowspan="1" colspan="1">
+            <ol>
+              <li class="CellHeading">
+                <a id="pgfId-1011031" name="pgfId-1011031"></a>
+                <p>
+                  MCU
+                </p>
+              </li>
+            </ol>
+          </th>
+          <th rowspan="1" colspan="1">
+            <ol>
+              <li class="CellHeading">
+                <a id="pgfId-1011033" name="pgfId-1011033"></a>
+                <p>
+                  HCU
+                </p>
+              </li>
+            </ol>
+          </th>
+          <th rowspan="1" colspan="1">
+            <ol>
+              <li class="CellHeading">
+                <a id="pgfId-1011035" name="pgfId-1011035"></a>
+                <p>
+                  Colour
+                </p>
+              </li>
+            </ol>
+          </th>
+          <th rowspan="1" colspan="1">
+            <ol>
+              <li class="CellHeading">
+                <a id="pgfId-1011037" name="pgfId-1011037"></a>
+                <p>
+                  Commercial Example (SRM Color)
+                </p>
+              </li>
+            </ol>
+          </th>
+        </tr>
+        <tr>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010959" name="pgfId-1010959"></a>1-10
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010961" name="pgfId-1010961"></a>1-10
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010963" name="pgfId-1010963"></a> 1-16
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010965" name="pgfId-1010965"></a>Pale
+              to L. Amber
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010967" name="pgfId-1010967"></a>Bud
+              (2), Molson Export (4), Bass (10)
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010969" name="pgfId-1010969"></a>8-12
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010971" name="pgfId-1010971"></a>11-20
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010973" name="pgfId-1010973"></a>12-20
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010975" name="pgfId-1010975"></a>Amber
+              to D. Amber
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010977" name="pgfId-1010977"></a>&nbsp;
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010979" name="pgfId-1010979"></a>11-15
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010981" name="pgfId-1010981"></a>21-30
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010983" name="pgfId-1010983"></a>19-25
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010985" name="pgfId-1010985"></a>D.
+              Amber to Copper
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010987" name="pgfId-1010987"></a>&nbsp;
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010989" name="pgfId-1010989"></a>14-17
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010991" name="pgfId-1010991"></a>31-40
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010993" name="pgfId-1010993"></a>24-30
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010995" name="pgfId-1010995"></a>Copper
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010997"
+              name="pgfId-1010997"></a>Michelob Dark (17)
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1010999" name="pgfId-1010999"></a>17-20
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1011001" name="pgfId-1011001"></a>41-50
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1011003" name="pgfId-1011003"></a>29-38
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1011005" name="pgfId-1011005"></a>L.
+              Brown to Brown
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1011007" name="pgfId-1011007"></a>&nbsp;
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1011009" name="pgfId-1011009"></a>20-30
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1011011" name="pgfId-1011011"></a>50-85
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1011013" name="pgfId-1011013"></a>38-46
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1011015" name="pgfId-1011015"></a>Brown
+              to Black
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1011017"
+              name="pgfId-1011017"></a>Salvator (21)
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1011019" name="pgfId-1011019"></a>&gt;30
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1011021" name="pgfId-1011021"></a>
+              &gt;85
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1011023" name="pgfId-1011023"></a>
+              &gt;60
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1011025" name="pgfId-1011025"></a>Opaque
+            </p>
+          </td>
+          <td rowspan="1" colspan="1">
+            <p class="CellBody">
+              <a id="pgfId-1011027" name="pgfId-1011027"></a>Most
+              Stouts and Porters
+            </p>
+          </td>
+        </tr>
+      </table>
+      <p class="Body">
+        <a id="pgfId-999685" name="pgfId-999685"></a>Dan A. Morey
+        wrote a letter to Brewing Techniques about Ray Daniels'
+        colour formula (logarithmic divergence after LOV/MCU &gt;
+        10) with this interesting formula, which StrangeBrew uses:
+      </p>
+      <p class="post">
+        <a id="pgfId-999686" name="pgfId-999686"></a>" What I did
+        was: Assume MCU = SRM from 0 to 10.5, Daniel's equation
+        holds in the range of 10.5 &lt; MCU &lt; 37, and Mosher's
+        formula holds for MCU &lt; 37. Then I plotted In (MCU) vs.
+        In (SRM) and performed linear regression. This exercise
+        resulted in a R^2 value of 0.97 (This is better than my
+        linear fit with force zero intercept on the MCU vs. SRM
+        graph - R^2 0.96). My resulting equation is:
+      </p>
+      <p class="post">
+        <a id="pgfId-999687" name="pgfId-999687"></a>SRM = 1.4922
+        [(MCU) ^ 0.6859] - for values of SRM &lt; 50
+      </p>
+      <p class="post">
+        <a id="pgfId-999688" name="pgfId-999688"></a>&nbsp;
+      </p>
+      <p class="post">
+        <a id="pgfId-999689" name="pgfId-999689"></a>Now there is a
+        single equation that can be used to estimate the final
+        color of beer. Also, in the age of calculators and
+        computers, it is no more difficult to calculate than a
+        linear equation."
+      </p>
+      <p class="Body">
+        <a id="pgfId-999691" name="pgfId-999691"></a>I wrote my own
+        formula for estimating beer colour based on SRM and showing
+        RGB (computer screen swatch), which is still being tweaked.
+        I will post it to HBD some day soon.
+      </p>
+    </div>
+    <div>
+      <h3 class="Heading2">
+        <a id="pgfId-999705" name="pgfId-999705"></a><a id="65286"
+        name="65286"></a>Calculating Hop Bitterness
+      </h3>
+      <p class="Body">
+        <a id="pgfId-999707" name="pgfId-999707"></a>The topics in
+        this section quote heavily from Norm Pyles Hop FAQ at
+        http://realbeer.com/hops/FAQ.html. This is the best summary
+        I've found of information about hops in general, and
+        bitterness specifically.
+      </p>
+      <p class="Body">
+        <a id="pgfId-999708" name="pgfId-999708"></a>StrangeBrew
+        provides four methods of calculating hop bitterness:
+      </p>
+      <ul>
+        <li class="Bulleted">
+          <a id="pgfId-999709" name="pgfId-999709"></a><a
+          href="index-10.html#37046" class="XRef">See HBU
+          Method</a>
+        </li>
+        <li class="Bulleted">
+          <a id="pgfId-1014393" name="pgfId-1014393"></a><a
+          href="index-10.html#61448" class="XRef">See Rager
+          Method</a>
+        </li>
+        <li class="Bulleted">
+          <a id="pgfId-1014403" name="pgfId-1014403"></a><a
+          href="index-10.html#10294" class="XRef">See Garetz
+          Method</a>
+        </li>
+        <li class="Bulleted">
+          <a id="pgfId-1014410" name="pgfId-1014410"></a><a
+          href="index-10.html#56681" class="XRef">See Tinseth
+          Method</a>
+        </li>
+      </ul>
+      <div>
+        <h4 class="Heading3">
+          <a id="pgfId-999732" name="pgfId-999732"></a><a
+          id="37046" name="37046"></a>HBU Method
+        </h4>
+        <p class="Body">
+          <a id="pgfId-999734" name="pgfId-999734"></a>From Norm
+          Pyles Hop FAQ at http://realbeer.com/hops/FAQ.html:
+        </p>
+        <p class="post">
+          <a id="pgfId-999735" name="pgfId-999735"></a>The simplest
+          way to describe the bittering potential of a given hop
+          sample is to use Alpha Acid Units (AAU) or Homebrew
+          Bittering Units (HBU) (they're the same). For the sake of
+          discussion we will use the term AAU, which is calculated
+          as follows:
+        </p>
+        <p class="Body">
+          <a id="pgfId-999736" name="pgfId-999736"></a>AAU = AA * W
+        </p>
+        <p class="Body">
+          <a id="pgfId-999737" name="pgfId-999737"></a>where:
+        </p>
+        <p class="Body">
+          <a id="pgfId-999738" name="pgfId-999738"></a> AA = alpha
+          acid % provided with the hops
+        </p>
+        <p class="Body">
+          <a id="pgfId-999739" name="pgfId-999739"></a> W = weight
+          of the hops in ounces
+        </p>
+        <p class="Body">
+          <a id="pgfId-999740" name="pgfId-999740"></a>&nbsp;
+        </p>
+        <p class="Body">
+          <a id="pgfId-999741" name="pgfId-999741"></a>AAU's are
+          literally hundredths of an ounce, so the units would be
+          ounces. This is a bit awkward, and they are usually
+          discussed as if they are "unit-less". It is generally
+          assumed that, when using AAU or HBU, the batch size is
+          the standard homebrewing unit of 5 gallons. If a beer is
+          said to have 10 AAU's of bitterness in it, and it is a 5
+          gallon batch, there would probably be no confusion. On
+          the other hand, if it is a 10 gallon batch, there is
+          actually half the AAU's per gallon when compared to the 5
+          gallon batch and the beer would be quite different.
+          Another drawback to using AAU's is that they don't
+          consider the utilization obtained from long,
+          intermediate, or short boil times. Fudge factors are
+          sometimes added but at best they offer a rough
+          approximation.
+        </p>
+      </div>
+      <div>
+        <h4 class="Heading3">
+          <a id="pgfId-999756" name="pgfId-999756"></a><a
+          id="61448" name="61448"></a>Rager Method
+        </h4>
+        <p class="Body">
+          <a id="pgfId-999758" name="pgfId-999758"></a>From Norm
+          Pyles Hop FAQ at http://realbeer.com/hops/FAQ.html:
+        </p>
+        <p class="Body">
+          <a id="pgfId-999759" name="pgfId-999759"></a>The Rager
+          table is represented by the following utilization
+          equation:
+        </p>
+        <p class="Body">
+          <a id="pgfId-999760" name="pgfId-999760"></a>%UTILIZATION
+          = 18.11 + 13.86 * hyptan[(MINUTES - 31.32) / 18.27]
+        </p>
+        <p class="Body">
+          <a id="pgfId-999761" name="pgfId-999761"></a>According to
+          Rager, if the gravity of the boil exceeds 1.050, there is
+          a gravity adjustment (GA) to factor in:
+        </p>
+        <p class="Body">
+          <a id="pgfId-999762" name="pgfId-999762"></a>GA =
+          (BOIL_GRAVITY - 1.050)
+        </p>
+        <p class="Body">
+          <a id="pgfId-999763" name="pgfId-999763"></a>
+          ----------------------
+        </p>
+        <p class="Body">
+          <a id="pgfId-999764" name="pgfId-999764"></a> 0.2
+        </p>
+        <p class="Body">
+          <a id="pgfId-999765" name="pgfId-999765"></a>otherwise,
+        </p>
+        <p class="Body">
+          <a id="pgfId-999766" name="pgfId-999766"></a>GA = 0
+        </p>
+        <p class="Body">
+          <a id="pgfId-999767" name="pgfId-999767"></a>&nbsp;
+        </p>
+        <p class="Body">
+          <a id="pgfId-999768" name="pgfId-999768"></a>Metric
+          Units:
+        </p>
+        <p class="Body">
+          <a id="pgfId-999769" name="pgfId-999769"></a>IBU = (GRAMS
+          OF HOPS) * %UTILIZATION * %ALPHA * 1000
+        </p>
+        <p class="Body">
+          <a id="pgfId-999770" name="pgfId-999770"></a>
+          ------------------------------------------------
+        </p>
+        <p class="Body">
+          <a id="pgfId-999771" name="pgfId-999771"></a>
+          VOLUME(litres) * (1 + GA)
+        </p>
+        <p class="Body">
+          <a id="pgfId-999772" name="pgfId-999772"></a>&nbsp;
+        </p>
+        <p class="Body">
+          <a id="pgfId-999773" name="pgfId-999773"></a>Non-metric
+          Units:
+        </p>
+        <p class="Body">
+          <a id="pgfId-999774" name="pgfId-999774"></a>IBU =
+          (OUNCES OF HOPS) * %UTILIZATION * %ALPHA * 7462
+        </p>
+        <p class="Body">
+          <a id="pgfId-999775" name="pgfId-999775"></a>
+          -------------------------------------------------
+        </p>
+        <p class="Body">
+          <a id="pgfId-999776" name="pgfId-999776"></a>
+          VOLUME(gallons) * (1 + GA)
+        </p>
+        <p class="Body">
+          <a id="pgfId-999777" name="pgfId-999777"></a>&nbsp;
+        </p>
+        <p class="Body">
+          <a id="pgfId-999778" name="pgfId-999778"></a>Jackie
+          Rager's numbers have been used successfully by thousands
+          of homebrewers and provide a consistent base with which
+          to work. Note that the figures expressed as percent
+          should be entered as decimal values in the formula (9% =
+          0.09). It is apparent that his constant 7462, derived
+          from metric to US conversion, is actually closer to 7490.
+          The GA factor could be questioned as well, as it is
+          intuitively obvious that a gravity of 1.049 does not
+          affect utilization exactly the same as a gravity of 1.000
+          (water). It is assumed (but not verified) that the
+          utilization table is corrected for this assumption and/or
+          the difference is small enough that it has little effect
+          on the final bitterness of the beer.
+        </p>
+        <p class="Body">
+          <a id="pgfId-999779" name="pgfId-999779"></a>The
+          unfortunate part of Rager's article is that it is
+          completely lacking in references, so assumptions come
+          with it part and parcel. Note also that Rager's numbers
+          are often used for pellet hops thrown loose in the boil.
+          Al Korzonas suggests adding 10% more hops if used in a
+          hop bag, and 10% more than that if loose hops or plugs
+          are used.
+        </p>
+      </div>
+      <div>
+        <h4 class="Heading3">
+          <a id="pgfId-999795" name="pgfId-999795"></a><a
+          id="10294" name="10294"></a>Garetz Method
+        </h4>
+        <p class="Body">
+          <a id="pgfId-999797" name="pgfId-999797"></a>From Norm
+          Pyles Hop FAQ at http://realbeer.com/hops/FAQ.html
+        </p>
+        <p class="Body">
+          <a id="pgfId-999798" name="pgfId-999798"></a>It has been
+          reported that since iso-alpha acids possess a slight
+          electrical charge, they can be lost in many ways. Among
+          these are absorption into the yeast cell walls (and
+          subsequent removal of the yeast), attachment to
+          coagulating proteins (and subsequent removal of this
+          trub), attachment to filters, etc. It is unclear if Mr.
+          Rager's utilization numbers have assumed these losses,
+          but it can be assumed that Tinseth and Garetz did take
+          them into account. The Garetz numbers below represent
+          average yeast flocculation; he also provides tables which
+          represent fast and slow yeast flocculation.
+        </p>
+        <p class="Body">
+          <a id="pgfId-999861" name="pgfId-999861"></a>&nbsp;
+        </p>
+        <h6 class="TableTitle">
+        </h6>
+        <a id="pgfId-1006188" name="pgfId-1006188"></a>
+        <p>
+          Boil time vs. hop utilization  
+        </p>
+        <table>
+          <tr>
+            <th rowspan="1" colspan="1">
+              <ol>
+                <li class="CellHeading">
+                  <a id="pgfId-1011127" name="pgfId-1011127"></a>
+                  <p>
+                    Boiling Time (minutes)
+                  </p>
+                </li>
+              </ol>
+            </th>
+            <th rowspan="1" colspan="1">
+              <ol>
+                <li class="CellHeading">
+                  <a id="pgfId-1011134" name="pgfId-1011134"></a>
+                  <p>
+                    %Util (Avg Yeast)
+                  </p>
+                </li>
+              </ol>
+            </th>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999806" name="pgfId-999806"></a> 0 - 5
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999808" name="pgfId-999808"></a> 0
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999810" name="pgfId-999810"></a> 6 -
+                10
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999812" name="pgfId-999812"></a> 0
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999814" name="pgfId-999814"></a>11 -
+                15
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999816" name="pgfId-999816"></a> 2
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999818" name="pgfId-999818"></a>16 -
+                20
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999820" name="pgfId-999820"></a> 5
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999822" name="pgfId-999822"></a>21 -
+                25
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999824" name="pgfId-999824"></a> 8
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999826" name="pgfId-999826"></a>26 -
+                30
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999828" name="pgfId-999828"></a>11
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999830" name="pgfId-999830"></a>31 -
+                35
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999832" name="pgfId-999832"></a>14
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999834" name="pgfId-999834"></a>36 -
+                40
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999836" name="pgfId-999836"></a>16
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999838" name="pgfId-999838"></a>41 -
+                45
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999840" name="pgfId-999840"></a>18
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999842" name="pgfId-999842"></a>46 -
+                50
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999844" name="pgfId-999844"></a>19
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999846" name="pgfId-999846"></a>51 -
+                60
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999848" name="pgfId-999848"></a>20
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999850" name="pgfId-999850"></a>61 -
+                70
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999852" name="pgfId-999852"></a>21
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999854" name="pgfId-999854"></a>71 -
+                80
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999856" name="pgfId-999856"></a>22
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999858" name="pgfId-999858"></a>81 -
+                90
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-999860" name="pgfId-999860"></a>23
+              </p>
+            </td>
+          </tr>
+        </table>
+        <p class="Body">
+          <a id="pgfId-999862" name="pgfId-999862"></a>&nbsp;
+        </p>
+        <p class="Body">
+          <a id="pgfId-999863" name="pgfId-999863"></a>According to
+          Garetz, there are several adjustment factors, that he
+          brings together in the formula with the term "combined
+          adjustments" (CA):
+        </p>
+        <p class="Body">
+          <a id="pgfId-999864" name="pgfId-999864"></a>CA = GF * HF
+          * TF
+        </p>
+        <p class="Body">
+          <a id="pgfId-999865" name="pgfId-999865"></a>where GF is
+          the Gravity Factor, HF is the Hopping Rate Factor, and TF
+          is the Temperature Factor. To calculate it all, he starts
+          with some he calls CF:
+        </p>
+        <p class="Body">
+          <a id="pgfId-999866"
+          name="pgfId-999866"></a>Concentration Factor: CF = Final
+          Volume / Boil Volume, to account for concentrated boils
+          of extract brews.
+        </p>
+        <p class="Body">
+          <a id="pgfId-999867" name="pgfId-999867"></a>Next,
+          calculate Boil Gravity (BG):
+        </p>
+        <p class="Body">
+          <a id="pgfId-999868" name="pgfId-999868"></a>BG = (CF *
+          (Starting Gravity - 1)) + 1
+        </p>
+        <p class="Body">
+          <a id="pgfId-999869" name="pgfId-999869"></a>Then
+          calculate GF:
+        </p>
+        <p class="Body">
+          <a id="pgfId-999870" name="pgfId-999870"></a> BG - 1.050
+        </p>
+        <p class="Body">
+          <a id="pgfId-999871" name="pgfId-999871"></a>GF =
+          ---------- + 1
+        </p>
+        <p class="Body">
+          <a id="pgfId-999872" name="pgfId-999872"></a> .2
+        </p>
+        <p class="Body">
+          <a id="pgfId-999873" name="pgfId-999873"></a>HF is
+          calculated as follows:
+        </p>
+        <p class="Body">
+          <a id="pgfId-999874" name="pgfId-999874"></a>HF = ((CF *
+          Desired IBUs)/260) + 1
+        </p>
+        <p class="Body">
+          <a id="pgfId-999875" name="pgfId-999875"></a>TF is based
+          on elevation as follows:
+        </p>
+        <p class="Body">
+          <a id="pgfId-999876" name="pgfId-999876"></a>TF =
+          ((Elevation in feet) / 550) * 0.02) + 1
+        </p>
+        <p class="Body">
+          <a id="pgfId-999877" name="pgfId-999877"></a>&nbsp;
+        </p>
+        <p class="Body">
+          <a id="pgfId-999878" name="pgfId-999878"></a>These are
+          all put into the following formula, along with the
+          utilization from the table, and the IBUs are calculated.
+          Note two things: 1) the utilization and alpha acids
+          should be expressed as whole numbers (7% = 7), and 2)
+          this process is iterative, since it contains a term (HF)
+          based on your goal IBUs. You must guess at the final
+          result, do the math, and rerun the process, each time
+          adjusting the value downward. It takes a little practice,
+          but can be done.
+        </p>
+        <p class="Body">
+          <a id="pgfId-999879" name="pgfId-999879"></a>Metric Units
+        </p>
+        <p class="Body">
+          <a id="pgfId-999880" name="pgfId-999880"></a>IBU =
+          (%Utilization) * (%Alpha) * Hop weight(grams) * 0.1
+        </p>
+        <p class="Body">
+          <a id="pgfId-999881" name="pgfId-999881"></a>
+          ---------------------------------------------------
+        </p>
+        <p class="Body">
+          <a id="pgfId-999882" name="pgfId-999882"></a>
+          Volume(liters) * CA
+        </p>
+        <p class="Body">
+          <a id="pgfId-999883" name="pgfId-999883"></a>&nbsp;
+        </p>
+        <p class="Body">
+          <a id="pgfId-999884" name="pgfId-999884"></a>Non-Metric
+          Units
+        </p>
+        <p class="Body">
+          <a id="pgfId-999885" name="pgfId-999885"></a>IBU =
+          (%Utilization) * (%Alpha) * Hop weight(ounces) * 0.749
+        </p>
+        <p class="Body">
+          <a id="pgfId-999886" name="pgfId-999886"></a>
+          ------------------------------------------------------
+        </p>
+        <p class="Body">
+          <a id="pgfId-999887" name="pgfId-999887"></a>
+          Volume(Gallons) * CA
+        </p>
+        <p class="Body">
+          <a id="pgfId-999888" name="pgfId-999888"></a>&nbsp;
+        </p>
+        <p class="Body">
+          <a id="pgfId-999889" name="pgfId-999889"></a>Garetz goes
+          to allow for a yeast factor (YF), pellet factor (PF), bag
+          factor (BF), and filter factor (FF), and comes up
+        </p>
+        <p class="Body">
+          <a id="pgfId-999890" name="pgfId-999890"></a>with:
+        </p>
+        <p class="Body">
+          <a id="pgfId-999891" name="pgfId-999891"></a>CA = GF * HF
+          * TF * PF * BF * FF
+        </p>
+        <p class="Body">
+          <a id="pgfId-999892" name="pgfId-999892"></a>&nbsp;
+        </p>
+        <p class="Body">
+          <a id="pgfId-999893" name="pgfId-999893"></a>This allows
+          you to adjust the formula based on your own brewery and
+          practices.
+        </p>
+      </div>
+      <div>
+        <h4 class="Heading3">
+          <a id="pgfId-999908" name="pgfId-999908"></a><a
+          id="56681" name="56681"></a>Tinseth Method
+        </h4>
+        <p class="Body">
+          <a id="pgfId-999909" name="pgfId-999909"></a>From Norm
+          Pyles Hop FAQ at http://realbeer.com/hops/FAQ.html:
+        </p>
+        <p class="Body">
+          <a id="pgfId-999910" name="pgfId-999910"></a>Glenn
+          Tinseth's method doesn't involve as many factors, but is
+          still a bit more complex than the original Rager
+          method.Tinseth notes that his table is optimized for
+          fresh whole cones loose in the boil, although easily
+          adjustable for other forms of hops. He builds the gravity
+          adjustment into the utilization tables and offers the
+          following:
+        </p>
+        <h6 class="TableTitle">
+        </h6>
+        <a id="pgfId-1012525" name="pgfId-1012525"></a>
+        <p>
+          Decimal Alpha Acid Utilization vs. Boil Time and Wort
+          Original Gravity  
+        </p>
+        <table>
+          <tr>
+            <th rowspan="2" colspan="1">
+              <ol>
+                <li class="CellHeading">
+                  <a id="pgfId-1013197" name="pgfId-1013197"></a>
+                  <p>
+                    Boil Time (min)
+                  </p>
+                </li>
+              </ol>
+            </th>
+            <th rowspan="1" colspan="11">
+              <ol>
+                <li class="CellHeading">
+                  <a id="pgfId-1013199" name="pgfId-1013199"></a>
+                  <p>
+                    Original Gravity
+                  </p>
+                </li>
+              </ol>
+            </th>
+          </tr>
+          <tr>
+            <th rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013272"
+                name="pgfId-1013272"></a>1.030
+              </p>
+            </th>
+            <th rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013274"
+                name="pgfId-1013274"></a>1.040
+              </p>
+            </th>
+            <th rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013276"
+                name="pgfId-1013276"></a>1.050
+              </p>
+            </th>
+            <th rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013278"
+                name="pgfId-1013278"></a>1.060
+              </p>
+            </th>
+            <th rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013280"
+                name="pgfId-1013280"></a>1.070
+              </p>
+            </th>
+            <th rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013282"
+                name="pgfId-1013282"></a>1.080
+              </p>
+            </th>
+            <th rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013284"
+                name="pgfId-1013284"></a>1.090
+              </p>
+            </th>
+            <th rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013286"
+                name="pgfId-1013286"></a>1.100
+              </p>
+            </th>
+            <th rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013288"
+                name="pgfId-1013288"></a>1.110
+              </p>
+            </th>
+            <th rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013290"
+                name="pgfId-1013290"></a>1.120
+              </p>
+            </th>
+            <th rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013292"
+                name="pgfId-1013292"></a>1.130
+              </p>
+            </th>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012597" name="pgfId-1012597"></a>0
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012599"
+                name="pgfId-1012599"></a>0.000
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012601"
+                name="pgfId-1012601"></a>0.000
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012603"
+                name="pgfId-1012603"></a>0.000
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012605"
+                name="pgfId-1012605"></a>0.000
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012607"
+                name="pgfId-1012607"></a>0.000
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012609"
+                name="pgfId-1012609"></a>0.000
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012611"
+                name="pgfId-1012611"></a>0.000
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012613"
+                name="pgfId-1012613"></a>0.000
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012615"
+                name="pgfId-1012615"></a>0.000
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012617"
+                name="pgfId-1012617"></a>0.000
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012619"
+                name="pgfId-1012619"></a>0.000
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012621" name="pgfId-1012621"></a>3
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012623"
+                name="pgfId-1012623"></a>0.034
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012625"
+                name="pgfId-1012625"></a>0.031
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012627"
+                name="pgfId-1012627"></a>0.029
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012629"
+                name="pgfId-1012629"></a>0.026
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012631"
+                name="pgfId-1012631"></a>0.024
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012633"
+                name="pgfId-1012633"></a>0.022
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012635"
+                name="pgfId-1012635"></a>0.020
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012637"
+                name="pgfId-1012637"></a>0.018
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012639"
+                name="pgfId-1012639"></a>0.017
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012641"
+                name="pgfId-1012641"></a>0.015
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012643"
+                name="pgfId-1012643"></a>0.014
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012645" name="pgfId-1012645"></a>6
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012647"
+                name="pgfId-1012647"></a>0.065
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012649"
+                name="pgfId-1012649"></a>0.059
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012651"
+                name="pgfId-1012651"></a>0.054
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012653"
+                name="pgfId-1012653"></a>0.049
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012655"
+                name="pgfId-1012655"></a>0.045
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012657"
+                name="pgfId-1012657"></a>0.041
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012659"
+                name="pgfId-1012659"></a>0.038
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012661"
+                name="pgfId-1012661"></a>0.035
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012663"
+                name="pgfId-1012663"></a>0.032
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012665"
+                name="pgfId-1012665"></a>0.029
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012667"
+                name="pgfId-1012667"></a>0.026
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012669" name="pgfId-1012669"></a>9
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012671"
+                name="pgfId-1012671"></a>0.092
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012673"
+                name="pgfId-1012673"></a>0.084
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012675"
+                name="pgfId-1012675"></a>0.077
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012677"
+                name="pgfId-1012677"></a>0.070
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012679"
+                name="pgfId-1012679"></a>0.064
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012681"
+                name="pgfId-1012681"></a>0.059
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012683"
+                name="pgfId-1012683"></a>0.054
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012685"
+                name="pgfId-1012685"></a>0.049
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012687"
+                name="pgfId-1012687"></a>0.045
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012689"
+                name="pgfId-1012689"></a>0.041
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012691"
+                name="pgfId-1012691"></a>0.037
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012693" name="pgfId-1012693"></a>12
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012695"
+                name="pgfId-1012695"></a>0.116
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012697"
+                name="pgfId-1012697"></a>0.106
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012699"
+                name="pgfId-1012699"></a>0.097
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012701"
+                name="pgfId-1012701"></a>0.088
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012703"
+                name="pgfId-1012703"></a>0.081
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012705"
+                name="pgfId-1012705"></a>0.074
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012707"
+                name="pgfId-1012707"></a>0.068
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012709"
+                name="pgfId-1012709"></a>0.062
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012711"
+                name="pgfId-1012711"></a>0.056
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012713"
+                name="pgfId-1012713"></a>0.052
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012715"
+                name="pgfId-1012715"></a>0.047
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012717" name="pgfId-1012717"></a>15
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012719"
+                name="pgfId-1012719"></a>0.137
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012721"
+                name="pgfId-1012721"></a>0.125
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012723"
+                name="pgfId-1012723"></a>0.114
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012725"
+                name="pgfId-1012725"></a>0.105
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012727"
+                name="pgfId-1012727"></a>0.096
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012729"
+                name="pgfId-1012729"></a>0.087
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012731"
+                name="pgfId-1012731"></a>0.080
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012733"
+                name="pgfId-1012733"></a>0.073
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012735"
+                name="pgfId-1012735"></a>0.067
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012737"
+                name="pgfId-1012737"></a>0.061
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012739"
+                name="pgfId-1012739"></a>0.056
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012741" name="pgfId-1012741"></a>18
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012743"
+                name="pgfId-1012743"></a>0.156
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012745"
+                name="pgfId-1012745"></a>0.142
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012747"
+                name="pgfId-1012747"></a>0.130
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012749"
+                name="pgfId-1012749"></a>0.119
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012751"
+                name="pgfId-1012751"></a>0.109
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012753"
+                name="pgfId-1012753"></a>0.099
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012755"
+                name="pgfId-1012755"></a>0.091
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012757"
+                name="pgfId-1012757"></a>0.083
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012759"
+                name="pgfId-1012759"></a>0.076
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012761"
+                name="pgfId-1012761"></a>0.069
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012763"
+                name="pgfId-1012763"></a>0.063
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012765" name="pgfId-1012765"></a>21
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012767"
+                name="pgfId-1012767"></a>0.173
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012769"
+                name="pgfId-1012769"></a>0.158
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012771"
+                name="pgfId-1012771"></a>0.144
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012773"
+                name="pgfId-1012773"></a>0.132
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012775"
+                name="pgfId-1012775"></a>0.120
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012777"
+                name="pgfId-1012777"></a>0.110
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012779"
+                name="pgfId-1012779"></a>0.101
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012781"
+                name="pgfId-1012781"></a>0.092
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012783"
+                name="pgfId-1012783"></a>0.084
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012785"
+                name="pgfId-1012785"></a>0.077
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012787"
+                name="pgfId-1012787"></a>0.070
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012789" name="pgfId-1012789"></a>24
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012791"
+                name="pgfId-1012791"></a>0.187
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012793"
+                name="pgfId-1012793"></a>0.171
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012795"
+                name="pgfId-1012795"></a>0.157
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012797"
+                name="pgfId-1012797"></a>0.143
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012799"
+                name="pgfId-1012799"></a>0.131
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012801"
+                name="pgfId-1012801"></a>0.120
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012803"
+                name="pgfId-1012803"></a>0.109
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012805"
+                name="pgfId-1012805"></a>0.100
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012807"
+                name="pgfId-1012807"></a>0.091
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012809"
+                name="pgfId-1012809"></a>0.083
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012811"
+                name="pgfId-1012811"></a>0.076
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012813" name="pgfId-1012813"></a>27
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012815"
+                name="pgfId-1012815"></a>0.201
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012817"
+                name="pgfId-1012817"></a>0.183
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012819"
+                name="pgfId-1012819"></a>0.168
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012821"
+                name="pgfId-1012821"></a>0.153
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012823"
+                name="pgfId-1012823"></a>0.140
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012825"
+                name="pgfId-1012825"></a>0.128
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012827"
+                name="pgfId-1012827"></a>0.117
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012829"
+                name="pgfId-1012829"></a>0.107
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012831"
+                name="pgfId-1012831"></a>0.098
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012833"
+                name="pgfId-1012833"></a>0.089
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012835"
+                name="pgfId-1012835"></a>0.082
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012837" name="pgfId-1012837"></a>30
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012839"
+                name="pgfId-1012839"></a>0.212
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012841"
+                name="pgfId-1012841"></a>0.194
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012843"
+                name="pgfId-1012843"></a>0.177
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012845"
+                name="pgfId-1012845"></a>0.162
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012847"
+                name="pgfId-1012847"></a>0.148
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012849"
+                name="pgfId-1012849"></a>0.135
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012851"
+                name="pgfId-1012851"></a>0.124
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012853"
+                name="pgfId-1012853"></a>0.113
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012855"
+                name="pgfId-1012855"></a>0.103
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012857"
+                name="pgfId-1012857"></a>0.094
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012859"
+                name="pgfId-1012859"></a>0.086
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012861" name="pgfId-1012861"></a>33
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012863"
+                name="pgfId-1012863"></a>0.223
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012865"
+                name="pgfId-1012865"></a>0.203
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012867"
+                name="pgfId-1012867"></a>0.186
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012869"
+                name="pgfId-1012869"></a>0.170
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012871"
+                name="pgfId-1012871"></a>0.155
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012873"
+                name="pgfId-1012873"></a>0.142
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012875"
+                name="pgfId-1012875"></a>0.130
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012877"
+                name="pgfId-1012877"></a>0.119
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012879"
+                name="pgfId-1012879"></a>0.108
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012881"
+                name="pgfId-1012881"></a>0.099
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012883"
+                name="pgfId-1012883"></a>0.091
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012885" name="pgfId-1012885"></a>36
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012887"
+                name="pgfId-1012887"></a>0.232
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012889"
+                name="pgfId-1012889"></a>0.212
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012891"
+                name="pgfId-1012891"></a>0.194
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012893"
+                name="pgfId-1012893"></a>0.177
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012895"
+                name="pgfId-1012895"></a>0.162
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012897"
+                name="pgfId-1012897"></a>0.148
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012899"
+                name="pgfId-1012899"></a>0.135
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012901"
+                name="pgfId-1012901"></a>0.124
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012903"
+                name="pgfId-1012903"></a>0.113
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012905"
+                name="pgfId-1012905"></a>0.103
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012907"
+                name="pgfId-1012907"></a>0.094
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012909" name="pgfId-1012909"></a>39
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012911"
+                name="pgfId-1012911"></a>0.240
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012913"
+                name="pgfId-1012913"></a>0.219
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012915"
+                name="pgfId-1012915"></a>0.200
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012917"
+                name="pgfId-1012917"></a>0.183
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012919"
+                name="pgfId-1012919"></a>0.167
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012921"
+                name="pgfId-1012921"></a>0.153
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012923"
+                name="pgfId-1012923"></a>0.140
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012925"
+                name="pgfId-1012925"></a>0.128
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012927"
+                name="pgfId-1012927"></a>0.117
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012929"
+                name="pgfId-1012929"></a>0.107
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012931"
+                name="pgfId-1012931"></a>0.098
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012933" name="pgfId-1012933"></a>42
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012935"
+                name="pgfId-1012935"></a>0.247
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012937"
+                name="pgfId-1012937"></a>0.226
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012939"
+                name="pgfId-1012939"></a>0.206
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012941"
+                name="pgfId-1012941"></a>0.189
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012943"
+                name="pgfId-1012943"></a>0.172
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012945"
+                name="pgfId-1012945"></a>0.158
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012947"
+                name="pgfId-1012947"></a>0.144
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012949"
+                name="pgfId-1012949"></a>0.132
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012951"
+                name="pgfId-1012951"></a>0.120
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012953"
+                name="pgfId-1012953"></a>0.110
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012955"
+                name="pgfId-1012955"></a>0.101
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012957" name="pgfId-1012957"></a>45
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012959"
+                name="pgfId-1012959"></a>0.253
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012961"
+                name="pgfId-1012961"></a>0.232
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012963"
+                name="pgfId-1012963"></a>0.212
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012965"
+                name="pgfId-1012965"></a>0.194
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012967"
+                name="pgfId-1012967"></a>0.177
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012969"
+                name="pgfId-1012969"></a>0.162
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012971"
+                name="pgfId-1012971"></a>0.148
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012973"
+                name="pgfId-1012973"></a>0.135
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012975"
+                name="pgfId-1012975"></a>0.123
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012977"
+                name="pgfId-1012977"></a>0.113
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012979"
+                name="pgfId-1012979"></a>0.103
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012981" name="pgfId-1012981"></a>48
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012983"
+                name="pgfId-1012983"></a>0.259
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012985"
+                name="pgfId-1012985"></a>0.237
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012987"
+                name="pgfId-1012987"></a>0.216
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012989"
+                name="pgfId-1012989"></a>0.198
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012991"
+                name="pgfId-1012991"></a>0.181
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012993"
+                name="pgfId-1012993"></a>0.165
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012995"
+                name="pgfId-1012995"></a>0.151
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012997"
+                name="pgfId-1012997"></a>0.138
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1012999"
+                name="pgfId-1012999"></a>0.126
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013001"
+                name="pgfId-1013001"></a>0.115
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013003"
+                name="pgfId-1013003"></a>0.105
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013005" name="pgfId-1013005"></a>51
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013007"
+                name="pgfId-1013007"></a>0.264
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013009"
+                name="pgfId-1013009"></a>0.241
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013011"
+                name="pgfId-1013011"></a>0.221
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013013"
+                name="pgfId-1013013"></a>0.202
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013015"
+                name="pgfId-1013015"></a>0.184
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013017"
+                name="pgfId-1013017"></a>0.169
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013019"
+                name="pgfId-1013019"></a>0.154
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013021"
+                name="pgfId-1013021"></a>0.141
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013023"
+                name="pgfId-1013023"></a>0.129
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013025"
+                name="pgfId-1013025"></a>0.118
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013027"
+                name="pgfId-1013027"></a>0.108
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013029" name="pgfId-1013029"></a>54
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013031"
+                name="pgfId-1013031"></a>0.269
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013033"
+                name="pgfId-1013033"></a>0.246
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013035"
+                name="pgfId-1013035"></a>0.224
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013037"
+                name="pgfId-1013037"></a>0.205
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013039"
+                name="pgfId-1013039"></a>0.188
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013041"
+                name="pgfId-1013041"></a>0.171
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013043"
+                name="pgfId-1013043"></a>0.157
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013045"
+                name="pgfId-1013045"></a>0.143
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013047"
+                name="pgfId-1013047"></a>0.131
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013049"
+                name="pgfId-1013049"></a>0.120
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013051"
+                name="pgfId-1013051"></a>0.109
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013053" name="pgfId-1013053"></a>57
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013055"
+                name="pgfId-1013055"></a>0.273
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013057"
+                name="pgfId-1013057"></a>0.249
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013059"
+                name="pgfId-1013059"></a>0.228
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013061"
+                name="pgfId-1013061"></a>0.208
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013063"
+                name="pgfId-1013063"></a>0.190
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013065"
+                name="pgfId-1013065"></a>0.174
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013067"
+                name="pgfId-1013067"></a>0.159
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013069"
+                name="pgfId-1013069"></a>0.145
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013071"
+                name="pgfId-1013071"></a>0.133
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013073"
+                name="pgfId-1013073"></a>0.121
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013075"
+                name="pgfId-1013075"></a>0.111
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013077" name="pgfId-1013077"></a>60
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013079"
+                name="pgfId-1013079"></a>0.276
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013081"
+                name="pgfId-1013081"></a>0.252
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013083"
+                name="pgfId-1013083"></a>0.231
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013085"
+                name="pgfId-1013085"></a>0.211
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013087"
+                name="pgfId-1013087"></a>0.193
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013089"
+                name="pgfId-1013089"></a>0.176
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013091"
+                name="pgfId-1013091"></a>0.161
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013093"
+                name="pgfId-1013093"></a>0.147
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013095"
+                name="pgfId-1013095"></a>0.135
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013097"
+                name="pgfId-1013097"></a>0.123
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013099"
+                name="pgfId-1013099"></a>0.112
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013101" name="pgfId-1013101"></a>70
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013103"
+                name="pgfId-1013103"></a>0.285
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013105"
+                name="pgfId-1013105"></a>0.261
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013107"
+                name="pgfId-1013107"></a>0.238
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013109"
+                name="pgfId-1013109"></a>0.218
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013111"
+                name="pgfId-1013111"></a>0.199
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013113"
+                name="pgfId-1013113"></a>0.182
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013115"
+                name="pgfId-1013115"></a>0.166
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013117"
+                name="pgfId-1013117"></a>0.152
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013119"
+                name="pgfId-1013119"></a>0.139
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013121"
+                name="pgfId-1013121"></a>0.127
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013123"
+                name="pgfId-1013123"></a>0.116
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013125" name="pgfId-1013125"></a>80
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013127"
+                name="pgfId-1013127"></a>0.291
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013129"
+                name="pgfId-1013129"></a>0.266
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013131"
+                name="pgfId-1013131"></a>0.243
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013133"
+                name="pgfId-1013133"></a>0.222
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013135"
+                name="pgfId-1013135"></a>0.203
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013137"
+                name="pgfId-1013137"></a>0.186
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013139"
+                name="pgfId-1013139"></a>0.170
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013141"
+                name="pgfId-1013141"></a>0.155
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013143"
+                name="pgfId-1013143"></a>0.142
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013145"
+                name="pgfId-1013145"></a>0.130
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013147"
+                name="pgfId-1013147"></a>0.119
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013149" name="pgfId-1013149"></a>90
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013151"
+                name="pgfId-1013151"></a>0.295
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013153"
+                name="pgfId-1013153"></a>0.270
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013155"
+                name="pgfId-1013155"></a>0.247
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013157"
+                name="pgfId-1013157"></a>0.226
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013159"
+                name="pgfId-1013159"></a>0.206
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013161"
+                name="pgfId-1013161"></a>0.188
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013163"
+                name="pgfId-1013163"></a>0.172
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013165"
+                name="pgfId-1013165"></a>0.157
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013167"
+                name="pgfId-1013167"></a>0.144
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013169"
+                name="pgfId-1013169"></a>0.132
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013171"
+                name="pgfId-1013171"></a>0.120
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013173" name="pgfId-1013173"></a>120
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013175"
+                name="pgfId-1013175"></a>0.301
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013177"
+                name="pgfId-1013177"></a>0.275
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013179"
+                name="pgfId-1013179"></a>0.252
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013181"
+                name="pgfId-1013181"></a>0.230
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013183"
+                name="pgfId-1013183"></a>0.210
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013185"
+                name="pgfId-1013185"></a>0.192
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013187"
+                name="pgfId-1013187"></a>0.176
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013189"
+                name="pgfId-1013189"></a>0.161
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013191"
+                name="pgfId-1013191"></a>0.147
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013193"
+                name="pgfId-1013193"></a>0.134
+              </p>
+            </td>
+            <td rowspan="1" colspan="1">
+              <p class="CellBody">
+                <a id="pgfId-1013195"
+                name="pgfId-1013195"></a>0.123
+              </p>
+            </td>
+          </tr>
+        </table>
+        <p class="Body">
+          <a id="pgfId-1000566" name="pgfId-1000566"></a>To
+          calculate IBUs, the formula is simple:
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000568" name="pgfId-1000568"></a>IBUs =
+          decimal alpha acid utilization * mg/l of added alpha
+          acids
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000570" name="pgfId-1000570"></a>For those
+          who want to make adjustments based on their own brewery,
+          he offers the following:
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000571" name="pgfId-1000571"></a>Metric
+          Units
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000572" name="pgfId-1000572"></a>mg/l of
+          added alpha acids = decimal AA rating * grams hops * 1000
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000573" name="pgfId-1000573"></a>
+          -------------------------------------
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000574" name="pgfId-1000574"></a> liters of
+          wort
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000575" name="pgfId-1000575"></a>&nbsp;
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000576" name="pgfId-1000576"></a>Non-Metric
+          Units
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000577" name="pgfId-1000577"></a>mg/l of
+          added alpha acids = decimal AA rating * ozs hops * 7490
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000578" name="pgfId-1000578"></a>
+          -------------------------------------
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000579" name="pgfId-1000579"></a> gallons
+          of wort
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000581" name="pgfId-1000581"></a>The
+          decimal alpha acid utilization is calculated using
+          Tinseth's two empirical factors: the Bigness factor and
+          the Boil Time factor.
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000583" name="pgfId-1000583"></a>Decimal
+          Alpha Acid Utilization = Bigness Factor * Boil Time
+          Factor
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000584" name="pgfId-1000584"></a>The
+          Bigness Factor accounts for reduced utilization due to
+          higher wort gravities.
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000585" name="pgfId-1000585"></a>Bigness
+          factor = 1.65 * 0.000125^(wort gravity - 1)
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000586" name="pgfId-1000586"></a>The Boil
+          Time Factor gives the varying utilization based on boil
+          time:
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000587" name="pgfId-1000587"></a>Boil Time
+          factor = 1 - e^(-0.04 * time in mins)
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000588" name="pgfId-1000588"></a>
+          --------------------------
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000589" name="pgfId-1000589"></a> 4.15
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000591" name="pgfId-1000591"></a>Some
+          comments from Tinseth:
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000592" name="pgfId-1000592"></a>"The
+          numbers 1.65 and 0.000125 are empirically derived to fit
+          my data. The number 0.04 controls the shape of the util
+          vs. time curve. The factor 4.15 controls the max util
+          value--make it smaller if your util is higher than mine.
+          I'd suggest fiddling with 4.15 if necessary to match your
+          system, only play with the other three if you like to
+          muck around. I make no guarantees if you do.
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000593" name="pgfId-1000593"></a>You might
+          notice that the shape of the util curves is very similar
+          to that of Randy Mosher's. He and I seem to have
+          independently arrived at the same conclusion.
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000594" name="pgfId-1000594"></a>The really
+          cool thing about these new equations is that they are
+          easily customizable. I believe the basic form is
+          correct--by playing with the different factors, different
+          brewers should be able to make them fit their breweries
+          perfectly. The root of the equations is the basic first
+          order chemical reaction, i.e. the AA isomerization seems
+          be first order (or pseudo-first order)."
+        </p>
+      </div>
+    </div>
+    <div>
+      <h3 class="Heading2">
+        <a id="pgfId-1000609" name="pgfId-1000609"></a><a
+        id="84801" name="84801"></a>Calculating Mash Steps
+      </h3>
+      <p class="Body">
+        <a id="pgfId-1000611"
+        name="pgfId-1000611"></a>StrangeBrew's mash calculator
+        provides for three types of mash step: infusion, decoction,
+        and direct heat. The first step is always assumed to be an
+        infusion mash, and both the amount of water added and its
+        temperature is calculated for the first or strike step. In
+        terms of calculation, the direct heat step is a no brainer.
+        Just add heat! The other types of calculations are outlined
+        here:
+      </p>
+      <ul>
+        <li class="Bulleted">
+          <a id="pgfId-1000612" name="pgfId-1000612"></a><a
+          href="index-10.html#25994" class="XRef">See Infusion
+          calculation</a>
+        </li>
+        <li class="Bulleted">
+          <a id="pgfId-1000613" name="pgfId-1000613"></a><a
+          href="index-10.html#35969" class="XRef">See Decoction
+          calculation</a>
+        </li>
+      </ul>
+      <div>
+        <h4 class="Heading3">
+          <a id="pgfId-1000627" name="pgfId-1000627"></a><a
+          id="25994" name="25994"></a>Infusion calculation
+        </h4>
+        <p class="Body">
+          <a id="pgfId-1000629"
+          name="pgfId-1000629"></a>StrangeBrew's infusion
+          calculations are based on an article written by Ken
+          Schwartz and posted on his homepage at
+          http://home.elp.rr.com/brewbeer/. His calculations were
+          based on grain heat capacity and mash volume information
+          from HBD issues 1879, 1792, and 1793.
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000630" name="pgfId-1000630"></a>Here are
+          is the relevant section of the article:
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000631"
+          name="pgfId-1000631"></a>&lt;quote&gt;
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000632" name="pgfId-1000632"></a>Grain
+          Volume:
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000633" name="pgfId-1000633"></a>"I have a
+          5-gallon cooler that I would like to mash in. How much
+          grain will it hold?"
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000634" name="pgfId-1000634"></a>1 lb grain
+          occupies about 0.08 gal or 0.32 quart when added to water
+          (and allowed to soak). 1 kg grain occupies about 0.67
+          liters when added to water (and allowed to soak).
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000635" name="pgfId-1000635"></a>Total
+          volume of mash = Wg (0.08 + MWR/4) gallons
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000636" name="pgfId-1000636"></a> = Wg
+          (0.32 + MWR) quarts
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000637" name="pgfId-1000637"></a> = Mg
+          (0.67 + MMWR) liters
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000638" name="pgfId-1000638"></a>&nbsp;
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000639" name="pgfId-1000639"></a>Wg =
+          weight of grain (lbs)
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000640" name="pgfId-1000640"></a>MWR = Mash
+          Water Ratio, qt/lb
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000641" name="pgfId-1000641"></a>Mg = Mass
+          of grain (kg)
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000642" name="pgfId-1000642"></a>MMWR =
+          Metric Mash Water Ratio, liters/kg
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000643" name="pgfId-1000643"></a>&nbsp;
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000644" name="pgfId-1000644"></a>Example:
+          10 lb grain with a MWR of 1.3 qt/lb occupies
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000645" name="pgfId-1000645"></a>vol = 10 *
+          (0.08 + 1.3 / 4)
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000646" name="pgfId-1000646"></a> = 4.05
+          gallons
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000647" name="pgfId-1000647"></a>&nbsp;
+        </p>
+      </div>
+      <div>
+        <h4 class="Heading3">
+          <a id="pgfId-1000648" name="pgfId-1000648"></a>Grain Heat
+          Capacity Calculation:
+        </h4>
+        <p class="Body">
+          <a id="pgfId-1000649" name="pgfId-1000649"></a>"If I
+          could find the amount of water which has the same heat
+          capacity as a certain amount of grain, it would make my
+          strike water and other calculations easier."
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000650" name="pgfId-1000650"></a>Although
+          some may argue that it's an extra step or something along
+          those lines, I believe it's easier to visualize water
+          calculations when you're dealing with just water -- the
+          resulting temperature is basically just the constituent
+          temperatures "averaged" over the total volume. Besides,
+          for multiple strikes, once you figure the
+          "water-equivalent" of a certain amount of grain that
+          number stays fixed, so you only need to figure it once.
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000651" name="pgfId-1000651"></a>The "water
+          equivalent" (W.E.) of grain is the volume of water whose
+          heat capacity is equivalent to that of a given
+          mass/weight of grain (based on specific heat of grain
+          being 0.4) and is calculated like this:
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000652" name="pgfId-1000652"></a>W.E. =
+          0.0479 * Wg gallons
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000653" name="pgfId-1000653"></a> = 0.192 *
+          Wg quarts
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000654" name="pgfId-1000654"></a> = 0.4 *
+          Mg liters
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000655" name="pgfId-1000655"></a>&nbsp;
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000656" name="pgfId-1000656"></a>Example:
+          20 kg of grain has the same heat capacity as
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000657" name="pgfId-1000657"></a>vol = 0.4
+          * 20
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000658" name="pgfId-1000658"></a> = 8
+          liters of water
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000659" name="pgfId-1000659"></a>&nbsp;
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000660" name="pgfId-1000660"></a>The
+          water-equivalent for a mash (grain plus water) is:
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000661" name="pgfId-1000661"></a>W.E. = Wg
+          (0.0479 + MWR/4) gallons
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000662" name="pgfId-1000662"></a> = Wg
+          (0.192 + MWR) quarts
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000663" name="pgfId-1000663"></a> = Mg (0.4
+          + MMWR) liters
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000664" name="pgfId-1000664"></a>&nbsp;
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000665" name="pgfId-1000665"></a>Example:
+          My 10 lb, 1.3 qt/lb mash has the same heat capacity as
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000666" name="pgfId-1000666"></a>vol = 10 *
+          (0.0479 + 1.3 / 4)
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000667" name="pgfId-1000667"></a> = 3.73
+          gallons of water
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000668" name="pgfId-1000668"></a>&nbsp;
+        </p>
+      </div>
+      <div>
+        <h4 class="Heading3">
+          <a id="pgfId-1000669" name="pgfId-1000669"></a>Strike
+          Water (Initial &amp; Subsequent) Temperature
+          Calculations:
+        </h4>
+        <p class="Body">
+          <a id="pgfId-1000670" name="pgfId-1000670"></a>"I'm
+          doughing-in at a certain MWR (or MMWR) using grain at
+          room temperature (Tg), trying to hit my dough-in
+          temperature of Td. I can figure how much water I need
+          from my Mash Ratio, but how hot (Ts) should the strike
+          water be?"
+        </p>
+        <div>
+          <h6 class="heading-3">
+            <a id="pgfId-1000671" name="pgfId-1000671"></a>Ts = [Td
+            + WEF * (Td - Tg) / (M)MWR] + FF
+          </h6>
+          <p class="Body">
+            <a id="pgfId-1000672" name="pgfId-1000672"></a>&nbsp;
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000673" name="pgfId-1000673"></a>Ts =
+            Strike Temp (F or C)
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000674" name="pgfId-1000674"></a>Td =
+            Desired Mash Temp after Strike (F or C)
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000675" name="pgfId-1000675"></a>WEF =
+            "Water Equivalent Factor", depending on units:
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000676" name="pgfId-1000676"></a> 0.0479
+            when dealing in gallons
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000677" name="pgfId-1000677"></a> 0.192
+            when dealing in quarts
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000678" name="pgfId-1000678"></a> 0.4
+            when dealing in liters
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000679" name="pgfId-1000679"></a>Tg =
+            Temperature of grain (F or C) (room temp)
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000680" name="pgfId-1000680"></a>FF =
+            "Fudge Factor" to account for thermal mass
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000681" name="pgfId-1000681"></a> of
+            vessel (3 deg F or 1.7 deg C is typical)
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000682" name="pgfId-1000682"></a>(M)MWR
+            in gal/lb, qt/lb, or liters/kg
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000683" name="pgfId-1000683"></a>&nbsp;
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000684" name="pgfId-1000684"></a>Example:
+            Doughing-in 10 lb grain at 70F with MWR = 1.3 qt/lb for
+            a final temperature of 142F, figuring 3 deg F for
+            "fudge factor", I'll need
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000685" name="pgfId-1000685"></a>vol = 10
+            lb * 1.3
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000686" name="pgfId-1000686"></a> = 13
+            quarts (3.25 gal) of strike water at
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000687" name="pgfId-1000687"></a>&nbsp;
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000688" name="pgfId-1000688"></a>T = [142
+            + 0.192 * (142-70) / 1.3] + 3
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000689" name="pgfId-1000689"></a> = 156
+            deg F (rounded off)
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000690" name="pgfId-1000690"></a>&nbsp;
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000691" name="pgfId-1000691"></a>"If I
+            add a certain amount (Vs) of water at temperature Tb to
+            a mash of water-equivalent Vm at temperature Tm, what
+            is the resulting new temperature Tn?"
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000692"
+            name="pgfId-1000692"></a>Calculate the "water
+            equivalent" volume of the existing, resting mash (grain
+            plus water), to find Vm:
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000693" name="pgfId-1000693"></a>Vm = Wg
+            (0.192 + MWR) quarts
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000694" name="pgfId-1000694"></a>(for
+            other units use other equations previously given)
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000695" name="pgfId-1000695"></a>&nbsp;
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000696"
+            name="pgfId-1000696"></a>...keeping in mind that your
+            MWR includes all water added so far (in the
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000697" name="pgfId-1000697"></a>case of
+            multiple steps)...
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000698" name="pgfId-1000698"></a>&nbsp;
+          </p>
+        </div>
+        <div>
+          <h6 class="Tip-Note-Heading">
+            <a id="pgfId-1000699" name="pgfId-1000699"></a>Tn = (Vm
+            * Tm + Vs * Ts) / (Vs + Vm)
+          </h6>
+          <p class="Body">
+            <a id="pgfId-1000700" name="pgfId-1000700"></a>&nbsp;
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000701" name="pgfId-1000701"></a>Example:
+            If I add 2 quarts of boiling (212F) water to a 142 deg
+            F mash (10 lb, MWR = 1.3 from previous example), the
+            water equivalent of the original mash is
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000702" name="pgfId-1000702"></a>Vm = 10
+            * (0.192 + 1.3)
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000703" name="pgfId-1000703"></a> = 14.92
+            quarts
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000704" name="pgfId-1000704"></a>&nbsp;
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000705" name="pgfId-1000705"></a>so the
+            resulting temperature will be
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000706" name="pgfId-1000706"></a>T =
+            (14.92 * 142 + 2 * 212) / (14.92 + 2)
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000707" name="pgfId-1000707"></a> = 150
+            deg F (rounded off)
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000708" name="pgfId-1000708"></a>&nbsp;
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000709"
+            name="pgfId-1000709"></a>Rearranging this equation
+            answers the more practical question, "My mash is
+            resting at temperature Tm; I wish to raise it to Tn by
+            adding water at temperature Tb. How much water do I
+            add?"
+          </p>
+        </div>
+        <div>
+          <h6 class="Tip-Note-Heading">
+            <a id="pgfId-1000710" name="pgfId-1000710"></a>Vs = Vm
+            (Tn - Tm) / (Tb - Tn)
+          </h6>
+          <p class="Body">
+            <a id="pgfId-1000711" name="pgfId-1000711"></a>&nbsp;
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000712" name="pgfId-1000712"></a>Example:
+            My mash (20kg, MMWR = 2) is at 60C. I need to boost it
+            to 70C with boiling (100C)water. My W.E. is 20 * (0.4 +
+            2) = 48 liters; so I need to add
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000713" name="pgfId-1000713"></a>Vs = 48
+            * (70 - 60) / (100 - 70)
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000714" name="pgfId-1000714"></a> = 16
+            liters boiling water
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000715" name="pgfId-1000715"></a>&nbsp;
+          </p>
+          <p class="Body">
+            <a id="pgfId-1000716"
+            name="pgfId-1000716"></a>&lt;/quote&gt;
+          </p>
+        </div>
+      </div>
+      <div>
+        <h4 class="Heading3">
+          <a id="pgfId-1019852" name="pgfId-1019852"></a><a
+          id="35969" name="35969"></a>Decoction calculation
+        </h4>
+        <p class="Body">
+          <a id="pgfId-1019885"
+          name="pgfId-1019885"></a>StrangeBrew uses a decoction
+          formula developed by AJ Delang and John Palmer:
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019908" name="pgfId-1019908"></a>Vd
+          (quarts) = [(T2 - T1)(.4G + 2W)] / [(Td - T1)(.4g + w)]
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019909" name="pgfId-1019909"></a>Where:
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019910" name="pgfId-1019910"></a>Vd =
+          decoction volume
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019911" name="pgfId-1019911"></a>T1 =
+          initial mash temperature
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019912" name="pgfId-1019912"></a>T2 =
+          target mash temperature
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019913" name="pgfId-1019913"></a>Td =
+          decoction temperature (212F)
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019914" name="pgfId-1019914"></a>G =
+          Grainbill weight
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019915" name="pgfId-1019915"></a>W = volume
+          of water in mash (i.e. initial infusion volume)
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019916" name="pgfId-1019916"></a>g = pounds
+          of grain per quart of decoction = 1/(Rd + .32)
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019917" name="pgfId-1019917"></a>w = quarts
+          of water per quart of decoction = g*Rd*water density =
+          2gRd
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019918" name="pgfId-1019918"></a>Rd = ratio
+          of grain to water in the decoction volume (range of .6 to
+          1 quart/lb)
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019920" name="pgfId-1019920"></a>thick
+          decoctions will have a ratio of .6-.7, thinner decoctions
+          will have a ratio of .8-.9. You need to choose an Rd
+          based on how thick you think your pulled decoction is.
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019929" name="pgfId-1019929"></a>Metric:
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019930" name="pgfId-1019930"></a>g =
+          1/(Rd+.667)
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019931" name="pgfId-1019931"></a>w = g*Rd
+        </p>
+        <p class="Body">
+          <a id="pgfId-1019900" name="pgfId-1019900"></a>Rd(L/kg) =
+          Rd(qt/lb) * 2.0864
+        </p>
+      </div>
+    </div>
+    <div>
+      <h3 class="Heading2">
+        <a id="pgfId-1019890" name="pgfId-1019890"></a>Efficiency
+      </h3>
+      <p class="Body">
+        <a id="pgfId-1000756" name="pgfId-1000756"></a>A measure of
+        how much extract obtained from mashed grain, based on a
+        theoretical yield of 100%. EG: typical two row malt has a
+        theoretical yield of 1.036 (1 lb in 1 gallon of water). If
+        you mash 1 lb of two row and get one gallon of wort at OG
+        1.018, your efficiency is 50% (18/36 * 100 = 50).
+      </p>
+    </div>
+    <div>
+      <h3 class="Heading2">
+        <a id="pgfId-1000770" name="pgfId-1000770"></a>Attenuation
+      </h3>
+      <p class="Body">
+        <a id="pgfId-1000772" name="pgfId-1000772"></a>A measure of
+        how much fermentable sugar has been consumed by yeast. More
+        accurately, apparent attenuation. Based on the difference
+        between Original Gravity (OG) and Final Gravity (FG).
+        Attenuation is a function of wort fermentability (simple
+        sugars vs complex sugars) and yeast.
+      </p>
+      <p class="Body">
+        <a id="pgfId-1000773" name="pgfId-1000773"></a>* A lower
+        saccrification rest will make for a more fermentable wort.
+      </p>
+      <p class="Body">
+        <a id="pgfId-1000774" name="pgfId-1000774"></a>* Ale yeasts
+        tend to attenuate more than lager yeasts.
+      </p>
+    </div>
+    <div>
+      <h3 class="Heading2">
+        <a id="pgfId-1000788" name="pgfId-1000788"></a><a
+        id="25430" name="25430"></a>Calculating Carbonation
+      </h3>
+      <div>
+        <h4 class="Heading3">
+          <a id="pgfId-1000790" name="pgfId-1000790"></a>Kegging
+          PSI:
+        </h4>
+        <p class="Body">
+          <a id="pgfId-1000791" name="pgfId-1000791"></a>I found
+          this formula on the web, which describes how PSI is
+          calculated:
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000792" name="pgfId-1000792"></a>P =
+          -16.6999 - 0.0101059 T + 0.00116512 T^2 + 0.173354 T V +
+          4.24267 V - 0.0684226 V^2
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000793" name="pgfId-1000793"></a>(T = temp
+          in degrees F, V = volumes of CO2)
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000794" name="pgfId-1000794"></a>&nbsp;
+        </p>
+      </div>
+      <div>
+        <h4 class="Heading3">
+          <a id="pgfId-1000795" name="pgfId-1000795"></a>Volume of
+          CO2 left in solution
+        </h4>
+        <p class="Body">
+          <a id="pgfId-1000796" name="pgfId-1000796"></a>This is a
+          perennial problem for carbonation - beer has carbonation
+          dissolved in it, a different amount at different
+          temperatures. This affects how much priming sugar should
+          be added at bottling to create the correct amount of
+          carbonation. The following formula calculates the amount
+          of CO2 still in solution at bottling depending on
+          temperature.
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000797" name="pgfId-1000797"></a>Alex
+          Santic posted this to HBD #????:
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000798"
+          name="pgfId-1000798"></a>&lt;quote&gt;
+        </p>
+        <p class="post">
+          <a id="pgfId-1000799" name="pgfId-1000799"></a>Pierre
+          Dumont (pierre_dumont@unb.ca) was kind enough to modify
+          the formula to express volume of dissolved CO2 as a
+          function of temperature and (atmospheric) pressure. In
+          other words, he did the hard part and came up with the
+          following equation:
+        </p>
+        <p class="post">
+          <a id="pgfId-1000800" name="pgfId-1000800"></a>VolCO2 =
+          1.266789 * tempF + 31.00342576 - 0.0000009243372 *
+          (SQRT((1898155717178 * tempF^2) + 91762600000000 * tempF
+          + 839352900000000 - 1710565000000 * 14.5))
+        </p>
+        <p class="post">
+          <a id="pgfId-1000801" name="pgfId-1000801"></a>The number
+          14.5 near the end represents 1 bar of pressure (14.5 psi)
+          so that we can compare with the tabular data. One could
+          try substituting actual atmospheric pressure according to
+          elevation.
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000802"
+          name="pgfId-1000802"></a>&lt;/quote&gt;
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000803" name="pgfId-1000803"></a>Alex
+          points out that the formula isn't perfect, but it's
+          within a few percent of measured results. Also, I do not
+          account for altitude, but I may in a future release.
+        </p>
+      </div>
+      <div>
+        <h4 class="Heading3">
+          <a id="pgfId-1000804" name="pgfId-1000804"></a>Priming
+          sugar:
+        </h4>
+        <p class="Body">
+          <a id="pgfId-1000805" name="pgfId-1000805"></a>Finally,
+          the brewery.org library has an excellent "Primer on
+          Priming" by Mark Hibberd (Bayside Brewers Club,
+          Melbourne, Australia) which had this information:
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000806"
+          name="pgfId-1000806"></a>&lt;quote&gt;
+        </p>
+        <p class="post">
+          <a id="pgfId-1000807"
+          name="pgfId-1000807"></a>Determining the amount of
+          priming sugar is based on the fact that adding 4 grams of
+          sucrose (cane/beet/granulated sugar) per litre will
+          ferment to give 1 volume of CO2:
+        </p>
+        <p class="post">
+          <a id="pgfId-1000808" name="pgfId-1000808"></a>4 g/l (1/2
+          oz/US gal) sucrose --&gt; 1 vol. CO2
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000809"
+          name="pgfId-1000809"></a>&lt;/quote&gt;
+        </p>
+        <p class="Body">
+          <a id="pgfId-1000810" name="pgfId-1000810"></a>He does
+          not say at what temperature the beer is to be served at,
+          but I'm assuming that it's 40F. Hibberd goes on to
+          suggest the following adjustments for the above formula
+          for the following priming sugars:
+        </p>
+        <ul>
+          <li class="Bulleted">
+            <a id="pgfId-1000811" name="pgfId-1000811"></a>
+            <p>
+              brown sugar: same
+            </p>
+          </li>
+          <li class="Bulleted">
+            <a id="pgfId-1000812" name="pgfId-1000812"></a>
+            <p>
+              dextrose: 15% more
+            </p>
+          </li>
+          <li class="Bulleted">
+            <a id="pgfId-1000813" name="pgfId-1000813"></a>
+            <p>
+              honey: 40% more
+            </p>
+          </li>
+          <li class="Bulleted">
+            <a id="pgfId-1000814" name="pgfId-1000814"></a>
+            <p>
+              maple syrup: 50% more
+            </p>
+          </li>
+          <li class="Bulleted">
+            <a id="pgfId-1000815" name="pgfId-1000815"></a>
+            <p>
+              molasses: 80% more
+            </p>
+          </li>
+          <li class="Bulleted">
+            <a id="pgfId-1000816" name="pgfId-1000816"></a>
+            <p>
+              DME: 30% more
+            </p>
+          </li>
+          <li class="Bulleted">
+            <a id="pgfId-1000817" name="pgfId-1000817"></a>
+            <p>
+              LME: 40% more
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <h3 class="Heading2">
+        <a id="pgfId-1000832" name="pgfId-1000832"></a><a
+        id="85308" name="85308"></a>Calculating Hydrometer
+        Correction
+      </h3>
+      <p class="Body">
+        <a id="pgfId-1000834" name="pgfId-1000834"></a>Once again,
+        A. J. DeLange posts the goods in HBD 3701 (the "someone" he
+        mentions is me):
+      </p>
+      <p class="Body">
+        <a id="pgfId-1000835"
+        name="pgfId-1000835"></a>&lt;quote&gt;
+      </p>
+      <p class="post">
+        <a id="pgfId-1000836" name="pgfId-1000836"></a>Someone
+        asked about hydrometer corrections the other day. When
+        things like this come up I always advocate using the ASBC's
+        methods if they have one and in this case they do. One can
+        calculate a correction from
+      </p>
+      <p class="post">
+        <a id="pgfId-1000837" name="pgfId-1000837"></a>&nbsp;
+      </p>
+      <p class="post">
+        <a id="pgfId-1000838" name="pgfId-1000838"></a>C = k0 +
+        k1*T + k2*T*T
+      </p>
+      <p class="post">
+        <a id="pgfId-1000839" name="pgfId-1000839"></a>&nbsp;
+      </p>
+      <p class="post">
+        <a id="pgfId-1000840" name="pgfId-1000840"></a>The
+        coefficients depend on the units used and the specific
+        gravity reading. For corrections in units of a hundredth of
+        a degree P and temperature in C the following coefficients
+        are valid for temperatures between 4 and 26 C for
+        hydrometers calibrated 20C/20C. They were obtained by
+        polynomial fitting to data in Table I, p 2, Beer-3 in the
+        ASBC Methods of Analysis:
+      </p>
+      <p class="post">
+        <a id="pgfId-1000841" name="pgfId-1000841"></a>&nbsp;
+      </p>
+      <p class="post">
+        <a id="pgfId-1000842" name="pgfId-1000842"></a>Reading
+      </p>
+      <p class="post">
+        <a id="pgfId-1000843" name="pgfId-1000843"></a>Deg P k0 k1
+        k2
+      </p>
+      <p class="post">
+        <a id="pgfId-1000844" name="pgfId-1000844"></a>&nbsp;
+      </p>
+      <p class="post">
+        <a id="pgfId-1000845" name="pgfId-1000845"></a>0 - 4.99
+        56.084 -0.17885 -0.13063
+      </p>
+      <p class="post">
+        <a id="pgfId-1000846" name="pgfId-1000846"></a>5 - 9.99
+        69.685 -1.367 -0.10621
+      </p>
+      <p class="post">
+        <a id="pgfId-1000847" name="pgfId-1000847"></a>10 - 14.99
+        77.782 -1.7288 -0.10822
+      </p>
+      <p class="post">
+        <a id="pgfId-1000848" name="pgfId-1000848"></a>15 - 19.99
+        87.895 -2.3601 -0.10285
+      </p>
+      <p class="post">
+        <a id="pgfId-1000849" name="pgfId-1000849"></a>20 - 24.99
+        97.052 -2.7729 -0.10596
+      </p>
+      <p class="Body">
+        <a id="pgfId-1000850" name="pgfId-1000850"></a>&nbsp;
+      </p>
+      <p class="Body">
+        <a id="pgfId-1000851"
+        name="pgfId-1000851"></a>&lt;/quote&gt;
+      </p>
+      <p class="Body">
+        <a id="pgfId-1000852" name="pgfId-1000852"></a>&nbsp;
+      </p>
+      <p class="Body">
+        <a id="pgfId-1000853" name="pgfId-1000853"></a>For
+        hydrometers correct at 60C/15.5F, I use the above
+        calculation at both temperatures, and divide by the
+        difference.
+      </p>
+    </div>
+    <div>
+      <h3 class="Heading2">
+        <a id="pgfId-1000866" name="pgfId-1000866"></a><a
+        id="13509" name="13509"></a>Water Calculations
+      </h3>
+      <p class="Body">
+        <a id="pgfId-1000868" name="pgfId-1000868"></a>The data
+        used to calculate water profiles, salt additions, and
+        acidification are all available on the internet, and I will
+        add them to this help file when I have a chance. Have a
+        look at www.hbd.org/library/ for a lot of good information.
+      </p>
+      <p class="Body">
+        <a id="pgfId-1000869" name="pgfId-1000869"></a>The
+        automatic water profile calculation algorithm is called
+        "simulated annealing", and can be used to solve lots of
+        different problems (the traveling salesman problem is the
+        classic example).
+      </p>
+      <p class="Body">
+        <a id="pgfId-1000870" name="pgfId-1000870"></a>The
+        estimated mash pH calculation is from Ray Daniels'
+        Designing Great Beers. The calculation is: pH = 5.8 +
+        (0.028 X [(ppm CaCO3 X 0.056) - (ppm Ca X 0.04) - (ppm Mg X
+        0.033)]).
+      </p>
+      <div>
+        <h6 class="heading-1">
+          <a id="pgfId-998214" name="pgfId-998214"></a>&nbsp;
+        </h6>
+      </div>
+    </div>
+  </body>
+</html>
+
