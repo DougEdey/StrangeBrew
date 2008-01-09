@@ -1,5 +1,8 @@
 Change Log:
 
+Jan 9, 2008 - Jim Clark
+- Added conversion dialog to menu (wopse - missed 2.0.1)
+
 Jan 7, 2008 - Jim Clark
 - Fixed bug with the "isDirty" flag and the Carb Panel so that all recipes arn't always dirty or in need of being saved all the time
 - Fixed Salt toString functions.

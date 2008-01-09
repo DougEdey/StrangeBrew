@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.68 2008/01/07 18:16:55 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.69 2008/01/09 13:02:19 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -110,6 +110,7 @@ import ca.strangebrew.Style;
 import ca.strangebrew.XmlTransformer;
 import ca.strangebrew.Yeast;
 import ca.strangebrew.ui.swing.dialogs.AboutDialog;
+import ca.strangebrew.ui.swing.dialogs.ConversionDialog;
 import ca.strangebrew.ui.swing.dialogs.FindDialog;
 import ca.strangebrew.ui.swing.dialogs.HydrometerToolDialog;
 import ca.strangebrew.ui.swing.dialogs.MaltPercentDialog;
@@ -261,6 +262,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JMenuItem maltPercentMenuItem = new JMenuItem();
 	final private JMenuItem refractometerMenuItem = new JMenuItem();
 	final private JMenuItem hydrometerToolMenuItem = new JMenuItem();
+	final private JMenuItem conversionToolMenuItem = new JMenuItem();
 	
 	final private JMenuItem newFileMenuItem = new JMenuItem();
 	final private JMenuItem openFileMenuItem = new JMenuItem();
@@ -2075,6 +2077,15 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							}
 						});
 						
+						mnuTools.add(conversionToolMenuItem);
+						conversionToolMenuItem.setText("Conversion Tool...");
+						conversionToolMenuItem.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								ConversionDialog convTool = new ConversionDialog(owner);
+								convTool.setModal(true);
+								convTool.setVisible(true);
+							}
+						});
 					}
 				}
 				{
