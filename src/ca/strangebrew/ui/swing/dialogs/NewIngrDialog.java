@@ -244,22 +244,32 @@ public class NewIngrDialog extends javax.swing.JDialog {
 		boolean addFerm = false;
 		boolean addYeast = false;
 		boolean addMisc = false;
+		
 		for (int i=0;i<newIngrList.size();i++){
-			if (newIngrList.get(i) instanceof Hop && add[i])
+			if (newIngrList.get(i) instanceof Hop && add[i]){
 					addHops = true;	
-			if (newIngrList.get(i) instanceof Fermentable && add[i])
+					db.hopsDB.add((Hop)newIngrList.get(i));
+			}
+			if (newIngrList.get(i) instanceof Fermentable && add[i]){
 					addFerm = true;
-			if (newIngrList.get(i) instanceof Yeast && add[i])
+					db.fermDB.add((Fermentable)newIngrList.get(i));
+			}
+			if (newIngrList.get(i) instanceof Yeast && add[i]){
 					addYeast = true;
-			if (newIngrList.get(i) instanceof Misc && add[i])
+					db.yeastDB.add((Yeast)newIngrList.get(i));
+			}
+			if (newIngrList.get(i) instanceof Misc && add[i]){
 					addMisc = true;
+					db.miscDB.add((Misc)newIngrList.get(i));
+			}
 		}
 		
 		// now do the writing:
-		if (addHops) db.writeHops(newIngrList, add);
-		if (addFerm) db.writeFermentables(newIngrList, add);
-		if (addYeast) db.writeYeast(newIngrList, add);
-		if (addMisc) db.writeMisc(newIngrList, add);
+		// if (addHops) db.writeHops(newIngrList, add);
+		if (addHops) db.writeHops();
+		if (addFerm) db.writeFermentables();
+		if (addYeast) db.writeYeast();
+		if (addMisc) db.writeMisc();
 		
 	}
 

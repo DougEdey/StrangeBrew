@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.69 2008/01/09 13:02:19 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.70 2008/01/14 21:13:28 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -132,7 +132,7 @@ import edu.stanford.ejalbert.exception.UnsupportedOperatingSystemException;
 public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener, WindowListener {
 
 
-	final public String version = "2.0.1";
+	private String version = "2.0.1";
 	
 	// Stuff that should be final
 	public JTable hopsTable;
@@ -222,8 +222,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JComboBox ibuMethodCombo = new JComboBox(ibuMethodComboModel);
 	final private JLabel ibuMethodLabel = new JLabel();
 	final private JPanel ibuMethodPanel = new JPanel();
-	final private JMenu jMenu4 = new JMenu();
-	final private JMenu jMenu5 = new JMenu();
+	final public JMenu editMenu = new JMenu();
+	final private JMenu helpMenu = new JMenu();
 	final private JMenuBar jMenuBar1 = new JMenuBar();
 	final private JPanel jPanel1 = new JPanel();
 	final private JScrollPane jScrollPane1 = new JScrollPane();
@@ -1639,7 +1639,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								hopColumn = hopsTable.getColumnModel().getColumn(1);
 								hopColumn.setCellEditor(new SBComboBoxCellEditor(hopsFormComboBox));								
 
-								//								 set up hop add combo
+								//	set up hop add combo
 								JComboBox hopsAddComboBox = new JComboBox(Hop.addTypes);
 								SmartComboBox.enable(hopsAddComboBox);
 								hopColumn = hopsTable.getColumnModel().getColumn(5);
@@ -1988,11 +1988,11 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 				}
 				{
-					jMenuBar1.add(jMenu4);
-					jMenu4.setText("Edit");
+					jMenuBar1.add(editMenu);
+					editMenu.setText("Edit");
 					{
 						final JFrame owner = this;
-						jMenu4.add(editPrefsMenuItem);
+						editMenu.add(editPrefsMenuItem);
 						editPrefsMenuItem.setText("Preferences...");
 						editPrefsMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
@@ -2004,10 +2004,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 
 					{
-						jMenu4.add(jSeparator1);
+						editMenu.add(jSeparator1);
 					}
 					{
-						jMenu4.add(deleteMenuItem);
+						editMenu.add(deleteMenuItem);
 						deleteMenuItem.setText("Delete");
 						deleteMenuItem.setEnabled(false);
 					}
@@ -2089,10 +2089,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 				}
 				{
-					jMenuBar1.add(jMenu5);
-					jMenu5.setText("Help");
+					jMenuBar1.add(helpMenu);
+					helpMenu.setText("Help");
 					{
-						jMenu5.add(helpMenuItem);
+						helpMenu.add(helpMenuItem);
 						helpMenuItem.setText("Help");						
 						helpMenuItem.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
@@ -2121,7 +2121,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						
 					}
 					{
-						jMenu5.add(aboutMenuItem);
+						helpMenu.add(aboutMenuItem);
 						aboutMenuItem.setText("About...");
 						final JFrame owner = this;
 						aboutMenuItem.addActionListener(new ActionListener() {
@@ -2276,4 +2276,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		}
 		
 	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
 }
