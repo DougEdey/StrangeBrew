@@ -79,7 +79,8 @@ public class Salt {
 		this.amount = 0.0;
 		this.amountU = Quantity.G;
 		this.gramsPerTsp = gramsPerTsp;
-		this.chemicalEffects = Arrays.copyOf(chemEff, chemEff.length);
+		// this.chemicalEffects = Arrays.copyOf(chemEff, chemEff.length);
+		this.chemicalEffects = chemEff.clone();
 	}
 	
 	public Salt(Salt s) {
@@ -89,7 +90,7 @@ public class Salt {
 		this.amount = s.getAmount();
 		this.amountU = s.getAmountU();
 		this.gramsPerTsp = s.getGramsPerTsp();
-		this.chemicalEffects = Arrays.copyOf(s.getChemicalEffects(), s.getChemicalEffects().length);
+		this.chemicalEffects = s.getChemicalEffects().clone();
 	}
 
 	public double getAmount() {
@@ -147,7 +148,8 @@ public class Salt {
 	}*/
 
 	public void setChemicalEffects(ChemicalEffect[] effs) {
-		this.chemicalEffects = Arrays.copyOf(effs, effs.length);
+		// this.chemicalEffects = Arrays.copyOf(effs, effs.length);
+		this.chemicalEffects = effs.clone();
 	}
 
 	public void setChemicalName(String chemicalName) {
