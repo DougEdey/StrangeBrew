@@ -14,7 +14,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.22 2008/01/14 19:18:47 jimcdiver Exp $
+ * $Id: Database.java,v 1.23 2008/01/14 21:20:05 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -184,7 +184,7 @@ public class Database {
 
 	}
 	
-	public void writeFermentables(ArrayList<Ingredient> newIngr, boolean[] add) {		
+	public void writeFermentables() {		
 		
 		File maltsFile = new File(dbPath, "malts.csv");
 		backupFile(maltsFile);
@@ -203,34 +203,22 @@ public class Database {
 			writer.put("Steep");
 			writer.put("Modified");
 			writer.nl();
-			int i = 0, j = 0, k = 0;
-			while (i < fermDB.size() || j < newIngr.size()) {
-				Fermentable f = null;				
-				if (i < fermDB.size()) {
-					f = (Fermentable) fermDB.get(i);
-					i++;					
-				} else if (j < newIngr.size()) {
-					if (newIngr.get(j) instanceof Fermentable && add[j]){
-						f = (Fermentable) newIngr.get(j);						
-					}
-					j++;
-				}
-				if (f != null) {
-					k++;
-					writer.put("" + (k));
-					writer.put(f.getName());
-					writer.put("" + f.getPppg());
-					writer.put("" + f.getLov());
-					writer.put("" + f.getCostPerU());
-					writer.put("" + f.getStock());
-					writer.put(f.getUnitsAbrv());
-					writer.put("" + f.getMashed());
-					writer.put(f.getDescription());
-					writer.put("" + f.getSteep());
-					writer.put("" + f.getModified());
-					writer.nl();
-				}
-
+			int i = 0;
+			while (i < fermDB.size()) {
+				Fermentable f = fermDB.get(i);
+				i++;
+				writer.put("" + (i));
+				writer.put(f.getName());
+				writer.put("" + f.getPppg());
+				writer.put("" + f.getLov());
+				writer.put("" + f.getCostPerU());
+				writer.put("" + f.getStock());
+				writer.put(f.getUnitsAbrv());
+				writer.put("" + f.getMashed());
+				writer.put(f.getDescription());
+				writer.put("" + f.getSteep());
+				writer.put("" + f.getModified());
+				writer.nl();
 			}
 
 			writer.close();
@@ -291,10 +279,8 @@ public class Database {
 
 	}
 	
-	public void writeHops(ArrayList<Ingredient> newIngr, boolean[] add) {		
+	public void writeHops() {		
 			
-		if (!(newIngr.size() > 0))
-			return;
 		File hopsFile = new File(dbPath, "hops.csv");
 		backupFile(hopsFile);
 
@@ -311,32 +297,21 @@ public class Database {
 			writer.put("Date");
 			writer.put("Modified");
 			writer.nl();
-			int i = 0, j = 0, k = 0;
-			while (i < hopsDB.size() || j < newIngr.size()) {
-				Hop h = null;				
-				if (i < hopsDB.size()) {
-					h = (Hop) hopsDB.get(i);
-					i++;					
-				} else if (j < newIngr.size()) {
-					if (newIngr.get(j) instanceof Hop && add[j]){
-						h = (Hop) newIngr.get(j);						
-					}
-					j++;
-				}
-				if (h != null) {
-					k++;
-					writer.put("" + (k));
-					writer.put(h.getName());
-					writer.put("" + h.getAlpha());
-					writer.put("" + h.getCostPerU());
-					writer.put("" + h.getStock());
-					writer.put(h.getUnitsAbrv());
-					writer.put(h.getDescription());
-					writer.put("" + h.getStorage());
-					writer.put("" + h.getDate());
-					writer.put("" + h.getModified());
-					writer.nl();
-				}
+			int i = 0;
+			while (i < hopsDB.size()) {
+				Hop h = hopsDB.get(i);
+				i++;
+				writer.put("" + (i));
+				writer.put(h.getName());
+				writer.put("" + h.getAlpha());
+				writer.put("" + h.getCostPerU());
+				writer.put("" + h.getStock());
+				writer.put(h.getUnitsAbrv());
+				writer.put(h.getDescription());
+				writer.put("" + h.getStorage());
+				writer.put("" + h.getDate());
+				writer.put("" + h.getModified());
+				writer.nl();
 
 			}
 
@@ -390,10 +365,8 @@ public class Database {
 
 	}
 	
-	public void writeYeast(ArrayList<Ingredient> newIngr, boolean[] add) {		
+	public void writeYeast() {		
 		
-		if (!(newIngr.size() > 0))
-			return;
 		File yeastFile = new File(dbPath, "yeast.csv");
 		backupFile(yeastFile);
 
@@ -405,27 +378,16 @@ public class Database {
 			writer.put("Descr");
 			writer.put("Modified");
 			writer.nl();
-			int i = 0, j = 0, k = 0;
-			while (i < yeastDB.size() || j < newIngr.size()) {
-				Yeast y = null;				
-				if (i < yeastDB.size()) {
-					y = (Yeast) yeastDB.get(i);
-					i++;					
-				} else if (j < newIngr.size()) {
-					if (newIngr.get(j) instanceof Yeast && add[j]){
-						y = (Yeast) newIngr.get(j);						
-					}
-					j++;
-				}
-				if (y != null) {
-					k++;
-					writer.put("" + (k));
-					writer.put(y.getName());
-					writer.put("" + y.getCostPerU());
-					writer.put(y.getDescription());
-					writer.put("" + y.getModified());
-					writer.nl();
-				}
+			int i = 0;
+			while (i < yeastDB.size()) {
+				Yeast y = yeastDB.get(i);
+				i++;
+				writer.put("" + (i));
+				writer.put(y.getName());
+				writer.put("" + y.getCostPerU());
+				writer.put(y.getDescription());
+				writer.put("" + y.getModified());
+				writer.nl();
 
 			}
 
@@ -548,10 +510,8 @@ public class Database {
 
 	}
 	
-	public void writeMisc(ArrayList<Ingredient> newIngr, boolean[] add) {		
+	public void writeMisc() {		
 		
-		if (!(newIngr.size() > 0))
-			return;
 		File miscFile = new File(dbPath, "misc_ingr.csv");
 		backupFile(miscFile);
 
@@ -565,31 +525,18 @@ public class Database {
 			writer.put("STAGE");
 			writer.put("Modified");
 			writer.nl();
-			int i = 0, j = 0, k = 0;
-			while (i < miscDB.size() || j < newIngr.size()) {
-				Misc m = null;				
-				if (i < miscDB.size()) {
-					m = (Misc) miscDB.get(i);
-					i++;					
-				} else if (j < newIngr.size()) {
-					if (newIngr.get(j) instanceof Misc
-							&& add[j]){
-						m = (Misc) newIngr.get(j);						
-					}
-					j++;
-				}
-				if (m != null) {
-					k++;
-					writer.put("" + (k));
-					writer.put(m.getName());
-					writer.put("" + m.getCostPerU());
-					writer.put(m.getDescription());
-					writer.put(m.getUnitsAbrv());
-					writer.put(m.getStage());
-					writer.put("" + m.getModified());
-					writer.nl();
-				}
-
+			int i = 0;
+			while (i < miscDB.size()) {
+				Misc m = miscDB.get(i);
+				i++;
+				writer.put("" + (i));
+				writer.put(m.getName());
+				writer.put("" + m.getCostPerU());
+				writer.put(m.getDescription());
+				writer.put(m.getUnitsAbrv());
+				writer.put(m.getStage());
+				writer.put("" + m.getModified());
+				writer.nl();
 			}
 
 			writer.close();
