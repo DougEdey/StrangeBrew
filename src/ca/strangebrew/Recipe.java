@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.65 2008/01/08 13:37:07 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.66 2008/01/14 19:31:01 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -1823,6 +1823,14 @@ public class Recipe {
 		double millEs = BrewCalcs.acidMillequivelantsPerLiter(getSourceWater().getPh(), 
 				getSourceWater().getAlkalinity(), getTargetWater().getPh());
 		double moles = BrewCalcs.molesByAcid(getAcid(), millEs,  getTargetWater().getPh());
+		double acidPerL = BrewCalcs.acidAmountPerL(getAcid(), moles);
+		return Quantity.convertUnit(Quantity.GAL, Quantity.L, acidPerL);
+	}
+
+	public double getAcidAmount5_2() {
+		double millEs = BrewCalcs.acidMillequivelantsPerLiter(getSourceWater().getPh(), 
+				getSourceWater().getAlkalinity(), 5.2);
+		double moles = BrewCalcs.molesByAcid(getAcid(), millEs,  5.2);
 		double acidPerL = BrewCalcs.acidAmountPerL(getAcid(), moles);
 		return Quantity.convertUnit(Quantity.GAL, Quantity.L, acidPerL);
 	}

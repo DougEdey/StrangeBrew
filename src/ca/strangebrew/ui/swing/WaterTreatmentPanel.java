@@ -122,12 +122,15 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 	final private JLabel lSourceAlk = new JLabel("Source Alk: ");
 	final private JLabel lTargetPH = new JLabel("Target pH: ");
 	final private JLabel lAcid = new JLabel("Acid: ");
-	final private JLabel lAdd = new JLabel("Add: ");
+	final private JLabel lAdd = new JLabel("Add for Target: ");
+	final private JLabel lAdd5_2 = new JLabel("Add for 5.2pH: "); 
 	final private JLabel lAcidUnit = new JLabel();
+	final private JLabel lAcidUnit5_2 = new JLabel();
 	final private JTextField textSourcePH = new JTextField("8.3");
 	final private JTextField textSourceAlk = new JTextField("100");
 	final private JTextField textTargetPH = new JTextField("5.0");
 	final private JTextField textAcidAmount = new JTextField();
+	final private JTextField textAcidAmount5_2 = new JTextField();
 	final private JComboBox comboAcid = new JComboBox(Acid.acidNames);
 	
 	public WaterTreatmentPanel() {
@@ -224,9 +227,11 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 		textTargetPH.setText(SBStringUtils.format(target.getPh(), 1));
 		comboAcid.setSelectedItem(myRecipe.getAcid().getName());
 		lAcidUnit.setText(myRecipe.getAcid().getAcidUnit());
+		lAcidUnit5_2.setText(myRecipe.getAcid().getAcidUnit());
 		// This seems backwards but, its not if you think about it
 		// basicaly, I am cheating the function to get the conversion I want
-		textAcidAmount.setText(SBStringUtils.format(myRecipe.getAcidAmount(), 2));	
+		textAcidAmount.setText(SBStringUtils.format(myRecipe.getAcidAmount(), 2));
+		textAcidAmount5_2.setText(SBStringUtils.format(myRecipe.getAcidAmount5_2(), 2));
 	}
 	
 	private void initGUI() {
@@ -522,6 +527,17 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 				textAcidAmount.setEditable(false);
 				constraints.gridx = 2;
 				panelAcid.add(lAcidUnit, constraints);					
+
+				constraints.gridx = 0;
+				constraints.gridy = 5;
+				panelAcid.add(lAdd5_2, constraints);
+				constraints.gridx = 1;
+				constraints.weightx = 1;
+				panelAcid.add(textAcidAmount5_2, constraints);
+				constraints.weightx = 0;
+				textAcidAmount5_2.setEditable(false);
+				constraints.gridx = 2;
+				panelAcid.add(lAcidUnit5_2, constraints);					
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -5,6 +5,7 @@ Jan 14, 2008 - Jim Clark
    so it didn't make sense to have the salts configurable on the fly when adding a salt still involved some code work to impliement
    this helped clean up the WaterTreatmentPanel too, so overall.. IMHO, better.
 - Added gram->tsp conversion into salt addisions.
+- Added acid required for 5.2pH target as well as to hit target water pH. Some people like to emulate water, some like 5.2.
 
 Jan 9, 2008 - Jim Clark
 - Added conversion dialog to menu (wopse - missed 2.0.1)
