@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Salt {
 	private String name;
@@ -9,7 +9,8 @@ public class Salt {
 	private String chemicalName;
 	private double amount = 0.0;
 	private String amountU = Quantity.G;
-	private ArrayList<ChemicalEffect> chemicalEffects = new ArrayList<ChemicalEffect>();
+	private double gramsPerTsp = 0.0;
+	private ChemicalEffect[] chemicalEffects = null;
 	
 	public static final String MAGNESIUM = "Mg";
 	public static final String CHLORINE = "Cl";
@@ -27,7 +28,58 @@ public class Salt {
 	public static final String CALCIUM_SULPHATE = "Calcium Sulphate";
 	public static final String CALCIUM_CHLORIDE = "Calcium Chloride";
 	
-	public Salt() { 
+	public static final String EPSOM_SALT = "Epsom Salt"; 
+	public static final String GYPSUM = "Gypsum"; 
+	public static final String SALT = "Salt"; 
+	public static final String BAKING_SODA = "Baking Soda"; 
+	public static final String CHALK = "Chalk"; 
+//	public static final String CALCIUM_CHLORIDE = "Calcium Chloride"; 
+	
+	public static final Salt[] salts = {
+		new Salt(MAGNESIUM_SULPHATE, EPSOM_SALT, "MgSo4", 4.5, new ChemicalEffect[]{
+			new ChemicalEffect(SULPHATE, 103.0),
+			new ChemicalEffect(MAGNESIUM, 26.1),
+			new ChemicalEffect(HARDNESS, 107.8)
+		}),
+		new Salt(CALCIUM_CARBONATE, GYPSUM, "CaCo3", 1.8, new ChemicalEffect[]{
+			new ChemicalEffect(CALCIUM, 61.5),
+			new ChemicalEffect(SULPHATE, 147.4),
+			new ChemicalEffect(HARDNESS, 153.6)
+		}),
+		new Salt(SODIUM_CHLORIDE, SALT, "NaCl", 6.5, new ChemicalEffect[]{
+			new ChemicalEffect(SODIUM, 103.9),
+			new ChemicalEffect(CHLORINE, 160.3),
+			new ChemicalEffect(HARDNESS, 107.8)
+		}),
+		new Salt(SODIUM_BICARBONATE, BAKING_SODA, "NaHCo3", 4.4, new ChemicalEffect[]{
+			new ChemicalEffect(SODIUM, 72.3),
+			new ChemicalEffect(CARBONATE, 188.7),
+			new ChemicalEffect(ALKALINITY, 157.4)
+		}),
+		new Salt(CALCIUM_SULPHATE, CHALK, "CaSo4", 4.0, new ChemicalEffect[]{
+			new ChemicalEffect(CALCIUM, 105.8),
+			new ChemicalEffect(CARBONATE, 158.4),
+			new ChemicalEffect(HARDNESS, 264.2),
+			new ChemicalEffect(ALKALINITY, 264.2)
+		}),
+		new Salt(CALCIUM_CHLORIDE, CALCIUM_CHLORIDE, "CaCl2", 3.4, new ChemicalEffect[]{
+			new ChemicalEffect(CALCIUM, 72.0),
+			new ChemicalEffect(CARBONATE, 127.4),
+			new ChemicalEffect(HARDNESS, 179.8)
+		})
+	};
+	
+	public Salt() {		
+	}
+	
+	public Salt(String name, String commonName, String chemicalName, double gramsPerTsp, ChemicalEffect[] chemEff) {
+		this.name = name;
+		this.commonName = commonName;
+		this.chemicalName = chemicalName;
+		this.amount = 0.0;
+		this.amountU = Quantity.G;
+		this.gramsPerTsp = gramsPerTsp;
+		this.chemicalEffects = Arrays.copyOf(chemEff, chemEff.length);
 	}
 	
 	public Salt(Salt s) {
@@ -36,8 +88,8 @@ public class Salt {
 		this.chemicalName = s.getChemicalName();
 		this.amount = s.getAmount();
 		this.amountU = s.getAmountU();
-		// Shallow copy! This should be ok, since this stuff should 'never' change on the fly
-		this.chemicalEffects = s.getChemicalEffects();
+		this.gramsPerTsp = s.getGramsPerTsp();
+		this.chemicalEffects = Arrays.copyOf(s.getChemicalEffects(), s.getChemicalEffects().length);
 	}
 
 	public double getAmount() {
@@ -60,7 +112,7 @@ public class Salt {
 		return name;
 	}
 
-	public ArrayList<ChemicalEffect> getChemicalEffects() {
+	public ChemicalEffect[] getChemicalEffects() {
 		return chemicalEffects;
 	}
 	
@@ -94,23 +146,8 @@ public class Salt {
 		this.amountU = amountU;
 	}*/
 
-	public void addChemicalEffect(String elem, double val) {
-		// Remove old effect of same name first!
-		for (int i = 0; i < this.chemicalEffects.size(); i++) {
-			ChemicalEffect temp = this.chemicalEffects.get(i);
-			if (temp.getElem().equals(elem)) {
-				this.chemicalEffects.remove(i);
-				break;
-			}
-		}
-
-		ChemicalEffect e = new ChemicalEffect(elem, val);
-		this.chemicalEffects.add(e);
-	}
-	
-	public void setChemicalEffects(ArrayList<ChemicalEffect> effs) {
-		this.chemicalEffects.clear();
-		this.chemicalEffects.addAll(effs);
+	public void setChemicalEffects(ChemicalEffect[] effs) {
+		this.chemicalEffects = Arrays.copyOf(effs, effs.length);
 	}
 
 	public void setChemicalName(String chemicalName) {
@@ -125,7 +162,7 @@ public class Salt {
 		this.name = name;
 	}
 
-	public class ChemicalEffect {
+	public static class ChemicalEffect {
 		final private String elem;
 		final private double effect;
 		
@@ -145,22 +182,43 @@ public class Salt {
 
 
 	public double getEffectByChem(String chem) {
-		for (int i = 0; i < chemicalEffects.size(); i++) {
-			if (((ChemicalEffect)chemicalEffects.get(i)).getElem().equals(chem)) {
-				return ((ChemicalEffect)chemicalEffects.get(i)).getEffect();
+		for (int i = 0; i < chemicalEffects.length; i++) {
+			if (chemicalEffects[i].getElem().equals(chem)) {
+				return chemicalEffects[i].getEffect();
 			}
 		}
 		
 		return 0;
 	}
 	
-	static public Salt getSaltByName(ArrayList<Salt> salts, String name) {
-		for (int i = 0; i < salts.size(); i++) {
-			if (salts.get(i).getName().equals(name)) {
-				return salts.get(i);
+	static public Salt getSaltByName(String name) {
+		for (int i = 0; i < Salt.salts.length; i++) {
+			if (Salt.salts[i].getName().equals(name)) {
+				return Salt.salts[i];
 			}
 		}
 		
 		return null;
+	}
+
+	public double getGramsPerTsp() {
+		return gramsPerTsp;
+	}
+
+	public void setGramsPerTsp(double gramsPerTsp) {
+		this.gramsPerTsp = gramsPerTsp;
+	}
+	
+	public String getVolU() {
+		return "tsp";
+	}
+	
+	public double getVol() {
+		double grams = this.getAmount();
+		double tsp = 0;
+		
+		tsp = grams / this.getGramsPerTsp();
+		
+		return tsp;
 	}
 }

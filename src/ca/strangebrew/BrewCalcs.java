@@ -149,7 +149,7 @@ public class BrewCalcs {
 		WaterProfile result = new WaterProfile();
 
 		if (waterNeeds.getMg() > 0) {
-			Salt epsom = Salt.getSaltByName(salts, Salt.MAGNESIUM_SULPHATE);
+			Salt epsom = Salt.getSaltByName(Salt.MAGNESIUM_SULPHATE);
 			if (epsom != null) {
 				epsom.setAmount(waterNeeds.getMg() / epsom.getEffectByChem(Salt.MAGNESIUM));
 				updateWater(result, epsom, sizeInGal);
@@ -158,7 +158,7 @@ public class BrewCalcs {
 		
 		if (waterNeeds.getSo4() > 0 &&
 			result.getSo4() < waterNeeds.getSo4()) {
-			Salt gypsum = Salt.getSaltByName(salts, Salt.CALCIUM_CARBONATE);
+			Salt gypsum = Salt.getSaltByName(Salt.CALCIUM_CARBONATE);
 			if (gypsum != null) {
 				gypsum.setAmount((waterNeeds.getSo4() - result.getSo4()) / gypsum.getEffectByChem(Salt.SULPHATE));
 				updateWater(result, gypsum, sizeInGal);
@@ -171,7 +171,7 @@ public class BrewCalcs {
 		
 		if (waterNeeds.getNa() > 0 &&
 			result.getNa() < waterNeeds.getNa()) {
-			Salt salt = Salt.getSaltByName(salts, Salt.SODIUM_CHLORIDE);
+			Salt salt = Salt.getSaltByName(Salt.SODIUM_CHLORIDE);
 			if (salt != null) {
 				salt.setAmount((waterNeeds.getNa() - result.getNa()) / salt.getEffectByChem(Salt.SODIUM));
 				updateWater(result, salt, sizeInGal);
@@ -180,7 +180,7 @@ public class BrewCalcs {
 
 		if (waterNeeds.getHco3() > 0 &&
 			result.getHco3() < waterNeeds.getHco3()) {
-			Salt soda = Salt.getSaltByName(salts, Salt.SODIUM_BICARBONATE);
+			Salt soda = Salt.getSaltByName(Salt.SODIUM_BICARBONATE);
 			if (soda != null) {
 				soda.setAmount((waterNeeds.getHco3() - result.getHco3()) / soda.getEffectByChem(Salt.CARBONATE));
 				updateWater(result, soda, sizeInGal);
@@ -189,7 +189,7 @@ public class BrewCalcs {
 
 		if (waterNeeds.getCa() > 0 &&
 			result.getCa() < waterNeeds.getCa()) {
-			Salt chalk = Salt.getSaltByName(salts, Salt.CALCIUM_SULPHATE);
+			Salt chalk = Salt.getSaltByName(Salt.CALCIUM_SULPHATE);
 			if (chalk != null) {
 				chalk.setAmount((waterNeeds.getCa() - result.getCa()) / chalk.getEffectByChem(Salt.CALCIUM));
 				updateWater(result, chalk, sizeInGal);
@@ -198,7 +198,7 @@ public class BrewCalcs {
 		
 		if (waterNeeds.getCa() > 0 &&
 			result.getCa() < waterNeeds.getCa()) {
-			Salt calChloride = Salt.getSaltByName(salts, Salt.CALCIUM_CHLORIDE);
+			Salt calChloride = Salt.getSaltByName(Salt.CALCIUM_CHLORIDE);
 			if (calChloride != null) {
 				calChloride.setAmount((waterNeeds.getCa() - result.getCa()) / calChloride.getEffectByChem(Salt.CALCIUM));
 				updateWater(result, calChloride, sizeInGal);
@@ -209,9 +209,9 @@ public class BrewCalcs {
 	}
 	
 	public static void updateWater(WaterProfile w, Salt s, double sizeInGal) {
-		ArrayList<Salt.ChemicalEffect> effs = s.getChemicalEffects();
-		for (int i = 0; i < effs.size(); i++) {
-			Salt.ChemicalEffect eff = effs.get(i);
+		Salt.ChemicalEffect[] effs = s.getChemicalEffects();
+		for (int i = 0; i < effs.length; i++) {
+			Salt.ChemicalEffect eff = effs[i];
 			
 			if (eff.getElem().equals(Salt.MAGNESIUM)) {
 				w.setMg((w.getMg() + (eff.getEffect() *  s.getAmount())) * sizeInGal);

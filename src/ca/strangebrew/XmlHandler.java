@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.24 2008/01/05 20:52:02 jimcdiver Exp $
+ * $Id: XmlHandler.java,v 1.25 2008/01/14 19:18:47 jimcdiver Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -12,7 +12,6 @@ package ca.strangebrew;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import org.xml.sax.Attributes;
@@ -284,10 +283,10 @@ public class XmlHandler extends DefaultHandler{
 				r.addFermentStep(ferm);	
 			} else if (qName.equalsIgnoreCase("SALT")) {
 				// look up the effects of this salt from the DB
-				ArrayList<Salt> db = Database.getInstance().saltDB;
-				Salt dbSalt = Salt.getSaltByName(db, salt.getName());
+				Salt dbSalt = Salt.getSaltByName(salt.getName());
 				if (dbSalt != null) {
 					salt.setChemicalEffects(dbSalt.getChemicalEffects());
+					salt.setGramsPerTsp(dbSalt.getGramsPerTsp());
 				}
 				r.addSalt(salt);				
 				salt = null;
@@ -625,7 +624,7 @@ public class XmlHandler extends DefaultHandler{
 					salt.setCommonName(s); 
 				} else if (currentElement.equalsIgnoreCase("CHEM")) {
 					salt.setChemicalName(s); 
-				} else if (currentElement.equalsIgnoreCase("AMMOUNT")) {
+				} else if (currentElement.equalsIgnoreCase("AMOUNT")) {
 					salt.setAmount(Double.parseDouble(s));
 				}
 				// TODO units!!!!

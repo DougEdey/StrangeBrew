@@ -1,5 +1,11 @@
 Change Log:
 
+Jan 14, 2008 - Jim Clark
+- Fixed some bugs with Salts and moved data out of CVS into static array. The data contents are tightly coupled to the salt calculations
+   so it didn't make sense to have the salts configurable on the fly when adding a salt still involved some code work to impliement
+   this helped clean up the WaterTreatmentPanel too, so overall.. IMHO, better.
+- Added gram->tsp conversion into salt addisions.
+
 Jan 9, 2008 - Jim Clark
 - Added conversion dialog to menu (wopse - missed 2.0.1)
 

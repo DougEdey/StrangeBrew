@@ -108,11 +108,13 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 	final private JTextField textMashPHR = new JTextField();
 	
 	// Salts
-	private JLabel[] lSalts = null;
-	private JLabel[] lSaltsU = null;
-	private JTextField[] textSaltsAmount = null;
-	private JCheckBox[] checkSaltsUse = null;
-	private String[] saltName = null; 
+	final private JLabel[] lSalts = new JLabel[Salt.salts.length];
+	final private JLabel[] lSaltsU = new JLabel[Salt.salts.length];
+	final private JLabel[] lSaltsVolU = new JLabel[Salt.salts.length];
+	final private JTextField[] textSaltsAmount = new JTextField[Salt.salts.length];
+	final private JTextField[] textSaltsVol = new JTextField[Salt.salts.length];
+	final private JCheckBox[] checkSaltsUse = new JCheckBox[Salt.salts.length];
+	final private String[] saltName = new String[Salt.salts.length];
 	
 	// Acidification
 	final private JPanel panelAcid = new JPanel();
@@ -150,41 +152,6 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 			comboSource.addItem(db.get(i).getName());
 			comboTarget.addItem(db.get(i).getName());
 		}
-
-		// have to have the DB loaded for these boys to work!
-		lSalts = new JLabel[Database.getInstance().saltDB.size()];
-		lSaltsU = new JLabel[Database.getInstance().saltDB.size()];
-		textSaltsAmount = new JTextField[Database.getInstance().saltDB.size()];
-		checkSaltsUse = new JCheckBox[Database.getInstance().saltDB.size()];
-		saltName = new String[Database.getInstance().saltDB.size()];
-
-		// Setup special arrays
-		ArrayList<Salt> salts = Database.getInstance().saltDB;
-		for (int i = 0; i < salts.size(); i++) {
-			Salt salt = salts.get(i);
-							
-			saltName[i] = new String(salt.getName());
-			lSalts[i] = new JLabel(salt.getCommonName() + " (" + salt.getChemicalName() + "): ");
-			lSaltsU[i] = new JLabel(salt.getAmountU());
-			textSaltsAmount[i] = new JTextField("0.0");
-			checkSaltsUse[i] = new JCheckBox();
-			checkSaltsUse[i].setSelected(false);
-					
-			// Add to panel
-			constraints.fill = GridBagConstraints.HORIZONTAL;
-			constraints.gridx = 0;
-			constraints.gridy = i;
-			panelSalt.add(lSalts[i], constraints);
-			constraints.gridx = 1;
-			panelSalt.add(checkSaltsUse[i], constraints);
-			checkSaltsUse[i].addActionListener(this);
-			constraints.gridx = 2;
-			constraints.ipadx = 60;
-			panelSalt.add(textSaltsAmount[i], constraints);
-			constraints.ipadx = 0;
-			constraints.gridx = 3;
-			panelSalt.add(lSaltsU[i], constraints);
-		}				
 	}
 	
 	public void displayWaterTreatment() {
@@ -244,8 +211,10 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 			Salt s = myRecipe.getSaltByName(saltName[i]);
 			if (myRecipe.getSaltByName(saltName[i]) != null) {
 				textSaltsAmount[i].setText(SBStringUtils.format(s.getAmount(), 2)); 	
+				textSaltsVol[i].setText(SBStringUtils.format(s.getVol(), 2));
 			} else {
 				textSaltsAmount[i].setText("0.0");
+				textSaltsVol[i].setText("0.0");
 			}
 		}
 		
@@ -469,7 +438,40 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 			
 			// Salt Panel
 			{
-				// see setList()
+				// Setup special arrays
+				for (int i = 0; i < Salt.salts.length; i++) {
+					Salt salt = Salt.salts[i];
+									
+					saltName[i] = new String(salt.getName());
+					lSalts[i] = new JLabel(salt.getCommonName() + " (" + salt.getChemicalName() + "): ");
+					lSaltsU[i] = new JLabel(salt.getAmountU());
+					lSaltsVolU[i] = new JLabel(salt.getVolU());
+					textSaltsAmount[i] = new JTextField("0.0");
+					textSaltsVol[i] = new JTextField("0.0");
+					checkSaltsUse[i] = new JCheckBox();
+					checkSaltsUse[i].setSelected(false);
+							
+					// Add to panel
+					constraints.fill = GridBagConstraints.HORIZONTAL;
+					constraints.gridx = 0;
+					constraints.gridy = i;
+					panelSalt.add(lSalts[i], constraints);
+					constraints.gridx = 1;
+					panelSalt.add(checkSaltsUse[i], constraints);
+					checkSaltsUse[i].addActionListener(this);
+					constraints.gridx = 2;
+					constraints.ipadx = 40;
+					panelSalt.add(textSaltsAmount[i], constraints);
+					constraints.ipadx = 0;
+					constraints.gridx = 3;
+					panelSalt.add(lSaltsU[i], constraints);
+					constraints.gridx = 4;
+					constraints.ipadx = 40;
+					panelSalt.add(textSaltsVol[i], constraints);
+					constraints.ipadx = 0;
+					constraints.gridx = 5;
+					panelSalt.add(lSaltsVolU[i], constraints);
+				}				
 			}
 			
 			// Acidification
@@ -564,7 +566,7 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 				if (o == checkSaltsUse[i]) {
 					if (checkSaltsUse[i].isSelected()) {
 						// Add this salt to recipe
-						Salt s = new Salt(Salt.getSaltByName(Database.getInstance().saltDB, saltName[i]));
+						Salt s = new Salt(Salt.getSaltByName(saltName[i]));
 						myRecipe.addSalt(s);
 					} else {
 						// Remove this salt from recipe

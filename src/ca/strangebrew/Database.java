@@ -14,7 +14,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.21 2008/01/05 22:06:54 jimcdiver Exp $
+ * $Id: Database.java,v 1.22 2008/01/14 19:18:47 jimcdiver Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -39,7 +39,6 @@ public class Database {
 	final public ArrayList<Misc> miscDB = new ArrayList<Misc>();
 	final public ArrayList<PrimeSugar> primeSugarDB = new ArrayList<PrimeSugar>();
 	final public ArrayList<WaterProfile> waterDB = new ArrayList<WaterProfile>();
-	final public ArrayList<Salt> saltDB = new ArrayList<Salt>();
 	public String dbPath;
 
 	// This is now a singleton
@@ -110,14 +109,6 @@ public class Database {
 					return i;			
 				}
 			}
-		} else if (o instanceof Salt) {
-			for (int i=0; i<saltDB.size(); i++){
-				Salt y1 = (Salt)o;
-				Salt y2 = (Salt)saltDB.get(i);
-				if (y1.equals(y2)) {					
-					return i;			
-				}
-			}
 		}
 		
 		return -1;
@@ -132,7 +123,6 @@ public class Database {
 		readMisc(dbPath);
 		importStyles(dbPath);
 		readWater(dbPath);
-		readSalt(dbPath);
 		
 		// sort
 		Collections.sort(styleDB);
@@ -694,80 +684,6 @@ public class Database {
 			System.out.println(e.getMessage());
 		}
 	}	
-
-	public void readSalt(String path) {
-		// read the fermentables from the csv file
-		try {
-			File primeFile = new File(path, "brewing_salts.csv");
-			CSVReader reader = new CSVReader(new FileReader(
-					primeFile), ',', '\"', true, false);
-
-			try {
-				// get the first line and set up the index:
-				String[] fields = reader.getAllFieldsInLine();
-				int nameIdx = getIndex(fields, "Name");
-				int commonNameIdx = getIndex(fields, "CommonName");
-				int chemNameIdx = getIndex(fields, "ChemicalName");
-				int caIdx = getIndex(fields, "Ca");
-				int so4Idx = getIndex(fields, "So4");
-				int mgIdx = getIndex(fields, "Mg");
-				int naIdx = getIndex(fields, "Na");
-				int clIdx = getIndex(fields, "Cl");
-				int co3Idx = getIndex(fields, "Co3");
-				int hardIdx = getIndex(fields, "Hardness");
-				int alkIdx = getIndex(fields, "Alk");
-				
-				while (true) {
-					Salt s = new Salt();
-					double val = 0;
-					
-					fields = reader.getAllFieldsInLine();
-					s.setName(fields[nameIdx]);
-					s.setCommonName(fields[commonNameIdx]);
-					s.setChemicalName(fields[chemNameIdx]);
-					val = Double.parseDouble(fields[caIdx]);
-					if (val != 0) {
-						s.addChemicalEffect(Salt.CALCIUM, val);
-					}
-					val = Double.parseDouble(fields[so4Idx]);
-					if (val != 0) {
-						s.addChemicalEffect(Salt.SULPHATE, val);
-					}
-					val = Double.parseDouble(fields[mgIdx]);
-					if (val != 0) {
-						s.addChemicalEffect(Salt.MAGNESIUM, val);
-					}
-					val = Double.parseDouble(fields[naIdx]);				
-					if (val != 0) {
-						s.addChemicalEffect(Salt.SODIUM, val);
-					}
-					val = Double.parseDouble(fields[clIdx]);
-					if (val != 0) {
-						s.addChemicalEffect(Salt.CHLORINE, val);
-					}
-					val = Double.parseDouble(fields[co3Idx]);
-					if (val != 0) {
-						s.addChemicalEffect(Salt.CARBONATE, val);
-					}
-					val = Double.parseDouble(fields[hardIdx]);
-					if (val != 0) {
-						s.addChemicalEffect(Salt.HARDNESS, val);
-					}
-					val = Double.parseDouble(fields[alkIdx]);
-					if (val != 0) {
-						s.addChemicalEffect(Salt.ALKALINITY, val);
-					}					
-					
-					saltDB.add(s);		
-				}
-			} catch (EOFException e) {
-			}
-			reader.close();	
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-		}
-	}
 	
 	public String[] getPrimeSugarNameList() {
 		String[] names = new String[primeSugarDB.size()];
