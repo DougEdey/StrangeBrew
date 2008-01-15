@@ -1,5 +1,9 @@
 Change Log:
 
+Jan 15, 2008 - Drew Avis
+- Now we handle the situation where the ingredient DB is moved.
+- Adding Ant build file.
+
 Jan 14, 2008 - Jim Clark
 - Fixed some bugs with Salts and moved data out of CVS into static array. The data contents are tightly coupled to the salt calculations
    so it didn't make sense to have the salts configurable on the fly when adding a salt still involved some code work to impliement

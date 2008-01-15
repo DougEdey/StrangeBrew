@@ -317,7 +317,7 @@ Bugs Fixed:
  Roadmap
 =========
 
-Features on the "TODO List":
+Features on the "TODO List" for StrangeBrew:
 - mash tun thermal mass
 - hop scaling
 - real application help (not the SB Win version)
@@ -325,7 +325,7 @@ Features on the "TODO List":
 - specify mash temp ranges
 - cereal mash
 
-Planned StrangeBrew Java Pro Features:
+Planned StrangeBrew  Pro Features:
 - advanced water profiling
 - inventory tracking
 - brewday timeline generation
@@ -358,6 +358,9 @@ can import it as a new project into Eclipse.  You'll need to:
   selected
 
 That should be all you need to build and run the program.
+
+If you wish to build the application from Ant, Greg LaPolla has kindly contributed
+a build file (build.xml in the top level of the source tree).
 
 ============
 Contributors
