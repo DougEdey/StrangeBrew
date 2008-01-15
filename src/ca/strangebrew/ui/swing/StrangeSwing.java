@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.71 2008/01/15 15:09:05 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.72 2008/01/15 18:17:27 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -445,8 +445,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// windows to pull up the public data stored here
 		// TODO
 		DB = Database.getInstance();
-		// String path = SBStringUtils.getAppPath("data");
-		String path = "";
+		String path = SBStringUtils.getAppPath("data");
 		Debug.print("DB Path: " + path);
 
 		// let's check that the path is good, if not, ask for a better one
