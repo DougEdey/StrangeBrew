@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.28 2008/01/16 15:45:00 andrew_avis Exp $
+ * $Id: Options.java,v 1.29 2008/01/16 17:28:12 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -148,7 +148,8 @@ public class Options {
 			{"winHeight", "650"},
 			{"maltTable0", "10"},
 			{"maltTable1", "10"},
-			{"maltTable2", "200"}
+			{"maltTable2", "200"},
+			{"hopsTable0", "200"}
 	};
 	
 	// default constructor, create options for a recipe
@@ -239,6 +240,7 @@ public class Options {
 	}
 			
 	public int getIProperty(String key){	
+		// does this property exist, either saved or in the defaults?
 		if (props.getProperty(key) != null)
 			return Integer.parseInt(props.getProperty(key));
 		else

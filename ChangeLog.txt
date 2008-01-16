@@ -1,7 +1,7 @@
 Change Log:
 
 Jan 16, 2008 - Drew Avis
-- Started adding support for saved column widths between application sessions.
+- Added support for saved column widths between application sessions.
 
 Jan 15, 2008 - Drew Avis
 - Now we handle the situation where the ingredient DB is moved.

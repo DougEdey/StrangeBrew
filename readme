@@ -2,7 +2,7 @@
 +                   README                     +
 ================================================
 
-StrangeBrew Java - 2.0.1
+StrangeBrew Java - 2.0.2
 (c)2000-2008 Drew Avis - drew.avis@gmail.com
 
 Thank you for downloading and trying StrangeBrew Java.
@@ -206,6 +206,12 @@ of reported bugs.  If you've found one that's not there, please report it!
 ==========
 What's New
 ==========
+
+2.0.2
+--------
+New Features:
+- Table column sizes are now remembered when you close and restart the application
+  (Request 1493295).
 
 2.0.1
 --------

@@ -56,6 +56,7 @@ public class SBTable extends JTable {
 	
 	public void setColumnWidths(Options p){
 		if (name == "") return;
+		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		int colCount = getColumnCount();
 		for (int i=0; i<colCount; i++){
 			String key = ""+name+i;
@@ -63,6 +64,7 @@ public class SBTable extends JTable {
 			if (k != 0)
 				getColumnModel().getColumn(i).setPreferredWidth(k);
 		}
+		setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 	}
 	
 	public void saveColumnWidths(Options p){

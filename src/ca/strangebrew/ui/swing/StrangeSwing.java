@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.73 2008/01/16 15:45:00 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.74 2008/01/16 17:28:12 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -134,7 +134,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private String version = "2.0.1";
 
 	// Stuff that should be final
-	public JTable hopsTable;
+	public SBTable hopsTable;
 	public SBTable maltTable;
 	private HopsTableModel hopsTableModel;
 	private MaltTableModel maltTableModel;
@@ -737,6 +737,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		preferences.setIProperty("winX", this.getX());
 		preferences.setIProperty("winY", this.getY());		
 		maltTable.saveColumnWidths(preferences); 
+		hopsTable.saveColumnWidths(preferences);
 		
 		preferences.saveProperties();
 	}
@@ -807,22 +808,11 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			tc.addPropertyChangeListener(hpcl);
 		}
 
-		// set preferred widths of the malt table
-		maltTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		TableColumn col = mtcm.getColumn(0);
-/*		col.setPreferredWidth(10);
-		col = mtcm.getColumn(1);
-		col.setPreferredWidth(10);
-		col = mtcm.getColumn(2);
-		col.setPreferredWidth(200);*/
+		// set preferred widths of the malt table	
 		maltTable.setColumnWidths(preferences);
-		maltTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
 		// now do the same for the hops table
-		hopsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		col = htcm.getColumn(0);
-		col.setPreferredWidth(200);
-		hopsTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+		hopsTable.setColumnWidths(preferences);		
 	}
 
 	// add the listeners *after* all the data has been attached to speed
@@ -1577,7 +1567,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							pnlHops.add(jScrollPane2, BorderLayout.CENTER);
 							{
 								hopsTableModel = new HopsTableModel(this);
-								hopsTable = new JTable() {
+								hopsTable = new SBTable("hopsTable") {
 									public String getToolTipText(MouseEvent e) {
 										java.awt.Point p = e.getPoint();
 										int rowIndex = rowAtPoint(p);
