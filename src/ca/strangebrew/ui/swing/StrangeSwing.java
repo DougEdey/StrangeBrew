@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.72 2008/01/15 18:17:27 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.73 2008/01/16 15:45:00 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -135,7 +135,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 	// Stuff that should be final
 	public JTable hopsTable;
-	public JTable maltTable;
+	public SBTable maltTable;
 	private HopsTableModel hopsTableModel;
 	private MaltTableModel maltTableModel;
 	private Options preferences;
@@ -411,7 +411,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		final StrangeSwing inst = new StrangeSwing();
 		inst.setVisible(true);
 		if (args.length > 0) {
-			// only one arg now:
+			// Are we in debug mode?
 			if (args[0].equals("-d")) {
 				Debug.set(true);
 			}
@@ -735,7 +735,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		preferences.setIProperty("winHeight", this.getHeight());
 		preferences.setIProperty("winWidth", this.getWidth());
 		preferences.setIProperty("winX", this.getX());
-		preferences.setIProperty("winY", this.getY());
+		preferences.setIProperty("winY", this.getY());		
+		maltTable.saveColumnWidths(preferences); 
+		
 		preferences.saveProperties();
 	}
 
@@ -808,11 +810,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// set preferred widths of the malt table
 		maltTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		TableColumn col = mtcm.getColumn(0);
-		col.setPreferredWidth(10);
+/*		col.setPreferredWidth(10);
 		col = mtcm.getColumn(1);
 		col.setPreferredWidth(10);
 		col = mtcm.getColumn(2);
-		col.setPreferredWidth(200);
+		col.setPreferredWidth(200);*/
+		maltTable.setColumnWidths(preferences);
 		maltTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
 		// now do the same for the hops table
@@ -1439,7 +1442,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							pnlMalt.add(jScrollPane1, BorderLayout.CENTER);
 							{
 								maltTableModel = new MaltTableModel(this);
-								maltTable = new JTable() {
+								maltTable = new SBTable("maltTable") {
 									public String getToolTipText(MouseEvent e) {
 										java.awt.Point p = e.getPoint();
 										int rowIndex = rowAtPoint(p);
@@ -1447,7 +1450,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 												.getDescriptionAt(rowIndex));
 
 									}
-								};
+								};					
 
 								jScrollPane1.setViewportView(maltTable);
 								maltTable.setModel(maltTableModel);
