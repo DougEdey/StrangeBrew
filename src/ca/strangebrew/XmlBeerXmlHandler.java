@@ -1,5 +1,5 @@
 /*
- * $Id: XmlBeerXmlHandler.java,v 1.6 2008/01/05 14:42:04 jimcdiver Exp $
+ * $Id: XmlBeerXmlHandler.java,v 1.7 2008/01/16 17:55:05 jimcdiver Exp $
  * Created on Oct 14, 2004
  */
 package ca.strangebrew;
@@ -251,13 +251,13 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 					myRecipe.setPostBoil(Double.parseDouble(s.trim()));
 					myRecipe.setVolUnits("l");
 				}
-				if (currentElement.equalsIgnoreCase("TOP_UP_WATER")){
-				    double d = Double.parseDouble(s);
-			     	if ( d != 0 ) {
-			    		myRecipe.setDiluted(true);
-			    		myRecipe.dilution.setAddVol(d);
-			    	}
-				}
+//				if (currentElement.equalsIgnoreCase("TOP_UP_WATER")){
+//				    double d = Double.parseDouble(s);
+//			     	if ( d != 0 ) {
+//			    		myRecipe.setDiluted(true);
+//			    		myRecipe.dilution.setAddVol(d);
+//			    	}
+//				}
 				if (currentElement.equalsIgnoreCase("BOIL_TIME"))
 					myRecipe.setBoilMinutes(new Double(s.trim()).intValue());
 				if (currentElement.equalsIgnoreCase("EFFICIENCY"))

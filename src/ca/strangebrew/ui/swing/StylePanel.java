@@ -8,7 +8,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
@@ -75,7 +75,7 @@ public class StylePanel extends javax.swing.JPanel {
 		// setStyleData();
 	}
 	
-	public void setList(ArrayList<Style> styleList){
+	public void setList(List<Style> styleList){
 		cmbStyle2Model.setList(styleList);
 	}
 	

@@ -94,7 +94,7 @@ public class ComboModel<T> extends AbstractListModel implements ComboBoxModel {
 		return list.get(index);
 	}
 
-	public void setList(ArrayList<T> l) {
+	public void setList(List<T> l) {
 		list = l;
 	}
 	

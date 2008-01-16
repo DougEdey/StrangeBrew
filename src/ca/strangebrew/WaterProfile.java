@@ -1,6 +1,6 @@
 package ca.strangebrew;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class WaterProfile implements Comparable<WaterProfile> {
 	private String name;
@@ -23,7 +23,7 @@ public class WaterProfile implements Comparable<WaterProfile> {
 	
 	public WaterProfile(String name) {
 		// Creates a new water profile based on the name from the db
-		ArrayList<WaterProfile> profiles = Database.getInstance().waterDB;
+		List<WaterProfile> profiles = Database.getInstance().waterDB;
 		
 		for (int i = 0; i < profiles.size(); i++) {
 			WaterProfile p = profiles.get(i);

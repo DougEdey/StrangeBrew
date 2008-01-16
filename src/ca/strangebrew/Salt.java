@@ -1,7 +1,6 @@
 package ca.strangebrew;
 
 import java.text.MessageFormat;
-import java.util.Arrays;
 
 public class Salt {
 	private String name;

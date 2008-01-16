@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * $Id: Mash.java,v 1.36 2008/01/05 14:42:04 jimcdiver Exp $
+ * $Id: Mash.java,v 1.37 2008/01/16 17:55:04 jimcdiver Exp $
  * @author aavis
  *
  */
@@ -75,7 +75,7 @@ public class Mash {
 	
 	
 	public Mash(Recipe r){
-		 Options opts = r.opts;
+		 Options opts = Options.getInstance();
 		 mashRatio = opts.getDProperty("optMashRatio");
 		 mashRatioU = opts.getProperty("optMashRatioU");;
 		 tempUnits = opts.getProperty("optMashTempU");

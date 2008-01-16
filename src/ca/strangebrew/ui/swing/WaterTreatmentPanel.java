@@ -8,7 +8,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -148,9 +148,9 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 		}
 	}
 
-	public void setList(ArrayList<WaterProfile> waterDB) {
+	public void setList(List<WaterProfile> waterDB) {
 		// Populate combo	
-		ArrayList<WaterProfile> db = waterDB;
+		List<WaterProfile> db = waterDB;
 		for (int i = 0; i < db.size(); i++) {
 			comboSource.addItem(db.get(i).getName());
 			comboTarget.addItem(db.get(i).getName());
@@ -553,7 +553,7 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 		
 		if (o == comboSource) {
 			String s = (String)comboSource.getSelectedItem();
-			ArrayList<WaterProfile> a = Database.getInstance().waterDB;
+			List<WaterProfile> a = Database.getInstance().waterDB;
 			WaterProfile w = null;
 			for (int i = 0; i < a.size(); i++) {
 				w = a.get(i);
@@ -563,7 +563,7 @@ public class WaterTreatmentPanel extends javax.swing.JPanel implements ActionLis
 			}
 		} else if (o == comboTarget) {
 			String s = (String)comboTarget.getSelectedItem();
-			ArrayList<WaterProfile> a = Database.getInstance().waterDB;
+			List<WaterProfile> a = Database.getInstance().waterDB;
 			WaterProfile w = null;
 			for (int i = 0; i < a.size(); i++) {
 				w = a.get(i);

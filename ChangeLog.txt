@@ -1,5 +1,17 @@
 Change Log:
 
+Jan 16, 2008 - Jim Clark
+- Changed many "ArrayList"s to "List"'s to follow best pratices when using collections. Ei: Program in terms of an 
+   interface type (List) rather than implementation type (ArrayList). Eg:
+ 		List list = new ArrayList();
+   is better than:
+        ArrayList list = new ArrayList();
+   This is so later when we want that Array to be a LinkedList or some custom list implementation of our own, everthgin just
+   works.
+- Started ripping Diluted Recipe stuff out of Recipe. Currently I would say Diluted Recipe is broken beyond imagineing, but I wanted
+   to check this in now, since most of the changes left are going to be in DilutedRecipe.java and DilutionPanel.java and shouldn't
+   make it a merging nightmare in a week when I am finaly done.
+
 Jan 16, 2008 - Drew Avis
 - Added support for saved column widths between application sessions.
 

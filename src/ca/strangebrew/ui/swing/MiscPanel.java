@@ -26,7 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -81,7 +81,7 @@ public class MiscPanel extends javax.swing.JPanel {
 		miscTableModel.setData(myRecipe);
 	}
 	
-	public void setList(ArrayList<Misc> miscList){
+	public void setList(List<Misc> miscList){
 		miscComboModel.setList(miscList);
 	}
 

@@ -9,12 +9,13 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.23 2008/01/14 21:20:05 andrew_avis Exp $
+ * $Id: Database.java,v 1.24 2008/01/16 17:55:05 jimcdiver Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -32,13 +33,13 @@ public class Database {
 	// we might want to move that way in the future.
 	private static Database instance = null;
 	
-	final public ArrayList<Fermentable> fermDB = new ArrayList<Fermentable>();
-	final public ArrayList<Hop> hopsDB = new ArrayList<Hop>();
-	final public ArrayList<Yeast> yeastDB = new ArrayList<Yeast>();
-	public ArrayList<Style> styleDB = new ArrayList<Style>();
-	final public ArrayList<Misc> miscDB = new ArrayList<Misc>();
-	final public ArrayList<PrimeSugar> primeSugarDB = new ArrayList<PrimeSugar>();
-	final public ArrayList<WaterProfile> waterDB = new ArrayList<WaterProfile>();
+	final public List<Fermentable> fermDB = new ArrayList<Fermentable>();
+	final public List<Hop> hopsDB = new ArrayList<Hop>();
+	final public List<Yeast> yeastDB = new ArrayList<Yeast>();
+	public List<Style> styleDB = new ArrayList<Style>();
+	final public List<Misc> miscDB = new ArrayList<Misc>();
+	final public List<PrimeSugar> primeSugarDB = new ArrayList<PrimeSugar>();
+	final public List<WaterProfile> waterDB = new ArrayList<WaterProfile>();
 	public String dbPath;
 
 	// This is now a singleton

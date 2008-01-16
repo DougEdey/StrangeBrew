@@ -1,5 +1,5 @@
 /*
- * $Id: DilutionPanel.java,v 1.8 2007/09/20 19:32:58 solid54 Exp $
+ * $Id: DilutionPanel.java,v 1.9 2008/01/16 17:55:04 jimcdiver Exp $
  * Created on June 4, 2005
  * Dilution panel to help you figure out the results of diluting
  * your wort with water post-boil.
@@ -98,16 +98,16 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 	}
 	
 	public void displayDilution(){
-		dilutedCheckBox.setSelected(myRecipe.isDiluted());
-		postBoilText.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
-		diluteWithText.setValue(new Double(myRecipe.dilution.getAddVol()));
-		totalVolumeSpinner.setValue(new Double(myRecipe.dilution.getDilVol()));
-		
-		ibuDilutedSpin.setValue(new Double(myRecipe.dilution.getDilIbu()));
-		colourDilutedLabel.setText(SBStringUtils.format(myRecipe.dilution.getDilSrm(), 0));
-		abvDilutedLabel.setText(SBStringUtils.format(myRecipe.dilution.getDilAlc(), 1));
-		ogDilutedSpin.setValue(new Double(myRecipe.dilution.getDilOG()));
-		
+//		dilutedCheckBox.setSelected(myRecipe.isDiluted());
+//		postBoilText.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
+//		diluteWithText.setValue(new Double(myRecipe.dilution.getAddVol()));
+//		totalVolumeSpinner.setValue(new Double(myRecipe.dilution.getDilVol()));
+//		
+//		ibuDilutedSpin.setValue(new Double(myRecipe.dilution.getDilIbu()));
+//		colourDilutedLabel.setText(SBStringUtils.format(myRecipe.dilution.getDilSrm(), 0));
+//		abvDilutedLabel.setText(SBStringUtils.format(myRecipe.dilution.getDilAlc(), 1));
+//		ogDilutedSpin.setValue(new Double(myRecipe.dilution.getDilOG()));
+//		
 		
 		// recipe values:
 		ibuRecipeLabel.setText(SBStringUtils.format(myRecipe.getIbu(), 1));
@@ -357,33 +357,33 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 	public void stateChanged(ChangeEvent e) {
 		Object o = e.getSource();	
 		
-		if (o == dilutedCheckBox ) {
-			myRecipe.setDiluted(dilutedCheckBox.isSelected());
-			displayDilution();
-		}
-		if (o == diluteWithText){
-			myRecipe.dilution.setAddVol(Double.parseDouble(diluteWithText.getValue().toString()));
-			displayDilution();
-		}
-		 
-		if (o == postBoilText) {
-			myRecipe.setPostBoil(Double.parseDouble(postBoilText.getValue().toString()));
-			displayDilution();
-		}
-		
-		if (o == totalVolumeSpinner){
-			myRecipe.dilution.setDilVol(Double.parseDouble(totalVolumeSpinner.getValue().toString()));
-			displayDilution();
-		}
-		
-		if (o == ibuDilutedSpin){
-			myRecipe.dilution.setDilIbu(Double.parseDouble(ibuDilutedSpin.getValue().toString()));
-			displayDilution();
-		}
-		if (o == ogDilutedSpin){
-			myRecipe.dilution.setDilOG(Double.parseDouble(ogDilutedSpin.getValue().toString()));
-			displayDilution();
-		}
+//		if (o == dilutedCheckBox ) {
+//			myRecipe.setDiluted(dilutedCheckBox.isSelected());
+//			displayDilution();
+//		}
+//		if (o == diluteWithText){
+//			myRecipe.dilution.setAddVol(Double.parseDouble(diluteWithText.getValue().toString()));
+//			displayDilution();
+//		}
+//		 
+//		if (o == postBoilText) {
+//			myRecipe.setPostBoil(Double.parseDouble(postBoilText.getValue().toString()));
+//			displayDilution();
+//		}
+//		
+//		if (o == totalVolumeSpinner){
+//			myRecipe.dilution.setDilVol(Double.parseDouble(totalVolumeSpinner.getValue().toString()));
+//			displayDilution();
+//		}
+//		
+//		if (o == ibuDilutedSpin){
+//			myRecipe.dilution.setDilIbu(Double.parseDouble(ibuDilutedSpin.getValue().toString()));
+//			displayDilution();
+//		}
+//		if (o == ogDilutedSpin){
+//			myRecipe.dilution.setDilOG(Double.parseDouble(ogDilutedSpin.getValue().toString()));
+//			displayDilution();
+//		}
 	}
 
 }
