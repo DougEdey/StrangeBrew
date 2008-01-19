@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: DetailsPanel.java,v 1.5 2008/01/08 13:37:07 andrew_avis Exp $
+ * $Id: DetailsPanel.java,v 1.6 2008/01/19 01:05:40 jimcdiver Exp $
  *  @author aavis 
  */
 
@@ -29,6 +29,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.Style;
@@ -37,7 +38,6 @@ import ca.strangebrew.Yeast;
 public class DetailsPanel extends javax.swing.JPanel implements ActionListener, FocusListener {
 
 	private Recipe myRecipe;
-	private StrangeSwing.SBNotifier sbn;
 	private JLabel lblBrewer;
 	private JTextField brewerNameText;
 	private JLabel lblDate;
@@ -225,7 +225,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 						Style s = (Style) cmbStyleModel.getSelectedItem();
 						if (myRecipe != null && s != myRecipe.getStyleObj()) {
 							myRecipe.setStyle(s);
-							sbn.setStyle(s);
+							StrangeSwing.getInstance().setStyle(s);
 						}
 
 						cmbStyle.setToolTipText(SBStringUtils.multiLineToolTip(50, s
@@ -251,14 +251,14 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 				postBoilText.setText("Post Boil");
 				postBoilText.addFocusListener(new FocusAdapter() {
 					public void focusLost(FocusEvent evt) {
-						myRecipe.setPostBoil(Double.parseDouble(postBoilText.getText().toString()));
-						sbn.displRecipe();
+						myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(postBoilText.getText().toString())));
+						//sbn.displRecipe();
 					}
 				});
 				postBoilText.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
-						myRecipe.setPostBoil(Double.parseDouble(postBoilText.getText().toString()));
-						sbn.displRecipe();
+						myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(postBoilText.getText().toString())));
+						//sbn.displRecipe();
 					}
 				});
 			}
@@ -281,7 +281,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 				spnEffic.addChangeListener(new ChangeListener() {
 					public void stateChanged(ChangeEvent evt) {
 						myRecipe.setEfficiency(Double.parseDouble(spnEffic.getValue().toString()));
-						sbn.displRecipe();
+						//sbn.displRecipe();
 					}
 				});
 				spnEffic.setEditor(new JSpinner.NumberEditor(spnEffic, "00.#"));
@@ -297,7 +297,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 				spnAtten.addChangeListener(new ChangeListener() {
 					public void stateChanged(ChangeEvent evt) {
 						myRecipe.setAttenuation(Double.parseDouble(spnAtten.getValue().toString()));
-						sbn.displRecipe();
+						//sbn.displRecipe();
 					}
 				});
 				spnAtten.setEditor(new JSpinner.NumberEditor(spnAtten, "00.#"));
@@ -312,7 +312,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 				spnOG.addChangeListener(new ChangeListener() {
 					public void stateChanged(ChangeEvent evt) {
 						myRecipe.setEstOg(Double.parseDouble(spnOG.getValue().toString()));
-						sbn.displRecipe();
+						//sbn.displRecipe();
 					}
 				});
 				spnOG.setEditor(new JSpinner.NumberEditor(spnOG, "0.000"));
@@ -330,7 +330,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 					public void stateChanged(ChangeEvent evt) {
 						// set the new FG, and update alc:
 						myRecipe.setEstFg(Double.parseDouble(spnFG.getValue().toString()));
-						sbn.displRecipe();
+						//sbn.displRecipe();
 					}
 				});
 			}
@@ -411,7 +411,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 						if (myRecipe != null && q != myRecipe.getVolUnits()) {
 							// also sets postboil units:
 							myRecipe.setVolUnits(q);
-							sbn.displRecipe();
+							//sbn.displRecipe();
 						}
 					}
 				});
@@ -530,21 +530,21 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 		if (o == brewerNameText)
 			myRecipe.setBrewer(s);
 		else if (o == txtPreBoil) {
-			myRecipe.setPreBoil(Double.parseDouble(s));
-			sbn.displRecipe();
+			myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s)));
+			//sbn.displRecipe();
 		} else if (o == postBoilText) {
-			myRecipe.setPostBoil(Double.parseDouble(s));
-			sbn.displRecipe();
+			myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s)));
+			//sbn.displRecipe();
 		} else if (o == evapText) {
 			myRecipe.setEvap(Double.parseDouble(s));
-			sbn.displRecipe();
+			//sbn.displRecipe();
 		} else if (o == boilMinText) {
                         if( s.indexOf('.') > 0)
                         {   // parseInt doesn't like '.' or ',', so trim the string
                             s = s.substring(0,s.indexOf('.'));
                         }
 			myRecipe.setBoilMinutes(Integer.parseInt(s));
-			sbn.displRecipe();
+			//sbn.displRecipe();
 		}
 
 	}
@@ -562,7 +562,7 @@ public class DetailsPanel extends javax.swing.JPanel implements ActionListener, 
 		else if (o == evapMethodCombo)
 			myRecipe.setEvapMethod(s);
 
-		sbn.displRecipe();
+		//sbn.displRecipe();
 	}
 
 	public void focusLost(FocusEvent e) {

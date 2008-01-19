@@ -1,5 +1,5 @@
 /*
- * $Id: DilutionPanel.java,v 1.9 2008/01/16 17:55:04 jimcdiver Exp $
+ * $Id: DilutionPanel.java,v 1.10 2008/01/19 01:05:40 jimcdiver Exp $
  * Created on June 4, 2005
  * Dilution panel to help you figure out the results of diluting
  * your wort with water post-boil.
@@ -28,6 +28,8 @@ package ca.strangebrew.ui.swing;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -39,13 +41,16 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import ca.strangebrew.BrewCalcs;
+import ca.strangebrew.DilutedRecipe;
+import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.Style;
 
 
 
-public class DilutionPanel extends javax.swing.JPanel implements ChangeListener {
+public class DilutionPanel extends javax.swing.JPanel implements ChangeListener, ActionListener {
 	private JPanel infoPanel;
 	private JPanel stylePanel;
 	private JLabel colourLowLabel;
@@ -85,6 +90,7 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 	private JCheckBox dilutedCheckBox;
 	
 	private Recipe myRecipe;
+	boolean dontUpdate = false;
 
 		
 	public DilutionPanel() {
@@ -98,22 +104,52 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 	}
 	
 	public void displayDilution(){
-//		dilutedCheckBox.setSelected(myRecipe.isDiluted());
-//		postBoilText.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
-//		diluteWithText.setValue(new Double(myRecipe.dilution.getAddVol()));
-//		totalVolumeSpinner.setValue(new Double(myRecipe.dilution.getDilVol()));
-//		
-//		ibuDilutedSpin.setValue(new Double(myRecipe.dilution.getDilIbu()));
-//		colourDilutedLabel.setText(SBStringUtils.format(myRecipe.dilution.getDilSrm(), 0));
-//		abvDilutedLabel.setText(SBStringUtils.format(myRecipe.dilution.getDilAlc(), 1));
-//		ogDilutedSpin.setValue(new Double(myRecipe.dilution.getDilOG()));
-//		
+		dontUpdate = true;
+		if (myRecipe instanceof DilutedRecipe) {
+			DilutedRecipe dilRecipe = (DilutedRecipe)myRecipe;
+			
+			dilutedCheckBox.setSelected(true);
+			totalVolumeSpinner.setEnabled(true);
+			diluteWithText.setEnabled(true);
+			
+			// Dilution specific
+			postBoilText.setValue(new Double(dilRecipe.getPostBoilVol(dilRecipe.getVolUnits())));
+			diluteWithText.setValue(new Double(dilRecipe.getAddVol(dilRecipe.getVolUnits())));
+			totalVolumeSpinner.setValue(new Double(dilRecipe.getFinalWortVol(dilRecipe.getVolUnits())));
 		
-		// recipe values:
-		ibuRecipeLabel.setText(SBStringUtils.format(myRecipe.getIbu(), 1));
-		colourRecipeLabel.setText(SBStringUtils.format(myRecipe.getSrm(), 1));
-		abvRecipeLabel.setText(SBStringUtils.format(myRecipe.getAlcohol(), 1));
-		ogRecipeLabel.setText(SBStringUtils.format(myRecipe.getEstOg(), 3));
+			// Diluted Numbers
+			ibuDilutedSpin.setValue(new Double(dilRecipe.getIbu()));
+			colourDilutedLabel.setText(SBStringUtils.format(dilRecipe.getColour(BrewCalcs.SRM), 0));
+			abvDilutedLabel.setText(SBStringUtils.format(dilRecipe.getAlcohol(), 1));
+			ogDilutedSpin.setValue(new Double(dilRecipe.getEstOg()));			
+			
+			// Original numbers
+			ibuRecipeLabel.setText(SBStringUtils.format(dilRecipe.getOrigIbu(), 1));
+			colourRecipeLabel.setText(SBStringUtils.format(dilRecipe.getOrigColour(BrewCalcs.SRM), 1));
+			abvRecipeLabel.setText(SBStringUtils.format(dilRecipe.getOrigAlcohol(), 1));
+			ogRecipeLabel.setText(SBStringUtils.format(dilRecipe.getOrigEstOg(), 3));		
+		} else {
+			dilutedCheckBox.setSelected(false);
+			totalVolumeSpinner.setEnabled(false);
+			diluteWithText.setEnabled(false);
+
+			// Dil specific
+			postBoilText.setValue(new Double(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
+			diluteWithText.setValue(0.0);
+			totalVolumeSpinner.setValue(new Double(myRecipe.getFinalWortVol(myRecipe.getVolUnits())));
+		
+			// Diluted Numbers
+			ibuDilutedSpin.setValue(0.0);
+			colourDilutedLabel.setText("0.0");
+			abvDilutedLabel.setText("0.0");
+			ogDilutedSpin.setValue(0.0);
+			
+			// recipe values:
+			ibuRecipeLabel.setText(SBStringUtils.format(myRecipe.getIbu(), 1));
+			colourRecipeLabel.setText(SBStringUtils.format(myRecipe.getColour(BrewCalcs.SRM), 1));
+			abvRecipeLabel.setText(SBStringUtils.format(myRecipe.getAlcohol(), 1));
+			ogRecipeLabel.setText(SBStringUtils.format(myRecipe.getEstOg(), 3));
+		}
 		
 		// style values
 		Style s = myRecipe.getStyleObj();		
@@ -124,8 +160,9 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 		colourLowLabel.setText(SBStringUtils.format(s.getSrmLow(), 1));		
 		colourHighLabel.setText(SBStringUtils.format(s.getSrmHigh(), 1));
 		ibuLowLabel.setText(SBStringUtils.format(s.getIbuLow(), 1));		
-		ibuHighLabel.setText(SBStringUtils.format(s.getIbuHigh(), 1));
+		ibuHighLabel.setText(SBStringUtils.format(s.getIbuHigh(), 1));	
 		
+		dontUpdate = false;
 	}
 	
 	private void initGUI() {
@@ -142,7 +179,7 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 					dilutedCheckBox = new JCheckBox();
 					infoPanel.add(dilutedCheckBox);
 					dilutedCheckBox.setText("Dilute Recipe");
-					dilutedCheckBox.addChangeListener(this);
+					dilutedCheckBox.addActionListener(this);
 				}
 				{
 					postBoilPanel = new JPanel();
@@ -354,36 +391,64 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener 
 		}
 	}
 	
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();	
+
+		if (myRecipe != null) {
+			if (o == dilutedCheckBox ) {
+				if (dilutedCheckBox.isSelected()) {
+					DilutedRecipe dil = new DilutedRecipe(myRecipe);
+					StrangeSwing.getInstance().setRecipe(dil);
+				} else {
+					Recipe unDil = new Recipe(myRecipe);
+					StrangeSwing.getInstance().setRecipe(unDil);				
+				}
+				displayDilution();
+			}
+		}
+	}
+	
 	public void stateChanged(ChangeEvent e) {
+		if (dontUpdate == true) {
+			return;
+		}
+		
 		Object o = e.getSource();	
 		
-//		if (o == dilutedCheckBox ) {
-//			myRecipe.setDiluted(dilutedCheckBox.isSelected());
-//			displayDilution();
-//		}
-//		if (o == diluteWithText){
-//			myRecipe.dilution.setAddVol(Double.parseDouble(diluteWithText.getValue().toString()));
-//			displayDilution();
-//		}
-//		 
-//		if (o == postBoilText) {
-//			myRecipe.setPostBoil(Double.parseDouble(postBoilText.getValue().toString()));
-//			displayDilution();
-//		}
-//		
-//		if (o == totalVolumeSpinner){
-//			myRecipe.dilution.setDilVol(Double.parseDouble(totalVolumeSpinner.getValue().toString()));
-//			displayDilution();
-//		}
-//		
-//		if (o == ibuDilutedSpin){
-//			myRecipe.dilution.setDilIbu(Double.parseDouble(ibuDilutedSpin.getValue().toString()));
-//			displayDilution();
-//		}
-//		if (o == ogDilutedSpin){
-//			myRecipe.dilution.setDilOG(Double.parseDouble(ogDilutedSpin.getValue().toString()));
-//			displayDilution();
-//		}
+		if (myRecipe != null) {
+			if (o == postBoilText) {
+				myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(postBoilText.getValue().toString())));
+				displayDilution();
+			}
+			
+			if (myRecipe instanceof DilutedRecipe) {
+				DilutedRecipe dilRecipe = (DilutedRecipe)myRecipe;
+				if (o == diluteWithText) {
+					dilRecipe.setAddVol(new Quantity(dilRecipe.getVolUnits(), Double.parseDouble(diluteWithText.getValue().toString())));
+					displayDilution();
+				} else if (o == totalVolumeSpinner) {
+					// If total vol is being set here, we are ONLY adding dilution water. So find the dif
+					// between this val, and the original final vol.. that is the dilution addision volume
+					final double origFinal = dilRecipe.getOrigFinalWortVol(dilRecipe.getVolUnits());
+					final double newFinal = Double.parseDouble(totalVolumeSpinner.getValue().toString());
+					if (newFinal < origFinal) {
+						// Should pop an error msg
+						dilRecipe.setAddVol(new Quantity(dilRecipe.getVolUnits(), 0));
+					} else {
+						dilRecipe.setAddVol(new Quantity(dilRecipe.getVolUnits(), newFinal - origFinal));
+					}
+					displayDilution();
+				}
+			}
+//			if (o == ibuDilutedSpin){
+//				myRecipe.dilution.setDilIbu(Double.parseDouble(ibuDilutedSpin.getValue().toString()));
+//				displayDilution();
+//			}
+//			if (o == ogDilutedSpin){
+//				myRecipe.dilution.setDilOG(Double.parseDouble(ogDilutedSpin.getValue().toString()));
+//				displayDilution();
+//			}
+		}
 	}
 
 }

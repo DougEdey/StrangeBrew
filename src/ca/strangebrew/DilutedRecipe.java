@@ -1,111 +1,117 @@
 package ca.strangebrew;
 
 public class DilutedRecipe extends Recipe {
-//
-//	private double dilOG;
-//	private double dilIbu;
-//	private double dilAlc;
-//	private double dilSrm;
-//	private Quantity dilVol;
-//	private Quantity addVol;
-//
-//	// A diluted recipe can only be created from an undiluted recipe
-//	private DilutedRecipe() {
-//	}
-//
-//	public DilutedRecipe(Recipe r) {
-//		super(r);
-//
-//		dilVol = new Quantity(getVolUnits(), super.postBoilVol.getValue());
-//		addVol = new Quantity(getVolUnits(), 0);		
-//	}
-//
-//
-//	// Overriden Funcs
-//	public void setPreBoil(final double p) {
-//		super.setPreBoil(p);
-//		calcDilution();
-//	}	
-//
-//	public void setPostBoil(final double p) {
-//		super.setPostBoil(p);
-//		calcDilution();
-//	}	
-//
-//	public double getDilSrm() {
-//		return dilSrm;
-//	}
-//	
-//	public double getAddVol() {
-//		return addVol.getValueAs(getVolUnits());
-//	}
-//
-//	public void setAddVol(final double a) {
-//		addVol.setAmount(a);
-//		addVol.setUnits(getVolUnits());
-//		dilVol.setAmount(super.postBoilVol.getValue() + addVol.getValue());
-//		dilVol.setUnits(getVolUnits());
-//		calcDilution();
-//	}
-//
-//	public double getDilAlc() {
-//		return dilAlc;
-//	}
-//
-//	public void setDilAlc(final double dilAlc) {
-//		this.dilAlc = dilAlc;
-//	}
-//
-//	public double getDilIbu() {
-//		return dilIbu;
-//	}
-//
-//	public void setDilIbu(final double d) {
-//		final double dilutionFactor = d / super.ibu;
-//		setDilVol(super.postBoilVol.getValue() / dilutionFactor);
-//
-//	}
-//
-//	public double getDilOG() {
-//		if ( addVol.getValue() > 0 ) {
-//			return dilOG;
-//		} else {
-//			return estOg;
-//		}
-//	}
-//
-//	public void setDilOG(final double d) {
-//		final double dilutionFactor = (d - 1) / (estOg - 1);
-//		setDilVol(postBoilVol.getValue() / dilutionFactor);
-//	}
-//
-//	public double getDilVol() {
-//		if ( addVol.getValue() > 0 ) {
-//			return dilVol.getValueAs(getVolUnits());
-//		} else { 
-//			return postBoilVol.getValueAs(getVolUnits());
-//		}
-//	}
-//
-//	public void setDilVol(final double d) {
-//		this.dilVol.setAmount(d);
-//		this.dilVol.setUnits(getVolUnits());
-//		addVol.setAmount(dilVol.getValue() - postBoilVol.getValue());
-//		addVol.setUnits(getVolUnits());
-//		calcDilution();
-//	}
-//
-//	/*
-//	 * Calculates the diluted values, assuming that the diluted volume has
-//	 * been set
-//	 */
-//	private void calcDilution() {
-//		final double dilutionFactor = dilVol.getValue() / postBoilVol.getValue();
-//		dilIbu = ibu / dilutionFactor;
-//		dilAlc = alcohol / dilutionFactor;
-//		dilOG = ((estOg - 1) / dilutionFactor) + 1;
-//		dilSrm = srm / dilutionFactor;
-//
-//	}
 
+	private Quantity addVol;
+
+	// A diluted recipe can only be created from an undiluted recipe
+	private DilutedRecipe() {
+	}
+
+	// Create a new Diluted Recipe with 0 added water
+	public DilutedRecipe(Recipe r) {
+		super(r);
+		this.addVol = new Quantity(super.getVolUnits(), 0);
+	}
+
+	// Create a diluted recipe from a recipe and an amount of dilution volumn
+	public DilutedRecipe(Recipe r, Quantity dil) {
+		super(r);
+		this.addVol = new Quantity(dil);		
+	}
+
+	// Specialized Functions
+	public double getAddVol(final String u) {
+		return this.addVol.getValueAs(u);
+	}
+
+	public void setAddVol(final Quantity a) {
+		addVol = a;
+	}
+
+	private double calcDilutionFactor() {
+		return (this.getAddVol(super.getVolUnits()) + super.getFinalWortVol(super.getVolUnits())) / super.getFinalWortVol(super.getVolUnits());
+	}
+	
+	// Overrides 
+	public void setVolUnits(final String v) {
+		super.setVolUnits(v);
+		this.addVol.setUnits(v);
+	}
+
+	public double getFinalWortVol(final String s) {
+		return this.getAddVol(s) + super.getFinalWortVol(s);		
+	}
+
+	public double getColour() {
+		return getColour(getColourMethod());
+	}
+	
+	public double getColour(final String method) {		
+		return BrewCalcs.calcColour(getMcu() / this.calcDilutionFactor(), method);		
+	}
+	
+	public double getIbu() {
+		return super.getIbu() / this.calcDilutionFactor();
+	}
+	
+	public double getEstOg() {
+		return ((super.getEstOg() - 1) / this.calcDilutionFactor()) + 1;
+	}
+	
+	public double getAlcohol() {
+		return super.getAlcohol() / this.calcDilutionFactor();
+	}		
+	
+	public String toXML(final String printOptions) {
+		StringBuffer unDil = new StringBuffer(super.toXML(printOptions));
+		String dil = "";
+		
+		// This is UGGLY! :)
+		dil += "      <ADDED_VOLUME>" + SBStringUtils.format(addVol.getValue(), 2) + "</ADDED_VOLUME>\n";
+		int offset = unDil.indexOf("</DETAILS>\n");
+		unDil.insert(offset, dil);
+		
+		return unDil.toString();
+	}
+	
+	public String toText() {
+		String unDil = super.toText();
+		
+		unDil += "Dilute With: " + SBStringUtils.format(addVol.getValue(), 2) + addVol.getUnits() + "\n";
+			
+		return unDil;
+	}
+	
+//	public double getBUGU() {
+//		double bugu = 0.0;
+//		if ( estOg != 1.0 ) { 
+//		   bugu = ibu / ((estOg - 1) * 1000);
+//		}		
+//		return bugu;
+//	}	
+	// Accessors to original numbers for DilPanel
+	public double getOrigFinalWortVol(final String s) {
+		return super.getFinalWortVol(s);		
+	}
+
+	public double getOrigColour() {
+		return super.getColour();
+	}
+
+	public double getOrigColour(final String method) {		
+		return super.getColour(method);
+	}
+	
+	public double getOrigIbu() {
+		return super.getIbu();
+	}
+	
+	public double getOrigEstOg() {
+		return super.getEstOg();
+	}
+	
+	public double getOrigAlcohol() {
+		return super.getAlcohol();
+	}				
 }

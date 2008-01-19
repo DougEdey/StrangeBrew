@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.29 2008/01/16 17:28:12 andrew_avis Exp $
+ * $Id: Options.java,v 1.30 2008/01/19 01:05:40 jimcdiver Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -33,7 +33,7 @@ public class Options {
 			// calculations:
 			{"optIBUCalcMethod", BrewCalcs.TINSETH},
 			// TODO
-			{"optAlcCalcMethod", "Volume"},
+			{"optAlcCalcMethod", BrewCalcs.ALC_BY_VOLUME},
 			{"optEvapCalcMethod", "Constant"},
 			{"optColourMethod", BrewCalcs.SRM},
 			{"optEfficiency", "75"},

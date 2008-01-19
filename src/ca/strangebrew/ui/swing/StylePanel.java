@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
+import ca.strangebrew.BrewCalcs;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.Style;
@@ -55,17 +56,10 @@ public class StylePanel extends javax.swing.JPanel {
 	private JScrollPane jScrollPane3;
 	
 	private Recipe myRecipe;
-	private StrangeSwing.SBNotifier sbn;
 	
 	
 	public StylePanel() {
 		super();
-		initGUI();
-	}
-	
-	public StylePanel(StrangeSwing.SBNotifier sb) {
-		super();
-		sbn = sb;		
 		initGUI();
 	}
 	
@@ -96,7 +90,7 @@ public class StylePanel extends javax.swing.JPanel {
 		stlRcpABV.setText(SBStringUtils.format(myRecipe.getAlcohol(), 1));
 		stlHighABV.setText(SBStringUtils.format(s.alcHigh, 1));
 		stlLowColour.setText(SBStringUtils.format(s.srmLow, 1));
-		stlRcpColour.setText(SBStringUtils.format(myRecipe.getSrm(), 1));
+		stlRcpColour.setText(SBStringUtils.format(myRecipe.getColour(BrewCalcs.SRM), 1));
 		stlHighColour.setText(SBStringUtils.format(s.srmHigh, 1));
 		stlLowIBU.setText(SBStringUtils.format(s.ibuLow, 1));
 		stlRcpIBU.setText(SBStringUtils.format(myRecipe.getIbu(), 1));
@@ -122,8 +116,8 @@ public class StylePanel extends javax.swing.JPanel {
 		else
 			stlRcpABV.setForeground(Color.black);
 		
-		if (myRecipe.getSrm() < s.srmLow ||
-				myRecipe.getSrm() > s.srmHigh)
+		if (myRecipe.getColour(BrewCalcs.SRM) < s.srmLow ||
+				myRecipe.getColour(BrewCalcs.SRM) > s.srmHigh)
 			stlRcpColour.setForeground(Color.red);
 		else
 			stlRcpColour.setForeground(Color.black);
@@ -146,7 +140,7 @@ public class StylePanel extends javax.swing.JPanel {
 			s = (Style) cmbStyle2Model.list.get(i);
 			if (	myRecipe.getEstOg() > s.ogLow && myRecipe.getEstOg() < s.ogHigh &&
 					myRecipe.getAlcohol() > s.alcLow && myRecipe.getAlcohol() < s.alcHigh &&
-					myRecipe.getSrm() > s.srmLow && myRecipe.getSrm() < s.srmHigh &&
+					myRecipe.getColour(BrewCalcs.SRM) > s.srmLow && myRecipe.getColour(BrewCalcs.SRM) < s.srmHigh &&
 					myRecipe.getIbu() > s.ibuLow && myRecipe.getIbu() < s.ibuHigh ) {
 				styles = styles.concat(s.name + "\n");
 			}
@@ -191,8 +185,7 @@ public class StylePanel extends javax.swing.JPanel {
 							Style s = (Style) cmbStyle2Model.getSelectedItem();
 							if (myRecipe != null && s != myRecipe.getStyleObj()) {
 								myRecipe.setStyle(s);
-								if (!sbn.equals(null))
-									sbn.setStyle(s);								
+								StrangeSwing.getInstance().setStyle(s);			
 							}
 							setStyleData();
 							

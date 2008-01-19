@@ -1,5 +1,15 @@
 Change Log:
 
+Jan 17-18, 2008 - Jim Clark
+- Modified how Recipe stores wort volumes to cut down on the number of variables neededing to be in sync. This
+   should provide a cleaner/easier interface to Recipe for DilutedRecipe.
+- Reworked StrangeSwing to consolidate all of the event listners and the "displayRecipe()" call to prevent infinite
+   recurtion loops as one display calls display recipe which sets a data element with a listner that calls displayRecipe.
+   As a side effect, this elimintate a significant amount of extranious event calls coming out of that function. What used
+   to happen would end up recurcivly calling event setters all over thoughout the app, now it only calls the ones on the page
+   in view. The reset calls are all triggered off using the tab pane now.
+- Finished off DilutedRecipe. Works seamlessly thoughout app and all the ugglyness is contained in DilutedRecipe and DilutedPanel.
+
 Jan 16, 2008 - Jim Clark
 - Changed many "ArrayList"s to "List"'s to follow best pratices when using collections. Ei: Program in terms of an 
    interface type (List) rather than implementation type (ArrayList). Eg:

@@ -8,13 +8,13 @@ package ca.strangebrew;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
+import java.util.List;
 
 public class OpenImport {
 
 	private String fileType = "";
 	private Recipe myRecipe;
-	private ArrayList<Recipe> recipes = null;
+	private List<Recipe> recipes = null;
 
 	private String checkFileType(File f) {
 
@@ -49,7 +49,7 @@ public class OpenImport {
 	public String getFileType() {
 		return fileType;
 	}
-	public ArrayList<Recipe> getRecipes() {
+	public List<Recipe> getRecipes() {
 		return recipes;
 	}
 

@@ -121,6 +121,14 @@ class MaltTableModel extends AbstractTableModel {
 					break;
 				case 2 :
 					data.setMaltName(row, value.toString());
+					// Shouldn't this re-set most of the data fields with base info
+					if (value instanceof Fermentable) {
+						Fermentable m = (Fermentable)value;
+						data.setMaltPppg(row, m.getPppg());
+						data.setMaltLov(row, m.getLov());
+						data.setMaltSteep(row, m.getSteep());
+						data.setMaltMashed(row, m.getMashed());						
+					}
 					break;
 				case 3 :
 					data.setMaltAmount(row, Double.parseDouble(value.toString()));					
@@ -148,7 +156,5 @@ class MaltTableModel extends AbstractTableModel {
 		fireTableCellUpdated(row, col);
 		fireTableDataChanged();		
 		app.displayRecipe();
-		
-		
 	}
 }

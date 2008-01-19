@@ -1,5 +1,5 @@
 /*
- * $Id: SettingsPanel.java,v 1.8 2007/12/28 16:41:23 jimcdiver Exp $
+ * $Id: SettingsPanel.java,v 1.9 2008/01/19 01:05:40 jimcdiver Exp $
  */
 
 package ca.strangebrew.ui.swing;
@@ -28,7 +28,6 @@ import ca.strangebrew.SBStringUtils;
 public class SettingsPanel extends javax.swing.JPanel implements ActionListener, FocusListener {
 	
 	private Recipe myRecipe;
-	private StrangeSwing.SBNotifier sbn;
 
 	private JLabel jLabel4;
 	private JLabel jLabel8;
@@ -52,14 +51,6 @@ public class SettingsPanel extends javax.swing.JPanel implements ActionListener,
 		super();
 		initGUI();
 	}
-	
-	public SettingsPanel(StrangeSwing.SBNotifier sb) {
-		super();
-		sbn = sb;
-		initGUI();
-	}
-	
-
 	
 	public void setData(Recipe r){
 		myRecipe = r;
@@ -192,8 +183,8 @@ public class SettingsPanel extends javax.swing.JPanel implements ActionListener,
 			double u = Double.parseDouble( pelletHopPctTxt.getText() );				
 			if (myRecipe != null) {
 				myRecipe.setPelletHopPct(u);
-				sbn.displRecipe();
-				sbn.hopsUpdateUI();
+				//sbn.displRecipe();
+				StrangeSwing.getInstance().hopsUpdateUI();
 			}
 		}
 		if (o == thickDecoctTxt){

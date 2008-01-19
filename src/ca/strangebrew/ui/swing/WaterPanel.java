@@ -24,7 +24,6 @@ import ca.strangebrew.SBStringUtils;
 
 public class WaterPanel extends javax.swing.JPanel implements ActionListener, FocusListener{
 	
-	private StrangeSwing.SBNotifier sbn;
 	private JLabel finalUnitsLbl;
 	private JLabel miscLosUnitsLbl;
 	private JLabel trubLossUnitsLbl;
@@ -63,9 +62,8 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 	private Recipe myRecipe;
 
 
-	public WaterPanel(StrangeSwing.SBNotifier sb) {
+	public WaterPanel() {
 		super();
-		sbn = sb;
 		initGUI();
 	}
 	
@@ -79,7 +77,7 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 		String recipeUnitsAbrv = Quantity.getVolAbrv(myRecipe.getVolUnits());
 		String mashUnitsAbrv = Quantity.getVolAbrv(myRecipe.mash.getMashVolUnits());
 
-		totalWaterLbl.setText(SBStringUtils.format(myRecipe.getTotalWater(), 1));
+		totalWaterLbl.setText(SBStringUtils.format(myRecipe.getTotalWaterVol(myRecipe.getVolUnits()), 1));
 		totalUnitsLbl.setText(recipeUnitsAbrv);
 		
 		usedMashLbl.setText(myRecipe.mash.getTotalWaterStr());
@@ -93,18 +91,16 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 		collectUnitsLbl.setText(recipeUnitsAbrv);
 		postBoilTxt.setValue(SBStringUtils.format(myRecipe.getPostBoilVol(myRecipe.getVolUnits()), 1));
 		postBoilUnitsLbl.setText(recipeUnitsAbrv);
-		
-		chillShrinkLbl.setText(SBStringUtils.format(myRecipe.getChillShrink(), 1));
-		kettleTxt.setValue(SBStringUtils.format(myRecipe.getKettleLoss(), 1));
-		kettleUnitsLbl.setText(recipeUnitsAbrv);
-		trubLossTxt.setValue(SBStringUtils.format(myRecipe.getTrubLoss(), 1));
-		trubLossUnitsLbl.setText(recipeUnitsAbrv);
-		miscLossTxt.setValue(SBStringUtils.format(myRecipe.getMiscLoss(), 1));
-		miscLosUnitsLbl.setText(recipeUnitsAbrv);
-		
-		finalVolTxt.setValue(SBStringUtils.format(myRecipe.getFinalWortVol(), 1));
+		finalVolTxt.setValue(SBStringUtils.format(myRecipe.getFinalWortVol(myRecipe.getVolUnits()), 1));
 		finalUnitsLbl.setText(recipeUnitsAbrv);
-		
+
+		chillShrinkLbl.setText(SBStringUtils.format(myRecipe.getChillShrinkVol(myRecipe.getVolUnits()), 1));
+		kettleTxt.setValue(SBStringUtils.format(myRecipe.getKettleLoss(myRecipe.getVolUnits()), 1));
+		kettleUnitsLbl.setText(recipeUnitsAbrv);
+		trubLossTxt.setValue(SBStringUtils.format(myRecipe.getTrubLoss(myRecipe.getVolUnits()), 1));
+		trubLossUnitsLbl.setText(recipeUnitsAbrv);
+		miscLossTxt.setValue(SBStringUtils.format(myRecipe.getMiscLoss(myRecipe.getVolUnits()), 1));
+		miscLosUnitsLbl.setText(recipeUnitsAbrv);	
 	}
 	
 	private void initGUI() {
@@ -351,34 +347,34 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 		
 		if (o == kettleTxt) {
 			String s = kettleTxt.getText();
-			myRecipe.setKettleLoss(Double.parseDouble(s));
+			myRecipe.setKettleLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s)));
 		}
 		else if (o == miscLossTxt) {
 			String s = miscLossTxt.getText();
-			myRecipe.setMiscLoss(Double.parseDouble(s));
+			myRecipe.setMiscLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s)));
 		}
 		else if (o == trubLossTxt) {
 			String s = trubLossTxt.getText();
-			myRecipe.setTrubLoss(Double.parseDouble(s));
+			myRecipe.setTrubLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s)));
 		}
 		else if (o == collectTxt) {
 			String s = collectTxt.getText();
-			myRecipe.setPreBoil(Double.parseDouble(s));
+			myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s)));
 
 		} else if (o == postBoilTxt) {
 			String s = postBoilTxt.getText();
-			myRecipe.setPostBoil(Double.parseDouble(s));
+			myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s)));
 
 		} else if (o == finalVolTxt) {
 			String s = finalVolTxt.getText();
-			myRecipe.setFinalWortVol(Double.parseDouble(s));
+			myRecipe.setFinalWortVol(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s)));
 
 		}		
 		
 		// don't do display water here call displrecipe on the SB notifier to fortce a refresh of the whole recipe. this will call display water from inside Strangeswing.displayrecipe.
-		//displayWater(); 
-		sbn.displRecipe();
-		
+		displayWater(); 
+		//sbn.displRecipe();
+		// Only update affected stuff!
 	}
 	
 	

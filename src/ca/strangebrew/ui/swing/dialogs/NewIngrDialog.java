@@ -3,7 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -35,7 +35,7 @@ public class NewIngrDialog extends javax.swing.JDialog {
 	private JButton cancelButton;
 	private JButton okButton;
 	private JPanel jPanel2;
-	private ArrayList<Ingredient> newIngrList;
+	private List<Ingredient> newIngrList;
 	private boolean [] add;
 	private Database db;
 	private NewIngrTableModel jTable1Model;
@@ -47,7 +47,7 @@ public class NewIngrDialog extends javax.swing.JDialog {
 		initGUI();
 	}
 	
-	public NewIngrDialog(JFrame frame, ArrayList<Ingredient> list) {		
+	public NewIngrDialog(JFrame frame, List<Ingredient> list) {		
 		super(frame);
 		newIngrList = list;
 		db = ((StrangeSwing)frame).DB;
@@ -126,7 +126,7 @@ public class NewIngrDialog extends javax.swing.JDialog {
 		
 		private String[] columnNames = {"Add?", "Type", "Name"};
 
-		private ArrayList<Ingredient> data = null;			
+		private List<Ingredient> data = null;			
 
 		
 		public NewIngrTableModel() {

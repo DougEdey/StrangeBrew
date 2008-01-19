@@ -1,5 +1,5 @@
 /*
- * $Id: FindDialog.java,v 1.4 2008/01/05 14:42:04 jimcdiver Exp $ 
+ * $Id: FindDialog.java,v 1.5 2008/01/19 01:05:40 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis find recipe window class
  */
 
@@ -34,6 +34,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -65,14 +66,12 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 	private FindTableModel recipeTableModel;
 
 	private Recipe r;
-	private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
-	private ArrayList<File> files = new ArrayList<File>();
+	private List<Recipe> recipes = new ArrayList<Recipe>();
+	private List<File> files = new ArrayList<File>();
 	private File currentDir;
-	private StrangeSwing inst;
 
 	public FindDialog(JFrame frame) {
 		super(frame);
-		inst = (StrangeSwing) frame;
 		currentDir = new File(SBStringUtils.getAppPath("recipes"));
 		
 		initGUI();
@@ -206,7 +205,7 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 					files.add(file);
 
 				} else if (openImport.getFileType().equals("beerxml")) {
-					ArrayList<Recipe> rs = openImport.getRecipes();
+					List<Recipe> rs = openImport.getRecipes();
 					for (int j=0; j<rs.size(); j++){
 						recipes.add(rs.get(j));
 						files.add(file);
@@ -228,7 +227,7 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 		} else if (o == openButton) {
 			int i = recipeTable.getSelectedRow();
 			if (i > -1 && i < recipes.size()) {
-				inst.setRecipe((Recipe) recipes.get(i), (File) files.get(i));
+				StrangeSwing.getInstance().setRecipe(recipes.get(i), files.get(i));
 			}
 
 			setVisible(false);
@@ -241,13 +240,13 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 
 		private String[] columnNames = {"Recipe", "Style", "Brewer", "Date"};
 
-		private ArrayList<Recipe> data;
+		private List<Recipe> data;
 
 		public FindTableModel() {
 			// data = new ArrayList();
 		}
 
-		public void setData(ArrayList<Recipe> l) {
+		public void setData(List<Recipe> l) {
 			data = l;
 		}
 

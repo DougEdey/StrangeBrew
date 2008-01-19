@@ -1,5 +1,5 @@
 /*
- * $Id: Quantity.java,v 1.15 2008/01/04 13:43:40 andrew_avis Exp $
+ * $Id: Quantity.java,v 1.16 2008/01/19 01:05:40 jimcdiver Exp $
  * Created on Oct 7, 2004
  *
  * To change the template for this generated file go to
@@ -9,6 +9,7 @@
 package ca.strangebrew;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author aavis
@@ -102,6 +103,13 @@ public class Quantity {
 	public Quantity(String u, double am){
 		setUnits(u);
 		setAmount(am);
+	}
+	
+	public Quantity(Quantity q) {
+		this.type = q.type;
+		this.unit = q.getUnits();
+		this.abrv = q.getAbrv();
+		this.value = q.getValue();
 	}
 
 	// This sets a quantity's unit, abrv, and type:
@@ -281,8 +289,8 @@ public class Quantity {
 	 * collecting objects bad.
 	 */
 
-	static public ArrayList<String> getListofUnits(String type, boolean abrv) {
-		ArrayList<String> list = new ArrayList<String>();
+	static public List<String> getListofUnits(String type, boolean abrv) {
+		List<String> list = new ArrayList<String>();
 		int i = 0;
 		if (type.equals("weight")) {
 			for (i = 0; i < weightUnits.length; i++) 
@@ -307,7 +315,7 @@ public class Quantity {
 		return list;
 	}
 
-	static public ArrayList<String> getListofUnits(String type) {
+	static public List<String> getListofUnits(String type) {
 		return (getListofUnits(type, false));
 	}
 	

@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.67 2008/01/16 17:55:05 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.68 2008/01/19 01:05:40 jimcdiver Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -39,7 +39,6 @@ public class Recipe {
 
 	private boolean isDirty = false;
 	public boolean allowRecalcs = true;
-	private double alcohol;
 	private double attenuation;
 	private int boilMinutes;
 	private String brewer;
@@ -52,10 +51,6 @@ public class Recipe {
 	private double ibu;
 	private boolean mashed;
 	private String name;
-	private Quantity preBoilVol = new Quantity();
-	private Quantity postBoilVol = new Quantity();
-	private double srm;
-	private double ebc;
 	private Style style = new Style();
 	private Yeast yeast = new Yeast();
 	private WaterProfile sourceWater = new WaterProfile();
@@ -65,13 +60,19 @@ public class Recipe {
 	public Mash mash;
 	
 	// water use:
-	private double chillShrinkQTS;
-	private double kettleLoss;
-	private double trubLoss;
-	private double miscLoss;
-	// private double spargeQTS;
-	private double totalWaterQTS;
-	private double finalWortVolQTS;
+	//
+	// All water use is now based on caluclation from mash and always done on-the-fly with getters <-------------
+	//
+	// Only hard data deserves a variable!
+	// initial vol = mash + sparge
+	// pre boil = initial - tun dead space (not implimented)
+	// post boil = pre - evap - chill
+	// final - post - kettle loss - trub loss - misc loss (+ dillution)
+	// total = initial (+ dillution)
+	private Quantity postBoilVol;
+	private Quantity kettleLossVol;
+	private Quantity trubLossVol;
+	private Quantity miscLossVol;
 	// this could be user-configurable:
 	private static final double CHILLPERCENT = 0.03;
 	
@@ -90,7 +91,7 @@ public class Recipe {
 	private String maltUnits;
 	private String ibuCalcMethod;
 	private double ibuHopUtil;
-	private String evapMethod;
+	private String evapMethod; 
 	private String alcMethod;
 	private double pelletHopPct;
 	private String bottleU;
@@ -145,10 +146,6 @@ public class Recipe {
 		evap = opts.getDProperty("optEvaporation");
 		alcMethod = opts.getProperty("optAlcCalcMethod");
 		colourMethod = opts.getProperty("optColourMethod");
-
-		kettleLoss = opts.getDProperty("optKettleLoss");
-		trubLoss = opts.getDProperty("optTrubLoss");
-		miscLoss = opts.getDProperty("optMiscLoss");
 		pelletHopPct = opts.getDProperty("optPelletHopsPct");
 
 		bottleU = opts.getProperty("optBottleU");
@@ -176,8 +173,10 @@ public class Recipe {
 		version = "";
 
 		// trigger the first re-calc:
-		setPostBoil(opts.getDProperty("optPostBoilVol"));
-		setVolUnits(opts.getProperty("optSizeU"));
+		kettleLossVol = new Quantity(opts.getProperty("optSizeU"), opts.getDProperty("optKettleLoss"));
+		trubLossVol = new Quantity(opts.getProperty("optSizeU"), opts.getDProperty("optTrubLoss"));
+		miscLossVol = new Quantity(opts.getProperty("optSizeU"), opts.getDProperty("optMiscLoss"));		
+		setPostBoil(new Quantity(opts.getProperty("optSizeU"), opts.getDProperty("optPostBoilVol")));		
 	}
 	
 	// Recipe copy constructor
@@ -186,23 +185,18 @@ public class Recipe {
 
 		this.isDirty = r.getDirty();
 		this.allowRecalcs = r.allowRecalcs;
-		this.alcohol = r.getAlcohol();
 		this.attenuation = r.getAttenuation();
 		this.boilMinutes = r.getBoilMinutes();
 		this.brewer = r.getBrewer();
 		this.comments = r.getComments();
 		this.created = r.getCreated();
 		this.efficiency = r.getEfficiency();
-		this.estOg = r.getEstOg();
+		this.estOg = r.estOg;
 		this.estFg = r.getEstFg();
 		this.evap = r.getEvap();
-		this.ibu = r.getIbu();
+		this.ibu = r.ibu;
 		this.mashed = r.mashed;
 		this.name = r.getName();
-		this.preBoilVol = r.preBoilVol;
-		this.postBoilVol = r.postBoilVol;
-		this.srm = r.getSrm();
-		this.ebc = r.ebc;
 		this.style = r.getStyleObj();
 		this.yeast = r.getYeastObj();
 		this.sourceWater = r.getSourceWater();
@@ -212,12 +206,10 @@ public class Recipe {
 		this.mash = r.mash;
 			
 		// water use:
-		this.kettleLoss = r.getKettleLoss();
-		this.trubLoss = r.getTrubLoss();
-		this.miscLoss = r.getMiscLoss();		
-		this.chillShrinkQTS = r.chillShrinkQTS;
-		this.totalWaterQTS = r.totalWaterQTS;
-		this.finalWortVolQTS = r.finalWortVolQTS;
+		this.kettleLossVol = new Quantity(r.getVolUnits(), r.getKettleLoss(r.getVolUnits()));
+		this.trubLossVol = new Quantity(r.getVolUnits(), r.getTrubLoss(r.getVolUnits()));
+		this.miscLossVol = new Quantity(r.getVolUnits(), r.getMiscLoss(r.getVolUnits()));	
+		this.postBoilVol = new Quantity(r.getVolUnits(), r.getPostBoilVol(r.getVolUnits()));
 		
 		// Carbonation
 		this.bottleTemp = r.getBottleTemp();
@@ -252,7 +244,7 @@ public class Recipe {
 		this.totalMashLbs = r.getTotalMaltLbs();
 		this.totalFermentTime = r.getTotalFermentTime();
 			
-			// ingredients
+		// ingredients
 		this.hops = new ArrayList<Hop>(r.hops);
 		this.fermentables = new ArrayList<Fermentable>(r.fermentables);
 		this.misc = new ArrayList<Misc>(r.misc);
@@ -264,7 +256,7 @@ public class Recipe {
 
 	// Getters:
 	public double getAlcohol() {
-		return alcohol;
+		return BrewCalcs.calcAlcohol(getAlcMethod(), estOg, getEstFg());
 	}
 	public String getAlcMethod() {
 		return alcMethod;
@@ -283,8 +275,8 @@ public class Recipe {
 	}
 	public double getBUGU() {
 		double bugu = 0.0;
-		if ( getEstOg() != 1.0 ) { 
-		   bugu = getIbu() / ((getEstOg() - 1) * 1000);
+		if ( estOg != 1.0 ) { 
+		   bugu = ibu / ((estOg - 1) * 1000);
 		}		
 		return bugu;
 	}
@@ -295,11 +287,21 @@ public class Recipe {
 		return comments;
 	}
 	public double getColour() {
-		if (colourMethod.equals(BrewCalcs.SRM)) {
-			return srm;
-		} else {
-			return ebc;
+		return getColour(getColourMethod());
+	}
+	
+	public double getMcu() {
+		double mcu = 0;
+		for (int i = 0; i < fermentables.size(); i++) {
+			final Fermentable m = fermentables.get(i);
+			mcu += m.getLov() * m.getAmountAs(Quantity.LB) / getPostBoilVol(Quantity.GAL);
 		}
+		
+		return mcu;
+	}
+	
+	public double getColour(final String method) {		
+		return BrewCalcs.calcColour(getMcu(), method);
 	}
 
 	public String getColourMethod() {
@@ -323,9 +325,6 @@ public class Recipe {
 	public String getEvapMethod() {
 		return evapMethod;
 	}
-	public double getKettleLoss() {
-		return kettleLoss;
-	}
 	public Mash getMash() {
 		return mash;
 	}
@@ -338,9 +337,6 @@ public class Recipe {
 	public String getMaltUnits() {
 		return maltUnits;
 	}
-	public double getMiscLoss() {
-		return miscLoss;
-	}
 	public String getName() {
 		return name;
 	}
@@ -350,14 +346,52 @@ public class Recipe {
 	public double getPelletHopPct() {
 		return pelletHopPct;
 	}
+	
+	// Water getters - the calculated version
+	public double getKettleLoss(final String s) {
+		return kettleLossVol.getValueAs(s);
+	}
+	public double getMiscLoss(final String s) {
+		return miscLossVol.getValueAs(s);
+	}
+	
+	public double getTotalWaterVol(final String s) {
+		Quantity q = new Quantity(Quantity.QT, mash.getTotalWaterQts() + mash.getSpargeVol());
+		return q.getValueAs(s);
+	}	
+	public double getChillShrinkVol(final String s) {
+		return getPostBoilVol(s) * CHILLPERCENT;
+	}	
 	public double getPreBoilVol(final String s) {
-		return preBoilVol.getValueAs(s);
+		double vol = getPostBoilVol(s) + getEvapVol(s) + getChillShrinkVol(s);
+		return vol;
+	}
+	public double getFinalWortVol(final String s) {
+		double vol = getPostBoilVol(s) - (getKettleLoss(s) + getTrubLoss(s) + getMiscLoss(s));
+		return vol;
 	}
 	public double getPostBoilVol(final String s) {
 		return postBoilVol.getValueAs(s);
 	}
-	public double getSrm() {
-		return srm;
+	public double getTrubLoss(final String s) {
+		return trubLossVol.getValueAs(s);
+	}
+	public double getEvapVol(final String s) {
+		// JvH changing the boiltime, changes the post boil volume (NOT the pre boil)
+		double e; 
+		if (evapMethod.equals("Constant")) {
+			e = getEvap() * getBoilMinutes() / 60;
+		} else { // %
+			e = getPostBoilVol(s) * (getEvap() / 100) * getBoilMinutes() / 60;
+		}		
+		return e;
+	}	
+	public String getVolUnits() {
+		return postBoilVol.getUnits();
+	}
+	public double getSparge() {
+		// return (getVolConverted(spargeQTS));
+		return mash.getSpargeVol();
 	}
 	public String getStyle() {
 		return style.getName();
@@ -392,40 +426,12 @@ public class Recipe {
 	public double getTotalMiscCost() {
 		return totalMiscCost;
 	}
-	public double getTrubLoss() {
-		return trubLoss;
-	}
-	public String getVolUnits() {
-		return postBoilVol.getUnits();
-	}
 	public String getYeast() {
 		return yeast.getName();
 	}
 	public Yeast getYeastObj() {
 		return yeast;
 	}
-
-	// water
-	private double getVolConverted(final double val) {
-		final double d = Quantity.convertUnit(Quantity.QT, getVolUnits(), val);
-		// String s = SBStringUtils.format(d, 1).toString();
-		return d;
-	}
-
-	public double getTotalWater() {
-		return (getVolConverted(totalWaterQTS));
-	}
-	public double getChillShrink() {
-		return (getVolConverted(chillShrinkQTS));
-	}
-	public double getSparge() {
-		// return (getVolConverted(spargeQTS));
-		return mash.getSpargeVol();
-	}
-	public double getFinalWortVol() {
-		return (getVolConverted(finalWortVolQTS));
-	}
-	
 	public boolean getDirty() {
 		return isDirty;
 	}
@@ -446,25 +452,13 @@ public class Recipe {
 	}
 
 	public void setAlcMethod(final String s) {
+		isDirty = true;
 		alcMethod = s;
-		calcAlcohol(alcMethod);
 	}
+	
 	public void setBoilMinutes(final int b) {
 		isDirty = true;
-		boilMinutes = b;
-		double post = 0;
-		// JvH changing the boiltime, changes the post boil volume (NOT the pre
-		// boil)
-		// TODO
-		if (evapMethod.equals("Constant")) {
-			post = preBoilVol.getValue() - (evap * boilMinutes / 60);
-		} else { // %
-			post = preBoilVol.getValue()
-					- (preBoilVol.getValue() * (evap / 100) * boilMinutes / 60);
-
-		}
-
-		setPostBoil(post);
+		boilMinutes = b;		
 	}
 	public void setBottleSize(final double b) {
 		isDirty = true;
@@ -495,24 +489,12 @@ public class Recipe {
 	public void setEvap(final double e) {
 		isDirty = true;
 		evap = e;
-		double post = 0;
-		// JvH changing the evaporation, changes the post boil volume (NOT the
-		// pre boil)
-		// TODO
-		if (evapMethod.equals("Constant")) {
-			post = preBoilVol.getValue() - (evap * boilMinutes / 60);
-		} else { // %
-			post = preBoilVol.getValue()
-					- (preBoilVol.getValue() * (evap / 100) * boilMinutes / 60);
-		}
-		postBoilVol.setAmount(post);
 		calcMaltTotals();
 		calcHopsTotals();
 	}
 	public void setEvapMethod(final String e) {
 		isDirty = true;
 		evapMethod = e;
-		setEvap(getEvap());
 	}
 
 	public void setHopsUnits(final String h) {
@@ -524,9 +506,9 @@ public class Recipe {
 		ibuCalcMethod = s;
 		calcHopsTotals();
 	}
-	public void setKettleLoss(final double k) {
+	public void setKettleLoss(final Quantity q) {
 		isDirty = true;
-		kettleLoss = k;
+		kettleLossVol = q;
 		calcMaltTotals();
 	}
 	public void setMaltUnits(final String m) {
@@ -545,9 +527,9 @@ public class Recipe {
 		isDirty = true;
 		mash.setMashRatioU(u);
 	}
-	public void setMiscLoss(final double m) {
+	public void setMiscLoss(final Quantity m) {
 		isDirty = true;
-		miscLoss = m;
+		miscLossVol = m;
 		calcMaltTotals();
 	}
 	public void setName(final String n) {
@@ -575,9 +557,9 @@ public class Recipe {
 		style = s;
 	}
 
-	public void setTrubLoss(final double t) {
+	public void setTrubLoss(final Quantity t) {
 		isDirty = true;
-		trubLoss = t;
+		trubLossVol = t;
 		calcMaltTotals();
 	}
 	public void setYeastName(final String s) {
@@ -920,11 +902,12 @@ public class Recipe {
 
 	public void setVolUnits(final String v) {
 		isDirty = true;
-		preBoilVol.setUnits(v);
-		postBoilVol.setUnits(v);
+		kettleLossVol.convertTo(v);
+		postBoilVol.convertTo(v);
+		trubLossVol.convertTo(v);
+		miscLossVol.convertTo(v);
 		calcMaltTotals();
 		calcHopsTotals();
-
 	}
 
 	public void setEstFg(final double f) {
@@ -932,17 +915,18 @@ public class Recipe {
 		if ((f != estFg) && (f > 0)) {
 			estFg = f;
 			attenuation = 100 - ((estFg - 1) / (estOg - 1) * 100);
-			calcAlcohol(alcMethod);
 		}
 	}
 
 	public void setEstOg(final double o) {
+		if (o == 0) {
+			return;
+		}
 		isDirty = true;
 		if ((o != estOg) && (o > 0)) {
 			estOg = o;
 			attenuation = 100 - ((estFg - 1) / (estOg - 1) * 100);
 			calcEfficiency();
-			calcAlcohol("Volume");
 		}
 	}
 
@@ -962,60 +946,38 @@ public class Recipe {
 		}
 
 	}
-	public void setPreBoil(final double p) {
+	public void setPreBoil(final Quantity p) {
 		isDirty = true;
-		preBoilVol.setAmount(p);
-
-		double post = 0;
-		// TODO
-		if (evapMethod.equals("Constant")) {
-			post = p - (evap * boilMinutes / 60);
-		} else {
-			post = p - (p * (evap / 100) * boilMinutes / 60);
-		}
-
-		postBoilVol.setAmount(post);
-		calcMaltTotals();
-		calcHopsTotals();
+		
+		// The one-true-volume is postBoil.. so calc it, and set it
+		Quantity post = new Quantity(getVolUnits(), 
+				p.getValueAs(getVolUnits()) - getEvapVol(getVolUnits()) - getChillShrinkVol(getVolUnits()));
+		setPostBoil(post);
 	}
 
-	public void setPostBoil(final double p) {
+	public void setPostBoil(final Quantity p) {
 		isDirty = true;
-		postBoilVol.setAmount(p);
-
-		double pre = 0;
-		// TODO
-		if (evapMethod.equals("Constant")) {
-			pre = p + (evap * boilMinutes / 60);
-		} else {
-			// pre = p + (p * (evap / 100) * boilMinutes / 60);
-			pre = p / ((1 - ((evap / 100) * boilMinutes / 60)));
-		}
-		preBoilVol.setAmount(pre);
+		
+		// One-true vol, set it and all the getters will go from there
+		// Hack alert; chop off "double ugglyness" rounding errors at umtenth decimal place
+		long hackNumber = (long)(p.getValue() * 100);
+		p.setAmount((double)hackNumber / 100);
+		postBoilVol = p;
+		
+		// Recalc all the bits
 		calcMaltTotals();
 		calcHopsTotals();
 		calcPrimeSugar();
 		calcKegPSI();
-		
-//		if (!diluted) {
-//			dilution.setDilVol(p);
-//		} else {
-//			dilution.calcDilution();
-//		}
 	}
 
-	public void setFinalWortVol(final double p) {
+	public void setFinalWortVol(final Quantity p) {
 		isDirty = true;
-		// convert to QTS and set the final vol
-		finalWortVolQTS = Quantity.convertUnit(getVolUnits(), Quantity.QT, p);
-		// now add in all the losses, and set the post-boil to force
-		// a recalc:
-		double d = finalWortVolQTS + Quantity.convertUnit(getVolUnits(), Quantity.QT, kettleLoss)
-				+ Quantity.convertUnit(getVolUnits(), Quantity.QT, trubLoss)
-				+ Quantity.convertUnit(getVolUnits(), Quantity.QT, miscLoss);
-		// add in chill shrink:
-		d = d / (1 - CHILLPERCENT);
-		setPostBoil(Quantity.convertUnit(Quantity.QT, getVolUnits(), d));
+		
+		// The one-true-volume is postBoil.. so calc it, and set it
+		Quantity post = new Quantity(getVolUnits(), 
+				p.getValueAs(getVolUnits()) + getKettleLoss(getVolUnits()) + getTrubLoss(getVolUnits()) + getMiscLoss(getVolUnits()));
+		setPostBoil(post);
 	}
 
 	/*
@@ -1092,12 +1054,9 @@ public class Recipe {
 		final int i = a.indexOf(" ");
 		final String d = a.substring(0, i);
 		final String u = a.substring(i);
-		// preBoilVol.setAmount(Double.parseDouble(d.trim()));
-		preBoilVol.setUnits(u.trim());
-		// postBoilVol.setAmount(Double.parseDouble(d.trim()));
-		postBoilVol.setUnits(u.trim());
-		setPostBoil(Double.parseDouble(d.trim()));
 
+		Quantity post = new Quantity(u.trim(), Double.parseDouble(d.trim()));
+		setPostBoil(post);
 	}
 
 	/**
@@ -1114,7 +1073,7 @@ public class Recipe {
 		for (int i = 0; i < fermentables.size(); i++) {
 			final Fermentable m = fermentables.get(i);
 			possiblePoints += (m.getPppg() - 1) * m.getAmountAs(Quantity.LB)
-					/ postBoilVol.getValueAs(Quantity.GAL);
+					/ getPostBoilVol(Quantity.GAL);
 		}
 		efficiency = (estOg - 1) / possiblePoints * 100;
 	}
@@ -1125,7 +1084,6 @@ public class Recipe {
 			return;
 		}
 		double maltPoints = 0;
-		double mcu = 0;
 		totalMaltLbs = 0;
 		totalMaltCost = 0;
 		totalMashLbs = 0;
@@ -1135,15 +1093,14 @@ public class Recipe {
 			final Fermentable m = fermentables.get(i);
 			totalMaltLbs += (m.getAmountAs(Quantity.LB));
 			if (m.getMashed()) { // apply efficiency and add to mash weight
-				maltPoints += (m.getPppg() - 1) * m.getAmountAs(Quantity.LB) * efficiency
-						/ postBoilVol.getValueAs(Quantity.GAL);
+				maltPoints += (m.getPppg() - 1) * m.getAmountAs(Quantity.LB) * getEfficiency()
+						/ getPostBoilVol(Quantity.GAL);
 				totalMashLbs += (m.getAmountAs(Quantity.LB));
 			} else {
 				maltPoints += (m.getPppg() - 1) * m.getAmountAs(Quantity.LB) * 100
-						/ postBoilVol.getValueAs(Quantity.GAL);
+						/ getPostBoilVol(Quantity.GAL);
 			}
 
-			mcu += m.getLov() * m.getAmountAs(Quantity.LB) / postBoilVol.getValueAs(Quantity.GAL);
 			totalMaltCost += m.getCostPerU() * m.getAmountAs(m.getUnits());
 		}
 
@@ -1159,24 +1116,8 @@ public class Recipe {
 
 		// set the fields in the object
 		estOg = (maltPoints / 100) + 1;
-		estFg = 1 + ((estOg - 1) * ((100 - attenuation) / 100));
-
-		srm = BrewCalcs.calcColour(mcu, BrewCalcs.SRM);
-		ebc = BrewCalcs.calcColour(mcu, BrewCalcs.EBC);
+		estFg = 1 + ((estOg - 1) * ((100 - getAttenuation()) / 100));		
 		// mash.setMaltWeight(totalMashLbs);
-
-		calcAlcohol(getAlcMethod());
-
-		// do the water calcs w/ the updated mash:
-		chillShrinkQTS = getPostBoilVol(Quantity.QT) * CHILLPERCENT;
-		// spargeQTS = getPreBoilVol("qt") - (mash.getTotalWaterQts() - mash.getAbsorbedQts());
-		totalWaterQTS = mash.getTotalWaterQts() + mash.getSpargeVol();
-
-		finalWortVolQTS = postBoilVol.getValueAs(Quantity.QT)
-				- (chillShrinkQTS + Quantity.convertUnit(getVolUnits(), Quantity.QT, kettleLoss)
-						+ Quantity.convertUnit(getVolUnits(), Quantity.QT, trubLoss) + Quantity
-						.convertUnit(getVolUnits(), Quantity.QT, miscLoss));
-
 	}
 	
 	public void calcHopsTotals() {
@@ -1204,27 +1145,27 @@ public class Recipe {
 			}
 
 			if (h.getMinutes() > 0) {
-				adjPreSize = postBoilVol.getValueAs(Quantity.GAL)
-						+ (preBoilVol.getValueAs(Quantity.GAL) - postBoilVol.getValueAs(Quantity.GAL))
-						/ (boilMinutes / h.getMinutes());
+				adjPreSize = getPostBoilVol(Quantity.GAL)
+						+ (getPreBoilVol(Quantity.GAL) - getPostBoilVol(Quantity.GAL))
+						/ (getBoilMinutes() / h.getMinutes());
 			} else {
-				adjPreSize = postBoilVol.getValueAs(Quantity.GAL);
+				adjPreSize = getPostBoilVol(Quantity.GAL);
 			}
 
-			aveOg = 1 + (((estOg - 1) + ((estOg - 1) / (adjPreSize / postBoilVol.getValueAs(Quantity.GAL)))) / 2);
+			aveOg = 1 + (((estOg - 1) + ((estOg - 1) / (adjPreSize / getPostBoilVol(Quantity.GAL)))) / 2);
 
 			if (ibuCalcMethod.equals(BrewCalcs.TINSETH)) {
-				h.setIBU(BrewCalcs.calcTinseth(h.getAmountAs(Quantity.OZ), postBoilVol.getValueAs(Quantity.GAL), aveOg,
+				h.setIBU(BrewCalcs.calcTinseth(h.getAmountAs(Quantity.OZ), getPostBoilVol(Quantity.GAL), aveOg,
 						time, h.getAlpha(), ibuHopUtil));
 			} else if (ibuCalcMethod.equals(BrewCalcs.RAGER)) {
-				h.setIBU(BrewCalcs.CalcRager(h.getAmountAs(Quantity.OZ), postBoilVol.getValueAs(Quantity.GAL), aveOg, time,
+				h.setIBU(BrewCalcs.CalcRager(h.getAmountAs(Quantity.OZ), getPostBoilVol(Quantity.GAL), aveOg, time,
 						h.getAlpha()));
 			} else {
-				h.setIBU(BrewCalcs.CalcGaretz(h.getAmountAs(Quantity.OZ), postBoilVol.getValueAs(Quantity.GAL), aveOg,
-						time, preBoilVol.getValueAs(Quantity.GAL), 1, h.getAlpha()));
+				h.setIBU(BrewCalcs.CalcGaretz(h.getAmountAs(Quantity.OZ), getPostBoilVol(Quantity.GAL), aveOg,
+						time, getPreBoilVol(Quantity.GAL), 1, h.getAlpha()));
 			}
 			if (h.getType().equalsIgnoreCase(Hop.PELLET)) {
-				h.setIBU(h.getIBU() * (1.0 + (pelletHopPct / 100)));
+				h.setIBU(h.getIBU() * (1.0 + (getPelletHopPct() / 100)));
 			}
 
 			ibuTotal += h.getIBU();
@@ -1235,20 +1176,6 @@ public class Recipe {
 
 		ibu = ibuTotal;
 
-	}
-
-	// TODO should be in BrewCalcs
-	private void calcAlcohol(final String method) {
-		final double oPlato = BrewCalcs.SGToPlato(estOg);
-		final double fPlato = BrewCalcs.SGToPlato(estFg);
-		final double q = 0.22 + 0.001 * oPlato;
-		final double re = (q * oPlato + fPlato) / (1.0 + q);
-		// calculate by weight:
-		alcohol = (oPlato - re) / (2.0665 - 0.010665 * oPlato);
-		// TODO
-		if (method.equalsIgnoreCase("Volume")) {
-			alcohol = alcohol * estFg / 0.794;
-		}
 	}
 
 	private String addXMLHeader(String in) {
@@ -1273,18 +1200,17 @@ public class Recipe {
 		sb.append("  <STYLE>" + style.getName() + "</STYLE>\n");
 		sb.append("  <MASH>" + mashed + "</MASH>\n");
 		// TODO: ebc vs srm
-		sb.append("  <LOV>" + SBStringUtils.format(srm, 1) + "</LOV>\n");
+		sb.append("  <LOV>" + SBStringUtils.format(getColour(BrewCalcs.SRM), 1) + "</LOV>\n");
 		sb.append("  <IBU>" + SBStringUtils.format(ibu, 1) + "</IBU>\n");
-		sb.append("  <ALC>" + SBStringUtils.format(alcohol, 1) + "</ALC>\n");
+		sb.append("  <ALC>" + SBStringUtils.format(getAlcohol(), 1) + "</ALC>\n");
 		sb.append("  <!-- SBJ1.0 Extensions: -->\n");
 		sb.append("  <EVAP>" + evap + "</EVAP>\n");
 		sb.append("  <EVAP_METHOD>" + evapMethod + "</EVAP_METHOD>\n");
 		sb.append("  <!-- END SBJ1.0 Extensions -->\n");
 		sb.append("  <BOIL_TIME>" + boilMinutes + "</BOIL_TIME>\n");
-		sb.append("  <PRESIZE>" + preBoilVol.getValue() + "</PRESIZE>\n");
-		sb.append("  <SIZE>" + postBoilVol.getValue() + "</SIZE>\n");
-		sb.append("  <SIZE_UNITS>" + postBoilVol.getUnits() + "</SIZE_UNITS>\n");
-//		sb.append("  <ADDED_VOLUME>" + dilution.getAddVol() + "</ADDED_VOLUME>\n");
+		sb.append("  <PRESIZE>" + getPreBoilVol(getVolUnits()) + "</PRESIZE>\n");
+		sb.append("  <SIZE>" + getPostBoilVol(getVolUnits()) + "</SIZE>\n");
+		sb.append("  <SIZE_UNITS>" + getVolUnits() + "</SIZE_UNITS>\n");
 		sb.append("  <MALT_UNITS>" + maltUnits + "</MALT_UNITS>\n");
 		sb.append("  <HOPS_UNITS>" + hopUnits + "</HOPS_UNITS>\n");
 		sb.append("  <YEAST>" + yeast.getName() + "</YEAST>\n");
@@ -1292,12 +1218,12 @@ public class Recipe {
 		sb.append("  <RECIPE_DATE>" + df.format(created.getTime()) + "</RECIPE_DATE>\n");
 		sb.append("  <ATTENUATION>" + attenuation + "</ATTENUATION>\n");
 		sb.append("  <!-- SBJ1.0 Extensions: -->\n");
-		sb.append("  <ALC_METHOD>" + alcMethod + "</ALC_METHOD>\n");
+		sb.append("  <ALC_METHOD>" + getAlcMethod() + "</ALC_METHOD>\n");
 		sb.append("  <IBU_METHOD>" + ibuCalcMethod + "</IBU_METHOD>\n");
 		sb.append("  <COLOUR_METHOD>" + colourMethod + "</COLOUR_METHOD>\n");
-		sb.append("  <KETTLE_LOSS>" + kettleLoss + "</KETTLE_LOSS>\n");
-		sb.append("  <TRUB_LOSS>" + trubLoss + "</TRUB_LOSS>\n");
-		sb.append("  <MISC_LOSS>" + miscLoss + "</MISC_LOSS>\n");
+		sb.append("  <KETTLE_LOSS>" + getKettleLoss(getVolUnits()) + "</KETTLE_LOSS>\n");
+		sb.append("  <TRUB_LOSS>" + getTrubLoss(getVolUnits()) + "</TRUB_LOSS>\n");
+		sb.append("  <MISC_LOSS>" + getMiscLoss(getVolUnits()) + "</MISC_LOSS>\n");
 		sb.append("  <PELLET_HOP_PCT>" + pelletHopPct + "</PELLET_HOP_PCT>\n");
 		sb.append("  <YEAST_COST>" + yeast.getCostPerU() + "</YEAST_COST>\n");
 		sb.append("  <OTHER_COST>" + otherCost + "</OTHER_COST>\n");
@@ -1428,14 +1354,14 @@ public class Recipe {
 		sb.append("Details:\n");
 		sb.append("Name: " + name + "\n");
 		sb.append("Brewer: " + brewer + "\n");
-		sb.append("Size: " + SBStringUtils.format(postBoilVol.getValue(), 1) + " "
-				+ postBoilVol.getUnits() + "\n");
+		sb.append("Size: " + SBStringUtils.format(getPostBoilVol(getVolUnits()), 1) + " "
+				+ getPostBoilVol(getVolUnits()) + "\n");
 		sb.append("Style: " + style.getName() + "\n");
 		mf = new MessageFormat(
 				"OG: {0,number,0.000},\tFG:{1,number,0.000}, \tAlc:{2,number,0.0}, \tIBU:{3,number,0.0}\n");
-		final Object[] objs = {new Double(estOg), new Double(estFg), new Double(alcohol), new Double(ibu)};
+		final Object[] objs = {new Double(estOg), new Double(estFg), new Double(getAlcohol()), new Double(ibu)};
 		sb.append(mf.format(objs));
-		sb.append("(Alc method: by " + alcMethod + "; IBU method: " + ibuCalcMethod + ")\n");
+		sb.append("(Alc method: by " + getAlcMethod() + "; IBU method: " + ibuCalcMethod + ")\n");
 		sb.append("\nYeast: " + yeast + "\n");		
 		sb.append("\nFermentables:\n");
 		sb.append(Recipe.padLeft("Name ", 30, ' ') + " amount units  pppg    lov   %\n");
@@ -1535,15 +1461,11 @@ public class Recipe {
 	 * Scale the recipe up or down, so that the new OG = old OG, and
 	 * new IBU = old IBU
 	 */
-	public void scaleRecipe(final double newSize, final String newUnits) {
-		double currentSize = getPostBoilVol(getVolUnits());
-		currentSize = Quantity.convertUnit(getVolUnits(), newUnits, currentSize);
-		final double conversionFactor = newSize / currentSize;
+	public void scaleRecipe(final Quantity newSize) {
+		final double currentSize = getPostBoilVol(newSize.getUnits());
+		final double conversionFactor = newSize.getValue() / currentSize;
 
 		if (conversionFactor != 1) {
-			setPostBoil(newSize);
-			setVolUnits(newUnits);
-
 			// TODO: figure out a way to make sure old IBU = new IBU
 			for (int i = 0; i < getHopsListSize(); i++) {
 				final Hop h = getHop(i);
@@ -1553,9 +1475,8 @@ public class Recipe {
 				final Fermentable f = getFermentable(i);
 				f.setAmount(f.getAmountAs(f.getUnits()) * conversionFactor);
 			}
-			calcHopsTotals();
-			calcMaltTotals();
-
+			setPostBoil(newSize);
+			setVolUnits(newSize.getUnits());
 		}
 	}
 
@@ -1651,7 +1572,7 @@ public class Recipe {
 		// Convert to selected Units
 		double neededPrime = Quantity.convertUnit(Quantity.G, getPrimeSugarU(), primeSugarGL);
 		neededPrime *= Quantity.convertUnit(Quantity.L, getVolUnits(), primeSugarGL);
-		neededPrime *= getFinalWortVol();
+		neededPrime *= getFinalWortVol(getVolUnits());
 		
 		primeSugar.setAmount(neededPrime);
 	}

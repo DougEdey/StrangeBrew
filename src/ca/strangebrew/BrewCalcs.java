@@ -403,6 +403,28 @@ public class BrewCalcs {
 
 		return ibu;
 	}	
+
+	// Alcohol calculations
+	public final static String ALC_BY_WEIGHT = "Weight";
+	public final static String ALC_BY_VOLUME = "Volume";
+	public final static String[] alcMethods = { ALC_BY_WEIGHT, ALC_BY_VOLUME };
+	public static double calcAlcohol(final String method, final double og, final double fg) {
+		double alc = 0;
+		
+		if (method == null ||
+			method.equalsIgnoreCase(ALC_BY_WEIGHT)) {
+			final double oPlato = BrewCalcs.SGToPlato(og);
+			final double fPlato = BrewCalcs.SGToPlato(fg);
+			final double q = 0.22 + 0.001 * oPlato;
+			final double re = (q * oPlato + fPlato) / (1.0 + q);
+			// calculate by weight:
+			alc = (oPlato - re) / (2.0665 - 0.010665 * oPlato);
+		} else if (method.equalsIgnoreCase(ALC_BY_VOLUME)) {
+			alc = calcAlcohol(ALC_BY_WEIGHT, og, fg) * fg / 0.794;
+		}
+		
+		return alc;
+	}
 	
 	// Acid calcs
 	// From http://hbd.org/brewery/library/AcidifWaterAJD0497.html by A.J. deLange

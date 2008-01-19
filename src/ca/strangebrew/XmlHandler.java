@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.26 2008/01/16 17:55:05 jimcdiver Exp $
+ * $Id: XmlHandler.java,v 1.27 2008/01/19 01:05:40 jimcdiver Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -527,18 +527,18 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentElement.equalsIgnoreCase("ATTENUATION")) {
 				r.setAttenuation(Double.parseDouble(s));
 			} else if (currentElement.equalsIgnoreCase("PRESIZE")) {
-				r.setPreBoil(Double.parseDouble(s));
+				r.setPreBoil(new Quantity(r.getVolUnits(), Double.parseDouble(s)));
 			} else if (currentElement.equalsIgnoreCase("SIZE")) {
-				r.setPostBoil(Double.parseDouble(s));
+				r.setPostBoil(new Quantity(r.getVolUnits(), Double.parseDouble(s)));
 			} else if (currentElement.equalsIgnoreCase("SIZE_UNITS")) {
 				// also sets postboil:
 				r.setVolUnits(s);				
-//			} else if (currentElement.equalsIgnoreCase("ADDED_VOLUME")) {
-//				double d = Double.parseDouble(s);
-//				if ( d != 0 ) {
-//					r.setDiluted(true);
-//					r.dilution.setAddVol(d);
-//				}
+			} else if (currentElement.equalsIgnoreCase("ADDED_VOLUME")) {
+				double d = Double.parseDouble(s);
+				if ( d != 0 ) {
+					DilutedRecipe dr = new DilutedRecipe(r, new Quantity(r.getVolUnits(), d));
+					r = dr;
+				}
 		    } else if (currentElement.equalsIgnoreCase("STYLE")) {
 				r.setStyle(s);
 			} else if (currentElement.equalsIgnoreCase("BOIL_TIME")) {
@@ -583,13 +583,13 @@ public class XmlHandler extends DefaultHandler{
 				r.setEvapMethod(s);
 			}
 			else if (currentElement.equalsIgnoreCase("KETTLE_LOSS")) {
-				r.setKettleLoss(Double.parseDouble(s));
+				r.setKettleLoss(new Quantity(r.getVolUnits(), Double.parseDouble(s)));
 			}
 			else if (currentElement.equalsIgnoreCase("MISC_LOSS")) {
-				r.setMiscLoss(Double.parseDouble(s));
+				r.setMiscLoss(new Quantity(r.getVolUnits(), Double.parseDouble(s)));
 			}
 			else if (currentElement.equalsIgnoreCase("TRUB_LOSS")) {
-				r.setTrubLoss(Double.parseDouble(s));
+				r.setTrubLoss(new Quantity(r.getVolUnits(), Double.parseDouble(s)));
 			}
 			else if (currentElement.equalsIgnoreCase("PELLET_HOP_PCT")) {
 				r.setPelletHopPct(Double.parseDouble(s));

@@ -170,7 +170,7 @@ public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionList
 		String newUnits = sizeUnitsComboModel.getSelectedItem().toString();
 		double newSize = Double.parseDouble(sizeTxt.getText());
 
-		myRecipe.scaleRecipe(newSize, newUnits);
+		myRecipe.scaleRecipe(new Quantity(newUnits, newSize));
 		
 		if (convMaltsChk.isSelected()){
 			for (int i=0;i<myRecipe.getMaltListSize();i++){

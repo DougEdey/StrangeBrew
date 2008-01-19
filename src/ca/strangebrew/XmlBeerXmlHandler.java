@@ -1,5 +1,5 @@
 /*
- * $Id: XmlBeerXmlHandler.java,v 1.7 2008/01/16 17:55:05 jimcdiver Exp $
+ * $Id: XmlBeerXmlHandler.java,v 1.8 2008/01/19 01:05:40 jimcdiver Exp $
  * Created on Oct 14, 2004
  */
 package ca.strangebrew;
@@ -248,7 +248,7 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 				if (currentElement.equalsIgnoreCase("brewer"))
 					myRecipe.setBrewer(s.trim());
 				if (currentElement.equalsIgnoreCase("BATCH_SIZE")){
-					myRecipe.setPostBoil(Double.parseDouble(s.trim()));
+					myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s.trim())));
 					myRecipe.setVolUnits("l");
 				}
 //				if (currentElement.equalsIgnoreCase("TOP_UP_WATER")){

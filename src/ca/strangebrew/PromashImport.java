@@ -1,5 +1,5 @@
 /*
- * $Id: PromashImport.java,v 1.8 2006/06/07 16:34:06 andrew_avis Exp $ Created on Jun 15, 2005
+ * $Id: PromashImport.java,v 1.9 2008/01/19 01:05:40 jimcdiver Exp $ Created on Jun 15, 2005
  * by aavis
  * A Promash .rec file importer, based on specs provided by Don Kelly
  */
@@ -54,7 +54,7 @@ public class PromashImport {
 			fl = readFloat(in);
 			Debug.print("Wort size: " + fl);
 			myRecipe.setVolUnits("gal");
-			myRecipe.setPostBoil(fl);
+			myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), fl));
 			in.skip(8);
 			fl = readFloat(in);
 			Debug.print("%effic: " + fl*100);

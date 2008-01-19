@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: CostPanel.java,v 1.11 2008/01/08 13:37:07 andrew_avis Exp $
+ * $Id: CostPanel.java,v 1.12 2008/01/19 01:05:40 jimcdiver Exp $
  *  @author aavis 
  */
 
@@ -83,10 +83,10 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener, Foc
 		bottleSizeTxt.setText(SBStringUtils.format(myRecipe.getBottleSize(), 0));
 		bottleSizeUCmbModel.addOrInsert(myRecipe.getBottleU());
 
-		finalVolLbl.setText(myRecipe.getFinalWortVol() + " " + myRecipe.getVolUnits());
+		finalVolLbl.setText(myRecipe.getFinalWortVol(myRecipe.getVolUnits()) + " " + myRecipe.getVolUnits());
 		double numBottles = Quantity.convertUnit(myRecipe.getVolUnits(), 
 				myRecipe.getBottleU(), 
-				myRecipe.getFinalWortVol()) / myRecipe.getBottleSize();
+				myRecipe.getFinalWortVol(myRecipe.getVolUnits())) / myRecipe.getBottleSize();
 		numBottlesLbl.setText(SBStringUtils.format(numBottles, 1));
 		bottleCostLbl.setText(SBStringUtils.myNF.format( totalCost/numBottles ));
 

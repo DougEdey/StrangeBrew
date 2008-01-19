@@ -104,6 +104,11 @@ class HopsTableModel extends AbstractTableModel {
 			switch (col) {
 			case 0:
 				data.setHopName(row, value.toString());
+				// Shouldn't this re-set most of the data fields with base info
+				if (value instanceof Hop) {
+					Hop h = (Hop)value;
+					data.setHopAlpha(row, h.getAlpha());					
+				}
 				break;
 			case 1:
 				data.setHopType(row, value.toString());

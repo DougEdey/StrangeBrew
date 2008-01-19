@@ -109,7 +109,7 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 		comboPrime.setSelectedItem(myRecipe.getPrimeSugarName());
 		
 		checkKegged.setSelected(myRecipe.isKegged());
-		lBatchSize.setText("Batch Size: " + myRecipe.getFinalWortVol() + 
+		lBatchSize.setText("Batch Size: " + myRecipe.getFinalWortVol(myRecipe.getVolUnits()) + 
 				" " + myRecipe.getVolUnits());
 		
 		double dissolvedCO2 = 0.0;
