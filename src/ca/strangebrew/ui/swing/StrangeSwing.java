@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.75 2008/01/19 01:05:40 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.76 2008/01/21 15:32:57 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -131,7 +131,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	// The one and only StrangeSwing
 	private static StrangeSwing instance = null;
 	
-	private String version = "2.0.1";
+	public String version = "2.0.2";
+	public String edition = "Free";
 
 	// Stuff that should be final
 	public SBTable hopsTable;
@@ -222,13 +223,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JPanel ibuMethodPanel = new JPanel();
 	final public JMenu editMenu = new JMenu();
 	final private JMenu helpMenu = new JMenu();
-	final private JMenuBar jMenuBar1 = new JMenuBar();
+	final public JMenuBar mainMenuBar = new JMenuBar();
 	final private JPanel jPanel1 = new JPanel();
 	final private JScrollPane jScrollPane1 = new JScrollPane();
 	final private JScrollPane jScrollPane2 = new JScrollPane();
 	final private JSeparator jSeparator1 = new JSeparator();
 	final private JSeparator jSeparator2 = new JSeparator();
-	final private JTabbedPane jTabbedPane1 = new JTabbedPane();
+	final public JTabbedPane jTabbedPane1 = new JTabbedPane();
 	final private JLabel lblAlc = new JLabel();
 
 	final private JLabel lblAlcValue = new JLabel();
@@ -392,7 +393,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	 } catch (Exception e) {}
 	 }*/
 
-	private StrangeSwing() {
+	public StrangeSwing() {
 		super();
 
 		preferences = Options.getInstance();
@@ -1377,9 +1378,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				}
 			}
 			{
-				setJMenuBar(jMenuBar1);
+				setJMenuBar(mainMenuBar);
 				{
-					jMenuBar1.add(fileMenu);
+					mainMenuBar.add(fileMenu);
 					fileMenu.setText("File");
 					{
 						fileMenu.add(newFileMenuItem);
@@ -1453,7 +1454,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 				}
 				{
-					jMenuBar1.add(editMenu);
+					mainMenuBar.add(editMenu);
 					editMenu.setText("Edit");
 					{
 						editMenu.add(editPrefsMenuItem);
@@ -1472,7 +1473,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 				}
 				{
-					jMenuBar1.add(mnuTools);
+					mainMenuBar.add(mnuTools);
 					mnuTools.setText("Tools");
 					{
 						mnuTools.add(scalRecipeMenuItem);
@@ -1503,7 +1504,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 				}
 				{
-					jMenuBar1.add(helpMenu);
+					mainMenuBar.add(helpMenu);
 					helpMenu.setText("Help");
 					{
 						helpMenu.add(helpMenuItem);
@@ -1581,7 +1582,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		fileChooser.setFileFilter(saveFileFilter);
 		fileChooser.setSelectedFile(new File(myRecipe.getName() + ".xml"));
 
-		int returnVal = fileChooser.showSaveDialog(jMenuBar1);
+		int returnVal = fileChooser.showSaveDialog(mainMenuBar);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fileChooser.getSelectedFile();
 
@@ -1654,13 +1655,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 	}
 
-	public String getVersion() {
-		return version;
-	}
-
-	public void setVersion(String version) {
-		this.version = version;
-	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (dontUpdate) {
@@ -1833,7 +1827,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			StringSelection ss = new StringSelection(myRecipe.toText());
 			clipboard.setContents(ss, ss);
 		} else if (o == aboutMenuItem) {
-			aboutDlg = new AboutDialog(this, version);
+			aboutDlg = new AboutDialog(this, version + " " + edition);
 			aboutDlg.setVisible(true);
 		} else if (o == helpMenuItem) {
 			String urlString = SBStringUtils.getAppPath("help") + "index.html";
@@ -1898,7 +1892,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			sbFileFilter saveFileFilter = new sbFileFilter(ext, "Text");
 			fileChooser.setFileFilter(saveFileFilter);
 			fileChooser.setSelectedFile(new File(myRecipe.getName() + ".txt"));
-			int returnVal = fileChooser.showSaveDialog(jMenuBar1);
+			int returnVal = fileChooser.showSaveDialog(mainMenuBar);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
 				// This is where a real application would save the file.
@@ -1923,7 +1917,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			fileChooser.setFileFilter(saveFileFilter);
 			fileChooser.setSelectedFile(new File(myRecipe.getName() + ".html"));
 
-			int returnVal = fileChooser.showSaveDialog(jMenuBar1);
+			int returnVal = fileChooser.showSaveDialog(mainMenuBar);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
 				// This is where a real application would save the file.
@@ -1958,7 +1952,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 			fileChooser.setFileFilter(openFileFilter);
 
-			int returnVal = fileChooser.showOpenDialog(jMenuBar1);
+			int returnVal = fileChooser.showOpenDialog(mainMenuBar);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
 				Debug.print("Opening: " + file.getName() + ".\n");
