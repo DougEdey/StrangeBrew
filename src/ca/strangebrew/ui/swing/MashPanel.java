@@ -1,6 +1,6 @@
 /*
  * Created on May 25, 2005
- * $Id: MashPanel.java,v 1.30 2008/01/08 13:37:07 andrew_avis Exp $
+ * $Id: MashPanel.java,v 1.31 2008/01/21 15:10:14 andrew_avis Exp $
  *  @author aavis 
  */
 
@@ -210,7 +210,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 					0));
 			{
 				
-				this.setPreferredSize(new java.awt.Dimension(502, 276));
+				// this.setPreferredSize(new java.awt.Dimension(502, 276));
 				this.addFocusListener(new FocusAdapter() {
 					public void focusGained(FocusEvent evt) {
 						displayMash();

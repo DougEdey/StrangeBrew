@@ -89,7 +89,7 @@ public class MiscPanel extends javax.swing.JPanel {
 	private void initGUI() {
 		try {
 			this.setLayout(new BoxLayout(this, javax.swing.BoxLayout.X_AXIS));
-			this.setPreferredSize(new Dimension(400, 300));
+			// this.setPreferredSize(new Dimension(400, 300));
 			{
 				this.add(tablePanel);
 				tablePanel.setLayout(new BoxLayout(tablePanel, javax.swing.BoxLayout.Y_AXIS));
