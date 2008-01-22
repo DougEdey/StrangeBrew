@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.77 2008/01/22 14:56:05 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.78 2008/01/22 18:23:06 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -49,6 +49,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.PrintStream;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -274,7 +275,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JPanel pnlMalt = new JPanel();
 	final private JPanel pnlMaltButtons = new JPanel();
 	final private JPanel pnlTables = new JPanel();
-	final private JFormattedTextField finalWortVolText = new JFormattedTextField();
+	final private JTextField finalWortVolText = new JTextField();
 	final private JMenuItem saveAsMenuItem = new JMenuItem();
 
 	final private JMenuItem saveMenuItem = new JMenuItem();
@@ -299,7 +300,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	// private JFormattedTextField txtDate;
 	final private DatePicker txtDate = new DatePicker();
 	final private JTextField txtName = new JTextField();
-	final private JFormattedTextField preBoilText = new JFormattedTextField();
+	final private JTextField preBoilText = new JTextField();
 	final private JButton printButton = new JButton();
 	final private JButton copyButton = new JButton();
 
@@ -529,9 +530,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		dontUpdate = true;
 		txtName.setText(myRecipe.getName());
 		brewerNameText.setText(myRecipe.getBrewer());
-		preBoilText.setValue(new Double(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));
+		preBoilText.setText(SBStringUtils.format(myRecipe.getPreBoilVol(myRecipe.getVolUnits()), 2));
 		lblSizeUnits.setText(myRecipe.getVolUnits());
-		finalWortVolText.setValue(new Double(myRecipe.getFinalWortVol(myRecipe.getVolUnits())));
+		finalWortVolText.setText(SBStringUtils.format(myRecipe.getFinalWortVol(myRecipe.getVolUnits()), 2));
 		boilMinText.setText(SBStringUtils.format(myRecipe.getBoilMinutes(), 0));
 		evapText.setText(SBStringUtils.format(myRecipe.getEvap(), 1));
 		spnEffic.setValue(new Double(myRecipe.getEfficiency()));
@@ -1668,14 +1669,21 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			myRecipe.setName(txtName.getText());
 		else if (o == brewerNameText)
 			myRecipe.setBrewer(brewerNameText.getText());
+		
 		else if (o == preBoilText) {
-			if (myRecipe.getPreBoilVol(myRecipe.getVolUnits()) != Double.parseDouble(preBoilText.getText())) {
+			double x = round(myRecipe.getPreBoilVol(myRecipe.getVolUnits()),2);
+			double y = round(Double.parseDouble(preBoilText.getText()),2);
+			if (x != y) {
+				Debug.print("Preboil Recipe: " + x + " UI: " + y);
 				myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(preBoilText.getText())));
 				displayRecipe();
 			}
 		} else if (o == finalWortVolText) {
-			if (myRecipe.getFinalWortVol(myRecipe.getVolUnits()) != Double.parseDouble(finalWortVolText.getText())) {
-			myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double
+			double x = round(myRecipe.getFinalWortVol(myRecipe.getVolUnits()),2);
+			double y = round(Double.parseDouble(finalWortVolText.getText()),2);
+			if (x != y){
+				Debug.print("Final Recipe: " + x + " UI: " + y);
+				myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double
 						.parseDouble(finalWortVolText.getText())));
 				displayRecipe();
 			}
@@ -2055,4 +2063,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			displayRecipe();
 		}
 	}	
+	
+	  public static double round(double d, int decimalPlace){
+		    // see the Javadoc about why we use a String in the constructor
+		    // http://java.sun.com/j2se/1.5.0/docs/api/java/math/BigDecimal.html#BigDecimal(double)
+		    BigDecimal bd = new BigDecimal(Double.toString(d));
+		    bd = bd.setScale(decimalPlace,BigDecimal.ROUND_HALF_UP);
+		    return bd.doubleValue();
+		  }
+
 }
