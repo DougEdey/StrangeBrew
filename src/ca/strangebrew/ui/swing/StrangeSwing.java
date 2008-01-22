@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.78 2008/01/22 18:23:06 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.79 2008/01/22 18:46:50 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -275,7 +275,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JPanel pnlMalt = new JPanel();
 	final private JPanel pnlMaltButtons = new JPanel();
 	final private JPanel pnlTables = new JPanel();
-	final private JTextField finalWortVolText = new JTextField();
+	final private JFormattedTextField finalWortVolText = new JFormattedTextField();
 	final private JMenuItem saveAsMenuItem = new JMenuItem();
 
 	final private JMenuItem saveMenuItem = new JMenuItem();
@@ -300,7 +300,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	// private JFormattedTextField txtDate;
 	final private DatePicker txtDate = new DatePicker();
 	final private JTextField txtName = new JTextField();
-	final private JTextField preBoilText = new JTextField();
+	final private JFormattedTextField preBoilText = new JFormattedTextField();
 	final private JButton printButton = new JButton();
 	final private JButton copyButton = new JButton();
 
@@ -530,9 +530,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		dontUpdate = true;
 		txtName.setText(myRecipe.getName());
 		brewerNameText.setText(myRecipe.getBrewer());
-		preBoilText.setText(SBStringUtils.format(myRecipe.getPreBoilVol(myRecipe.getVolUnits()), 2));
+		preBoilText.setValue(SBStringUtils.format(myRecipe.getPreBoilVol(myRecipe.getVolUnits()), 2));
 		lblSizeUnits.setText(myRecipe.getVolUnits());
-		finalWortVolText.setText(SBStringUtils.format(myRecipe.getFinalWortVol(myRecipe.getVolUnits()), 2));
+		finalWortVolText.setValue(SBStringUtils.format(myRecipe.getFinalWortVol(myRecipe.getVolUnits()), 2));
 		boilMinText.setText(SBStringUtils.format(myRecipe.getBoilMinutes(), 0));
 		evapText.setText(SBStringUtils.format(myRecipe.getEvap(), 1));
 		spnEffic.setValue(new Double(myRecipe.getEfficiency()));

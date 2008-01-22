@@ -1,5 +1,10 @@
 Change Log:
 
+Jan 22, 2008 - Drew Avis
+- Worked on re-calc bug, and fixed a bug where recipes saved using vol units != US gals were importing size
+incorrectly (the problem is in Recipe.setVolUnits(), which was converting rather than just setting units). I
+think we still need a Recipe.convertVolUnits(), which is called when you change units...
+
 Jan 17-18, 2008 - Jim Clark
 - Modified how Recipe stores wort volumes to cut down on the number of variables neededing to be in sync. This
    should provide a cleaner/easier interface to Recipe for DilutedRecipe.

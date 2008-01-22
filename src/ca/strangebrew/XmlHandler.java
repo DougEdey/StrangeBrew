@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.27 2008/01/19 01:05:40 jimcdiver Exp $
+ * $Id: XmlHandler.java,v 1.28 2008/01/22 18:46:50 andrew_avis Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -197,8 +197,8 @@ public class XmlHandler extends DefaultHandler{
 			currentList = "MASH";
 		} else if (eName.equalsIgnoreCase("MISC")) {
 			currentList = "MISC";
-		} else if (eName.equalsIgnoreCase("FERMENTATION_SCHEDUAL")) {
-			currentList = "FERMENTATION_SCHEDUAL";
+		} else if (eName.equalsIgnoreCase("FERMENTATION_SCHEDULE")) {
+			currentList = "FERMENTATION_SCHEDULE";
 		} else if (eName.equalsIgnoreCase("WATER_PROFILE")) {
 			currentList = "WATER_PROFILE";
 		} else if (eName.equalsIgnoreCase("NOTES") && !currentList.equals("DETAILS")) {
@@ -532,7 +532,7 @@ public class XmlHandler extends DefaultHandler{
 				r.setPostBoil(new Quantity(r.getVolUnits(), Double.parseDouble(s)));
 			} else if (currentElement.equalsIgnoreCase("SIZE_UNITS")) {
 				// also sets postboil:
-				r.setVolUnits(s);				
+				r.setVolUnits(s);			
 			} else if (currentElement.equalsIgnoreCase("ADDED_VOLUME")) {
 				double d = Double.parseDouble(s);
 				if ( d != 0 ) {

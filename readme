@@ -106,6 +106,15 @@ Update default system JVM:
 
 See https://help.ubuntu.com/community/Java for more help with Ubuntu.
 
+Greg LaPolla points out:
+When you create a launcher on the desktop and start the app with the java -jar 
+command it displays the "can't find the database" error.  You can create a shell
+script to fix it by simply changing to the StrangeBrew directory first:
+
+#!/bin/sh
+cd ~/StrangeBrew
+java -jar StrangeBrew.jar
+
 =========================
 Setting the Look and Feel
 =========================
@@ -212,6 +221,10 @@ What's New
 New Features:
 - Table column sizes are now remembered when you close and restart the application
   (Request 1493295).
+- Diluted recipe feature works a lot better.  Diluted specs show up on the main recipe
+  details tab.  
+- If StrangeBrew can't find the ingredient databases, it will ask you where they are instead
+  of silently starting anyway.  
 
 2.0.1
 --------
@@ -340,6 +353,7 @@ Planned StrangeBrew  Pro Features:
 - alternate malt/hop selection dialog
 - ingredient database editing
 - equipment databases
+- iPod Note export
 
 (StrangeBrew Java will be released under a "dual-license": a free 
 Open Source version and a commercial "Pro" version that will 

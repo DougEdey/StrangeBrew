@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.69 2008/01/22 14:56:04 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.70 2008/01/22 18:46:50 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -61,13 +61,13 @@ public class Recipe {
 	
 	// water use:
 	//
-	// All water use is now based on caluclation from mash and always done on-the-fly with getters <-------------
+	// All water use is now based on calculation from mash and always done on-the-fly with getters <-------------
 	//
 	// Only hard data deserves a variable!
 	// initial vol = mash + sparge
-	// pre boil = initial - tun dead space (not implimented)
+	// pre boil = initial 
 	// post boil = pre - evap - chill
-	// final - post - kettle loss - trub loss - misc loss (+ dillution)
+	// final - post - kettle loss - trub loss - misc loss (+ dillution) (- tun dead space)
 	// total = initial (+ dillution)
 	private Quantity postBoilVol;
 	private Quantity kettleLossVol;
@@ -906,10 +906,10 @@ public class Recipe {
 
 	public void setVolUnits(final String v) {
 		isDirty = true;
-		kettleLossVol.convertTo(v);
-		postBoilVol.convertTo(v);
-		trubLossVol.convertTo(v);
-		miscLossVol.convertTo(v);
+		kettleLossVol.setUnits(v);
+		postBoilVol.setUnits(v);
+		trubLossVol.setUnits(v);
+		miscLossVol.setUnits(v);
 		calcMaltTotals();
 		calcHopsTotals();
 	}
@@ -964,8 +964,9 @@ public class Recipe {
 		
 		// One-true vol, set it and all the getters will go from there
 		// Hack alert; chop off "double ugglyness" rounding errors at umtenth decimal place
-		long hackNumber = (long)(p.getValue() * 100);
-		p.setAmount((double)hackNumber / 100);
+		// this is causing recalc problems:
+		// long hackNumber = (long)(p.getValue() * 100);
+		// p.setAmount((double)hackNumber / 100);
 		postBoilVol = p;
 		
 		// Recalc all the bits
@@ -1265,11 +1266,11 @@ public class Recipe {
 		sb.append(mash.toXml());
 
 		// Fermentation Schedule
-		sb.append("   <FERMENTATION_SCHEDUAL>\n");
+		sb.append("   <FERMENTATION_SCHEDULE>\n");
 		for (int i = 0; i < fermentationSteps.size(); i++ ) {
 			sb.append(fermentationSteps.get(i).toXML());
 		}
-		sb.append("   </FERMENTATION_SCHEDUAL>\n");
+		sb.append("   </FERMENTATION_SCHEDULE>\n");
 
 		// Carb
 		sb.append("   <CARB>\n");
