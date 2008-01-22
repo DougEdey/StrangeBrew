@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.68 2008/01/19 01:05:40 jimcdiver Exp $
+ * $Id: Recipe.java,v 1.69 2008/01/22 14:56:04 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -870,7 +870,11 @@ public class Recipe {
 		return  misc.get(i).getComments();
 	}
 
-	// notes get/set methods
+	// notes get/set methods	
+	public Note getNote(int i){
+		return notes.get(i);
+	}
+	
 	public int getNotesListSize() {
 		return notes.size();
 	}
@@ -1260,7 +1264,7 @@ public class Recipe {
 
 		sb.append(mash.toXml());
 
-		// Fermentation Schedual
+		// Fermentation Schedule
 		sb.append("   <FERMENTATION_SCHEDUAL>\n");
 		for (int i = 0; i < fermentationSteps.size(); i++ ) {
 			sb.append(fermentationSteps.get(i).toXML());
@@ -1355,7 +1359,7 @@ public class Recipe {
 		sb.append("Name: " + name + "\n");
 		sb.append("Brewer: " + brewer + "\n");
 		sb.append("Size: " + SBStringUtils.format(getPostBoilVol(getVolUnits()), 1) + " "
-				+ getPostBoilVol(getVolUnits()) + "\n");
+				+ getVolUnits() + "\n");
 		sb.append("Style: " + style.getName() + "\n");
 		mf = new MessageFormat(
 				"OG: {0,number,0.000},\tFG:{1,number,0.000}, \tAlc:{2,number,0.0}, \tIBU:{3,number,0.0}\n");
@@ -1413,7 +1417,7 @@ public class Recipe {
 		
 		// Fermentation Schedule
 		if (fermentationSteps.size() > 0){
-			sb.append("\nFermentation Schedual:\n");
+			sb.append("\nFermentation Schedule:\n");
 			sb.append(Recipe.padLeft("Step ", 10, ' ') + "  Time   Days\n");
 			mf = new MessageFormat("{0} {1} {2}\n");
 			for (int i = 0; i < fermentationSteps.size(); i++ ) {

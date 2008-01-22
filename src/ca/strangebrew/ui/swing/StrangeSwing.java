@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.76 2008/01/21 15:32:57 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.77 2008/01/22 14:56:05 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -321,7 +321,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		cmbStyleModel.addOrInsert(s);
 	}
 
-	private class sbFileFilter extends FileFilter {
+	public class sbFileFilter extends FileFilter {
 
 		private String description = "";
 		private String[] extensions = { "xml" };
@@ -583,7 +583,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// update the panels - but not here! done on the fly with event from tab pane to help stop infinte recursion
 
 		// Setup title bar
-		String title = "StrangeBrew " + version;
+		String title = "StrangeBrew " + version + " " + edition;
 		String file = "";
 		String dirty = "";
 
@@ -782,7 +782,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/sb2.gif");
 			icon = new ImageIcon(imgURL);
 			this.setIconImage(icon.getImage());
-			this.setTitle("StrangeBrew " + version + " - [<new>]");
+			this.setTitle("StrangeBrew " + version + " " + edition + " - [<new>]");
 			this.addWindowListener(new WindowAdapter() {
 				public void windowClosed(WindowEvent evt) {
 					System.exit(1);
@@ -1604,7 +1604,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		}
 	}
 
-	private void showError(Exception e) {
+	public void showError(Exception e) {
 
 		ByteArrayOutputStream bs = new ByteArrayOutputStream();
 		e.printStackTrace(new PrintStream(bs));
@@ -1669,11 +1669,16 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		else if (o == brewerNameText)
 			myRecipe.setBrewer(brewerNameText.getText());
 		else if (o == preBoilText) {
-			myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(preBoilText.getText())));
-			displayRecipe();
+			if (myRecipe.getPreBoilVol(myRecipe.getVolUnits()) != Double.parseDouble(preBoilText.getText())) {
+				myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(preBoilText.getText())));
+				displayRecipe();
+			}
 		} else if (o == finalWortVolText) {
-			myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(finalWortVolText.getText())));
-			displayRecipe();
+			if (myRecipe.getFinalWortVol(myRecipe.getVolUnits()) != Double.parseDouble(finalWortVolText.getText())) {
+			myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double
+						.parseDouble(finalWortVolText.getText())));
+				displayRecipe();
+			}
 		} else if (o == evapText) {
 			myRecipe.setEvap(Double.parseDouble(evapText.getText()));
 			displayRecipe();
@@ -2037,13 +2042,15 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		} else if (o == spnAtten) {
 			myRecipe.setAttenuation(Double.parseDouble(spnAtten.getValue().toString()));
 			displayRecipe();
-		} else if ( o == spnOG) {
+		} else if (o == spnOG) {
 			myRecipe.setEstOg(Double.parseDouble(spnOG.getValue().toString()));
 			displayRecipe();
+
 		} else if (o == spnFG) {
 			myRecipe.setEstFg(Double.parseDouble(spnFG.getValue().toString()));
 			displayRecipe();
-		} else if ( o == spnEffic) {
+
+		} else if (o == spnEffic) {
 			myRecipe.setEfficiency(Double.parseDouble(spnEffic.getValue().toString()));
 			displayRecipe();
 		}
