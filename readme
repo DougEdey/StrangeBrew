@@ -380,7 +380,14 @@ can import it as a new project into Eclipse.  You'll need to:
 That should be all you need to build and run the program.
 
 If you wish to build the application from Ant, Greg LaPolla has kindly contributed
-a build file (build.xml in the top level of the source tree).
+a build file (build.xml in the top level of the source tree).  This file has three
+targets:
+* ant build - build the application
+* ant clean - clean the workspace
+* ant zip - build a zip file for distribution.  You have to edit
+  the version.num property at the top of the build.xml file.  This build target
+  also unpacks the other jars and incorporates them into the distributable
+  jar and it also creates the manifest file. 
 
 ============
 Contributors

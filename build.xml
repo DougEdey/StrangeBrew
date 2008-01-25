@@ -6,7 +6,8 @@
   <property name="src" location="src"/>
   <property name="build" location="build"/>
   <property name="dist"  location="dist"/>
-    
+  <property name="version.num" value="2.02-Free"/>  
+  
   <path id="project.class.path">
     <pathelement location="lib/"/>
     <pathelement path="${java.class.path}/"/>
@@ -41,7 +42,6 @@
     <mkdir dir="${dist}"/>
     <delete file="${dist}/StrangeBrew.jar"/>
     <delete file="MANIFEST.MF"/>
-    <property name="version.num" value="2.01"/>
     <buildnumber file="build.num"/>
      
     <manifest file="MANIFEST.MF">
@@ -73,6 +73,10 @@
     <copy todir="${dist}/src/ca/strangebrew/data">
       <fileset dir="${src}/ca/strangebrew/data"/>
     </copy>
+  	<mkdir dir="${dist}/src/ca/strangebrew/icons"/>
+  	<copy todir="${dist}/src/ca/strangebrew/icons">
+  	  <fileset dir="${src}/ca/strangebrew/icons"/>
+  	</copy>
   </target>
   
   <target name="zip" description="Create Ziped Distribution" depends="compile,dist">
