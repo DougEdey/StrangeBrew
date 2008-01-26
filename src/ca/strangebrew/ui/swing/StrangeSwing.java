@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.79 2008/01/22 18:46:50 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.80 2008/01/26 19:32:34 jimcdiver Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -1671,16 +1671,16 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			myRecipe.setBrewer(brewerNameText.getText());
 		
 		else if (o == preBoilText) {
-			double x = round(myRecipe.getPreBoilVol(myRecipe.getVolUnits()),2);
-			double y = round(Double.parseDouble(preBoilText.getText()),2);
+			double x = SBStringUtils.round(myRecipe.getPreBoilVol(myRecipe.getVolUnits()),2);
+			double y = SBStringUtils.round(Double.parseDouble(preBoilText.getText()),2);
 			if (x != y) {
 				Debug.print("Preboil Recipe: " + x + " UI: " + y);
 				myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(preBoilText.getText())));
 				displayRecipe();
 			}
 		} else if (o == finalWortVolText) {
-			double x = round(myRecipe.getFinalWortVol(myRecipe.getVolUnits()),2);
-			double y = round(Double.parseDouble(finalWortVolText.getText()),2);
+			double x = SBStringUtils.round(myRecipe.getFinalWortVol(myRecipe.getVolUnits()),2);
+			double y = SBStringUtils.round(Double.parseDouble(finalWortVolText.getText()),2);
 			if (x != y){
 				Debug.print("Final Recipe: " + x + " UI: " + y);
 				myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double
@@ -2063,13 +2063,4 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			displayRecipe();
 		}
 	}	
-	
-	  public static double round(double d, int decimalPlace){
-		    // see the Javadoc about why we use a String in the constructor
-		    // http://java.sun.com/j2se/1.5.0/docs/api/java/math/BigDecimal.html#BigDecimal(double)
-		    BigDecimal bd = new BigDecimal(Double.toString(d));
-		    bd = bd.setScale(decimalPlace,BigDecimal.ROUND_HALF_UP);
-		    return bd.doubleValue();
-		  }
-
 }

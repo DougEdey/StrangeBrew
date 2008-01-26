@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import ca.strangebrew.Debug;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
@@ -77,7 +78,7 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 		String recipeUnitsAbrv = Quantity.getVolAbrv(myRecipe.getVolUnits());
 		String mashUnitsAbrv = Quantity.getVolAbrv(myRecipe.mash.getMashVolUnits());
 
-		totalWaterLbl.setText(SBStringUtils.format(myRecipe.getTotalWaterVol(myRecipe.getVolUnits()), 1));
+		totalWaterLbl.setText(SBStringUtils.format(myRecipe.getTotalWaterVol(myRecipe.getVolUnits()), 2));
 		totalUnitsLbl.setText(recipeUnitsAbrv);
 		
 		usedMashLbl.setText(myRecipe.mash.getTotalWaterStr());
@@ -87,19 +88,19 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 		spargeWithLbl.setText(SBStringUtils.format(myRecipe.getSparge(), 1));
 		spargeUnitsLbl.setText(mashUnitsAbrv);
 		
-		collectTxt.setValue(SBStringUtils.format(myRecipe.getPreBoilVol(myRecipe.getVolUnits()), 1));
+		collectTxt.setValue(SBStringUtils.format(myRecipe.getPreBoilVol(myRecipe.getVolUnits()), 2));
 		collectUnitsLbl.setText(recipeUnitsAbrv);
-		postBoilTxt.setValue(SBStringUtils.format(myRecipe.getPostBoilVol(myRecipe.getVolUnits()), 1));
+		postBoilTxt.setValue(SBStringUtils.format(myRecipe.getPostBoilVol(myRecipe.getVolUnits()), 2));
 		postBoilUnitsLbl.setText(recipeUnitsAbrv);
-		finalVolTxt.setValue(SBStringUtils.format(myRecipe.getFinalWortVol(myRecipe.getVolUnits()), 1));
+		finalVolTxt.setValue(SBStringUtils.format(myRecipe.getFinalWortVol(myRecipe.getVolUnits()), 2));
 		finalUnitsLbl.setText(recipeUnitsAbrv);
 
-		chillShrinkLbl.setText(SBStringUtils.format(myRecipe.getChillShrinkVol(myRecipe.getVolUnits()), 1));
-		kettleTxt.setValue(SBStringUtils.format(myRecipe.getKettleLoss(myRecipe.getVolUnits()), 1));
+		chillShrinkLbl.setText(SBStringUtils.format(myRecipe.getChillShrinkVol(myRecipe.getVolUnits()), 2));
+		kettleTxt.setValue(SBStringUtils.format(myRecipe.getKettleLoss(myRecipe.getVolUnits()), 2));
 		kettleUnitsLbl.setText(recipeUnitsAbrv);
-		trubLossTxt.setValue(SBStringUtils.format(myRecipe.getTrubLoss(myRecipe.getVolUnits()), 1));
+		trubLossTxt.setValue(SBStringUtils.format(myRecipe.getTrubLoss(myRecipe.getVolUnits()), 2));
 		trubLossUnitsLbl.setText(recipeUnitsAbrv);
-		miscLossTxt.setValue(SBStringUtils.format(myRecipe.getMiscLoss(myRecipe.getVolUnits()), 1));
+		miscLossTxt.setValue(SBStringUtils.format(myRecipe.getMiscLoss(myRecipe.getVolUnits()), 2));
 		miscLosUnitsLbl.setText(recipeUnitsAbrv);	
 	}
 	
@@ -346,29 +347,44 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 		Object o = e.getSource();
 		
 		if (o == kettleTxt) {
-			String s = kettleTxt.getText();
-			myRecipe.setKettleLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s)));
+			double x = SBStringUtils.round(myRecipe.getKettleLoss(myRecipe.getVolUnits()),2);
+			double y = SBStringUtils.round(Double.parseDouble(kettleTxt.getText()),2);
+			if (x != y) {
+				myRecipe.setKettleLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(kettleTxt.getText())));
+			}			
 		}
 		else if (o == miscLossTxt) {
-			String s = miscLossTxt.getText();
-			myRecipe.setMiscLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s)));
+			double x = SBStringUtils.round(myRecipe.getMiscLoss(myRecipe.getVolUnits()),2);
+			double y = SBStringUtils.round(Double.parseDouble(miscLossTxt.getText()),2);
+			if (x != y) {
+				myRecipe.setKettleLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(miscLossTxt.getText())));
+			}					
 		}
 		else if (o == trubLossTxt) {
-			String s = trubLossTxt.getText();
-			myRecipe.setTrubLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s)));
+			double x = SBStringUtils.round(myRecipe.getTrubLoss(myRecipe.getVolUnits()),2);
+			double y = SBStringUtils.round(Double.parseDouble(trubLossTxt.getText()),2);
+			if (x != y) {
+				myRecipe.setTrubLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(trubLossTxt.getText())));
+			}					
 		}
 		else if (o == collectTxt) {
-			String s = collectTxt.getText();
-			myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s)));
-
+			double x = SBStringUtils.round(myRecipe.getPreBoilVol(myRecipe.getVolUnits()),2);
+			double y = SBStringUtils.round(Double.parseDouble(collectTxt.getText()),2);
+			if (x != y) {
+				myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(collectTxt.getText())));
+			}				
 		} else if (o == postBoilTxt) {
-			String s = postBoilTxt.getText();
-			myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s)));
-
+			double x = SBStringUtils.round(myRecipe.getPostBoilVol(myRecipe.getVolUnits()),2);
+			double y = SBStringUtils.round(Double.parseDouble(postBoilTxt.getText()),2);
+			if (x != y) {
+				myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(postBoilTxt.getText())));
+			}	
 		} else if (o == finalVolTxt) {
-			String s = finalVolTxt.getText();
-			myRecipe.setFinalWortVol(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s)));
-
+			double x = SBStringUtils.round(myRecipe.getFinalWortVol(myRecipe.getVolUnits()),2);
+			double y = SBStringUtils.round(Double.parseDouble(finalVolTxt.getText()),2);
+			if (x != y) {
+				myRecipe.setFinalWortVol(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(finalVolTxt.getText())));
+			}	
 		}		
 		
 		// don't do display water here call displrecipe on the SB notifier to fortce a refresh of the whole recipe. this will call display water from inside Strangeswing.displayrecipe.

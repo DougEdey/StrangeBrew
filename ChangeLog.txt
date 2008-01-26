@@ -1,5 +1,10 @@
 Change Log:
 
+Jan 26, 2008 - Jim Clark
+- Carried re-cacle bug fix into WaterPanel. DilutionPanel may still need work, but it uses JSpinners and needs more investigation first.
+- Moved StrangeSwing.round() into SBStringUtils since its sort of the inverse functionality of SBStringUtils.format().
+   Ei: you format a double to a string for display and you round a display string to a double.
+
 Jan 22, 2008 - Drew Avis
 - Worked on re-calc bug, and fixed a bug where recipes saved using vol units != US gals were importing size
 incorrectly (the problem is in Recipe.setVolUnits(), which was converting rather than just setting units). I
