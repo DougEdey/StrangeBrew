@@ -1,5 +1,9 @@
 Change Log:
 
+Feb 21, 2008 - Drew Avis
+- Added check for MacOS/X to splash, which makes the app look more native on Macs.  (Suggested by
+Greg LaPolla).
+
 Jan 26, 2008 - Jim Clark
 - Carried re-cacle bug fix into WaterPanel. DilutionPanel may still need work, but it uses JSpinners and needs more investigation first.
 - Moved StrangeSwing.round() into SBStringUtils since its sort of the inverse functionality of SBStringUtils.format().
