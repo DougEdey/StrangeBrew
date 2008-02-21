@@ -21,7 +21,18 @@ public class Splash {
      * the splash screen.
      * @param args the command line arguments
      */
+	
+	
+	
     public static void main(String[] args) {
+    	// check if this is a mac/osx machine, and deal accordingly
+    	String lcOSName = System.getProperty("os.name").toLowerCase();
+    	
+    	if (lcOSName.startsWith("mac os x")) {
+    		System.setProperty("apple.laf.useScreenMenuBar","true");
+    		System.setProperty("com.apple.mrj.application.apple.menu.about.name","StrangeBrew");
+    	}
+    	
         SplashWindow.splash(Splash.class.getResource("splash.gif"));
         SplashWindow.invokeMain("StrangeSwing", args);
         SplashWindow.disposeSplash();
