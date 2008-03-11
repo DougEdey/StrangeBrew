@@ -225,6 +225,7 @@ New Features:
   details tab.  
 - If StrangeBrew can't find the ingredient databases, it will ask you where they are instead
   of silently starting anyway.  
+- StrangeBrew now looks more like a native MacOS/X application on Macs.  
 
 2.0.1
 --------

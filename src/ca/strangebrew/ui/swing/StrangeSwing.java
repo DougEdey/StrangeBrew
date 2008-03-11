@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.80 2008/01/26 19:32:34 jimcdiver Exp $ 
+ * $Id: StrangeSwing.java,v 1.81 2008/03/11 15:08:00 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -49,7 +49,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.PrintStream;
-import java.math.BigDecimal;
 import java.net.URL;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -127,11 +126,12 @@ import edu.stanford.ejalbert.BrowserLauncherRunner;
 import edu.stanford.ejalbert.exception.BrowserLaunchingInitializingException;
 import edu.stanford.ejalbert.exception.UnsupportedOperatingSystemException;
 
-public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener, WindowListener, ChangeListener {
+public class StrangeSwing extends javax.swing.JFrame implements ActionListener, FocusListener, WindowListener,
+		ChangeListener {
 
 	// The one and only StrangeSwing
 	private static StrangeSwing instance = null;
-	
+
 	public String version = "2.0.2";
 	public String edition = "Free";
 
@@ -150,7 +150,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private ImageIcon icon;
 	private URL imgURL;
 
-	// All the GUE elements are final, speeds app since the VM doesnt try and garbage collect these
+	// All the GUE elements are final, speeds app since the VM doesnt try and
+	// garbage collect these
 	final private MashPanel mashPanel = new MashPanel(myRecipe);;
 	final private MiscPanel miscPanel = new MiscPanel(myRecipe);
 	final private NotesPanel notesPanel = new NotesPanel();
@@ -257,14 +258,14 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private ComboModel<String> maltTotalUnitsComboModel = new ComboModel<String>();
 	final private JComboBox maltUnitsComboBox = new JComboBox();
 	final private JMenu mnuTools = new JMenu();
-	final private JMenuItem scalRecipeMenuItem = new JMenuItem();
+	final private JMenuItem scaleRecipeMenuItem = new JMenuItem();
 	final private JMenuItem extractPotentialMenuItem = new JMenuItem();
 	final private JMenuItem maltPercentMenuItem = new JMenuItem();
 	final private JMenuItem refractometerMenuItem = new JMenuItem();
 	final private JMenuItem hydrometerToolMenuItem = new JMenuItem();
 	final private JMenuItem conversionToolMenuItem = new JMenuItem();
 	final private JMenuItem clipboardMenuItem = new JMenuItem("Copy to Clipboard");
-	final private JMenuItem printMenuItem = new JMenuItem("Print...");	
+	final private JMenuItem printMenuItem = new JMenuItem("Print...");
 
 	final private JMenuItem newFileMenuItem = new JMenuItem();
 	final private JMenuItem openFileMenuItem = new JMenuItem();
@@ -305,19 +306,23 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JButton copyButton = new JButton();
 
 	final public Database DB;
-	
+
 	private boolean dontUpdate = false;
 
-	// an object that you give to other gui objects so that they can set things on the main SB GUI
+	// an object that you give to other gui objects so that they can set things
+	// on the main SB GUI
 	// used by style and settings panels
-	// sbn.displayRecipe() causes infinite loops as it trigers updateActions all over which call back into displayRecipe()
+	// sbn.displayRecipe() causes infinite loops as it trigers updateActions all
+	// over which call back into displayRecipe()
 	// Notifer obsolete on these with singelton instance
 	public void hopsUpdateUI() {
 		hopsTable.updateUI();
 	}
+
 	public void maltUpdateUI() {
 		maltTable.updateUI();
 	}
+
 	public void setStyle(Style s) {
 		cmbStyleModel.addOrInsert(s);
 	}
@@ -387,23 +392,25 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	}
 
 	/*
-	 * If you wanted to set a LAF, you'd do this:
-	 * 	{
-	 try {
-	 UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
-	 } catch (Exception e) {}
-	 }*/
+	 * If you wanted to set a LAF, you'd do this: { try {
+	 * UIManager.setLookAndFeel(new Plastic3DLookAndFeel()); } catch (Exception
+	 * e) {} }
+	 */
 
 	public StrangeSwing() {
 		super();
 
 		preferences = Options.getInstance();
 
-		// There has *got* to be a better way to do this: (yeah, singleton it for starters)
-		// Later this singleton should be propagated though out such that the "setList()" 
-		// functions are not needed. Each Model can call up the one and only Database instance
+		// There has *got* to be a better way to do this: (yeah, singleton it
+		// for starters)
+		// Later this singleton should be propagated though out such that the
+		// "setList()"
+		// functions are not needed. Each Model can call up the one and only
+		// Database instance
 		// at any time
-		// On the same note, StrangeSwing could be singeltoned which would allow all the sub
+		// On the same note, StrangeSwing could be singeltoned which would allow
+		// all the sub
 		// windows to pull up the public data stored here
 		// TODO
 		DB = Database.getInstance();
@@ -414,12 +421,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// if no path provided, exit
 		File maltFile = new File(path, "malts.csv");
 		File hopsFile = new File(path, "hops.csv");
-		if (!maltFile.exists() || !hopsFile.exists()){
+		if (!maltFile.exists() || !hopsFile.exists()) {
 			Object[] options = { "Yes", "CANCEL" };
-			int choice = JOptionPane.showOptionDialog( null, "Ingredient databases not found.\n For more information, see the release notes.\n " +
-					"Do you want to select a new location?  (Select Cancel to exit).", 
-					"Databases Not Found", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE , null, options, options[0]);
-			if (choice == 0){
+			int choice = JOptionPane.showOptionDialog(null,
+					"Ingredient databases not found.\n For more information, see the release notes.\n "
+							+ "Do you want to select a new location?  (Select Cancel to exit).", "Databases Not Found",
+					JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0]);
+			if (choice == 0) {
 				fileChooser.resetChoosableFileFilters();
 				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				String[] ext = { "csv" };
@@ -432,9 +440,11 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					path = file.getPath();
 					Debug.print("Updated DB path: " + path + "\n");
 					fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-					
-				} else System.exit(1);
-			} else System.exit(1);
+
+				} else
+					System.exit(1);
+			} else
+				System.exit(1);
 		}
 		DB.readDB(path);
 
@@ -472,17 +482,17 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		attachRecipeData();
 		displayRecipe();
 	}
-	
+
 	public static StrangeSwing getInstance() {
 		if (instance == null) {
 			instance = new StrangeSwing();
 		}
-		
+
 		return instance;
 	}
 
 	public void attachRecipeData() {
-		// this method attaches data from the recipe to the tables 
+		// this method attaches data from the recipe to the tables
 		// and comboboxes
 		// use whenever the Recipe changes
 		cmbStyleModel.addOrInsert(myRecipe.getStyleObj());
@@ -526,7 +536,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	public void displayRecipe() {
 		if (myRecipe == null)
 			return;
-		
+
 		dontUpdate = true;
 		txtName.setText(myRecipe.getName());
 		brewerNameText.setText(myRecipe.getBrewer());
@@ -581,7 +591,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					.getIProperty("optGreen"), preferences.getIProperty("optBlue"), preferences
 					.getIProperty("optAlpha")));
 
-		// update the panels - but not here! done on the fly with event from tab pane to help stop infinte recursion
+		// update the panels - but not here! done on the fly with event from tab
+		// pane to help stop infinte recursion
 
 		// Setup title bar
 		String title = "StrangeBrew " + version + " " + edition;
@@ -601,7 +612,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		}
 
 		this.setTitle(title + file + dirty);
-		
+
 		dontUpdate = false;
 	}
 
@@ -613,7 +624,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		Object o = e.getSource();
 		ActionEvent evt = new ActionEvent(o, 1, "");
 		actionPerformed(evt);
-		
+
 		if (o == txtComments) {
 			if (!txtComments.getText().equals(myRecipe.getComments())) {
 				myRecipe.setComments(txtComments.getText());
@@ -628,7 +639,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		out.write(myRecipe.toXML(options));
 		out.close();
 
-		// find the xslt stylesheet in the classpath		
+		// find the xslt stylesheet in the classpath
 		// URL xsltUrl = getClass().getClassLoader().getResource(xslt);
 		String path = SBStringUtils.getAppPath("data");
 		File xsltFile = new File(path, xslt);
@@ -643,6 +654,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	public void setRecipe(Recipe r) {
 		setRecipe(r, currentFile);
 	}
+
 	public void setRecipe(Recipe r, File f) {
 		currentFile = f;
 		myRecipe = r;
@@ -675,10 +687,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		preferences.setIProperty("winHeight", this.getHeight());
 		preferences.setIProperty("winWidth", this.getWidth());
 		preferences.setIProperty("winX", this.getX());
-		preferences.setIProperty("winY", this.getY());		
-		maltTable.saveColumnWidths(preferences); 
+		preferences.setIProperty("winY", this.getY());
+		maltTable.saveColumnWidths(preferences);
 		hopsTable.saveColumnWidths(preferences);
-		
+
 		preferences.saveProperties();
 	}
 
@@ -698,7 +710,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		TableColumnModel mtcm = maltTable.getColumnModel();
 		TableColumnModel htcm = hopsTable.getColumnModel();
 
-		//: listener that watches the width of a column
+		// : listener that watches the width of a column
 		PropertyChangeListener mpcl = new PropertyChangeListener() {
 			// private int columnCount = maltTable.getColumnCount();
 			// private int[] width = new int[columnCount];
@@ -717,7 +729,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			}
 		};
 
-		//: listener that watches the width of a column
+		// : listener that watches the width of a column
 		PropertyChangeListener hpcl = new PropertyChangeListener() {
 			// private int columnCount = hopsTable.getColumnCount();
 			// private int[] width = new int[columnCount];
@@ -736,23 +748,23 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			}
 		};
 
-		//: add the column width lister to each column
+		// : add the column width lister to each column
 		for (Enumeration e = mtcm.getColumns(); e.hasMoreElements();) {
 			TableColumn tc = (TableColumn) e.nextElement();
 			tc.addPropertyChangeListener(mpcl);
 		}
 
-		//: add the column width lister to each column
+		// : add the column width lister to each column
 		for (Enumeration e = htcm.getColumns(); e.hasMoreElements();) {
 			TableColumn tc = (TableColumn) e.nextElement();
 			tc.addPropertyChangeListener(hpcl);
 		}
 
-		// set preferred widths of the malt table	
+		// set preferred widths of the malt table
 		maltTable.setColumnWidths(preferences);
 
 		// now do the same for the hops table
-		hopsTable.setColumnWidths(preferences);		
+		hopsTable.setColumnWidths(preferences);
 	}
 
 	// add the listeners *after* all the data has been attached to speed
@@ -762,8 +774,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		txtName.addFocusListener(this);
 		brewerNameText.addFocusListener(this);
 		brewerNameText.addActionListener(this);
-		//txtDate.addFocusListener(this);
-		//txtDate.addActionListener(this);
+		// txtDate.addFocusListener(this);
+		// txtDate.addActionListener(this);
 		preBoilText.addFocusListener(this);
 		preBoilText.addActionListener(this);
 		finalWortVolText.addFocusListener(this);
@@ -772,6 +784,48 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		boilMinText.addActionListener(this);
 		evapText.addFocusListener(this);
 		evapText.addActionListener(this);
+		txtDate.addActionListener(this);
+
+		cmbStyle.addActionListener(this);
+
+		cmbSizeUnits.addActionListener(this);
+		btnAddMalt.addActionListener(this);
+		btnDelMalt.addActionListener(this);
+		maltUnitsComboBox.addActionListener(this);
+		maltTotalUnitsComboBox.addActionListener(this);
+		hopComboBox.addActionListener(this);
+		hopsUnitsComboBox.addActionListener(this);
+		hopsTotalUnitsComboBox.addActionListener(this);
+
+		alcMethodCombo.addActionListener(this);
+		ibuMethodCombo.addActionListener(this);
+		colourMethodCombo.addActionListener(this);
+		evapMethodCombo.addActionListener(this);
+
+		saveButton.addActionListener(this);
+		findButton.addActionListener(this);
+		printButton.addActionListener(this);
+		copyButton.addActionListener(this);
+		aboutMenuItem.addActionListener(this);
+		helpMenuItem.addActionListener(this);
+		conversionToolMenuItem.addActionListener(this);
+		hydrometerToolMenuItem.addActionListener(this);
+		extractPotentialMenuItem.addActionListener(this);
+		refractometerMenuItem.addActionListener(this);
+		maltPercentMenuItem.addActionListener(this);
+		scaleRecipeMenuItem.addActionListener(this);
+		editPrefsMenuItem.addActionListener(this);
+		exitMenuItem.addActionListener(this);
+		printMenuItem.addActionListener(this);
+		clipboardMenuItem.addActionListener(this);
+		exportTextMenuItem.addActionListener(this);
+		exportHTMLmenu.addActionListener(this);
+		saveAsMenuItem.addActionListener(this);
+		saveMenuItem.addActionListener(this);
+		findFileMenuItem.addActionListener(this);
+		openFileMenuItem.addActionListener(this);
+		newFileMenuItem.addActionListener(this);
+
 	}
 
 	private void initGUI() {
@@ -795,7 +849,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				jPanel2Layout.columnWeights = new double[] { 0.1 };
 				jPanel2Layout.columnWidths = new int[] { 7 };
 				jPanel2Layout.rowWeights = new double[] { 0.1, 0.1, 0.9, 0.1 };
-				jPanel2Layout.rowHeights = new int[] { 7, 7, 7, 7 };
+				// jPanel2Layout.rowHeights = new int[] { 7, 7, 7, 7 };
 				pnlMain.setLayout(jPanel2Layout);
 				this.getContentPane().add(pnlMain, BorderLayout.CENTER);
 				{
@@ -886,7 +940,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							lblColour.setText("Colour:");
 						}
 						{
-							//txtDate = new JFormattedTextField();
+							// txtDate = new JFormattedTextField();
 							pnlDetails.add(txtDate, new GridBagConstraints(1, 1, 2, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0),
 									0, 0));
@@ -992,7 +1046,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								scpComments.setViewportView(txtComments);
 								txtComments.setText("Comments");
 								txtComments.setWrapStyleWord(true);
-								// txtComments.setPreferredSize(new java.awt.Dimension(117, 42));
+								// txtComments.setPreferredSize(new
+								// java.awt.Dimension(117, 42));
 								txtComments.setLineWrap(true);
 								scpComments.setPreferredSize(new java.awt.Dimension(263, 40));
 								txtComments.addFocusListener(this);
@@ -1090,25 +1145,21 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							saveButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
 									"ca/strangebrew/icons/save.gif")));
 							saveButton.setToolTipText("Save Recipe");
-							saveButton.addActionListener(this);
 
 							mainToolBar.add(findButton);
 							findButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
 									"ca/strangebrew/icons/find.gif")));
 							findButton.setToolTipText("Find Recipes");
-							findButton.addActionListener(this);
 
 							mainToolBar.add(printButton);
 							printButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
 									"ca/strangebrew/icons/print.gif")));
 							printButton.setToolTipText("Print Recipe");
-							printButton.addActionListener(this);
 
 							mainToolBar.add(copyButton);
 							copyButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
 									"ca/strangebrew/icons/copy.gif")));
 							copyButton.setToolTipText("Copy to clipboard");
-							copyButton.addActionListener(this);
 
 							{
 								jPanel1.add(lblName);
@@ -1176,7 +1227,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 												.getDescriptionAt(rowIndex));
 
 									}
-								};					
+								};
 
 								jScrollPane1.setViewportView(maltTable);
 								maltTable.setModel(maltTableModel);
@@ -1214,7 +1265,6 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							maltTotalUnitsComboBox.setModel(maltTotalUnitsComboModel);
 							TableColumn t = tblMaltTotals.getColumnModel().getColumn(4);
 							t.setCellEditor(new SBComboBoxCellEditor(maltTotalUnitsComboBox));
-							maltTotalUnitsComboBox.addActionListener(this);
 
 						}
 					}
@@ -1232,12 +1282,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							{
 								tlbMalt.add(btnAddMalt);
 								btnAddMalt.setText("+");
-								btnAddMalt.addActionListener(this);
 							}
 							{
 								tlbMalt.add(btnDelMalt);
 								btnDelMalt.setText("-");
-								btnDelMalt.addActionListener(this);
 							}
 						}
 					}
@@ -1259,7 +1307,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							hopsTotalUnitsComboBox.setModel(hopsTotalUnitsComboModel);
 							TableColumn t = tblHopsTotals.getColumnModel().getColumn(4);
 							t.setCellEditor(new SBComboBoxCellEditor(hopsTotalUnitsComboBox));
-							hopsTotalUnitsComboBox.addActionListener(this);
+
 						}
 						{
 							pnlHops.add(jScrollPane2, BorderLayout.CENTER);
@@ -1304,7 +1352,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								hopColumn = hopsTable.getColumnModel().getColumn(1);
 								hopColumn.setCellEditor(new SBComboBoxCellEditor(hopsFormComboBox));
 
-								//	set up hop add combo
+								// set up hop add combo
 								JComboBox hopsAddComboBox = new JComboBox(Hop.addTypes);
 								SmartComboBox.enable(hopsAddComboBox);
 								hopColumn = hopsTable.getColumnModel().getColumn(5);
@@ -1386,13 +1434,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					{
 						fileMenu.add(newFileMenuItem);
 						newFileMenuItem.setText("New");
-						newFileMenuItem.addActionListener(this);
+						
 					}
 					{
 						fileMenu.add(openFileMenuItem);
 						openFileMenuItem.setText("Open");
 						openFileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
-						openFileMenuItem.addActionListener(this);
+						
 					}
 					{
 						imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/find.gif");
@@ -1401,7 +1449,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						findFileMenuItem.setText("Find");
 						findFileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.CTRL_MASK));
 						fileMenu.add(findFileMenuItem);
-						findFileMenuItem.addActionListener(this);
+						
 					}
 					{
 						imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/save.gif");
@@ -1410,7 +1458,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						saveMenuItem.setIcon(icon);
 						fileMenu.add(saveMenuItem);
 						saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
-						saveMenuItem.addActionListener(this);
+						
 					}
 					{
 						imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/saveas.gif");
@@ -1418,7 +1466,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						saveAsMenuItem.setText("Save As ...");
 						saveAsMenuItem.setIcon(icon);
 						fileMenu.add(saveAsMenuItem);
-						saveAsMenuItem.addActionListener(this);
+						
 					}
 					{
 
@@ -1427,22 +1475,22 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						{
 							exportMenu.add(exportHTMLmenu);
 							exportHTMLmenu.setText("HTML");
-							exportHTMLmenu.addActionListener(this);
+							
 
 							exportMenu.add(exportTextMenuItem);
 							exportTextMenuItem.setText("Text");
-							exportTextMenuItem.addActionListener(this);
+							
 						}
 					}
 					{
 						fileMenu.add(clipboardMenuItem);
-						clipboardMenuItem.addActionListener(this);
+						
 
 						imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/print.gif");
 						icon = new ImageIcon(imgURL);
 						printMenuItem.setIcon(icon);
 						fileMenu.add(printMenuItem);
-						printMenuItem.addActionListener(this);
+						
 					}
 					{
 						fileMenu.add(jSeparator2);
@@ -1451,7 +1499,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						fileMenu.add(exitMenuItem);
 						exitMenuItem.setText("Exit");
 						exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
-						exitMenuItem.addActionListener(this);
+						
 					}
 				}
 				{
@@ -1460,7 +1508,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					{
 						editMenu.add(editPrefsMenuItem);
 						editPrefsMenuItem.setText("Preferences...");
-						editPrefsMenuItem.addActionListener(this);
+						
 
 					}
 
@@ -1477,31 +1525,27 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					mainMenuBar.add(mnuTools);
 					mnuTools.setText("Tools");
 					{
-						mnuTools.add(scalRecipeMenuItem);
-						scalRecipeMenuItem.setText("Resize / Convert Recipe...");
-						scalRecipeMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.CTRL_MASK));
-						scalRecipeMenuItem.addActionListener(this);
+						mnuTools.add(scaleRecipeMenuItem);
+						scaleRecipeMenuItem.setText("Resize / Convert Recipe...");
+						scaleRecipeMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.CTRL_MASK));
 
 						mnuTools.add(maltPercentMenuItem);
 						maltPercentMenuItem.setText("Malt Percent...");
-						maltPercentMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, ActionEvent.CTRL_MASK));
-						maltPercentMenuItem.addActionListener(this);
+						maltPercentMenuItem
+								.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, ActionEvent.CTRL_MASK));
 
 						mnuTools.add(refractometerMenuItem);
 						refractometerMenuItem.setText("Refractometer Utility...");
-						refractometerMenuItem.addActionListener(this);
 
 						mnuTools.add(extractPotentialMenuItem);
 						extractPotentialMenuItem.setText("Extract Potential...");
-						extractPotentialMenuItem.addActionListener(this);
 
 						mnuTools.add(hydrometerToolMenuItem);
 						hydrometerToolMenuItem.setText("Hydrometer Tool...");
-						hydrometerToolMenuItem.addActionListener(this);
 
 						mnuTools.add(conversionToolMenuItem);
 						conversionToolMenuItem.setText("Conversion Tool...");
-						conversionToolMenuItem.addActionListener(this);
+
 					}
 				}
 				{
@@ -1510,13 +1554,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					{
 						helpMenu.add(helpMenuItem);
 						helpMenuItem.setText("Help");
-						helpMenuItem.addActionListener(this);
 
 					}
 					{
 						helpMenu.add(aboutMenuItem);
 						aboutMenuItem.setText("About...");
-						aboutMenuItem.addActionListener(this);
+
 					}
 				}
 			}
@@ -1587,7 +1630,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fileChooser.getSelectedFile();
 
-			//This is where a real application would save the file.
+			// This is where a real application would save the file.
 			try {
 				FileWriter out = new FileWriter(file);
 				out.write(myRecipe.toXML(null));
@@ -1619,7 +1662,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 		// while we're doing this, why not synch up the style?
 		// default style is just a name - find the matching style
-		// in the style db.		
+		// in the style db.
 		int j = DB.inDB(myRecipe.getStyleObj());
 		if (j > -1)
 			myRecipe.setStyle((Style) DB.styleDB.get(j));
@@ -1656,32 +1699,30 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 	}
 
-
 	public void actionPerformed(ActionEvent e) {
 		if (dontUpdate) {
 			return;
 		}
 		Object o = e.getSource();
 
-
 		// Fields
 		if (o == txtName)
 			myRecipe.setName(txtName.getText());
 		else if (o == brewerNameText)
 			myRecipe.setBrewer(brewerNameText.getText());
-		
+
 		else if (o == preBoilText) {
-			double x = SBStringUtils.round(myRecipe.getPreBoilVol(myRecipe.getVolUnits()),2);
-			double y = SBStringUtils.round(Double.parseDouble(preBoilText.getText()),2);
+			double x = SBStringUtils.round(myRecipe.getPreBoilVol(myRecipe.getVolUnits()), 2);
+			double y = SBStringUtils.round(Double.parseDouble(preBoilText.getText()), 2);
 			if (x != y) {
 				Debug.print("Preboil Recipe: " + x + " UI: " + y);
 				myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(preBoilText.getText())));
 				displayRecipe();
 			}
 		} else if (o == finalWortVolText) {
-			double x = SBStringUtils.round(myRecipe.getFinalWortVol(myRecipe.getVolUnits()),2);
-			double y = SBStringUtils.round(Double.parseDouble(finalWortVolText.getText()),2);
-			if (x != y){
+			double x = SBStringUtils.round(myRecipe.getFinalWortVol(myRecipe.getVolUnits()), 2);
+			double y = SBStringUtils.round(Double.parseDouble(finalWortVolText.getText()), 2);
+			if (x != y) {
 				Debug.print("Final Recipe: " + x + " UI: " + y);
 				myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double
 						.parseDouble(finalWortVolText.getText())));
@@ -1693,7 +1734,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		} else if (o == boilMinText) {
 			String s = boilMinText.getText();
 			if (s.indexOf('.') > 0) { // parseInt doesn't like '.' or ',', so
-										// trim the string
+				// trim the string
 				s = s.substring(0, s.indexOf('.'));
 			}
 			myRecipe.setBoilMinutes(Integer.parseInt(s));
@@ -1739,7 +1780,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				hopsTable.updateUI();
 				displayRecipe();
 			}
-		} else if (o ==	cmbYeast) {
+		} else if (o == cmbYeast) {
 			Yeast y = (Yeast) cmbYeastModel.getSelectedItem();
 			if (myRecipe != null && y != myRecipe.getYeastObj()) {
 				myRecipe.setYeast(y);
@@ -1747,22 +1788,22 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			String st = SBStringUtils.multiLineToolTip(40, y.getDescription());
 
 			cmbYeast.setToolTipText(st);
-		} else if (o ==	cmbSizeUnits) {
+		} else if (o == cmbSizeUnits) {
 			String q = (String) cmbSizeUnits.getSelectedItem();
 			if (myRecipe != null && q != myRecipe.getVolUnits()) {
 				// also sets postboil units:
 				myRecipe.setVolUnits(q);
 				displayRecipe();
 			}
-		} else if (o ==	alcMethodCombo) {
+		} else if (o == alcMethodCombo) {
 			recipeSettingsActionPerformed(e);
-		} else if (o ==	ibuMethodCombo) {
+		} else if (o == ibuMethodCombo) {
 			recipeSettingsActionPerformed(e);
-		} else if (o ==	colourMethodCombo) {
+		} else if (o == colourMethodCombo) {
 			recipeSettingsActionPerformed(e);
-		} else if (o ==	evapMethodCombo) {
+		} else if (o == evapMethodCombo) {
 			recipeSettingsActionPerformed(e);
-		} else if (o ==	maltComboBox) {
+		} else if (o == maltComboBox) {
 			Fermentable f = (Fermentable) cmbMaltModel.getSelectedItem();
 			int i = maltTable.getSelectedRow();
 			if (myRecipe != null && i != -1) {
@@ -1776,7 +1817,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					f2.setCost(f.getCostPerU());
 				}
 			}
-		} else if (o ==	maltUnitsComboBox) {
+		} else if (o == maltUnitsComboBox) {
 			String u = (String) cmbMaltUnitsModel.getSelectedItem();
 			int i = maltTable.getSelectedRow();
 			if (myRecipe != null && i != -1) {
@@ -1788,7 +1829,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					displayRecipe();
 				}
 			}
-		} else if (o ==	hopComboBox) {
+		} else if (o == hopComboBox) {
 			Hop h = (Hop) cmbHopsModel.getSelectedItem();
 			int i = hopsTable.getSelectedRow();
 			if (myRecipe != null && i != -1) {
@@ -1797,7 +1838,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				h2.setDescription(h.getDescription());
 				h2.setCost(h.getCostPerU());
 			}
-		} else if (o ==	hopsUnitsComboBox) {
+		} else if (o == hopsUnitsComboBox) {
 			String u = (String) cmbHopsUnitsModel.getSelectedItem();
 			int i = hopsTable.getSelectedRow();
 			if (myRecipe != null && i != -1) {
@@ -1807,7 +1848,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				// tblHops.updateUI();
 				displayRecipe();
 			}
-		} else if (o ==	txtDate) {
+		} else if (o == txtDate) {
 			java.util.Date newDate = txtDate.getDate();
 			java.util.Date oldDate = myRecipe.getCreated().getTime();
 			if (!oldDate.equals(newDate)) {
@@ -1822,7 +1863,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			}
 			cmbStyle.setToolTipText(SBStringUtils.multiLineToolTip(50, st.getDescription()));
 		}
-		
+
 		// Button and Menu listners
 		else if (o == saveButton) {
 			saveFile();
@@ -1877,7 +1918,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			MaltPercentDialog maltPercent = new MaltPercentDialog(this);
 			maltPercent.setModal(true);
 			maltPercent.setVisible(true);
-		} else if (o == scalRecipeMenuItem) {
+		} else if (o == scaleRecipeMenuItem) {
 			ScaleRecipeDialog scaleRecipe = new ScaleRecipeDialog(this);
 			scaleRecipe.setModal(true);
 			scaleRecipe.setVisible(true);
@@ -1975,24 +2016,17 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				currentFile = file;
 				if (oi.getFileType().equals("")) {
 
-					JOptionPane.showMessageDialog(null,
-							"The file you've tried to open isn't a recognized format. \n"
-									+ "You can open: \n"
-									+ "StrangeBrew 1.x and Java files (.xml)\n"
-									+ "QBrew files (.qbrew)\n"
-									+ "BeerXML files (.xml)\n"
-									+ "Promash files (.rec)",
-							"Unrecognized Format!",
+					JOptionPane.showMessageDialog(null, "The file you've tried to open isn't a recognized format. \n"
+							+ "You can open: \n" + "StrangeBrew 1.x and Java files (.xml)\n" + "QBrew files (.qbrew)\n"
+							+ "BeerXML files (.xml)\n" + "Promash files (.rec)", "Unrecognized Format!",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
 				if (oi.getFileType().equals("beerxml")) {
-					JOptionPane
-							.showMessageDialog(
-									null,
-									"The file you've opened is in BeerXML format.  It may contain \n"
-											+ "several recipes.  Only the first recipe is opened.  Use the Find \n"
-											+ "dialog to open other recipes in a BeerXML file.",
-									"BeerXML!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"The file you've opened is in BeerXML format.  It may contain \n"
+									+ "several recipes.  Only the first recipe is opened.  Use the Find \n"
+									+ "dialog to open other recipes in a BeerXML file.", "BeerXML!",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
 				attachRecipeData();
 				checkIngredientsInDB();
@@ -2011,23 +2045,23 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			myRecipe.setDirty(false);
 			displayRecipe();
 		}
-	}								
+	}
 
 	public void stateChanged(ChangeEvent e) {
 		if (dontUpdate) {
 			return;
 		}
 		Object o = e.getSource();
-		
+
 		if (o == jTabbedPane1) {
-			JTabbedPane pane = (JTabbedPane)o;
+			JTabbedPane pane = (JTabbedPane) o;
 			Component tab = pane.getSelectedComponent();
 			if (tab == pnlDetails) {
 				displayRecipe();
 			} else if (tab == stylePanel) {
-				stylePanel.setStyleData();					            	
-	        } else if (tab == miscPanel) {
-	          	// n/a
+				stylePanel.setStyleData();
+			} else if (tab == miscPanel) {
+				// n/a
 			} else if (tab == notesPanel) {
 				// n/a
 			} else if (tab == dilutionPanel) {
@@ -2041,12 +2075,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			} else if (tab == carbPanel) {
 				carbPanel.displayCarb();
 			} else if (tab == waterPanel) {
-				waterPanel.displayWater();					            	
+				waterPanel.displayWater();
 			} else if (tab == costPanel) {
-				costPanel.displayCost();					            	
+				costPanel.displayCost();
 			} else if (tab == settingsPanel) {
 				// n/a
-			}						            
+			}
 		} else if (o == spnAtten) {
 			myRecipe.setAttenuation(Double.parseDouble(spnAtten.getValue().toString()));
 			displayRecipe();
@@ -2062,5 +2096,5 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			myRecipe.setEfficiency(Double.parseDouble(spnEffic.getValue().toString()));
 			displayRecipe();
 		}
-	}	
+	}
 }

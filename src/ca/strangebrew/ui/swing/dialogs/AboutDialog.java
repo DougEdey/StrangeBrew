@@ -38,7 +38,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
 
-
 public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 	private JTabbedPane aboutTabPanel;
 	private JPanel buttonPanel;
@@ -173,7 +172,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 				this.getContentPane().add(buttonPanel);				
 				buttonPanel.add(getOkButton());				
 			}
-			setSize(500, 350);
+			this.setSize(518, 372);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
