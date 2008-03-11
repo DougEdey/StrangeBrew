@@ -2,6 +2,7 @@ Change Log:
 
 Mar 10, 2008 - Drew Avis
 - Fixing some lost action listener registrations.
+- Fixed problem w/ FinalWortVol vs PostBoilVol confusion.
 
 Feb 21, 2008 - Drew Avis
 - Added check for MacOS/X to splash, which makes the app look more native on Macs.  (Suggested by

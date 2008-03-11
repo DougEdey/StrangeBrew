@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.81 2008/03/11 15:08:00 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.82 2008/03/11 17:20:20 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -1721,10 +1721,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			}
 		} else if (o == finalWortVolText) {
 			double x = SBStringUtils.round(myRecipe.getFinalWortVol(myRecipe.getVolUnits()), 2);
-			double y = SBStringUtils.round(Double.parseDouble(finalWortVolText.getText()), 2);
-			if (x != y) {
-				Debug.print("Final Recipe: " + x + " UI: " + y);
-				myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double
+			double y = SBStringUtils.round(Double.parseDouble(finalWortVolText.getText()), 2);			
+			if (x != y) {				
+				myRecipe.setFinalWortVol(new Quantity(myRecipe.getVolUnits(), Double
 						.parseDouble(finalWortVolText.getText())));
 				displayRecipe();
 			}
