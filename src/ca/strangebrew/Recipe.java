@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.71 2008/03/11 17:20:20 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.72 2008/05/16 14:31:05 andrew_avis Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -35,7 +35,7 @@ import java.util.List;
 public class Recipe {
 
 	// basics:
-	private String version;
+	private String version = "";
 
 	private boolean isDirty = false;
 	public boolean allowRecalcs = true;
@@ -171,8 +171,6 @@ public class Recipe {
 		primeSugar.setUnits(opts.getProperty("optSugarU"));
 		carbTempU = opts.getProperty("optCarbTempU");
 		kegged = opts.getBProperty("optKegged");
-
-		version = "";
 
 		// trigger the first re-calc:
 		kettleLossVol = new Quantity(opts.getProperty("optSizeU"), opts.getDProperty("optKettleLoss"));
@@ -1508,7 +1506,7 @@ public class Recipe {
 		final Object[] objs = { new Double(estOg), new Double(estFg), new Double(getAlcohol()), new Double(ibu) };
 		sb.append(mf.format(objs));
 		sb.append("(Alc method: by " + getAlcMethod() + "; IBU method: " + ibuCalcMethod + ")\n");
-		sb.append("\nYeast: " + yeast + "\n");
+		sb.append("\nYeast: " + yeast.getName() + "\n");
 		sb.append("\nFermentables:\n");
 		sb.append(Recipe.padLeft("Name ", 30, ' ') + " amount units  pppg    lov   %\n");
 
@@ -1532,7 +1530,7 @@ public class Recipe {
 		for (int i = 0; i < hops.size(); i++) {
 			final Hop h = hops.get(i);
 
-			final Object[] objh = { Recipe.padLeft(h.getName(), 20, ' '),
+			final Object[] objh = { Recipe.padLeft(h.getName() + " (" + h.getType()+")", 20, ' '),
 					Recipe.padRight(" " + SBStringUtils.format(h.getAmountAs(h.getUnits()), 2), 6, ' '),
 					Recipe.padRight(" " + h.getUnitsAbrv(), 5, ' '), Recipe.padRight(" " + h.getAlpha(), 6, ' '),
 					Recipe.padRight(" " + SBStringUtils.format(h.getMinutes(), 1), 6, ' '),

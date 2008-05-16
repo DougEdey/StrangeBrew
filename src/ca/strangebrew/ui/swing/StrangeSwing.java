@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.82 2008/03/11 17:20:20 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.83 2008/05/16 14:31:05 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -526,6 +526,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		Style s = (Style) cmbStyleModel.getSelectedItem();
 		st = SBStringUtils.multiLineToolTip(40, s.getDescription());
 		cmbStyle.setToolTipText(st);
+		
+		// set version
+		myRecipe.setVersion(version);
 
 	}
 
@@ -593,6 +596,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 		// update the panels - but not here! done on the fly with event from tab
 		// pane to help stop infinte recursion
+		// have to update at least the style panel:
+		stylePanel.setStyleData();
 
 		// Setup title bar
 		String title = "StrangeBrew " + version + " " + edition;
@@ -791,11 +796,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		cmbSizeUnits.addActionListener(this);
 		btnAddMalt.addActionListener(this);
 		btnDelMalt.addActionListener(this);
+		maltComboBox.addActionListener(this);
 		maltUnitsComboBox.addActionListener(this);
 		maltTotalUnitsComboBox.addActionListener(this);
 		hopComboBox.addActionListener(this);
 		hopsUnitsComboBox.addActionListener(this);
 		hopsTotalUnitsComboBox.addActionListener(this);
+		cmbYeast.addActionListener(this);
 
 		alcMethodCombo.addActionListener(this);
 		ibuMethodCombo.addActionListener(this);
@@ -1581,6 +1588,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				Debug.print("Saved: " + file.getAbsoluteFile());
 				currentFile = file;
 				myRecipe.setDirty(false);
+				displayRecipe();
 
 			} catch (Exception e) {
 				showError(e);
@@ -1815,6 +1823,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					f2.setSteep(f.getSteep());
 					f2.setCost(f.getCostPerU());
 				}
+				maltTable.updateUI();
+				myRecipe.setDirty(true);
+				// displayRecipe();
 			}
 		} else if (o == maltUnitsComboBox) {
 			String u = (String) cmbMaltUnitsModel.getSelectedItem();
@@ -2040,7 +2051,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		} else if (o == newFileMenuItem) {
 			// This is just a test right now to see that
 			// stuff is changed.
-			setRecipe(new Recipe(), null);
+			attachRecipeData();
+			// setRecipe(new Recipe(), null);
 			myRecipe.setDirty(false);
 			displayRecipe();
 		}

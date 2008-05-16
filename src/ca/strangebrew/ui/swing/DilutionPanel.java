@@ -1,5 +1,5 @@
 /*
- * $Id: DilutionPanel.java,v 1.10 2008/01/19 01:05:40 jimcdiver Exp $
+ * $Id: DilutionPanel.java,v 1.11 2008/05/16 14:31:05 andrew_avis Exp $
  * Created on June 4, 2005
  * Dilution panel to help you figure out the results of diluting
  * your wort with water post-boil.
@@ -397,11 +397,11 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener,
 		if (myRecipe != null) {
 			if (o == dilutedCheckBox ) {
 				if (dilutedCheckBox.isSelected()) {
-					DilutedRecipe dil = new DilutedRecipe(myRecipe);
-					StrangeSwing.getInstance().setRecipe(dil);
+					// DilutedRecipe dil = new DilutedRecipe(myRecipe);
+					// StrangeSwing.getInstance().setRecipe(dil);
 				} else {
-					Recipe unDil = new Recipe(myRecipe);
-					StrangeSwing.getInstance().setRecipe(unDil);				
+					// Recipe unDil = new Recipe(myRecipe);
+					// StrangeSwing.getInstance().setRecipe(unDil);				
 				}
 				displayDilution();
 			}
@@ -421,25 +421,25 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener,
 				displayDilution();
 			}
 			
-			if (myRecipe instanceof DilutedRecipe) {
-				DilutedRecipe dilRecipe = (DilutedRecipe)myRecipe;
-				if (o == diluteWithText) {
-					dilRecipe.setAddVol(new Quantity(dilRecipe.getVolUnits(), Double.parseDouble(diluteWithText.getValue().toString())));
-					displayDilution();
-				} else if (o == totalVolumeSpinner) {
-					// If total vol is being set here, we are ONLY adding dilution water. So find the dif
-					// between this val, and the original final vol.. that is the dilution addision volume
-					final double origFinal = dilRecipe.getOrigFinalWortVol(dilRecipe.getVolUnits());
-					final double newFinal = Double.parseDouble(totalVolumeSpinner.getValue().toString());
-					if (newFinal < origFinal) {
-						// Should pop an error msg
-						dilRecipe.setAddVol(new Quantity(dilRecipe.getVolUnits(), 0));
-					} else {
-						dilRecipe.setAddVol(new Quantity(dilRecipe.getVolUnits(), newFinal - origFinal));
-					}
-					displayDilution();
-				}
-			}
+//			if (myRecipe instanceof DilutedRecipe) {
+//				DilutedRecipe dilRecipe = (DilutedRecipe)myRecipe;
+//				if (o == diluteWithText) {
+//					dilRecipe.setAddVol(new Quantity(dilRecipe.getVolUnits(), Double.parseDouble(diluteWithText.getValue().toString())));
+//					displayDilution();
+//				} else if (o == totalVolumeSpinner) {
+//					// If total vol is being set here, we are ONLY adding dilution water. So find the dif
+//					// between this val, and the original final vol.. that is the dilution addision volume
+//					final double origFinal = dilRecipe.getOrigFinalWortVol(dilRecipe.getVolUnits());
+//					final double newFinal = Double.parseDouble(totalVolumeSpinner.getValue().toString());
+//					if (newFinal < origFinal) {
+//						// Should pop an error msg
+//						dilRecipe.setAddVol(new Quantity(dilRecipe.getVolUnits(), 0));
+//					} else {
+//						dilRecipe.setAddVol(new Quantity(dilRecipe.getVolUnits(), newFinal - origFinal));
+//					}
+//					displayDilution();
+//				}
+//			}
 //			if (o == ibuDilutedSpin){
 //				myRecipe.dilution.setDilIbu(Double.parseDouble(ibuDilutedSpin.getValue().toString()));
 //				displayDilution();

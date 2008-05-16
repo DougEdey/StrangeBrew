@@ -1,5 +1,9 @@
 Change Log:
 
+Apr 9, 2008 - Derw Avis
+- Fixed display of * and version in title, recipe version.
+- Added style panel update back to displayRecipe(), to fix update problem.
+
 Mar 10, 2008 - Drew Avis
 - Fixing some lost action listener registrations.
 - Fixed problem w/ FinalWortVol vs PostBoilVol confusion.
