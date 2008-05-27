@@ -1034,13 +1034,14 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					constraints.gridx = 0;
 					constraints.gridy = 1;
 					mashPanel.add(jLabel27, constraints);
-					jLabel27.setText("Temp Units:");		
+					jLabel27.setText("Temp Units:");
+					constraints.gridx = 1;
 					mashPanel.add(frb, constraints);
 					frb.setText("F");
 					tempUBG.add(frb);
 					frb.setSelected(true);
 					frb.addActionListener(this);		
-					constraints.gridx = 1;
+					constraints.gridx = 2;
 					mashPanel.add(crb, constraints);
 					crb.setText("C");
 					constraints.gridx = 2;

@@ -6,7 +6,9 @@
   <property name="src" location="src"/>
   <property name="build" location="build"/>
   <property name="dist"  location="dist"/>
-  <property name="version.num" value="2.02-Free"/>  
+  <property name="installer"  location="installer"/>	
+  <property name="version.num" value="2.02-Free"/>
+  <property name="project_name" value="StrangeBrew"/>
   
   <path id="project.class.path">
     <pathelement location="lib/"/>
@@ -79,7 +81,7 @@
   	</copy>
   </target>
   
-  <target name="zip" description="Create Ziped Distribution" depends="compile,dist">
+  <target name="zip" description="Create Ziped Distribution" depends="dist">
     <zip destfile="StrangeBrew-${version.num}.zip" basedir="${dist}"/>
   </target>  
 
@@ -88,5 +90,17 @@
     <delete file="StrangeBrew-${version.num}.zip"/>
     <delete dir="${build}"/>
     <delete dir="${dist}"/>
+  	<delete file="${installer}/setup.exe"/>
+  	<delete file="${installer}/build.log"/>
+  </target>
+
+  <target name="installer" depends="dist" description="build the installer" >
+  	<taskdef name="nsis" classname="net.sf.nsisant.Task">
+  	  <classpath location="${installer}/nsisant-1.2.jar"/>
+  	</taskdef>
+  	<nsis script="${installer}/strangebrew.nsi" verbosity="4" out="${installer}/build.log">
+  	  <define name="VERSION" value="${version.num}"/>
+	  <define name="MUI_APP" value="${project_name}"/>
+  	</nsis>
   </target>
 </project>

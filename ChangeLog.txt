@@ -1,6 +1,13 @@
 Change Log:
 
-Apr 9, 2008 - Derw Avis
+May 27, 2008 - Greg LaPolla
+- Built windows installer using NSIS
+- Added NSIS installer scripts and build process to the ant script
+- Changed some build dependencies in the ant build script
+- Fixed Rager math calculations now using Math.tanh from Java math library
+- Fixed Temp Units display issue in Recipe Preferences
+
+Apr 9, 2008 - Drew Avis
 - Fixed display of * and version in title, recipe version.
 - Added style panel update back to displayRecipe(), to fix update problem.
 
