@@ -227,6 +227,9 @@ New Features:
   of silently starting anyway.  
 - StrangeBrew now looks more like a native MacOS/X application on Macs.  
 
+Bugs Fixed:
+- Misc water loss is now set correctly on the Water tab.
+
 2.0.1
 --------
 New Features:
