@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.30 2008/01/19 01:05:40 jimcdiver Exp $
+ * $Id: Options.java,v 1.31 2008/05/28 15:47:42 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -113,9 +113,9 @@ public class Options {
 			{"optBoilTime", "60"},
 
 			// water use:
-			{"optKettleLoss", "1"},
-			{"optTrubLoss", "1"},
-			{"optMiscLoss", "1"},
+			{"optKettleLoss", "0"},
+			{"optTrubLoss", "0"},
+			{"optMiscLoss", "0"},
 			
 			// cost:
 			{"optMiscCost", "5.0"},

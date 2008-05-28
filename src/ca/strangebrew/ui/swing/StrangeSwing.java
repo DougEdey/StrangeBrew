@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.83 2008/05/16 14:31:05 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.84 2008/05/28 15:47:41 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -160,7 +160,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private WaterPanel waterPanel = new WaterPanel();
 	final private FermentPanel fermentPanel = new FermentPanel();
 	final private CarbonationPanel carbPanel = new CarbonationPanel();
-	final private WaterTreatmentPanel waterTreatmentPanel = new WaterTreatmentPanel();
+//	final private WaterTreatmentPanel waterTreatmentPanel = new WaterTreatmentPanel();
 
 	final private JMenuItem aboutMenuItem = new JMenuItem();
 	// TODO
@@ -453,7 +453,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		cmbMaltModel.setList(DB.fermDB);
 		cmbHopsModel.setList(DB.hopsDB);
 		carbPanel.setList(DB.primeSugarDB);
-		waterTreatmentPanel.setList(DB.waterDB);
+//		waterTreatmentPanel.setList(DB.waterDB);
 
 		initGUI();
 
@@ -510,7 +510,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		settingsPanel.setData(myRecipe);
 		fermentPanel.setData(myRecipe);
 		carbPanel.setData(myRecipe);
-		waterTreatmentPanel.setData(myRecipe);
+//		waterTreatmentPanel.setData(myRecipe);
 		maltTable.updateUI();
 		hopsTable.updateUI();
 
@@ -1200,7 +1200,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						jTabbedPane1.addTab("Notes", null, notesPanel, null);
 						jTabbedPane1.addTab("Dilution", null, dilutionPanel, null);
 						jTabbedPane1.addTab("Mash", null, mashPanel, null);
-						jTabbedPane1.addTab("Water Treatment", null, waterTreatmentPanel, null);
+//						jTabbedPane1.addTab("Water Treatment", null, waterTreatmentPanel, null);
 						jTabbedPane1.addTab("Ferment", null, fermentPanel, null);
 						jTabbedPane1.addTab("Carbonation", null, carbPanel, null);
 						jTabbedPane1.addTab("Water", null, waterPanel, null);
@@ -2079,8 +2079,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				dilutionPanel.displayDilution();
 			} else if (tab == mashPanel) {
 				mashPanel.displayMash();
-			} else if (tab == waterTreatmentPanel) {
-				waterTreatmentPanel.displayWaterTreatment();
+//			} else if (tab == waterTreatmentPanel) {
+//				waterTreatmentPanel.displayWaterTreatment();
 			} else if (tab == fermentPanel) {
 				fermentPanel.displayFerment();
 			} else if (tab == carbPanel) {

@@ -357,7 +357,7 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 			double x = SBStringUtils.round(myRecipe.getMiscLoss(myRecipe.getVolUnits()),2);
 			double y = SBStringUtils.round(Double.parseDouble(miscLossTxt.getText()),2);
 			if (x != y) {
-				myRecipe.setKettleLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(miscLossTxt.getText())));
+				myRecipe.setMiscLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(miscLossTxt.getText())));
 			}					
 		}
 		else if (o == trubLossTxt) {
