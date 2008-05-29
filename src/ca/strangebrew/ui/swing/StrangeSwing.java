@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.84 2008/05/28 15:47:41 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.85 2008/05/29 13:05:22 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -564,13 +564,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// setText(SBStringUtils.dateFormat1.format(myRecipe.getCreated().getTime()));
 		Costs = SBStringUtils.myNF.format(myRecipe.getTotalMaltCost());
 		tblMaltTotalsModel.setDataVector(new String[][] { { "", "", "Totals:",
-				"" + SBStringUtils.format(myRecipe.getTotalMalt(), 1), myRecipe.getMaltUnits(),
+				"" + SBStringUtils.format(myRecipe.getTotalMalt(), 2), myRecipe.getMaltUnits(),
 				"" + SBStringUtils.format(myRecipe.getEstOg(), 3), "" + SBStringUtils.format(myRecipe.getColour(), 1),
 				Costs, "100" } }, new String[] { "", "", "", "", "", "", "", "", "" });
 
 		Costs = SBStringUtils.myNF.format(myRecipe.getTotalHopsCost());
 		tblHopsTotalsModel.setDataVector(new String[][] { { "Totals:", "", "",
-				"" + SBStringUtils.format(myRecipe.getTotalHops(), 1), myRecipe.getHopUnits(), "", "",
+				"" + SBStringUtils.format(myRecipe.getTotalHops(), 2), myRecipe.getHopUnits(), "", "",
 				"" + SBStringUtils.format(myRecipe.getIbu(), 1), Costs } }, new String[] { "", "", "", "", "", "", "",
 				"", "" });
 
