@@ -226,9 +226,12 @@ New Features:
 - If StrangeBrew can't find the ingredient databases, it will ask you where they are instead
   of silently starting anyway.  
 - StrangeBrew now looks more like a native MacOS/X application on Macs.  
+- Windows Installer
 
 Bugs Fixed:
 - Misc water loss is now set correctly on the Water tab.
+- Rager formula bug fixed.
+- New Recipe Defaults: Temp Units now displays properly.
 
 2.0.1
 --------
@@ -409,6 +412,7 @@ program:
 * Colin Kilburn - testing / bug fixes
 * Jason Landry - database updates
 * Jeroen Wouters - bug fixes
+* Greg LaPolla - bug fixes / ant build / windows installer
 
 ==========
 Copyrights

@@ -1,8 +1,11 @@
 Change Log:
+June 11, 2008 - Greg LaPolla
+- Added New styleguide for 2008 BJCP guidelines
+- Added a new build option in build.xml to generate a source distribution zip file
+
 May 28, 2008 - Drew Avis
 - Fixed a bug where the misc loss wasn't set correctly.
 
-Apr 9, 2008 - Drew Avis
 May 27, 2008 - Greg LaPolla
 - Built windows installer using NSIS
 - Added NSIS installer scripts and build process to the ant script
