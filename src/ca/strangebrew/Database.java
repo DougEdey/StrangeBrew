@@ -15,7 +15,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.24 2008/01/16 17:55:05 jimcdiver Exp $
+ * $Id: Database.java,v 1.25 2008/07/07 17:51:14 andrew_avis Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -29,8 +29,7 @@ public class Database {
 
 	// this class is just some lists of various ingredients
 	// read from the csv files.
-	// I suspect that binary files will be faster, and
-	// we might want to move that way in the future.
+
 	private static Database instance = null;
 	
 	final public List<Fermentable> fermDB = new ArrayList<Fermentable>();
@@ -41,6 +40,7 @@ public class Database {
 	final public List<PrimeSugar> primeSugarDB = new ArrayList<PrimeSugar>();
 	final public List<WaterProfile> waterDB = new ArrayList<WaterProfile>();
 	public String dbPath;
+	private String styleFileName;
 
 	// This is now a singleton
 	private Database() {}
@@ -115,8 +115,9 @@ public class Database {
 		return -1;
 	}
 	
-	public void readDB(String path){
+	public void readDB(String path, String styleYear){
 		dbPath = path;
+		styleFileName = "styleguide" + styleYear + ".xml";
 		readFermentables(dbPath);
 		readPrimeSugar(dbPath);
 		readHops(dbPath);
@@ -459,9 +460,9 @@ public class Database {
 	
 	public void importStyles(String path){
 		// import a yeast array from an xml file:
-		File yeastFile = new File(path, "styleguide.xml");
-		Debug.print("Opening: " + yeastFile.getName() + ".\n");
-		ImportXml imp = new ImportXml(yeastFile.toString(), "style");
+		File styleFile = new File(path, styleFileName);
+		Debug.print("Opening: " + styleFile.getName() + ".\n");
+		ImportXml imp = new ImportXml(styleFile.toString(), "style");
 		styleDB = imp.styleHandler.getStyles();
 	}
 	

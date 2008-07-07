@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.85 2008/05/29 13:05:22 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.86 2008/07/07 17:51:14 andrew_avis Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -446,7 +446,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			} else
 				System.exit(1);
 		}
-		DB.readDB(path);
+		DB.readDB(path, preferences.getProperty("optStyleYear"));
 
 		cmbStyleModel.setList(DB.styleDB);
 		cmbYeastModel.setList(DB.yeastDB);
@@ -1933,8 +1933,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			scaleRecipe.setModal(true);
 			scaleRecipe.setVisible(true);
 		} else if (o == editPrefsMenuItem) {
-			PreferencesDialog d = new PreferencesDialog(this);
+			PreferencesDialog d = new PreferencesDialog(this);			
 			d.setVisible(true);
+			preferences = d.getOpts();
 		} else if (o == exitMenuItem) {
 			// exit program
 			processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
@@ -2051,6 +2052,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		} else if (o == newFileMenuItem) {
 			// This is just a test right now to see that
 			// stuff is changed.
+			myRecipe = new Recipe();
+			currentFile = null;
 			attachRecipeData();
 			// setRecipe(new Recipe(), null);
 			myRecipe.setDirty(false);

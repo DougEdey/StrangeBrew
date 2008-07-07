@@ -1,5 +1,5 @@
 /*
- * $Id: DilutionPanel.java,v 1.11 2008/05/16 14:31:05 andrew_avis Exp $
+ * $Id: DilutionPanel.java,v 1.12 2008/07/07 17:51:14 andrew_avis Exp $
  * Created on June 4, 2005
  * Dilution panel to help you figure out the results of diluting
  * your wort with water post-boil.
@@ -397,11 +397,13 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener,
 		if (myRecipe != null) {
 			if (o == dilutedCheckBox ) {
 				if (dilutedCheckBox.isSelected()) {
-					// DilutedRecipe dil = new DilutedRecipe(myRecipe);
-					// StrangeSwing.getInstance().setRecipe(dil);
+					DilutedRecipe dil = new DilutedRecipe(myRecipe);
+					StrangeSwing.getInstance().setRecipe(dil);
+					myRecipe = dil;
 				} else {
-					// Recipe unDil = new Recipe(myRecipe);
-					// StrangeSwing.getInstance().setRecipe(unDil);				
+					Recipe unDil = new Recipe(myRecipe);
+					StrangeSwing.getInstance().setRecipe(unDil);
+					myRecipe = unDil;
 				}
 				displayDilution();
 			}

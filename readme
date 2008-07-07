@@ -219,6 +219,7 @@ What's New
 2.0.2
 --------
 New Features:
+- You can now specify the BJCP style year you want to use (2004 or 2008).
 - Table column sizes are now remembered when you close and restart the application
   (Request 1493295).
 - Diluted recipe feature works a lot better.  Diluted specs show up on the main recipe
@@ -350,6 +351,7 @@ Features on the "TODO List" for StrangeBrew:
 - save / load mash profiles
 - specify mash temp ranges
 - cereal mash
+- allow user-specified precision of values
 
 Planned StrangeBrew  Pro Features:
 - advanced water profiling

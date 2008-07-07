@@ -1,7 +1,7 @@
 package ca.strangebrew;
 
 /**
- * $Id: Options.java,v 1.31 2008/05/28 15:47:42 andrew_avis Exp $
+ * $Id: Options.java,v 1.32 2008/07/07 17:51:14 andrew_avis Exp $
  * Created on Oct 6, 2004
  * @author aavis
  *
@@ -140,6 +140,9 @@ public class Options {
 			{"optMashoutTmpF", "161"},
 			{"optSpargeTmpF", "170"},			
 			{"optCerealMashTmpF", "155"},
+			
+			// style DB
+			{"optStyleYear", "2004"},
 			
 			// application window:
 			{"winX", "0"},

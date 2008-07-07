@@ -1,4 +1,7 @@
 Change Log:
+July 7, 2008 - Drew Avis
+- Added option to select BJCP style definintion year
+
 June 11, 2008 - Greg LaPolla
 - Added New styleguide for 2008 BJCP guidelines
 - Added a new build option in build.xml to generate a source distribution zip file

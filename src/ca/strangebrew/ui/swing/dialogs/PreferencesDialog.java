@@ -1,3 +1,16 @@
+/*
+ * @author aavis
+ * 
+ * This class creates a tabbed dialog box with all the preferences
+ * used by the application.  The constructor will initialize all the
+ * UI components to values from the Options object in the constructor.
+ * 
+ * If the dialog box is closed with the OK button then the Options object
+ * given in the constructor will be updated with new values entered by
+ * the user.  If the dialog box is closed any other way then no changes will
+ * be made to the Options object.
+ */
+
 package ca.strangebrew.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
@@ -42,18 +55,7 @@ import ca.strangebrew.ui.swing.ComboModel;
 import ca.strangebrew.ui.swing.SmartComboBox;
 import ca.strangebrew.ui.swing.StrangeSwing;
 
-/**
- * @author aavis
- * 
- * This class creates a tabbed dialog box with all the preferences
- * used by the application.  The constructor will initialize all the
- * UI components to values from the Options object in the constructor.
- * 
- * If the dialog box is closed with the OK button then the Options object
- * given in the constructor will be updated with new values entered by
- * the user.  If the dialog box is closed any other way then no changes will
- * be made to the Options object.
- */
+
 public class PreferencesDialog extends javax.swing.JDialog implements ActionListener, ChangeListener {
 
 	// Mutables
@@ -65,8 +67,6 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JTextField txtBottleSize = new JTextField();
 	final private JButton okButton = new JButton();
 	final private JButton cancelButton = new JButton();
-	final private JLabel jLabel8 = new JLabel();
-	final private JPanel pnlSortOrder = new JPanel();
 	final private JLabel jLabel4 = new JLabel();
 	final private JPanel pnlCalculations = new JPanel();
 	final private JTextField txtEmail = new JTextField();
@@ -114,6 +114,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JTextField txtTinsethUtil = new JTextField();
 	final private JLabel jLabelc4 = new JLabel();
 	final private JTextField txtFWHTime = new JTextField();
+	private JComboBox comboStyleYear;
 	final private JTextField boilTimeTxt = new JTextField();
 	final private JLabel jLabel30 = new JLabel();
 	final private JComboBox mashRatioUCombo = new JComboBox();
@@ -191,9 +192,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 	final private JLabel jLabelc1 = new JLabel();
 	final private JPanel pnlDefaultDB = new JPanel();
-	final private JTextField txtDBLocation = new JTextField();
-	final private JButton btnBrowse = new JButton();
-	
+
 	final private JLabel localeLabel = new JLabel();
 	final private JComboBox localeComboBox = new JComboBox();
 	final private JLabel defaultLocaleLable = new JLabel();
@@ -208,7 +207,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JLabel labelVol = new JLabel("Target C02 Volumn: ");
 	final private JComboBox comboPrimeSugar = new JComboBox(Database.getInstance().getPrimeSugarNameList());
 	// TODO come back and fix all the temperature selection everywhere to use some sort of static list from
-	// somewhere. Probably Recipie, Options or Database!
+	// somewhere. Probably Recipe, Options or Database!
 	final private JComboBox comboCarbTempU = new JComboBox(new String[] {"F", "C"});
 	final private JComboBox comboSugarU = new JComboBox(Quantity.getListofUnits("weight").toArray());
 	final private JTextField txtServTemp = new JTextField();
@@ -341,6 +340,9 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		colMethod2rb.setSelected(opts.getProperty("optRGBMethod").equals("2"));
 		displayColour();
 		
+		// style DB tab:		
+		comboStyleYear.setSelectedItem(opts.getProperty("optStyleYear"));
+		
 	}
 
 	private void saveOptions() {
@@ -437,6 +439,8 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			opts.setProperty("optRGBMethod", "1");
 		else 
 			opts.setProperty("optRGBMethod", "2");
+		
+		opts.setProperty("optStyleYear", comboStyleYear.getSelectedItem().toString());
 	
 	}
 
@@ -736,6 +740,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				pnlBrewerLayout.columnWidths = new int[]{7, 7, 7, 7};
 				pnlBrewer.setLayout(pnlBrewerLayout);
 				jTabbedPane1.addTab("Brewer", null, pnlBrewer, null);
+				jTabbedPane1.addTab("Style Database", null, pnlDatabase, null);
 				{
 					pnlBrewer.add(jLabel4, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, new Insets(0, 0,
@@ -821,8 +826,6 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				BorderLayout pnlDatabaseLayout = new BorderLayout();
 				pnlDatabase.setLayout(pnlDatabaseLayout);
 				pnlDatabase.add(pnlDefaultDB, BorderLayout.NORTH);
-				pnlDatabase.add(pnlSortOrder, BorderLayout.WEST);
-				jTabbedPane1.addTab("Database", null, pnlDatabase, null);
 				pnlDatabase.setVisible(false);
 			}
 
@@ -1115,29 +1118,18 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				BorderLayout pnlDefaultDBLayout = new BorderLayout();
 				pnlDefaultDB.setLayout(pnlDefaultDBLayout);
 				pnlDefaultDB.setPreferredSize(new java.awt.Dimension(387, 48));
-				pnlDefaultDB.setBorder(BorderFactory.createTitledBorder("Default Database:"));
-				pnlDefaultDB.add(btnBrowse, BorderLayout.EAST);
-				pnlDefaultDB.add(txtDBLocation, BorderLayout.CENTER);
+				pnlDefaultDB.setBorder(BorderFactory.createTitledBorder("BJCP Style DB:"));
+				{
+					ComboBoxModel styleYearComboModel = 
+						new DefaultComboBoxModel(
+								new String[] { "2004", "2008" });
+					comboStyleYear = new JComboBox();
+					pnlDefaultDB.add(comboStyleYear, BorderLayout.CENTER);
+					comboStyleYear.setModel(styleYearComboModel);
+				}
 			}
 
-			{		
-				txtDBLocation.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-			}
-
-			{
-				btnBrowse.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-			}
-
-			{
-				pnlSortOrder.setBorder(BorderFactory.createTitledBorder(null, "Recipe Sort Order",
-						TitledBorder.LEADING, TitledBorder.TOP));
-				pnlSortOrder.setPreferredSize(new java.awt.Dimension(167, 270));
-				pnlSortOrder.add(jLabel8);
-			}
-
-			{
-				jLabel8.setText("Not Implemented");
-			}
+			
 
 			{
 				GridLayout pnlWaterUsageLayout = new GridLayout(3, 2);
@@ -1322,6 +1314,10 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			evapAmountLbl.setText("%");
 		else
 			evapAmountLbl.setText(volUnitsComboModel.getSelectedItem().toString() + "/hr");
+	}
+
+	public Options getOpts() {
+		return opts;
 	}
 
 }
