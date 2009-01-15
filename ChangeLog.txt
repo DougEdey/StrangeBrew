@@ -1,4 +1,8 @@
 Change Log:
+Jan 14, 2008 - Greg LaPolla
+- Removed NSIS Windows Based Installer 
+- Added IzPack Java Based Installer now installs natively on Windows and Linux
+ 
 July 7, 2008 - Drew Avis
 - Added option to select BJCP style definintion year
 

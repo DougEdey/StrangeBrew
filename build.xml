@@ -155,12 +155,20 @@
   </target>
 
   <target name="installer" depends="dist" description="build the installer" >
-  	<taskdef name="nsis" classname="net.sf.nsisant.Task">
-  	  <classpath location="${installer}/nsisant-1.2.jar"/>
-  	</taskdef>
-  	<nsis script="${installer}/strangebrew.nsi" verbosity="4" out="${installer}/build.log">
-  	  <define name="VERSION" value="${version.num}"/>
-	  <define name="MUI_APP" value="${project_name}"/>
-  	</nsis>
+  	<taskdef name="izpack" classpath="lib\standalone-compiler.jar"
+  	    classname="com.izforge.izpack.ant.IzPackTask"/>
+  	<!-- Run installer build -->
+  	<echo message="Running IzPack to build the installer..."/>
+  	<izpack input="install.xml"
+  	        output="installer/StrangeBrew-installer.jar"
+  	        installerType="standard"
+  	        inheritAll="true"
+  	        basedir="."
+  	        compression="deflate"
+  	        compressionlevel="9"/>
+  	<!-- Clean working directory -->
+  	<echo message="Cleaning up working directory..."/>
+  	<delete dir="${temp.dir}" quiet="true" includeemptydirs="true"/>
+  	<echo message="Done."/>
   </target>
 </project>

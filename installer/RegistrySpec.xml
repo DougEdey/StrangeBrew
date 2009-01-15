@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<registry>
+    <pack name="Uninstall">
+        <!-- Special "pack", if not defined an uninstall key will be generated automatically -->
+        <!-- The variable $UNINSTALL_NAME can be only used if CheckedHelloPanel will be used
+               because there the variable will be declared. With that variabel it is possible
+               to install more as one instances of the product on one machine each with an
+               unique uninstall key. -->
+        <value name="DisplayName"
+               keypath="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$UNINSTALL_NAME"
+               root="HKLM"
+               string="$UNINSTALL_NAME"/>
+        <value name="UninstallString"
+               keypath="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$UNINSTALL_NAME"
+               root="HKLM"
+               string="&quot;$JAVA_HOME\bin\javaw.exe&quot; -jar &quot;$INSTALL_PATH\uninstaller\uninstaller.jar&quot;"/>
+        <value name="DisplayIcon"
+               keypath="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$UNINSTALL_NAME"
+               root="HKLM"
+               string="$INSTALL_PATH\src\ca\strangebrew\icons\brew.ico"/>
+        <value name="HelpLink"
+               keypath="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$UNINSTALL_NAME"
+               root="HKLM"
+               string="$APP_URL"/>
+    </pack>
+    <pack name="StrangeBrew">
+        <key keypath="SOFTWARE\StrangeBrew\$UNINSTALL_NAME" root="HKLM"/>
+        <value name="Path" 
+               keypath="SOFTWARE\StrangeBrew\$UNINSTALL_NAME"  root="HKLM"
+               string="$INSTALL_PATH"/>
+        <value name="DWORD"
+               keypath="SOFTWARE\StrangeBrew\$UNINSTALL_NAME"
+               root="HKLM"
+               dword="42"/>
+        <value name="BIN"
+               keypath="SOFTWARE\StrangeBrew\$UNINSTALL_NAME"
+               root="HKLM">
+            <bin data="42, 49, 4e, 20, 54, 45, 53, 54"/>
+            <bin data="42, 49, 4e, 20, 54, 45, 53, 54"/>
+        </value>
+    </pack>
+    <pack name="Help">
+        <key keypath="SOFTWARE\StrangeBrew\$UNINSTALL_NAME\Help" root="HKLM"/>
+    </pack>
+    <pack name="Database">
+        <key keypath="SOFTWARE\StrangeBrew\$UNINSTALL_NAME\Database" root="HKLM"/>
+    </pack>
+    <pack name="Recipes">
+        <key keypath="SOFTWARE\StrangeBrew\$UNINSTALL_NAME\Recipes" root="HKLM"/>
+    </pack>
+    
+    </registry>
+
