@@ -1,5 +1,5 @@
 /**
- * $Id: Hop.java,v 1.15 2008/01/14 21:13:28 andrew_avis Exp $
+ * $Id: Hop.java,v 1.16 2012/03/12 02:50:34 dougedey Exp $
  * Created on Oct 5, 2004
  *
  * Base class for hops.  This object doesn't do much except hold data and
@@ -88,9 +88,19 @@ public class Hop extends Ingredient {
 	}
 	
 	public int compareTo(Hop h) {
+		// Check to see if the additions are at the same time
 		if (this.getMinutes() == 0 && h.getMinutes() == 0) {
-			return super.compareTo(h);
+			//Check to see if we have dry hopping
+			if(this.getAdd() == h.getAdd()) {
+				// Same addition, continue the compare
+				return super.compareTo(h);
+			} else {
+				//Different addition type, so compare that. Boil is luckily prior to Dry
+				return this.getAdd().compareToIgnoreCase(h.getAdd());
+				
+			}
 		} else {
+			// Times are not the same, straightforward comparrison
 			int result = ((Integer)h.getMinutes()).compareTo((Integer)this.getMinutes());
 			return (result == 0 ? -1 : result);
 		}
