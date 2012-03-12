@@ -277,8 +277,13 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		}		
 		comboWaterProfile.setSelectedItem(opts.getProperty("optWaterProfile"));
 		
-		// TODO: convert boiltempF if c is selected
-		boilTempTxt.setText(opts.getProperty("optBoilTempF"));
+		// Not sure why we need to convert every time we save, but keeping it like this for now
+		if(opts.getProperty("optMashTempU").equalsIgnoreCase("C")){
+			boilTempTxt.setText(Double.toString(BrewCalcs.fToC(opts.getDProperty("optBoilTempF"))));
+		} else {		
+			boilTempTxt.setText(opts.getProperty("optBoilTempF"));
+		}
+		
 		mashVolComboModel.addOrInsert(opts.getProperty("optMashVolU"));
 		frb.setSelected(opts.getProperty("optMashTempU").equalsIgnoreCase("F"));
 		crb.setSelected(opts.getProperty("optMashTempU").equalsIgnoreCase("C"));
@@ -1058,11 +1063,11 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					jLabel12.setText("Boil Temp:");
 					constraints.gridx = 1;
 					mashPanel.add(boilTempTxt, constraints);
-					boilTempTxt.setText("212");
+					boilTempTxt.setText(opts.getProperty("optBoilTempC"));
 					boilTempTxt.setPreferredSize(new java.awt.Dimension(45, 20));
 					constraints.gridx = 2;
 					mashPanel.add(boilTempULbl, constraints);
-					boilTempULbl.setText("F");
+					boilTempULbl.setText(opts.getProperty("optMashTempU"));
 					boilTempULbl.setPreferredSize(new java.awt.Dimension(21, 14));
 					
 					// Ratio
