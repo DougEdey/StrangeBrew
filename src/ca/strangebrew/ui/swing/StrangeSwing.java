@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.86 2008/07/07 17:51:14 andrew_avis Exp $ 
+ * $Id: StrangeSwing.java,v 1.87 2012/05/30 22:30:47 dougedey Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -375,13 +375,14 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	 * Auto-generated main method to display this JFrame
 	 */
 	public static void main(String[] args) {
+		
+		try {
 		final StrangeSwing inst = new StrangeSwing();
 		inst.setVisible(true);
-		if (args.length > 0) {
-			// Are we in debug mode?
-			if (args[0].equals("-d")) {
-				Debug.set(true);
-			}
+		
+		
+		} catch (Exception e){
+			System.err.println("Trouble starting up: " + e.getMessage());
 		}
 
 	}
@@ -485,7 +486,11 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 	public static StrangeSwing getInstance() {
 		if (instance == null) {
-			instance = new StrangeSwing();
+			try {
+				instance = new StrangeSwing();
+			} catch (Exception e) {
+				System.err.println("Trouble starting up: " + e.getMessage());
+			}
 		}
 
 		return instance;
@@ -868,7 +873,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								0.1 };
 						pnlDetailsLayout.columnWidths = new int[] { 7, 7, 7, 7, 7, 7, 7, 7, 7, 7 };
 						pnlDetailsLayout.rowWeights = new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 };
-						pnlDetailsLayout.rowHeights = new int[] { 7, 7, 7, 7, 7, 7, 7 };
+						pnlDetailsLayout.rowHeights = new int[] { 10, 10, 10, 10, 10, 10, 10 };
 						pnlDetails.setLayout(pnlDetailsLayout);
 						pnlDetails.setPreferredSize(new java.awt.Dimension(20, 16));
 						{
@@ -998,7 +1003,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							spnEffic.addChangeListener(this);
 							spnEffic.setEditor(new JSpinner.NumberEditor(spnEffic, "00.#"));
 							spnEffic.getEditor().setPreferredSize(new java.awt.Dimension(28, 16));
-							spnEffic.setPreferredSize(new java.awt.Dimension(53, 18));
+							spnEffic.setPreferredSize(new java.awt.Dimension(53, 20));
 						}
 						{
 							SpinnerNumberModel spnAttenModel = new SpinnerNumberModel(75.0, 0.0, 100.0, 1.0);
@@ -1019,7 +1024,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							spnOG.addChangeListener(this);
 							spnOG.setEditor(new JSpinner.NumberEditor(spnOG, "0.000"));
 							spnOG.getEditor().setPreferredSize(new java.awt.Dimension(20, 16));
-							spnOG.setPreferredSize(new java.awt.Dimension(67, 18));
+							spnOG.setPreferredSize(new java.awt.Dimension(69, 20));
 						}
 						{
 							SpinnerNumberModel spnFgModel = new SpinnerNumberModel(1.000, 0.900, 2.000, 0.001);
@@ -1137,7 +1142,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						ComboBoxModel evapMethodComboModel = new DefaultComboBoxModel(new String[] { "Constant",
 								"Percent" });
 						{
-							pnlMain.add(jPanel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST,
+							pnlMain.add(jPanel1, new GridBagConstraints(0, 0, 1, 2, 0.0, 0.0, GridBagConstraints.WEST,
 									GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 							FlowLayout jPanel1Layout = new FlowLayout();
 							jPanel1Layout.setAlignment(FlowLayout.LEFT);
@@ -1175,7 +1180,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							{
 								jPanel1.add(txtName);
 								txtName.setText("Name");
-								txtName.setPreferredSize(new java.awt.Dimension(297, 20));
+								txtName.setPreferredSize(new java.awt.Dimension(297, 22));
 
 							}
 

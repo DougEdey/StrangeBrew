@@ -22,6 +22,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -40,6 +41,9 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
@@ -47,6 +51,7 @@ import javax.swing.event.ChangeListener;
 
 import ca.strangebrew.BrewCalcs;
 import ca.strangebrew.Database;
+import ca.strangebrew.Debug;
 import ca.strangebrew.Hop;
 import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
@@ -171,6 +176,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JRadioButton colMethod1rb = new JRadioButton();
 	final private ButtonGroup colourGroup = new ButtonGroup();
 	final private JPanel colourPanel = new JPanel();
+	
 	final private JPanel appearancePanel = new JPanel();
 	final private JTextField boilTempTxt = new JTextField();
 	final private JLabel jLabel12 = new JLabel();
@@ -196,6 +202,10 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JLabel localeLabel = new JLabel();
 	final private JComboBox localeComboBox = new JComboBox();
 	final private JLabel defaultLocaleLable = new JLabel();
+	final private JLabel swingTheme = new JLabel();
+	private JComboBox swingComboBox = new JComboBox();
+	final private JLabel currentTheme = new JLabel();
+	
 	// Carb
 	final private GridBagLayout layoutCarbPanel = new GridBagLayout();
 	final private GridBagConstraints constraints = new GridBagConstraints();
@@ -234,34 +244,25 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		opts = Options.getInstance();
 		sb = owner;
 		
-/*		UIManager.LookAndFeelInfo[] installed =
-	          UIManager.getInstalledLookAndFeels();
-		looks = new ArrayList();
-		for (int i = 0; i < installed.length; i++) {
-			looks.add(installed[i].getClassName());
-			// landfCombo.addItem(installed[i].getName());
-		}*/
-		
 		layoutUi();		
 		setLocation(owner.getLocation());
 		setOptions();				
 		
-/*		landfCombo.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent evt) {
-				String s = landfCombo.getSelectedItem().toString();
-				try {
-					UIManager.setLookAndFeel(s);
-					SwingUtilities.updateComponentTreeUI(sb);					
-					sb.pack();
-				} catch (Exception e) {					
-					e.printStackTrace();
-				} 
-				
-			}
-		});*/
-
 	}
 
+	class Looks {
+		String name;
+		String value;
+		
+		public Looks(String n, String v) {
+			name = n;
+			value = v;
+		}
+		
+		public String toString() { return name; }
+		public String getValue() { return value; }
+	}
+	
 	private void setOptions() {
 		
 		// new recipe tab:		
@@ -351,6 +352,11 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	}
 
 	private void saveOptions() {
+		
+		// overall appearance
+		opts.setProperty("optsPrefDiagHeight", String.valueOf(getContentPane().getHeight()));
+		opts.setProperty("optsPrefDiagWidth", String.valueOf(getContentPane().getWidth()));
+		
 		// cost/carb tab:
 		opts.setProperty("optMiscCost", txtOtherCost.getText());
 		opts.setProperty("optBottleSize", txtBottleSize.getText());
@@ -374,6 +380,8 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		opts.setProperty("optPhone", txtPhone.getText());
 		opts.setProperty("optClub", txtClubName.getText());
 		opts.setProperty("optEmail", txtEmail.getText());
+		opts.setProperty("optAppearance", ((Looks)swingComboBox.getSelectedItem()).value);
+		
 		// TODO
 		opts.setLocale((Locale)localeComboBox.getSelectedItem());
 
@@ -739,8 +747,8 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			}
 			{
 				GridBagLayout pnlBrewerLayout = new GridBagLayout();
-				pnlBrewerLayout.rowWeights = new double[]{0.1, 0.1, 0.3, 0.3};
-				pnlBrewerLayout.rowHeights = new int[]{2, 2, 7, 7};
+				pnlBrewerLayout.rowWeights = new double[]{0.1, 0.1, 0.3, 0.3, 0.3};
+				pnlBrewerLayout.rowHeights = new int[]{2, 2, 7, 7, 7};
 				pnlBrewerLayout.columnWeights = new double[]{0.1, 0.1, 0.1, 0.1};
 				pnlBrewerLayout.columnWidths = new int[]{7, 7, 7, 7};
 				pnlBrewer.setLayout(pnlBrewerLayout);
@@ -798,7 +806,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					pnlBrewer.add(localeLabel, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, new Insets(0, 0,
 									0, 0), 0, 0));
-					localeLabel.setText("Set Local:");
+					localeLabel.setText("Set Locale:");
 				}
 				{
 					pnlBrewer.add(localeComboBox, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
@@ -825,9 +833,59 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 							GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0,
 									0, 0), 0, 0));
 					defaultLocaleLable.setText("System Locale is " + Locale.getDefault().toString());
-				}				
+				}	
+				{
+					
+					
+					
+					
+					ArrayList<Looks> looks = new ArrayList<Looks>();
+					
+					for(UIManager.LookAndFeelInfo look : UIManager.getInstalledLookAndFeels()) {
+						
+						looks.add(new Looks(look.getName(), look.getClassName()));
+						
+					}
+					
+					swingComboBox = new JComboBox(looks.toArray());
+					pnlBrewer.add(swingComboBox, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
+							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
+									0, 0, 0), 0, 0));	
+					
+					swingComboBox.addActionListener(new ActionListener() {
+						public void actionPerformed (ActionEvent e){
+							
+							try {
+								Debug.print("UIManager trying to set look and feel to " + swingComboBox.getSelectedItem().toString());
+								UIManager.setLookAndFeel(((Looks)swingComboBox.getSelectedItem()).value);
+								SwingUtilities.updateComponentTreeUI(sb);
+								sb.pack();
+							} catch (ClassNotFoundException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (InstantiationException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (IllegalAccessException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (UnsupportedLookAndFeelException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+					});
+					
+				}
+				{
+					pnlBrewer.add(swingTheme, new GridBagConstraints(2, 4, 2, 1, 0.0, 0.0,
+							GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0,
+									0, 0), 0, 0));
+					swingTheme.setText("Swing Theme is " + UIManager.getLookAndFeel().getName());
+				}	
 			}
 			{
+				
 				BorderLayout pnlDatabaseLayout = new BorderLayout();
 				pnlDatabase.setLayout(pnlDatabaseLayout);
 				pnlDatabase.add(pnlDefaultDB, BorderLayout.NORTH);
@@ -848,6 +906,9 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			landfCombo = new JComboBox(looks.toArray());
 			
 			landfPanel.add(landfCombo);*/
+			
+			//appearancePanel.add(swingPanel, BorderLayout.CENTER);
+			//GridBagLayout swingPanelLayout = new GridBagLayout();
 			
 			
 			appearancePanel.add(colourPanel, BorderLayout.CENTER);
@@ -878,7 +939,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 			colourPanel.add(jLabel15, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel15.setText("Amber\n(8)");
-
+			
 			colourPanel.add(jLabel16, new GridBagConstraints(3, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			jLabel16.setText("Copper (15)");
 
@@ -1244,13 +1305,27 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		getContentPane().add(BorderLayout.CENTER, jTabbedPane1);
 		getContentPane().add(BorderLayout.SOUTH, buttons);
 
-		setSize(500, 500);
-
+		int dHeight = 500, dWidth = 500;
+		try {
+			
+			
+			if( (opts.getProperty("optsPrefDiagHeight")!= null) && opts.getProperty("optsPrefDiagWidth") != null) {
+				dHeight = Integer.parseInt(opts.getProperty("optsPrefDiagHeight"));
+				dWidth = Integer.parseInt(opts.getProperty("optsPrefDiagWidth"));
+			}
+		} catch ( NumberFormatException e) {
+			System.err.println("Something wrong with the Diag Options");
+		}
+		setSize(dWidth, dHeight);
+		
 	}	
 
 	//	Action Performed 
 	public void actionPerformed(ActionEvent e) {
-		Object o = e.getSource();			
+		
+		Object o = e.getSource();
+		
+		Debug.print("Action performed on: " + o);
 		
 		if (o == okButton) {
 			saveOptions();
@@ -1281,7 +1356,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				boilTempULbl.setText("C");
 			else
 				boilTempULbl.setText("F");				
-		}		
+		}	
 	}
 	
 	public void stateChanged(ChangeEvent e){
