@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.88 2012/05/30 22:31:38 dougedey Exp $ 
+ * $Id: StrangeSwing.java,v 1.89 2012/05/30 22:34:56 dougedey Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -1180,7 +1180,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							{
 								jPanel1.add(txtName);
 								txtName.setText("Name");
-								txtName.setPreferredSize(new java.awt.Dimension(297, 22));
+								txtName.setPreferredSize(new java.awt.Dimension(297, 26));
 
 							}
 
