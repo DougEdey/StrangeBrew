@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.87 2012/05/30 22:30:47 dougedey Exp $ 
+ * $Id: StrangeSwing.java,v 1.88 2012/05/30 22:31:38 dougedey Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -1142,7 +1142,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						ComboBoxModel evapMethodComboModel = new DefaultComboBoxModel(new String[] { "Constant",
 								"Percent" });
 						{
-							pnlMain.add(jPanel1, new GridBagConstraints(0, 0, 1, 2, 0.0, 0.0, GridBagConstraints.WEST,
+							pnlMain.add(jPanel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST,
 									GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 							FlowLayout jPanel1Layout = new FlowLayout();
 							jPanel1Layout.setAlignment(FlowLayout.LEFT);
