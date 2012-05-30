@@ -31,7 +31,8 @@ public class OpenImport {
 				String c;
 				int i = 0;
 				while ((c = inb.readLine()) != null && i < 10) {
-					if (c.indexOf("BeerXML Format") > -1)
+					// check for an opening tag of Recipes too
+					if (c.indexOf("BeerXML Format") > -1 || c.indexOf("<RECIPES>") > -1 )
 						return "beerxml";
 					if (c.indexOf("STRANGEBREWRECIPE") > -1)
 						return "sb";

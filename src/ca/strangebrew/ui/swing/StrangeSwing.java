@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.89 2012/05/30 22:34:56 dougedey Exp $ 
+ * $Id: StrangeSwing.java,v 1.90 2012/05/30 22:55:12 dougedey Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -885,7 +885,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							pnlDetails.add(brewerNameText, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0),
 									0, 0));
-							brewerNameText.setPreferredSize(new java.awt.Dimension(69, 20));
+							brewerNameText.setPreferredSize(new java.awt.Dimension(69, 26));
 							brewerNameText.setText("Brewer");
 
 						}
@@ -957,7 +957,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0),
 									0, 0));
 							// txtDate.setText("Date");
-							txtDate.setPreferredSize(new java.awt.Dimension(73, 20));
+							txtDate.setPreferredSize(new java.awt.Dimension(73, 26));
 							txtDate.setDateStyle(DateFormat.SHORT);
 							txtDate.setLocale(preferences.getLocale());
 						}

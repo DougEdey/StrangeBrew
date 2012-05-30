@@ -1,5 +1,5 @@
 /*
- * $Id: XmlHandler.java,v 1.29 2008/05/16 14:31:05 andrew_avis Exp $
+ * $Id: XmlHandler.java,v 1.30 2012/05/30 22:55:11 dougedey Exp $
  * Created on Oct 14, 2004
  * 
  * This class is the "content handler" for xml input.
@@ -97,7 +97,8 @@ public class XmlHandler extends DefaultHandler{
 		
 		currentElement = eName;
 		currentAttributes = attrs;
-
+		
+		
 		if (eName.equalsIgnoreCase("STRANGEBREWRECIPE")) {
 			importType = "STRANGEBREW";
 			r = new Recipe();
