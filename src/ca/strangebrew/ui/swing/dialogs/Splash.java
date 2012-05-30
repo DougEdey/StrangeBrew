@@ -106,7 +106,7 @@ public class Splash {
     	Debug.print("OS is: " + lcOSName);
     	//Debug.flush();
     	
-    	if (lcOSName.startsWith("mac os x")) {
+    	if (lcOSName.indexOf("mac") > -1) {
     		System.setProperty("apple.laf.useScreenMenuBar","true");
     		System.setProperty("com.apple.mrj.application.apple.menu.about.name","StrangeBrew");
     	}
