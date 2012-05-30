@@ -1352,10 +1352,39 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			evapAmountLbl.setText(Quantity.getVolAbrv(volUnitsComboModel.getSelectedItem().toString()) + "/hr");
 		}
 		else if (o == crb || o == frb){
-			if (crb.isSelected())
+			// check the current value and see if we need to switch
+			
+			if (crb.isSelected()) {
+			
+				if(boilTempULbl.getText().equals("F"))
+				{
+					boilTempTxt.setText(
+							String.valueOf(
+									BrewCalcs.fToC(
+											Double.parseDouble(
+													boilTempTxt.getText()
+															)
+													)
+											)
+										);
+				}
 				boilTempULbl.setText("C");
-			else
-				boilTempULbl.setText("F");				
+			}
+			else {
+				if(boilTempULbl.getText().equals("C"))
+				{
+					boilTempTxt.setText(
+							String.valueOf(
+									BrewCalcs.cToF(
+											Double.parseDouble(
+													boilTempTxt.getText()
+															)
+													)
+											)
+										);
+				}
+				boilTempULbl.setText("F");
+			}
 		}	
 	}
 	
