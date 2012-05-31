@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.72 2008/05/16 14:31:05 andrew_avis Exp $
+ * $Id: Recipe.java,v 1.73 2012/05/31 01:04:46 dougedey Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -387,6 +387,8 @@ public class Recipe {
 		return getPostBoilVol(s) * CHILLPERCENT;
 	}
 
+	
+	
 	public double getPreBoilVol(final String s) {
 		double vol = getPostBoilVol(s) + getEvapVol(s) + getChillShrinkVol(s);
 		return vol;
@@ -397,6 +399,10 @@ public class Recipe {
 		return vol;
 	}
 
+	public Quantity getPostBoilVol() {
+		return postBoilVol;
+	}
+	
 	public double getPostBoilVol(final String s) {
 		return postBoilVol.getValueAs(s);
 	}

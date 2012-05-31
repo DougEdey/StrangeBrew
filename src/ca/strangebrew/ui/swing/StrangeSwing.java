@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.90 2012/05/30 22:55:12 dougedey Exp $ 
+ * $Id: StrangeSwing.java,v 1.91 2012/05/31 01:04:50 dougedey Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -1801,11 +1801,24 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 			cmbYeast.setToolTipText(st);
 		} else if (o == cmbSizeUnits) {
+			
 			String q = (String) cmbSizeUnits.getSelectedItem();
-			if (myRecipe != null && q != myRecipe.getVolUnits()) {
+			Debug.print("Checking the Size of the boil "+ q + ", recipe: "+ myRecipe.getVolUnits() );
+			if (myRecipe != null && !q.equals(myRecipe.getVolUnits())) {
+				// update the volume boxes
+				//DOUG
+				Debug.print("Setting the text");
+				
+				Quantity temp = myRecipe.getPostBoilVol();
+				temp.convertTo(q);
+				myRecipe.setPostBoil(temp);
+				
 				// also sets postboil units:
 				myRecipe.setVolUnits(q);
+				
 				displayRecipe();
+				
+				
 			}
 		} else if (o == alcMethodCombo) {
 			recipeSettingsActionPerformed(e);
