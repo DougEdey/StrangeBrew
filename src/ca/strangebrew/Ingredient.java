@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * $Id: Ingredient.java,v 1.7 2008/01/05 14:42:04 jimcdiver Exp $
+ * $Id: Ingredient.java,v 1.8 2012/06/02 19:40:58 dougedey Exp $
  * Created on Oct 21, 2004
  * @author aavis
  *
@@ -117,6 +117,6 @@ public class Ingredient implements Comparable<Ingredient> {
 
 	public int compareTo(Ingredient i) {
 		int result = this.getName().compareToIgnoreCase(i.getName());				
-		return (result == 0 ? -1 : result);				
+		return result;				
 	}
 }

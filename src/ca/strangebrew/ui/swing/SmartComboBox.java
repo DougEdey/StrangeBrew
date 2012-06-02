@@ -15,6 +15,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.PlainDocument;
 
+import ca.strangebrew.Debug;
+
 /* This work is hereby released into the Public Domain.
  * To view a copy of the public domain dedication, visit
  * http://creativecommons.org/licenses/publicdomain/
@@ -50,6 +52,8 @@ public class SmartComboBox extends PlainDocument {
 					configureEditor((ComboBoxEditor) e.getNewValue());
 				if (e.getPropertyName().equals("model"))
 					model = (ComboBoxModel) e.getNewValue();
+				
+				Debug.print("SmartComboBox property:"+e.getPropertyName());
 			}
 		});
 		editorKeyListener = new KeyAdapter() {

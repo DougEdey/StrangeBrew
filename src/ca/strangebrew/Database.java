@@ -9,13 +9,14 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.25 2008/07/07 17:51:14 andrew_avis Exp $
+ * $Id: Database.java,v 1.26 2012/06/02 19:40:58 dougedey Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -32,7 +33,7 @@ public class Database {
 
 	private static Database instance = null;
 	
-	final public List<Fermentable> fermDB = new ArrayList<Fermentable>();
+	public List<Fermentable> fermDB = new ArrayList<Fermentable>();
 	final public List<Hop> hopsDB = new ArrayList<Hop>();
 	final public List<Yeast> yeastDB = new ArrayList<Yeast>();
 	public List<Style> styleDB = new ArrayList<Style>();
@@ -154,7 +155,8 @@ public class Database {
 				int descrIdx = getIndex(fields, "Descr");
 				int steepIdx = getIndex(fields, "Steep");
 				int modIdx = getIndex(fields, "Modified");
-
+				
+				
 				while (true) {
 					Fermentable f = new Fermentable();
 					fields = reader.getAllFieldsInLine();
@@ -177,7 +179,7 @@ public class Database {
 			}
 			reader.close();	
 			
-
+			Collections.sort(fermDB);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -185,6 +187,39 @@ public class Database {
 		}
 
 	}
+	
+	public void writeFermentables(String item, String name, String yield, String lov, String cost, String units, 
+				String mash, String descr, String steep, String modified) {
+		
+		File maltsFile = new File(dbPath, "malts.csv");
+		backupFile(maltsFile);
+		
+		try {
+			CSVWriter append = new CSVWriter(new FileWriter(maltsFile, true));
+			// we should now be appending
+			append.put(item);	// count, no idea why
+			append.put(name);
+			append.put(yield);
+			append.put(lov);
+			append.put(cost);
+			append.put(units);
+			append.put(mash);
+			append.put(descr);
+			append.put(steep);
+			append.put(modified);
+			append.nl();
+			
+			append.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			
+		}
+		
+
+	
+	}
+	
+	
 	
 	public void writeFermentables() {		
 		
@@ -206,9 +241,17 @@ public class Database {
 			writer.put("Modified");
 			writer.nl();
 			int i = 0;
+			
+			// sort the list first
+			Collections.sort(fermDB);
+			
 			while (i < fermDB.size()) {
 				Fermentable f = fermDB.get(i);
 				i++;
+				if(f.getName().equals("Add New")) {
+					//skip the add step
+					continue;
+				}
 				writer.put("" + (i));
 				writer.put(f.getName());
 				writer.put("" + f.getPppg());
@@ -224,6 +267,15 @@ public class Database {
 			}
 
 			writer.close();
+			//clear the list
+			fermDB = new ArrayList<Fermentable>();
+			
+			Debug.print("Trying to update DB at: "+dbPath);
+			readFermentables(dbPath);
+			
+			
+			//this.readFermentables(dbPath);
+			
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -655,6 +707,27 @@ public class Database {
 			return i;
 	}
 	
+	public int find(Object seek) {
+		// check the objects and seek specifically
+		int index = -1;
+		if(seek instanceof Fermentable) {
+			index = Collections.binarySearch(fermDB, (Fermentable)seek);
+		} else if(seek instanceof Hop) {
+			Comparator<Hop> c = new Comparator<Hop>()  {
+				public int compare(Hop h1, Hop h2){
+					
+					int result = h1.getName().compareToIgnoreCase(h2.getName());
+					Debug.print("Hop comparing: "+h1.getName() + " to: " + h2.getName() + " got " + result);	
+					return result ;
+				}
+			
+			};
+			index = Collections.binarySearch(hopsDB, (Hop)seek, c);
+		}
+		// we can't find the object, lets return
+		return index;
+	}
+	
 	public void backupFile(File in){
 		try {
 		File out = new File (in.getAbsolutePath() + ".bak");
@@ -669,4 +742,4 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
-}
+} 

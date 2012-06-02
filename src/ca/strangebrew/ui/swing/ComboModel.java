@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
+import javax.swing.MutableComboBoxModel;
 
 import ca.strangebrew.Fermentable;
 import ca.strangebrew.Hop;
@@ -16,11 +17,12 @@ import ca.strangebrew.Style;
 import ca.strangebrew.Yeast;
 
 
-public class ComboModel<T> extends AbstractListModel implements ComboBoxModel {
+public class ComboModel<T> extends AbstractListModel implements MutableComboBoxModel {
 	
 	List<T> list = new ArrayList<T>();
 	T selected = null;
 
+	
 	public void addOrInsert(T o) {
 
 		int i = 0;
@@ -102,5 +104,25 @@ public class ComboModel<T> extends AbstractListModel implements ComboBoxModel {
 		for (int i=0; i<sList.length; i++) {
 			list.add(sList[i]);
 		}
+	}
+
+	public void addElement(Object item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void removeElement(Object obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void insertElementAt(Object item, int index) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void removeElementAt(int index) {
+		// TODO Auto-generated method stub
+		
 	}
 }

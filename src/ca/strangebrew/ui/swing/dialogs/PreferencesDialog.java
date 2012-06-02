@@ -1264,7 +1264,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				pnlEvaporationLayout.columnWeights = new double[] {0.1, 0.1};
 				pnlEvaporationLayout.columnWidths = new int[] {7, 7};
 				pnlEvaporation.setLayout(pnlEvaporationLayout);
-				pnlEvaporation.setLayout(pnlEvaporationLayout);
+				
 				pnlEvaporation.setBorder(BorderFactory.createTitledBorder("Evaporation:"));
 				pnlEvaporation.add(rbPercent, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 				pnlEvaporation.add(rbConstant, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));

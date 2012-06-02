@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.91 2012/05/31 01:04:50 dougedey Exp $ 
+ * $Id: StrangeSwing.java,v 1.92 2012/06/02 19:40:57 dougedey Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -49,6 +49,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -108,6 +109,9 @@ import ca.strangebrew.Style;
 import ca.strangebrew.XmlTransformer;
 import ca.strangebrew.Yeast;
 import ca.strangebrew.ui.swing.dialogs.AboutDialog;
+import ca.strangebrew.ui.swing.dialogs.AddFermDialog;
+import ca.strangebrew.ui.swing.dialogs.AddHopsDialog;
+import ca.strangebrew.ui.swing.dialogs.AddYeastDialog;
 import ca.strangebrew.ui.swing.dialogs.ConversionDialog;
 import ca.strangebrew.ui.swing.dialogs.FindDialog;
 import ca.strangebrew.ui.swing.dialogs.HydrometerToolDialog;
@@ -262,6 +266,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JMenuItem extractPotentialMenuItem = new JMenuItem();
 	final private JMenuItem maltPercentMenuItem = new JMenuItem();
 	final private JMenuItem refractometerMenuItem = new JMenuItem();
+	final private JMenuItem fermentableMenuItem = new JMenuItem();
+	final private JMenuItem hopsMenuItem = new JMenuItem();
+	final private JMenuItem yeastMenuItem = new JMenuItem();
 	final private JMenuItem hydrometerToolMenuItem = new JMenuItem();
 	final private JMenuItem conversionToolMenuItem = new JMenuItem();
 	final private JMenuItem clipboardMenuItem = new JMenuItem("Copy to Clipboard");
@@ -398,7 +405,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	 * e) {} }
 	 */
 
-	public StrangeSwing() {
+	public StrangeSwing() throws UnsupportedEncodingException {
 		super();
 
 		preferences = Options.getInstance();
@@ -451,7 +458,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 		cmbStyleModel.setList(DB.styleDB);
 		cmbYeastModel.setList(DB.yeastDB);
+		
 		cmbMaltModel.setList(DB.fermDB);
+		
+		
 		cmbHopsModel.setList(DB.hopsDB);
 		carbPanel.setList(DB.primeSugarDB);
 //		waterTreatmentPanel.setList(DB.waterDB);
@@ -627,10 +637,14 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	}
 
 	public void focusGained(FocusEvent e) {
-		// do nothing, we don't need this event
+		//We gained focus, update all elements
+		Debug.print("Gained focus on StrangeSwing "+ e.getSource());
+		this.cmbMaltModel.setList(DB.fermDB);
 	}
+	
 
 	public void focusLost(FocusEvent e) {
+		Debug.print("Focus Lost from StrangeSwing");
 		Object o = e.getSource();
 		ActionEvent evt = new ActionEvent(o, 1, "");
 		actionPerformed(evt);
@@ -674,11 +688,14 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	}
 
 	public void windowActivated(WindowEvent e) {
+		Debug.print("Window Event!");
+		maltTable.updateUI();
 	}
 
 	public void windowClosed(WindowEvent e) {
 	}
 
+	
 	// This main window is closing, prompt to save file:
 	public void windowClosing(WindowEvent e) {
 		// displayMessage("WindowListener method called: windowClosing.");
@@ -823,6 +840,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		conversionToolMenuItem.addActionListener(this);
 		hydrometerToolMenuItem.addActionListener(this);
 		extractPotentialMenuItem.addActionListener(this);
+		fermentableMenuItem.addActionListener(this);
+		hopsMenuItem.addActionListener(this);
+		yeastMenuItem.addActionListener(this);
 		refractometerMenuItem.addActionListener(this);
 		maltPercentMenuItem.addActionListener(this);
 		scaleRecipeMenuItem.addActionListener(this);
@@ -1251,6 +1271,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								// set up malt list combo
 								SmartComboBox.enable(maltComboBox);
 								maltComboBox.setModel(cmbMaltModel);
+								
 								maltColumn.setCellEditor(new SBComboBoxCellEditor(maltComboBox));
 
 								// set up malt amount editor
@@ -1532,6 +1553,18 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						deleteMenuItem.setText("Delete");
 						deleteMenuItem.setEnabled(false);
 					}
+					{
+						editMenu.add(jSeparator1);
+					}
+					{
+						editMenu.add(fermentableMenuItem);
+						fermentableMenuItem.setText("Add Fermentable");
+						editMenu.add(hopsMenuItem);
+						hopsMenuItem.setText("Add Hop");
+						editMenu.add(yeastMenuItem);
+						yeastMenuItem.setText("Add Yeast");
+					}
+					
 				}
 				{
 					mainMenuBar.add(mnuTools);
@@ -1832,6 +1865,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			Fermentable f = (Fermentable) cmbMaltModel.getSelectedItem();
 			int i = maltTable.getSelectedRow();
 			if (myRecipe != null && i != -1) {
+				// check if we're adding a new ingredient
 				Fermentable f2 = myRecipe.getFermentable(i);
 				if (f2 != null) {
 					f2.setLov(f.getLov());
@@ -1843,6 +1877,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				}
 				maltTable.updateUI();
 				myRecipe.setDirty(true);
+			
 				// displayRecipe();
 			}
 		} else if (o == maltUnitsComboBox) {
@@ -1912,7 +1947,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			aboutDlg = new AboutDialog(this, version + " " + edition);
 			aboutDlg.setVisible(true);
 		} else if (o == helpMenuItem) {
-			String urlString = SBStringUtils.getAppPath("help") + "index.html";
+			String urlString = null;
+			try {
+				urlString = SBStringUtils.getAppPath("help") + "index.html";
+			} catch (UnsupportedEncodingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			Debug.print(urlString);
 			AbstractLogger logger = new SystemLogger();
 			BrowserLauncher launcher;
@@ -1942,6 +1983,19 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			RefractometerDialog refract = new RefractometerDialog(this);
 			refract.setModal(true);
 			refract.setVisible(true);
+		} else if (o == fermentableMenuItem) {
+			AddFermDialog ferm = new AddFermDialog(this);
+			ferm.setModal(true);
+			ferm.setVisible(true);
+		} else if (o == hopsMenuItem) {
+			AddHopsDialog hop = new AddHopsDialog(this);
+			hop.setModal(true);
+			hop.setVisible(true);
+		} else if (o == yeastMenuItem) {
+			Debug.print("Opening yeast Menu");
+			AddYeastDialog yeast = new AddYeastDialog(this);
+			yeast.setModal(true);
+			yeast.setVisible(true);
 		} else if (o == maltPercentMenuItem) {
 			MaltPercentDialog maltPercent = new MaltPercentDialog(this);
 			maltPercent.setModal(true);
@@ -2127,6 +2181,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		} else if (o == spnEffic) {
 			myRecipe.setEfficiency(Double.parseDouble(spnEffic.getValue().toString()));
 			displayRecipe();
+		} else {
+			Debug.print("State changed for untested: " + o);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 /**
  * Created on Oct 4, 2004
- * $Id: Fermentable.java,v 1.10 2007/12/18 17:54:01 jimcdiver Exp $
+ * $Id: Fermentable.java,v 1.11 2012/06/02 19:40:58 dougedey Exp $
  * @author aavis
  *
  * This is the base malt class.  It doesn't do much, except hold data
@@ -9,7 +9,10 @@
 
 package ca.strangebrew;
 
-public class Fermentable extends Ingredient {
+import java.util.Comparator;
+
+public class Fermentable extends Ingredient  {
+	
 	// base data
 	private double pppg;
 	private double lov;
@@ -97,6 +100,8 @@ public class Fermentable extends Ingredient {
 	    sb.append( "    </ITEM>\n" );
 	    return sb.toString();
 	}
+	
+	
 	
 
 }

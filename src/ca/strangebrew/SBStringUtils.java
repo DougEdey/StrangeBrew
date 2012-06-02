@@ -6,7 +6,9 @@
 package ca.strangebrew;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLDecoder;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -109,15 +111,17 @@ public class SBStringUtils {
 		return s;
 	}
 	
-	public static String getAppPath(String type){
+	public static String getAppPath(String type) throws UnsupportedEncodingException{
 		String appRoot = "";
 		String path = "";
 		String slash = System.getProperty("file.separator");
-		try {
-			appRoot = new File(".").getCanonicalPath();
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		
+		String jpath = new File(SBStringUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParentFile().getPath();
+		//File nFile = new File(jpath).getParentFile().getPath();
+		appRoot = URLDecoder.decode(jpath, "UTF-8");
+		Debug.print("Path: "+ appRoot);
+		
+		
 		if (type.equals("data"))
 			path = appRoot + slash + "src" + slash + "ca" 
 				+ slash + "strangebrew" + slash + "data";
