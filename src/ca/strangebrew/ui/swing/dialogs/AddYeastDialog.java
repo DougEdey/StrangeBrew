@@ -225,7 +225,7 @@ public class AddYeastDialog extends javax.swing.JDialog implements ActionListene
 		Debug.print("Action performed on: " + o);
 		if(o == okButton) {
 			
-			
+			Debug.print("Checking Yeast...");
 			// create a new Yeast object
 			Yeast i = new Yeast();
 			i.setName(txtName.getText());
@@ -241,9 +241,8 @@ public class AddYeastDialog extends javax.swing.JDialog implements ActionListene
 				// This already exists, do we want to overwrite?
 				result = JOptionPane.showConfirmDialog((Component) null, 
 							"This ingredient exists, overwrite original?","alert", JOptionPane.YES_NO_CANCEL_OPTION); 
-			}
-			
-			switch(result) {
+				
+				switch(result) {
 				case JOptionPane.NO_OPTION:
 					setVisible(false);
 					dispose();
@@ -255,8 +254,11 @@ public class AddYeastDialog extends javax.swing.JDialog implements ActionListene
 				
 				case JOptionPane.CANCEL_OPTION:
 					return;
+				}
 			}
 			
+			
+			Debug.print("Adding yeast: " + i.getName());
 			db.yeastDB.add(i);
 			db.writeYeast();
 

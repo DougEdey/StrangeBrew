@@ -14,6 +14,7 @@
 package ca.strangebrew.ui.swing.dialogs;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -22,6 +23,9 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -30,8 +34,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JViewport;
+import javax.swing.ScrollPaneLayout;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -42,7 +49,7 @@ import ca.strangebrew.Options;
 import ca.strangebrew.ui.swing.StrangeSwing;
 
 
-public class AddHopsDialog extends javax.swing.JDialog implements ActionListener, ChangeListener {
+public class AddHopsDialog extends javax.swing.JDialog implements ActionListener, ChangeListener, FocusListener {
 
 	private Database db;
 	
@@ -78,6 +85,7 @@ public class AddHopsDialog extends javax.swing.JDialog implements ActionListener
 	final private JLabel lblDescr = new JLabel();
 	final private JTextArea txtDescr = new JTextArea();
 	
+	
 	final private JLabel lblStorage= new JLabel();
 	final private JTextField txtStorage = new JTextField();
 	
@@ -86,7 +94,7 @@ public class AddHopsDialog extends javax.swing.JDialog implements ActionListener
 	
 	final private JButton okButton = new JButton();
 	final private JButton cancelButton = new JButton();
-
+	JScrollPane jScrollDescr =new JScrollPane(txtDescr, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 	public AddHopsDialog(Frame owner) {
 		super(owner, "Add Hop", true);
@@ -112,6 +120,7 @@ public class AddHopsDialog extends javax.swing.JDialog implements ActionListener
 		JPanel lOne = new JPanel(new FlowLayout(FlowLayout.LEFT));//new GridLayout());
 		JPanel lTwo = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel lThree = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		lThree.setPreferredSize(new Dimension(400,60));
 		JPanel lFour = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel lFive = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
@@ -121,14 +130,9 @@ public class AddHopsDialog extends javax.swing.JDialog implements ActionListener
 		
 		mainPanel.setLayout(gridBag);
 		this.setTitle("Add Hop");
-		this.setSize(500,300);
+		this.setSize(500,400);
 		//
 
-		mainPanel.add(lOne);
-		mainPanel.add(lTwo);
-		mainPanel.add(lThree);
-		mainPanel.add(lFour);
-		mainPanel.add(lFive);
 		
 		try {
 			// First Line	
@@ -139,8 +143,8 @@ public class AddHopsDialog extends javax.swing.JDialog implements ActionListener
 	
 				lOne.add(txtName, c);
 				txtName.setPreferredSize(new java.awt.Dimension(120, 20));
-	
-				
+				txtName.addActionListener(this);
+				txtName.addFocusListener(this);
 				
 				lOne.add(lblAlpha, c);
 				lblAlpha.setText("Alpha: ");
@@ -181,28 +185,34 @@ public class AddHopsDialog extends javax.swing.JDialog implements ActionListener
 			}
 			//Third
 			{
-				lThree.add(lblUnits, c);
-				lblUnits.setText("Units: ");
 	
-				lThree.add(cUnits, c);
-				cUnits.addItem("g");
-				cUnits.addItem("oz");
-				
-	
-				
 //				Mash.setPreferredSize(new java.awt.Dimension(55, 20));
+			//	lThree.setLayout(null);
+				//lThree.add(lblDescr, c);
+				//lblDescr.setText("Description: ");
 				
-				lThree.add(lblDescr, c);
-				lblDescr.setText("Description: ");
-
-				lThree.add(txtDescr, c);
-				txtDescr.setPreferredSize(new java.awt.Dimension(120, 40));
-	
+				txtDescr.setLineWrap(true);
+				//txtDescr.setPreferredSize(new java.awt.Dimension(400, 40));
+				
+				jScrollDescr.setPreferredSize(new java.awt.Dimension(400,50)); 
+				jScrollDescr.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+				jScrollDescr.setLayout(new ScrollPaneLayout());
+				//lThree.add(jScrollDescr , c);
 	
 				//c.gridwidth = GridBagConstraints.REMAINDER;
 			}
 			//Fourth
-			{
+			{			
+				lFour.add(lblUnits, c);
+				lblUnits.setText("Units: ");
+				
+				lFour.add(cUnits, c);
+				cUnits.addItem("g");
+				cUnits.addItem("oz");
+				
+
+			
+			
 				lFour.add(lblStorage, c);
 				lblStorage.setText("Storage: ");
 	
@@ -232,6 +242,12 @@ public class AddHopsDialog extends javax.swing.JDialog implements ActionListener
 				
 				//c.gridwidth = GridBagConstraints.REMAINDER;
 			}
+
+			mainPanel.add(lOne);
+			mainPanel.add(lTwo);
+			mainPanel.add(jScrollDescr);
+			mainPanel.add(lFour);
+			mainPanel.add(lFive);
 		// 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -305,11 +321,59 @@ public class AddHopsDialog extends javax.swing.JDialog implements ActionListener
 		
 	}
 	
+	public void focusLost(FocusEvent e) {
+		if(e.getSource() == txtName) {
+			// this is where we have lost focus, so now we need to populate the data
+			// See if we can find the hop
+			Hop temp = new Hop();
+			temp.setName(txtName.getText());
+			int result = db.find(temp);
+			Debug.print("Searching for " + txtName.getText() + " found: " + result);
+			if(result >= 0) {
+			
+				// we have the index, load it into the hop
+				temp = db.hopsDB.get(result);
+				// set the fields
+				if(Double.toString(temp.getAlpha())!= null)
+					txtAlpha.setText(Double.toString(temp.getAlpha()));
+				if(Double.toString(temp.getCostPerU()) != null)
+					txtCost.setText(Double.toString(temp.getCostPerU()));
+				if(temp.getDate() != null)
+					txtDate.setText(temp.getDate().toString());
+				if(Double.toString(temp.getStock()) != null)
+					txtStock.setText(Double.toString(temp.getStock()));
+				if(temp.getUnits() != null)
+					cUnits.setSelectedItem(temp.getUnits());
+				if(temp.getDescription() != null){
+					
+					txtDescr.setText(temp.getDescription());
+					jScrollDescr.invalidate();
+				}
+				if(Double.toString(temp.getStorage()) != null)
+					txtStorage.setText(Double.toString(temp.getStorage()));
+				
+				jScrollDescr.getVerticalScrollBar().setValue(0);
+				jScrollDescr.revalidate();
+				
+			}
+		}
+		
+		Debug.print("Focus changed on: " + e.getSource());
+		
+	}
 	public void stateChanged(ChangeEvent e){
 		Object o = e.getSource();
 		
 		Debug.print("State changed on: " + o);
 		
+		
+	}
+
+
+
+
+	public void focusGained(FocusEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 	

@@ -1,4 +1,6 @@
 package ca.strangebrew;
+import java.awt.Dialog;
+import java.awt.Frame;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +18,7 @@ import com.mindprod.csv.CSVReader;
 import com.mindprod.csv.CSVWriter;
 
 /**
- * $Id: Database.java,v 1.26 2012/06/02 19:40:58 dougedey Exp $
+ * $Id: Database.java,v 1.27 2012/06/03 17:07:52 dougedey Exp $
  * @author aavis
  *
  * This is the Database class that reads in the .csv files and 
@@ -119,6 +121,17 @@ public class Database {
 	public void readDB(String path, String styleYear){
 		dbPath = path;
 		styleFileName = "styleguide" + styleYear + ".xml";
+		
+		File styleFile = new File(path, styleFileName);
+		if(!styleFile.exists()){
+			Frame window = new Frame();
+			// style file doesn't exist!
+			Dialog d = new Dialog(window, "Can not open style guide: "+path+"/"+styleFileName+"\n Please check your install!");
+			//try reverting to the base styleguide
+			styleFileName = "styleguide.xml";
+			
+			styleFile = new File(path, styleFileName);
+		}
 		readFermentables(dbPath);
 		readPrimeSugar(dbPath);
 		readHops(dbPath);
@@ -352,6 +365,10 @@ public class Database {
 			writer.put("Modified");
 			writer.nl();
 			int i = 0;
+			
+			//Sort the list
+			Collections.sort(hopsDB);
+			
 			while (i < hopsDB.size()) {
 				Hop h = hopsDB.get(i);
 				i++;
@@ -433,6 +450,10 @@ public class Database {
 			writer.put("Modified");
 			writer.nl();
 			int i = 0;
+			
+			// Sort the Yeast
+			Collections.sort(yeastDB);
+			
 			while (i < yeastDB.size()) {
 				Yeast y = yeastDB.get(i);
 				i++;
@@ -723,6 +744,8 @@ public class Database {
 			
 			};
 			index = Collections.binarySearch(hopsDB, (Hop)seek, c);
+		} else if(seek instanceof Yeast) {
+			index = Collections.binarySearch(yeastDB, (Yeast)seek);
 		}
 		// we can't find the object, lets return
 		return index;

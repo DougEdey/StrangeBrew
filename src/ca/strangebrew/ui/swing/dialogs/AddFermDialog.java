@@ -24,6 +24,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,10 +45,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneLayout;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -70,7 +74,7 @@ import ca.strangebrew.ui.swing.SmartComboBox;
 import ca.strangebrew.ui.swing.StrangeSwing;
 
 
-public class AddFermDialog extends javax.swing.JDialog implements ActionListener, ChangeListener {
+public class AddFermDialog extends javax.swing.JDialog implements ActionListener, ChangeListener, FocusListener {
 
 	private Database db;
 	
@@ -112,6 +116,7 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 	
 	final private JLabel lblDescr = new JLabel();
 	final private JTextArea txtDescr = new JTextArea();
+	JScrollPane jScrollDescr =new JScrollPane(txtDescr, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	
 	final private JLabel lblSteep = new JLabel();
 	final private JCheckBox bSteep = new JCheckBox();
@@ -144,7 +149,7 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 		GridLayout gridBag = new GridLayout(0,1);
 		GridBagConstraints c = new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		
+		txtName.addFocusListener(this);
 		c = null;
 		
 		JPanel lOne = new JPanel(new FlowLayout(FlowLayout.LEFT));//new GridLayout());
@@ -164,7 +169,7 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 
 		mainPanel.add(lOne);
 		mainPanel.add(lTwo);
-		mainPanel.add(lThree);
+		mainPanel.add(jScrollDescr);
 		mainPanel.add(lFour);
 		mainPanel.add(lFive);
 		
@@ -222,28 +227,29 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 			}
 			//Third
 			{
-				lThree.add(lblUnits, c);
-				lblUnits.setText("Units: ");
-	
-				lThree.add(cUnits, c);
-				cUnits.addItem("lb");
-				cUnits.addItem("kg");
-				
+			
 	
 				
 //				Mash.setPreferredSize(new java.awt.Dimension(55, 20));
 				
-				lThree.add(lblDescr, c);
-				lblDescr.setText("Description: ");
-	
-				lThree.add(txtDescr, c);
-				txtDescr.setPreferredSize(new java.awt.Dimension(120, 60));
-	
+				txtDescr.setLineWrap(true);
+				//txtDescr.setPreferredSize(new java.awt.Dimension(400, 40));
+				
+				jScrollDescr.setPreferredSize(new java.awt.Dimension(400,50)); 
+				jScrollDescr.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+				jScrollDescr.setLayout(new ScrollPaneLayout());
 	
 				//c.gridwidth = GridBagConstraints.REMAINDER;
 			}
 			//Fourth
 			{
+				lFour.add(lblUnits, c);
+				lblUnits.setText("Units: ");
+	
+				lFour.add(cUnits, c);
+				cUnits.addItem("lb");
+				cUnits.addItem("kg");
+				
 				lFour.add(lblMash, c);
 				lblMash.setText("Mashed: ");
 	
@@ -313,10 +319,8 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 			if((found = db.find(i)) >= 0){
 				// This already exists, do we want to overwrite?
 				result = JOptionPane.showConfirmDialog((Component) null, 
-							"This ingredient exists, overwrite original?","alert", JOptionPane.YES_NO_CANCEL_OPTION); 
-			}
-			
-			switch(result) {
+							"This ingredient exists, overwrite original?","alert", JOptionPane.YES_NO_CANCEL_OPTION);
+				switch(result) {
 				case JOptionPane.NO_OPTION:
 					setVisible(false);
 					dispose();
@@ -328,7 +332,10 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 				
 				case JOptionPane.CANCEL_OPTION:
 					return;
+				}
 			}
+			
+			
 			
 			db.fermDB.add(i);
 			db.writeFermentables();
@@ -342,11 +349,71 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 		
 	}
 	
+	public void focusLost(FocusEvent e) {
+		Debug.print("Focus changed on: " + e.getSource());
+		if(e.getSource() == txtName) {
+			// this is where we have lost focus, so now we need to populate the data
+			// See if we can find the Fermentable
+			Fermentable temp = new Fermentable();
+			temp.setName(txtName.getText());
+			int result = db.find(temp);
+			Debug.print("Searching for " + txtName.getText() + " found: " + result);
+			if(result >= 0) {
+			
+				// we have the index, load it into the hop
+				temp = db.fermDB.get(result);
+				// set the fields
+				if(Double.toString(temp.getPppg())!= null)
+					txtYield.setText(Double.toString(temp.getPppg()));
+				
+				if(Double.toString(temp.getLov()) != null)
+					txtCost.setText(Double.toString(temp.getLov()));
+				
+				if(Double.toString(temp.getCostPerU()) != null)
+					txtCost.setText(Double.toString(temp.getCostPerU()));
+				
+				if(Double.toString(temp.getStock()) != null)
+					txtStock.setText(Double.toString(temp.getStock()));
+				
+				if(temp.getUnits() != null)
+					cUnits.setSelectedItem(temp.getUnits());
+				
+				if(temp.getMashed()) 
+					bMash.setSelected(temp.getMashed());
+				
+				if(temp.getSteep()) 
+					bSteep.setSelected(temp.getSteep());
+				
+				if(temp.getModified()) 
+					bModified.setSelected(temp.getModified());
+				
+				if(temp.getDescription() != null){
+					
+					txtDescr.setText(temp.getDescription());
+					jScrollDescr.invalidate();
+				}
+				
+				jScrollDescr.getVerticalScrollBar().setValue(0);
+				jScrollDescr.revalidate();
+				
+			}
+		}
+		
+		
+		
+	}
+	
 	public void stateChanged(ChangeEvent e){
 		Object o = e.getSource();
 		
 		Debug.print("State changed on: " + o);
 		
+		
+	}
+
+
+	public void focusGained(FocusEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 	
