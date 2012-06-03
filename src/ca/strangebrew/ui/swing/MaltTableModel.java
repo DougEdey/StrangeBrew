@@ -5,6 +5,7 @@ package ca.strangebrew.ui.swing;
 
 import javax.swing.table.AbstractTableModel;
 
+import ca.strangebrew.Debug;
 import ca.strangebrew.Fermentable;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
@@ -109,7 +110,7 @@ class MaltTableModel extends AbstractTableModel {
 	 * change.
 	 */
 	public void setValueAt(Object value, int row, int col) {
-
+		Debug.print("Setting at " + row + "/" + col);
 		// Fermentable m = (Fermentable) data.get(row);
 		try {
 			switch (col) {
@@ -120,7 +121,9 @@ class MaltTableModel extends AbstractTableModel {
 					data.setMaltMashed(row, new Boolean(value.toString()).booleanValue());
 					break;
 				case 2 :
+					
 					data.setMaltName(row, value.toString());
+					
 					// Shouldn't this re-set most of the data fields with base info
 					if (value instanceof Fermentable) {
 						Fermentable m = (Fermentable)value;
@@ -131,7 +134,9 @@ class MaltTableModel extends AbstractTableModel {
 					}
 					break;
 				case 3 :
-					data.setMaltAmount(row, Double.parseDouble(value.toString()));					
+					data.setMaltAmount(row, Double.parseDouble(value.toString()));	
+					//sort by the malt amount	
+					
 					break;
 				case 4 :
 					// m.setUnits(value.toString());

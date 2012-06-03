@@ -1,5 +1,5 @@
 /*
- * $Id: Recipe.java,v 1.73 2012/05/31 01:04:46 dougedey Exp $
+ * $Id: Recipe.java,v 1.74 2012/06/03 19:29:17 dougedey Exp $
  * Created on Oct 4, 2004 @author aavis recipe class
  */
 
@@ -28,6 +28,7 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -880,7 +881,7 @@ public class Recipe {
 		// have to re-sort
 		isDirty = true;
 		fermentables.get(i).setName(n);
-		Collections.sort(fermentables);
+		
 	}
 
 	public void setMaltUnits(final int i, final String u) {
@@ -891,6 +892,24 @@ public class Recipe {
 	public void setMaltAmount(final int i, final double a) {
 		isDirty = true;
 		fermentables.get(i).setAmount(a);
+		Comparator<Fermentable> c = new Comparator<Fermentable>()  {
+			public int compare(Fermentable h1, Fermentable h2){
+				
+				Debug.print("Comparing " + h1.getAmountAs(Quantity.LB) + " to " + h2.getAmountAs(Quantity.LB) );
+				if(h1.getAmountAs(Quantity.LB) > h2.getAmountAs(Quantity.LB))
+					return 1;
+				if(h1.getAmountAs(Quantity.LB) < h2.getAmountAs(Quantity.LB))
+					return -1;
+				if(h1.getAmountAs(Quantity.LB) == h2.getAmountAs(Quantity.LB))
+					return 0;
+				return 0;
+				
+			}
+		
+		};
+		
+		Collections.sort(fermentables, c);
+		Collections.reverse(fermentables);
 	}
 
 	public void setMaltAmountAs(final int i, final double a, final String u) {
@@ -1137,7 +1156,23 @@ public class Recipe {
 	public void addMalt(final Fermentable m) {
 		isDirty = true;
 		fermentables.add(m);
-		Collections.sort(fermentables);
+		Comparator<Fermentable> c = new Comparator<Fermentable>()  {
+			public int compare(Fermentable h1, Fermentable h2){
+				
+				Debug.print("Comparing " + h1.getAmountAs(Quantity.LB) + " to " + h2.getAmountAs(Quantity.LB) );
+				if(h1.getAmountAs(Quantity.LB) > h2.getAmountAs(Quantity.LB))
+					return 1;
+				if(h1.getAmountAs(Quantity.LB) < h2.getAmountAs(Quantity.LB))
+					return -1;
+				if(h1.getAmountAs(Quantity.LB) == h2.getAmountAs(Quantity.LB))
+					return 0;
+				return 0;
+				
+			}
+		
+		};
+		Collections.sort(fermentables, c);
+		Collections.reverse(fermentables);
 		calcMaltTotals();
 	}
 

@@ -9,6 +9,8 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.table.TableCellEditor;
 
+import ca.strangebrew.Debug;
+
 public class SBComboBoxCellEditor extends AbstractCellEditor implements
 		ActionListener, TableCellEditor, Serializable {
 

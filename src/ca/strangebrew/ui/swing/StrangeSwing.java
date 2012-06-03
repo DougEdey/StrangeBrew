@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.92 2012/06/02 19:40:57 dougedey Exp $ 
+ * $Id: StrangeSwing.java,v 1.93 2012/06/03 19:29:16 dougedey Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -82,6 +82,7 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -1863,7 +1864,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			recipeSettingsActionPerformed(e);
 		} else if (o == maltComboBox) {
 			Fermentable f = (Fermentable) cmbMaltModel.getSelectedItem();
+			
 			int i = maltTable.getSelectedRow();
+			Debug.print("Malt combo box selected");
 			if (myRecipe != null && i != -1) {
 				// check if we're adding a new ingredient
 				Fermentable f2 = myRecipe.getFermentable(i);
@@ -1875,7 +1878,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					f2.setSteep(f.getSteep());
 					f2.setCost(f.getCostPerU());
 				}
-				maltTable.updateUI();
+				SwingUtilities.invokeLater(new Runnable() {
+				    public void run() {
+				      maltTable.updateUI();
+				    }
+				  });
+				//maltTable.updateUI();
 				myRecipe.setDirty(true);
 			
 				// displayRecipe();
