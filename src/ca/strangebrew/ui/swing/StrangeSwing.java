@@ -1,5 +1,5 @@
 /*
- * $Id: StrangeSwing.java,v 1.93 2012/06/03 19:29:16 dougedey Exp $ 
+ * $Id: StrangeSwing.java,v 1.94 2012/06/04 02:43:59 dougedey Exp $ 
  * Created on June 15, 2005 @author aavis main recipe window class
  */
 
@@ -104,6 +104,7 @@ import ca.strangebrew.Ingredient;
 import ca.strangebrew.OpenImport;
 import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
+import ca.strangebrew.RandomName;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.Style;
@@ -154,7 +155,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private File currentFile;
 	private ImageIcon icon;
 	private URL imgURL;
-
+	private RandomName rName = new RandomName();
+	
 	// All the GUE elements are final, speeds app since the VM doesnt try and
 	// garbage collect these
 	final private MashPanel mashPanel = new MashPanel(myRecipe);;
@@ -312,7 +314,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JFormattedTextField preBoilText = new JFormattedTextField();
 	final private JButton printButton = new JButton();
 	final private JButton copyButton = new JButton();
-
+	final private JButton randomButton = new JButton();
+	
 	final public Database DB;
 
 	private boolean dontUpdate = false;
@@ -320,9 +323,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	// an object that you give to other gui objects so that they can set things
 	// on the main SB GUI
 	// used by style and settings panels
-	// sbn.displayRecipe() causes infinite loops as it trigers updateActions all
+	// sbn.displayRecipe() causes infinite loops as it triggers updateActions all
 	// over which call back into displayRecipe()
-	// Notifer obsolete on these with singelton instance
+	// Notifer obsolete on these with singleton instance
 	public void hopsUpdateUI() {
 		hopsTable.updateUI();
 	}
@@ -833,6 +836,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		evapMethodCombo.addActionListener(this);
 
 		saveButton.addActionListener(this);
+		randomButton.addActionListener(this);
 		findButton.addActionListener(this);
 		printButton.addActionListener(this);
 		copyButton.addActionListener(this);
@@ -1202,7 +1206,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								jPanel1.add(txtName);
 								txtName.setText("Name");
 								txtName.setPreferredSize(new java.awt.Dimension(297, 26));
-
+								
+								randomButton.setText("Random!");
+								jPanel1.add(randomButton);
 							}
 
 						}
@@ -1938,6 +1944,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// Button and Menu listners
 		else if (o == saveButton) {
 			saveFile();
+		} else if (o == randomButton){
+			// generate a random name!
+			rName.generate();
+			txtName.setText(rName.getName());
 		} else if (o == findButton) {
 			FindDialog fd = new FindDialog(this);
 			fd.setModal(true);
