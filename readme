@@ -123,6 +123,10 @@ The Java Swing library (which StrangeBrew uses for its user interface) supports
 a "pluggable look and feel" (LAF) -- meaning you can easily change the appearance 
 of Swing applications to suit your own tastes.  
 
+The default is the System Look and Feel, this means that the application should 
+fairly closely match your Operating Systems Look & Feel (there are some exceptions,
+such as KDE based environments)
+
 (Some betas of StrangeBrew used the JGoodies Looks LAF, but I removed
 it as the default to give users more control over how the application looks).
 
@@ -155,6 +159,9 @@ LAF:
 swing.installedlaf.tonic.name = Tonic
 swing.installedlaf.tonic.class = com.digitprop.tonic.TonicLookAndFeel
 swing.defaultlaf=com.digitprop.tonic.TonicLookAndFeel
+
+3. Using the preferences options. Under the "Brewer" pane you can select from any of the L&Fs installed 
+on your system. This gets saved.
 
 Now start StrangeBrew as you would normally, and it should use the new LAF.
 
@@ -228,8 +235,16 @@ New Features:
   of silently starting anyway.  
 - StrangeBrew now looks more like a native MacOS/X application on Macs.  
 - Windows Installer
+- Ingredients can be added/edited from the GUI, under the Edit menu.
 
 Bugs Fixed:
+- Pre/Post boil volumes don't match the Unit
+- Mac is now detected correctly
+- BeerXML now opens files correctly
+- Hops sorted correctly for timings, not name
+- Switching temperature units no longer corrupts the value
+- Adding fermentables now orders them correctly and they do not switch order when selecting the name
+- Strangebrew now looks in the correct location for data files
 - Misc water loss is now set correctly on the Water tab.
 - Rager formula bug fixed.
 - New Recipe Defaults: Temp Units now displays properly.
