@@ -226,6 +226,7 @@ What's New
 --------
 New Features:
 - You can now specify the BJCP style year you want to use (2004 or 2008).
+- Random Name Generator for recipes!
 - Table column sizes are now remembered when you close and restart the application
   (Request 1493295).
 - Diluted recipe feature works a lot better.  Diluted specs show up on the main recipe
