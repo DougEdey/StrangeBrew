@@ -97,7 +97,11 @@ public class FermentTableModel extends AbstractTableModel {
 				case 0:
 					data.setFermentStepType(row, value.toString());
 				case 1:
-					data.setFermentStepTime(row, Integer.parseInt(value.toString()));
+					try {
+						data.setFermentStepTime(row, Integer.parseInt(value.toString()));
+					} catch (NumberFormatException m) {
+						m.printStackTrace();
+					}
 					break;
 				case 2 :
 					data.setFermentStepTemp(row, Double.parseDouble(value.toString()));
