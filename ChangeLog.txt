@@ -1,0 +1,180 @@
+Change Log:
+Jan 14, 2008 - Greg LaPolla
+- Removed NSIS Windows Based Installer 
+- Added IzPack Java Based Installer now installs natively on Windows and Linux
+ 
+July 7, 2008 - Drew Avis
+- Added option to select BJCP style definintion year
+
+June 11, 2008 - Greg LaPolla
+- Added New styleguide for 2008 BJCP guidelines
+- Added a new build option in build.xml to generate a source distribution zip file
+
+May 28, 2008 - Drew Avis
+- Fixed a bug where the misc loss wasn't set correctly.
+
+May 27, 2008 - Greg LaPolla
+- Built windows installer using NSIS
+- Added NSIS installer scripts and build process to the ant script
+- Changed some build dependencies in the ant build script
+- Fixed Rager math calculations now using Math.tanh from Java math library
+- Fixed Temp Units display issue in Recipe Preferences
+
+Apr 9, 2008 - Drew Avis
+- Fixed display of * and version in title, recipe version.
+- Added style panel update back to displayRecipe(), to fix update problem.
+
+Mar 10, 2008 - Drew Avis
+- Fixing some lost action listener registrations.
+- Fixed problem w/ FinalWortVol vs PostBoilVol confusion.
+
+Feb 21, 2008 - Drew Avis
+- Added check for MacOS/X to splash, which makes the app look more native on Macs.  (Suggested by
+Greg LaPolla).
+
+Jan 26, 2008 - Jim Clark
+- Carried re-cacle bug fix into WaterPanel. DilutionPanel may still need work, but it uses JSpinners and needs more investigation first.
+- Moved StrangeSwing.round() into SBStringUtils since its sort of the inverse functionality of SBStringUtils.format().
+   Ei: you format a double to a string for display and you round a display string to a double.
+
+Jan 22, 2008 - Drew Avis
+- Worked on re-calc bug, and fixed a bug where recipes saved using vol units != US gals were importing size
+incorrectly (the problem is in Recipe.setVolUnits(), which was converting rather than just setting units). I
+think we still need a Recipe.convertVolUnits(), which is called when you change units...
+
+Jan 17-18, 2008 - Jim Clark
+- Modified how Recipe stores wort volumes to cut down on the number of variables neededing to be in sync. This
+   should provide a cleaner/easier interface to Recipe for DilutedRecipe.
+- Reworked StrangeSwing to consolidate all of the event listners and the "displayRecipe()" call to prevent infinite
+   recurtion loops as one display calls display recipe which sets a data element with a listner that calls displayRecipe.
+   As a side effect, this elimintate a significant amount of extranious event calls coming out of that function. What used
+   to happen would end up recurcivly calling event setters all over thoughout the app, now it only calls the ones on the page
+   in view. The reset calls are all triggered off using the tab pane now.
+- Finished off DilutedRecipe. Works seamlessly thoughout app and all the ugglyness is contained in DilutedRecipe and DilutedPanel.
+
+Jan 16, 2008 - Jim Clark
+- Changed many "ArrayList"s to "List"'s to follow best pratices when using collections. Ei: Program in terms of an 
+   interface type (List) rather than implementation type (ArrayList). Eg:
+ 		List list = new ArrayList();
+   is better than:
+        ArrayList list = new ArrayList();
+   This is so later when we want that Array to be a LinkedList or some custom list implementation of our own, everthgin just
+   works.
+- Started ripping Diluted Recipe stuff out of Recipe. Currently I would say Diluted Recipe is broken beyond imagineing, but I wanted
+   to check this in now, since most of the changes left are going to be in DilutedRecipe.java and DilutionPanel.java and shouldn't
+   make it a merging nightmare in a week when I am finaly done.
+
+Jan 16, 2008 - Drew Avis
+- Added support for saved column widths between application sessions.
+
+Jan 15, 2008 - Drew Avis
+- Now we handle the situation where the ingredient DB is moved.
+- Adding Ant build file.
+
+Jan 14, 2008 - Jim Clark
+- Fixed some bugs with Salts and moved data out of CVS into static array. The data contents are tightly coupled to the salt calculations
+   so it didn't make sense to have the salts configurable on the fly when adding a salt still involved some code work to impliement
+   this helped clean up the WaterTreatmentPanel too, so overall.. IMHO, better.
+- Added gram->tsp conversion into salt addisions.
+- Added acid required for 5.2pH target as well as to hit target water pH. Some people like to emulate water, some like 5.2.
+
+Jan 9, 2008 - Jim Clark
+- Added conversion dialog to menu (wopse - missed 2.0.1)
+
+Jan 7, 2008 - Jim Clark
+- Fixed bug with the "isDirty" flag and the Carb Panel so that all recipes arn't always dirty or in need of being saved all the time
+- Fixed Salt toString functions.
+
+Jan 7, 2008 - Drew Avis
+- Fixed broken format string in WaterProfile.toString().
+- Fixed a bug on the Note tab where notes were being lost.
+- Made debug output optional (w/ -d command line option)
+
+Jan 5, 2008 - Jim Clark
+- Down to 1 Type safty warrnings by implemeing various Collection<Type> stuff in various places.
+   The one remaining is due to calling Generics unfrinedly SWING code.
+- Moved prime sugar and keg presure calcs into Recipe from UI
+- Moved water treatment/acid/salt calcs into recipe
+- Added acid to save/load/xlst printing
+- Acid pulls values from source and target water (perhaps a bad thing?)
+- Changed some class comparisons to use instanceof keyword instead of string compareing the class name
+
+Jan 3-4, 2008 - Drew Avis
+- Added some tooltips for toolbar buttons
+- Added copy to clipboard toolbar button
+- Fixed bug where a new hop had Add and Type switched
+- You can now set target vol on the carbonation tab
+- Tried to get priming sugar amount to re-calculate when you set targetVol on the recipe, but gave up
+- Cleaned up some Java 1.6 things (String.isEmpty)
+- Made a few changes to reduce compiler warnings (use of raw ArrayList)
+
+Dec 28, 2007 - Jim Clark
+- Consolidated a lot of fixed strings scatetred though out app into static strings to
+   help prevent fat fingers and what not and to create more readable code. Still more to
+   do, especialy in Quantity(), but I got most of them.
+- Fixed bug with Salt check boxes not adding/removeing salt from recipe (addActionListner())
+- Fixed water calc bug where app was telling user to add salts when they already had the target
+   value or higher.
+- Fixed shallow copy of Salt out of database into (partial) deep copy
+- First run at acidification (needs save/load/print and options)
+
+Dec 27, 2007 - Jim Clark
+- Save/load/export added for water profile and salts
+- A few bugs with implementation of water treatment cleaned up
+- A bug with notes display in xlst fixed 
+- Default Water profile in options and prefs dialog
+- TODO: allow user to add water profiles without having to manual edit DB files
+
+Dec 25, 2007 - Jim Clark
+- Basic structure for Water Treatment and Brewing Salts
+  - GUI started
+  - Water and salt database implemented
+  - Water and salts added to Recipe
+  - Basic salt calulations
+  - TODO: acid calcs/gui, save/load into xml, xlst printing, options
+
+Dec 20, 2007 - Jim Clark
+- Added keg line length to carb panel and options
+- Added conversion tool dialog for pressure, temp, gravity, volume and weight
+
+Dec 19, 2007 - Jim Clark
+- Properties for carb panel implemented
+- Export to html for carb implemented
+- Quantity.Converter and ilk now static so a nre Quanity object doesn't need to be instantiated to 
+   convert a weight or volume
+
+Dec 18, 2007 - Jim Clark
+- Completed functionality of carbonation panel, still doesn't have selectable default settings in
+   options dialog.
+- Rolled back useing malts.csv and added a new prime_sugar.csv, which is used.
+
+Dec 14, 2007 - Jim Clark
+- Completed fermentation schedual functionality (save and xml->html export)
+- Revamped xlst to include all data on sheet. Much nicer output now, usable for a brewday sheet.
+- Fixed note display and UI panel
+- Moved some string lists into their prespective 'home' classes (mash types in Mash for example)
+- Added a field to malts.csv to determine if the malt/adjuct is suitable for use as a primeing sugar
+- Turned Database into a singleton
+- Carbonation prime sugar list comes from malts.cvs
+- Saveing and Loading carb data - NOTE does not reflect in carb tab
+- Carb tab has lots of TODO left!!!!  It is currently non-functional
+
+Dec 13, 2007 - Jim Clark
+- Added fermentation schedual tab and infrastructure. Commented out of StrangeSwing 
+   because it is missing save and pring functionality.
+
+Dec 12, 2007 - Jim Clark
+Changes to Date from 2.0.1
+- Applied Patch 1845484
+  - Request 1489276 - Addes configurable default hop type (Leaf, Pellet, Plug)
+- Applied Patch 1845847
+  - Fixes 1489252 - Text field auto selection 
+- Fixed 1493279 - Implimented custom combobox and combobox cell editor to allow better
+   UI on tabled combo boxes and to support keyboard navigation
+- Request 1497970 - Mash Steps insert at end of list
+- Request 1222300 - Added Gravity Teperature Tool Dialog
+- Fixes 1480514 - Added selectable user locale which affects date format
+- Fixes 1493267 - Changed default bottle unit and size to imperal
+- UI improvments to the saved "default" mash shceduals; TODO impliment a delete function
+- Turned Options into a singleton
+- added isDirty tag to Recipe to determine if it needs saveing or not

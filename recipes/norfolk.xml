@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "J1.0">
+  <DETAILS>
+  <NAME>Norfolk &amp; Chance</NAME>
+  <BREWER>Andy Davison</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>75.0</EFFICIENCY>
+  <OG>1.052</OG>
+  <FG>1.013</FG>
+  <STYLE>Strong Bitter / English Pale Ale</STYLE>
+  <MASH>false</MASH>
+  <LOV>6.1</LOV>
+  <IBU>33.3</IBU>
+  <ALC>5.1</ALC>
+  <BOIL_TIME>60</BOIL_TIME>
+  <PRESIZE>26.5</PRESIZE>
+  <SIZE>25.0</SIZE>
+  <SIZE_UNITS>litres</SIZE_UNITS>
+  <MALT_UNITS>pounds</MALT_UNITS>
+  <HOPS_UNITS>ounces</HOPS_UNITS>
+  <YEAST>Danstar Nottingham Dry Ale Yeast</YEAST>
+  <RECIPE_DATE>06/22/2005</RECIPE_DATE>
+  <ATTENUATION>75.0</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Volume</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>EBC</COLOUR_METHOD>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <ITEM>
+      <MALT>British Lager Two-Row</MALT>
+      <AMOUNT>5000.0</AMOUNT>
+      <UNITS>gr</UNITS>
+      <POINTS>1.038</POINTS>
+      <LOV>1.4</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <DESCRIPTION>null</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>German Light Caramel</MALT>
+      <AMOUNT>500.0</AMOUNT>
+      <UNITS>gr</UNITS>
+      <POINTS>1.037</POINTS>
+      <LOV>2.5</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <DESCRIPTION>null</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <ITEM>
+      <HOP>Styrian Golding</HOP>
+      <AMOUNT>20.0</AMOUNT>
+      <TIME>2</TIME>
+      <UNITS>gr</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>5.5</ALPHA>
+      <COSTOZ>0.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION></DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Styrian Golding</HOP>
+      <AMOUNT>20.0</AMOUNT>
+      <TIME>15</TIME>
+      <UNITS>gr</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>5.5</ALPHA>
+      <COSTOZ>0.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION></DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>E. Kent Goldngs</HOP>
+      <AMOUNT>60.0</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>gr</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>5.0</ALPHA>
+      <COSTOZ>0.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION></DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+  </MISC>
+  <MASH>
+  </MASH>
+  <NOTES>
+  </NOTES>
+</STRANGEBREWRECIPE>

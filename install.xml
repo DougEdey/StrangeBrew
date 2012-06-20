@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<installation version="1.0">
+
+    <info>
+        <appname>StrangeBrew</appname>
+        <appversion>2.01</appversion>
+        <authors>
+            <author name="Drew Avis" email="drew.avis@gmail.com"/>
+        </authors>
+        <url>http://www.strangebrew.ca/</url>
+    </info>
+
+    <guiprefs width="800" height="600" resizable="no">
+	    <modifier key="layoutAnchor" value="CENTER"/>
+	    <modifier key="headingPanelCounter" value="progressbar"/>
+	    <modifier key="headingPanelCounterPos" value="inNavigationPanel"/>
+	    <modifier key="allYGap" value="4"/>
+	    <modifier key="paragraphYGap" value="10"/>
+	    <modifier key="filler1YGap" value="5"/>
+	    <modifier key="filler3XGap" value="10"/>
+    </guiprefs>
+    <variables>
+        <variable name="DesktopShortcutCheckboxEnabled" value="true"/>
+    </variables>
+    
+    <locale>
+        <langpack iso3="eng"/>
+    </locale>
+    
+    <resources>
+        <res id="LicencePanel.licence" src="gpl.txt"/>
+        <res id="InfoPanel.info" src="readme"/>
+        <res src="src\ca\strangebrew\ui\swing\dialogs\StrangeBrewSplash.jpg" id="installer.hellopanel.img"/>
+        <res src="installer\shortcutSpec.xml" id="shortcutSpec.xml"/>
+        <res src="installer\Unix_shortcutSpec.xml" id="Unix_shortcutSpec.xml"/>
+        <res src="installer\info-border.png" id="Installer.image.0"/>
+        <res src="installer\info-border.png" id="Installer.image.1"/>
+        <res src="installer\info-border.png" id="Installer.image.2"/>
+        <res src="installer\pack-border.png" id="Installer.image.3"/>
+        <res src="installer\pack-border.png" id="Installer.image.4"/>
+        <res src="installer\installing-border.png" id="Installer.image.5"/>
+        <res src="installer\installing-border.png" id="Installer.image.6"/>
+        <res src="installer\installing-border.png" id="Installer.image.7"/>
+        <res src="installer\finished-border.png" id="Installer.image.8"/>
+        <res src="installer\RegistrySpec.xml" id="RegistrySpec.xml"/>
+    </resources>
+    <panels>
+        <panel classname="CheckedHelloPanel" id="hellopanel"/>
+        <!--
+          <panel classname="InfoPanel" id="infopanel"/>
+        -->
+        <panel classname="LicencePanel" id="licensepanel"/>
+        <panel classname="TargetPanel" id="targetpanel"/>
+        <panel classname="PacksPanel" id="packspanel"/>
+        <panel classname="SummaryPanel" id="summarypanel"/>
+        <panel classname="InstallPanel" id="installpanel"/>
+        <panel classname="ShortcutPanel" id="shortcutpanel"/>
+        <panel classname="SimpleFinishPanel" id="finishpanel"/>
+    </panels>
+    
+    <listeners>
+        <listener installer="SummaryLoggerInstallerListener"/>
+        <listener installer="RegistryInstallerListener"
+                  uninstaller="RegistryUninstallerListener">
+            <os family="windows"/>
+        </listener>
+    </listeners>
+    
+    <packs>
+        <pack name="StrangeBrew" required="yes">
+            <description>The StrangeBrew files</description>
+            <file src="dist/readme" targetdir="$INSTALL_PATH"/>
+            <file src="dist/gpl.txt" targetdir="$INSTALL_PATH"/>
+            <file src="dist/ChangeLog.txt" targetdir="$INSTALL_PATH"/>
+            <file src="dist/StrangeBrew.jar" targetdir="$INSTALL_PATH"/>
+        </pack>
+        <pack name="Recipes" required="yes">
+            <description>The StrangeBrew Recipes</description>
+            <file src="dist/recipes" targetdir="$INSTALL_PATH"/>
+        </pack>
+        <pack name="Help" required="yes">
+            <description>The StrangeBrew Help Files</description>
+            <file src="dist/help" targetdir="$INSTALL_PATH"/>
+        </pack>
+        <pack name="Database" required="yes">
+            <description>The StrangeBrew default databases and support files</description>
+            <file src="dist/src" targetdir="$INSTALL_PATH"/>
+        </pack>
+    </packs>
+    <native type="izpack" name="ShellLink.dll"/>
+    <native type="3rdparty" name="COIOSHelper.dll" stage="both">
+        <os family="windows"/>
+    </native>
+</installation>

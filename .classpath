@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="lib/microba.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="lib/BrowserLauncher2-all-10rc4.jar"/>
+	<classpathentry kind="lib" path="lib/standalone-compiler.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

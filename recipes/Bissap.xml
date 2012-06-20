@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="ISO8859-1" ?>
+<?xml:stylesheet type="text/xsl" href="strangebrew17.xsl" ?>
+ <STRANGEBREWRECIPE version = "1.7">
+<DETAILS>
+   <NAME type="1">
+     Bissap
+   </NAME>
+   <NOTES type="16">
+     Meant to emulate some of the characteristics of the sweet hibiscus tea people drink in West Africa (dablini in Mali, bissap in Senegal) and Egypt (karkade). Toward the sweetest possible brew to balance the hibiscus. 
+Should have put some 2-row in as I probably didn't have enough enzymes and ended up with uncomplete conversion (hence the brown sugar).
+Left the bottles at a friend's place to sample when I go back to Montreal (I'm currently in Moncton).
+Repitching from Saizon.
+
+   </NOTES>
+   <EFFICIENCY type="6">
+     63.4
+   </EFFICIENCY>
+   <OG type="6">
+     1.080
+   </OG>
+   <FG type="6">
+     1.028
+   </FG>
+   <STYLE type="1">
+     Saison
+   </STYLE>
+   <MASH type="5">
+     True
+   </MASH>
+   <LOV type="6">
+     17
+   </LOV>
+   <IBU type="6">
+     40.4
+   </IBU>
+   <ALC type="6">
+     7.15
+   </ALC>
+   <BOIL_TIME type="6">
+     90
+   </BOIL_TIME>
+   <PRESIZE type="6">
+     21.4
+   </PRESIZE>
+   <SIZE type="6">
+     15
+   </SIZE>
+   <SIZE_UNITS type="1">
+     litres
+   </SIZE_UNITS>
+   <MALT_UNITS type="1">
+     kg
+   </MALT_UNITS>
+   <HOPS_UNITS type="1">
+     oz
+   </HOPS_UNITS>
+   <HOPS_OZS type="6">
+     2.00
+   </HOPS_OZS>
+   <YEAST type="1">
+     WLP565 Belgian Saison I Yeast
+   </YEAST>
+   <MALT_LBS type="6">
+     14.42
+   </MALT_LBS>
+   <INDEX type="14">
+     114
+   </INDEX>
+   <RECIPE_DATE type="11">
+     23/10/03
+   </RECIPE_DATE>
+   <ATTENUATION type="6">
+     64.9
+   </ATTENUATION>
+   <MISC_COST type="6">
+     $2.00
+   </MISC_COST>
+   <GRAIN_TMP type="6">
+     68
+   </GRAIN_TMP>
+   <BOTTLE_SIZE type="6">
+     .65
+   </BOTTLE_SIZE>
+   <SUGAR_TYPE type="1">
+     table sugar
+   </SUGAR_TYPE>
+   <KEGGED type="5">
+     False
+   </KEGGED>
+   <SERV_TEMP type="6">
+     38
+   </SERV_TEMP>
+   <BOTTLE_TEMP type="6">
+     68
+   </BOTTLE_TEMP>
+   <VOLS_CO type="6">
+     2
+   </VOLS_CO>
+   <MISC_INGR_COST type="6">
+     $1.82
+   </MISC_INGR_COST>
+   <YEAST_COST type="6">
+     $0.00
+   </YEAST_COST>
+   <MASH_LBS type="6">
+     13.78
+   </MASH_LBS>
+   <MASH_RATIO type="6">
+     1.10
+   </MASH_RATIO>
+   <MASH_RATIO_U type="1">
+     qt/lb
+   </MASH_RATIO_U>
+   <MASH_TMP_U type="1">
+     F
+   </MASH_TMP_U>
+   <MASH_VOL_U type="1">
+     litres
+   </MASH_VOL_U>
+   <CARB_TEMP_U type="1">
+     F
+   </CARB_TEMP_U>
+   <BOTTLE_U type="1">
+     litres
+   </BOTTLE_U>
+   <SUGAR_U type="1">
+     gr
+   </SUGAR_U>
+   <BREWED type="5">
+     True
+   </BREWED>
+   <DATEBREWED type="9">
+     18/11/03
+   </DATEBREWED>
+   <WL_TRUB type="6">
+     0
+   </WL_TRUB>
+   <WL_KETTLE type="6">
+     0
+   </WL_KETTLE>
+   <BREWER type="1">
+     Alexandre Enkerli
+   </BREWER>
+   <DescrLookup type="1">
+     Classic Saison yeast
+   </DescrLookup>
+   <LOCKED type="5">
+     False
+   </LOCKED>
+   <MASH_TIME type="6">
+     60
+   </MASH_TIME>
+   <FINAL_BEER_VOL type="6">
+     
+   </FINAL_BEER_VOL>
+   <FOLDER type="1">
+     Recettes
+   </FOLDER>
+   <STARTTIME type="10">
+     8:00:00 AM
+   </STARTTIME>
+   <TIMETOSPARGE type="3">
+     60
+   </TIMETOSPARGE>
+   <TIMETOBOIL type="3">
+     30
+   </TIMETOBOIL>
+   <TIMETOCHILL type="3">
+     30
+   </TIMETOCHILL>
+   <TIMETOCLEAN type="3">
+     75
+   </TIMETOCLEAN>
+   <TIMETOPREP type="3">
+     30
+   </TIMETOPREP>
+</DETAILS>
+ <FERMENTABLES>
+<ITEM>
+   <MALT type="1">
+     American Crystal 120L
+   </MALT>
+   <AMOUNT type="6">
+     .25
+   </AMOUNT>
+   <RECIPE type="2">
+     114
+   </RECIPE>
+   <POINTS type="6">
+     1.033
+   </POINTS>
+   <COSTLB type="6">
+     $6.76
+   </COSTLB>
+   <UNITS type="1">
+     kg
+   </UNITS>
+   <LOV type="6">
+     120
+   </LOV>
+   <DescrLookup type="1">
+     American Crystal 120L: 5 to 15% will lend a complex bitter/sweet caramel flavor and aroma to beers. Used in smaller quantities this malt will add color and slight sweetness to beers, while heavier concentrations are well suited to strong beers such as Barley Wines and Old Ales.
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     American Munich (Dark)
+   </MALT>
+   <AMOUNT type="6">
+     3
+   </AMOUNT>
+   <RECIPE type="2">
+     114
+   </RECIPE>
+   <POINTS type="6">
+     1.033
+   </POINTS>
+   <COSTLB type="6">
+     $3.75
+   </COSTLB>
+   <UNITS type="1">
+     kg
+   </UNITS>
+   <LOV type="6">
+     20
+   </LOV>
+   <DescrLookup type="1">
+     American Munich (Dark): A little darker than German Munich malt, use Domestic Munich to add a deeper color and fuller malt profile.  An excellent choice for Dark and amber lagers, blend Munich with German Pils or Klages at the rate of 10 to 60% of the total grist. 
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Brown Sugar
+   </MALT>
+   <AMOUNT type="6">
+     3
+   </AMOUNT>
+   <RECIPE type="2">
+     114
+   </RECIPE>
+   <POINTS type="6">
+     1.045
+   </POINTS>
+   <COSTLB type="6">
+     $0.06
+   </COSTLB>
+   <UNITS type="1">
+     oz
+   </UNITS>
+   <LOV type="6">
+     2
+   </LOV>
+   <DescrLookup type="1">
+     Brown Sugar: used in authentic British bitters.  Can lend a buttery, molases flavour when used in small amounts.
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Cara-Pils Dextrine
+   </MALT>
+   <AMOUNT type="6">
+     1
+   </AMOUNT>
+   <RECIPE type="2">
+     114
+   </RECIPE>
+   <POINTS type="6">
+     1.033
+   </POINTS>
+   <COSTLB type="6">
+     $0.00
+   </COSTLB>
+   <UNITS type="1">
+     kg
+   </UNITS>
+   <LOV type="6">
+     1.8
+   </LOV>
+   <DescrLookup type="1">
+     Cara-Pils Dextrine: Dextrins lend body, mouthfeel and palate fullness to beers, as well as foam stability.  Cara Pils must be mashed with pale malt, due to its lack of enzymes. Use 5 to 20% for these properties without adding color or having to mash at higher temperatures.
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Demerara / turbinado
+   </MALT>
+   <AMOUNT type="6">
+     .21
+   </AMOUNT>
+   <RECIPE type="2">
+     114
+   </RECIPE>
+   <POINTS type="6">
+     1.043
+   </POINTS>
+   <COSTLB type="6">
+     $0.55
+   </COSTLB>
+   <UNITS type="1">
+     kg
+   </UNITS>
+   <LOV type="6">
+     2
+   </LOV>
+   <DescrLookup type="1">
+     This is crystalizable sugar from the first step of refinement. It has a tan to brown color from the residual impurities. Some food faddists attribute beneficial results from using this but unless a lot is consumed, the potential benefits are very low. 
+Demerara is the UK term; turbinado the US (and Spanish language?) term. Demerara is usually a dark brown shade while turbinado is lighter, more of a tan or taupe color. It is ~98% sugar with some residual proteins and unfermentable carbohydrates present. 
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Torrefied Wheat
+   </MALT>
+   <AMOUNT type="6">
+     1
+   </AMOUNT>
+   <RECIPE type="2">
+     114
+   </RECIPE>
+   <POINTS type="6">
+     1.036
+   </POINTS>
+   <COSTLB type="6">
+     $0.00
+   </COSTLB>
+   <UNITS type="1">
+     kg
+   </UNITS>
+   <LOV type="6">
+     2
+   </LOV>
+   <DescrLookup type="1">
+     5-15% of grist, can use much more too.  Pre-gelatinized unmalted wheat, add directly to mash. Needs to be crushed. Adds silky smoothness. Use like wheat flakes for head retention and body. Common in British ales and witbiers.
+
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Vienna
+   </MALT>
+   <AMOUNT type="6">
+     1
+   </AMOUNT>
+   <RECIPE type="2">
+     114
+   </RECIPE>
+   <POINTS type="6">
+     1.030
+   </POINTS>
+   <COSTLB type="6">
+     $3.25
+   </COSTLB>
+   <UNITS type="1">
+     kg
+   </UNITS>
+   <LOV type="6">
+     4
+   </LOV>
+   <DescrLookup type="1">
+     Vienna: Vienna malt is kiln dried at a higher temperature than pale malt yet still retains sufficient enzyme power for use as 60 to 100% of total mash grist. Vienna is a rich, aromatic malt that will lend a deep color and full flavor to your finest Vienna or Marzen beers.
+   </DescrLookup>
+</ITEM>
+ </FERMENTABLES>
+ <HOPS>
+<ITEM>
+   <HOP type="1">
+     German Tradition (Hallert
+   </HOP>
+   <RECIPE type="2">
+     114
+   </RECIPE>
+   <AMOUNT type="6">
+     2
+   </AMOUNT>
+   <ADDORDER type="3">
+     2
+   </ADDORDER>
+   <TIME type="6">
+     60
+   </TIME>
+   <UNITS type="1">
+     oz
+   </UNITS>
+   <FORM type="1">
+     Pellet
+   </FORM>
+   <ALPHA type="6">
+     5.5
+   </ALPHA>
+   <COSTOZ type="6">
+     $0.00
+   </COSTOZ>
+   <ADD type="1">
+     Boil
+   </ADD>
+   <DescrLookup type="1">
+     
+   </DescrLookup>
+   <GUID type="14">
+     338
+   </GUID>
+</ITEM>
+ </HOPS>
+ <MASH>
+<ITEM>
+   <RECIPE type="2">
+     114
+   </RECIPE>
+   <TYPE type="1">
+     alpha
+   </TYPE>
+   <DISPL_TEMP type="6">
+     158.0
+   </DISPL_TEMP>
+   <TEMP type="6">
+     158.0
+   </TEMP>
+   <METHOD type="1">
+     infusion
+   </METHOD>
+   <MIN type="3">
+     60
+   </MIN>
+   <DIRECTIONS type="16">
+     Mash in with 14.3 litres of water at 177.0 F
+   </DIRECTIONS>
+   <WATER_EQV type="6">
+     20.9
+   </WATER_EQV>
+   <WATER_QTS type="6">
+     15.2
+   </WATER_QTS>
+   <DECOCT_QTS type="6">
+     0.0
+   </DECOCT_QTS>
+</ITEM>
+ </MASH>
+ <MISC>
+<ITEM>
+   <RECIPE type="2">
+     114
+   </RECIPE>
+   <NAME type="1">
+     Hibiscus Flowers
+   </NAME>
+   <AMOUNT type="6">
+     2
+   </AMOUNT>
+   <UNITS type="1">
+     oz
+   </UNITS>
+   <COMMENTS type="16">
+     
+   </COMMENTS>
+   <DescrLookup type="1">
+     Used in different parts of Africa to make a very strong tea, usually served very sweet, either hot or cold. The drink is known as "bissap" in Senegal and as "karkade" in Egypt.
+   </DescrLookup>
+   <COST_PER_U type="6">
+     $0.91
+   </COST_PER_U>
+   <STAGE type="1">
+     Boil
+   </STAGE>
+   <TIME type="3">
+     20
+   </TIME>
+</ITEM>
+ </MISC>
+ <NOTES>
+<ITEM>
+   <RECIPE type="6">
+     114
+   </RECIPE>
+   <DATE type="9">
+     19/11/03
+   </DATE>
+   <GUID type="14">
+     74
+   </GUID>
+   <TYPE type="1">
+     Brewed
+   </TYPE>
+   <NOTE type="16">
+     Recipe brewed, shopping list and inventory updated
+   </NOTE>
+</ITEM>
+<ITEM>
+   <RECIPE type="6">
+     114
+   </RECIPE>
+   <DATE type="9">
+     19/11/03
+   </DATE>
+   <GUID type="14">
+     75
+   </GUID>
+   <TYPE type="1">
+     Brewed
+   </TYPE>
+   <NOTE type="16">
+     Missed OG (maybe because it didn't convert for lack of enzymes?), too bitter (wrong AA reading for German tradition?), added brown sugar to increase sweetness. Hibiscus might contribute to bitterness. Overall, nice profile at pitching time. Started bubbling within an hour. Weird mash (undershot, then overshot, didn't seem converted...) but good sparge/lauter. Bottled Saizon while brewing which perturbated the schedule quite a bit (needed the racking tube for both...). Long brewday but the result should be quite interesting. Might get 6% ABV if attenuates enough but was looking for a lot of dextrins.
+   </NOTE>
+</ITEM>
+<ITEM>
+   <RECIPE type="6">
+     114
+   </RECIPE>
+   <DATE type="9">
+     11/12/03
+   </DATE>
+   <GUID type="14">
+     77
+   </GUID>
+   <TYPE type="1">
+     Tasting
+   </TYPE>
+   <NOTE type="16">
+     1020@70F, very similar to Saizon, intense bitterness, probably some phenols for intense medicinal flavour, interesting aroma but not very strong.
+   </NOTE>
+</ITEM>
+ </NOTES>
+ </STRANGEBREWRECIPE>

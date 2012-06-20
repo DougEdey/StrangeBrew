@@ -1,0 +1,32 @@
+Form		What		Bytes
+-------------------------------------
+a55	Name			55
+a55	Lab			55
+a25	CatalogNum		25
+C	Type			1
+{
+	0x00 => Ale
+	0x01 => Lager
+	0x02 => Wine
+	0x03 => Champagne
+}
+C	Medium			1
+{
+	0x00 => Dry
+	0x01 => Liquid
+	0x02 => AgarSlant
+}
+a155	FlavourDesc		155
+a159	Comment			159
+f	Quantity		4
+l	LoAtt			4
+l	HighAtt			4
+f	Temp			4
+C	Flocc			1
+{
+	0x00 => High
+	0x01 => Medium
+	0x02 => Low
+}
+?	???			5
+-------------------------------------

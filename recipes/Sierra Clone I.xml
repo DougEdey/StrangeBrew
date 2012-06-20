@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "J1.0">
+  <DETAILS>
+  <NAME>Sierra Clone I</NAME>
+  <BREWER>John Milton-Benoit</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>75.0</EFFICIENCY>
+  <OG>1.051</OG>
+  <FG>1.013</FG>
+  <STYLE>American Pale Ale</STYLE>
+  <MASH>true</MASH>
+  <LOV>22.2</LOV>
+  <IBU>41.6</IBU>
+  <ALC>5.0</ALC>
+  <BOIL_TIME>60</BOIL_TIME>
+  <PRESIZE>7.3</PRESIZE>
+  <SIZE>5.8</SIZE>
+  <SIZE_UNITS>gallons US</SIZE_UNITS>
+  <MALT_UNITS>lb</MALT_UNITS>
+  <HOPS_UNITS>oz</HOPS_UNITS>
+  <YEAST>Wyeast 1056 American/Chico Ale Yeast</YEAST>
+  <RECIPE_DATE>06/18/2004</RECIPE_DATE>
+  <ATTENUATION>75.0</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Volume</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>EBC</COLOUR_METHOD>
+	 <EVAP>22.0</EVAP>
+	 <EVAP_METHOD>Percent</EVAP_METHOD>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <ITEM>
+      <MALT>American Crystal  60L</MALT>
+      <AMOUNT>1.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.034</POINTS>
+      <LOV>60.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <DESCRIPTION>American Crystal  60L: This Crystal malt is well suited to all beer recipes calling for crystal malt and is a good choice if you're not sure which variety to use.  5 to 15% of 60 L Crystal malt will lend a well rounded caramel flavor, color and sweetness to your finest Ales.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>American Two-Row</MALT>
+      <AMOUNT>9.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.037</POINTS>
+      <LOV>1.8</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <DESCRIPTION>American Two-Row: The basic malt for brewing all grain beers from scratch.  High in diastatic power, well modified and fairly neutral, Klages make an excellent base malt. Best for both American Lager and Ale styles, Klages lends itself well to all beer styles.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Cara-Pils Dextrine</MALT>
+      <AMOUNT>0.75</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.033</POINTS>
+      <LOV>1.8</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <DESCRIPTION>Cara-Pils Dextrine: Dextrins lend body, mouthfeel and palate fullness to beers, as well as foam stability.  Cara Pils must be mashed with pale malt, due to its lack of enzymes. Use 5 to 20% for these properties without adding color or having to mash at higher temperatures.</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <ITEM>
+      <HOP>Northern Brewer</HOP>
+      <AMOUNT>1.0</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>7.0</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Northern Brewer: Northern Brewer is a versatile bittering hop for Ales, Porters and Stouts. While not considered an aroma hop it can be used to flavor Steam Beer recipes. Germangrown Northern Brewer will contribute a solid bittering and rich flavor to Ales and Lagers.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Willamette</HOP>
+      <AMOUNT>1.0</AMOUNT>
+      <TIME>30</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>6.5</ALPHA>
+      <COSTOZ>1.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Willamette: A U.S. Fuggle hybrid with good bittering qualities.  A very versatile hop  with a light, fruity flavor and aroma.  Use it in almost any Ale style.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Cascade</HOP>
+      <AMOUNT>0.5</AMOUNT>
+      <TIME>15</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>6.3</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Cascade: Cascade, while a good bittering hop, is best known for its pronounced, very  distinctive "perfumey" aroma and flavor.  Used by many micro breweries.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Cascade</HOP>
+      <AMOUNT>1.0</AMOUNT>
+      <TIME>0</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>6.3</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Cascade: Cascade, while a good bittering hop, is best known for its pronounced, very  distinctive "perfumey" aroma and flavor.  Used by many micro breweries.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+    <ITEM>
+      <NAME>Polyclar</NAME>
+      <AMOUNT>1.0</AMOUNT>
+      <UNITS>tsp</UNITS>
+      <STAGE>Secondary</STAGE>
+      <TIME>0</TIME>
+      <COMMENTS>null</COMMENTS>
+    </ITEM>
+    <ITEM>
+      <NAME>Irish Moss</NAME>
+      <AMOUNT>1.5</AMOUNT>
+      <UNITS>tsp</UNITS>
+      <STAGE>Boil</STAGE>
+      <TIME>5</TIME>
+      <COMMENTS>Added to last bit of boil</COMMENTS>
+    </ITEM>
+  </MISC>
+  <MASH>
+    <ITEM>
+      <TYPE>alpha</TYPE>
+      <TEMP>152.0</TEMP>
+      <END_TEMP>152.0</END_TEMP>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Mash in with 3.2 gallons US of water at 165.4 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>mashout</TYPE>
+      <TEMP>168.0</TEMP>
+      <END_TEMP>168.0</END_TEMP>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Add 1.4 gallons US of water at 212.0 F</DIRECTIONS>
+    </ITEM>
+  </MASH>
+  <NOTES>
+  </NOTES>
+</STRANGEBREWRECIPE>

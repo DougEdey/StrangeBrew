@@ -1,0 +1,19 @@
+Form		What		Bytes
+-------------------------------------
+a79		RecipeName	79
+l		HopCount	4
+l		MaltCount	4
+l		ExtraCount	4
+f		Batch Size	4
+f		Wort Size	4
+??		??		8
+f		% Eff.		4
+l		BoilTime	4
+??		??		4	
+C		Type		1	
+{
+	0x00 => All Grain
+	0x01 => Partial
+	0x02 => Extract
+}
+-------------------------------------

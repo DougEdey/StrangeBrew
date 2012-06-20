@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="ISO8859-1" ?>
+<?xml-stylesheet type="text/xsl" href="strangebrew18.xsl" ?>
+ <STRANGEBREWRECIPE version = "1.8">
+<DETAILS>
+   <NAME type="1">
+     30A RyePorter
+   </NAME>
+   <NOTES type="16">
+     
+   </NOTES>
+   <EFFICIENCY type="6">
+     70.0
+   </EFFICIENCY>
+   <OG type="6">
+     1.052
+   </OG>
+   <FG type="6">
+     1.013
+   </FG>
+   <STYLE type="1">
+     Robust Porter
+   </STYLE>
+   <MASH type="5">
+     True
+   </MASH>
+   <LOV type="6">
+     28.4
+   </LOV>
+   <IBU type="6">
+     27.2
+   </IBU>
+   <ALC type="6">
+     5.12
+   </ALC>
+   <BOIL_TIME type="6">
+     60
+   </BOIL_TIME>
+   <PRESIZE type="6">
+     65
+   </PRESIZE>
+   <SIZE type="6">
+     60
+   </SIZE>
+   <SIZE_UNITS type="1">
+     litres
+   </SIZE_UNITS>
+   <MALT_UNITS type="1">
+     lb
+   </MALT_UNITS>
+   <HOPS_UNITS type="1">
+     T SI
+   </HOPS_UNITS>
+   <HOPS_OZS type="6">
+     5.00
+   </HOPS_OZS>
+   <YEAST type="1">
+     Safale S-04
+   </YEAST>
+   <MALT_LBS type="6">
+     33.95
+   </MALT_LBS>
+   <INDEX type="14">
+     185
+   </INDEX>
+   <RECIPE_DATE type="11">
+     9/24/2005
+   </RECIPE_DATE>
+   <ATTENUATION type="6">
+     75.0
+   </ATTENUATION>
+   <MISC_COST type="6">
+     $5.00
+   </MISC_COST>
+   <GRAIN_TMP type="6">
+     65
+   </GRAIN_TMP>
+   <BOTTLE_SIZE type="6">
+     12
+   </BOTTLE_SIZE>
+   <SUGAR_TYPE type="1">
+     dextrose
+   </SUGAR_TYPE>
+   <KEGGED type="5">
+     False
+   </KEGGED>
+   <SERV_TEMP type="6">
+     38
+   </SERV_TEMP>
+   <BOTTLE_TEMP type="6">
+     72
+   </BOTTLE_TEMP>
+   <VOLS_CO type="6">
+     2.4
+   </VOLS_CO>
+   <MISC_INGR_COST type="6">
+     
+   </MISC_INGR_COST>
+   <YEAST_COST type="6">
+     $0.75
+   </YEAST_COST>
+   <MASH_LBS type="6">
+     33.20
+   </MASH_LBS>
+   <MASH_RATIO type="6">
+     0.90
+   </MASH_RATIO>
+   <MASH_RATIO_U type="1">
+     cmbMaltUni
+   </MASH_RATIO_U>
+   <MASH_TMP_U type="1">
+     F
+   </MASH_TMP_U>
+   <MASH_VOL_U type="1">
+     gallons US
+   </MASH_VOL_U>
+   <CARB_TEMP_U type="1">
+     F
+   </CARB_TEMP_U>
+   <BOTTLE_U type="1">
+     fl. ounces
+   </BOTTLE_U>
+   <SUGAR_U type="1">
+     gr
+   </SUGAR_U>
+   <BREWED type="5">
+     False
+   </BREWED>
+   <DATEBREWED type="9">
+     
+   </DATEBREWED>
+   <WL_TRUB type="6">
+     0
+   </WL_TRUB>
+   <WL_KETTLE type="6">
+     0
+   </WL_KETTLE>
+   <BREWER type="1">
+     Drew Avis
+   </BREWER>
+   <DescrLookup type="1">
+     A well-known, bottom
+   </DescrLookup>
+   <LOCKED type="5">
+     False
+   </LOCKED>
+   <MASH_TIME type="6">
+     70
+   </MASH_TIME>
+   <FINAL_BEER_VOL type="6">
+     
+   </FINAL_BEER_VOL>
+   <FOLDER type="1">
+     
+   </FOLDER>
+   <STARTTIME type="10">
+     12:00:00 PM
+   </STARTTIME>
+   <TIMETOSPARGE type="3">
+     45
+   </TIMETOSPARGE>
+   <TIMETOBOIL type="3">
+     30
+   </TIMETOBOIL>
+   <TIMETOCHILL type="3">
+     30
+   </TIMETOCHILL>
+   <TIMETOCLEAN type="3">
+     15
+   </TIMETOCLEAN>
+   <TIMETOPREP type="3">
+     30
+   </TIMETOPREP>
+   <DILUTED type="5">
+     False
+   </DILUTED>
+   <DILUTE_VOL type="6">
+     0.00
+   </DILUTE_VOL>
+   <DILUTE_TOTAL type="6">
+     5.00
+   </DILUTE_TOTAL>
+   <MASH_TUNLOSS_TEMP type="6">
+     3
+   </MASH_TUNLOSS_TEMP>
+   <WL_MISC type="6">
+     
+   </WL_MISC>
+   <EVAP type="6">
+     5
+   </EVAP>
+   <BATCHES type="3">
+     1
+   </BATCHES>
+</DETAILS>
+ <FERMENTABLES>
+<ITEM>
+   <MALT type="1">
+     Belgian Aromatic
+   </MALT>
+   <AMOUNT type="6">
+     5
+   </AMOUNT>
+   <RECIPE type="2">
+     185
+   </RECIPE>
+   <POINTS type="6">
+     1.030
+   </POINTS>
+   <COSTLB type="6">
+     $0.90
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     25
+   </LOV>
+   <DescrLookup type="1">
+     Belgian Aromatic: Used at rates of up to 10%, Aromatic malt will lend a distinct, almost exaggerated malt aroma and flavor to your finished Ales and Lagers.  Aromatic malt also has a rich color and is high in diastatic power for aid in starch conversion. 
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     British Carastan
+   </MALT>
+   <AMOUNT type="6">
+     5
+   </AMOUNT>
+   <RECIPE type="2">
+     185
+   </RECIPE>
+   <POINTS type="6">
+     1.035
+   </POINTS>
+   <COSTLB type="6">
+     $0.90
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     34
+   </LOV>
+   <DescrLookup type="1">
+     British Carastan: Also known as CaraStan, use 5 to 20% of English Crystal to add color and a full, toffee/sweet flavor to Bitters, Pale Ales and Porters.
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     British Pale Chocolate
+   </MALT>
+   <AMOUNT type="6">
+     12
+   </AMOUNT>
+   <RECIPE type="2">
+     185
+   </RECIPE>
+   <POINTS type="6">
+     1.034
+   </POINTS>
+   <COSTLB type="6">
+     $0.00
+   </COSTLB>
+   <UNITS type="1">
+     oz
+   </UNITS>
+   <LOV type="6">
+     200
+   </LOV>
+   <DescrLookup type="1">
+     British Pale Chocolate: an excellent lightly roasted dark malt that adds colour but not a lot of roast flavour to brown ales, milds, and porters.  Very pleasing chocolate aroma and flavour.
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     British Two-Row
+   </MALT>
+   <AMOUNT type="6">
+     12.5
+   </AMOUNT>
+   <RECIPE type="2">
+     185
+   </RECIPE>
+   <POINTS type="6">
+     1.038
+   </POINTS>
+   <COSTLB type="6">
+     $0.47
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     2.5
+   </LOV>
+   <DescrLookup type="1">
+     British Two-Row: Fully modified British malt, easily converted by a single temperature mash.  Preferred by many brewers for full flavored ales.  Pale Ale malt has undergone higher kilning than Klages and is lower in diastatic power so keep adjuncts to 15% or less. 
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Canadian Two-Row
+   </MALT>
+   <AMOUNT type="6">
+     3.5
+   </AMOUNT>
+   <RECIPE type="2">
+     185
+   </RECIPE>
+   <POINTS type="6">
+     1.036
+   </POINTS>
+   <COSTLB type="6">
+     $0.39
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     2.1
+   </LOV>
+   <DescrLookup type="1">
+     Canadian Two-Row: The basic malt for brewing all grain beers from scratch.  High in diastatic power, well modified and fairly neutral, Klages make an excellent base malt. Best for both American Lager and Ale styles, Klages lends itself well to all beer styles.
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     German Carafa
+   </MALT>
+   <AMOUNT type="6">
+     1
+   </AMOUNT>
+   <RECIPE type="2">
+     185
+   </RECIPE>
+   <POINTS type="6">
+     1.030
+   </POINTS>
+   <COSTLB type="6">
+     $3.86
+   </COSTLB>
+   <UNITS type="1">
+     kg
+   </UNITS>
+   <LOV type="6">
+     300
+   </LOV>
+   <DescrLookup type="1">
+     German Carafa light - a very nice version of chocolate malt.
+   </DescrLookup>
+</ITEM>
+<ITEM>
+   <MALT type="1">
+     Rye Malt
+   </MALT>
+   <AMOUNT type="6">
+     5
+   </AMOUNT>
+   <RECIPE type="2">
+     185
+   </RECIPE>
+   <POINTS type="6">
+     1.030
+   </POINTS>
+   <COSTLB type="6">
+     $0.00
+   </COSTLB>
+   <UNITS type="1">
+     lb
+   </UNITS>
+   <LOV type="6">
+     4
+   </LOV>
+   <DescrLookup type="1">
+     Malted Rye
+   </DescrLookup>
+</ITEM>
+ </FERMENTABLES>
+ <HOPS>
+<ITEM>
+   <HOP type="1">
+     E. Kent Goldngs
+   </HOP>
+   <RECIPE type="2">
+     185
+   </RECIPE>
+   <AMOUNT type="6">
+     5
+   </AMOUNT>
+   <ADDORDER type="3">
+     2
+   </ADDORDER>
+   <TIME type="6">
+     60
+   </TIME>
+   <UNITS type="1">
+     oz
+   </UNITS>
+   <FORM type="1">
+     Leaf
+   </FORM>
+   <ALPHA type="6">
+     5
+   </ALPHA>
+   <COSTOZ type="6">
+     $1.25
+   </COSTOZ>
+   <ADD type="1">
+     Boil
+   </ADD>
+   <DescrLookup type="1">
+     E. Kent Goldngs: A British grown version of the classic ale finishing hop.  Slightly smoother and more refined than the herbal, Canadian grown version.
+   </DescrLookup>
+   <GUID type="14">
+     479
+   </GUID>
+</ITEM>
+ </HOPS>
+ <MASH>
+<ITEM>
+   <RECIPE type="2">
+     185
+   </RECIPE>
+   <TYPE type="1">
+     alpha
+   </TYPE>
+   <DISPL_TEMP type="6">
+     155.0
+   </DISPL_TEMP>
+   <TEMP type="6">
+     155.0
+   </TEMP>
+   <METHOD type="1">
+     infusion
+   </METHOD>
+   <MIN type="3">
+     60
+   </MIN>
+   <DIRECTIONS type="16">
+     Mash in with 7.5 gallons US of water at 177.0 F
+   </DIRECTIONS>
+   <WATER_EQV type="6">
+     43.8
+   </WATER_EQV>
+   <WATER_QTS type="6">
+     29.9
+   </WATER_QTS>
+   <DECOCT_QTS type="6">
+     0.0
+   </DECOCT_QTS>
+   <END_TEMP type="6">
+     155.0
+   </END_TEMP>
+   <RAMP_MIN type="3">
+     15
+   </RAMP_MIN>
+   <DISPL_END_TEMP type="6">
+     155.0
+   </DISPL_END_TEMP>
+</ITEM>
+<ITEM>
+   <RECIPE type="2">
+     185
+   </RECIPE>
+   <TYPE type="1">
+     mashout
+   </TYPE>
+   <DISPL_TEMP type="6">
+     168.0
+   </DISPL_TEMP>
+   <TEMP type="6">
+     168.0
+   </TEMP>
+   <METHOD type="1">
+     infusion
+   </METHOD>
+   <MIN type="3">
+     10
+   </MIN>
+   <DIRECTIONS type="16">
+     Add 2.7 gallons US of water at 212.0 F
+   </DIRECTIONS>
+   <WATER_EQV type="6">
+     36.3
+   </WATER_EQV>
+   <WATER_QTS type="6">
+     10.7
+   </WATER_QTS>
+   <DECOCT_QTS type="6">
+     0.0
+   </DECOCT_QTS>
+   <END_TEMP type="6">
+     168.0
+   </END_TEMP>
+   <RAMP_MIN type="3">
+     2
+   </RAMP_MIN>
+   <DISPL_END_TEMP type="6">
+     168.0
+   </DISPL_END_TEMP>
+</ITEM>
+ </MASH>
+ <MISC>
+ </MISC>
+ <NOTES>
+ </NOTES>
+ </STRANGEBREWRECIPE>

@@ -1,0 +1,31 @@
+Form		What			Bytes
+---------------------------------------------
+a55		StyleName		55
+a55		SubStyleName		55
+f		OrigMinSG		4
+f		OrigMaxSG		4
+f		FinalMinSG		4
+f		FinalMaxSG		4
+f		MinPercentAlcohol	4
+f		MaxPercentAlcohol	4
+f		Min IBU			4
+f		Max IBU			4
+f		Min CLR			4
+f		Max CLR			4
+a155		ColourNote		155
+a155		MaltNote		155
+a155		HopNote			155
+a155		YeastNote		155
+a255		Examples		255	 
+S		Cat#			2
+S		SubCatLetter		2
+C		Type			1
+                {
+		  0x01 => Ale
+                  0x02 => Lager
+                  0x03 => Ale/Lager (Mixed)
+                  0x04 => Cider
+                  0x05 => Mead
+                }
+							
+---------------------------------------------

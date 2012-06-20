@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "2.0a7">
+<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
+  <DETAILS>
+  <NAME>30A Ginger Rye Camomile Wit</NAME>
+  <BREWER>Drew Avis</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>72.0</EFFICIENCY>
+  <OG>1.052</OG>
+  <FG>1.013</FG>
+  <STYLE>Witbier</STYLE>
+  <MASH>true</MASH>
+  <LOV>3.8</LOV>
+  <IBU>17.5</IBU>
+  <ALC>5.1</ALC>
+  <!-- SBJ1.0 Extensions: -->
+  <EVAP>4.0</EVAP>
+  <EVAP_METHOD>Constant</EVAP_METHOD>
+  <!-- END SBJ1.0 Extensions -->
+  <BOIL_TIME>75</BOIL_TIME>
+  <PRESIZE>65.0</PRESIZE>
+  <SIZE>60.0</SIZE>
+  <SIZE_UNITS>litres</SIZE_UNITS>
+  <MALT_UNITS>lb</MALT_UNITS>
+  <HOPS_UNITS>oz</HOPS_UNITS>
+  <YEAST>Safbrew T-58</YEAST>
+  <RECIPE_DATE>04/13/2005</RECIPE_DATE>
+  <ATTENUATION>75.0</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Volume</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>SRM</COLOUR_METHOD>
+  <KETTLE_LOSS>1.0</KETTLE_LOSS>
+  <TRUB_LOSS>1.0</TRUB_LOSS>
+  <MISC_LOSS>1.0</MISC_LOSS>
+  <PELLET_HOP_PCT>6.0</PELLET_HOP_PCT>
+  <YEAST_COST>0.75</YEAST_COST>
+  <OTHER_COST>5.0</OTHER_COST>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <TOTAL>36.0</TOTAL>
+    <ITEM>
+      <MALT>German Pilsener</MALT>
+      <AMOUNT>16.0</AMOUNT>
+      <PERCENT>44.4</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.038</POINTS>
+      <LOV>1.6</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.72</COSTLB>
+      <DESCRIPTION>German Pilsener - usually a moravian malt, very light in colour, perfect for decoction mashes and as a base for lighter lagers.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Rice Hulls</MALT>
+      <AMOUNT>4.0</AMOUNT>
+      <PERCENT>11.1</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.0</POINTS>
+      <LOV>0.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.5</COSTLB>
+      <DESCRIPTION>Filter bed material for beers with large amounts of adjuncts. Rule of thumb: use in grists that consist of greater than 60% wheat or 10% rye.  Use 10% or more.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Rye Malt</MALT>
+      <AMOUNT>2.0</AMOUNT>
+      <PERCENT>5.6</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.03</POINTS>
+      <LOV>4.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.6</COSTLB>
+      <DESCRIPTION>Malted Rye</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Wheat (Flaked)</MALT>
+      <AMOUNT>14.0</AMOUNT>
+      <PERCENT>38.9</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.034</POINTS>
+      <LOV>2.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.5</COSTLB>
+      <DESCRIPTION>Wheat (Flaked)</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <TOTAL>4.5</TOTAL>
+    <ITEM>
+      <HOP>Saaz</HOP>
+      <AMOUNT>4.5</AMOUNT>
+      <TIME>65</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>3.5</ALPHA>
+      <COSTOZ>1.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Saaz: Having mild bittering power, it&apos;s the spicy, earthy, flavor and aroma that makes Saaz one of the worlds most prized Pilsner and Lager hops.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+    <ITEM>
+      <NAME>Ginger</NAME>
+      <AMOUNT>2.0</AMOUNT>
+      <UNITS>ounces</UNITS>
+      <STAGE>Boil</STAGE>
+      <TIME>0</TIME>
+      <COMMENTS>Grated ginger, added at flameout.</COMMENTS>
+    </ITEM>
+    <ITEM>
+      <NAME>Camomile</NAME>
+      <AMOUNT>1.0</AMOUNT>
+      <UNITS>ounces</UNITS>
+      <STAGE>Boil</STAGE>
+      <TIME>0</TIME>
+      <COMMENTS>Loose bulk flowers, added at flameout.</COMMENTS>
+    </ITEM>
+  </MISC>
+  <MASH>
+    <MASH_VOLUME>12.52</MASH_VOLUME>
+    <MASH_VOL_U>gallons US</MASH_VOL_U>
+    <MASH_RATIO>1.25</MASH_RATIO>
+    <MASH_RATIO_U>qt/lb</MASH_RATIO_U>
+    <MASH_TIME>300</MASH_TIME>
+    <MASH_TMP_U>F</MASH_TMP_U>
+    <THICK_DECOCT_RATIO>0.6</THICK_DECOCT_RATIO>
+    <THIN_DECOCT_RATIO>0.9</THIN_DECOCT_RATIO>
+    <MASH_TUNLOSS_TEMP>0.0</MASH_TUNLOSS_TEMP>
+    <GRAIN_TEMP>68.0</GRAIN_TEMP>
+    <BOIL_TEMP>212.0</BOIL_TEMP>
+    <ITEM>
+      <TYPE>protein</TYPE>
+      <TEMP>122.0</TEMP>
+      <DISPL_TEMP>122.0</DISPL_TEMP>
+      <END_TEMP>122.0</END_TEMP>
+      <DISPL_END_TEMP>122.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <WEIGHT_LBS>30.0</WEIGHT_LBS>
+      <DIRECTIONS>Mash in with 9.4 gallons US of water at 130.3 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>beta</TYPE>
+      <TEMP>141.0</TEMP>
+      <DISPL_TEMP>141.0</DISPL_TEMP>
+      <END_TEMP>141.0</END_TEMP>
+      <DISPL_END_TEMP>141.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>decoction</METHOD>
+      <WEIGHT_LBS>30.0</WEIGHT_LBS>
+      <DIRECTIONS>Remove 2.6 gallons US of mash, boil, and return to mash.</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>alpha</TYPE>
+      <TEMP>152.83333333333334</TEMP>
+      <DISPL_TEMP>152.83333333333334</DISPL_TEMP>
+      <END_TEMP>152.0</END_TEMP>
+      <DISPL_END_TEMP>152.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>cereal mash</METHOD>
+      <WEIGHT_LBS>6.0</WEIGHT_LBS>
+      <DIRECTIONS>Cereal mash: mash 6.0 lb grain with 1.9 gallons US water at 168.4F to hit 155.0F and rest. Raise to 212.0F and add to the main mash to reach 152.8F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>mashout</TYPE>
+      <TEMP>168.0</TEMP>
+      <DISPL_TEMP>168.0</DISPL_TEMP>
+      <END_TEMP>168.0</END_TEMP>
+      <DISPL_END_TEMP>168.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>direct</METHOD>
+      <WEIGHT_LBS>36.0</WEIGHT_LBS>
+      <DIRECTIONS>Add direct heat until mash reaches 168.0 F.</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>sparge</TYPE>
+      <TEMP>170.0</TEMP>
+      <DISPL_TEMP>170.0</DISPL_TEMP>
+      <END_TEMP>170.0</END_TEMP>
+      <DISPL_END_TEMP>170.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>fly</METHOD>
+      <WEIGHT_LBS>0.0</WEIGHT_LBS>
+      <DIRECTIONS>Sparge with 10.9 gallons US at 170.0F to collect 17.2 gallons US</DIRECTIONS>
+    </ITEM>
+  </MASH>
+  <NOTES>
+    <ITEM>
+      <DATE>05/17/2006</DATE>
+      <TYPE>Planning</TYPE>
+      <NOTE>This is a test</NOTE>
+    </ITEM>
+    <ITEM>
+      <DATE>05/17/2006</DATE>
+      <TYPE>Brewed</TYPE>
+      <NOTE>Another Test</NOTE>
+    </ITEM>
+  </NOTES>
+ <style>
+  <subcategory id="16A">    <name>Witbier</name>
+    <aroma>
+Moderate sweetness (often with light notes of honey and/or vanilla) with light, grainy, spicy wheat aromatics, often with a bit of tartness. Moderate perfumy coriander, often with a complex herbal, spicy, or peppery note in the background. Moderate zesty, orangey fruitiness. A low spicy-herbal hop aroma is optional, but should never overpower the other characteristics. No diacetyl. Vegetal, celery-like, or ham-like aromas from certain types of spices are inappropriate. Spices should blend in with fruity, floral and sweet aromas and should not be overly strong.</aroma>
+    <appearance>
+Very pale straw to very light gold in color. The beer will be very cloudy from starch haze and/or yeast, which gives it a milky, whitish-yellow appearance. Dense, white, moussy head. Head retention should be quite good.</appearance>
+    <flavor>
+Pleasant sweetness (often with a honey and/or vanilla character) and a zesty, orange-citrusy fruitiness. Refreshingly crisp with a dry, often tart, finish. Can have a low wheat flavor. Optionally has a very light lactic-tasting sourness. Herbal-spicy flavors are common but not overpowering, and can taste moderately of coriander and other spices at a more subtle level. A spicy-earthy hop flavor is low to none, and never gets in the way of the spices. Hop bitterness is low to medium-low (as with a Hefeweizen), and doesn't interfere with refreshing flavors of fruit and spice, nor does it persist into the finish. Bitterness from orange pith should not be present. Vegetal, celery-like, ham-like, or soapy flavors from certain types of spices are inappropriate. No diacetyl.</flavor>
+    <mouthfeel>
+Medium-light to medium body, often having a smoothness and light creaminess from unmalted wheat and the occasional oats. Despite body and creaminess, finishes dry and often a bit tart. Effervescent character from high carbonation. Refreshing, from carbonation, light acidity, and lack of bitterness in finish. No harshness or astringency from orange pith. Should not be overly dry and thin, nor should it be thick and heavy.</mouthfeel>
+    <impression>
+A refreshing, elegant, tasty, moderate-strength wheat-based ale.</impression>
+    <comments>
+The presence, character and degree of spicing and lactic sourness varies. Overly spiced and/or sour beers are not good examples of the style. The beer tends to be fragile and does not age well, so younger, fresher, properly handled examples are most desirable.</comments>
+    <ingredients>
+About 50% unmalted wheat (traditionally soft white winter wheat) and 50% pale barley malt (usually pils malt) constitute the grist. In some versions, up to 5-10% raw oats may be used. Spices of freshly-ground coriander and Curaçao or sometimes sweet orange peel complement the sweet aroma and are quite characteristic. Other spices (e.g., chamomile, cumin, cinnamon, Grains of Paradise) may be used for complexity but are much less prominent. Ale yeast prone to the production of mild, spicy flavors is very characteristic. In some instances a very limited lactic fermentation, or the actual addition of lactic acid, is done.</ingredients>
+ <stats>
+  <og flexible="false">
+      <low>1.044</low>
+      <high>1.052</high>
+  </og>
+  <fg flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </fg>
+  <ibu flexible="false">
+      <low>10.0</low>
+      <high>20.0</high>
+  </ibu>
+  <srm flexible="false">
+      <low>2.0</low>
+      <high>4.0</high>
+  </srm>
+  <abv flexible="false">
+      <low>4.5</low>
+      <high>5.5</high>
+  </abv>
+</stats>
+    <examples> ABV of 5% is most typical
+Hoegaarden Wit, Vuuve 5, Blanche de Bruges, Blanche de Bruxelles, Brugs Tarwebier, Sterkens White Ale, Celis White (now made in Michigan), Blanche de Brooklyn, Great Lakes Holy Moses, Unibroue Blanche de Chambly, Blue Moon Belgian White</examples>
+  </subcategory>
+ </style>
+</STRANGEBREWRECIPE>

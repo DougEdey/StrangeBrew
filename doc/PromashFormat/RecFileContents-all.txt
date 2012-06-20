@@ -1,0 +1,342 @@
+RecFileContents
+==================================================
+Chunk			Bytes	Percent Complete
+------------------------------------------------
+<Recipe>		  126	90%
+<Style>			  775	100%
+[Hops]*			  635	100%
+[Malt]*			  521	100%
+[Extra]*		  444	100%
+<Yeast>			  473	90%
+<Water>			  106	90%
+<MashSched>		  292	75%
+<Notes>			 8311	100%
+<CustomMashSchedule>	14867	60%
+
+------------------------------------------------
+NOTES:
+<> - Always present in the REC file
+[] - Presence indicated by a "counter" variable in the "Recipe" chunk
+
+Field Form Notation:
+a<nn>	   ASCII string, length nn
+l	   long integer (4 bytes)
+lw	   long unsigned integer (4 bytes) (LongWord in Delphi)
+f	   single precision float
+C	   unsigned character (single byte)
+
+
+RecipeChunk
+=====================================
+Form		What		Bytes
+-------------------------------------
+a79		RecipeName	83 (not 79)
+l		HopCount	4
+l		MaltCount	4
+l		ExtraCount	4
+??		??		2
+f		Batch Size	4
+f		Wort Size	4
+??		??		8
+f		% Eff.	4
+C		BoilTime	1
+??		??		7	
+C		Type		1	
+{
+	0x00 => All Grain
+	0x01 => Partial
+	0x02 => Extract
+}
+-------------------------------------
+
+
+StyleChunk
+=============================================
+Form		What			Bytes
+---------------------------------------------
+a55		StyleName		56
+a55		SubStyleName	55
+f		OrigMinSG		4
+f		OrigMaxSG		4
+f		FinalMinSG		4
+f		FinalMaxSG		4
+f		MinPercentAlcohol	4
+f		MaxPercentAlcohol	4
+f		Min IBU		4
+f		Max IBU		4
+f		Min CLR		4
+f		Max CLR		4
+a155		ColourNote		155
+a155		MaltNote		155
+a155		HopNote		155
+a155		YeastNote		155
+a255		Examples		255	 
+S		Cat#			2
+S		SubCatLetter	2
+C		Type			1
+                {
+		  0x01 => Ale
+                  0x02 => Lager
+                  0x03 => Ale/Lager (Mixed)
+                  0x04 => Cider
+                  0x05 => Mead
+                }
+							
+---------------------------------------------
+
+
+HopChunk
+=============================================
+Form		What		Bytes
+-------------------------------------
+a55	Name			55
+f	Alpha as listed in database	4
+f	Beta			4
+C	IsNoble			1 (boolean)
+f	Cohomulone		4
+f	Myrcene			4
+f	Humulene		4
+f	Carophyllene		4
+C	Usage			1
+{
+	0x01 => Bittering
+	0x02 => Aroma
+	0x03 => Both
+}
+C	Form			1
+{
+	0x02 => Whole
+	0x12 => Plug
+	0x22 => Pellet
+}
+f	StorageFactor		4
+a155	TasteDesc		155
+a55	Origin		55
+a155	Use			155
+a159	Substitutes		165
+??	??			4
+f	Actual Alpha	4
+??	??			1
+f	Quantity		4
+C	BoilTime		1
+??	??			5
+
+------------------------------------- MaltChunk
+
+Fermentables Chunk
+======================================
+Form		What		Bytes
+-------------------------------------
+a55	Name			55
+a55	Manufacturer	55
+a55	Origin		55
+C	Type			1
+{
+	0x01 => Grain
+	0x02 => Extract
+	0x03 => Sugar
+	0x04 => Other
+}
+C	(varies)		1
+  IF (Type==Extract)
+  {
+    ExtractType
+    {
+	0x00 => LME
+	0x01 => DME
+    }
+  }
+  IF (Type==Grain|Sugar)
+  {
+    MustMash?
+    {
+	0x00 => No
+	0x01 => Yes
+    }
+  }
+  IF (Type==Grain|Sugar)
+  {
+    *ignored*
+  }
+f	GravPotential	4	(SG pppg)
+f	SRM			4	(lovibond)
+f	Moisture		4	(%)
+f	Max			4	(%)
+f	DiastaticPower	4
+f	Protein		4	(%)
+f	TSN			4	(%)
+a155	Use			155
+a159	Comments		159
+??	??			4
+f	fg dry		4
+f	cg dry		4
+f	Quantity		4
+??	??			4
+-------------------------------------
+
+
+ExtraChunk
+==================================================
+Form		What		Bytes
+-------------------------------------
+a55	Name			55
+C	Type			1
+{
+	0x00 => Spice
+	0x01 => Fruit
+	0x02 => Coffee
+	0x03 => Other
+	0x04 => FiningAgent
+	0x05 => Herb
+}
+lw	Time			4
+C	Where			1
+{
+	0x00 => InBoil
+	0x01 => InFermentor
+	0x02 => InMash
+}
+C	Length			1
+{
+	0x00 => InDays
+	0x01 => InMinutes
+}
+C	Units			1
+{
+	0x00 => Ounces
+	0x01 => Grams
+	0x02 => Pounds
+	0x03 => Tsp
+	0x04 => Tbsp
+	0x05 => Cups
+	0x06 => SingleUnit
+}
+??	??			4
+a222	Usage			255
+a155	Comment		255
+f	Quantity		4
+??	??			8
+-------------------------------------
+
+YeastChunk
+======================================
+Form		What		Bytes
+-------------------------------------
+a55	Name			55
+a55	Lab			55
+a25	CatalogNum		25
+C	Type			1
+{
+	0x00 => Ale
+	0x01 => Lager
+	0x02 => Wine
+	0x03 => Champagne
+}
+C	Medium			1
+{
+	0x00 => Dry
+	0x01 => Liquid
+	0x02 => AgarSlant
+}
+a155	FlavourDesc		155
+a159	Comment		159
+f	Quantity		4
+lw	LoAtt			4
+lw	HighAtt		4
+f	Temp			4
+C	Flocc			1
+{
+	0x00 => High
+	0x01 => Medium
+	0x02 => Low
+}
+?	???			5
+-------------------------------------
+
+WaterChunk
+=====================================
+Form		What		Bytes
+-------------------------------------
+a27	Name			27
+f	CA			4
+f	MG			4
+f	NA			4
+?	?			4
+f	SO4			4
+f	CL			4
+f	HCO3			4
+f	PH			4
+a47	KnownAs		47
+
+-------------------------------------
+
+MashSceduleChunk
+===================================================
+Form		What		Bytes
+-------------------------------------
+c	Type				1
+{
+	0x02 => Single step
+	0x03 => Multi step
+}
+??	??				8 
+lw	AcidRest/TempF		1
+lw	AcidRest/Minutes		1
+lw	ProteinRest/TempF		1
+lw	ProteinRest/Minutes	1
+lw	InterRest/TempF		1
+lw	InterRest/Minutes		1
+lw	SaccRest/TempF		1
+lw	SaccRest/Minutes		1
+lw	MashOut/TempF		1
+lw	MashOut/Minutes		1
+lw	Sparge Temp/TempF		1
+lw	Sparge Temp/Minutes	1
+f	MashQTS			4
+c	??				1
+
+-------------------------------------
+
+NotesChunk
+======================================
+Form		What		Bytes
+-------------------------------------
+a4028		Notes		4028
+a4283		Awards	4283
+
+-------------------------------------
+
+CustomMashSceduleChunk
+===================================================
+Form		What		Bytes
+-------------------------------------
+C	MashStepCount	1
+??	??			1
+l	GrainTemp		4
+??	??			6
+
+[foreach MashStepCount]
+a256	Name			255
+c	HeatType		1
+{
+	0 => infusion
+	1 => direct heat
+	2 => decoction
+}
+l	StartTemp(F)	4
+l	StopTemp(F)		4
+l	InfuseTemp(F)	4
+l	RestTime		4
+l	StopTime		4
+f	InfuseRatio		4
+f	InfuseAmount	4
+lw	StepUpTimeClr	4 (RGBA)
+lw	RestTimeClr		4 (RGBA)
+[/foreach MashStepCount]
+
+?	Padding			??
+  ** Guarantees chunk size will always be 0x3a13 butes
+a255	MashScheduleName	255
+C	??			1
+
+-------------------------------------

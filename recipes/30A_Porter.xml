@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "2.0a7">
+<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
+  <DETAILS>
+  <NAME>30A Porter</NAME>
+  <BREWER>Drew and John</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>65.0</EFFICIENCY>
+  <OG>1.067</OG>
+  <FG>1.017</FG>
+  <STYLE>Robust Porter</STYLE>
+  <MASH>true</MASH>
+  <LOV>31.0</LOV>
+  <IBU>28.9</IBU>
+  <ALC>6.6</ALC>
+  <!-- SBJ1.0 Extensions: -->
+  <EVAP>1.5</EVAP>
+  <EVAP_METHOD>Constant</EVAP_METHOD>
+  <!-- END SBJ1.0 Extensions -->
+  <BOIL_TIME>60</BOIL_TIME>
+  <PRESIZE>46.5</PRESIZE>
+  <SIZE>45.0</SIZE>
+  <SIZE_UNITS>litres</SIZE_UNITS>
+  <MALT_UNITS>lb</MALT_UNITS>
+  <HOPS_UNITS>oz</HOPS_UNITS>
+  <YEAST>Safale S-04</YEAST>
+  <RECIPE_DATE>05/09/2003</RECIPE_DATE>
+  <ATTENUATION>75.0</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Volume</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>SRM</COLOUR_METHOD>
+  <KETTLE_LOSS>1.0</KETTLE_LOSS>
+  <TRUB_LOSS>1.0</TRUB_LOSS>
+  <MISC_LOSS>1.0</MISC_LOSS>
+  <PELLET_HOP_PCT>6.0</PELLET_HOP_PCT>
+  <YEAST_COST>0.75</YEAST_COST>
+  <OTHER_COST>5.0</OTHER_COST>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <ITEM>
+      <MALT>British Carastan</MALT>
+      <AMOUNT>5.0</AMOUNT>
+      <PERCENT>14.9</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.035</POINTS>
+      <LOV>34.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.47</COSTLB>
+      <DESCRIPTION>British Carastan: Also known as CaraStan, use 5 to 20% of English Crystal to add color and a full, toffee/sweet flavor to Bitters, Pale Ales and Porters.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>British Chocolate</MALT>
+      <AMOUNT>8.0</AMOUNT>
+      <PERCENT>1.5</PERCENT>
+      <UNITS>oz</UNITS>
+      <POINTS>1.034</POINTS>
+      <LOV>475.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.06</COSTLB>
+      <DESCRIPTION>British Chocolate: British Chocolate malt is ideal for British Porters and Brown or Mild Ales and even Stouts.  It&apos;s a little darker thanour domestic Chocolate malt yet it has a slightly smoother character in the roast flavor and aroma profiles.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>British Two-Row</MALT>
+      <AMOUNT>6.0</AMOUNT>
+      <PERCENT>17.9</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.038</POINTS>
+      <LOV>2.5</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.47</COSTLB>
+      <DESCRIPTION>British Two-Row: Fully modified British malt, easily converted by a single temperature mash.  Preferred by many brewers for full flavored ales.  Pale Ale malt has undergone higher kilning than Klages and is lower in diastatic power so keep adjuncts to 15% or less.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Brown Sugar</MALT>
+      <AMOUNT>2.0</AMOUNT>
+      <PERCENT>6.0</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.045</POINTS>
+      <LOV>2.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>Brown Sugar: used in authentic British bitters.  Can lend a buttery, molases flavour when used in small amounts.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Canadian Two-Row</MALT>
+      <AMOUNT>14.0</AMOUNT>
+      <PERCENT>41.8</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.036</POINTS>
+      <LOV>2.1</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.4</COSTLB>
+      <DESCRIPTION>Canadian Two-Row: The basic malt for brewing all grain beers from scratch.  High in diastatic power, well modified and fairly neutral, Klages make an excellent base malt. Best for both American Lager and Ale styles, Klages lends itself well to all beer styles.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>German Carafa Chocolate</MALT>
+      <AMOUNT>1.0</AMOUNT>
+      <PERCENT>3.0</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.03</POINTS>
+      <LOV>525.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>1.0</COSTLB>
+      <DESCRIPTION>German Carafa Chocolate - very smooth version of chocolate malt.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Oats (Flaked)</MALT>
+      <AMOUNT>3.0</AMOUNT>
+      <PERCENT>9.0</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.033</POINTS>
+      <LOV>2.2</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>Oats (Flaked): Adds body and a creamy mouthfeel, although in higher amounts it may lend oilyness to a beer.  Use 5-15%.  Often used in Oatmeal Stouts and Wit beers.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Wheat Malt</MALT>
+      <AMOUNT>2.0</AMOUNT>
+      <PERCENT>6.0</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.039</POINTS>
+      <LOV>1.7</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.47</COSTLB>
+      <DESCRIPTION>Wheat Malt: Use to make wheat and weizen beers. Also, small amounts (3-6%) aid in head retention to any beer without altering final flavor. Use 5 to 70% in the mash, 40 to 70% being the norm for wheat beers, combined with a high enzyme malt such as Klages.</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <ITEM>
+      <HOP>E. Kent Goldngs</HOP>
+      <AMOUNT>2.0</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>5.0</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>FWH</ADD>
+      <DESCRIPTION>E. Kent Goldngs: A British grown version of the classic ale finishing hop.  Slightly smoother and more refined than the herbal, Canadian grown version.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Galena</HOP>
+      <AMOUNT>1.0</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Pellet</FORM>
+      <ALPHA>12.2</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Galena: A popular High Alpha Acid variety, Galena is a strong bittering hop which blends has a very clean flavour.  Blends well with other hops, especially nobel hops.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+    <ITEM>
+      <NAME>Irish Moss</NAME>
+      <AMOUNT>1.0</AMOUNT>
+      <UNITS>tsp</UNITS>
+      <STAGE>Boil</STAGE>
+      <TIME>20</TIME>
+      <COMMENTS></COMMENTS>
+    </ITEM>
+  </MISC>
+  <MASH>
+    <MASH_VOLUME>11.89</MASH_VOLUME>
+    <MASH_VOL_U>gallons US</MASH_VOL_U>
+    <MASH_RATIO>1.0</MASH_RATIO>
+    <MASH_RATIO_U>qt/lb</MASH_RATIO_U>
+    <MASH_TIME>90</MASH_TIME>
+    <MASH_TMP_U>F</MASH_TMP_U>
+    <MASH_TUNLOSS_TEMP>0.0</MASH_TUNLOSS_TEMP>
+    <ITEM>
+      <TYPE>beta</TYPE>
+      <TEMP>150.0</TEMP>
+      <DISPL_TEMP>150.0</DISPL_TEMP>
+      <END_TEMP>150.0</END_TEMP>
+      <DISPL_END_TEMP>150.0</DISPL_END_TEMP>
+      <MIN>75</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Mash in with 8.4 gallons US of water at 165.7 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>mashout</TYPE>
+      <TEMP>168.0</TEMP>
+      <DISPL_TEMP>168.0</DISPL_TEMP>
+      <END_TEMP>168.0</END_TEMP>
+      <DISPL_END_TEMP>168.0</DISPL_END_TEMP>
+      <MIN>15</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>decoction</METHOD>
+      <DIRECTIONS>null</DIRECTIONS>
+    </ITEM>
+  </MASH>
+  <NOTES>
+  </NOTES>
+ <style>
+  <subcategory id="12B">    <name>Robust Porter</name>
+    <aroma>
+Roasty aroma (often with a lightly burnt, black malt character) should be noticeable and may be moderately strong. Optionally may also show some additional malt character in support (grainy, bready, toffee-like, caramelly, chocolate, coffee, rich, and/or sweet). Hop aroma low to high (US or UK varieties). Some American versions may be dry-hopped. Fruity esters are moderate to none. Diacetyl low to none.</aroma>
+    <appearance>
+Medium brown to very dark brown, often with ruby- or garnet-like highlights. Can approach black in color. Clarity may be difficult to discern in such a dark beer, but when not opaque will be clear (particularly when held up to the light). Full, tan-colored head with moderately good head retention.</appearance>
+    <flavor>
+Moderately strong malt flavor usually features a lightly burnt, black malt character (and sometimes chocolate and/or coffee flavors) with a bit of roasty dryness in the finish. Overall flavor may finish from dry to medium-sweet, depending on grist composition, hop bittering level, and attenuation. May have a sharp character from dark roasted grains, although should not be overly acrid, burnt or harsh. Medium to high bitterness, which can be accentuated by the roasted malt. Hop flavor can vary from low to moderately high (US or UK varieties, typically), and balances the roasted malt flavors. Diacetyl low to none. Fruity esters moderate to none.</flavor>
+    <mouthfeel>
+Medium to medium-full body. Moderately low to moderately high carbonation. Stronger versions may have a slight alcohol warmth. May have a slight astringency from roasted grains, although this character should not be strong.</mouthfeel>
+    <impression>
+A substantial, malty dark ale with a complex and flavorful roasty character.</impression>
+    <comments>
+Although a rather broad style open to brewer interpretation, it may be distinguished from Stout as lacking a strong roasted barley character. It differs from a brown porter in that a black patent or roasted grain character is usually present, and it can be stronger in alcohol. Roast intensity and malt flavors can also vary significantly. May or may not have a strong hop character, and may or may not have significant fermentation by-products; thus may seem to have an "American" or "English" character.</comments>
+    <ingredients>
+May contain several malts, prominently dark roasted malts and grains, which often include black patent malt (chocolate malt and/or roasted barley may also be used in some versions). Hops are used for bittering, flavor and/or aroma, and are frequently UK or US varieties. Water with moderate to high carbonate hardness is typical. Ale yeast can either be clean US versions or characterful English varieties.</ingredients>
+ <stats>
+  <og flexible="false">
+      <low>1.048</low>
+      <high>1.065</high>
+  </og>
+  <fg flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </fg>
+  <ibu flexible="true">
+      <low>25.0</low>
+      <high>50.0</high>
+  </ibu>
+  <srm flexible="true">
+      <low>22.0</low>
+      <high>35.0</high>
+  </srm>
+  <abv flexible="false">
+      <low>4.8</low>
+      <high>6.0</high>
+  </abv>
+</stats>
+    <examples>
+Anchor Porter, Great Lakes Edmund Fitzgerald Porter, Sierra Nevada Porter, Bell's Porter, Thirsty Dog Old Leghumper, Otter Creek Stovepipe Porter, Portland Haystack Black Porter, Avery New World Porter, Deschutes Black Butte Porter, Redhook Blackhook Porter</examples>
+  </subcategory>
+ </style>
+</STRANGEBREWRECIPE>

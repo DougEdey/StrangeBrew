@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "2.0.1">
+<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
+  <DETAILS>
+  <NAME>Snow Falling On Pils</NAME>
+  <BREWER>Drew</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>75.0</EFFICIENCY>
+  <OG>1.055</OG>
+  <FG>1.012</FG>
+  <STYLE>Classic American Pilsner</STYLE>
+  <MASH>false</MASH>
+  <LOV>5.3</LOV>
+  <IBU>39.1</IBU>
+  <ALC>5.6</ALC>
+  <!-- SBJ1.0 Extensions: -->
+  <EVAP>1.5</EVAP>
+  <EVAP_METHOD>Constant</EVAP_METHOD>
+  <!-- END SBJ1.0 Extensions -->
+  <BOIL_TIME>60</BOIL_TIME>
+  <PRESIZE>16.5</PRESIZE>
+  <SIZE>15.0</SIZE>
+  <SIZE_UNITS>gallons US</SIZE_UNITS>
+  <ADDED_VOLUME>0.0</ADDED_VOLUME>
+  <MALT_UNITS>pounds</MALT_UNITS>
+  <HOPS_UNITS>ounces</HOPS_UNITS>
+  <YEAST>Saflager S-189</YEAST>
+  <RECIPE_DATE>01/02/2008</RECIPE_DATE>
+  <ATTENUATION>78.0</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Volume</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>SRM</COLOUR_METHOD>
+  <KETTLE_LOSS>1.0</KETTLE_LOSS>
+  <TRUB_LOSS>1.0</TRUB_LOSS>
+  <MISC_LOSS>1.0</MISC_LOSS>
+  <PELLET_HOP_PCT>6.0</PELLET_HOP_PCT>
+  <YEAST_COST>0.75</YEAST_COST>
+  <OTHER_COST>5.0</OTHER_COST>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <TOTAL>31.0</TOTAL>
+    <ITEM>
+      <MALT>Belgian Pils</MALT>
+      <AMOUNT>24.0</AMOUNT>
+      <PERCENT>77.4</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.035</POINTS>
+      <LOV>1.8</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>Belgian Pils: A lower protein two row, usually moravian. This is a good base malt for many styles, including European Lagers, Belgian Ales and Wheat beers.  Benefits from a short protein rest and decoction mash schedule, although modern moravian malts can mashed with a single step infusion.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Corn (Flaked)</MALT>
+      <AMOUNT>5.0</AMOUNT>
+      <PERCENT>16.1</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.04</POINTS>
+      <LOV>0.5</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>Corn (Flaked): can add a sweet, corn flavour to beer without additional colour.  Used especially in Classic American (Pre-Prohibition) Pilsners, up to 30%.  Flaked corn is pre-gelatanized and can be added directly to the mash.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Canadian Honey</MALT>
+      <AMOUNT>2.0</AMOUNT>
+      <PERCENT>6.5</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.03</POINTS>
+      <LOV>25.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>Canadian Honey: made by Gambrinus.  Malt sweetness and honey like flavour and aroma make it perfect for any specialty beer. The closest comparison is a light caramel, but Honey Malt has a flavour of its own: sweet and a little bit nutty. Made by restricting the oxygen flow during the sprouting process, Honey Malt is essentially self-stewed. When the oxygen is cut off, the grain bed heats up, developing sugars and rich malt flavours. The malt is lightly kilned for a color color profile of 25 SRM and is devoid of astringent roast flavors. Honey malt has a diastatic power of 50, and needs to be mashed with a base malt. Use up to 15% in specialty beers for a unique flavour.</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <TOTAL>4.6</TOTAL>
+    <ITEM>
+      <HOP>Target</HOP>
+      <AMOUNT>2.6</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>12.4</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Target: Widely used for high alpha acid content comined with an acceptable aroma. Robust bittering. British ales and lagers.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Cascade</HOP>
+      <AMOUNT>1.0</AMOUNT>
+      <TIME>10</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Pellet</FORM>
+      <ALPHA>5.9</ALPHA>
+      <COSTOZ>1.6</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Cascade: Cascade, while a good bittering hop, is best known for its pronounced, very  distinctive &quot;perfumey&quot; aroma and flavor.  Used by many micro breweries.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Cascade</HOP>
+      <AMOUNT>1.0</AMOUNT>
+      <TIME>1</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Pellet</FORM>
+      <ALPHA>5.9</ALPHA>
+      <COSTOZ>1.6</COSTOZ>
+      <ADD>Leaf</ADD>
+      <DESCRIPTION>Cascade: Cascade, while a good bittering hop, is best known for its pronounced, very  distinctive &quot;perfumey&quot; aroma and flavor.  Used by many micro breweries.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+  </MISC>
+  <MASH>
+    <NAME>Mash</NAME>
+    <MASH_VOLUME>0.00</MASH_VOLUME>
+    <MASH_VOL_U>gallons US</MASH_VOL_U>
+    <MASH_RATIO>1.25</MASH_RATIO>
+    <MASH_RATIO_U>qt/lb</MASH_RATIO_U>
+    <MASH_TIME>0</MASH_TIME>
+    <MASH_TMP_U>F</MASH_TMP_U>
+    <THICK_DECOCT_RATIO>0.6</THICK_DECOCT_RATIO>
+    <THIN_DECOCT_RATIO>0.9</THIN_DECOCT_RATIO>
+    <MASH_TUNLOSS_TEMP>0.0</MASH_TUNLOSS_TEMP>
+    <GRAIN_TEMP>68.0</GRAIN_TEMP>
+    <BOIL_TEMP>212.0</BOIL_TEMP>
+  </MASH>
+   <FERMENTATION_SCHEDUAL>
+   </FERMENTATION_SCHEDUAL>
+   <CARB>
+      <BOTTLETEMP>65.0</BOTTLETEMP>
+      <SERVTEMP>45.0</SERVTEMP>
+      <VOL>2.4</VOL>
+      <SUGAR>Dextrose</SUGAR>
+      <AMOUNT>116.4</AMOUNT>
+      <SUGARU>g</SUGARU>
+      <TEMPU>F</TEMPU>
+      <KEG>true</KEG>
+      <PSI>13.70</PSI>
+   </CARB>
+   <WATER_PROFILE>
+      <SOURCE_WATER>
+         <NAME>Distilled/RO</NAME>
+         <CA>0.0</CA>
+         <MG>0.0</MG>
+         <NA>0.0</NA>
+         <SO4>0.0</SO4>
+         <HCO3>0.0</HCO3>
+         <CL>0.0</CL>
+         <HARDNESS>0.0</HARDNESS>
+         <TDS>0.0</TDS>
+         <PH>5.80000019073486</PH>
+         <ALKALINITY>0.0</ALKALINITY>
+      </SOURCE_WATER>
+      <TARGET_WATER>
+         <NAME>Dortmund 1</NAME>
+         <CA>225.0</CA>
+         <MG>40.0</MG>
+         <NA>60.0</NA>
+         <SO4>120.0</SO4>
+         <HCO3>221.0</HCO3>
+         <CL>60.0</CL>
+         <HARDNESS>750.0</HARDNESS>
+         <TDS>1000.0</TDS>
+         <PH>6.52640247344971</PH>
+         <ALKALINITY>180.0</ALKALINITY>
+      </TARGET_WATER>
+      <SALTS>
+         <SALT>
+            <NAME>Calcium Carbonate</NAME>
+            <COMMONNAME>Gypsum</COMMONNAME>
+            <CHEM>CaCO3</CHEM>
+            <AMOUNT>0.81</AMOUNT>
+            <AMOUNTU>g</AMOUNTU>
+         </SALT>
+         <SALT>
+            <NAME>Sodium Bicarbonate</NAME>
+            <COMMONNAME>Baking Soda</COMMONNAME>
+            <CHEM>NaHCO3</CHEM>
+            <AMOUNT>1.17</AMOUNT>
+            <AMOUNTU>g</AMOUNTU>
+         </SALT>
+         <SALT>
+            <NAME>Calcium Sulphate</NAME>
+            <COMMONNAME>Chalk</COMMONNAME>
+            <CHEM>CaSo4</CHEM>
+            <AMOUNT>2.13</AMOUNT>
+            <AMOUNTU>g</AMOUNTU>
+         </SALT>
+         <SALT>
+            <NAME>Calcium Chloride</NAME>
+            <COMMONNAME>Calcium Chloride</COMMONNAME>
+            <CHEM>CaCl2</CHEM>
+            <AMOUNT>0.00</AMOUNT>
+            <AMOUNTU>g</AMOUNTU>
+         </SALT>
+         <SALT>
+            <NAME>Magnesium Sulfate</NAME>
+            <COMMONNAME>Epsom Salt</COMMONNAME>
+            <CHEM>MgSo4</CHEM>
+            <AMOUNT>1.53</AMOUNT>
+            <AMOUNTU>g</AMOUNTU>
+         </SALT>
+         <SALT>
+            <NAME>Sodium Chloride</NAME>
+            <COMMONNAME>Salt</COMMONNAME>
+            <CHEM>NaCl</CHEM>
+            <AMOUNT>0.58</AMOUNT>
+            <AMOUNTU>g</AMOUNTU>
+         </SALT>
+      </SALTS>
+   </WATER_PROFILE>
+  <NOTES>
+  </NOTES>
+ <style>
+  <subcategory id="2C">    <name>Classic American Pilsner</name>
+    <aroma>
+Low to medium grainy, corn-like or sweet maltiness may be evident (although rice-based beers are more neutral). Medium to moderately high hop aroma, often classic noble hops. Clean lager character, with no fruitiness or diacetyl. Some DMS is acceptable.</aroma>
+    <appearance>
+Yellow to deep gold color. Substantial, long lasting white head. Bright clarity.</appearance>
+    <flavor>
+Moderate to moderately high maltiness similar in character to the Continental Pilsners but somewhat lighter in intensity due to the use of up to 30% flaked maize (corn) or rice used as an adjunct. Slight grainy, corn-like sweetness from the use of maize with substantial offsetting hop bitterness. Rice-based versions are crisper, drier, and often lack corn-like flavors. Medium to high hop flavor from noble hops (either late addition or first-wort hopped). Medium to high hop bitterness, which should not be coarse nor have a harsh aftertaste. No fruitiness or diacetyl. Should be smooth and well-lagered.</flavor>
+    <mouthfeel>
+Medium body and rich, creamy mouthfeel. Medium to high carbonation levels.</mouthfeel>
+    <impression>
+A substantial Pilsner that can stand up to the classic European Pilsners, but exhibiting the native American grains and hops available to German brewers who initially brewed it in the USA. Refreshing, but with the underlying malt and hops that stand out when compared to other modern American light lagers. Maize lends a distinctive grainy sweetness. Rice contributes a crisper, more neutral character.</impression>
+    <comments>
+The classic American Pilsner was brewed both pre-Prohibition and post-Prohibition with some differences. OG s of 1.050-1.060 would have been appropriate for pre-Prohibition beers while gravities dropped to 1.044-1.048 after Prohibition. Corresponding IBU s dropped from a pre-Prohibition level of 30-40 to 25-30 after Prohibition.</comments>
+    <ingredients>
+Six-row barley with 20% to 30% flaked maize to dilute the excessive protein levels. Native American hops such as Clusters, traditional continental noble hops, or modern noble crosses (Ultra, Liberty,Crystal) are also appropriate. Modern American hops such as Cascade are inappropriate. Water with a high mineral content can lead to an inappropriate coarseness in flavor and harshness in aftertaste.</ingredients>
+ <stats>
+  <og flexible="false">
+      <low>1.044</low>
+      <high>1.06</high>
+  </og>
+  <fg flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </fg>
+  <ibu flexible="false">
+      <low>25.0</low>
+      <high>40.0</high>
+  </ibu>
+  <srm flexible="false">
+      <low>3.0</low>
+      <high>6.0</high>
+  </srm>
+  <abv flexible="false">
+      <low>4.5</low>
+      <high>6.0</high>
+  </abv>
+</stats>
+    <examples>
+Occasional brewpub and microbrewery specials</examples>
+  </subcategory>
+ </style>
+</STRANGEBREWRECIPE>

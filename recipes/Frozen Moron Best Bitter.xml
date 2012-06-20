@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "2.0.1">
+<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
+  <DETAILS>
+  <NAME>Frozen Moron Best Bitter</NAME>
+  <BREWER>John Scime</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>75.0</EFFICIENCY>
+  <OG>1.048</OG>
+  <FG>1.012</FG>
+  <STYLE>Special/Best/Premium Bitter</STYLE>
+  <MASH>false</MASH>
+  <LOV>11.4</LOV>
+  <IBU>38.6</IBU>
+  <ALC>4.8</ALC>
+  <!-- SBJ1.0 Extensions: -->
+  <EVAP>1.5</EVAP>
+  <EVAP_METHOD>Constant</EVAP_METHOD>
+  <!-- END SBJ1.0 Extensions -->
+  <BOIL_TIME>60</BOIL_TIME>
+  <PRESIZE>14.5</PRESIZE>
+  <SIZE>13.0</SIZE>
+  <SIZE_UNITS>gallons US</SIZE_UNITS>
+  <ADDED_VOLUME>1.999999999999984</ADDED_VOLUME>
+  <MALT_UNITS>pounds</MALT_UNITS>
+  <HOPS_UNITS>ounces</HOPS_UNITS>
+  <YEAST>Danstar Nottingham Dry Ale Yeast</YEAST>
+  <RECIPE_DATE>12/28/2007</RECIPE_DATE>
+  <ATTENUATION>75.0</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Volume</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>SRM</COLOUR_METHOD>
+  <KETTLE_LOSS>1.0</KETTLE_LOSS>
+  <TRUB_LOSS>1.0</TRUB_LOSS>
+  <MISC_LOSS>1.0</MISC_LOSS>
+  <PELLET_HOP_PCT>6.0</PELLET_HOP_PCT>
+  <YEAST_COST>0.75</YEAST_COST>
+  <OTHER_COST>5.0</OTHER_COST>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <TOTAL>23.5894620537819</TOTAL>
+    <ITEM>
+      <MALT>Marris Otter</MALT>
+      <AMOUNT>10.0</AMOUNT>
+      <PERCENT>93.5</PERCENT>
+      <UNITS>kg</UNITS>
+      <POINTS>1.036</POINTS>
+      <LOV>3.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>1.9841603596638981</COSTLB>
+      <DESCRIPTION>The classic British ale malt, prized by the finest brewers in Britain. Made from fully modified two-row winter Maris Otter. This malt has a wide optimum temperature and pH range, making it very forgiving in the brewery and popular with small-scale brewers. Very low protein (9.5%), high flavour malt, perfect for lower gravity Bitters</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Crystal 120</MALT>
+      <AMOUNT>700.0</AMOUNT>
+      <PERCENT>6.5</PERCENT>
+      <UNITS>g</UNITS>
+      <POINTS>1.029</POINTS>
+      <LOV>120.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>true</STEEPED>
+      <COSTLB>0.003483303742521066</COSTLB>
+      <DESCRIPTION>Crystal 120: 5 to 15% will lend a complex bitter/sweet caramel flavor and aroma to beers. Used in smaller quantities this malt will add color and slight sweetness to beers, while heavier concentrations are well suited to strong beers such as Barley Wines and Old Ales.</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <TOTAL>4.691436939294195</TOTAL>
+    <ITEM>
+      <HOP>Nugget</HOP>
+      <AMOUNT>50.0</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>g</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>13.0</ALPHA>
+      <COSTOZ>0.044092452436975516</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Nugget: A favorite of the high alpha hops, Nugget lends a clean, solid bitterness in moderate quantities yet also has a pleasant, herbal aromatic quality.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Cascade</HOP>
+      <AMOUNT>15.0</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>g</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>5.9</ALPHA>
+      <COSTOZ>0.05643833911932866</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Cascade: Cascade, while a good bittering hop, is best known for its pronounced, very  distinctive &quot;perfumey&quot; aroma and flavor.  Used by many micro breweries.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Willamette</HOP>
+      <AMOUNT>28.0</AMOUNT>
+      <TIME>10</TIME>
+      <UNITS>g</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>5.5</ALPHA>
+      <COSTOZ>0.035273961949580414</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Willamette: A U.S. Fuggle hybrid with good bittering qualities.  A very versatile hop  with a light, fruity flavor and aroma.  Use it in almost any Ale style.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Cascade</HOP>
+      <AMOUNT>40.0</AMOUNT>
+      <TIME>0</TIME>
+      <UNITS>g</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>5.9</ALPHA>
+      <COSTOZ>0.05643833911932866</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Cascade: Cascade, while a good bittering hop, is best known for its pronounced, very  distinctive &quot;perfumey&quot; aroma and flavor.  Used by many micro breweries.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+  </MISC>
+  <MASH>
+    <NAME>Single infusion w/ sparge</NAME>
+    <MASH_VOLUME>43.43</MASH_VOLUME>
+    <MASH_VOL_U>l</MASH_VOL_U>
+    <MASH_RATIO>1.0</MASH_RATIO>
+    <MASH_RATIO_U>qt/lb</MASH_RATIO_U>
+    <MASH_TIME>70</MASH_TIME>
+    <MASH_TMP_U>F</MASH_TMP_U>
+    <THICK_DECOCT_RATIO>0.6</THICK_DECOCT_RATIO>
+    <THIN_DECOCT_RATIO>0.9</THIN_DECOCT_RATIO>
+    <MASH_TUNLOSS_TEMP>0.0</MASH_TUNLOSS_TEMP>
+    <GRAIN_TEMP>68.0</GRAIN_TEMP>
+    <BOIL_TEMP>212.0</BOIL_TEMP>
+    <ITEM>
+      <TYPE>alpha</TYPE>
+      <TEMP>154.0</TEMP>
+      <DISPL_TEMP>154.0</DISPL_TEMP>
+      <END_TEMP>145.0</END_TEMP>
+      <DISPL_END_TEMP>145.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <WEIGHT_LBS>23.5894620537819</WEIGHT_LBS>
+      <DIRECTIONS>Mash in with 22.3 l of water at 170.5 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>mashout</TYPE>
+      <TEMP>165.5</TEMP>
+      <DISPL_TEMP>165.5</DISPL_TEMP>
+      <END_TEMP>165.5</END_TEMP>
+      <DISPL_END_TEMP>165.5</DISPL_END_TEMP>
+      <MIN>10</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <WEIGHT_LBS>23.5894620537819</WEIGHT_LBS>
+      <DIRECTIONS>Add 11.7 l of water at 212.0 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>sparge</TYPE>
+      <TEMP>171.0</TEMP>
+      <DISPL_TEMP>171.0</DISPL_TEMP>
+      <END_TEMP>171.0</END_TEMP>
+      <DISPL_END_TEMP>171.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>fly</METHOD>
+      <WEIGHT_LBS>23.5894620537819</WEIGHT_LBS>
+      <DIRECTIONS>Sparge with 33.1 l at 170.0F to collect 54.9 l</DIRECTIONS>
+    </ITEM>
+  </MASH>
+   <FERMENTATION_SCHEDUAL>
+   </FERMENTATION_SCHEDUAL>
+   <CARB>
+      <BOTTLETEMP>68.0</BOTTLETEMP>
+      <SERVTEMP>45.0</SERVTEMP>
+      <VOL>2.4</VOL>
+      <SUGAR>Corn Sugar</SUGAR>
+      <AMOUNT>104.3</AMOUNT>
+      <SUGARU>g</SUGARU>
+      <TEMPU>F</TEMPU>
+      <KEG>true</KEG>
+      <PSI>0.00</PSI>
+   </CARB>
+  <NOTES>
+  </NOTES>
+ <style>
+  <subcategory id="8B">    <name>Special/Best/Premium Bitter</name>
+    <aroma>
+The best examples have some malt aroma, often (but not always) with a caramel quality. Mild to moderate fruitiness. Hop aroma can range from moderate to none (UK varieties typically, although US varieties may be used). Generally no diacetyl, although very low levels are allowed.</aroma>
+    <appearance>
+Medium gold to medium copper. Good to brilliant clarity. Low to moderate white to off-white head. May have very little head due to low carbonation.</appearance>
+    <flavor>
+Medium to high bitterness. Most have moderately low to moderately high fruity esters. Moderate to low hop flavor (earthy, resiny, and/or floral UK varieties typically, although US varieties may be used). Low to medium maltiness with a dry finish. Caramel flavors are common but not required. Balance is often decidedly bitter, although the bitterness should not completely overpower the malt flavor, esters and hop flavor. Generally no diacetyl, although very low levels are allowed.</flavor>
+    <mouthfeel>
+Medium-light to medium body. Carbonation low, although bottled and canned commercial examples can have moderate carbonation.</mouthfeel>
+    <impression>
+A flavorful, yet refreshing, session beer. Some examples can be more malt balanced, but this should not override the overall bitter impression. Drinkability is a critical component of the style; emphasis is still on the bittering hop addition as opposed to the aggressive middle and late hopping seen in American ales.</impression>
+    <comments>
+More evident malt flavor than in an ordinary bitter, this is a stronger, session-strength ale. Some modern variants are brewed exclusively with pale malt and are known as golden or summer bitters. Most bottled or kegged versions of UK-produced bitters are higher-alcohol versions of their cask (draught) products produced specifically for export. The IBU levels are often not adjusted, so the versions available in the US often do not directly correspond to their style subcategories in Britain. This style guideline reflects the "real ale" version of the style, not the export formulations of commercial products.</comments>
+    <ingredients>
+Pale ale, amber, and/or crystal malts, may use a touch of black malt for color adjustment. May use sugar adjuncts, corn or wheat. English hops most typical, although American and European varieties are becoming more common (particularly in the paler examples). Characterful English yeast. Often medium sulfate water is used.</ingredients>
+ <stats>
+  <og flexible="false">
+      <low>1.04</low>
+      <high>1.048</high>
+  </og>
+  <fg flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </fg>
+  <ibu flexible="false">
+      <low>25.0</low>
+      <high>40.0</high>
+  </ibu>
+  <srm flexible="false">
+      <low>5.0</low>
+      <high>16.0</high>
+  </srm>
+  <abv flexible="false">
+      <low>3.8</low>
+      <high>4.6</high>
+  </abv>
+</stats>
+    <examples>
+Fuller's London Pride, Coniston Bluebird Bitter, Timothy Taylor Landlord, Robinson's Northern Glory, Shepherd Neame Masterbrew Bitter, Greene King Ruddles County Bitter, RCH Pitchfork Rebellious Bitter, Brains SA, Harviestoun Bitter and Twisted, Goose Island Honkers Ale, Rogue Younger's Special Bitter</examples>
+  </subcategory>
+ </style>
+</STRANGEBREWRECIPE>

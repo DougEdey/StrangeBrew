@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "2.0a7">
+<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
+  <DETAILS>
+  <NAME>30A Ginger Rye Camomile Wit</NAME>
+  <BREWER>Drew Avis</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>72.0</EFFICIENCY>
+  <OG>1.052</OG>
+  <FG>1.013</FG>
+  <STYLE>Witbier</STYLE>
+  <MASH>true</MASH>
+  <LOV>3.8</LOV>
+  <IBU>17.5</IBU>
+  <ALC>5.1</ALC>
+  <!-- SBJ1.0 Extensions: -->
+  <EVAP>4.0</EVAP>
+  <EVAP_METHOD>Constant</EVAP_METHOD>
+  <!-- END SBJ1.0 Extensions -->
+  <BOIL_TIME>75</BOIL_TIME>
+  <PRESIZE>65.0</PRESIZE>
+  <SIZE>60.0</SIZE>
+  <SIZE_UNITS>litres</SIZE_UNITS>
+  <MALT_UNITS>lb</MALT_UNITS>
+  <HOPS_UNITS>oz</HOPS_UNITS>
+  <YEAST>Safbrew T-58</YEAST>
+  <RECIPE_DATE>04/13/2005</RECIPE_DATE>
+  <ATTENUATION>75.0</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Volume</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>SRM</COLOUR_METHOD>
+  <KETTLE_LOSS>1.0</KETTLE_LOSS>
+  <TRUB_LOSS>1.0</TRUB_LOSS>
+  <MISC_LOSS>1.0</MISC_LOSS>
+  <PELLET_HOP_PCT>6.0</PELLET_HOP_PCT>
+  <YEAST_COST>0.75</YEAST_COST>
+  <OTHER_COST>5.0</OTHER_COST>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <ITEM>
+      <MALT>German Pilsener</MALT>
+      <AMOUNT>16.0</AMOUNT>
+      <PERCENT>44.4</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.038</POINTS>
+      <LOV>1.6</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.72</COSTLB>
+      <DESCRIPTION>German Pilsener - usually a moravian malt, very light in colour, perfect for decoction mashes and as a base for lighter lagers.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Rice Hulls</MALT>
+      <AMOUNT>4.0</AMOUNT>
+      <PERCENT>11.1</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.0</POINTS>
+      <LOV>0.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.5</COSTLB>
+      <DESCRIPTION>Filter bed material for beers with large amounts of adjuncts. Rule of thumb: use in grists that consist of greater than 60% wheat or 10% rye.  Use 10% or more.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Rye Malt</MALT>
+      <AMOUNT>2.0</AMOUNT>
+      <PERCENT>5.6</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.03</POINTS>
+      <LOV>4.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.6</COSTLB>
+      <DESCRIPTION>Malted Rye</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Wheat (Flaked)</MALT>
+      <AMOUNT>14.0</AMOUNT>
+      <PERCENT>38.9</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.034</POINTS>
+      <LOV>2.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.5</COSTLB>
+      <DESCRIPTION>Wheat (Flaked)</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <ITEM>
+      <HOP>Saaz</HOP>
+      <AMOUNT>4.5</AMOUNT>
+      <TIME>65</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>3.5</ALPHA>
+      <COSTOZ>1.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Saaz: Having mild bittering power, it&apos;s the spicy, earthy, flavor and aroma that makes Saaz one of the worlds most prized Pilsner and Lager hops.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+    <ITEM>
+      <NAME>Ginger</NAME>
+      <AMOUNT>2.0</AMOUNT>
+      <UNITS>ounces</UNITS>
+      <STAGE>Boil</STAGE>
+      <TIME>0</TIME>
+      <COMMENTS>Grated ginger, added at flameout.</COMMENTS>
+    </ITEM>
+    <ITEM>
+      <NAME>Camomile</NAME>
+      <AMOUNT>1.0</AMOUNT>
+      <UNITS>ounces</UNITS>
+      <STAGE>Boil</STAGE>
+      <TIME>0</TIME>
+      <COMMENTS>Loose bulk flowers, added at flameout.</COMMENTS>
+    </ITEM>
+  </MISC>
+  <MASH>
+    <MASH_VOLUME>19.67</MASH_VOLUME>
+    <MASH_VOL_U>gallons US</MASH_VOL_U>
+    <MASH_RATIO>1.25</MASH_RATIO>
+    <MASH_RATIO_U>qt/lb</MASH_RATIO_U>
+    <MASH_TIME>120</MASH_TIME>
+    <MASH_TMP_U>F</MASH_TMP_U>
+    <MASH_TUNLOSS_TEMP>0.0</MASH_TUNLOSS_TEMP>
+    <ITEM>
+      <TYPE>alpha</TYPE>
+      <TEMP>155.0</TEMP>
+      <DISPL_TEMP>155.0</DISPL_TEMP>
+      <END_TEMP>155.0</END_TEMP>
+      <DISPL_END_TEMP>155.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Mash in with 11.2 gallons US of water at 168.4 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>mashout</TYPE>
+      <TEMP>168.0</TEMP>
+      <DISPL_TEMP>168.0</DISPL_TEMP>
+      <END_TEMP>168.0</END_TEMP>
+      <DISPL_END_TEMP>168.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Add 3.8 gallons US of water at 212.0 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>sparge</TYPE>
+      <TEMP>170.0</TEMP>
+      <DISPL_TEMP>170.0</DISPL_TEMP>
+      <END_TEMP>170.0</END_TEMP>
+      <DISPL_END_TEMP>170.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>fly</METHOD>
+      <DIRECTIONS>Add 0.0 gallons US at 170.0F to collect 10.9 gallons US</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>sparge</TYPE>
+      <TEMP>170.0</TEMP>
+      <DISPL_TEMP>170.0</DISPL_TEMP>
+      <END_TEMP>170.0</END_TEMP>
+      <DISPL_END_TEMP>170.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>fly</METHOD>
+      <DIRECTIONS>Add 6.2 gallons US at 170.0F to collect 6.2 gallons US</DIRECTIONS>
+    </ITEM>
+  </MASH>
+  <NOTES>
+    <ITEM>
+      <DATE>05/17/2006</DATE>
+      <TYPE>Planning</TYPE>
+      <NOTE>This is a test</NOTE>
+    </ITEM>
+    <ITEM>
+      <DATE>05/17/2006</DATE>
+      <TYPE>Brewed</TYPE>
+      <NOTE>Another Test</NOTE>
+    </ITEM>
+  </NOTES>
+ <style>
+  <subcategory id="null">    <name>Witbier</name>
+    <aroma>null</aroma>
+    <appearance>null</appearance>
+    <flavor>null</flavor>
+    <mouthfeel>null</mouthfeel>
+    <impression>null</impression>
+    <comments>null</comments>
+    <ingredients>null</ingredients>
+ <stats>
+  <og flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </og>
+  <fg flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </fg>
+  <ibu flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </ibu>
+  <srm flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </srm>
+  <abv flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </abv>
+</stats>
+    <examples>null</examples>
+  </subcategory>
+ </style>
+</STRANGEBREWRECIPE>

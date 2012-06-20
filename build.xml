@@ -1,0 +1,175 @@
+<project name="StrangeBrew" default="dist" basedir=".">
+    <description>
+        StrangeBrew Brewing Software
+    </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+	<property name="source"  location="source"/>	
+  <property name="installer"  location="installer"/>	
+  <property name="version.num" value="2.02-Free"/>
+  <property name="project_name" value="StrangeBrew"/>
+  
+  <path id="project.class.path">
+    <pathelement location="lib/"/>
+    <pathelement path="${java.class.path}/"/>
+  </path>
+        
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="init"
+        description="compile the source " >
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" destdir="${build}" target="1.5" source="1.5"
+    	debug="true" debuglevel="lines,vars,source">
+    <classpath>
+      <pathelement path="${classpath}"/>
+      <pathelement location="lib/microba.jar"/>
+      <pathelement location="lib/BrowserLauncher2-all-10rc4.jar"/>
+    </classpath>
+    </javac>
+    <copy todir="${build}">
+      <fileset dir="${src}">
+        <exclude name="**/*.java"/>
+      </fileset>
+     </copy>
+  </target>
+  
+  <target name="dist" depends="compile">
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}"/>
+    <delete file="${dist}/StrangeBrew.jar"/>
+    <delete file="MANIFEST.MF"/>
+    <buildnumber file="build.num"/>
+     
+    <manifest file="MANIFEST.MF">
+      <attribute name="Built-By" value="${user.name}"/>
+      <attribute name="Main-Class" value="ca.strangebrew.ui.swing.dialogs.Splash"/>
+      <attribute name="Implementation-Version" value="${version.num}-b${build.number}"/> 
+    </manifest>
+    
+    <jar jarfile="${dist}/StrangeBrew.jar"
+         basedir="${build}"
+         manifest="MANIFEST.MF">
+
+      <zipfileset src="lib/microba.jar" excludes="source/**"/>
+      <zipfileset src="lib/BrowserLauncher2-all-10rc4.jar" excludes="source/**"/>
+		</jar>
+		
+		<copy file="gpl.txt" todir="${dist}"/>
+		<copy file="ChangeLog.txt" todir="${dist}"/>
+		<copy file="readme" todir="${dist}"/>
+    <mkdir dir="${dist}/recipes"/>
+		<copy todir="${dist}/recipes">
+		  <fileset dir="recipes"/>
+		</copy>
+    <mkdir dir="${dist}/help"/>
+    <copy todir="${dist}/help">
+      <fileset dir="help"/>
+    </copy>
+    <mkdir dir="${dist}/src/ca/strangebrew/data"/>
+    <copy todir="${dist}/src/ca/strangebrew/data">
+      <fileset dir="${src}/ca/strangebrew/data"/>
+    </copy>
+  	<mkdir dir="${dist}/src/ca/strangebrew/icons"/>
+  	<copy todir="${dist}/src/ca/strangebrew/icons">
+  	  <fileset dir="${src}/ca/strangebrew/icons"/>
+  	</copy>
+  </target>
+  
+  <target name="zip" description="Create Ziped Distribution" depends="dist">
+    <zip destfile="StrangeBrew-${version.num}.zip" basedir="${dist}"/>
+  </target>  
+
+  <target name="source" description="Create Ziped Source Distribution">
+  	<mkdir dir="${source}"/>
+    <copy file="gpl.txt" todir="${source}"/>
+  	<copy file="build.xml" todir="${source}"/>
+    <copy file="ChangeLog.txt" todir="${source}"/>
+    <copy file="readme" todir="${source}"/>
+    <mkdir dir="${source}/recipes"/>
+    <copy todir="${source}/recipes">
+      <fileset dir="recipes"/>
+    </copy>
+    <mkdir dir="${source}/help"/>
+    <copy todir="${source}/help">
+      <fileset dir="help"/>
+    </copy>
+    <mkdir dir="${source}/src/ca/strangebrew/data"/>
+    <copy todir="${source}/src/ca/strangebrew/data">
+      <fileset dir="${src}/ca/strangebrew/data"/>
+    </copy>
+    <mkdir dir="${source}/src/ca/strangebrew/icons"/>
+    <copy todir="${source}/src/ca/strangebrew/icons">
+      <fileset dir="${src}/ca/strangebrew/icons"/>
+    </copy>
+    <mkdir dir="${source}/src/ca/strangebrew/ui/swing/dialogs"/>
+    <copy todir="${source}/src/ca/strangebrew/ui/swing/dialogs">
+      <fileset dir="${src}/ca/strangebrew/ui/swing/dialogs"/>
+    </copy>	
+    <copy todir="${source}/src/ca/strangebrew/ui/swing">
+      <fileset dir="${src}/ca/strangebrew/ui/swing"/>
+    </copy>
+    <copy todir="${source}/src/ca/strangebrew">
+      <fileset dir="${src}/ca/strangebrew"/>
+    </copy>
+  	<mkdir dir="${source}/lib"/>
+  	<copy todir="${source}/lib">
+  	  <fileset dir="lib"/>
+  	</copy>
+  	<mkdir dir="${source}/src/com/mindprod/csv"/>
+  	<copy todir="${source}/src/com/mindprod/csv">
+  	  <fileset dir="${src}/com/mindprod/csv"/>
+  	</copy>
+  	<mkdir dir="${source}/help/images"/>
+  	<copy todir="${source}/help/images">
+  	  <fileset dir="help/images"/>
+  	</copy>
+  	<copy todir="${source}/help">
+  	  <fileset dir="help"/>
+  	</copy>
+  	<mkdir dir="${source}/doc/PromashFormat"/>
+  	<copy todir="${source}/doc/PromashFormat">
+  	  <fileset dir="doc/PromashFormat"/>
+  	</copy>
+  	<copy todir="${source}/doc">
+  	  <fileset dir="doc"/>
+  	</copy>
+    <zip destfile="StrangeBrew-${version.num}-src.zip" basedir="${source}"/>
+  </target>  	
+	
+  <target name="clean" description="clean up" >
+    <!-- Delete the ${build} ${source} and ${dist} directory trees -->
+    <delete file="StrangeBrew-${version.num}.zip"/>
+  	<delete file="StrangeBrew-src-${version.num}.zip"/>
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  	<delete dir="${source}"/>
+  	<delete file="${installer}/setup.exe"/>
+  	<delete file="${installer}/build.log"/>
+  </target>
+
+  <target name="installer" depends="dist" description="build the installer" >
+  	<taskdef name="izpack" classpath="lib\standalone-compiler.jar"
+  	    classname="com.izforge.izpack.ant.IzPackTask"/>
+  	<!-- Run installer build -->
+  	<echo message="Running IzPack to build the installer..."/>
+  	<izpack input="install.xml"
+  	        output="installer/StrangeBrew-installer.jar"
+  	        installerType="standard"
+  	        inheritAll="true"
+  	        basedir="."
+  	        compression="deflate"
+  	        compressionlevel="9"/>
+  	<!-- Clean working directory -->
+  	<echo message="Cleaning up working directory..."/>
+  	<delete dir="${temp.dir}" quiet="true" includeemptydirs="true"/>
+  	<echo message="Done."/>
+  </target>
+</project>

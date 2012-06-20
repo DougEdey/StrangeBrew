@@ -1,0 +1,24 @@
+Form		What		Bytes
+-------------------------------------
+l	MashStepCount		4
+??	??			8
+
+[foreach MashStepCount]
+a256	Name			256
+l	StartTemp(F)		4
+l	StopTemp(F)		4
+l	InfuseTemp(F)		4
+l	RestTime		4
+l	StopTime		4
+f	InfuseRatio		4
+f	InfuseAmount		4
+l	StepUpTimeClr		4 (RGBA)
+l	RestTimeClr		4 (RGBA)
+[/foreach MashStepCount]
+
+?	Padding			??
+  ** Guarantees chunk size will always be 0x3a13 butes
+a255	MashScheduleName	255
+C	??			1
+
+-------------------------------------

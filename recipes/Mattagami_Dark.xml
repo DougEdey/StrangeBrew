@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "0.7 (Beta)">
+<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
+  <DETAILS>
+  <NAME>Mattagami Dark</NAME>
+  <BREWER>Andrew Perron</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>75.0</EFFICIENCY>
+  <OG>1.045</OG>
+  <FG>1.011</FG>
+  <STYLE>Northern Brown</STYLE>
+  <MASH>true</MASH>
+  <LOV>14.6</LOV>
+  <IBU>20.9</IBU>
+  <ALC>4.4</ALC>
+  <!-- SBJ1.0 Extensions: -->
+  <EVAP>1.0</EVAP>
+  <EVAP_METHOD>Constant</EVAP_METHOD>
+  <!-- END SBJ1.0 Extensions -->
+  <BOIL_TIME>60</BOIL_TIME>
+  <PRESIZE>6.0</PRESIZE>
+  <SIZE>5.0</SIZE>
+  <SIZE_UNITS>gallons US</SIZE_UNITS>
+  <MALT_UNITS>lb</MALT_UNITS>
+  <HOPS_UNITS>oz</HOPS_UNITS>
+  <YEAST>Danstar Nottingham Dry Ale Yeast</YEAST>
+  <RECIPE_DATE>05/15/2002</RECIPE_DATE>
+  <ATTENUATION>75.0</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Volume</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>SRM</COLOUR_METHOD>
+  <KETTLE_LOSS>1.0</KETTLE_LOSS>
+  <TRUB_LOSS>1.0</TRUB_LOSS>
+  <MISC_LOSS>1.0</MISC_LOSS>
+  <PELLET_HOP_PCT>6.0</PELLET_HOP_PCT>
+  <YEAST_COST>0.75</YEAST_COST>
+  <OTHER_COST>5.0</OTHER_COST>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <ITEM>
+      <MALT>British Carastan</MALT>
+      <AMOUNT>2.0</AMOUNT>
+      <PERCENT>24.6</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.035</POINTS>
+      <LOV>34.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>British Carastan: Also known as CaraStan, use 5 to 20% of English Crystal to add color and a full, toffee/sweet flavor to Bitters, Pale Ales and Porters.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>British Two-Row</MALT>
+      <AMOUNT>6.0</AMOUNT>
+      <PERCENT>73.8</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.038</POINTS>
+      <LOV>2.5</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.47</COSTLB>
+      <DESCRIPTION>British Two-Row: Fully modified British malt, easily converted by a single temperature mash.  Preferred by many brewers for full flavored ales.  Pale Ale malt has undergone higher kilning than Klages and is lower in diastatic power so keepadjuncts to 15% or less.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Roast Barley</MALT>
+      <AMOUNT>2.0</AMOUNT>
+      <PERCENT>1.5</PERCENT>
+      <UNITS>oz</UNITS>
+      <POINTS>1.029</POINTS>
+      <LOV>450.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.06</COSTLB>
+      <DESCRIPTION>Roast Barley: Use 10 to 12% to impart a distinct, roasted flavor to Stouts.  Other dark beers also benefit from smaller quantities (2 - 6%).</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <ITEM>
+      <HOP>Fuggles</HOP>
+      <AMOUNT>1.0</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>4.5</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>FWH</ADD>
+      <DESCRIPTION>Fuggles: Good all purpose ale hop. Well suited to bittering, flavoring and finishing.Will lend a pleasant hop profile, tending to be slightly fruity in aroma.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Fuggles</HOP>
+      <AMOUNT>0.5</AMOUNT>
+      <TIME>15</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>4.5</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Fuggles: Good all purpose ale hop. Well suited to bittering, flavoring and finishing.Will lend a pleasant hop profile, tending to be slightly fruity in aroma.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Fuggles</HOP>
+      <AMOUNT>0.2</AMOUNT>
+      <TIME>0</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>4.5</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Fuggles: Good all purpose ale hop. Well suited to bittering, flavoring and finishing.Will lend a pleasant hop profile, tending to be slightly fruity in aroma.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+  </MISC>
+  <MASH>
+    <MASH_VOLUME>3.39</MASH_VOLUME>
+    <MASH_VOL_U>gallons US</MASH_VOL_U>
+    <MASH_RATIO>1.25</MASH_RATIO>
+    <MASH_RATIO_U>qt/lb</MASH_RATIO_U>
+    <MASH_TIME>60</MASH_TIME>
+    <MASH_TMP_U>null</MASH_TMP_U>
+    <MASH_TUNLOSS_TEMP>0.0</MASH_TUNLOSS_TEMP>
+    <ITEM>
+      <TYPE>alpha</TYPE>
+      <TEMP>155.0</TEMP>
+      <DISPL_TEMP>155.0</DISPL_TEMP>
+      <END_TEMP>155.0</END_TEMP>
+      <DISPL_END_TEMP>155.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Mash in with 2.5 gallons US of water at 168.4 F</DIRECTIONS>
+    </ITEM>
+  </MASH>
+  <NOTES>
+  </NOTES>
+ <style>
+  <subcategory id="null">    <name>Northern Brown</name>
+    <aroma>null</aroma>
+    <appearance>null</appearance>
+    <flavor>null</flavor>
+    <mouthfeel>null</mouthfeel>
+    <impression>null</impression>
+    <comments>null</comments>
+    <ingredients>null</ingredients>
+ <stats>
+  <og flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </og>
+  <fg flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </fg>
+  <ibu flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </ibu>
+  <srm flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </srm>
+  <abv flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </abv>
+</stats>
+    <examples>null</examples>
+  </subcategory>
+ </style>
+</STRANGEBREWRECIPE>

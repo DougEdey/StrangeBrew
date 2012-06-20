@@ -1,0 +1,46 @@
+Form		What		Bytes
+-------------------------------------
+a55	Name			55
+a55	Manufacturer		55
+a55	Origin			55
+C	Type			1
+{
+	0x01 => Grain
+	0x02 => Extract
+	0x03 => Sugar
+	0x04 => Other
+}
+C	(varies)		1
+  IF (Type==Extract)
+  {
+    ExtractType
+    {
+	0x00 => LME
+	0x01 => DME
+    }
+  }
+  IF (Type==Grain|Sugar)
+  {
+    MustMash?
+    {
+	0x00 => No
+	0x01 => Yes
+    }
+  }
+  IF (Type==Grain|Sugar)
+  {
+    *ignored*
+  }
+f	GravPotential		4	(SG pppg)
+f	SRM			4	(lovibond)
+f	Moisture		4	(%)
+f	Max			4	(%)
+f	DiastaticPower		4
+f	Protein			4	(%)
+f	TSN			4	(%)
+a155	Use			155
+a159	Comments		159
+f	Quantity		4
+f	fg dry			4
+f	cg dry			4
+-------------------------------------

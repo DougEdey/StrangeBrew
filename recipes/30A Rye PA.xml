@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "2.0A">
+  <DETAILS>
+  <NAME>30A Rye PA</NAME>
+  <BREWER>BUd mcbudster</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>75.0</EFFICIENCY>
+  <OG>1.091</OG>
+  <FG>1.023</FG>
+  <STYLE>American Pale Ale</STYLE>
+  <MASH>true</MASH>
+  <LOV>12.9</LOV>
+  <IBU>75.7</IBU>
+  <ALC>9.0</ALC>
+  <BOIL_TIME>60</BOIL_TIME>
+  <PRESIZE>46.5</PRESIZE>
+  <SIZE>45.0</SIZE>
+  <SIZE_UNITS>litres</SIZE_UNITS>
+  <MALT_UNITS>lb</MALT_UNITS>
+  <HOPS_UNITS>oz</HOPS_UNITS>
+  <YEAST>Safale S-04</YEAST>
+  <RECIPE_DATE>04/29/2004</RECIPE_DATE>
+  <ATTENUATION>75.0</ATTENUATION>
+  </DETAILS>
+  <FERMENTABLES>
+    <ITEM>
+      <MALT>Belgian Aromatic</MALT>
+      <AMOUNT>2.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.03</POINTS>
+      <LOV>25.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <DESCRIPTION>rch conversion.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>British Carastan</MALT>
+      <AMOUNT>4.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.035</POINTS>
+      <LOV>34.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <DESCRIPTION>British Carastan: Also known as CaraStan, use 5 to 20% of English Crystal to add color and a full, toffee/sweet flavor to Bitters, Pale Ales and Porters.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>British Two-Row</MALT>
+      <AMOUNT>24.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.038</POINTS>
+      <LOV>2.5</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <DESCRIPTION>British Two-Row: Fully modified British malt, easily converted by a single temperature mash.  Preferred by many brewers for full flavored ales.  Pale Ale malt has undergone higher kilning than Klages and is lower in diastatic power so keep adjuncts to 15% or less.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>CaraFoam</MALT>
+      <AMOUNT>1.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.033</POINTS>
+      <LOV>3.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <DESCRIPTION>Best used to create Pilseners, lagers, and low- or nonalcoholic beers. Increases smoothness and mouth fullness, without adding flavours. Try Carafoam instead of Carapils.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Rye Malt</MALT>
+      <AMOUNT>7.0</AMOUNT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.03</POINTS>
+      <LOV>4.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <DESCRIPTION>Malted Rye</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>White Cane Sugar (Gran)</MALT>
+      <AMOUNT>0.9</AMOUNT>
+      <UNITS>kg</UNITS>
+      <POINTS>1.042</POINTS>
+      <LOV>0.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <DESCRIPTION>null</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <ITEM>
+      <HOP>Cascade</HOP>
+      <AMOUNT>4.0</AMOUNT>
+      <TIME>1</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>6.9</ALPHA>
+      <COSTOZ>1.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Cascade: Cascade, while a good bittering hop, is best known for its pronounced, very  distinctive "perfumey" aroma and flavor.  Used by many micro breweries.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Cascade</HOP>
+      <AMOUNT>4.0</AMOUNT>
+      <TIME>15</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>6.9</ALPHA>
+      <COSTOZ>1.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Cascade: Cascade, while a good bittering hop, is best known for its pronounced, very  distinctive "perfumey" aroma and flavor.  Used by many micro breweries.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>E. Kent Goldngs</HOP>
+      <AMOUNT>4.0</AMOUNT>
+      <TIME>30</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>5.9</ALPHA>
+      <COSTOZ>1.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>E. Kent Goldngs: A British grown version of the classic ale finishing hop.  Slightly smoother and more refined than the herbal, Canadian grown version.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Cascade</HOP>
+      <AMOUNT>6.0</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>6.9</ALPHA>
+      <COSTOZ>1.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Cascade: Cascade, while a good bittering hop, is best known for its pronounced, very  distinctive "perfumey" aroma and flavor.  Used by many micro breweries.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+    <ITEM>
+      <NAME>Irish Moss</NAME>
+      <AMOUNT>1.0</AMOUNT>
+      <UNITS>tsp</UNITS>
+      <STAGE>Boil</STAGE>
+      <TIME>20</TIME>
+      <COMMENTS>null</COMMENTS>
+    </ITEM>
+  </MISC>
+  <MASH>
+    <ITEM>
+      <TYPE>alpha</TYPE>
+      <TEMP>155.0</TEMP>
+      <END_TEMP>153.0</END_TEMP>
+      <METHOD>infusion</METHOD>
+      <DIRECTIONS>Mash in with 10.0 gallons US of water at 171.7 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>mashout</TYPE>
+      <TEMP>168.0</TEMP>
+      <END_TEMP>168.0</END_TEMP>
+      <METHOD>decoction</METHOD>
+      <DIRECTIONS>Remove 12.1 gallons US of mash, boil, and return to mash.</DIRECTIONS>
+    </ITEM>
+  </MASH>
+  <NOTES>
+    <ITEM>
+      <DATE>04/29/2004</DATE>
+      <TYPE>Planning</TYPE>
+      <NOTE>Figuring out the right numbers for a nice big IPA with rye character.</NOTE>
+    </ITEM>
+  </NOTES>
+</STRANGEBREWRECIPE>

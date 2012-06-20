@@ -1,0 +1,139 @@
+I'm not a super-duper brewing wizard, but I do have some experience with 
+stepping up infusions with boiling water.  (I brewed 4 beers doing it this 
+way.)  I've since moved to stovetop temperature increases and an insulated 
+box which I prefer.  I find using a cooler to be a little nerve-wracking.  
+Missing a target temperature leads to a little too much stress for me to be 
+able to relax and enjoy the brewing experience but hopefully my pain and 
+suffering will be helpful for you.
+
+>From my vague memories of high school chemistry, I recall that mass 
+temperature systems can be calculated by using the following
+formula (which is basically conservation of heat).
+
+Sum of all ( Mass * Temperature ) = a constant
+
+So for our infusion:
+
+   Mass of mash * Initial temperature of mash
++ Mass of added water * Temperature of the added hot water
++ Mass of vessel * Initial temperature of vessel
+
+Equals
+
+   Mass of everything * final temp everything
+
+The balance equation for the addition of water to the mash tun is
+then:
+
+Mi*Ti + Mt*Ti + Ma*Ta = (Mm + Mt + Ma) Tf
+
+
+Where:
+
+Ma = Mass of water to add
+Mi = Mass of the mash (before addition)
+Mt = Thermal mass of you vessel
+
+Ti = Initial temperature
+Tf = Desired final temperature
+Ta = Temperature of added water
+
+Solving for the amount of boiling water to add:
+
+Mw = (Mi + Mt)*( Tf - Ti )/( Ta - Tf )
+
+Or you could calculate the temperature of water to add by the following:
+
+Ta = (Tf - Ti)*(Mi + Mt)/(Ma) + Tf
+
+Now, given that, but without knowing the Mt, it'll be difficult to hit the 
+temperatures you want, but you should be able to come close.  Also, unless 
+you want a really thin mash for starch conversion, you have to start with a 
+very thick mash for your protein rest and limit the temperature rise.  This 
+actually works out OK, 'cause a thick mash works well for a protein rest.
+
+I'm going to show my example in metric because of the convenience of 1
+litre of water = 1 kg.  The formulas above are valid for any measurement 
+system, but remember to work in consistent units. (lbs of water)
+
+You can calculate the thermal mass of your vessel by experimenting
+with boiling water and an empty cooler.  Typically, insulated vessels
+have very low thermal mass.  A heavy steel vessel could be several
+kilos.
+
+Here's what I'll work with.  I'll estimate the thermal mass of my
+cooler at 0 kg, and use 25C for initial room/grain/vessel temperature.
+I'll aim for a protein rest at 50C (131F).  It's on the high end of
+the scale, but it should work fine for reducing chill haze.  And if we
+still be in protein conversion range.  The initial grist of 5kg will
+be infused with 10 litres of water at the following strike
+temperature:
+
+
+Ta = ( Tf - Ti )*( Mi + Mt )/( Ma ) + Tf
+Ta = ( 50C - 25C )*( 5kg + 0 )/( 10kg ) + 50C
+Ta = 62.5C = Strike temp
+
+(Also, when using a non-zero thermal mass make sure you mix in the grain 
+after stabilizing your vessel's temperature.  Otherwise you may overheat 
+your grain before the mash vessel has enough time to absorb some of the 
+excess heat.)
+
+This should yield a really thick (less than 1 quart per pound) 15kg of
+mash at 50C, depending on the thermal mass (Mt) of your vessel and the
+temperature of your your dry grain.  Let's assume we're spot on for
+the sake of our example (but make sure you measure with a
+thermometer and adjust the calculation for starch conversion step-up).
+
+Before you have experience with the temperature dynamics of your
+vessel, I recommend that you do one of the following: either aim for
+the top end of the starch conversion range and rely on the thermal
+mass not absorbing enough heat to lower you mash below starch conversion 
+range, or aim for the middle and estimate the thermal mass.  In fact the 
+first time through, I'm going to neglect my thermal mass *and* aim for the 
+middle of starch conversion range.  I'll undoubtedly end up below my desired 
+range, but it's safer to add a little more boiling water to ease it up into 
+the desired range than to desperately try to lower the temp before the 
+amylase gets denatured.
+
+I'm going to aim for 66C.  So, after the protein rest I'll add the following 
+amount of boiling water:
+
+Mw = (Mi + Mt)*( Tf - Ti )/( Ta - Tf )
+
+Mw = ( 15kg + 0 ) ( 66C - 50C ) / ( 100C - 66C )
+
+Mw = 7.3 kg of 100C water.
+
+ ...and if I need to raise the temperature some more I'll need about 500ml of 
+boiling water per degree C.
+
+The mash is significantly thinner at this point.  (3.46 l/kg or 1.65
+qts per lb) If you are way outside your target temperature you should
+quickly add more boiling or ice cold water to correct.  Missing high
+is much more serious.  Especially with a thin mash, amylase will
+degrade rather quickly.  Again, we aimed low, so it shouldn't be a
+problem.
+
+As an aside, I've seen at least a couple of bits of software that will
+do these calculations for you.  I like filling up my brewing notebooks
+with chicken scratch algebra.  I'm also more comfortable doing it by
+hand because I know how and where shortcuts are being taken, and I
+know what all the fields mean and what units they're in.  On the other
+hand, I'm known to make the occasional error so you may want to
+verify with a tool anyway.
+
+Also be aware of the volume of your cooler.  A five gallon cooler isn't 
+going to cut it, with the amount of water we'd have to add to 5kg of grain.  
+You should be able to squeak by with an 8 gallon cooler.  Otherwise, you'll 
+have to reduce the amount of grist.
+
+Good luck,
+
+Doug
+
+- --
+Douglas Gould - maestro_d at hotmail.com
+
+"Wise men make proverbs, but fools repeat them."
+     - Samuel Palmer (1805-80)

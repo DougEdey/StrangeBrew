@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "0.7 (Beta)">
+<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
+  <DETAILS>
+  <NAME>Imperial IPA</NAME>
+  <BREWER>Ken Briggs</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>75.0</EFFICIENCY>
+  <OG>1.076</OG>
+  <FG>1.019</FG>
+  <STYLE>Imperial IPA</STYLE>
+  <MASH>false</MASH>
+  <LOV>7.6</LOV>
+  <IBU>69.0</IBU>
+  <ALC>7.5</ALC>
+  <!-- SBJ1.0 Extensions: -->
+  <EVAP>0.9</EVAP>
+  <EVAP_METHOD>Constant</EVAP_METHOD>
+  <!-- END SBJ1.0 Extensions -->
+  <BOIL_TIME>60</BOIL_TIME>
+  <PRESIZE>6.0</PRESIZE>
+  <SIZE>5.1</SIZE>
+  <SIZE_UNITS>gallons US</SIZE_UNITS>
+  <MALT_UNITS>pounds</MALT_UNITS>
+  <HOPS_UNITS>ounces</HOPS_UNITS>
+  <YEAST>Wyeast 1056 American/Chico Ale Yeast</YEAST>
+  <RECIPE_DATE>05/25/2006</RECIPE_DATE>
+  <ATTENUATION>75.0</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Volume</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>SRM</COLOUR_METHOD>
+  <KETTLE_LOSS>1.0</KETTLE_LOSS>
+  <TRUB_LOSS>1.0</TRUB_LOSS>
+  <MISC_LOSS>1.0</MISC_LOSS>
+  <PELLET_HOP_PCT>10.0</PELLET_HOP_PCT>
+  <YEAST_COST>6.0</YEAST_COST>
+  <OTHER_COST>5.0</OTHER_COST>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <ITEM>
+      <MALT>Canadian Two-Row</MALT>
+      <AMOUNT>6.0</AMOUNT>
+      <PERCENT>90.9</PERCENT>
+      <UNITS>kg</UNITS>
+      <POINTS>1.036</POINTS>
+      <LOV>2.1</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.39</COSTLB>
+      <DESCRIPTION>Canadian Two-Row: The basic malt for brewing all grain beers from scratch.  High in diastatic power, well modified and fairly neutral, Klages make an excellent base malt. Best for both American Lager and Ale styles, Klages lends itself well to all beer styles.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Crystal 20</MALT>
+      <AMOUNT>0.6</AMOUNT>
+      <PERCENT>9.1</PERCENT>
+      <UNITS>kg</UNITS>
+      <POINTS>1.031</POINTS>
+      <LOV>20.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>true</STEEPED>
+      <COSTLB>3.483303742521066</COSTLB>
+      <DESCRIPTION>Crystal 20: As with all Crystal malts, the character of this malt is contributed by unfermentable crystallized sugars produced by a special process Called &quot;stewing&quot;.  5 to 20% Pale Crystal will lend a balance of light caramel color, flavor, and body to Ales and Lagers</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <ITEM>
+      <HOP>Fuggles</HOP>
+      <AMOUNT>56.0</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>g</UNITS>
+      <FORM>Pellet</FORM>
+      <ALPHA>4.4</ALPHA>
+      <COSTOZ>0.044092452436975516</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Fuggles: Good all purpose ale hop. Well suited to bittering, flavoring and finishing.Will lend a pleasant hop profile, tending to be slightly fruity in aroma.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Cascade</HOP>
+      <AMOUNT>56.0</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>g</UNITS>
+      <FORM>Pellet</FORM>
+      <ALPHA>5.5</ALPHA>
+      <COSTOZ>0.05643833911932866</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Cascade: Cascade, while a good bittering hop, is best known for its pronounced, very  distinctive &quot;perfumey&quot; aroma and flavor.  Used by many micro breweries.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>E. Kent Goldngs</HOP>
+      <AMOUNT>28.0</AMOUNT>
+      <TIME>20</TIME>
+      <UNITS>g</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>5.1</ALPHA>
+      <COSTOZ>0.044092452436975516</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>E. Kent Goldngs: A British grown version of the classic ale finishing hop.  Slightly smoother and more refined than the herbal, Canadian grown version.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>E. Kent Goldngs</HOP>
+      <AMOUNT>28.0</AMOUNT>
+      <TIME>0</TIME>
+      <UNITS>g</UNITS>
+      <FORM>Leaf</FORM>
+      <ALPHA>5.1</ALPHA>
+      <COSTOZ>0.044092452436975516</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>E. Kent Goldngs: A British grown version of the classic ale finishing hop.  Slightly smoother and more refined than the herbal, Canadian grown version.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+  </MISC>
+  <MASH>
+    <MASH_VOLUME>0.00</MASH_VOLUME>
+    <MASH_VOL_U>gallons US</MASH_VOL_U>
+    <MASH_RATIO>1.25</MASH_RATIO>
+    <MASH_RATIO_U>qt/lb</MASH_RATIO_U>
+    <MASH_TIME>0</MASH_TIME>
+    <MASH_TMP_U>null</MASH_TMP_U>
+    <MASH_TUNLOSS_TEMP>0.0</MASH_TUNLOSS_TEMP>
+  </MASH>
+  <NOTES>
+  </NOTES>
+ <style>
+  <subcategory id="14C">    <name>Imperial IPA</name>
+    <aroma>
+A prominent to intense hop aroma that can be derived from American, English and/or noble varieties (although a citrusy hop character is almost always present). Most versions are dry hopped and can have an additional resinous or grassy aroma, although this is not absolutely required. Some clean malty sweetness may be found in the background. Fruitiness, either from esters or hops, may also be detected in some versions, although a neutral fermentation character is typical. Some alcohol can usually be noted, but it should not have a "hot" character.</aroma>
+    <appearance>
+Color ranges from golden amber to medium reddish copper; some versions can have an orange-ish tint. Should be clear, although unfiltered dry-hopped versions may be a bit hazy. Good head stand should persist.</appearance>
+    <flavor>
+Hop flavor is strong and complex, and can reflect the use of American, English and/or noble hop varieties. High to absurdly high hop bitterness, although the malt backbone will generally support the strong hop character and provide the best balance. Malt flavor should be low to medium, and is generally clean and malty sweet although some caramel or toasty flavors are acceptable at low levels. No diacetyl. Low fruitiness is acceptable but not required. A long, lingering bitterness is usually present in the aftertaste but should not be harsh. Medium-dry to dry finish. A clean, smooth alcohol flavor is usually present. Oak is inappropriate in this style. Some sulfur may be present if sulfate water is used, but most examples do not exhibit this character.</flavor>
+    <mouthfeel>
+Smooth, medium-light to medium-full body. No harsh hop-derived astringency, although moderate to medium-high carbonation can combine to render an overall dry sensation in the presence of malt sweetness. Smooth alcohol warming.</mouthfeel>
+    <impression>
+An intensely hoppy, very strong pale ale without the big maltiness and/or deeper malt flavors of an American barleywine. Strongly hopped, but clean, lacking harshness, and a tribute to historical IPAs.</impression>
+    <comments>
+Bigger than either an English or American IPA in both alcohol strength and overall hop level (bittering and finish). Less malty, lower body, less rich and a greater overall hop intensity than an American Barleywine. Not necessarily as high in gravity/alcohol as a barleywine. A showcase for hops.</comments>
+    <ingredients>
+Pale ale malt (well-modified and suitable for single-temperature infusion mashing); can use a complex variety of hops (English, American, noble). American yeast that can give a clean or slightly fruity profile. Generally all-malt, but mashed at lower temperatures for high attenuation. Water character varies from soft to moderately sulfate.</ingredients>
+ <stats>
+  <og flexible="true">
+      <low>1.075</low>
+      <high>1.09</high>
+  </og>
+  <fg flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </fg>
+  <ibu flexible="true">
+      <low>60.0</low>
+      <high>100.0</high>
+  </ibu>
+  <srm flexible="false">
+      <low>8.0</low>
+      <high>15.0</high>
+  </srm>
+  <abv flexible="true">
+      <low>7.5</low>
+      <high>10.0</high>
+  </abv>
+</stats>
+    <examples>
+Dogfish Head 90-minute IPA, Rogue I2PA, Stone Ruination IPA, Three Floyd's Dreadnaught, Russian River Pliny the Elder, Moylan's Moylander Double IPA. Stock ales include examples such as Stone Arrogant Bastard and Mendocino Eye of the Hawk.</examples>
+  </subcategory>
+ </style>
+</STRANGEBREWRECIPE>

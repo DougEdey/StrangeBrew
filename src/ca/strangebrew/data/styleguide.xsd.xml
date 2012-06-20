@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Revision: 1; 2004-09-02
+
+****** BEGIN LICENSE BLOCK ******
+*
+* The contents of this file are Copyright (C) 2004 BJCP.org and
+* the original authors. All rights reserved.
+*
+* The initial developer of the code is:
+*   Christopher Cook (http://www.intraplanar.net/)
+*
+* Contributor(s):
+*
+* Original document location:
+*   http://www.bjcp.org/styles04/xml/styleguide.xsd
+*
+* This file may be freely distributed ONLY in an UNMODIFED form and ONLY
+* when accompanied by the original UNMODIFIED xml document
+* (styleguide.xml). If modifications are made to the code (xml schema,
+* entities, etc.), those modifications MAY be sent to the BJCP
+* communication director <communication_director@bjcp.org>.
+*
+****** END LICENSE BLOCK ******
+-->
+
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="styleguide">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="class" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="introduction" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="revision" type="revisionType"/>
+                    <xs:element name="title"/>
+                    <xs:element name="section" type="sectionType" minOccurs="0" maxOccurs="unbounded"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="category" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="revision" type="revisionType"/>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="notes" type="textType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="subcategory" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="name"/>
+                          <xs:element name="notes" type="textType" minOccurs="0" maxOccurs="unbounded"/>
+                          <xs:element name="aroma" type="textType" minOccurs="0"/>
+                          <xs:element name="appearance" type="textType" minOccurs="0"/>
+                          <xs:element name="flavor" type="textType" minOccurs="0"/>
+                          <xs:element name="mouthfeel" type="textType" minOccurs="0"/>
+                          <xs:element name="impression" type="textType" minOccurs="0"/>
+                          <xs:element name="history" type="textType" minOccurs="0"/>
+                          <xs:element name="comments" type="textType" minOccurs="0"/>
+                          <xs:element name="varieties" type="textType" minOccurs="0"/>
+                          <xs:element name="ingredients" type="textType" minOccurs="0"/>
+                          <xs:element name="stats" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="exceptions" type="textType" minOccurs="0"/>
+                                <xs:element name="og" type="statType" minOccurs="0"/>
+                                <xs:element name="fg" type="statType" minOccurs="0"/>
+                                <xs:element name="ibu" type="statType" minOccurs="0"/>
+                                <xs:element name="srm" type="statType" minOccurs="0"/>
+                                <xs:element name="abv" type="statType" minOccurs="0"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="examples" type="textType" minOccurs="0"/>
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:string" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="type" use="required">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="beer"/>
+                  <xs:enumeration value="mead"/>
+                  <xs:enumeration value="cider"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="revisionType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="number" type="xs:positiveInteger"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="statType">
+    <xs:sequence>
+      <xs:element name="low" type="xs:float"/>
+      <xs:element name="high" type="xs:float"/>
+    </xs:sequence>
+    <xs:attribute name="flexible">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="true"/>
+          <xs:enumeration value="false"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="sectionType">
+    <xs:sequence>
+      <xs:element name="sectiontitle" minOccurs="0"/>
+      <xs:element name="paragraph" type="textType" minOccurs="0"/>
+      <xs:element name="definitionlist" type="definitionlistType" minOccurs="0"/>
+      <xs:element name="ul" type="htmllistType" minOccurs="0"/>
+      <xs:element name="ol" type="htmllistType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="definitionlistType">
+    <xs:sequence>
+      <xs:element name="definitionitem" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="definitionterm"/>
+            <xs:element name="definition" type="textType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="htmllistType">
+    <xs:sequence>
+      <xs:element name="li" type="textType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="linkType">
+    <xs:sequence>
+      <xs:element name="destination" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="type" type="xs:string" use="required"/>
+          <xs:attribute name="target" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="linkcaption"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="textType" mixed="true">
+    <xs:complexContent mixed="true">
+      <xs:restriction base="xs:anyType">
+        <xs:sequence>
+          <xs:element name="link" type="linkType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute/>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>
