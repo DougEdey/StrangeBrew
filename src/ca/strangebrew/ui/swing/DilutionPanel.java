@@ -42,6 +42,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import ca.strangebrew.BrewCalcs;
+import ca.strangebrew.Debug;
 import ca.strangebrew.DilutedRecipe;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
@@ -419,7 +420,12 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener,
 		
 		if (myRecipe != null) {
 			if (o == postBoilText) {
-				myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(postBoilText.getValue().toString())));
+				try {
+					myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(postBoilText.getValue().toString())));
+				} catch (NumberFormatException m) {
+					Debug.print("Could not parse postBoilText as a double");
+					postBoilText.setValue(myRecipe.getPostBoilVol().toString());
+				}
 				displayDilution();
 			}
 			

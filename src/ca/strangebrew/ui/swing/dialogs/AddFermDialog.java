@@ -302,10 +302,25 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 			// create a new Ferm object
 			Fermentable i = new Fermentable();
 			i.setName(txtName.getText());
-			i.setPppg(Double.parseDouble(txtYield.getText()));
-			i.setLov(Double.parseDouble(txtLov.getText()));
+			try {
+				i.setPppg(Double.parseDouble(txtYield.getText()));
+			} catch (NumberFormatException  m) {
+				Debug.print("Could not read txtYield as double");
+			}
+			
+			try {
+				i.setLov(Double.parseDouble(txtLov.getText()));
+			} catch (NumberFormatException  m) {
+				Debug.print("Could not read txtLov as double");
+			}	
 			i.setCost(txtCost.getText());
-			i.setStock(Double.parseDouble(txtStock.getText()));
+			
+			try {
+				i.setStock(Double.parseDouble(txtStock.getText()));
+			} catch (NumberFormatException  m) {
+				Debug.print("Could not read txtStock as double");
+			}
+			
 			i.setUnits(cUnits.getSelectedItem().toString());
 			i.setMashed(bMash.isSelected());
 			i.setDescription(txtDescr.getText());

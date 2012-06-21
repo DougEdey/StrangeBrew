@@ -134,7 +134,12 @@ class MaltTableModel extends AbstractTableModel {
 					}
 					break;
 				case 3 :
-					data.setMaltAmount(row, Double.parseDouble(value.toString()));	
+					try {
+						data.setMaltAmount(row, Double.parseDouble(value.toString()));
+					} catch (NumberFormatException m) {
+						Debug.print("Could not parse "+ value.toString() + " as a double");
+
+					}
 					//sort by the malt amount	
 					
 					break;
@@ -142,12 +147,23 @@ class MaltTableModel extends AbstractTableModel {
 					// m.setUnits(value.toString());
 					break;
 				case 5 :
-					data.setMaltPppg(row, Double.parseDouble(value.toString()));
+					try {
+						data.setMaltPppg(row, Double.parseDouble(value.toString()));
+					} catch (NumberFormatException m) {
+						Debug.print("Could not parse "+ value.toString() + " as a double");
+
+					}
 					break;
 				case 6 :
-					data.setMaltLov(row, Double.parseDouble(value.toString()));
+					try {
+						data.setMaltLov(row, Double.parseDouble(value.toString()));
+					} catch (NumberFormatException m) {
+						Debug.print("Could not parse "+ value.toString() + " as a double");
+
+					}
 					break;
 				case 7 :
+					
 					data.setMaltCost(row, value.toString());
 					break;
 				case 8 :

@@ -38,6 +38,7 @@ import javax.swing.JToolBar;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableColumn;
 
+import ca.strangebrew.Debug;
 import ca.strangebrew.Mash;
 import ca.strangebrew.MashDefaults;
 import ca.strangebrew.Quantity;
@@ -508,8 +509,13 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 		Object o = e.getSource();
 
 		if (o == ratioText) {
-			double d = Double.parseDouble(ratioText.getText());
-			myRecipe.mash.setMashRatio(d);
+			try {
+				double d = Double.parseDouble(ratioText.getText());
+				myRecipe.mash.setMashRatio(d);
+			} catch (NumberFormatException m) {
+				Debug.print("Could not parse "+ ratioText.getText() + " as a double");
+				ratioText.setText(Double.toString(myRecipe.mash.getMashRatio()));
+			}
 		} else if (o == volUnitsCombo) {
 			String s = (String) volUnitsComboModel.getSelectedItem();
 			myRecipe.mash.setMashVolUnits(s);
@@ -524,13 +530,28 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			myRecipe.mash.calcMashSchedule();
 		} else if (o == grainTempText) {
 			String s = grainTempText.getText();
-			myRecipe.mash.setGrainTemp(Double.parseDouble(s));
+			try {
+				myRecipe.mash.setGrainTemp(Double.parseDouble(s));
+			} catch (NumberFormatException m) {
+				Debug.print("Could not parse "+ s + " as a double");
+				grainTempText.setText(Double.toString(myRecipe.mash.getGrainTemp()));
+			}
 		} else if (o == boilTempTxt) {
 			String s = boilTempTxt.getText();
-			myRecipe.mash.setBoilTemp(Double.parseDouble(s));
+			try {
+				myRecipe.mash.setBoilTemp(Double.parseDouble(s));
+			} catch (NumberFormatException m) {
+				Debug.print("Could not parse "+ s + " as a double");
+				boilTempTxt.setText(Double.toString(myRecipe.mash.getBoilTemp()));
+			}
 		} else if (o == tunLossTxt) {
 			String s = tunLossTxt.getText();
-			myRecipe.mash.setTunLoss(Double.parseDouble(s));
+			try {
+				myRecipe.mash.setTunLoss(Double.parseDouble(s));
+			} catch (NumberFormatException m) {
+				Debug.print("Could not parse "+ s + " as a double");
+				tunLossTxt.setText(Double.toString(myRecipe.mash.getTunLoss()));
+			}
 		} else if (o == nameTxt) {
 			myRecipe.mash.setName(nameTxt.getText());
 		} else if (o == defaultsButton){

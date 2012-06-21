@@ -128,19 +128,43 @@ class MashTableModel extends AbstractTableModel {
 					data.setStepMethod(row, value.toString());					
 					break;
 				case 2 :
-					data.setStepStartTemp(row, Double.parseDouble(value.toString()));
+					try {
+						data.setStepStartTemp(row, Double.parseDouble(value.toString()));
+					} catch (NumberFormatException m) {
+						m.printStackTrace();
+					}
 					break;
 				case 3 :
-					data.setStepEndTemp(row, Double.parseDouble(value.toString()));
+					try {
+						data.setStepEndTemp(row, Double.parseDouble(value.toString()));
+					} catch (NumberFormatException m) {
+						m.printStackTrace();
+					}
 					break;
 				case 4 :
-					data.setStepRampMin(row, Integer.parseInt(value.toString()));
+					try {
+						data.setStepRampMin(row, Integer.parseInt(value.toString()));
+					} catch (NumberFormatException m) {
+						m.printStackTrace();
+					}
 					break;
 				case 5 :
+					try {
 					data.setStepMin(row, Integer.parseInt(value.toString()));
+					} catch (NumberFormatException m) {
+						m.printStackTrace();
+					}
 					break;
 				case 6 :
-					data.setStepWeight(row, Double.parseDouble(value.toString()));
+					try {
+						data.setStepWeight(row, Double.parseDouble(value.toString()));
+					} catch (NumberFormatException m) {
+						m.printStackTrace();
+					}
+					break;
+				default:
+					Debug.print("Invalid column value! " + col);
+					break;
 
 
 			}

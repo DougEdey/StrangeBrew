@@ -115,19 +115,31 @@ class MiscTableModel extends AbstractTableModel {
 					data.setMiscName(row, value.toString());
 					break;
 				case 1 :
-					data.setMiscAmount(row, Double.parseDouble(value.toString()));					
+					try {
+						data.setMiscAmount(row, Double.parseDouble(value.toString()));
+					} catch (NumberFormatException m) {
+						m.printStackTrace();
+					}
 					break;
 				case 2 :
 					data.setMiscUnits(row, value.toString());
 					break;
 				case 3 :
-					data.setMiscCost(row, Double.parseDouble(value.toString()));
+					try {
+						data.setMiscCost(row, Double.parseDouble(value.toString()));
+					} catch (NumberFormatException m) {
+						m.printStackTrace();
+					}
 					break;
 				case 4 :
 					data.setMiscStage(row, value.toString());
 					break;
 				case 5 :
-					data.setMiscTime(row, Integer.parseInt(value.toString()));
+					try {
+						data.setMiscTime(row, Integer.parseInt(value.toString()));
+					} catch (NumberFormatException m) {
+						m.printStackTrace();
+					}
 					break;
 
 			}

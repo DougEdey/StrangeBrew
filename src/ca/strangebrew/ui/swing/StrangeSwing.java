@@ -1765,23 +1765,39 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			myRecipe.setBrewer(brewerNameText.getText());
 
 		else if (o == preBoilText) {
-			double x = SBStringUtils.round(myRecipe.getPreBoilVol(myRecipe.getVolUnits()), 2);
-			double y = SBStringUtils.round(Double.parseDouble(preBoilText.getText()), 2);
-			if (x != y) {
-				Debug.print("Preboil Recipe: " + x + " UI: " + y);
-				myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(preBoilText.getText())));
-				displayRecipe();
+			try {
+				double x = SBStringUtils.round(myRecipe.getPreBoilVol(myRecipe.getVolUnits()), 2);
+				
+				double y = SBStringUtils.round(Double.parseDouble(preBoilText.getText()), 2);
+				
+				if (x != y) {
+					Debug.print("Preboil Recipe: " + x + " UI: " + y);
+					myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(preBoilText.getText())));
+					
+				}
+			} catch (NumberFormatException m) {
+				preBoilText.setText(Double.toString(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));
 			}
+			displayRecipe();
 		} else if (o == finalWortVolText) {
-			double x = SBStringUtils.round(myRecipe.getFinalWortVol(myRecipe.getVolUnits()), 2);
-			double y = SBStringUtils.round(Double.parseDouble(finalWortVolText.getText()), 2);			
-			if (x != y) {				
-				myRecipe.setFinalWortVol(new Quantity(myRecipe.getVolUnits(), Double
-						.parseDouble(finalWortVolText.getText())));
-				displayRecipe();
+			try {
+				double x = SBStringUtils.round(myRecipe.getFinalWortVol(myRecipe.getVolUnits()), 2);
+				double y = SBStringUtils.round(Double.parseDouble(finalWortVolText.getText()), 2);			
+				if (x != y) {				
+					myRecipe.setFinalWortVol(new Quantity(myRecipe.getVolUnits(), Double
+							.parseDouble(finalWortVolText.getText())));
+					
+				}
+			} catch (NumberFormatException m) {
+				finalWortVolText.setText(Double.toString(myRecipe.getFinalWortVol(myRecipe.getVolUnits())));
 			}
+			displayRecipe();
 		} else if (o == evapText) {
-			myRecipe.setEvap(Double.parseDouble(evapText.getText()));
+			try {
+				myRecipe.setEvap(Double.parseDouble(evapText.getText()));
+			} catch (NumberFormatException m) {
+				evapText.setText(Double.toString(myRecipe.getEvap()));
+			}
 			displayRecipe();
 		} else if (o == boilMinText) {
 			String s = boilMinText.getText();
@@ -1789,7 +1805,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				// trim the string
 				s = s.substring(0, s.indexOf('.'));
 			}
-			myRecipe.setBoilMinutes(Integer.parseInt(s));
+			try {
+				myRecipe.setBoilMinutes(Integer.parseInt(s));
+			} catch (NumberFormatException m) {
+				// reset the boil text
+				boilMinText.setText(Integer.toString(myRecipe.getBoilMinutes()));
+			}
 			displayRecipe();
 		} else if (o == maltTotalUnitsComboBox) {
 			String u = (String) maltTotalUnitsComboModel.getSelectedItem();

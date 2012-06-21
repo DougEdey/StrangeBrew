@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 
 import ca.strangebrew.BrewCalcs;
 import ca.strangebrew.Database;
+import ca.strangebrew.Debug;
 import ca.strangebrew.Options;
 import ca.strangebrew.PrimeSugar;
 import ca.strangebrew.Recipe;
@@ -344,11 +345,23 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 				updatePrimeSugar((String)comboPrime.getSelectedItem(), myRecipe.getPrimeSugarU());			
 				displayCarb();
 			} else if (o == textBottleTemp) {
-				myRecipe.setBottleTemp(Double.parseDouble(textBottleTemp.getText()));
+				try {
+					myRecipe.setBottleTemp(Double.parseDouble(textBottleTemp.getText()));
+				} catch (NumberFormatException m) {
+					Debug.print("Could not parse textBottleTemp as a double");
+					textBottleTemp.setText(Double.toString(myRecipe.getBottleTemp()));
+				}
+				
 				displayCarb();
 				updatePrimeSugar((String)comboPrime.getSelectedItem(), myRecipe.getPrimeSugarU());			
-			} else if (o == textServTemp) {			
-				myRecipe.setServTemp(Double.parseDouble(textServTemp.getText()));
+			} else if (o == textServTemp) {
+				try {
+					myRecipe.setServTemp(Double.parseDouble(textServTemp.getText()));
+				} catch (NumberFormatException m) {
+					Debug.print("Could not parse textServTemp as a double");
+					textServTemp.setText(Double.toString(myRecipe.getServTemp()));
+				}
+				
 				displayCarb();
 				updatePrimeSugar((String)comboPrime.getSelectedItem(), myRecipe.getPrimeSugarU());			
 			} else if (o == checkKegged) {			
@@ -359,11 +372,23 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 				Options.getInstance().setProperty("optTubingID", tubeID);
 				displayCarb();
 			} else if (o == textHeight) {
-				double height = Double.parseDouble(textHeight.getText());
-				Options.getInstance().setDProperty("optHeightAboveKeg", height);
+				try {
+					double height = Double.parseDouble(textHeight.getText());
+					Options.getInstance().setDProperty("optHeightAboveKeg", height);
+				} catch (NumberFormatException m) {
+					Debug.print("Could not parse textHeight as a double");
+					textHeight.setText(Double.toString(Options.getInstance().getDProperty("optHeighAboveKeg")));
+				}
+				
+				
 				displayCarb();
 			} else if (o == textTargetVol) {
-				myRecipe.setTargetVol(Double.parseDouble(textTargetVol.getText()));
+				try {
+					myRecipe.setTargetVol(Double.parseDouble(textTargetVol.getText()));
+				} catch (NumberFormatException m) {
+					Debug.print("Could not parse textTargetVol as a double");
+					textTargetVol.setText(Double.toString(myRecipe.getTargetVol()));
+				}	
 				displayCarb();
 			}
 		}

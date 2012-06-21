@@ -23,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import ca.strangebrew.Debug;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
@@ -245,7 +246,12 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener, Foc
 			displayCost();
 		}		 
 		if (o == bottleSizeTxt){
-			myRecipe.setBottleSize(Double.parseDouble(bottleSizeTxt.getText()));
+			try {
+				myRecipe.setBottleSize(Double.parseDouble(bottleSizeTxt.getText()));
+			} catch (NumberFormatException m) {
+				Debug.print("Could not parse bottleSizeTxt as a double");
+				bottleSizeTxt.setText(Double.toString(myRecipe.getBottleSize()));
+			}
 			displayCost();
 		}
 		if (o == bottleSizeUCmb){

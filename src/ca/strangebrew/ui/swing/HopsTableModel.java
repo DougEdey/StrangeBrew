@@ -6,6 +6,7 @@ package ca.strangebrew.ui.swing;
 
 import javax.swing.table.AbstractTableModel;
 
+import ca.strangebrew.Debug;
 import ca.strangebrew.Hop;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
@@ -114,10 +115,20 @@ class HopsTableModel extends AbstractTableModel {
 				data.setHopType(row, value.toString());
 				break;
 			case 2:
-				data.setHopAlpha(row, Double.parseDouble(value.toString()));
+				try {
+					data.setHopAlpha(row, Double.parseDouble(value.toString()));
+				} catch (NumberFormatException m) {
+					Debug.print("Could not parse "+ value.toString() + " as a double");
+					
+				}
 				break;
 			case 3:
-				data.setHopAmount(row, Double.parseDouble(value.toString()));
+				try {
+					data.setHopAmount(row, Double.parseDouble(value.toString()));
+				} catch (NumberFormatException m) {
+					Debug.print("Could not parse "+ value.toString() + " as a double");
+
+				}
 				break;
 			case 4:
 				// h.setUnits(value.toString());
@@ -126,7 +137,12 @@ class HopsTableModel extends AbstractTableModel {
 				data.setHopAdd(row, value.toString());
 				break;
 			case 6:
-				data.setHopMinutes(row, (int)Double.parseDouble(value.toString()));
+				try {
+					data.setHopMinutes(row, (int)Double.parseDouble(value.toString()));
+				} catch (NumberFormatException m) {
+					Debug.print("Could not parse "+ value.toString() + " as a double");
+
+				}
 				break;
 			case 7:
 				break;

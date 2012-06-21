@@ -74,8 +74,14 @@ public class Ingredient implements Comparable<Ingredient> {
 		int i = a.indexOf(" ");
 		String d = a.substring(0,i);
 		String u = a.substring(i);
-		
-		amount.setAmount(Double.parseDouble(d.trim()));
+		Double dAmount = 0.0;
+		try {
+			dAmount = Double.parseDouble(d.trim());
+		} catch (NumberFormatException m) {
+			Debug.print("Could not read Amount: "+ d + " as a valid size");
+			return;
+		}
+		amount.setAmount(dAmount);
 		amount.setUnits(u.trim());
 	}
 	public void setAmountAs(double a, String u) {
@@ -87,7 +93,11 @@ public class Ingredient implements Comparable<Ingredient> {
 		if (c.substring(0,1).equals("$")) {
 			c = c.substring(1, c.length()); // trim leading "$"
 		}
-		costPerU = Double.parseDouble(c);
+		try {
+			costPerU = Double.parseDouble(c);
+		} catch (NumberFormatException m) {
+			Debug.print("Number format Exception setting cost to " + c);
+		}
 	}
 	public void setDate(String d){ 
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");

@@ -347,44 +347,74 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 		Object o = e.getSource();
 		
 		if (o == kettleTxt) {
-			double x = SBStringUtils.round(myRecipe.getKettleLoss(myRecipe.getVolUnits()),2);
-			double y = SBStringUtils.round(Double.parseDouble(kettleTxt.getText()),2);
-			if (x != y) {
-				myRecipe.setKettleLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(kettleTxt.getText())));
-			}			
+			try {
+				double x = SBStringUtils.round(myRecipe.getKettleLoss(myRecipe.getVolUnits()),2);
+				double y = SBStringUtils.round(Double.parseDouble(kettleTxt.getText()),2);
+				if (x != y) {
+					myRecipe.setKettleLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(kettleTxt.getText())));
+				}
+			} catch (NumberFormatException  m) {
+				Debug.print("Could not read kettleTxt as double");
+				kettleTxt.setText(Double.toString(myRecipe.getKettleLoss(myRecipe.getVolUnits())));
+			}
 		}
 		else if (o == miscLossTxt) {
-			double x = SBStringUtils.round(myRecipe.getMiscLoss(myRecipe.getVolUnits()),2);
-			double y = SBStringUtils.round(Double.parseDouble(miscLossTxt.getText()),2);
-			if (x != y) {
-				myRecipe.setMiscLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(miscLossTxt.getText())));
-			}					
+			try {
+				double x = SBStringUtils.round(myRecipe.getMiscLoss(myRecipe.getVolUnits()),2);
+				double y = SBStringUtils.round(Double.parseDouble(miscLossTxt.getText()),2);
+				if (x != y) {
+					myRecipe.setMiscLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(miscLossTxt.getText())));
+				}
+			} catch (NumberFormatException  m) {
+				Debug.print("Could not read miscLossTxt as double");
+				miscLossTxt.setText(Double.toString(myRecipe.getMiscLoss(myRecipe.getVolUnits())));
+			}
 		}
 		else if (o == trubLossTxt) {
-			double x = SBStringUtils.round(myRecipe.getTrubLoss(myRecipe.getVolUnits()),2);
-			double y = SBStringUtils.round(Double.parseDouble(trubLossTxt.getText()),2);
-			if (x != y) {
-				myRecipe.setTrubLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(trubLossTxt.getText())));
-			}					
+			try {
+				double x = SBStringUtils.round(myRecipe.getTrubLoss(myRecipe.getVolUnits()),2);
+				double y = SBStringUtils.round(Double.parseDouble(trubLossTxt.getText()),2);
+				if (x != y) {
+					myRecipe.setTrubLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(trubLossTxt.getText())));
+				}
+			} catch (NumberFormatException  m) {
+				Debug.print("Could not read trubLossTxt as double");
+				trubLossTxt.setText(Double.toString(myRecipe.getTrubLoss(myRecipe.getVolUnits())));
+			}
 		}
 		else if (o == collectTxt) {
-			double x = SBStringUtils.round(myRecipe.getPreBoilVol(myRecipe.getVolUnits()),2);
-			double y = SBStringUtils.round(Double.parseDouble(collectTxt.getText()),2);
-			if (x != y) {
-				myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(collectTxt.getText())));
-			}				
+			try {
+				double x = SBStringUtils.round(myRecipe.getPreBoilVol(myRecipe.getVolUnits()),2);
+				double y = SBStringUtils.round(Double.parseDouble(collectTxt.getText()),2);
+				if (x != y) {
+					myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(collectTxt.getText())));
+				}
+			} catch (NumberFormatException  m) {
+				Debug.print("Could not read collectTxt as double");
+				collectTxt.setText(Double.toString(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));
+			}
 		} else if (o == postBoilTxt) {
-			double x = SBStringUtils.round(myRecipe.getPostBoilVol(myRecipe.getVolUnits()),2);
-			double y = SBStringUtils.round(Double.parseDouble(postBoilTxt.getText()),2);
-			if (x != y) {
-				myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(postBoilTxt.getText())));
-			}	
+			try {
+				double x = SBStringUtils.round(myRecipe.getPostBoilVol(myRecipe.getVolUnits()),2);
+				double y = SBStringUtils.round(Double.parseDouble(postBoilTxt.getText()),2);
+				if (x != y) {
+					myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(postBoilTxt.getText())));
+				}
+			} catch (NumberFormatException  m) {
+				Debug.print("Could not read postBoilTxt as double");
+				postBoilTxt.setText(Double.toString(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
+			}
 		} else if (o == finalVolTxt) {
-			double x = SBStringUtils.round(myRecipe.getFinalWortVol(myRecipe.getVolUnits()),2);
-			double y = SBStringUtils.round(Double.parseDouble(finalVolTxt.getText()),2);
-			if (x != y) {
-				myRecipe.setFinalWortVol(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(finalVolTxt.getText())));
-			}	
+			try {
+				double x = SBStringUtils.round(myRecipe.getFinalWortVol(myRecipe.getVolUnits()),2);
+				double y = SBStringUtils.round(Double.parseDouble(finalVolTxt.getText()),2);
+				if (x != y) {
+					myRecipe.setFinalWortVol(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(finalVolTxt.getText())));
+				}
+			} catch (NumberFormatException  m) {
+				Debug.print("Could not read finalVolTxt as double");
+				finalVolTxt.setText(Double.toString(myRecipe.getFinalWortVol(myRecipe.getVolUnits())));
+			}
 		}		
 		
 		// don't do display water here call displrecipe on the SB notifier to fortce a refresh of the whole recipe. this will call display water from inside Strangeswing.displayrecipe.

@@ -235,19 +235,39 @@ public class Options {
 	}
 	
 	public double getDProperty(String key){
-		return Double.parseDouble(props.getProperty(key));
+		try {
+			return Double.parseDouble(props.getProperty(key));
+		} catch (NumberFormatException m) {
+			Debug.print("Could not read a double value from property file for key: "+key + "." +
+					" Value read in: " + props.getProperty(key));
+		}
+		return 0.0;
 	}
 	
 	public float getFProperty(String key){
-		return Float.parseFloat(props.getProperty(key));
+		try {
+			return Float.parseFloat(props.getProperty(key));
+		} catch (NumberFormatException m) {
+			Debug.print("Could not read a float value from property file for key: "+key + "." +
+					" Value read in: " + props.getProperty(key));
+		}
+		return (float) 0.0;
 	}
 			
 	public int getIProperty(String key){	
 		// does this property exist, either saved or in the defaults?
-		if (props.getProperty(key) != null)
-			return Integer.parseInt(props.getProperty(key));
-		else
-			return 0;
+		if (props.getProperty(key) != null) {
+			try {
+				return Integer.parseInt(props.getProperty(key));
+			} catch (NumberFormatException m) {
+				Debug.print( key + " property is corrupted read from file: " + props.getProperty(key));
+			}
+		} else {
+			Debug.print("Could not find property " + key);
+		}
+		
+		
+		return 0;
 
 	}
 	

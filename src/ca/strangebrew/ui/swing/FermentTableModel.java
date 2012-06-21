@@ -104,7 +104,11 @@ public class FermentTableModel extends AbstractTableModel {
 					}
 					break;
 				case 2 :
-					data.setFermentStepTemp(row, Double.parseDouble(value.toString()));
+					try {
+						data.setFermentStepTemp(row, Double.parseDouble(value.toString()));
+					} catch (NumberFormatException m) {
+						m.printStackTrace();
+					}
 					break;
 				case 3 :
 					data.setFermentStepTempU(row, value.toString());
