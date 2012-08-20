@@ -4,6 +4,9 @@
  */
 package ca.strangebrew.ui.swing;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import javax.swing.table.AbstractTableModel;
 
 import ca.strangebrew.Debug;
@@ -116,7 +119,9 @@ class HopsTableModel extends AbstractTableModel {
 				break;
 			case 2:
 				try {
-					data.setHopAlpha(row, Double.parseDouble(value.toString()));
+					NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+					Number number = format.parse(value.toString().trim());
+					data.setHopAlpha(row, number.doubleValue());
 				} catch (NumberFormatException m) {
 					Debug.print("Could not parse "+ value.toString() + " as a double");
 					
@@ -124,7 +129,9 @@ class HopsTableModel extends AbstractTableModel {
 				break;
 			case 3:
 				try {
-					data.setHopAmount(row, Double.parseDouble(value.toString()));
+					NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+					Number number = format.parse(value.toString().trim());
+					data.setHopAmount(row, number.doubleValue());
 				} catch (NumberFormatException m) {
 					Debug.print("Could not parse "+ value.toString() + " as a double");
 
@@ -138,9 +145,11 @@ class HopsTableModel extends AbstractTableModel {
 				break;
 			case 6:
 				try {
-					data.setHopMinutes(row, (int)Double.parseDouble(value.toString()));
+					NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+					Number number = format.parse(value.toString().trim());
+					data.setHopMinutes(row, number.intValue());
 				} catch (NumberFormatException m) {
-					Debug.print("Could not parse "+ value.toString() + " as a double");
+					Debug.print("Could not parse "+ value.toString() + " as a integer");
 
 				}
 				break;

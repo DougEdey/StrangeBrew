@@ -12,7 +12,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Locale;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
@@ -247,8 +249,13 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener, Foc
 		}		 
 		if (o == bottleSizeTxt){
 			try {
-				myRecipe.setBottleSize(Double.parseDouble(bottleSizeTxt.getText()));
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(bottleSizeTxt.getText().trim());
+				myRecipe.setBottleSize(number.doubleValue());
 			} catch (NumberFormatException m) {
+				Debug.print("Could not parse bottleSizeTxt as a double");
+				bottleSizeTxt.setText(Double.toString(myRecipe.getBottleSize()));
+			} catch (ParseException m) {
 				Debug.print("Could not parse bottleSizeTxt as a double");
 				bottleSizeTxt.setText(Double.toString(myRecipe.getBottleSize()));
 			}

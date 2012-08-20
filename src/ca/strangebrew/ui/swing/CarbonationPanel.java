@@ -5,7 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
@@ -346,8 +349,13 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 				displayCarb();
 			} else if (o == textBottleTemp) {
 				try {
-					myRecipe.setBottleTemp(Double.parseDouble(textBottleTemp.getText()));
+					NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+					Number number = format.parse(textBottleTemp.getText().trim());
+					myRecipe.setBottleTemp(number.doubleValue());
 				} catch (NumberFormatException m) {
+					Debug.print("Could not parse textBottleTemp as a double");
+					textBottleTemp.setText(Double.toString(myRecipe.getBottleTemp()));
+				} catch (ParseException m) {
 					Debug.print("Could not parse textBottleTemp as a double");
 					textBottleTemp.setText(Double.toString(myRecipe.getBottleTemp()));
 				}
@@ -356,8 +364,13 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 				updatePrimeSugar((String)comboPrime.getSelectedItem(), myRecipe.getPrimeSugarU());			
 			} else if (o == textServTemp) {
 				try {
-					myRecipe.setServTemp(Double.parseDouble(textServTemp.getText()));
+					NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+					Number number = format.parse(textServTemp.getText().trim());
+					myRecipe.setServTemp(number.doubleValue());
 				} catch (NumberFormatException m) {
+					Debug.print("Could not parse textServTemp as a double");
+					textServTemp.setText(Double.toString(myRecipe.getServTemp()));
+				} catch (ParseException m) {
 					Debug.print("Could not parse textServTemp as a double");
 					textServTemp.setText(Double.toString(myRecipe.getServTemp()));
 				}
@@ -373,9 +386,13 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 				displayCarb();
 			} else if (o == textHeight) {
 				try {
-					double height = Double.parseDouble(textHeight.getText());
-					Options.getInstance().setDProperty("optHeightAboveKeg", height);
+					NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+					Number number = format.parse(textHeight.getText().trim());
+					Options.getInstance().setDProperty("optHeightAboveKeg", number.doubleValue());
 				} catch (NumberFormatException m) {
+					Debug.print("Could not parse textHeight as a double");
+					textHeight.setText(Double.toString(Options.getInstance().getDProperty("optHeighAboveKeg")));
+				} catch (ParseException m) {
 					Debug.print("Could not parse textHeight as a double");
 					textHeight.setText(Double.toString(Options.getInstance().getDProperty("optHeighAboveKeg")));
 				}
@@ -384,8 +401,13 @@ public class CarbonationPanel extends javax.swing.JPanel implements ActionListen
 				displayCarb();
 			} else if (o == textTargetVol) {
 				try {
-					myRecipe.setTargetVol(Double.parseDouble(textTargetVol.getText()));
+					NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+					Number number = format.parse(textTargetVol.getText().trim());
+					myRecipe.setTargetVol(number.doubleValue());
 				} catch (NumberFormatException m) {
+					Debug.print("Could not parse textTargetVol as a double");
+					textTargetVol.setText(Double.toString(myRecipe.getTargetVol()));
+				} catch (ParseException m) {
 					Debug.print("Could not parse textTargetVol as a double");
 					textTargetVol.setText(Double.toString(myRecipe.getTargetVol()));
 				}	
