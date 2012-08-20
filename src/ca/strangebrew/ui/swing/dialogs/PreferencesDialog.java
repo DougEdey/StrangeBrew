@@ -22,6 +22,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -55,6 +56,7 @@ import ca.strangebrew.Debug;
 import ca.strangebrew.Hop;
 import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
+import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.WaterProfile;
 import ca.strangebrew.ui.swing.ComboModel;
 import ca.strangebrew.ui.swing.SmartComboBox;
@@ -81,6 +83,10 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JTextField txtPhone = new JTextField();
 	final private JLabel jLabel5 = new JLabel();
 	final private JTextField txtBrewerName = new JTextField();
+	
+	final private JLabel jLabelRecipe = new JLabel();
+	final private JTextField txtRecipe = new JTextField();
+	
 	final private JPanel carbPanel = new JPanel();
 	final private JComboBox cmbBottleSize = new JComboBox();
 	final private ComboModel<String> cmbBottleSizeModel = new ComboModel<String>();
@@ -91,6 +97,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JPanel costCarbPanel = new JPanel();
 	final private JTabbedPane jTabbedPane1 = new JTabbedPane();
 
+	
 	// calcs panel:
 	final private JPanel pnlHopsCalc = new JPanel();
 	final private ButtonGroup bgHopsCalc = new ButtonGroup();
@@ -310,6 +317,16 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		txtPhone.setText(opts.getProperty("optPhone"));
 		txtClubName.setText(opts.getProperty("optClub"));
 		txtEmail.setText(opts.getProperty("optEmail"));
+		String recipeDir = opts.getProperty("optRecipe");
+		if((recipeDir == null) || recipeDir.equalsIgnoreCase("") ) {
+			try {
+				recipeDir = SBStringUtils.getAppPath("recipes");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		txtRecipe.setText(recipeDir);
 		localeComboBox.setSelectedItem(opts.getLocale());		
 
 		// calculations tab:
@@ -380,6 +397,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		opts.setProperty("optPhone", txtPhone.getText());
 		opts.setProperty("optClub", txtClubName.getText());
 		opts.setProperty("optEmail", txtEmail.getText());
+		opts.setProperty("optRecipe", txtRecipe.getText());
 		opts.setProperty("optAppearance", ((Looks)swingComboBox.getSelectedItem()).value);
 		
 		// TODO
@@ -802,6 +820,21 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 									0, 0, 0), 0, 0));
 					txtEmail.setText("Email");
 				}
+				{
+					pnlBrewer.add(jLabelRecipe, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
+							GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, new Insets(0, 0,
+									0, 0), 0, 0));
+					jLabelRecipe.setText("Recipes:");
+				}
+				{
+					pnlBrewer.add(txtRecipe, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
+							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
+									0, 0, 0), 0, 0));
+					
+					txtEmail.setText("Recipe Directory");
+				}			
+				
+				
 				{
 					pnlBrewer.add(localeLabel, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, new Insets(0, 0,
