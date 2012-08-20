@@ -8,7 +8,7 @@
   <property name="dist"  location="dist"/>
 	<property name="source"  location="source"/>	
   <property name="installer"  location="installer"/>	
-  <property name="version.num" value="2.02-Free"/>
+  <property name="version.num" value="2.0.3-ALPHA"/>
   <property name="project_name" value="StrangeBrew"/>
   
   <path id="project.class.path">
@@ -83,11 +83,11 @@
   	</copy>
   </target>
   
-  <target name="zip" description="Create Ziped Distribution" depends="dist">
+  <target name="zip" description="Create Zipped Distribution" depends="dist">
     <zip destfile="StrangeBrew-${version.num}.zip" basedir="${dist}"/>
   </target>  
 
-  <target name="source" description="Create Ziped Source Distribution">
+  <target name="source" description="Create Zipped Source Distribution">
   	<mkdir dir="${source}"/>
     <copy file="gpl.txt" todir="${source}"/>
   	<copy file="build.xml" todir="${source}"/>
