@@ -30,6 +30,9 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -421,8 +424,13 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener,
 		if (myRecipe != null) {
 			if (o == postBoilText) {
 				try {
-					myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(postBoilText.getValue().toString())));
+					NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+					Number number = format.parse(postBoilText.toString().trim());
+					myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), number.doubleValue()));
 				} catch (NumberFormatException m) {
+					Debug.print("Could not parse postBoilText as a double");
+					postBoilText.setValue(myRecipe.getPostBoilVol().toString());
+				} catch (ParseException m) {
 					Debug.print("Could not parse postBoilText as a double");
 					postBoilText.setValue(myRecipe.getPostBoilVol().toString());
 				}

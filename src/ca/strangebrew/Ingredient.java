@@ -1,8 +1,10 @@
 package ca.strangebrew;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * $Id: Ingredient.java,v 1.8 2012/06/02 19:40:58 dougedey Exp $
@@ -76,8 +78,16 @@ public class Ingredient implements Comparable<Ingredient> {
 		String u = a.substring(i);
 		Double dAmount = 0.0;
 		try {
-			dAmount = Double.parseDouble(d.trim());
+			NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+			Number number = format.parse(d.trim());
+		    dAmount = number.doubleValue();
+			
 		} catch (NumberFormatException m) {
+			
+			Debug.print("Could not read Amount: "+ d + " as a valid size");
+			return;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
 			Debug.print("Could not read Amount: "+ d + " as a valid size");
 			return;
 		}
@@ -94,9 +104,15 @@ public class Ingredient implements Comparable<Ingredient> {
 			c = c.substring(1, c.length()); // trim leading "$"
 		}
 		try {
-			costPerU = Double.parseDouble(c);
+			NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+			Number number = format.parse(c.trim());
+		    costPerU = number.doubleValue();
+			
 		} catch (NumberFormatException m) {
 			Debug.print("Number format Exception setting cost to " + c);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			Debug.print("Parse Exception setting cost to " + c);
 		}
 	}
 	public void setDate(String d){ 
