@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -349,11 +352,17 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 		if (o == kettleTxt) {
 			try {
 				double x = SBStringUtils.round(myRecipe.getKettleLoss(myRecipe.getVolUnits()),2);
-				double y = SBStringUtils.round(Double.parseDouble(kettleTxt.getText()),2);
+				
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(kettleTxt.getText().trim());
+				double y = SBStringUtils.round(number.doubleValue(), 2);
 				if (x != y) {
-					myRecipe.setKettleLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(kettleTxt.getText())));
+					myRecipe.setKettleLoss(new Quantity(myRecipe.getVolUnits(), number.doubleValue()));
 				}
 			} catch (NumberFormatException  m) {
+				Debug.print("Could not read kettleTxt as double");
+				kettleTxt.setText(Double.toString(myRecipe.getKettleLoss(myRecipe.getVolUnits())));
+			} catch (ParseException m) {
 				Debug.print("Could not read kettleTxt as double");
 				kettleTxt.setText(Double.toString(myRecipe.getKettleLoss(myRecipe.getVolUnits())));
 			}
@@ -361,11 +370,17 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 		else if (o == miscLossTxt) {
 			try {
 				double x = SBStringUtils.round(myRecipe.getMiscLoss(myRecipe.getVolUnits()),2);
-				double y = SBStringUtils.round(Double.parseDouble(miscLossTxt.getText()),2);
+				
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(miscLossTxt.getText().trim());
+				double y = SBStringUtils.round(number.doubleValue(),2);
 				if (x != y) {
-					myRecipe.setMiscLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(miscLossTxt.getText())));
+					myRecipe.setMiscLoss(new Quantity(myRecipe.getVolUnits(), number.doubleValue()));
 				}
 			} catch (NumberFormatException  m) {
+				Debug.print("Could not read miscLossTxt as double");
+				miscLossTxt.setText(Double.toString(myRecipe.getMiscLoss(myRecipe.getVolUnits())));
+			} catch (ParseException m) {
 				Debug.print("Could not read miscLossTxt as double");
 				miscLossTxt.setText(Double.toString(myRecipe.getMiscLoss(myRecipe.getVolUnits())));
 			}
@@ -373,11 +388,17 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 		else if (o == trubLossTxt) {
 			try {
 				double x = SBStringUtils.round(myRecipe.getTrubLoss(myRecipe.getVolUnits()),2);
-				double y = SBStringUtils.round(Double.parseDouble(trubLossTxt.getText()),2);
+
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(trubLossTxt.getText().trim());
+				double y = SBStringUtils.round(number.doubleValue(), 2);
 				if (x != y) {
-					myRecipe.setTrubLoss(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(trubLossTxt.getText())));
+					myRecipe.setTrubLoss(new Quantity(myRecipe.getVolUnits(), number.doubleValue()));
 				}
 			} catch (NumberFormatException  m) {
+				Debug.print("Could not read trubLossTxt as double");
+				trubLossTxt.setText(Double.toString(myRecipe.getTrubLoss(myRecipe.getVolUnits())));
+			} catch (ParseException m) {
 				Debug.print("Could not read trubLossTxt as double");
 				trubLossTxt.setText(Double.toString(myRecipe.getTrubLoss(myRecipe.getVolUnits())));
 			}
@@ -385,33 +406,42 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 		else if (o == collectTxt) {
 			try {
 				double x = SBStringUtils.round(myRecipe.getPreBoilVol(myRecipe.getVolUnits()),2);
-				double y = SBStringUtils.round(Double.parseDouble(collectTxt.getText()),2);
+
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(collectTxt.getText().trim());
+				double y = SBStringUtils.round(number.doubleValue(), 2);
 				if (x != y) {
-					myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(collectTxt.getText())));
+					myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), number.doubleValue()));
 				}
-			} catch (NumberFormatException  m) {
+			} catch (ParseException  m) {
 				Debug.print("Could not read collectTxt as double");
 				collectTxt.setText(Double.toString(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));
 			}
 		} else if (o == postBoilTxt) {
 			try {
 				double x = SBStringUtils.round(myRecipe.getPostBoilVol(myRecipe.getVolUnits()),2);
-				double y = SBStringUtils.round(Double.parseDouble(postBoilTxt.getText()),2);
+
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(postBoilTxt.getText().trim());
+				double y = SBStringUtils.round(number.doubleValue(), 2);
 				if (x != y) {
-					myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(postBoilTxt.getText())));
+					myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), number.doubleValue()));
 				}
-			} catch (NumberFormatException  m) {
+			} catch (ParseException  m) {
 				Debug.print("Could not read postBoilTxt as double");
 				postBoilTxt.setText(Double.toString(myRecipe.getPostBoilVol(myRecipe.getVolUnits())));
 			}
 		} else if (o == finalVolTxt) {
 			try {
 				double x = SBStringUtils.round(myRecipe.getFinalWortVol(myRecipe.getVolUnits()),2);
-				double y = SBStringUtils.round(Double.parseDouble(finalVolTxt.getText()),2);
+
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(finalVolTxt.getText().trim());
+				double y = SBStringUtils.round(number.doubleValue(),2);
 				if (x != y) {
-					myRecipe.setFinalWortVol(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(finalVolTxt.getText())));
+					myRecipe.setFinalWortVol(new Quantity(myRecipe.getVolUnits(), number.doubleValue()));
 				}
-			} catch (NumberFormatException  m) {
+			} catch (ParseException  m) {
 				Debug.print("Could not read finalVolTxt as double");
 				finalVolTxt.setText(Double.toString(myRecipe.getFinalWortVol(myRecipe.getVolUnits())));
 			}

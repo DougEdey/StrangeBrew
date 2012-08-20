@@ -8,6 +8,9 @@ package ca.strangebrew.ui.swing;
  * @author aavis
  *
  */
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import javax.swing.table.AbstractTableModel;
 
 import ca.strangebrew.Debug;
@@ -129,35 +132,45 @@ class MashTableModel extends AbstractTableModel {
 					break;
 				case 2 :
 					try {
-						data.setStepStartTemp(row, Double.parseDouble(value.toString()));
+						NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+						Number number = format.parse(value.toString().trim());
+						data.setStepStartTemp(row, number.doubleValue());
 					} catch (NumberFormatException m) {
 						m.printStackTrace();
 					}
 					break;
 				case 3 :
 					try {
-						data.setStepEndTemp(row, Double.parseDouble(value.toString()));
+						NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+						Number number = format.parse(value.toString().trim());
+						data.setStepEndTemp(row, number.doubleValue());
 					} catch (NumberFormatException m) {
 						m.printStackTrace();
 					}
 					break;
 				case 4 :
 					try {
-						data.setStepRampMin(row, Integer.parseInt(value.toString()));
+						NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+						Number number = format.parse(value.toString().trim());
+						data.setStepRampMin(row, number.intValue());
 					} catch (NumberFormatException m) {
 						m.printStackTrace();
 					}
 					break;
 				case 5 :
 					try {
-					data.setStepMin(row, Integer.parseInt(value.toString()));
+						NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+						Number number = format.parse(value.toString().trim());
+						data.setStepMin(row, number.intValue());
 					} catch (NumberFormatException m) {
 						m.printStackTrace();
 					}
 					break;
 				case 6 :
 					try {
-						data.setStepWeight(row, Double.parseDouble(value.toString()));
+						NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+						Number number = format.parse(value.toString().trim());
+						data.setStepWeight(row, number.doubleValue());
 					} catch (NumberFormatException m) {
 						m.printStackTrace();
 					}

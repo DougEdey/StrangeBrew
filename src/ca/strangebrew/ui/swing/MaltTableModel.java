@@ -3,6 +3,9 @@
  */
 package ca.strangebrew.ui.swing;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import javax.swing.table.AbstractTableModel;
 
 import ca.strangebrew.Debug;
@@ -135,7 +138,9 @@ class MaltTableModel extends AbstractTableModel {
 					break;
 				case 3 :
 					try {
-						data.setMaltAmount(row, Double.parseDouble(value.toString()));
+						NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+						Number number = format.parse(value.toString().trim());
+						data.setMaltAmount(row, number.doubleValue());
 					} catch (NumberFormatException m) {
 						Debug.print("Could not parse "+ value.toString() + " as a double");
 
@@ -148,7 +153,9 @@ class MaltTableModel extends AbstractTableModel {
 					break;
 				case 5 :
 					try {
-						data.setMaltPppg(row, Double.parseDouble(value.toString()));
+						NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+						Number number = format.parse(value.toString().trim());
+						data.setMaltPppg(row, number.doubleValue());
 					} catch (NumberFormatException m) {
 						Debug.print("Could not parse "+ value.toString() + " as a double");
 
@@ -156,7 +163,9 @@ class MaltTableModel extends AbstractTableModel {
 					break;
 				case 6 :
 					try {
-						data.setMaltLov(row, Double.parseDouble(value.toString()));
+						NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+						Number number = format.parse(value.toString().trim());
+						data.setMaltLov(row, number.doubleValue());
 					} catch (NumberFormatException m) {
 						Debug.print("Could not parse "+ value.toString() + " as a double");
 

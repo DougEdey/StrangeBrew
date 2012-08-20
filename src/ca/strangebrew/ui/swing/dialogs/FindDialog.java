@@ -33,6 +33,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -72,11 +74,15 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 
 	public FindDialog(JFrame frame) {
 		super(frame);
-		currentDir = new File(SBStringUtils.getAppPath("recipes"));
+		try {
+			currentDir = new File(SBStringUtils.getAppPath("recipes"));
 		
-		initGUI();
-		dirLocationText.setText(currentDir.getAbsolutePath());
-		loadRecipes(currentDir);
+			initGUI();
+			dirLocationText.setText(currentDir.getAbsolutePath());
+			loadRecipes(currentDir);
+		} catch (UnsupportedEncodingException e) {
+			JOptionPane.showMessageDialog(frame, "Couldn't get the App Path for the find recipe dialog.");
+		}
 	}
 
 	private void initGUI() {

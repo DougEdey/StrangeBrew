@@ -52,9 +52,12 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -1766,23 +1769,32 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 		else if (o == preBoilText) {
 			try {
+				
+				
 				double x = SBStringUtils.round(myRecipe.getPreBoilVol(myRecipe.getVolUnits()), 2);
 				
-				double y = SBStringUtils.round(Double.parseDouble(preBoilText.getText()), 2);
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(preBoilText.getText());
+				double y = SBStringUtils.round(number.doubleValue(), 2);
 				
 				if (x != y) {
 					Debug.print("Preboil Recipe: " + x + " UI: " + y);
-					myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(preBoilText.getText())));
+					myRecipe.setPreBoil(new Quantity(myRecipe.getVolUnits(), y));
 					
 				}
 			} catch (NumberFormatException m) {
+				preBoilText.setText(Double.toString(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));
+			} catch (ParseException m) {
 				preBoilText.setText(Double.toString(myRecipe.getPreBoilVol(myRecipe.getVolUnits())));
 			}
 			displayRecipe();
 		} else if (o == finalWortVolText) {
 			try {
 				double x = SBStringUtils.round(myRecipe.getFinalWortVol(myRecipe.getVolUnits()), 2);
-				double y = SBStringUtils.round(Double.parseDouble(finalWortVolText.getText()), 2);			
+				
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(finalWortVolText.getText());
+				double y = SBStringUtils.round(number.doubleValue(), 2);			
 				if (x != y) {				
 					myRecipe.setFinalWortVol(new Quantity(myRecipe.getVolUnits(), Double
 							.parseDouble(finalWortVolText.getText())));
@@ -1790,25 +1802,33 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				}
 			} catch (NumberFormatException m) {
 				finalWortVolText.setText(Double.toString(myRecipe.getFinalWortVol(myRecipe.getVolUnits())));
+			} catch (ParseException m) {
+				finalWortVolText.setText(Double.toString(myRecipe.getFinalWortVol(myRecipe.getVolUnits())));
 			}
 			displayRecipe();
 		} else if (o == evapText) {
 			try {
-				myRecipe.setEvap(Double.parseDouble(evapText.getText()));
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(evapText.getText());
+				myRecipe.setEvap(number.doubleValue());
 			} catch (NumberFormatException m) {
+				evapText.setText(Double.toString(myRecipe.getEvap()));
+			} catch (ParseException m) {
 				evapText.setText(Double.toString(myRecipe.getEvap()));
 			}
 			displayRecipe();
+			
 		} else if (o == boilMinText) {
-			String s = boilMinText.getText();
-			if (s.indexOf('.') > 0) { // parseInt doesn't like '.' or ',', so
-				// trim the string
-				s = s.substring(0, s.indexOf('.'));
-			}
+			String s = boilMinText.getText().trim();
+			
 			try {
-				myRecipe.setBoilMinutes(Integer.parseInt(s));
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(s);
+				myRecipe.setBoilMinutes(number.intValue());
 			} catch (NumberFormatException m) {
 				// reset the boil text
+				boilMinText.setText(Integer.toString(myRecipe.getBoilMinutes()));
+			} catch (ParseException m) {
 				boilMinText.setText(Integer.toString(myRecipe.getBoilMinutes()));
 			}
 			displayRecipe();
