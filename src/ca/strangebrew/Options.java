@@ -18,6 +18,8 @@ package ca.strangebrew;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -236,8 +238,14 @@ public class Options {
 	
 	public double getDProperty(String key){
 		try {
-			return Double.parseDouble(props.getProperty(key));
+			NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+			Number number = format.parse(props.getProperty(key));
+		    
+			return number.doubleValue();
 		} catch (NumberFormatException m) {
+			Debug.print("Could not read a double value from property file for key: "+key + "." +
+					" Value read in: " + props.getProperty(key));
+		} catch (ParseException e) {
 			Debug.print("Could not read a double value from property file for key: "+key + "." +
 					" Value read in: " + props.getProperty(key));
 		}
@@ -246,8 +254,13 @@ public class Options {
 	
 	public float getFProperty(String key){
 		try {
-			return Float.parseFloat(props.getProperty(key));
+			NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+			Number number = format.parse(props.getProperty(key));
+			return number.floatValue();
 		} catch (NumberFormatException m) {
+			Debug.print("Could not read a float value from property file for key: "+key + "." +
+					" Value read in: " + props.getProperty(key));
+		} catch (ParseException e) {
 			Debug.print("Could not read a float value from property file for key: "+key + "." +
 					" Value read in: " + props.getProperty(key));
 		}
@@ -258,8 +271,12 @@ public class Options {
 		// does this property exist, either saved or in the defaults?
 		if (props.getProperty(key) != null) {
 			try {
-				return Integer.parseInt(props.getProperty(key));
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(props.getProperty(key));
+				return number.intValue();
 			} catch (NumberFormatException m) {
+				Debug.print( key + " property is corrupted read from file: " + props.getProperty(key));
+			} catch (ParseException e) {
 				Debug.print( key + " property is corrupted read from file: " + props.getProperty(key));
 			}
 		} else {

@@ -26,6 +26,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -303,21 +305,27 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 			Fermentable i = new Fermentable();
 			i.setName(txtName.getText());
 			try {
-				i.setPppg(Double.parseDouble(txtYield.getText()));
-			} catch (NumberFormatException  m) {
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(txtYield.getText().trim());
+				i.setPppg(number.doubleValue());
+			} catch (ParseException  m) {
 				Debug.print("Could not read txtYield as double");
 			}
 			
 			try {
-				i.setLov(Double.parseDouble(txtLov.getText()));
-			} catch (NumberFormatException  m) {
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(txtLov.getText().trim());
+				i.setLov(number.doubleValue());
+			} catch (ParseException  m) {
 				Debug.print("Could not read txtLov as double");
 			}	
 			i.setCost(txtCost.getText());
 			
 			try {
-				i.setStock(Double.parseDouble(txtStock.getText()));
-			} catch (NumberFormatException  m) {
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(txtStock.getText().trim());
+				i.setStock(number.doubleValue());
+			} catch (ParseException  m) {
 				Debug.print("Could not read txtStock as double");
 			}
 			

@@ -1,5 +1,8 @@
 package ca.strangebrew.ui.swing;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import javax.swing.table.AbstractTableModel;
 
 import ca.strangebrew.FermentStep;
@@ -98,14 +101,18 @@ public class FermentTableModel extends AbstractTableModel {
 					data.setFermentStepType(row, value.toString());
 				case 1:
 					try {
-						data.setFermentStepTime(row, Integer.parseInt(value.toString()));
+						NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+						Number number = format.parse(value.toString().trim());
+						data.setFermentStepTime(row, number.intValue());
 					} catch (NumberFormatException m) {
 						m.printStackTrace();
 					}
 					break;
 				case 2 :
 					try {
-						data.setFermentStepTemp(row, Double.parseDouble(value.toString()));
+						NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+						Number number = format.parse(value.toString().trim());
+						data.setFermentStepTemp(row, number.doubleValue());
 					} catch (NumberFormatException m) {
 						m.printStackTrace();
 					}

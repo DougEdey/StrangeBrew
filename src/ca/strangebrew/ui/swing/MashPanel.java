@@ -17,6 +17,9 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -510,9 +513,11 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 
 		if (o == ratioText) {
 			try {
-				double d = Double.parseDouble(ratioText.getText());
-				myRecipe.mash.setMashRatio(d);
-			} catch (NumberFormatException m) {
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(ratioText.getText().trim());
+				
+				myRecipe.mash.setMashRatio(number.doubleValue());
+			} catch (ParseException m) {
 				Debug.print("Could not parse "+ ratioText.getText() + " as a double");
 				ratioText.setText(Double.toString(myRecipe.mash.getMashRatio()));
 			}
@@ -531,24 +536,30 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 		} else if (o == grainTempText) {
 			String s = grainTempText.getText();
 			try {
-				myRecipe.mash.setGrainTemp(Double.parseDouble(s));
-			} catch (NumberFormatException m) {
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(s.toString().trim());
+				myRecipe.mash.setGrainTemp(number.doubleValue());
+			} catch (ParseException m) {
 				Debug.print("Could not parse "+ s + " as a double");
 				grainTempText.setText(Double.toString(myRecipe.mash.getGrainTemp()));
 			}
 		} else if (o == boilTempTxt) {
 			String s = boilTempTxt.getText();
 			try {
-				myRecipe.mash.setBoilTemp(Double.parseDouble(s));
-			} catch (NumberFormatException m) {
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(s.toString().trim());
+				myRecipe.mash.setBoilTemp(number.doubleValue());
+			} catch (ParseException m) {
 				Debug.print("Could not parse "+ s + " as a double");
 				boilTempTxt.setText(Double.toString(myRecipe.mash.getBoilTemp()));
 			}
 		} else if (o == tunLossTxt) {
 			String s = tunLossTxt.getText();
 			try {
-				myRecipe.mash.setTunLoss(Double.parseDouble(s));
-			} catch (NumberFormatException m) {
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(s.toString().trim());
+				myRecipe.mash.setTunLoss(number.doubleValue());
+			} catch (ParseException m) {
 				Debug.print("Could not parse "+ s + " as a double");
 				tunLossTxt.setText(Double.toString(myRecipe.mash.getTunLoss()));
 			}

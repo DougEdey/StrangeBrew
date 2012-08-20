@@ -14,6 +14,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -182,49 +185,66 @@ public class SettingsPanel extends javax.swing.JPanel implements ActionListener,
 		
 		if (o == pelletHopPctTxt){
 			try {
-				double u = Double.parseDouble( pelletHopPctTxt.getText() );				
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(pelletHopPctTxt.getText().trim());
+				double u = number.doubleValue();				
 				if (myRecipe != null) {
 					myRecipe.setPelletHopPct(u);
 					//sbn.displRecipe();
 					StrangeSwing.getInstance().hopsUpdateUI();
 				}
-			} catch (NumberFormatException  m) {
+			} catch (ParseException  m) {
 				Debug.print("Could not read pelletHopPctTxt as double");
 				pelletHopPctTxt.setText(Double.toString(myRecipe.getPelletHopPct()));
 			}
+				
 		}
 		if (o == thickDecoctTxt){
 			try {
-				double u = Double.parseDouble( thickDecoctTxt.getText() );				
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(thickDecoctTxt.getText().trim());
+				double u = number.doubleValue();				
 				myRecipe.mash.setDecoctRatio("thick", u);
-			} catch (NumberFormatException  m) {
+			} catch (ParseException  m) {
 				Debug.print("Could not read thickDecoctTxt as double");
 				thickDecoctTxt.setText(Double.toString(myRecipe.mash.getThickDecoctRatio()));
 			}
 		}
 		if (o == thinDecoctTxt){
 			try {
-				double u = Double.parseDouble( thinDecoctTxt.getText() );				
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(thinDecoctTxt.getText().trim());
+				double u = number.doubleValue();	
 				myRecipe.mash.setDecoctRatio("thin", u);
-			} catch (NumberFormatException  m) {
+			} catch (ParseException m) {
+				
 				Debug.print("Could not read thinDecoctTxt as double");
 				thinDecoctTxt.setText(Double.toString(myRecipe.mash.getThinDecoctRatio()));
+			
 			}
 		}
 		if (o == mashoutTmpTxt){
 			try {
-				double u = Double.parseDouble( mashoutTmpTxt.getText() );				
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(mashoutTmpTxt.getText().trim());
+				double u = number.doubleValue();	
+								
 				myRecipe.mash.setTempRange("mashout", u);
-			} catch (NumberFormatException  m) {
+			
+			} catch (ParseException m) {
 				Debug.print("Could not read mashoutTmpTxt as double");
 				mashoutTmpTxt.setText(Double.toString(myRecipe.mash.getTempRange("mashout")));
 			}
 		}
 		if (o == spargeTmpTxt){
 			try {
-				double u = Double.parseDouble( spargeTmpTxt.getText() );				
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(spargeTmpTxt.getText().trim());
+				double u = number.doubleValue();	
+								
 				myRecipe.mash.setTempRange("sparge", u);
-			} catch (NumberFormatException  m) {
+		
+			} catch (ParseException m) {
 				Debug.print("Could not read spargeTmpTxt as double");
 				spargeTmpTxt.setText(Double.toString(myRecipe.mash.getTempRange("sparge")));
 			}

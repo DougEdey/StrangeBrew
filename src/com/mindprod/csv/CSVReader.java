@@ -5,7 +5,10 @@ import java.io.EOFException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Read  CSV (Comma Separated Value)
@@ -565,20 +568,16 @@ public class CSVReader
     */
    public int getInt() throws EOFException, IOException, NumberFormatException
    {
-      String s = get();
-      if ( s == null )
-         {
-         return 0;
-         }
-      if ( ! trim )
-         {
-         s = s.trim();
-         }
-      if ( s.length() == 0 )
-         {
-         return 0;
-         }
-      return Integer.parseInt( s );
+	   String s = get();
+	      
+	   NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+	   try {
+		Number number = format.parse(s.trim());
+		return number.intValue();
+	   } catch (ParseException e) {
+		
+		return 0;
+	   }
    }
 
 
@@ -595,21 +594,16 @@ public class CSVReader
    */
    public long getLong() throws EOFException, IOException, NumberFormatException
    {
-      String s = get();
-      if ( s == null )
-         {
-         return 0;
-         }
-      if ( ! trim )
-         {
-         s = s.trim();
-         }
-
-      if ( s.length() == 0 )
-         {
-         return 0;
-         }
-      return Long.parseLong( s );
+	   String s = get();
+	      
+	      NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+	      try {
+			Number number = format.parse(s.trim());
+			 return number.longValue();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			return 0;
+		}
    }
 
 
@@ -627,19 +621,15 @@ public class CSVReader
    public float getFloat() throws EOFException, IOException, NumberFormatException
    {
       String s = get();
-      if ( s == null )
-         {
-         return 0;
-         }
-      if ( ! trim )
-         {
-         s = s.trim();
-         }
-      if ( s.length() == 0 )
-         {
-         return 0;
-         }
-      return Float.parseFloat( s );
+      
+      NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+      try {
+		Number number = format.parse(s.trim());
+		 return number.floatValue();
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		return 0;
+	}
    }
 
    /**
@@ -656,19 +646,16 @@ public class CSVReader
    public double getDouble() throws EOFException, IOException, NumberFormatException
    {
       String s = get();
-      if ( s == null )
-         {
-         return 0;
-         }
-      if ( ! trim )
-         {
-         s = s.trim();
-         }
-      if ( s.length() == 0 )
-         {
-         return 0;
-         }
-      return Double.parseDouble( s );
+      NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+      try {
+		Number number = format.parse(s.trim());
+		 return number.doubleValue();
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		return 0;
+	}
+      
+     
    }
 
    /**

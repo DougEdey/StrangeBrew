@@ -8,6 +8,9 @@ package ca.strangebrew.ui.swing;
  * @author aavis
  *
  */
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import javax.swing.table.AbstractTableModel;
 
 import ca.strangebrew.Misc;
@@ -116,7 +119,9 @@ class MiscTableModel extends AbstractTableModel {
 					break;
 				case 1 :
 					try {
-						data.setMiscAmount(row, Double.parseDouble(value.toString()));
+						NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+						Number number = format.parse(value.toString().trim());
+						data.setMiscAmount(row, number.doubleValue());
 					} catch (NumberFormatException m) {
 						m.printStackTrace();
 					}
@@ -126,7 +131,9 @@ class MiscTableModel extends AbstractTableModel {
 					break;
 				case 3 :
 					try {
-						data.setMiscCost(row, Double.parseDouble(value.toString()));
+						NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+						Number number = format.parse(value.toString().trim());
+						data.setMiscCost(row, number.doubleValue());
 					} catch (NumberFormatException m) {
 						m.printStackTrace();
 					}
@@ -136,7 +143,9 @@ class MiscTableModel extends AbstractTableModel {
 					break;
 				case 5 :
 					try {
-						data.setMiscTime(row, Integer.parseInt(value.toString()));
+						NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+						Number number = format.parse(value.toString().trim());
+						data.setMiscTime(row, number.intValue());
 					} catch (NumberFormatException m) {
 						m.printStackTrace();
 					}
