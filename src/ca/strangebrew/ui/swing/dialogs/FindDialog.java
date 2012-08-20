@@ -51,6 +51,7 @@ import javax.swing.table.AbstractTableModel;
 
 import ca.strangebrew.Debug;
 import ca.strangebrew.OpenImport;
+import ca.strangebrew.Options;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.ui.swing.StrangeSwing;
@@ -67,6 +68,7 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 	private JScrollPane recipeScrollPane;
 	private FindTableModel recipeTableModel;
 
+	private Options opt;
 	private Recipe r;
 	private List<Recipe> recipes = new ArrayList<Recipe>();
 	private List<File> files = new ArrayList<File>();
@@ -74,15 +76,23 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 
 	public FindDialog(JFrame frame) {
 		super(frame);
-		try {
-			currentDir = new File(SBStringUtils.getAppPath("recipes"));
-		
-			initGUI();
-			dirLocationText.setText(currentDir.getAbsolutePath());
-			loadRecipes(currentDir);
-		} catch (UnsupportedEncodingException e) {
-			JOptionPane.showMessageDialog(frame, "Couldn't get the App Path for the find recipe dialog.");
+	
+		String recipeDir = opt.getProperty("optRecipe");
+		if(recipeDir.equalsIgnoreCase("") ) {
+			try {
+				recipeDir = SBStringUtils.getAppPath("recipes");
+			} catch (UnsupportedEncodingException e) {
+				// 
+				JOptionPane.showMessageDialog(frame, "Couldn't get the App Path for the find recipe dialog.");
+			}
 		}
+		currentDir = new File(recipeDir);
+	
+		initGUI();
+		dirLocationText.setText(currentDir.getAbsolutePath());
+		loadRecipes(currentDir);
+		
+		
 	}
 
 	private void initGUI() {
