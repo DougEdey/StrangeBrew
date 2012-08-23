@@ -128,7 +128,7 @@
 						<xsl:value-of select="/STRANGEBREWRECIPE/MASH/MASH_TMP_U"/>
 					</td>
 					<th>Evaporation</th>
-					<td><xsl:value-of select="format-number(EVAP, '##.#')"/> gallons</td>
+					<td><xsl:value-of select="format-number(EVAP, '##.#')"/> <xsl:text> </xsl:text><xsl:value-of select="/STRANGEBREWRECIPE/MASH/MASH_VOL_U" /></td>
 					<th>Attenuation</th>
 					<td><xsl:value-of select="format-number(ATTENUATION, '#.00')"/><xsl:text> %</xsl:text></td>
 				</tr>
@@ -144,9 +144,9 @@
             <tbody>
                <tr>                  
                   <th><abbr title="Dilution Amount">Added Volume</abbr></th>
-                  <td><xsl:value-of select="format-number(ADDED_VOLUME, '##.#')"/> gallons</td>
+                  <td><xsl:value-of select="format-number(ADDED_VOLUME, '##.#')"/> <xsl:text> </xsl:text><xsl:value-of select="/STRANGEBREWRECIPE/ADDED_VOLUME/UNITS" /></td>
                   <th><abbr title="Final Volume">Final Volume</abbr></th>
-                  <td><xsl:value-of select="format-number((SIZE + ADDED_VOLUME), '##.#')"/> gallons</td>
+                  <td><xsl:value-of select="format-number((SIZE + ADDED_VOLUME), '##.#')"/> <xsl:text> </xsl:text><xsl:value-of select="/STRANGEBREWRECIPE/ADDED_VOLUME/UNITS" /></td>
                   <th><abbr title="IBU After Dilution"/>IBU</th>
                   <td><xsl:value-of select="format-number(IBU div ((SIZE + ADDED_VOLUME) div SIZE), '###.#')"/></td>
                   <th><abbr title="OG After Dilution"/>OG</th>
