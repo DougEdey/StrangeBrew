@@ -69,6 +69,7 @@ public class DilutedRecipe extends Recipe {
 		
 		// This is UGGLY! :)
 		dil += "      <ADDED_VOLUME>" + SBStringUtils.format(addVol.getValue(), 2) + "</ADDED_VOLUME>\n";
+		dil += "      <UNITS>" + addVol.getUnits() + "</UNITS>\n";
 		int offset = unDil.indexOf("</DETAILS>\n");
 		unDil.insert(offset, dil);
 		
