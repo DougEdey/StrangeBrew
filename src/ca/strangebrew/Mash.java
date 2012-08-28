@@ -79,7 +79,12 @@ public class Mash {
 		 mashRatio = opts.getDProperty("optMashRatio");
 		 mashRatioU = opts.getProperty("optMashRatioU");;
 		 tempUnits = opts.getProperty("optMashTempU");
-		 volUnits = opts.getProperty("optMashVolU");
+		 
+		 if(myRecipe != null) {
+			 volUnits = myRecipe.getVolUnits();
+		 } else {
+			 volUnits = opts.getProperty("optMashVolU");
+		 }
 		 grainTempF = opts.getDProperty("optGrainTemp");
 		 boilTempF = opts.getDProperty("optBoilTempF");
 		 ACIDTMPF = opts.getFProperty("optAcidTmpF");
