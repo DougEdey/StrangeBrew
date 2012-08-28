@@ -141,7 +141,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	// The one and only StrangeSwing
 	private static StrangeSwing instance = null;
 
-	public String version = "2.0.2";
+	public String version = "2.0.3";
 	public String edition = "Free";
 
 	// Stuff that should be final

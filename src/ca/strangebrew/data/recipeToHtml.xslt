@@ -128,7 +128,16 @@
 						<xsl:value-of select="/STRANGEBREWRECIPE/MASH/MASH_TMP_U"/>
 					</td>
 					<th>Evaporation</th>
-					<td><xsl:value-of select="format-number(EVAP, '##.#')"/> <xsl:text> </xsl:text><xsl:value-of select="SIZE_UNITS"/></td>
+					<td><xsl:value-of select="format-number(EVAP, '##.#')"/> <xsl:text> </xsl:text>
+					<xsl:choose>
+					<xsl:when test="EVAP_METHOD ='Constant'">
+						<xsl:value-of select="SIZE_UNITS" />
+					</xsl:when>
+					<xsl:when test="EVAP_METHOD ='Percent'">
+						<xsl:text>%</xsl:text>
+					</xsl:when>
+					</xsl:choose>
+					</td>
 					<th>Attenuation</th>
 					<td><xsl:value-of select="format-number(ATTENUATION, '#.00')"/><xsl:text> %</xsl:text></td>
 				</tr>
