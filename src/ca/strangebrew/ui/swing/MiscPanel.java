@@ -78,6 +78,7 @@ public class MiscPanel extends javax.swing.JPanel {
 	public void setData(Recipe r) {
 		myRecipe = r;
 		miscTableModel.setData(myRecipe);
+		miscTable.updateUI();
 	}
 	
 	public void setList(List<Misc> miscList){
