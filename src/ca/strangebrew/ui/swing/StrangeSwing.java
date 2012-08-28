@@ -673,6 +673,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// find the xslt stylesheet in the classpath
 		// URL xsltUrl = getClass().getClassLoader().getResource(xslt);
 		String path = SBStringUtils.getAppPath("data");
+		Debug.print("Using " + SBStringUtils.getAppPath("data"));
 		File xsltFile = new File(path, xslt);
 
 		FileOutputStream output = new FileOutputStream(f);
