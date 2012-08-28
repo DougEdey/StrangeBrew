@@ -479,7 +479,11 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		cmbMaltUnitsModel.setList(Quantity.getListofUnits("weight"));
 		cmbHopsUnitsModel.setList(Quantity.getListofUnits("weight"));
 
-		path = SBStringUtils.getAppPath("recipes");
+		if(preferences != null && preferences.getProperty("optRecipe") != null) {
+			path = preferences.getProperty("optRecipe");
+		} else {
+			path = SBStringUtils.getAppPath("recipes");
+		}
 		Debug.print("Recipes path:" + path);
 
 		fileChooser.setCurrentDirectory(new File(path));
@@ -2137,8 +2141,15 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			fd.setModal(true);
 			fd.setVisible(true);
 		} else if (o == openFileMenuItem) {
+			String path = new String();
+			if(preferences != null && preferences.getProperty("optRecipe") != null) {
+				path = preferences.getProperty("optRecipe");
+				Debug.print("Recipes path:" + path);
 
-			// Show open dialog; this method does
+				fileChooser.setCurrentDirectory(new File(path));
+
+			}
+						// Show open dialog; this method does
 			// not return until the dialog is closed
 			fileChooser.resetChoosableFileFilters();
 			String[] ext = { "xml", "qbrew", "rec" };
