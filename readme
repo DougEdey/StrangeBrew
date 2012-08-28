@@ -2,8 +2,9 @@
 +                   README                     +
 ================================================
 
-StrangeBrew Java - 2.0.2
+StrangeBrew Java - 2.0.3
 (c)2000-2008 Drew Avis - drew.avis@gmail.com
+Doug Edey - doug.edey@gmail.com
 
 Thank you for downloading and trying StrangeBrew Java.
 
@@ -29,8 +30,7 @@ This file contains:
 
 This is a "release quality" release of StrangeBrew Java, which means 
 it's feature-complete, and is pretty stable.  If you find bugs, please
-report them via the Sourceforge bug tracker, or email 
-bugs@strangebrew.ca.
+report them via the Github Project. Or email a developer above
 
 StrangeBrew Java is a Java port of the popular Windows homebrewing
 software, StrangeBrew (www.strangebrew.ca).
