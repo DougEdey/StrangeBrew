@@ -873,17 +873,31 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					
 					
 					ArrayList<Looks> looks = new ArrayList<Looks>();
-					
+					int currentLook = 0;
+					int i = 0;
 					for(UIManager.LookAndFeelInfo look : UIManager.getInstalledLookAndFeels()) {
 						
+						Debug.print(look.getClassName());
+						if(opts.getProperty("optAppearance") != null && opts.getProperty("optAppearance").equals(look.getClassName())) {
+							Debug.print("Current look found");
+							currentLook = i;
+						}
+						i++;
 						looks.add(new Looks(look.getName(), look.getClassName()));
 						
 					}
 					
 					swingComboBox = new JComboBox(looks.toArray());
+					
+					
+					Debug.print("Setting selected item");
+					swingComboBox.setSelectedIndex(currentLook);
+					
+					
 					pnlBrewer.add(swingComboBox, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));	
+					
 					
 					swingComboBox.addActionListener(new ActionListener() {
 						public void actionPerformed (ActionEvent e){
