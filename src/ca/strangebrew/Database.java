@@ -415,7 +415,7 @@ public class Database {
 		Debug.print("Saving fermentables to file");
 		
 		try {
-			PreparedStatement pStatement = conn.prepareStatement("SELECT COUNT(*) FROM hops WHERE name = ?;");
+			PreparedStatement pStatement = conn.prepareStatement("SELECT COUNT(*) FROM fermentables WHERE name = ?;");
 			
 			String sql = "insert into fermentables (Name,Yield,Lov,Cost,Stock,Units,Mash,Descr,Steep) " +
 					"values(?, ?,  ? , ?, ?, ?, ?, ?, ? )";
@@ -437,7 +437,7 @@ public class Database {
 				pStatement.setString(1, f.getName());
 				res = pStatement.executeQuery();
 				res.next();
-				
+				Debug.print("Checking for: "+f.getName() + " ("+ f.getPppg() + ") - " + res.getInt(1));
 				if(res.getInt(1) == 0){
 					insertFerm.setString(1, f.getName());
 					insertFerm.setString(2, Double.toString(f.getPppg()));
@@ -448,7 +448,7 @@ public class Database {
 					insertFerm.setString(7, Boolean.toString(f.getMashed()));
 					insertFerm.setString(8, f.getDescription());
 					insertFerm.setString(9, Boolean.toString(f.getSteep()));
-					
+					insertFerm.execute();
 				}
 			}
 			//clear the list
