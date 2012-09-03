@@ -53,7 +53,7 @@
       <attribute name="Built-By" value="${user.name}"/>
       <attribute name="Main-Class" value="ca.strangebrew.ui.swing.dialogs.Splash"/>
       <attribute name="Implementation-Version" value="${version.num}-b${build.number}"/> 
-  
+  		
     </manifest>
     
     <jar jarfile="${dist}/StrangeBrew.jar"

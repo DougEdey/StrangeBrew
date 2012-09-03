@@ -320,7 +320,7 @@ public class Database {
 				
 				// Rename the file
 			
-				File newFile = new File("malts.csv" + dateFormat.format(date));
+				File newFile = new File(path, "malts.csv" + dateFormat.format(date));
 				
 				if (!newFile.exists()) {
 					maltFile.renameTo(newFile);
@@ -533,7 +533,7 @@ public class Database {
 				reader.close();
 	
 				// Rename the file
-				File newFile = new File("hops.csv" + dateFormat.format(date));
+				File newFile = new File(path, "hops.csv" + dateFormat.format(date));
 				
 				if (!newFile.exists()) {
 					hopsFile.renameTo(newFile);
@@ -708,7 +708,7 @@ public class Database {
 						reader.close();
 	
 						// Rename the file
-						File newFile = new File("yeast.csv" + dateFormat.format(date));
+						File newFile = new File(path, "yeast.csv" + dateFormat.format(date));
 						
 						if (!newFile.exists()) {
 							yeastFile.renameTo(newFile);
@@ -1358,7 +1358,7 @@ public class Database {
 				
 				DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
 				Date date = new Date();
-				File newFile = new File("water_profiles.csv" + dateFormat.format(date));
+				File newFile = new File(path, "water_profiles.csv" + dateFormat.format(date));
 				
 				if (!newFile.exists()) {
 					waterFile.renameTo(newFile);
