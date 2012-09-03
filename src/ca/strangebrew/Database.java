@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.channels.FileChannel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -60,7 +61,8 @@ public class Database {
 	private Connection conn = null;
 
 	// This is now a singleton
-	private Database() {
+	private Database() throws UnsupportedEncodingException {
+		dbPath = SBStringUtils.getAppPath("data");
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
@@ -71,8 +73,8 @@ public class Database {
         try {
         	
         	
-        	Debug.print("Trying to open database");
-			conn = DriverManager.getConnection("jdbc:sqlite:sb_ingredients.db");
+        	Debug.print("Trying to open database: "+ dbPath);
+			conn = DriverManager.getConnection("jdbc:sqlite:"+dbPath+File.separator+"sb_ingredients.db");
 		
 			
 			Debug.print("Checking for tables");
@@ -91,7 +93,7 @@ public class Database {
 			if(!tables.contains("styleguide")) {
 				// no Style guide
 				Debug.print("Creating styleguide table");
-				stat.executeUpdate("create table styleguide (Item,Name, Category, OG_Low, OG_High, Alc_Low, Alc_High, IBU_Low, IBU_High, Lov_Low, Lov_High," +
+				stat.executeUpdate("create table styleguide (Item INT AUTO_INCREMENT,Name, Category, OG_Low, OG_High, Alc_Low, Alc_High, IBU_Low, IBU_High, Lov_Low, Lov_High," +
 						"Appearance, Aroma, Flavor, Mouthfeel, Impression, Comments, Ingredients, Comm_examples, Year );");
 			}
 			
@@ -104,30 +106,30 @@ public class Database {
 			if(!tables.contains("hops")) {
 				// no hops
 				Debug.print("Creating hops table");
-				stat.executeUpdate("create table hops (Item,Name,Alpha,Cost,Stock,Units,Descr,Storage,Date,Modified);");
+				stat.executeUpdate("create table hops (Item INT AUTO_INCREMENT,Name,Alpha,Cost,Stock,Units,Descr,Storage,Date,Modified);");
 			}
 	        
 			if(!tables.contains("misc")) {
 				// no misc
 				Debug.print("Creating misc table");
-				stat.executeUpdate("create table misc (Item,Name,Descr,Stock,Units,Cost,Stage,Modified);");
+				stat.executeUpdate("create table misc (Item INT AUTO_INCREMENT,Name,Descr,Stock,Units,Cost,Stage,Modified);");
 			}
 			
 			if(!tables.contains("prime")) {
 				// no prime
 				Debug.print("Creating prime table");
-				stat.executeUpdate("create table prime  ( Item,Name,Yield,Units,Descr);");
+				stat.executeUpdate("create table prime  ( Item INT AUTO_INCREMENT,Name,Yield,Units,Descr);");
 			}
 			
 			if(!tables.contains("yeast")) {
 				// no yeast
 				Debug.print("Creating yeast table");
-				stat.executeUpdate("create table yeast (Item,Name,Cost,Descr,Modified);");
+				stat.executeUpdate("create table yeast (Item INT AUTO_INCREMENT,Name,Cost,Descr,Modified);");
 			}
 			if(!tables.contains("water_profiles")) {
 				// no water_profiles 
 				Debug.print("Creating water_profiles table");
-				stat.executeUpdate("create table water_profiles ( Item, Name,Descr,Ca,Mg,Na,SO4,HCO3,Cl,Hardness,TDS,PH,Alk);");
+				stat.executeUpdate("create table water_profiles ( Item INT AUTO_INCREMENT, Name,Descr,Ca,Mg,Na,SO4,HCO3,Cl,Hardness,TDS,PH,Alk);");
 			}
 
 			
@@ -141,7 +143,12 @@ public class Database {
 	
 	public static Database getInstance() {
 		if (instance == null) {
-			instance = new Database();
+			try {
+				instance = new Database();
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		return instance;
@@ -217,7 +224,7 @@ public class Database {
 		styleFileName = "styleguide" + styleYear + ".xml";
 		
 		File styleFile = new File(path, styleFileName);
-		if(!styleFile.exists()){
+		if(styleFile != null && !styleFile.exists()){
 			Frame window = new Frame();
 			// style file doesn't exist!
 			new Dialog(window, "Can not open style guide: "+path+"/"+styleFileName+"\n Please check your install!");
@@ -235,15 +242,17 @@ public class Database {
 			readMisc(dbPath);
 			importStyles(dbPath, styleYear);
 			readWater(dbPath);
+		
+			// sort
+			Debug.print(styleDB.size());
+			Collections.sort(styleDB);
+			Collections.sort(fermDB);
+			Collections.sort(hopsDB);
+			Collections.sort(yeastDB);
+			Collections.sort(waterDB);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
-		// sort
-		Collections.sort(styleDB);
-		Collections.sort(fermDB);
-		Collections.sort(hopsDB);
-		Collections.sort(yeastDB);
-		Collections.sort(waterDB);
 	}
 	
 	public void readFermentables(String path) {
@@ -256,7 +265,7 @@ public class Database {
 		try {
 			Statement statement = conn.createStatement();
 			File maltFile = new File(path, "malts.csv");
-			if(maltFile.exists()) {
+			if(maltFile != null && maltFile.exists()) {
 				CSVReader reader = new CSVReader(new FileReader(
 					maltFile), ',', '\"', true, false);
 
@@ -471,7 +480,7 @@ public class Database {
 			// read the hops from the csv file
 						
 			File hopsFile = new File(path, "hops.csv");
-			if(hopsFile.exists()) {
+			if(hopsFile != null && hopsFile.exists()) {
 				
 				CSVReader reader = new CSVReader(new FileReader(
 						hopsFile), ',', '\"', true, false);
@@ -656,7 +665,7 @@ public class Database {
 					// read the hops from the csv file
 								
 					File yeastFile = new File(path, "yeast.csv");
-					if(yeastFile.exists()) {
+					if(yeastFile != null && yeastFile.exists()) {
 						CSVReader reader = new CSVReader(new FileReader(
 								yeastFile), ',', '\"', true, false);
 	
@@ -814,7 +823,7 @@ public class Database {
 		Statement statement = null;
 		try {
 			File styleFile = new File(path, "bjcp_styles.csv");	
-			if(styleFile.exists()) {
+			if(styleFile != null && styleFile.exists()) {
 				CSVReader reader = new CSVReader(new FileReader(
 						styleFile), ',', '\"', true, false);
 
@@ -929,18 +938,28 @@ public class Database {
 		PreparedStatement pStatement = null;
 		ResultSet res = null;
 		String sql = new String();
-		styleDB = null;
 		
-		Debug.print("Opening "+styleFileName);
-		File styleFile = new File(path, styleFileName);
-		if(styleFile.exists()) {
-			Debug.print("Opening: " + styleFile.getName() + ".\n");
+		File styleFile = null;
+		Debug.print("Opening "+ path + styleFileName);
+		try {
+			
+			 styleFile = new File(path, styleFileName);
+			 Debug.print(".");
+		} catch (NullPointerException e) {
+			// do nothing
+			e.printStackTrace();
+		}
+		Debug.print(styleFile.toString() + Boolean.toString(styleFile.exists()));
+		if(styleFile != null && styleFile.exists()) {
+			Debug.print("Opening: " + path + styleFile.toString() + ".\n");
+			
 			ImportXml imp = new ImportXml(styleFile.toString(), "style");
+			Debug.print(".");
 			styleDB = imp.styleHandler.getStyles();
-		
+			
 			for(Style style : styleDB) {
 				sql = "SELECT COUNT(*) FROM styleguide WHERE name = ? AND year = ?";
-				
+				Debug.print(sql);
 				try {
 					pStatement = conn.prepareStatement(sql);
 					pStatement.setString(1, style.getName());
@@ -949,7 +968,8 @@ public class Database {
 					res = pStatement.executeQuery();
 					
 					res.next();
-					if(res.getInt(1) == 0) {
+					Debug.print("Found " + res.getInt(1) + "rows");
+					if(res.getInt(1) == 0 && !style.name.equals("")) {
 						// Add this to the style db
 						//Item,Name, Category, OG_Low, OG_High, IBU_Low, IBU_High, Lov_Low, Lov_High,"
 						//Appearance, Aroma, Flavor, Mouthfeel, Impression, Comments, Ingredients, Year
@@ -980,6 +1000,7 @@ public class Database {
 						pStatement.setString(18, style.ingredients);
 						pStatement.setString(19, year);
 						
+						pStatement.execute();
 					}
 					
 				} catch (SQLException e) {
@@ -998,7 +1019,7 @@ public class Database {
 			
 			
 		} // File existed, we can now move on and read from the DB
-		
+		Debug.print("Year: " + year);
 		try {
 			sql = "SELECT * FROM styleguide WHERE year = ?";
 			pStatement = conn.prepareStatement(sql);
@@ -1021,23 +1042,33 @@ public class Database {
 				s.setIbuHigh(Double.parseDouble(res.getString("IBU_High")));
 				s.setSrmLow(Double.parseDouble(res.getString("Lov_Low")));
 				s.setSrmHigh(Double.parseDouble(res.getString("Lov_High")));
-				s.setExamples(res.getString("Comm_examples"));
-				s.appearance = res.getString("Appearance");
-				s.aroma = res.getString("Aroma");
-				s.flavour = res.getString("Flavour");
-				s.mouthfeel = res.getString("Mouthfeel");
-				s.impression = res.getString("Imprssion");
-				s.comments = res.getString("Comments");
-				s.ingredients = res.getString("Ingredients");
-				
+				if(res.getString("Comm_examples") != null) 
+					s.setExamples(res.getString("Comm_examples"));
+				if(res.getString("Appearance") != null)
+					s.appearance = res.getString("Appearance");
+				if(res.getString("Aroma") != null)
+					s.aroma = res.getString("Aroma");
+				if(res.getString("Flavor") != null)
+					s.flavour = res.getString("Flavor");
+				if(res.getString("Mouthfeel") != null)
+					s.mouthfeel = res.getString("Mouthfeel");
+				if(res.getString("Impression") != null)
+					s.impression = res.getString("Impression");
+				if(res.getString("Comments") != null)
+					s.comments = res.getString("Comments");
+				if(res.getString("Ingredients") != null)
+					s.ingredients = res.getString("Ingredients");
+				Debug.print("Adding style " + s.getName() + s.toText());
 				styleDB.add(s);
 			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
 		}
-		
+		Debug.print("Loaded Styles");
 		
 		
 	}
@@ -1049,7 +1080,7 @@ public class Database {
 		try {
 			File miscFile = new File(path, "misc_ingr.csv");
 			CSVReader reader = null;
-			if(miscFile.exists()) {
+			if(miscFile != null && miscFile.exists()) {
 				reader = new CSVReader(new FileReader(
 						miscFile), ',', '\"', true, false);
 				String sql = new String();
@@ -1205,7 +1236,7 @@ public class Database {
 		Debug.print("Opening Priming Sugar");
 		try {
 			File primeFile = new File(path, "prime_sugar.csv");
-			if(primeFile.exists()) {
+			if(primeFile != null && primeFile.exists()) {
 				
 				
 				CSVReader reader = new CSVReader(new FileReader(
@@ -1286,12 +1317,12 @@ public class Database {
 		PreparedStatement pStatement = null;
 		String sql = new String();
 		ResultSet res = null;
-	
+		Debug.print("Reading water");
 		// read the fermentables from the csv file
 		try {
 			File waterFile = new File(path, "water_profiles.csv");
 			
-			if(waterFile.exists()) {
+			if(waterFile != null && waterFile.exists()) {
 				CSVReader reader = new CSVReader(new FileReader(
 						waterFile), ',', '\"', true, false);
 	
@@ -1402,7 +1433,11 @@ public class Database {
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
 		}
+		
+		Debug.print("Read all water");
 	}	
 	
 	public String[] getPrimeSugarNameList() {
