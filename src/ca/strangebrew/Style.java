@@ -38,7 +38,7 @@ public class Style implements Comparable<Style> {
 	public String impression;
 	public String comments;
 	public String ingredients;
-
+	public String year;
 	public String type;
 
 	// override the equals so we can compare:
@@ -149,7 +149,10 @@ public class Style implements Comparable<Style> {
 	public double getOgLow() {
 		return ogLow;
 	}
-
+	
+	public String getYear() {
+		return year;
+	}
 	// set methods:
 	public void setName(String n) {
 		name = n;
@@ -220,6 +223,10 @@ public class Style implements Comparable<Style> {
 	 */
 	public void setOgLow(double ogLow) {
 		this.ogLow = ogLow;
+	}
+	
+	public void setYear(String year) {
+		this.year = year;
 	}
 
 	public String toXML() {
@@ -295,4 +302,6 @@ public class Style implements Comparable<Style> {
 		int result = this.getName().compareTo(s.getName());
 		return (result == 0 ? -1 : result);
 	}
+
+	
 }

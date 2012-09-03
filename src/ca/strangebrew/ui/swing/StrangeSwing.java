@@ -434,6 +434,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 		// let's check that the path is good, if not, ask for a better one
 		// if no path provided, exit
+		/*
 		File maltFile = new File(path, "malts.csv");
 		File hopsFile = new File(path, "hops.csv");
 		if (!maltFile.exists() || !hopsFile.exists()) {
@@ -460,7 +461,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					System.exit(1);
 			} else
 				System.exit(1);
-		}
+		}*/
 		DB.readDB(path, preferences.getProperty("optStyleYear"));
 
 		cmbStyleModel.setList(DB.styleDB);

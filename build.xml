@@ -32,6 +32,7 @@
       <pathelement path="${classpath}"/>
       <pathelement location="lib/microba.jar"/>
       <pathelement location="lib/BrowserLauncher2-all-10rc4.jar"/>
+    	<pathelement location="lib/sqlite-jdbc-3.7.2.jar"/>
     </classpath>
     </javac>
     <copy todir="${build}">
@@ -52,6 +53,7 @@
       <attribute name="Built-By" value="${user.name}"/>
       <attribute name="Main-Class" value="ca.strangebrew.ui.swing.dialogs.Splash"/>
       <attribute name="Implementation-Version" value="${version.num}-b${build.number}"/> 
+  
     </manifest>
     
     <jar jarfile="${dist}/StrangeBrew.jar"
@@ -60,6 +62,7 @@
 
       <zipfileset src="lib/microba.jar" excludes="source/**"/>
       <zipfileset src="lib/BrowserLauncher2-all-10rc4.jar" excludes="source/**"/>
+    	 <zipfileset src="lib/sqlite-jdbc-3.7.2.jar" excludes="source/**"/>
 		</jar>
 		
 		<copy file="gpl.txt" todir="${dist}"/>
