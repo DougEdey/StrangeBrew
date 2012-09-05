@@ -994,7 +994,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0),
 									0, 0));
 							// txtDate.setText("Date");
-							txtDate.setPreferredSize(new java.awt.Dimension(73, 26));
+							txtDate.setPreferredSize(new java.awt.Dimension(73, txtDate.getFont().getSize()*2));
 							txtDate.setDateStyle(DateFormat.SHORT);
 							txtDate.setLocale(preferences.getLocale());
 						}
@@ -1005,7 +1005,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									0, 0));
 							cmbStyle.setModel(cmbStyleModel);
 							cmbStyle.setMaximumSize(new java.awt.Dimension(100, 32767));
-							cmbStyle.setPreferredSize(new java.awt.Dimension(190, 20));
+							cmbStyle.setPreferredSize(new java.awt.Dimension(190, cmbStyle.getFont().getSize()*2));
 
 						}
 						{
@@ -1013,7 +1013,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0,
 									0));
 							preBoilText.setText("Pre Boil");
-							preBoilText.setPreferredSize(new java.awt.Dimension(37, 20));
+							preBoilText.setPreferredSize(new java.awt.Dimension(37, preBoilText.getFont().getSize()*2));
 
 						}
 						{
@@ -1021,7 +1021,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0,
 									0));
 							finalWortVolText.setText("FinalVol");
-							finalWortVolText.setPreferredSize(new java.awt.Dimension(46, 20));
+							finalWortVolText.setPreferredSize(new java.awt.Dimension(46, finalWortVolText.getFont().getSize()*2));
 
 						}
 						{
@@ -1040,7 +1040,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							spnEffic.addChangeListener(this);
 							spnEffic.setEditor(new JSpinner.NumberEditor(spnEffic, "00.#"));
 							spnEffic.getEditor().setPreferredSize(new java.awt.Dimension(28, 16));
-							spnEffic.setPreferredSize(new java.awt.Dimension(53, 20));
+							spnEffic.setPreferredSize(new java.awt.Dimension(53, spnEffic.getFont().getSize()*2));
 						}
 						{
 							SpinnerNumberModel spnAttenModel = new SpinnerNumberModel(75.0, 0.0, 100.0, 1.0);
@@ -1050,7 +1050,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							spnAtten.setModel(spnAttenModel);
 							spnAtten.addChangeListener(this);
 							spnAtten.setEditor(new JSpinner.NumberEditor(spnAtten, "00.#"));
-							spnAtten.setPreferredSize(new java.awt.Dimension(49, 20));
+							spnAtten.setPreferredSize(new java.awt.Dimension(49, spnAtten.getFont().getSize()*2));
 						}
 						{
 							SpinnerNumberModel spnOgModel = new SpinnerNumberModel(1.000, 0.900, 2.000, 0.001);
@@ -1060,7 +1060,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							spnOG.setModel(spnOgModel);
 							spnOG.addChangeListener(this);
 							spnOG.setEditor(new JSpinner.NumberEditor(spnOG, "0.000"));
-							spnOG.getEditor().setPreferredSize(new java.awt.Dimension(20, 16));
+							spnOG.getEditor().setPreferredSize(new java.awt.Dimension(20, spnOG.getFont().getSize()*2));
 							spnOG.setPreferredSize(new java.awt.Dimension(69, 20));
 						}
 						{
@@ -1070,7 +1070,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									0, 0));
 							spnFG.setModel(spnFgModel);
 							spnFG.setEditor(new JSpinner.NumberEditor(spnFG, "0.000"));
-							spnFG.setPreferredSize(new java.awt.Dimension(69, 20));
+							spnFG.setPreferredSize(new java.awt.Dimension(69, spnFG.getFont().getSize()*2));
 							spnFG.addChangeListener(this);
 						}
 						{
@@ -1109,7 +1109,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0),
 									0, 0));
 							cmbYeast.setModel(cmbYeastModel);
-							cmbYeast.setPreferredSize(new java.awt.Dimension(193, 20));
+							cmbYeast.setPreferredSize(new java.awt.Dimension(193, cmbYeast.getFont().getSize()*2));
 
 						}
 						{
@@ -1118,6 +1118,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0),
 									0, 0));
 							cmbSizeUnits.setModel(cmbSizeUnitsModel);
+							cmbSizeUnits.setPreferredSize(new java.awt.Dimension(193, cmbSizeUnits.getFont().getSize()*2));
 
 						}
 						{
@@ -1141,7 +1142,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0),
 									0, 0));
 							boilMinText.setText("60");
-							boilMinText.setPreferredSize(new java.awt.Dimension(22, 20));
+							
+							boilMinText.setPreferredSize(new java.awt.Dimension(20, boilMinText.getFont().getSize()*2));
 
 						}
 						{
@@ -1149,14 +1151,14 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0),
 									0, 0));
 							evapText.setText("4");
-							evapText.setPreferredSize(new java.awt.Dimension(23, 20));
+							evapText.setPreferredSize(new java.awt.Dimension(23, evapText.getFont().getSize()*2));
 						}
 						{
 							SmartComboBox.enable(alcMethodCombo);
 							pnlDetails.add(alcMethodCombo, new GridBagConstraints(9, 0, 1, 1, 0.0, 0.0,
 									GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0,
 									0));
-							alcMethodCombo.setPreferredSize(new java.awt.Dimension(71, 20));
+							alcMethodCombo.setPreferredSize(new java.awt.Dimension(71, alcMethodCombo.getFont().getSize()*2));
 
 						}
 						{
@@ -1164,7 +1166,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							pnlDetails.add(ibuMethodCombo, new GridBagConstraints(9, 1, 1, 1, 0.0, 0.0,
 									GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0,
 									0));
-							ibuMethodCombo.setPreferredSize(new java.awt.Dimension(72, 20));
+							ibuMethodCombo.setPreferredSize(new java.awt.Dimension(72, ibuMethodCombo.getFont().getSize()*2));
 
 						}
 						{
@@ -1172,7 +1174,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							pnlDetails.add(colourMethodCombo, new GridBagConstraints(9, 2, 1, 1, 0.0, 0.0,
 									GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0,
 									0));
-							colourMethodCombo.setPreferredSize(new java.awt.Dimension(52, 20));
+							colourMethodCombo.setPreferredSize(new java.awt.Dimension(52, colourMethodCombo.getFont().getSize()*2));
 
 						}
 
