@@ -100,6 +100,8 @@ public class Fermentable extends Ingredient  {
 	    sb.append( "    </ITEM>\n" );
 	    return sb.toString();
 	}
+
+	
 	
 	
 	

@@ -50,7 +50,7 @@ public class Database {
 	private static Database instance = null;
 	
 	public List<Fermentable> fermDB = new ArrayList<Fermentable>();
-	final public List<Hop> hopsDB = new ArrayList<Hop>();
+	public List<Hop> hopsDB = new ArrayList<Hop>();
 	final public List<Yeast> yeastDB = new ArrayList<Yeast>();
 	public List<Style> styleDB = new ArrayList<Style>();
 	final public List<Misc> miscDB = new ArrayList<Misc>();
@@ -356,10 +356,15 @@ public class Database {
 				f.setUnits(res.getString("Units"));
 				f.setMashed(Boolean.valueOf(res.getString("Mash")).booleanValue());
 				f.setSteep(Boolean.valueOf(res.getString("Steep")).booleanValue());
-				if (!res.getString("Stock").equals(""))
-					f.setAmount(Double.parseDouble(res.getString("Stock")));
+				
+				if (!res.getString("Stock").equals("")) {
+					
+					f.setStock(Double.parseDouble(res.getString("Stock")));
+				}
 				else
-					f.setAmount(0);
+					f.setStock(0);
+				
+				Debug.print("Loading from DB Stock: " + res.getString("Stock")+ " - " + f.getStock());
 				f.setDescription(res.getString("Descr"));
 				f.setModified(Boolean.valueOf(res.getString("Modified")).booleanValue());
 				fermDB.add(f);
@@ -417,10 +422,21 @@ public class Database {
 		try {
 			PreparedStatement pStatement = conn.prepareStatement("SELECT COUNT(*) FROM fermentables WHERE name = ?;");
 			
+			PreparedStatement rStatement = conn.prepareStatement("SELECT COUNT(*) FROM fermentables " +
+					"WHERE name = ? AND Yield =? AND Lov=? AND Cost=? AND Stock=? AND" +
+					" Units=? AND Mash=? AND Descr=? AND Steep=? ;");
+			
+			
 			String sql = "insert into fermentables (Name,Yield,Lov,Cost,Stock,Units,Mash,Descr,Steep) " +
 					"values(?, ?,  ? , ?, ?, ?, ?, ?, ? )";
 			
 			PreparedStatement insertFerm = conn.prepareStatement(sql);
+			
+			sql = "UPDATE fermentables SET Yield =?, Lov=?, Cost=?, Stock=?," +
+					" Units=?, Mash=?, Descr=?, Steep=? " +
+					" WHERE name = ?";
+			
+			PreparedStatement updateFerm = conn.prepareStatement(sql);
 			
 			ResultSet res = null;
 	
@@ -449,6 +465,35 @@ public class Database {
 					insertFerm.setString(8, f.getDescription());
 					insertFerm.setString(9, Boolean.toString(f.getSteep()));
 					insertFerm.execute();
+				} else {
+					
+					rStatement.setString(1, f.getName());
+					rStatement.setString(2, Double.toString(f.getPppg()));
+					rStatement.setString(3, Double.toString(f.getLov()));
+					rStatement.setString(4, Double.toString(f.getCostPerU()));
+					rStatement.setString(5, Double.toString(f.getStock()));
+					rStatement.setString(6, f.getUnitsAbrv());
+					rStatement.setString(7, Boolean.toString(f.getMashed()));
+					rStatement.setString(8, f.getDescription());
+					rStatement.setString(9, Boolean.toString(f.getSteep()));
+					res = rStatement.executeQuery();
+					
+					// we have a name match, see if anything has changed
+					if(res.getInt(1) == 0) {
+						Debug.print("Fermentables Update");
+						updateFerm.setString(1, Double.toString(f.getPppg()));
+						updateFerm.setString(2, Double.toString(f.getLov()));
+						updateFerm.setString(3, Double.toString(f.getCostPerU()));
+						updateFerm.setString(4, Double.toString(f.getStock()));
+						updateFerm.setString(5, f.getUnitsAbrv());
+						updateFerm.setString(6, Boolean.toString(f.getMashed()));
+						updateFerm.setString(7, f.getDescription());
+						updateFerm.setString(8, Boolean.toString(f.getSteep()));
+						// where cause
+						updateFerm.setString(9, f.getName());
+						updateFerm.execute();
+						
+					}
 				}
 			}
 			//clear the list
@@ -580,7 +625,7 @@ public class Database {
 			h.setUnits(res.getString("Units"));
 			
 			if (!res.getString("Stock").equals(""))
-				h.setAmount(Double.parseDouble(res.getString("Stock")));
+				h.setStock(Double.parseDouble(res.getString("Stock")));
 			
 			h.setDescription(res.getString("Descr"));
 			
@@ -610,11 +655,20 @@ public class Database {
 		Debug.print("Write Hops to DB");
 		try {
 			PreparedStatement pStatement = conn.prepareStatement("SELECT COUNT(*) FROM hops WHERE name = ?;");
+			PreparedStatement rStatement = conn.prepareStatement("SELECT COUNT(*) FROM hops WHERE name = ?" +
+					" AND Alpha=? AND Cost=? AND Stock=? AND " +
+					"Units=? AND Descr=? AND Storage=? AND Date=? ;");
 			
-			String sql = "insert into yeast (Name,Alpha,Cost,Stock,Units,Descr,Storage,Date) " +
+			String sql = "insert into hops (Name,Alpha,Cost,Stock,Units,Descr,Storage,Date) " +
 					"values(?, ?,  ? , ?, ?, ?, ?, ? )";
 			
 			PreparedStatement insertMisc = conn.prepareStatement(sql);
+			
+			sql = "UPDATE hops SET Alpha=?,Cost=?,Stock=?," +
+					"Units=?,Descr=?,Storage=?,Date=? " +
+					"WHERE name = ?";
+			
+			PreparedStatement updateMisc = conn.prepareStatement(sql);
 			
 			ResultSet res = null;
 		
@@ -639,6 +693,35 @@ public class Database {
 					insertMisc.setString(7, Double.toString(h.getStorage()));
 					insertMisc.setString(8, h.getDate().toString());
 					insertMisc.executeUpdate();
+				} else { // do update
+					
+					rStatement.setString(1, h.getName());
+					rStatement.setString(2, Double.toString(h.getAlpha()));
+					rStatement.setString(3, Double.toString(h.getCostPerU()));
+					rStatement.setString(4, Double.toString(h.getStock()));
+					rStatement.setString(5, h.getUnitsAbrv());
+					rStatement.setString(6, h.getDescription());
+					rStatement.setString(7, Double.toString(h.getStorage()));
+					rStatement.setString(8, h.getDate().toString());
+					res = rStatement.executeQuery();
+					
+					res.next();
+					if(res.getInt(1) == 0) {
+						Debug.print("Hops Update "+ h.getStock());
+						updateMisc.setString(1, Double.toString(h.getAlpha()));
+						updateMisc.setString(2, Double.toString(h.getCostPerU()));
+						updateMisc.setString(3, Double.toString(h.getStock()));
+						updateMisc.setString(4, h.getUnitsAbrv());
+						updateMisc.setString(5, h.getDescription());
+						updateMisc.setString(6, Double.toString(h.getStorage()));
+						updateMisc.setString(7, h.getDate().toString());
+						
+						// where
+						updateMisc.setString(8, h.getName());
+						
+						updateMisc.executeUpdate();
+					}
+					
 				}
 			}
 

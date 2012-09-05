@@ -122,6 +122,7 @@ import ca.strangebrew.ui.swing.dialogs.FindDialog;
 import ca.strangebrew.ui.swing.dialogs.HydrometerToolDialog;
 import ca.strangebrew.ui.swing.dialogs.MaltPercentDialog;
 import ca.strangebrew.ui.swing.dialogs.NewIngrDialog;
+import ca.strangebrew.ui.swing.dialogs.Pantry;
 import ca.strangebrew.ui.swing.dialogs.PotentialExtractCalcDialog;
 import ca.strangebrew.ui.swing.dialogs.PreferencesDialog;
 import ca.strangebrew.ui.swing.dialogs.PrintDialog;
@@ -273,6 +274,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JMenuItem maltPercentMenuItem = new JMenuItem();
 	final private JMenuItem refractometerMenuItem = new JMenuItem();
 	final private JMenuItem fermentableMenuItem = new JMenuItem();
+	final private JMenuItem pantryMenuItem = new JMenuItem();
 	final private JMenuItem hopsMenuItem = new JMenuItem();
 	final private JMenuItem yeastMenuItem = new JMenuItem();
 	final private JMenuItem hydrometerToolMenuItem = new JMenuItem();
@@ -857,6 +859,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		fermentableMenuItem.addActionListener(this);
 		hopsMenuItem.addActionListener(this);
 		yeastMenuItem.addActionListener(this);
+		pantryMenuItem.addActionListener(this);
 		refractometerMenuItem.addActionListener(this);
 		maltPercentMenuItem.addActionListener(this);
 		scaleRecipeMenuItem.addActionListener(this);
@@ -1579,6 +1582,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						hopsMenuItem.setText("Add Hop");
 						editMenu.add(yeastMenuItem);
 						yeastMenuItem.setText("Add Yeast");
+						editMenu.add(pantryMenuItem);
+						pantryMenuItem.setText("Pantry");
 					}
 					
 				}
@@ -1766,7 +1771,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			return;
 		}
 		Object o = e.getSource();
-
+		Debug.print("Clicked on " + o.toString());
 		// Fields
 		if (o == txtName)
 			myRecipe.setName(txtName.getText());
@@ -2052,6 +2057,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			AddFermDialog ferm = new AddFermDialog(this);
 			ferm.setModal(true);
 			ferm.setVisible(true);
+		} else if (o == pantryMenuItem) {
+			Pantry pantry = new Pantry(this);
+			pantry.setModal(true);
+			pantry.setVisible(true);
 		} else if (o == hopsMenuItem) {
 			AddHopsDialog hop = new AddHopsDialog(this);
 			hop.setModal(true);

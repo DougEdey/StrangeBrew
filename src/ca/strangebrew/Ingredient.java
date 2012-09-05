@@ -17,10 +17,10 @@ import java.util.Locale;
 public class Ingredient implements Comparable<Ingredient> {
 	private Quantity amount = new Quantity();
 	private double costPerU;
-	private Date dateBought;
+	private Date dateBought = new Date();
 	private String description="";
 	private String name="";
-	private double stock;
+	private Quantity stock = new Quantity();
 	private String type;
 	private boolean modified;
 	
@@ -52,19 +52,22 @@ public class Ingredient implements Comparable<Ingredient> {
 	    }                                                                                                                            
 	  }
 	public double getAmountAs(String s){ return amount.getValueAs(s); }
+	public double getStockAs(String s) { return stock.getValueAs(s); }
+	public double getStock() { return stock.getValue(); }
 	// Get methods:
 	public double getCostPerU(){ return costPerU; }
 	public Date getDate(){ return dateBought; }
 	public String getDescription(){ return description; }
 	public boolean getModified(){ return modified; }
-	public String getName(){ return name; }
-	public double getStock(){ return stock; }	
+	public String getName(){ return name; }	
 	public String getType(){ return type; }
 	public String getUnits(){ return amount.getUnits(); }
 	
 	
 	public String getUnitsAbrv(){ return amount.getAbrv(); }
+	
 	public void setAmount(double a){ amount.setAmount(a); }
+	public void setStock(double a){ stock.setAmount(a); }
 	/**
 	 * Handles a string of the form "d u", where d is a double
 	 * amount, and u is a string of units.  For importing the
@@ -128,7 +131,6 @@ public class Ingredient implements Comparable<Ingredient> {
 	// Setter methods:
 	public void setModified(boolean b){ modified = b; }
 	public void setName(String n){ name = n; }
-	public void setStock (double d) { stock = d; }
 	public void setType(String t){ type = t; }
 	public void setUnits(String a){ amount.setUnits(a); }
 	public void convertTo(String newUnits){
