@@ -76,8 +76,11 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 
 	public FindDialog(JFrame frame) {
 		super(frame);
-	
-		String recipeDir = opt.getProperty("optRecipe");
+		String recipeDir = "";
+		
+		if(opt.getProperty("optRecipe") != null)
+			recipeDir = opt.getProperty("optRecipe");
+		
 		if(recipeDir.equalsIgnoreCase("") ) {
 			try {
 				recipeDir = SBStringUtils.getAppPath("recipes");
