@@ -198,11 +198,15 @@ public class StylePanel extends javax.swing.JPanel {
 				jPanel2 = new JPanel();
 				GridBagLayout jPanel2Layout1 = new GridBagLayout();
 				jPanel2Layout1.columnWeights = new double[]{0.1, 0.1, 0.1, 0.1};
-				jPanel2Layout1.columnWidths = new int[]{7, 7, 7, 7};
+				jPanel2Layout1.columnWidths = new int[]{jPanel2.getFont().getSize()*2, jPanel2.getFont().getSize()*2, 
+							jPanel2.getFont().getSize()*2, jPanel2.getFont().getSize()*2};
 				jPanel2Layout1.rowWeights = new double[]{0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
-				jPanel2Layout1.rowHeights = new int[]{7, 7, 7, 7, 7, 7};
-				jPanel2.setPreferredSize(new java.awt.Dimension(179, 120));
+				jPanel2Layout1.rowHeights = new int[]{jPanel2.getFont().getSize()*2, jPanel2.getFont().getSize()*2, jPanel2.getFont().getSize()*2, 
+								jPanel2.getFont().getSize()*2, jPanel2.getFont().getSize()*2, jPanel2.getFont().getSize()*2};
+				jPanel2.setMaximumSize(new java.awt.Dimension(400, 32767));
+				//jPanel2.setPreferredSize(new java.awt.Dimension(400, jPanel2.getFont().getSize()*10));
 				jPanel2.setLayout(jPanel2Layout1);
+				
 				this.add(jPanel2, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 				jPanel2.setBorder(BorderFactory.createTitledBorder(null, "Recipe Conformance:", TitledBorder.LEADING, TitledBorder.TOP));
 				{

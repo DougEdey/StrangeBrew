@@ -525,7 +525,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 										{
 											pnlHops.add(txtPellet);
 											txtPellet.setPreferredSize(new java.awt.Dimension(20,
-													20));
+													txtPellet.getFont().getSize()*2));
 										}
 										{
 											pnlHops.add(jLabelc2);
@@ -743,7 +743,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					{
 						jPanel2.add(txtOtherCost, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 						txtOtherCost.setText("$0.00");
-						txtOtherCost.setPreferredSize(new java.awt.Dimension(62, 20));
+						txtOtherCost.setPreferredSize(new java.awt.Dimension(62, txtOtherCost.getFont().getSize()*2));
 					}
 					{
 						jPanel2.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -754,7 +754,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 						cmbBottleSizeModel.setList(Quantity.getListofUnits("vol"));
 						cmbBottleSize.setModel(cmbBottleSizeModel);
 						jPanel2.add(cmbBottleSize, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-						cmbBottleSize.setPreferredSize(new java.awt.Dimension(89, 20));
+						cmbBottleSize.setPreferredSize(new java.awt.Dimension(89, cmbBottleSize.getFont().getSize()*2));
 						jPanel2.add(txtBottleSize, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
 					}
@@ -831,7 +831,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
 					
-					txtEmail.setText("Recipe Directory");
+					txtRecipe.setText("Recipe Directory");
 				}			
 				
 				
@@ -1144,7 +1144,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					mashPanel.add(mashVolCombo, constraints);
 					constraints.gridwidth = 1;
 					mashVolCombo.setModel(mashVolComboModel);
-					mashVolCombo.setPreferredSize(new java.awt.Dimension(137, 20));
+					mashVolCombo.setPreferredSize(new java.awt.Dimension(137, mashVolCombo.getFont().getSize()*2));
 					
 					// Temp units
 					constraints.gridx = 0;
@@ -1172,11 +1172,11 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					constraints.gridx = 1;
 					mashPanel.add(boilTempTxt, constraints);
 					boilTempTxt.setText(opts.getProperty("optBoilTempC"));
-					boilTempTxt.setPreferredSize(new java.awt.Dimension(45, 20));
+					boilTempTxt.setPreferredSize(new java.awt.Dimension(45, boilTempTxt.getFont().getSize()*2));
 					constraints.gridx = 2;
 					mashPanel.add(boilTempULbl, constraints);
 					boilTempULbl.setText(opts.getProperty("optMashTempU"));
-					boilTempULbl.setPreferredSize(new java.awt.Dimension(21, 14));
+					boilTempULbl.setPreferredSize(new java.awt.Dimension(21, boilTempULbl.getFont().getSize()*2));
 					
 					// Ratio
 					constraints.gridx = 0;
@@ -1186,14 +1186,14 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					constraints.gridx = 1;
 					mashPanel.add(mashRatioTxt, constraints);
 					mashRatioTxt.setText("1.25");
-					mashRatioTxt.setPreferredSize(new java.awt.Dimension(45, 20));		
+					mashRatioTxt.setPreferredSize(new java.awt.Dimension(45, mashRatioTxt.getFont().getSize()*2));		
 					ComboBoxModel mashRatioUComboModel = new DefaultComboBoxModel(new String[] {
 							"qt/l", "l/kg" });		
 					SmartComboBox.enable(mashRatioUCombo);
 					constraints.gridx = 2;
 					mashPanel.add(mashRatioUCombo, constraints);
 					mashRatioUCombo.setModel(mashRatioUComboModel);
-					mashRatioUCombo.setPreferredSize(new java.awt.Dimension(71, 20));				
+					mashRatioUCombo.setPreferredSize(new java.awt.Dimension(71, mashRatioUCombo.getFont().getSize()*2));				
 				}
 				
 				// Misc
@@ -1213,7 +1213,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					constraints.gridx = 1;
 					miscPanel.add(hopsTypeCombo, constraints);
 					hopsTypeCombo.setModel(hopsTypeComboModel);
-					hopsTypeCombo.setPreferredSize(new java.awt.Dimension(137, 20));
+					hopsTypeCombo.setPreferredSize(new java.awt.Dimension(137, hopsTypeCombo.getFont().getSize()*2));
 
 					// Water Profile
 					SmartComboBox.enable(comboWaterProfile);
@@ -1239,6 +1239,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					comboStyleYear = new JComboBox();
 					pnlDefaultDB.add(comboStyleYear, BorderLayout.CENTER);
 					comboStyleYear.setModel(styleYearComboModel);
+					comboStyleYear.setPreferredSize(new java.awt.Dimension(137, comboStyleYear.getFont().getSize()*2));
 				}
 			}
 
@@ -1323,10 +1324,10 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 				jPanel3.add(evapAmountTxt);
 				evapAmountTxt.setText("0");
-				evapAmountTxt.setPreferredSize(new java.awt.Dimension(56, 20));
+				evapAmountTxt.setPreferredSize(new java.awt.Dimension(56, evapAmountTxt.getFont().getSize()*2));
 
 				jPanel3.add(evapAmountLbl);
-				evapAmountLbl.setPreferredSize(new java.awt.Dimension(39, 14));
+				evapAmountLbl.setPreferredSize(new java.awt.Dimension(39, evapAmountLbl.getFont().getSize()*2));
 				evapAmountLbl.setText(Quantity.getVolAbrv(opts.getProperty("optVolUnits")));
 
 				bgEvap.add(rbPercent);
@@ -1346,7 +1347,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 			{
 				txtBottleSize.setText("351");
-				txtBottleSize.setPreferredSize(new java.awt.Dimension(61, 20));
+				txtBottleSize.setPreferredSize(new java.awt.Dimension(61, txtBottleSize.getFont().getSize()*2));
 			}			
 		}
 		getContentPane().add(BorderLayout.CENTER, jTabbedPane1);

@@ -160,7 +160,7 @@ public class AddYeastDialog extends javax.swing.JDialog implements ActionListene
 				
 	
 				lOne.add(txtName, c);
-				txtName.setPreferredSize(new java.awt.Dimension(120, 20));
+				txtName.setPreferredSize(new java.awt.Dimension(120, txtName.getFont().getSize()*2));
 	
 				
 			}
@@ -171,7 +171,7 @@ public class AddYeastDialog extends javax.swing.JDialog implements ActionListene
 	
 				lTwo.add(txtCost, c);
 				txtCost.setText("$0.00");
-				txtCost.setPreferredSize(new java.awt.Dimension(55, 20));
+				txtCost.setPreferredSize(new java.awt.Dimension(55, txtCost.getFont().getSize()*2));
 				
 			}
 			//Third
@@ -181,7 +181,7 @@ public class AddYeastDialog extends javax.swing.JDialog implements ActionListene
 				lblDescr.setText("Description: ");
 	
 				lThree.add(txtDescr, c);
-				txtDescr.setPreferredSize(new java.awt.Dimension(120, 60));
+				txtDescr.setPreferredSize(new java.awt.Dimension(120, txtDescr.getFont().getSize()*6));
 	
 	
 				//c.gridwidth = GridBagConstraints.REMAINDER;

@@ -132,14 +132,14 @@ public class RefractometerDialog extends javax.swing.JDialog implements ActionLi
 		finalBrix2 = new JTextField();
 		jPanel5.add(finalBrix2, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		finalBrix2.setText("0.0");
-		finalBrix2.setPreferredSize(new java.awt.Dimension(55, 20));
+		finalBrix2.setPreferredSize(new java.awt.Dimension(55, finalBrix2.getFont().getSize()*2));
 		finalBrix2.addFocusListener(this);
 		finalBrix2.addActionListener(this);
 
 		fgTxt = new JTextField();
 		jPanel5.add(fgTxt, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		fgTxt.setText("0.0");
-		fgTxt.setPreferredSize(new java.awt.Dimension(55, 20));
+		fgTxt.setPreferredSize(new java.awt.Dimension(55, fgTxt.getFont().getSize()*2));
 		fgTxt.addFocusListener(this);
 		fgTxt.addActionListener(this);
 
@@ -162,21 +162,21 @@ public class RefractometerDialog extends javax.swing.JDialog implements ActionLi
 		origBrixTxt = new JTextField();
 		jPanel4.add(origBrixTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		origBrixTxt.setText("0.0");
-		origBrixTxt.setPreferredSize(new java.awt.Dimension(51, 20));
+		origBrixTxt.setPreferredSize(new java.awt.Dimension(51, origBrixTxt.getFont().getSize()*2));
 		origBrixTxt.addFocusListener(this);
 		origBrixTxt.addActionListener(this);
 
 		finalBrixTxt = new JTextField();
 		jPanel4.add(finalBrixTxt, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		finalBrixTxt.setText("0.0");
-		finalBrixTxt.setPreferredSize(new java.awt.Dimension(51, 20));
+		finalBrixTxt.setPreferredSize(new java.awt.Dimension(51, finalBrixTxt.getFont().getSize()*2));
 		finalBrixTxt.addFocusListener(this);
 		finalBrixTxt.addActionListener(this);
 
 		fgLbl = new JLabel();
 		jPanel4.add(fgLbl, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		fgLbl.setText("fgLbl");
-		fgLbl.setPreferredSize(new java.awt.Dimension(35, 14));
+		fgLbl.setPreferredSize(new java.awt.Dimension(35, fgLbl.getFont().getSize()*2));
 
 		jLabel1 = new JLabel();
 		jPanel3.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -186,7 +186,7 @@ public class RefractometerDialog extends javax.swing.JDialog implements ActionLi
 		jPanel3.add(brixTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		brixTxt.setText("0.0" +
 				"");
-		brixTxt.setPreferredSize(new java.awt.Dimension(47, 20));
+		brixTxt.setPreferredSize(new java.awt.Dimension(47, brixTxt.getFont().getSize()*2));
 		brixTxt.addFocusListener(this);
 		brixTxt.addActionListener(this);
 

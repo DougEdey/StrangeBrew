@@ -96,7 +96,7 @@ public class PrintDialog extends javax.swing.JDialog implements ActionListener {
 					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
 					0));
 			fontCombo.setModel(fontComboModel);
-			fontCombo.setPreferredSize(new java.awt.Dimension(136, 20));
+			fontCombo.setPreferredSize(new java.awt.Dimension(136, fontCombo.getFont().getSize()*2));
 
 			ComboBoxModel bodyFontComboModel = new DefaultComboBoxModel(fontNames);
 			bodyFontComboModel.setSelectedItem("Dialog");
@@ -114,7 +114,7 @@ public class PrintDialog extends javax.swing.JDialog implements ActionListener {
 					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
 					0));
 			sizeSpin.setModel(headSizeSpinModel);
-			sizeSpin.setPreferredSize(new java.awt.Dimension(56, 20));
+			sizeSpin.setPreferredSize(new java.awt.Dimension(56, sizeSpin.getFont().getSize()*2));
 
 			this.setSize(400, 172);
 		} catch (Exception e) {

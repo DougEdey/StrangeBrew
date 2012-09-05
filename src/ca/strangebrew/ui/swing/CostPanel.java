@@ -145,7 +145,7 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener, Foc
 			yeastTxt = new JTextField();
 			jPanel1.add(yeastTxt, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			yeastTxt.setText("jLabel11");
-			yeastTxt.setPreferredSize(new java.awt.Dimension(48, 20));
+			yeastTxt.setPreferredSize(new java.awt.Dimension(48, yeastTxt.getFont().getSize()*2));
 			yeastTxt.addFocusListener(this);
 			yeastTxt.addActionListener(this);
 
@@ -156,7 +156,7 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener, Foc
 			otherTxt = new JTextField();
 			jPanel1.add(otherTxt, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			otherTxt.setText("jLabel11");
-			otherTxt.setPreferredSize(new java.awt.Dimension(48, 20));
+			otherTxt.setPreferredSize(new java.awt.Dimension(48, otherTxt.getFont().getSize()*2));
 			otherTxt.addFocusListener(this);
 			otherTxt.addActionListener(this);
 
@@ -194,7 +194,7 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener, Foc
 			bottleSizeTxt = new JTextField();
 			jPanel2.add(bottleSizeTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			bottleSizeTxt.setText("jTextField1");
-			bottleSizeTxt.setPreferredSize(new java.awt.Dimension(62, 20));
+			bottleSizeTxt.setPreferredSize(new java.awt.Dimension(62, bottleSizeTxt.getFont().getSize()*2));
 			bottleSizeTxt.addFocusListener(this);
 			bottleSizeTxt.addActionListener(this);
 
@@ -205,7 +205,7 @@ public class CostPanel extends javax.swing.JPanel implements ActionListener, Foc
 			SmartComboBox.enable(bottleSizeUCmb);
 			jPanel2.add(bottleSizeUCmb, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 			bottleSizeUCmb.setModel(bottleSizeUCmbModel);
-			bottleSizeUCmb.setPreferredSize(new java.awt.Dimension(80, 20));
+			bottleSizeUCmb.setPreferredSize(new java.awt.Dimension(80, bottleSizeUCmb.getFont().getSize()*2));
 			bottleSizeUCmb.addFocusListener(this);
 			bottleSizeUCmb.addActionListener(this);
 

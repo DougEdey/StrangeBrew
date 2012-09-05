@@ -199,7 +199,7 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener,
 					{
 						postBoilText = new JSpinner();
 						postBoilPanel.add(postBoilText);
-						postBoilText.setPreferredSize(new java.awt.Dimension(85, 20));
+						postBoilText.setPreferredSize(new java.awt.Dimension(85, postBoilText.getFont().getSize()*2));
 						postBoilText.addChangeListener(this);
 					}
 				}
@@ -220,7 +220,7 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener,
 						diluteWithText = new JSpinner();
 						diluteWithText.setModel(diluteWithTextSpinnerModel);
 						diluteWithPanel.add(diluteWithText);
-						diluteWithText.setPreferredSize(new java.awt.Dimension(79, 20));
+						diluteWithText.setPreferredSize(new java.awt.Dimension(79, diluteWithText.getFont().getSize()*2));
 						diluteWithText.addChangeListener(this);
 					}
 				}
@@ -243,7 +243,7 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener,
 						totalVolumeSpinner = new JSpinner();
 						totalVolPanel.add(totalVolumeSpinner);
 						totalVolumeSpinner.setModel(totalVolumeSpinnerModel);
-						totalVolumeSpinner.setPreferredSize(new java.awt.Dimension(91, 21));
+						totalVolumeSpinner.setPreferredSize(new java.awt.Dimension(91, totalVolumeSpinner.getFont().getSize()*2));
 						totalVolumeSpinner.addChangeListener(this);
 					}
 				}
@@ -255,7 +255,7 @@ public class DilutionPanel extends javax.swing.JPanel implements ChangeListener,
 				stylePanelLayout.setRows(5);
 				stylePanel.setLayout(stylePanelLayout);
 				this.add(stylePanel);
-				stylePanel.setPreferredSize(new java.awt.Dimension(277, 154));
+				stylePanel.setPreferredSize(new java.awt.Dimension(500, stylePanel.getFont().getSize()*20));
 				stylePanel.setBorder(BorderFactory.createTitledBorder("Style Conformance"));
 				{
 					spaceLabel = new JLabel();

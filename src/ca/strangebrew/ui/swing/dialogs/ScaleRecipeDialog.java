@@ -135,7 +135,7 @@ public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionList
 					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
 					0));
 			maltUnitsCombo.setModel(maltUnitsComboModel);
-			maltUnitsCombo.setPreferredSize(new java.awt.Dimension(96, 20));
+			maltUnitsCombo.setPreferredSize(new java.awt.Dimension(96, maltUnitsCombo.getFont().getSize()*2));
 
 			hopsUnitsComboModel = new ComboModel<String>();
 			hopsUnitsComboModel.setList(Quantity.getListofUnits("weight"));
@@ -147,7 +147,7 @@ public class ScaleRecipeDialog extends javax.swing.JDialog implements ActionList
 					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0,
 					0));
 			hopsUnitsCombo.setModel(hopsUnitsComboModel);
-			hopsUnitsCombo.setPreferredSize(new java.awt.Dimension(97, 20));
+			hopsUnitsCombo.setPreferredSize(new java.awt.Dimension(97, hopsUnitsCombo.getFont().getSize()*2));
 
 			cancelButton = new JButton();
 			cancelButton.addActionListener(this);

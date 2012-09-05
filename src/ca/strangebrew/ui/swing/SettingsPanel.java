@@ -92,7 +92,7 @@ public class SettingsPanel extends javax.swing.JPanel implements ActionListener,
 
 		pelletHopPctTxt = new JTextField();
 		this.add(pelletHopPctTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-		pelletHopPctTxt.setPreferredSize(new java.awt.Dimension(58, 20));
+		pelletHopPctTxt.setPreferredSize(new java.awt.Dimension(58, pelletHopPctTxt.getFont().getSize()*2));
 
 		jPanel1 = new JPanel();
 		GridBagLayout jPanel1Layout = new GridBagLayout();
@@ -111,7 +111,7 @@ public class SettingsPanel extends javax.swing.JPanel implements ActionListener,
 		thinDecoctTxt = new JTextField();
 		jPanel1.add(thinDecoctTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		thinDecoctTxt.setText(".9");
-		thinDecoctTxt.setPreferredSize(new java.awt.Dimension(55, 20));
+		thinDecoctTxt.setPreferredSize(new java.awt.Dimension(55, thinDecoctTxt.getFont().getSize()*2));
 
 		jLabel5 = new JLabel();
 		jPanel1.add(jLabel5, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -124,7 +124,7 @@ public class SettingsPanel extends javax.swing.JPanel implements ActionListener,
 		thickDecoctTxt = new JTextField();
 		jPanel1.add(thickDecoctTxt, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		thickDecoctTxt.setText(".6");
-		thickDecoctTxt.setPreferredSize(new java.awt.Dimension(55, 20));
+		thickDecoctTxt.setPreferredSize(new java.awt.Dimension(55, thickDecoctTxt.getFont().getSize()*2));
 
 		jLabel6 = new JLabel();
 		jPanel1.add(jLabel6, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -141,12 +141,12 @@ public class SettingsPanel extends javax.swing.JPanel implements ActionListener,
 		mashoutTmpTxt = new JTextField();
 		jPanel1.add(mashoutTmpTxt, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		mashoutTmpTxt.setText("0");
-		mashoutTmpTxt.setPreferredSize(new java.awt.Dimension(55, 20));
+		mashoutTmpTxt.setPreferredSize(new java.awt.Dimension(55, mashoutTmpTxt.getFont().getSize()*2));
 
 		spargeTmpTxt = new JTextField();
 		jPanel1.add(spargeTmpTxt, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		spargeTmpTxt.setText("0");
-		spargeTmpTxt.setPreferredSize(new java.awt.Dimension(55, 20));
+		spargeTmpTxt.setPreferredSize(new java.awt.Dimension(55, spargeTmpTxt.getFont().getSize()*2));
 
 		mtmpuLbl = new JLabel();
 		jPanel1.add(mtmpuLbl, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));

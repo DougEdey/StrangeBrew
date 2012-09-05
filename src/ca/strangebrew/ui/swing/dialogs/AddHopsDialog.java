@@ -142,7 +142,7 @@ public class AddHopsDialog extends javax.swing.JDialog implements ActionListener
 				
 	
 				lOne.add(txtName, c);
-				txtName.setPreferredSize(new java.awt.Dimension(120, 20));
+				txtName.setPreferredSize(new java.awt.Dimension(120, txtName.getFont().getSize()*2));
 				txtName.addActionListener(this);
 				txtName.addFocusListener(this);
 				
@@ -151,7 +151,7 @@ public class AddHopsDialog extends javax.swing.JDialog implements ActionListener
 	
 				lOne.add(txtAlpha, c);
 				txtAlpha.setText("0.00");
-				txtAlpha.setPreferredSize(new java.awt.Dimension(55, 20));
+				txtAlpha.setPreferredSize(new java.awt.Dimension(55, txtAlpha.getFont().getSize()*2));
 	
 				//c.gridwidth = GridBagConstraints.REMAINDER;
 				
@@ -163,21 +163,21 @@ public class AddHopsDialog extends javax.swing.JDialog implements ActionListener
 	
 				lTwo.add(txtCost, c);
 				txtCost.setText("$0.00");
-				txtCost.setPreferredSize(new java.awt.Dimension(55, 20));
+				txtCost.setPreferredSize(new java.awt.Dimension(55, txtCost.getFont().getSize()*2));
 	
 				lTwo.add(lblDate, c);
 				lblDate.setText("Date: ");
 	
 				lTwo.add(txtDate, c);
 				txtDate.setText("00/00/0000");
-				txtDate.setPreferredSize(new java.awt.Dimension(55, 20));
+				txtDate.setPreferredSize(new java.awt.Dimension(55, txtDate.getFont().getSize()*2));
 				
 				lTwo.add(lblStock, c);
 				lblStock.setText("Stock: ");
 	
 				lTwo.add(txtStock, c);
 				txtStock.setText("0");
-				txtStock.setPreferredSize(new java.awt.Dimension(55, 20));
+				txtStock.setPreferredSize(new java.awt.Dimension(55, txtStock.getFont().getSize()*2));
 	
 				
 				//c.gridwidth = GridBagConstraints.REMAINDER;
@@ -194,7 +194,7 @@ public class AddHopsDialog extends javax.swing.JDialog implements ActionListener
 				txtDescr.setLineWrap(true);
 				//txtDescr.setPreferredSize(new java.awt.Dimension(400, 40));
 				
-				jScrollDescr.setPreferredSize(new java.awt.Dimension(400,50)); 
+				jScrollDescr.setPreferredSize(new java.awt.Dimension(400,jScrollDescr.getFont().getSize()*6)); 
 				jScrollDescr.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 				jScrollDescr.setLayout(new ScrollPaneLayout());
 				//lThree.add(jScrollDescr , c);
@@ -218,7 +218,7 @@ public class AddHopsDialog extends javax.swing.JDialog implements ActionListener
 	
 				lFour.add(txtStorage, c);
 				txtStorage.setText("0");
-				txtStorage.setPreferredSize(new java.awt.Dimension(55, 20));
+				txtStorage.setPreferredSize(new java.awt.Dimension(55, txtStorage.getFont().getSize()*2));
 	
 				lFour.add(lblModified, c);
 				lblModified.setText("Modified: ");

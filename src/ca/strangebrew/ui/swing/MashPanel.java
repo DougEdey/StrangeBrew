@@ -225,7 +225,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 
 			jPanel1.add(nameTxt);
 			nameTxt.setText("Name");
-			nameTxt.setPreferredSize(new java.awt.Dimension(211, 20));
+			nameTxt.setPreferredSize(new java.awt.Dimension(211, nameTxt.getFont().getSize()*2));
 			nameTxt.addActionListener(this);
 			
 			jPanel1.add(saveButton);
@@ -260,7 +260,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
 					ratioText.setText("1.25");
-					ratioText.setPreferredSize(new java.awt.Dimension(51, 20));
+					ratioText.setPreferredSize(new java.awt.Dimension(51, ratioText.getFont().getSize()*2));
 					ratioText.addFocusListener(this);
 					ratioText.addActionListener(this);
 				}
@@ -269,7 +269,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
 					grainTempText.setText("10");
-					grainTempText.setPreferredSize(new java.awt.Dimension(50, 20));
+					grainTempText.setPreferredSize(new java.awt.Dimension(50, grainTempText.getFont().getSize()*2));
 
 					grainTempText.addFocusListener(this);
 					grainTempText.addActionListener(this);
@@ -291,7 +291,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0,
 								0, 0), 0, 0));
 				boilTempTxt.setText("212");
-				boilTempTxt.setPreferredSize(new java.awt.Dimension(52, 20));
+				boilTempTxt.setPreferredSize(new java.awt.Dimension(52, boilTempTxt.getFont().getSize()*2));
 
 				settingsPanel.add(jLabel20, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
 						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
@@ -307,7 +307,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 					settingsPanel.add(tunLossTxt, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
-					tunLossTxt.setPreferredSize(new java.awt.Dimension(52, 20));
+					tunLossTxt.setPreferredSize(new java.awt.Dimension(52, tunLossTxt.getFont().getSize()*2));
 
 					tunLossTxt.addFocusListener(this);
 					tunLossTxt.addActionListener(this);
@@ -331,7 +331,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
 					volUnitsCombo.setModel(volUnitsComboModel);
-					volUnitsCombo.setPreferredSize(new java.awt.Dimension(57, 20));
+					volUnitsCombo.setPreferredSize(new java.awt.Dimension(57, volUnitsCombo.getFont().getSize()*2));
 					volUnitsCombo.addActionListener(this);
 				}
 
@@ -380,7 +380,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0,
 								0, 0), 0, 0));
 				jToolBar1.setFloatable(false);
-				jToolBar1.setPreferredSize(new java.awt.Dimension(76, 18));
+				jToolBar1.setPreferredSize(new java.awt.Dimension(76, jToolBar1.getFont().getSize()*2));
 				{
 					buttonsPanel.add(tempFrb, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0,

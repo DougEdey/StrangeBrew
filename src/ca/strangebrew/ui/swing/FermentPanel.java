@@ -77,7 +77,7 @@ public class FermentPanel extends javax.swing.JPanel implements ActionListener, 
 			fermentButtonsPanelLayout.setAlignment(FlowLayout.LEFT);
 			fermentButtonsPanelLayout.setVgap(0);
 			fermentButtonsPanel.setLayout(fermentButtonsPanelLayout);
-			fermentButtonsPanel.setPreferredSize(new java.awt.Dimension(592, 27));
+			fermentButtonsPanel.setPreferredSize(new java.awt.Dimension(592, fermentButtonsPanel.getFont().getSize()*2));
 			
 			// Setup ferment panel
 			fermentPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(
@@ -129,7 +129,7 @@ public class FermentPanel extends javax.swing.JPanel implements ActionListener, 
 			// Setup Bottom Panel
 			{
 				fermentButtonsPanel.add(fermentButtonBar);
-				fermentButtonBar.setPreferredSize(new java.awt.Dimension(386, 20));
+				fermentButtonBar.setPreferredSize(new java.awt.Dimension(386, fermentButtonBar.getFont().getSize()*2));
 				fermentButtonBar.setFloatable(false);
 				
 				// Setup button bar

@@ -912,7 +912,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						pnlDetailsLayout.rowWeights = new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 };
 						pnlDetailsLayout.rowHeights = new int[] { 10, 10, 10, 10, 10, 10, 10 };
 						pnlDetails.setLayout(pnlDetailsLayout);
-						pnlDetails.setPreferredSize(new java.awt.Dimension(20, 16));
+						pnlDetails.setPreferredSize(new java.awt.Dimension(20, pnlDetails.getFont().getSize()*2));
 						{
 							pnlDetails.add(lblBrewer, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 									GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -922,7 +922,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							pnlDetails.add(brewerNameText, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0),
 									0, 0));
-							brewerNameText.setPreferredSize(new java.awt.Dimension(69, 26));
+							brewerNameText.setPreferredSize(new java.awt.Dimension(69, brewerNameText.getFont().getSize()*2));
 							brewerNameText.setText("Brewer");
 
 						}
@@ -1039,7 +1039,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							spnEffic.setMaximumSize(new java.awt.Dimension(70, 32767));
 							spnEffic.addChangeListener(this);
 							spnEffic.setEditor(new JSpinner.NumberEditor(spnEffic, "00.#"));
-							spnEffic.getEditor().setPreferredSize(new java.awt.Dimension(28, 16));
+							spnEffic.getEditor().setPreferredSize(new java.awt.Dimension(28, spnEffic.getFont().getSize()*2));
 							spnEffic.setPreferredSize(new java.awt.Dimension(53, spnEffic.getFont().getSize()*2));
 						}
 						{
@@ -1061,7 +1061,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							spnOG.addChangeListener(this);
 							spnOG.setEditor(new JSpinner.NumberEditor(spnOG, "0.000"));
 							spnOG.getEditor().setPreferredSize(new java.awt.Dimension(20, spnOG.getFont().getSize()*2));
-							spnOG.setPreferredSize(new java.awt.Dimension(69, 20));
+							spnOG.setPreferredSize(new java.awt.Dimension(69, spnOG.getFont().getSize()*2));
 						}
 						{
 							SpinnerNumberModel spnFgModel = new SpinnerNumberModel(1.000, 0.900, 2.000, 0.001);
@@ -1219,7 +1219,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							{
 								jPanel1.add(txtName);
 								txtName.setText("Name");
-								txtName.setPreferredSize(new java.awt.Dimension(297, 26));
+								txtName.setPreferredSize(new java.awt.Dimension(297, txtName.getFont().getSize()*2));
 								
 								randomButton.setText("Random!");
 								jPanel1.add(randomButton);
@@ -1231,12 +1231,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						pnlDetails.add(evapMethodCombo, new GridBagConstraints(6, 5, 1, 1, 0.0, 0.0,
 								GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 						evapMethodCombo.setModel(evapMethodComboModel);
-						evapMethodCombo.setPreferredSize(new java.awt.Dimension(64, 20));
+						evapMethodCombo.setPreferredSize(new java.awt.Dimension(64, evapMethodCombo.getFont().getSize()*2));
 
 						pnlDetails.add(colourPanel, new GridBagConstraints(9, 3, 1, 1, 0.0, 0.0,
 								GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 						colourPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-						colourPanel.setPreferredSize(new java.awt.Dimension(93, 32));
+						colourPanel.setPreferredSize(new java.awt.Dimension(93, colourPanel.getFont().getSize()*3));
 
 					}
 					{

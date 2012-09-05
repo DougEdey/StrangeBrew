@@ -69,7 +69,7 @@ public class PotentialExtractCalcDialog extends javax.swing.JDialog implements C
 				100.0, 1.0);
 		extractTxt.setModel(extractModel);
 		jPanel1.add(extractTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-		extractTxt.setPreferredSize(new java.awt.Dimension(43, 20));
+		extractTxt.setPreferredSize(new java.awt.Dimension(43, extractTxt.getFont().getSize()*2));
 
 		jLabel2 = new JLabel();
 		jPanel1.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -80,7 +80,7 @@ public class PotentialExtractCalcDialog extends javax.swing.JDialog implements C
 				100.0, 1.0);
 		moistureTxt.setModel(moistureModel);
 		jPanel1.add(moistureTxt, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-		moistureTxt.setPreferredSize(new java.awt.Dimension(43, 20));
+		moistureTxt.setPreferredSize(new java.awt.Dimension(43, moistureTxt.getFont().getSize()*2));
 		
 		
 		jLabel3 = new JLabel();

@@ -102,7 +102,7 @@ public class HydrometerToolDialog extends javax.swing.JDialog implements ActionL
 
 			mainPanel.add(measuredGravity, c);
 			measuredGravity.setText("1.040");
-			measuredGravity.setPreferredSize(new java.awt.Dimension(55, 20));
+			measuredGravity.setPreferredSize(new java.awt.Dimension(55, measuredGravity.getFont().getSize()*2));
 			measuredGravity.addFocusListener(this);
 			measuredGravity.addActionListener(this);	
 			measuredGravity.addKeyListener(this);
@@ -123,7 +123,7 @@ public class HydrometerToolDialog extends javax.swing.JDialog implements ActionL
 			} else {
 				measuredTemp.setText("15.0");
 			}
-			measuredTemp.setPreferredSize(new java.awt.Dimension(55, 20));
+			measuredTemp.setPreferredSize(new java.awt.Dimension(55, measuredTemp.getFont().getSize()*2));
 			measuredTemp.addFocusListener(this);
 			measuredTemp.addActionListener(this);		
 			measuredTemp.addKeyListener(this);
@@ -143,7 +143,7 @@ public class HydrometerToolDialog extends javax.swing.JDialog implements ActionL
 			mainPanel.add(correctedGravity, c);
 			correctedGravity.setText("0.0");
 			correctedGravity.setEditable(false);
-			correctedGravity.setPreferredSize(new java.awt.Dimension(55, 20));
+			correctedGravity.setPreferredSize(new java.awt.Dimension(55, correctedGravity.getFont().getSize()*2));
 			correctedGravity.addFocusListener(this);
 			correctedGravity.addActionListener(this);
 
@@ -162,7 +162,7 @@ public class HydrometerToolDialog extends javax.swing.JDialog implements ActionL
 				calibratedTemp.setText("15.0");
 			}
 			mainPanel.add(calibratedTemp, c);	
-			calibratedTemp.setPreferredSize(new java.awt.Dimension(55, 20));
+			calibratedTemp.setPreferredSize(new java.awt.Dimension(55, calibratedTemp.getFont().getSize()*2));
 			calibratedTemp.addFocusListener(this);
 			calibratedTemp.addActionListener(this);		
 
