@@ -20,6 +20,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import ca.strangebrew.Debug;
 import ca.strangebrew.FermentStep;
 import ca.strangebrew.Recipe;
 
@@ -179,6 +180,7 @@ public class FermentPanel extends javax.swing.JPanel implements ActionListener, 
 		} else if (o == comboUnits) {
 			String newUnit = (String)comboUnits.getSelectedItem();
 			int index = fermentTable.getSelectedRow();
+			Debug.print("Updating combo units on row: " + index);
 			if (myRecipe != null && index >= 0)
 			{
 				myRecipe.setFermentStepTempU(index, newUnit);

@@ -138,6 +138,7 @@ class HopsTableModel extends AbstractTableModel {
 				}
 				break;
 			case 4:
+				Debug.print("Converting units on row " + row);
 				// h.setUnits(value.toString());
 				break;
 			case 5:

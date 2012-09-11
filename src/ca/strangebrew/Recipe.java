@@ -409,6 +409,7 @@ public class Recipe {
 	}
 
 	public double getTrubLoss(final String s) {
+		Debug.print("Trub Value: " + trubLossVol.getValue() + trubLossVol.getUnits());
 		return trubLossVol.getValueAs(s);
 	}
 
@@ -855,6 +856,10 @@ public class Recipe {
 	public double getMaltCostPerU(final int i) {
 		return fermentables.get(i).getCostPerU();
 	}
+	
+	public double getMaltCostPerUAs(final int i, String s) {
+		return fermentables.get(i).getCostPerUAs(s);
+	}
 
 	public double getMaltPercent(final int i) {
 		return fermentables.get(i).getPercent();
@@ -887,6 +892,8 @@ public class Recipe {
 	public void setMaltUnits(final int i, final String u) {
 		isDirty = true;
 		fermentables.get(i).setUnits(u);
+		Debug.print("Setting malt cost to: " + fermentables.get(i).getCostPerUAs(u));
+		fermentables.get(i).setCost(fermentables.get(i).getCostPerUAs(u));
 	}
 
 	public void setMaltAmount(final int i, final double a) {
@@ -915,6 +922,8 @@ public class Recipe {
 	public void setMaltAmountAs(final int i, final double a, final String u) {
 		isDirty = true;
 		fermentables.get(i).setAmountAs(a, u);
+		Debug.print("Setting malt cost to: " + fermentables.get(i).getCostPerUAs(u));
+		fermentables.get(i).setCost(fermentables.get(i).getCostPerUAs(u));
 	}
 
 	public void setMaltPppg(final int i, final double p) {
@@ -932,6 +941,11 @@ public class Recipe {
 		fermentables.get(i).setCost(c);
 	}
 
+	public void setMaltCost(final int i, final Double c) {
+		isDirty = true;
+		fermentables.get(i).setCost(c);
+	}
+	
 	public void setMaltPercent(final int i, final double p) {
 		isDirty = true;
 		fermentables.get(i).setPercent(p);
@@ -1069,10 +1083,10 @@ public class Recipe {
 
 	public void setVolUnits(final String v) {
 		isDirty = true;
-		kettleLossVol.setUnits(v);
-		postBoilVol.setUnits(v);
-		trubLossVol.setUnits(v);
-		miscLossVol.setUnits(v);
+		kettleLossVol.convertTo(v);
+		postBoilVol.convertTo(v);
+		trubLossVol.convertTo(v);
+		miscLossVol.convertTo(v);
 		calcMaltTotals();
 		calcHopsTotals();
 	}
@@ -1288,7 +1302,7 @@ public class Recipe {
 			} else {
 				maltPoints += (m.getPppg() - 1) * m.getAmountAs(Quantity.LB) * 100 / getPostBoilVol(Quantity.GAL);
 			}
-
+			Debug.print("Cost: " + m.getCostPerU() + m.getAmountAs(m.getUnits()) + m.getUnits());
 			totalMaltCost += m.getCostPerU() * m.getAmountAs(m.getUnits());
 		}
 

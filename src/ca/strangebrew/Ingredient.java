@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import ca.strangebrew.Quantity.Converter;
+
 /**
  * $Id: Ingredient.java,v 1.8 2012/06/02 19:40:58 dougedey Exp $
  * Created on Oct 21, 2004
@@ -24,6 +26,7 @@ public class Ingredient implements Comparable<Ingredient> {
 	private String type;
 	private boolean modified;
 	
+		
 	public Ingredient() {
 		modified = true;
 	}
@@ -63,6 +66,10 @@ public class Ingredient implements Comparable<Ingredient> {
 	public String getType(){ return type; }
 	public String getUnits(){ return amount.getUnits(); }
 	
+	public double getCostPerUAs(String to){
+		// current value / new value * cost
+		return costPerU;
+	}
 	
 	public String getUnitsAbrv(){ return amount.getAbrv(); }
 	
@@ -133,8 +140,10 @@ public class Ingredient implements Comparable<Ingredient> {
 	public void setName(String n){ name = n; }
 	public void setType(String t){ type = t; }
 	public void setUnits(String a){ amount.setUnits(a); }
+	
 	public void convertTo(String newUnits){
-		setCost(Quantity.convertUnit(newUnits, getUnits(), getCostPerU()));			
+		setCost(Quantity.convertUnit(newUnits, getUnits(), getCostPerU()));		
+		
 		amount.convertTo(newUnits);		
 	}
 	

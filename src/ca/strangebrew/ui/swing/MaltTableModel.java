@@ -75,7 +75,7 @@ class MaltTableModel extends AbstractTableModel {
 				case 6 :
 					return SBStringUtils.format(data.getMaltLov(row), 0);
 				case 7 :
-					return new Double(data.getMaltCostPerU(row));
+					return new Double(data.getMaltCostPerUAs(row, data.getMaltUnits()));
 				case 8 :
 					return SBStringUtils.format(data.getMaltPercent(row), 1);
 
@@ -92,6 +92,7 @@ class MaltTableModel extends AbstractTableModel {
 	 */
 	
 	public Class<?> getColumnClass(int c) {
+		Debug.print("Malt Column " + c + " Class: " + getValueAt(0, c).getClass() );
 		return getValueAt(0, c).getClass();
 	}
 
@@ -149,7 +150,14 @@ class MaltTableModel extends AbstractTableModel {
 					
 					break;
 				case 4 :
+					Debug.print("Setting malt units");
+					if (value instanceof Fermentable) {
+						Fermentable m = (Fermentable)value;
+						data.setMaltCost(row, m.getCostPerUAs(m.getUnits()));
+					}
+					fireTableCellUpdated(row, 7);
 					// m.setUnits(value.toString());
+					
 					break;
 				case 5 :
 					try {
@@ -181,7 +189,10 @@ class MaltTableModel extends AbstractTableModel {
 
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		};
+		
+		Debug.print("FireTableCellUpdated");
 		app.myRecipe.calcMaltTotals();
 		fireTableCellUpdated(row, col);
 		fireTableDataChanged();		

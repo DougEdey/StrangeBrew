@@ -181,7 +181,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JLabel alcMethodLabel = new JLabel();
 	final private JPanel alcMethodPanel = new JPanel();
 	final private SBCellEditor maltAmountEditor = new SBCellEditor(new JTextField());
+	final private SBCellEditor maltCostEditor = new SBCellEditor(new JTextField());
+	
 	final private SBCellEditor hopAmountEditor = new SBCellEditor(new JTextField());
+	final private SBCellEditor hopCostEditor = new SBCellEditor(new JTextField());
 	final private SBCellEditor hopTimeEditor = new SBCellEditor(new JTextField());
 	final private SBCellEditor hopAcidEditor = new SBCellEditor(new JTextField());
 	final private JTextField boilMinText = new JTextField();
@@ -306,7 +309,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private DefaultTableModel tblHopsTotalsModel = new DefaultTableModel(new String[][] { { "" } }, new String[] {
 			"1", "2", "3", "4", "5", "6", "7", "8", "9" });
 	final private DefaultTableModel tblMaltTotalsModel = new DefaultTableModel(new String[][] { { "" } }, new String[] {
-			"S", "M", "Malt", "Amount", "Units", "Points", "Lov", "Cost/U", "%" });
+			"S", "M", "Malt", "Amount", "Units", "Points", "Lov", "Cost", "%" });
 	final private JTable tblMaltTotals = new JTable();
 
 	final private JToolBar tlbHops = new JToolBar();
@@ -1298,6 +1301,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								// set up malt amount editor
 								maltColumn = maltTable.getColumnModel().getColumn(3);
 								maltColumn.setCellEditor(maltAmountEditor);
+								
+								maltColumn = maltTable.getColumnModel().getColumn(7);
+								maltColumn.setCellEditor(maltCostEditor);
 
 								// set up malt units combo
 								SmartComboBox.enable(maltUnitsComboBox);

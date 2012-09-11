@@ -469,6 +469,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				tempFrb.setSelected(true);
 			else
 				tempCrb.setSelected(true);
+			
 			grainTempULabel.setText(myRecipe.mash.getMashTempUnits());
 			tempLostULabel.setText(myRecipe.mash.getMashTempUnits());
 			boilTempULbl.setText(myRecipe.mash.getMashTempUnits());

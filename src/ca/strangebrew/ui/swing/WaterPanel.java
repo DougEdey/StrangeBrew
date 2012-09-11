@@ -98,10 +98,13 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 		finalVolTxt.setValue(SBStringUtils.format(myRecipe.getFinalWortVol(myRecipe.getVolUnits()), 2));
 		finalUnitsLbl.setText(recipeUnitsAbrv);
 
+		
 		chillShrinkLbl.setText(SBStringUtils.format(myRecipe.getChillShrinkVol(myRecipe.getVolUnits()), 2));
 		kettleTxt.setValue(SBStringUtils.format(myRecipe.getKettleLoss(myRecipe.getVolUnits()), 2));
 		kettleUnitsLbl.setText(recipeUnitsAbrv);
+//		myRecipe.setTrubLoss(myRecipe.)
 		trubLossTxt.setValue(SBStringUtils.format(myRecipe.getTrubLoss(myRecipe.getVolUnits()), 2));
+		Debug.print("Trub loss units: " + myRecipe.getVolUnits());
 		trubLossUnitsLbl.setText(recipeUnitsAbrv);
 		miscLossTxt.setValue(SBStringUtils.format(myRecipe.getMiscLoss(myRecipe.getVolUnits()), 2));
 		miscLosUnitsLbl.setText(recipeUnitsAbrv);	
@@ -348,7 +351,7 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 	//(DISPOSE_ON_CLOSE).
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		
+		Debug.print("Water Panel Selected: "+ e.toString());
 		if (o == kettleTxt) {
 			try {
 				double x = SBStringUtils.round(myRecipe.getKettleLoss(myRecipe.getVolUnits()),2);
@@ -356,6 +359,7 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
 				Number number = format.parse(kettleTxt.getText().trim());
 				double y = SBStringUtils.round(number.doubleValue(), 2);
+				Debug.print("Kettle loss: " + kettleTxt.getText());
 				if (x != y) {
 					myRecipe.setKettleLoss(new Quantity(myRecipe.getVolUnits(), number.doubleValue()));
 				}
@@ -370,7 +374,7 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 		else if (o == miscLossTxt) {
 			try {
 				double x = SBStringUtils.round(myRecipe.getMiscLoss(myRecipe.getVolUnits()),2);
-				
+				Debug.print("Misc loss: " + miscLossTxt.getText());
 				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
 				Number number = format.parse(miscLossTxt.getText().trim());
 				double y = SBStringUtils.round(number.doubleValue(),2);
@@ -388,10 +392,11 @@ public class WaterPanel extends javax.swing.JPanel implements ActionListener, Fo
 		else if (o == trubLossTxt) {
 			try {
 				double x = SBStringUtils.round(myRecipe.getTrubLoss(myRecipe.getVolUnits()),2);
-
+				
 				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
 				Number number = format.parse(trubLossTxt.getText().trim());
 				double y = SBStringUtils.round(number.doubleValue(), 2);
+				Debug.print("Trub loss: " + y);
 				if (x != y) {
 					myRecipe.setTrubLoss(new Quantity(myRecipe.getVolUnits(), number.doubleValue()));
 				}
