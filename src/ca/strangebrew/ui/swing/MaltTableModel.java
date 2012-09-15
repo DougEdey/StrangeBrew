@@ -10,6 +10,7 @@ import javax.swing.table.AbstractTableModel;
 
 import ca.strangebrew.Debug;
 import ca.strangebrew.Fermentable;
+import ca.strangebrew.Options;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
 
@@ -127,6 +128,7 @@ class MaltTableModel extends AbstractTableModel {
 				case 2 :
 					
 					data.setMaltName(row, value.toString());
+					
 					
 					// Shouldn't this re-set most of the data fields with base info
 					if (value instanceof Fermentable) {

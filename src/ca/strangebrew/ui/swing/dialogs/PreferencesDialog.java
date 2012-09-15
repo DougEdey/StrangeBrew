@@ -212,6 +212,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JLabel swingTheme = new JLabel();
 	private JComboBox swingComboBox = new JComboBox();
 	final private JLabel currentTheme = new JLabel();
+	final private JCheckBox checkStock = new JCheckBox("Show Stock");
 	
 	// Carb
 	final private GridBagLayout layoutCarbPanel = new GridBagLayout();
@@ -309,6 +310,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		txtServTemp.setText(opts.getProperty("optServTemp"));
 		txtVol.setText(opts.getProperty("optVolsCO2"));
 		checkKegged.setSelected(opts.getBProperty("optKegged"));
+		checkStock.setSelected(opts.getBProperty("optHideNonStock"));
 		comboTubingID.setSelectedItem(opts.getProperty("optTubingID"));
 		textHeight.setText(opts.getProperty("optHeightAboveKeg"));
 		
@@ -392,6 +394,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			opts.setProperty("optKegged", "false");
 		}
 
+		
 		// Brewer tab:
 		opts.setProperty("optBrewer", txtBrewerName.getText());
 		opts.setProperty("optPhone", txtPhone.getText());
@@ -399,6 +402,13 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		opts.setProperty("optEmail", txtEmail.getText());
 		opts.setProperty("optRecipe", txtRecipe.getText());
 		opts.setProperty("optAppearance", ((Looks)swingComboBox.getSelectedItem()).value);
+		
+		if (checkStock.isSelected()) {
+			opts.setProperty("optHideNonStock", "true");
+			
+		} else {
+			opts.setProperty("optHideNonStock", "false");
+		}
 		
 		// TODO
 		opts.setLocale((Locale)localeComboBox.getSelectedItem());
@@ -842,6 +852,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					localeLabel.setText("Set Locale:");
 				}
 				{
+					pnlBrewer.add(checkStock, constraints);
 					pnlBrewer.add(localeComboBox, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));					

@@ -131,6 +131,7 @@ import ca.strangebrew.ui.swing.dialogs.ScaleRecipeDialog;
 
 import com.michaelbaranov.microba.calendar.DatePicker;
 
+
 import edu.stanford.ejalbert.BrowserLauncher;
 import edu.stanford.ejalbert.BrowserLauncherRunner;
 import edu.stanford.ejalbert.exception.BrowserLaunchingInitializingException;
@@ -472,10 +473,18 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		cmbStyleModel.setList(DB.styleDB);
 		cmbYeastModel.setList(DB.yeastDB);
 		
-		cmbMaltModel.setList(DB.fermDB);
+		// check to see if we are hiding non stock ingredients
+		Debug.print("OptHideNonStock: "+preferences.getProperty("optHideNonStock"));
+		if(preferences.getProperty("optHideNonStock") != null && preferences.getBProperty("optHideNonStock") ) {
+			Debug.print("Hiding Stock");
+			cmbMaltModel.setList(DB.stockFermDB);			
+			cmbHopsModel.setList(DB.stockHopsDB); 
+		} else {
+			cmbMaltModel.setList(DB.fermDB);			
+			cmbHopsModel.setList(DB.hopsDB);
+		}
 		
 		
-		cmbHopsModel.setList(DB.hopsDB);
 		carbPanel.setList(DB.primeSugarDB);
 //		waterTreatmentPanel.setList(DB.waterDB);
 
@@ -2090,6 +2099,25 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			PreferencesDialog d = new PreferencesDialog(this);			
 			d.setVisible(true);
 			preferences = d.getOpts();
+			String path;
+			try {
+				path = SBStringUtils.getAppPath("data");
+				DB.readDB(path, preferences.getProperty("optStyleYear"));
+				Debug.print("OptHideNonStock: "+preferences.getProperty("optHideNonStock"));
+				if(preferences.getProperty("optHideNonStock") != null && preferences.getBProperty("optHideNonStock") ) {
+					Debug.print("Hiding Stock");
+					cmbMaltModel.setList(DB.stockFermDB);			
+					cmbHopsModel.setList(DB.stockHopsDB); 
+				} else {
+					cmbMaltModel.setList(DB.fermDB);			
+					cmbHopsModel.setList(DB.hopsDB);
+				}
+			} catch (UnsupportedEncodingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
 		} else if (o == exitMenuItem) {
 			// exit program
 			processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));

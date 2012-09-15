@@ -48,9 +48,11 @@ public class Database {
 	// read from the csv files.
 
 	private static Database instance = null;
-	
+	private Options preferences = Options.getInstance();
 	public List<Fermentable> fermDB = new ArrayList<Fermentable>();
+	public List<Fermentable> stockFermDB = new ArrayList<Fermentable>();
 	public List<Hop> hopsDB = new ArrayList<Hop>();
+	public List<Hop> stockHopsDB = new ArrayList<Hop>();
 	final public List<Yeast> yeastDB = new ArrayList<Yeast>();
 	public List<Style> styleDB = new ArrayList<Style>();
 	final public List<Misc> miscDB = new ArrayList<Misc>();
@@ -368,6 +370,13 @@ public class Database {
 				f.setDescription(res.getString("Descr"));
 				f.setModified(Boolean.valueOf(res.getString("Modified")).booleanValue());
 				fermDB.add(f);
+				
+				// check to see if we have nonStock set
+				
+				if(f.getStock() > 0.00 ) {
+					Debug.print("Adding to Stock DB");
+					stockFermDB.add(f); 
+				} 
 			}
 			Collections.sort(fermDB);
 
@@ -498,6 +507,7 @@ public class Database {
 			}
 			//clear the list
 			fermDB = new ArrayList<Fermentable>();
+			stockFermDB = new ArrayList<Fermentable>();
 			
 			Debug.print("Trying to update DB at: "+dbPath);
 			readFermentables(dbPath);
@@ -637,6 +647,10 @@ public class Database {
 			h.setModified(Boolean.valueOf(res.getString("Modified")).booleanValue());
 			hopsDB.add(h);
 			
+			if(h.getStock() > 0 && preferences.getProperty("optHideNonStock") != null && preferences.getProperty("optHideNonStock") == "true") {
+				stockHopsDB.add(h); 
+			} 
+			
 			//Item,Name,Yield,Lov,Cost,Stock,Units,Mash,Descr,Steep,Modified 
 			Debug.print("Loading from database: "+ res.getString("Name"));
 			
@@ -693,7 +707,7 @@ public class Database {
 					insertMisc.setString(7, Double.toString(h.getStorage()));
 					insertMisc.setString(8, h.getDate().toString());
 					insertMisc.executeUpdate();
-				} else { // do update
+				} else { // check to see if we need to update
 					
 					rStatement.setString(1, h.getName());
 					rStatement.setString(2, Double.toString(h.getAlpha()));
@@ -725,7 +739,11 @@ public class Database {
 				}
 			}
 
-		
+			//clear the list
+			hopsDB = new ArrayList<Hop>();
+			stockHopsDB = new ArrayList<Hop>();
+			
+			readHops(dbPath);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -847,6 +865,7 @@ public class Database {
 					e.printStackTrace();
 				}
 				Collections.sort(hopsDB);
+				Collections.sort(stockHopsDB);
 				
 
 		
@@ -934,7 +953,7 @@ public class Database {
 						fields = reader.getAllFieldsInLine();
 						
 						//Item,Name, Category,OG_Low,OG_High,Alc_Low,Alc_High,IBU_Low,IBU_High,Lov_Low,Lov_High,Comm_examples,Descr
-						Debug.print("SELECT COUNT(*) FROM styleguide WHERE name='"+fields[nameIdx]+"';");
+						//Debug.print("SELECT COUNT(*) FROM styleguide WHERE name='"+fields[nameIdx]+"';");
 						pStatement = conn.prepareStatement("SELECT COUNT(*) FROM styleguide WHERE name=?;");
 						
 						pStatement.setString(1, fields[nameIdx]);
@@ -1141,7 +1160,7 @@ public class Database {
 					s.comments = res.getString("Comments");
 				if(res.getString("Ingredients") != null)
 					s.ingredients = res.getString("Ingredients");
-				Debug.print("Adding style " + s.getName() + s.toText());
+		//		Debug.print("Adding style " + s.getName() + s.toText());
 				styleDB.add(s);
 			}
 			

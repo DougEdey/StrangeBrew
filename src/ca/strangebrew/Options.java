@@ -290,7 +290,7 @@ public class Options {
 	
 	public boolean getBProperty(String key) {
 		String s = props.getProperty(key);
-		if (s.equalsIgnoreCase("true")) {
+		if (s != null && s.equalsIgnoreCase("true")) {
 			return true;
 		}
 		return false;
