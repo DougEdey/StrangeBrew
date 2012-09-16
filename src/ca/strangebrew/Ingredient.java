@@ -74,7 +74,12 @@ public class Ingredient implements Comparable<Ingredient> {
 	public String getUnitsAbrv(){ return amount.getAbrv(); }
 	
 	public void setAmount(double a){ amount.setAmount(a); }
-	public void setStock(double a){ stock.setAmount(a); }
+	public void setStock(double a){ 
+		if(a < 0.00) 
+			stock.setAmount(0);
+		else
+			stock.setAmount(a); 
+	}
 	/**
 	 * Handles a string of the form "d u", where d is a double
 	 * amount, and u is a string of units.  For importing the
@@ -129,7 +134,9 @@ public class Ingredient implements Comparable<Ingredient> {
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		try{
 		dateBought = df.parse(d);
-		}catch (ParseException p){}
+		}catch (ParseException p){
+			
+		}
 		
 	}
 	

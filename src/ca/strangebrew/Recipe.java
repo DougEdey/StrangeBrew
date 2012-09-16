@@ -1928,4 +1928,46 @@ public class Recipe {
 		final double acidPerL = BrewCalcs.acidAmountPerL(getAcid(), moles);
 		return Quantity.convertUnit(Quantity.GAL, Quantity.L, acidPerL);
 	}
+
+	public void substractIngredients() {
+		// THe user wants to subtract the ingredients from their pantry
+		// we have to slowly iterate the list, because someone may change the AA and therefore
+		// an object match doesn't work
+		List<Fermentable> fDB = Database.getInstance().fermDB;
+		int i = 0;
+		for (i = 0; i < this.fermentables.size(); i++) {
+			int j = 0;
+			// double iteration because there's no choice :(
+			
+			while(j < fDB.size()) {
+				if(fDB.get(j).getName().equals(this.fermentables.get(i).getName())) {
+					fDB.get(j).setStock(fDB.get(j).getStock() - this.fermentables.get(i).getAmountAs(fDB.get(j).getUnits()));
+					break;
+				}
+				j++;
+			}
+		}
+		Database.getInstance().fermDB = fDB;
+		Database.getInstance().writeFermentables();
+		
+		
+		List<Hop> hDB = Database.getInstance().hopsDB;
+		i = 0;
+		for (i = 0; i < this.hops.size(); i++) {
+			Debug.print("i = " + i);
+			int j = 0;
+			// double iteration because there's no choice :(
+			while(j < hDB.size()) {
+				
+				if(hDB.get(j).getName().equals(this.hops.get(i).getName()) ) {
+					hDB.get(j).setStock(hDB.get(j).getStock() - this.hops.get(i).getAmountAs(hDB.get(j).getUnits()));
+					break;
+				}
+				j++;
+			}
+		}
+		
+		Database.getInstance().hopsDB = hDB;
+		Database.getInstance().writeHops();	
+	}
 }

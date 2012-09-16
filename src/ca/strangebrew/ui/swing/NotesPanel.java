@@ -34,6 +34,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -182,6 +183,20 @@ public class NotesPanel extends javax.swing.JPanel implements ActionListener {
 			if (myRecipe != null) {
 				selectedRow = notesTable.getSelectedRow();
 				myRecipe.setNoteType(selectedRow, (String)typeComboBox.getSelectedItem());
+				
+				if(((JComboBox)o).isPopupVisible() && (String)typeComboBox.getSelectedItem() == "Brewed") {
+					
+					int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to subtract the ingredients from your stock levels?",
+							"Info", JOptionPane.YES_NO_OPTION );
+					
+					// does the user want to subtract the ingredients from stock?
+					if(dialogResult == JOptionPane.YES_OPTION) {
+						// run the DB Subtract
+						Debug.print("Subtracting ingredients");
+						myRecipe.substractIngredients();
+					}
+						
+				}
 			}
 		} else if (o == addNoteButton) {
 			if (myRecipe != null) {
@@ -243,6 +258,7 @@ public class NotesPanel extends javax.swing.JPanel implements ActionListener {
 					case 0 :
 						return SBStringUtils.dateFormatShort.format(data.getNoteDate(row));
 					case 1 :						
+						
 						return data.getNoteType(row);
 
 				}

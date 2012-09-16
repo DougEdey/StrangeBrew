@@ -671,7 +671,7 @@ public class Database {
 			PreparedStatement pStatement = conn.prepareStatement("SELECT COUNT(*) FROM hops WHERE name = ?;");
 			PreparedStatement rStatement = conn.prepareStatement("SELECT COUNT(*) FROM hops WHERE name = ?" +
 					" AND Alpha=? AND Cost=? AND Stock=? AND " +
-					"Units=? AND Descr=? AND Storage=? AND Date=? ;");
+					"Units=? AND Descr=? AND Storage=? ;");
 			
 			String sql = "insert into hops (Name,Alpha,Cost,Stock,Units,Descr,Storage,Date) " +
 					"values(?, ?,  ? , ?, ?, ?, ?, ? )";
@@ -716,12 +716,16 @@ public class Database {
 					rStatement.setString(5, h.getUnitsAbrv());
 					rStatement.setString(6, h.getDescription());
 					rStatement.setString(7, Double.toString(h.getStorage()));
-					rStatement.setString(8, h.getDate().toString());
+					
 					res = rStatement.executeQuery();
 					
 					res.next();
+					Debug.print(h.getName() + " - " + h.getStock());
 					if(res.getInt(1) == 0) {
-						Debug.print("Hops Update "+ h.getStock());
+						Debug.print("SELECT COUNT(*) FROM hops WHERE name = " + h.getName() + 
+								" AND Alpha=" + h.getAlpha() +" AND Cost= " + Double.toString(h.getCostPerU()) + 
+								" AND Stock=" + h.getStorage() + " AND " +
+								"Units= " + h.getUnitsAbrv() + " AND Descr= " + h.getDescription() + " AND Storage= " + Double.toString(h.getStorage()) +" ;" );
 						updateMisc.setString(1, Double.toString(h.getAlpha()));
 						updateMisc.setString(2, Double.toString(h.getCostPerU()));
 						updateMisc.setString(3, Double.toString(h.getStock()));
