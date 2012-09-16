@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "2.0.3">
+<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
+  <DETAILS>
+  <NAME>Joes Fat One</NAME>
+  <BREWER>Doug Edey</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>75.0</EFFICIENCY>
+  <OG>1.042</OG>
+  <FG>1.010</FG>
+  <STYLE></STYLE>
+  <MASH>false</MASH>
+  <LOV>30.7</LOV>
+  <IBU>26.3</IBU>
+  <ALC>4.1</ALC>
+  <!-- SBJ1.0 Extensions: -->
+  <EVAP>0.3</EVAP>
+  <EVAP_METHOD>Percent</EVAP_METHOD>
+  <!-- END SBJ1.0 Extensions -->
+  <BOIL_TIME>60</BOIL_TIME>
+  <PRESIZE>25.4170683</PRESIZE>
+  <SIZE>24.6051</SIZE>
+  <SIZE_UNITS>litres</SIZE_UNITS>
+  <MALT_UNITS>kilograms</MALT_UNITS>
+  <HOPS_UNITS>grams</HOPS_UNITS>
+  <YEAST>Safale S-04</YEAST>
+  <RECIPE_DATE>08/25/2012</RECIPE_DATE>
+  <ATTENUATION>75.0</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Volume</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>SRM</COLOUR_METHOD>
+  <KETTLE_LOSS>0.0</KETTLE_LOSS>
+  <TRUB_LOSS>0.0</TRUB_LOSS>
+  <MISC_LOSS>0.0</MISC_LOSS>
+  <PELLET_HOP_PCT>6.0</PELLET_HOP_PCT>
+  <YEAST_COST>0.75</YEAST_COST>
+  <OTHER_COST>5.0</OTHER_COST>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <TOTAL>5.027585227128385</TOTAL>
+    <ITEM>
+      <MALT>Marris Otter</MALT>
+      <AMOUNT>3.0165511362770303</AMOUNT>
+      <PERCENT>60.0</PERCENT>
+      <UNITS>kg</UNITS>
+      <POINTS>1.036</POINTS>
+      <LOV>3.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>The classic British ale malt, prized by the finest brewers in Britain. Made from fully modified two-row winter Maris Otter. This malt has a wide optimum temperature and pH range, making it very forgiving in the brewery and popular with small-scale brewers. Very low protein (9.5%), high flavour malt, perfect for lower gravity Bitters</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Rolled Oats</MALT>
+      <AMOUNT>1.0055170454256768</AMOUNT>
+      <PERCENT>20.0</PERCENT>
+      <UNITS>kg</UNITS>
+      <POINTS>1.025</POINTS>
+      <LOV>2.2</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>false</STEEPED>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>Rolled Oats: pre-gelatanized.  Will add a silky smoothness to mouthfeel, and increased head retention, when used at around 5% of the grist.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Crystal 60</MALT>
+      <AMOUNT>0.5027585227128384</AMOUNT>
+      <PERCENT>10.0</PERCENT>
+      <UNITS>kg</UNITS>
+      <POINTS>1.03</POINTS>
+      <LOV>60.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>true</STEEPED>
+      <COSTLB>1.58</COSTLB>
+      <DESCRIPTION>Crystal 60: This Crystal malt is well suited to all beer recipes calling for crystal malt and is a good choice if you&apos;re not sure which variety to use.  5 to 15% of 60 L Crystal malt will lend a well rounded caramel flavor, color and sweetness to your finest Ales.</DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Chocolate</MALT>
+      <AMOUNT>0.2513792613564192</AMOUNT>
+      <PERCENT>5.0</PERCENT>
+      <UNITS>kg</UNITS>
+      <POINTS>1.029</POINTS>
+      <LOV>350.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>true</STEEPED>
+      <COSTLB>0.0</COSTLB>
+      <DESCRIPTION></DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Roast Barley</MALT>
+      <AMOUNT>0.2513792613564192</AMOUNT>
+      <PERCENT>5.0</PERCENT>
+      <UNITS>kg</UNITS>
+      <POINTS>1.029</POINTS>
+      <LOV>450.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>true</STEEPED>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>The classic British ale malt, prized by the finest brewers in Britain. Made from fully modified two-row winter Maris Otter. This malt has a wide optimum temperature and pH range, making it very forgiving in the brewery and popular with small-scale brewers. Very low protein (9.5%), high flavour malt, perfect for lower gravity Bitters</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <TOTAL>56.0</TOTAL>
+    <ITEM>
+      <HOP>Fuggles</HOP>
+      <AMOUNT>28.0</AMOUNT>
+      <TIME>45</TIME>
+      <UNITS>g</UNITS>
+      <FORM>Pellet</FORM>
+      <ALPHA>4.5</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>Fuggles: Good all purpose ale hop. Well suited to bittering, flavoring and finishing.Will lend a pleasant hop profile, tending to be slightly fruity in aroma.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>E. Kent Goldngs</HOP>
+      <AMOUNT>28.0</AMOUNT>
+      <TIME>45</TIME>
+      <UNITS>g</UNITS>
+      <FORM>Pellet</FORM>
+      <ALPHA>5.0</ALPHA>
+      <COSTOZ>1.25</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>E. Kent Goldngs: A British grown version of the classic ale finishing hop.  Slightly smoother and more refined than the herbal, Canadian grown version.</DESCRIPTION>
+      <DATE>null</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+  </MISC>
+  <MASH>
+    <NAME>Mash</NAME>
+    <MASH_VOLUME>0.00</MASH_VOLUME>
+    <MASH_VOL_U>litres</MASH_VOL_U>
+    <MASH_RATIO>1.25</MASH_RATIO>
+    <MASH_RATIO_U>qt/l</MASH_RATIO_U>
+    <MASH_TIME>0</MASH_TIME>
+    <MASH_TMP_U>F</MASH_TMP_U>
+    <THICK_DECOCT_RATIO>0.6</THICK_DECOCT_RATIO>
+    <THIN_DECOCT_RATIO>0.9</THIN_DECOCT_RATIO>
+    <MASH_TUNLOSS_TEMP>0.0</MASH_TUNLOSS_TEMP>
+    <GRAIN_TEMP>68.0</GRAIN_TEMP>
+    <BOIL_TEMP>212.0</BOIL_TEMP>
+  </MASH>
+   <FERMENTATION_SCHEDULE>
+   </FERMENTATION_SCHEDULE>
+   <CARB>
+      <BOTTLETEMP>68.0</BOTTLETEMP>
+      <SERVTEMP>45.0</SERVTEMP>
+      <VOL>2.4</VOL>
+      <SUGAR>Corn Sugar</SUGAR>
+      <AMOUNT>1010.6</AMOUNT>
+      <SUGARU>g</SUGARU>
+      <TEMPU>F</TEMPU>
+      <KEG>true</KEG>
+      <PSI>13.72</PSI>
+   </CARB>
+   <WATER_PROFILE>
+      <SOURCE_WATER>
+         <NAME>Ottawa, ON</NAME>
+         <CA>17.5</CA>
+         <MG>2.4</MG>
+         <NA>15.0</NA>
+         <SO4>26.0</SO4>
+         <HCO3>45.0</HCO3>
+         <CL>5.0</CL>
+         <HARDNESS>33.8</HARDNESS>
+         <TDS>-1.0</TDS>
+         <PH>9.0</PH>
+         <ALKALINITY>32.0</ALKALINITY>
+      </SOURCE_WATER>
+      <TARGET_WATER>
+         <NAME>Distilled/RO</NAME>
+         <CA>0.0</CA>
+         <MG>0.0</MG>
+         <NA>0.0</NA>
+         <SO4>0.0</SO4>
+         <HCO3>0.0</HCO3>
+         <CL>0.0</CL>
+         <HARDNESS>0.0</HARDNESS>
+         <TDS>0.0</TDS>
+         <PH>5.80000019073486</PH>
+         <ALKALINITY>0.0</ALKALINITY>
+      </TARGET_WATER>
+      <ACID>
+         <NAME>Citric</NAME>
+         <AMT>177.01</AMT>
+         <ACIDU>mg</ACIDU>
+      </ACID>
+   </WATER_PROFILE>
+  <NOTES>
+  </NOTES>
+ <style>
+  <subcategory id="null">    <name></name>
+    <aroma>null</aroma>
+    <appearance>null</appearance>
+    <flavor>null</flavor>
+    <mouthfeel>null</mouthfeel>
+    <impression>null</impression>
+    <comments>null</comments>
+    <ingredients>null</ingredients>
+ <stats>
+  <og flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </og>
+  <fg flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </fg>
+  <ibu flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </ibu>
+  <srm flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </srm>
+  <abv flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </abv>
+</stats>
+    <examples>null</examples>
+  </subcategory>
+ </style>
+</STRANGEBREWRECIPE>
