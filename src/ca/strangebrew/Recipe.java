@@ -24,6 +24,12 @@
 
 package ca.strangebrew;
 
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,6 +38,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 public class Recipe {
 
@@ -1954,7 +1962,7 @@ public class Recipe {
 		List<Hop> hDB = Database.getInstance().hopsDB;
 		i = 0;
 		for (i = 0; i < this.hops.size(); i++) {
-			Debug.print("i = " + i);
+			
 			int j = 0;
 			// double iteration because there's no choice :(
 			while(j < hDB.size()) {
@@ -1969,5 +1977,50 @@ public class Recipe {
 		
 		Database.getInstance().hopsDB = hDB;
 		Database.getInstance().writeHops();	
+	}
+	
+	public boolean pushRecipe() {
+
+		// Pushes this Recipe to the remote output
+		Connection conn = null;
+
+	    try
+	    {
+	
+	        String url = "jdbc:mysql://mysql1.gohsphere.com:3306/gmnoel_strangebrew";
+	        Class.forName ("com.mysql.jdbc.Driver");
+	        conn = DriverManager.getConnection (url,"gmnoel_strange","brew1234");
+	        System.out.println ("Database connection established");
+	    
+	        PreparedStatement pStatement = conn.prepareStatement("SELECT MAX(Iteration) FROM recipes WHERE Title = ?;");
+	        pStatement.setString(1, this.getName());
+	        ResultSet allRecipesQuery = pStatement.executeQuery();
+	        int iteration = 0;
+	        
+	        if(allRecipesQuery.last()) {
+	        
+	        	// we have more than one recipe, get the max
+	        	allRecipesQuery.first();
+	        	iteration = allRecipesQuery.getInt(1);
+	        	
+	        } 
+	        
+	        // now we can insert
+	        PreparedStatement iStatement = conn.prepareStatement("INSERT INTO recipes (Brewer, Title, Style, Iteration, Recipe) VALUES (?, ?, ?, ?, ?)");
+	        
+	        iStatement.setString(1, this.getBrewer());
+	        iStatement.setString(2, this.getName());
+	        iStatement.setString(3, this.getStyle());
+	        iStatement.setInt(4, iteration);
+	        iStatement.setBlob(5, new javax.sql.rowset.serial.SerialBlob(this.toXML(null).getBytes()));
+	        
+	        iStatement.executeUpdate();
+	        return true;
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    	return false;
+	    }
+	    
+
 	}
 }

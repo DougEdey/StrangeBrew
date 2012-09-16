@@ -127,6 +127,7 @@ import ca.strangebrew.ui.swing.dialogs.PotentialExtractCalcDialog;
 import ca.strangebrew.ui.swing.dialogs.PreferencesDialog;
 import ca.strangebrew.ui.swing.dialogs.PrintDialog;
 import ca.strangebrew.ui.swing.dialogs.RefractometerDialog;
+import ca.strangebrew.ui.swing.dialogs.RemoteRecipes;
 import ca.strangebrew.ui.swing.dialogs.ScaleRecipeDialog;
 
 import com.michaelbaranov.microba.calendar.DatePicker;
@@ -194,6 +195,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JButton btnAddHop = new JButton();
 	final private JButton btnAddMalt = new JButton();
 	final private JButton findButton = new JButton();
+	final private JButton remoteButton = new JButton();
 	final private JButton saveButton = new JButton();
 	final private JToolBar mainToolBar = new JToolBar();
 	final private JButton btnDelHop = new JButton();
@@ -229,6 +231,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final private JLabel fileNameLabel = new JLabel();
 	final private JPanel fileNamePanel = new JPanel();
 	final private JMenuItem findFileMenuItem = new JMenuItem();
+	final private JMenuItem remoteFileMenuItem = new JMenuItem();
+	final private JMenuItem pushFileMenuItem = new JMenuItem();
 	final private JMenuItem helpMenuItem = new JMenuItem();
 	final private JComboBox hopComboBox = new JComboBox();
 	final private JComboBox hopsUnitsComboBox = new JComboBox();
@@ -328,6 +332,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	final public Database DB;
 
 	private boolean dontUpdate = false;
+
+	public String recipeFile = "";
 
 	// an object that you give to other gui objects so that they can set things
 	// on the main SB GUI
@@ -861,6 +867,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		saveButton.addActionListener(this);
 		randomButton.addActionListener(this);
 		findButton.addActionListener(this);
+		remoteButton.addActionListener(this);
 		printButton.addActionListener(this);
 		copyButton.addActionListener(this);
 		aboutMenuItem.addActionListener(this);
@@ -884,6 +891,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		saveAsMenuItem.addActionListener(this);
 		saveMenuItem.addActionListener(this);
 		findFileMenuItem.addActionListener(this);
+		remoteFileMenuItem.addActionListener(this);
+		pushFileMenuItem.addActionListener(this);
 		openFileMenuItem.addActionListener(this);
 		newFileMenuItem.addActionListener(this);
 
@@ -1214,6 +1223,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									"ca/strangebrew/icons/find.gif")));
 							findButton.setToolTipText("Find Recipes");
 
+							mainToolBar.add(remoteButton);
+							remoteButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
+									"ca/strangebrew/icons/find.gif")));
+							remoteButton.setToolTipText("Find Recipes from SB Online!");
+
+							
 							mainToolBar.add(printButton);
 							printButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
 									"ca/strangebrew/icons/print.gif")));
@@ -1518,6 +1533,23 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 						findFileMenuItem.setText("Find");
 						findFileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.CTRL_MASK));
 						fileMenu.add(findFileMenuItem);
+						
+					}
+					{
+						imgURL = getClass().getClassLoader().getResource("ca/strangebrew/icons/find.gif");
+						icon = new ImageIcon(imgURL);
+						remoteFileMenuItem.setIcon(icon);
+						remoteFileMenuItem.setText("Find Remote Recipes");
+						
+						fileMenu.add(remoteFileMenuItem);
+						
+					}
+					{
+						
+						
+						pushFileMenuItem.setText("Upload to SB Online!");
+						
+						fileMenu.add(pushFileMenuItem);
 						
 					}
 					{
@@ -2021,6 +2053,13 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			FindDialog fd = new FindDialog(this);
 			fd.setModal(true);
 			fd.setVisible(true);
+		} else if (o == remoteButton) {
+			
+			RemoteRecipes rr = new RemoteRecipes(this);
+			rr.setModal(true);
+			rr.setVisible(true);
+			
+			
 		} else if (o == printButton) {
 			PrintDialog pd = new PrintDialog(this);
 			pd.setModal(true);
@@ -2186,6 +2225,56 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			FindDialog fd = new FindDialog(this);
 			fd.setModal(true);
 			fd.setVisible(true);
+		} else if (o == remoteFileMenuItem) {
+			// open the find dialog
+			if(DB.loadRRecipes()) {
+				RemoteRecipes rr = new RemoteRecipes(this);
+				rr.setModal(true);
+				rr.setVisible(true);
+				
+				
+				if(!recipeFile.equals("")) {
+					File file = new File(recipeFile);
+					Debug.print("Opening: " + file.getName() + ".\n");
+
+					OpenImport oi = new OpenImport();
+					myRecipe = oi.openFile(file);
+					currentFile = file;
+					if (oi.getFileType().equals("")) {
+
+						JOptionPane.showMessageDialog(null, "The file you've tried to open isn't a recognized format. \n"
+								+ "You can open: \n" + "StrangeBrew 1.x and Java files (.xml)\n" + "QBrew files (.qbrew)\n"
+								+ "BeerXML files (.xml)\n" + "Promash files (.rec)", "Unrecognized Format!",
+								JOptionPane.INFORMATION_MESSAGE);
+					}
+					if (oi.getFileType().equals("beerxml")) {
+						JOptionPane.showMessageDialog(null,
+								"The file you've opened is in BeerXML format.  It may contain \n"
+										+ "several recipes.  Only the first recipe is opened.  Use the Find \n"
+										+ "dialog to open other recipes in a BeerXML file.", "BeerXML!",
+								JOptionPane.INFORMATION_MESSAGE);
+					}
+					attachRecipeData();
+					checkIngredientsInDB();
+					myRecipe.setDirty(false);
+					myRecipe.calcMaltTotals();
+					myRecipe.calcHopsTotals();
+					myRecipe.mash.calcMashSchedule();
+					displayRecipe();
+				}
+				
+			}
+		} else if (o == pushFileMenuItem) {
+			int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to upload this recipe?",
+					"Info", JOptionPane.YES_NO_OPTION );
+			
+			// does the user want to subtract the ingredients from stock?
+			if(dialogResult == JOptionPane.YES_OPTION) {
+				// run the DB Subtract
+				Debug.print("Uploading recipe");
+				myRecipe.pushRecipe();
+			}
+			
 		} else if (o == openFileMenuItem) {
 			String path = new String();
 			if(preferences != null && preferences.getProperty("optRecipe") != null) {

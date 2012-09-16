@@ -26,10 +26,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.sqlite.JDBC;
+import javax.swing.JOptionPane;
 
 import com.mindprod.csv.CSVReader;
-import com.mindprod.csv.CSVWriter;
+
 
 /**
  * $Id: Database.java,v 1.27 2012/06/03 17:07:52 dougedey Exp $
@@ -64,6 +64,7 @@ public class Database {
 
 	// This is now a singleton
 	private Database() throws UnsupportedEncodingException {
+		
 		dbPath = SBStringUtils.getAppPath("data");
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -1603,5 +1604,46 @@ public class Database {
 		} catch (Exception e){
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean loadRRecipes() {
+
+		// Reads the list of recipes on the remote Database
+		Connection conn = null;
+
+	    try
+	    {
+	
+	        String url = "jdbc:mysql://mysql1.gohsphere.com:3306/gmnoel_strangebrew";
+	        Class.forName ("com.mysql.jdbc.Driver");
+	        conn = DriverManager.getConnection (url,"gmnoel_strange","brew1234");
+	        System.out.println ("Database connection established");
+	    
+	        Statement query = conn.createStatement();
+	        ResultSet allRecipesQuery;
+	        if(query.execute("SELECT ID, Brewer, Title, Style, Iteration FROM recipes;")) {
+	        
+	        	allRecipesQuery = query.getResultSet();
+	        	if(!allRecipesQuery.last()) {
+	        		JOptionPane.showMessageDialog(null, "No Recipes found in the online database!");
+	        		conn.close();
+	        		
+	        		return false;
+	        	}
+	        	
+	        	allRecipesQuery.first();
+	        	return true;
+	        	
+	        } else { 
+	        	
+	        	System.out.println("could not get recipes!");
+	        	return false;
+	        }
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    	return false;
+	    }
+	    
+
 	}
 } 

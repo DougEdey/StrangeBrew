@@ -32,7 +32,8 @@
       <pathelement path="${classpath}"/>
       <pathelement location="lib/microba.jar"/>
       <pathelement location="lib/BrowserLauncher2-all-10rc4.jar"/>
-    	<pathelement location="lib/sqlite-jdbc-3.7.2.jar"/>
+      <pathelement location="lib/sqlite-jdbc-3.7.2.jar"/>
+    	<pathelement location="mysql-connector-java-5.1.22-bin.jar"/>
     </classpath>
     </javac>
     <copy todir="${build}">
@@ -63,6 +64,7 @@
       <zipfileset src="lib/microba.jar" excludes="source/**"/>
       <zipfileset src="lib/BrowserLauncher2-all-10rc4.jar" excludes="source/**"/>
     	 <zipfileset src="lib/sqlite-jdbc-3.7.2.jar" excludes="source/**"/>
+   	 <zipfileset src="mysql-connector-java-5.1.22-bin.jar" excludes="source/**"/>
 		</jar>
 		
 		<copy file="gpl.txt" todir="${dist}"/>
