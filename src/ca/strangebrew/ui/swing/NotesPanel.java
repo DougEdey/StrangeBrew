@@ -222,18 +222,18 @@ public class NotesPanel extends javax.swing.JPanel implements ActionListener {
 
 	class NotesTableModel extends AbstractTableModel {
 		final private String[] columnNames = {"Date", "Type"};
-		private Recipe data = null;
+		//private Recipe data = null;
 
 		public NotesTableModel() {
 		}
 
 		public void addRow() {
 			Note n = new Note();
-			data.addNote(n);
+			myRecipe.addNote(n);
 		}
 
 		public void setData(Recipe d) {
-			data = d;
+			//myRecipe;
 		}
 
 		public int getColumnCount() {
@@ -241,8 +241,8 @@ public class NotesPanel extends javax.swing.JPanel implements ActionListener {
 		}
 
 		public int getRowCount() {
-			if (data != null)
-				return data.getNotesListSize();
+			if (myRecipe != null)
+				return myRecipe.getNotesListSize();
 			else
 				return 0;
 		}
@@ -256,10 +256,10 @@ public class NotesPanel extends javax.swing.JPanel implements ActionListener {
 			try {
 				switch (col) {
 					case 0 :
-						return SBStringUtils.dateFormatShort.format(data.getNoteDate(row));
+						return SBStringUtils.dateFormatShort.format(myRecipe.getNoteDate(row));
 					case 1 :						
 						
-						return data.getNoteType(row);
+						return myRecipe.getNoteType(row);
 
 				}
 			} catch (Exception e) {
@@ -301,13 +301,13 @@ public class NotesPanel extends javax.swing.JPanel implements ActionListener {
 					case 0 :
 						try {							
 							Date d = SBStringUtils.dateFormatShort.parse(value.toString());
-							data.setNoteDate(row, d);
+							myRecipe.setNoteDate(row, d);
 						} catch (ParseException e) {
 							System.out.println("Unable to parse " + value.toString());
 						}
 						break;
 					case 1 :
-						data.setNoteType(row, value.toString());
+						myRecipe.setNoteType(row, value.toString());
 						break;
 
 				}
