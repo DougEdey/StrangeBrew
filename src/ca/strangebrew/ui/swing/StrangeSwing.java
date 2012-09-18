@@ -1081,7 +1081,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 							spnOG.setModel(spnOgModel);
 							spnOG.addChangeListener(this);
 							spnOG.setEditor(new JSpinner.NumberEditor(spnOG, "0.000"));
-							spnOG.getEditor().setPreferredSize(new java.awt.Dimension(20, spnOG.getFont().getSize()*2));
+							//spnOG.getEditor().setPreferredSize(new java.awt.Dimension(20, spnOG.getFont().getSize()*2));
 							spnOG.setPreferredSize(new java.awt.Dimension(69, spnOG.getFont().getSize()*2));
 						}
 						{
@@ -2049,6 +2049,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			// generate a random name!
 			rName.generate();
 			txtName.setText(rName.getName());
+			myRecipe.setName(txtName.getText());
 		} else if (o == findButton) {
 			FindDialog fd = new FindDialog(this);
 			fd.setModal(true);
