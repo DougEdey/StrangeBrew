@@ -53,7 +53,7 @@ public class PromashImport {
 			Debug.print("Batch size: " + fl);			
 			fl = readFloat(in);
 			Debug.print("Wort size: " + fl);
-			myRecipe.setVolUnits("gal");
+			myRecipe.setReadVolUnits("gal");
 			myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), fl));
 			in.skip(8);
 			fl = readFloat(in);

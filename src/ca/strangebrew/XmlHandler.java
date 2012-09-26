@@ -533,7 +533,7 @@ public class XmlHandler extends DefaultHandler{
 				r.setPostBoil(new Quantity(r.getVolUnits(), Double.parseDouble(s)));
 			} else if (currentElement.equalsIgnoreCase("SIZE_UNITS")) {
 				// also sets postboil:
-				r.setVolUnits(s);			
+				r.setReadVolUnits(s);			
 //			} else if (currentElement.equalsIgnoreCase("ADDED_VOLUME")) {
 //				double d = Double.parseDouble(s);
 //				if ( d != 0 ) {

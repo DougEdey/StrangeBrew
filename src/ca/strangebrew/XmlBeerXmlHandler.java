@@ -249,7 +249,7 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 					myRecipe.setBrewer(s.trim());
 				if (currentElement.equalsIgnoreCase("BATCH_SIZE")){
 					myRecipe.setPostBoil(new Quantity(myRecipe.getVolUnits(), Double.parseDouble(s.trim())));
-					myRecipe.setVolUnits("l");
+					myRecipe.setReadVolUnits("l");
 				}
 //				if (currentElement.equalsIgnoreCase("TOP_UP_WATER")){
 //				    double d = Double.parseDouble(s);

@@ -22,7 +22,7 @@ import java.util.List;
 public class Quantity {
 
 	private String type; // can be vol, weight, or temp
-	private String unit; // must match one of the known units
+	private String unit = ""; // must match one of the known units
 	private String abrv; // ditto
 	private double value;
 
@@ -171,8 +171,11 @@ public class Quantity {
 	}
 
 	public void convertTo(String to){
-		value = Quantity.convertUnit(unit, to, value);
-		setUnits(to);
+		if(to != this.unit) {
+			Debug.print("converting: " + value + " to " + unit);
+			value = Quantity.convertUnit(unit, to, value);
+			setUnits(to);
+		}
 	}
 
 	//	 implement to support comboboxes in Swing:

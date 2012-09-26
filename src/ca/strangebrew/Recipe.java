@@ -181,11 +181,23 @@ public class Recipe {
 		carbTempU = opts.getProperty("optCarbTempU");
 		kegged = opts.getBProperty("optKegged");
 
-		// trigger the first re-calc:
-		kettleLossVol = new Quantity(opts.getProperty("optSizeU"), opts.getDProperty("optKettleLoss"));
-		trubLossVol = new Quantity(opts.getProperty("optSizeU"), opts.getDProperty("optTrubLoss"));
-		miscLossVol = new Quantity(opts.getProperty("optSizeU"), opts.getDProperty("optMiscLoss"));
-		setPostBoil(new Quantity(opts.getProperty("optSizeU"), opts.getDProperty("optPostBoilVol")));
+		// trigger the first re-calc, from the recipe size if available
+		String units = "";
+		try {
+			if(this.getVolUnits() != "" && this.getVolUnits() != opts.getProperty("optSizeU")) {
+				units = this.getVolUnits();
+			} else {
+				units = opts.getProperty("optSizeU");
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+		
+		kettleLossVol = new Quantity(units, opts.getDProperty("optKettleLoss"));
+		trubLossVol = new Quantity(units, opts.getDProperty("optTrubLoss"));
+		miscLossVol = new Quantity(units, opts.getDProperty("optMiscLoss"));
+		setPostBoil(new Quantity(units, opts.getDProperty("optPostBoilVol")));
 	}
 
 	// Recipe copy constructor
@@ -434,7 +446,10 @@ public class Recipe {
 	}
 
 	public String getVolUnits() {
-		return postBoilVol.getUnits();
+		if(postBoilVol != null){
+			return postBoilVol.getUnits();
+		} 
+		return "";
 	}
 
 	public double getSparge() {
@@ -1095,6 +1110,16 @@ public class Recipe {
 		postBoilVol.convertTo(v);
 		trubLossVol.convertTo(v);
 		miscLossVol.convertTo(v);
+		calcMaltTotals();
+		calcHopsTotals();
+	}
+	
+	public void setReadVolUnits(final String v) {
+		isDirty = true;
+		kettleLossVol.setUnits(v);
+		postBoilVol.setUnits(v);
+		trubLossVol.setUnits(v);
+		miscLossVol.setUnits(v);
 		calcMaltTotals();
 		calcHopsTotals();
 	}
