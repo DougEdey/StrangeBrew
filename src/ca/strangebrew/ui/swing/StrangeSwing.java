@@ -110,6 +110,7 @@ import ca.strangebrew.Quantity;
 import ca.strangebrew.RandomName;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
+import ca.strangebrew.SBVersion;
 import ca.strangebrew.Style;
 import ca.strangebrew.XmlTransformer;
 import ca.strangebrew.Yeast;
@@ -144,7 +145,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	// The one and only StrangeSwing
 	private static StrangeSwing instance = null;
 
-	public String version = "2.0.3";
+	public String version = SBVersion.VERSION;
 	public String edition = "Free";
 
 	// Stuff that should be final

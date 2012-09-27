@@ -37,6 +37,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
+import ca.strangebrew.SBVersion;
+
 
 public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 	private JTabbedPane aboutTabPanel;
@@ -90,12 +92,17 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 					{
 						versionLabel = new JLabel();
 						aboutPanel.add(versionLabel);
-						versionLabel.setText("Version: " + version);
+						
+						versionLabel.setText("<html>Version: " + SBVersion.VERSION + "<br />" +
+								"Build Date: " + SBVersion.BUILDDATE + "<br />" +
+								"Build: " + SBVersion.BUILDNUMBER + "</html>");
+								
+							
 					}
 					{
 						emailLabel = new JLabel();
 						aboutPanel.add(emailLabel);
-						emailLabel.setText("Contact: drew.avis@gmail.com");
+						emailLabel.setText("Contact: doug.edey@gmail.com");
 					}
 					{
 						copyrightLabel = new JLabel();
