@@ -19,6 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
@@ -159,6 +161,13 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 		// 		"Wed", "Thu", "Fri", "Sat" });
 		// weightSpn.setModel(weightSpnModel);
 		weightSpn.setValue(new Double(myRecipe.getTotalMalt()));
+		weightSpn.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent evt) {
+				// enable the radio button for this
+				weightBtn.setSelected(true);
+				return;
+			}
+		});
 
 		OGBtn = new JRadioButton("Target OG:");
 		jPanel4.add(OGBtn, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -170,6 +179,13 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 				2.000, 0.001);
 		jPanel4.add(OGSpn, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		OGSpn.setModel(OGSpnModel);
+		OGSpn.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent evt) {
+				// enable the radio button for this
+				OGBtn.setSelected(true);
+				return;
+			}
+		});
 
 		ComboModel<String> weightUComboModel = new ComboModel<String>();
 		weightUComboModel.setList(Quantity.getListofUnits("weight"));
@@ -179,6 +195,13 @@ public class MaltPercentDialog extends javax.swing.JDialog {
 		SmartComboBox.enable(weightUCombo);
 		jPanel4.add(weightUCombo, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		weightUCombo.setModel(weightUComboModel);
+		weightUCombo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				// enable the radio button for this
+				weightBtn.setSelected(true);
+				return;
+			}
+		});
 
 		OGSpn.setValue(new Double(myRecipe.getEstOg()));
 
