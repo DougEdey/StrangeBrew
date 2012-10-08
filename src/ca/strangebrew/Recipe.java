@@ -2021,12 +2021,13 @@ public class Recipe {
 	        pStatement.setString(1, this.getName());
 	        ResultSet allRecipesQuery = pStatement.executeQuery();
 	        int iteration = 0;
-	        
+	        Debug.print("seach for: " + this.getName());
 	        if(allRecipesQuery.last()) {
-	        
+	        	Debug.print("Found a recipe max: " + allRecipesQuery.getInt(1));
 	        	// we have more than one recipe, get the max
 	        	allRecipesQuery.first();
 	        	iteration = allRecipesQuery.getInt(1);
+	        	iteration++;
 	        	
 	        } 
 	        
