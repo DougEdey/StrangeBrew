@@ -579,6 +579,23 @@ public class XmlHandler extends DefaultHandler{
 			} else if (currentElement.equalsIgnoreCase("COLOUR_METHOD")) {
 				r.setColourMethod(s);
 			} else if (currentElement.equalsIgnoreCase("EVAP")) {
+				if(currentAttributes.getLength() > 0) {
+					int i = 0;
+					while(i < currentAttributes.getLength()) {
+						String attrName = currentAttributes.getQName(i);
+						Debug.print("Attr name: " +attrName);
+						String attrValue = currentAttributes.getValue(i);
+						if(attrName.equalsIgnoreCase("type")) {
+							if(attrValue.equalsIgnoreCase("6")) {
+								r.setEvapMethod("Percent");
+							} else {
+								r.setEvapMethod("Constant");
+							}
+						}
+						i++;
+					}
+				}
+					
 				r.setEvap(Double.parseDouble(s));
 			} else if (currentElement.equalsIgnoreCase("EVAP_METHOD")) {
 				r.setEvapMethod(s);
