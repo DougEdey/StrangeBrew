@@ -430,6 +430,7 @@ program:
 * Jason Landry - database updates
 * Jeroen Wouters - bug fixes
 * Greg LaPolla - bug fixes / ant build / windows installer
+* Sean Cotterill - for his research into Refractometer accuracy
 
 ==========
 Copyrights

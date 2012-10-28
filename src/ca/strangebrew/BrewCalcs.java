@@ -53,6 +53,7 @@ public class BrewCalcs {
 	public static double platoToSG(double plato)
 	{  // function to convert a value in Plato to SG
 	   // equation based on HBD#3723 post by AJ DeLange
+		
 	   double SG;
 	   SG = 1.0000131 + 0.00386777*plato + 1.27447E-5*plato*plato + 6.34964E-8*plato*plato*plato;
 	   return SG;
@@ -81,23 +82,61 @@ public class BrewCalcs {
 //	 Refractometer calculations
 
 	public static double brixToSG(double brix) {
-	  double sg = 1.000898 + 0.003859118*brix +
-	             0.00001370735*brix*brix + 0.00000003742517*brix*brix*brix;
+		// apply the wort correction factor
+		brix = brix/1.04;
+		double sg =((brix)/(258.6-(((brix)/258.2)*227.1))+1);
+		
+	  /*double sg = 1.000898 + 0.003859118*brix +
+	             0.00001370735*brix*brix + 0.00000003742517*brix*brix*brix;*/
 	  return sg;
 	}
 
 	public static double brixToFG(double ob, double fb){
-	  double fg = 1.001843 - 0.002318474*ob -
+		// apply wort correction
+		ob = ob/1.04;
+		fb = fb/1.04;
+		// ABV from OB and FB
+		double fg = 1.0000 - 0.00085683*ob + 0.0034941*fb;
+		
+	  /*double fg = 1.001843 - 0.002318474*ob -
 	             0.000007775*ob*ob - 0.000000034*ob*ob*ob +
-	             0.00574*fb + 0.00003344*fb*fb + 0.000000086*fb*fb*fb;
+	             0.00574*fb + 0.00003344*fb*fb + 0.000000086*fb*fb*fb;*/
 	  return fg;
 	}
 
 	public static double SGBrixToABV(double sg, double fb){
+//		return ((0.01/0.8192)*((C7/$E$3)-(0.1808*(C7/$E$3)+0.8192*(668.72*H7-463.37-205.347*H7^2)))/(2.0665-0.010665*(C7/$E$3))
+		fb = fb/1.04;
+		
 	  double ri  = 1.33302 + 0.001427193*fb + 0.000005791157*fb*fb;
 	  double abw = 1017.5596 - (277.4*sg) + ri*((937.8135*ri) - 1805.1228);
 	  double abv = abw * 1.25;
 	  return abv;
+	}
+	
+	public static double OBFBtoABV(double ob, double fb){
+
+		double cubic = 1.0178;
+		double fg = brixToFG(ob, fb);
+		fb = fb/1.04;
+		ob = ob/1.04;
+		double abv = 0.0;
+		if(fb == 0.0) {
+			Debug.print("fb is 0.0");
+			abv = ((0.01/0.8192)*((ob)-(0.1808*(ob)+0.8192*(668.72*cubic-463.37-205.347*Math.pow(cubic,2))))/(2.0665-0.010665*(ob)));
+		}
+		else {
+			Debug.print("fb is set");
+			abv = (0.01/0.8192)*(ob-(0.1808*(ob)+0.8192*(668.72*fg-463.37-205.347*Math.pow(fg,2))))/(2.0665-0.010665*ob);
+		}
+		abv = abv*100;
+		Debug.print("OBFB: " + abv);
+		return abv;
+		
+	  /*double ri  = 1.33302 + 0.001427193*fb + 0.000005791157*fb*fb;
+	  double abw = 1017.5596 - (277.4*sg) + ri*((937.8135*ri) - 1805.1228);
+	  double abv = abw * 1.25;
+	  return abv;*/
 	}
 
 	

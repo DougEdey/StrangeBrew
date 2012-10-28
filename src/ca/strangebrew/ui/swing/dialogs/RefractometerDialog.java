@@ -29,6 +29,7 @@ public class RefractometerDialog extends javax.swing.JDialog implements ActionLi
 	private JLabel jLabel7;
 	private JPanel jPanel5;
 	private JLabel fgLbl;
+	private JLabel babvLbl;
 	private JTextField finalBrixTxt;
 	private JTextField origBrixTxt;
 	private JLabel jLabel5;
@@ -66,10 +67,10 @@ public class RefractometerDialog extends javax.swing.JDialog implements ActionLi
 		double finalBrix = Double.parseDouble(finalBrixTxt.getText());
 		double fg = BrewCalcs.brixToFG(origBrix, finalBrix);
 		fgLbl.setText(SBStringUtils.format(fg, 3));
-		
-		finalBrix = Double.parseDouble(finalBrix2.getText());
 		fg = Double.parseDouble(fgTxt.getText());
-		double abv = BrewCalcs.SGBrixToABV(fg, finalBrix);
+		double abv = BrewCalcs.OBFBtoABV(origBrix, finalBrix);
+		babvLbl.setText(SBStringUtils.format(abv, 1));
+		abv = BrewCalcs.SGBrixToABV(fg, finalBrix);
 		abvLbl.setText(SBStringUtils.format(abv, 1));
 		
 	}
@@ -118,72 +119,81 @@ public class RefractometerDialog extends javax.swing.JDialog implements ActionLi
 		jPanel5.setBorder(BorderFactory.createTitledBorder("ABV from FG and Brix"));
 
 		jLabel7 = new JLabel();
-		jPanel5.add(jLabel7, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel5.add(jLabel7, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		jLabel7.setText("Final Brix:");
 
 		jLabel8 = new JLabel();
-		jPanel5.add(jLabel8, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel5.add(jLabel8, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		jLabel8.setText("FG:");
 
 		jLabel9 = new JLabel();
-		jPanel5.add(jLabel9, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel5.add(jLabel9, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		jLabel9.setText("ABV:");
 
 		finalBrix2 = new JTextField();
-		jPanel5.add(finalBrix2, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel5.add(finalBrix2, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		finalBrix2.setText("0.0");
-		finalBrix2.setPreferredSize(new java.awt.Dimension(55, finalBrix2.getFont().getSize()*2));
+		finalBrix2.setPreferredSize(new java.awt.Dimension(200, finalBrix2.getFont().getSize()*2));
 		finalBrix2.addFocusListener(this);
 		finalBrix2.addActionListener(this);
 
 		fgTxt = new JTextField();
-		jPanel5.add(fgTxt, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel5.add(fgTxt, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		fgTxt.setText("0.0");
-		fgTxt.setPreferredSize(new java.awt.Dimension(55, fgTxt.getFont().getSize()*2));
+		fgTxt.setPreferredSize(new java.awt.Dimension(200, fgTxt.getFont().getSize()*2));
 		fgTxt.addFocusListener(this);
 		fgTxt.addActionListener(this);
 
 		abvLbl = new JLabel();
-		jPanel5.add(abvLbl, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel5.add(abvLbl, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		abvLbl.setText("jLabel10");
 
 		jLabel3 = new JLabel();
-		jPanel4.add(jLabel3, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel4.add(jLabel3, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		jLabel3.setText("Original Brix:");
 
 		jLabel4 = new JLabel();
-		jPanel4.add(jLabel4, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel4.add(jLabel4, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		jLabel4.setText("Final Brix:");
 
 		jLabel5 = new JLabel();
-		jPanel4.add(jLabel5, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel4.add(jLabel5, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		jLabel5.setText("FG:");
+		
+		jLabel5 = new JLabel();
+		jPanel4.add(jLabel5, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+		jLabel5.setText("ABV:");
 
 		origBrixTxt = new JTextField();
-		jPanel4.add(origBrixTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel4.add(origBrixTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		origBrixTxt.setText("0.0");
-		origBrixTxt.setPreferredSize(new java.awt.Dimension(51, origBrixTxt.getFont().getSize()*2));
+		origBrixTxt.setPreferredSize(new java.awt.Dimension(200, origBrixTxt.getFont().getSize()*2));
 		origBrixTxt.addFocusListener(this);
 		origBrixTxt.addActionListener(this);
 
 		finalBrixTxt = new JTextField();
-		jPanel4.add(finalBrixTxt, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel4.add(finalBrixTxt, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		finalBrixTxt.setText("0.0");
-		finalBrixTxt.setPreferredSize(new java.awt.Dimension(51, finalBrixTxt.getFont().getSize()*2));
+		finalBrixTxt.setPreferredSize(new java.awt.Dimension(200, finalBrixTxt.getFont().getSize()*2));
 		finalBrixTxt.addFocusListener(this);
 		finalBrixTxt.addActionListener(this);
 
 		fgLbl = new JLabel();
-		jPanel4.add(fgLbl, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel4.add(fgLbl, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		fgLbl.setText("fgLbl");
 		fgLbl.setPreferredSize(new java.awt.Dimension(35, fgLbl.getFont().getSize()*2));
+		
+		babvLbl = new JLabel();
+		jPanel4.add(babvLbl, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+		babvLbl.setText("babvLbl");
+		babvLbl.setPreferredSize(new java.awt.Dimension(35, babvLbl.getFont().getSize()*2));
 
 		jLabel1 = new JLabel();
-		jPanel3.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel3.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		jLabel1.setText("Brix:");
 
 		brixTxt = new JTextField();
-		jPanel3.add(brixTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel3.add(brixTxt, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		brixTxt.setText("0.0" +
 				"");
 		brixTxt.setPreferredSize(new java.awt.Dimension(47, brixTxt.getFont().getSize()*2));
@@ -191,11 +201,11 @@ public class RefractometerDialog extends javax.swing.JDialog implements ActionLi
 		brixTxt.addActionListener(this);
 
 		jLabel2 = new JLabel();
-		jPanel3.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel3.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		jLabel2.setText("SG:");
 
 		sgLbl = new JLabel();
-		jPanel3.add(sgLbl, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		jPanel3.add(sgLbl, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 		sgLbl.setText("jLabel3");
 
 		jPanel2 = new JPanel();
