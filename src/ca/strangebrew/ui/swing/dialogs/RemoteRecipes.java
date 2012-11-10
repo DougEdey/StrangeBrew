@@ -34,8 +34,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -44,6 +49,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -56,6 +62,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import ca.strangebrew.Debug;
 import ca.strangebrew.OpenImport;
@@ -216,45 +234,55 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 	    try
 	    {
 	
-	        String url = "jdbc:mysql://mysql1.gohsphere.com:3306/gmnoel_strangebrew";
-	        Class.forName ("com.mysql.jdbc.Driver");
-	        conn = DriverManager.getConnection (url,"gmnoel_strange","brew1234");
-	        //System.out.println ("Database connection established");
-	    
-	        Statement query = conn.createStatement();
-	        ResultSet allRecipesQuery;
-	        if(query.execute("SELECT ID, Brewer, Title, Style, Iteration FROM recipes;")) {
+        	String baseURL = Options.getInstance().getProperty("cloudURL");
+	    	
+	    	URL url = new URL(baseURL+"/recipes/");
+	    	InputStream response = url.openStream();
+	    	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+	        dbf.setValidating(false);
+	        dbf.setIgnoringComments(false);
+	        dbf.setIgnoringElementContentWhitespace(true);
+	        dbf.setNamespaceAware(true);
+	        // dbf.setCoalescing(true);
+	        // dbf.setExpandEntityReferences(true);
+
+	        DocumentBuilder db = null;
+	        db = dbf.newDocumentBuilder();
+	        //db.setEntityResolver(new NullResolver());
+
+	        // db.setErrorHandler( new MyErrorHandler());
+
+	        Document readXML = db.parse(response);
 	        
-	        	allRecipesQuery = query.getResultSet();
-	        	if(!allRecipesQuery.last()) {
-	        		JOptionPane.showMessageDialog(null, "No Recipes found in the online database!");
-	        		conn.close();
-	        		this.close = true;
-	        		return;
-	        	}
+	        
+	        NodeList childNodes = readXML.getElementsByTagName("recipe");
+	        
+	        
+	        Debug.print("Loading recipes from online: "+ childNodes.getLength());    
+	        for(int x = 0; x < childNodes.getLength(); x++ ) {
 	        	
-	        	allRecipesQuery.first();
 	        	
-	        } else { 
+	        	Node child = childNodes.item(x);
+		        
+	        	NamedNodeMap childAttr = child.getAttributes();
 	        	
-	        	//System.out.println("could not get recipes!");
-	        	return;
-	        }
-		    
-			//List<BasicRecipe> recipes = new ArrayList<BasicRecipe>();
-			Debug.print("Loading recipes from online");
-			do {
-				
-				int ID = allRecipesQuery.getInt("ID");
-				String Brewer = allRecipesQuery.getString("Brewer");
-				String Title = allRecipesQuery.getString("Title");
-				String Style = allRecipesQuery.getString("Style");
-				int iteration = allRecipesQuery.getInt("Iteration");
+	        	
+	        	// generate the recipe list
+	        	
+				int ID = Integer.parseInt( childAttr.getNamedItem("id").getNodeValue() );
+				String Brewer = childAttr.getNamedItem("brewer").getNodeValue().toString();
+				String Title = childAttr.getNamedItem("name").getNodeValue().toString();
+				String Style = childAttr.getNamedItem("style").getNodeValue().toString();
+				int iteration = 0;//Integer.parseInt(childAttr.getNamedItem("iteration").getNodeValue());
 				Debug.print("Loading: " + Title);
 				BasicRecipe rRecipe = new BasicRecipe(ID, Brewer, Style, Title, iteration);
 				recipes.add(rRecipe);
 				
-			} while(allRecipesQuery.next());
+		    
+	        }
+		    
+		
 			recipeTableModel.setData(recipes);
 			recipeTable.updateUI();
 	    }
@@ -304,7 +332,7 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 			if (i > -1 && i < recipes.size()) {
 				// grab the Blob and name
 				int ID = recipes.get(i).id;
-				StrangeSwing.getInstance().recipeFile = getRemoteRecipe(ID);
+				StrangeSwing.getInstance().recipeFile = getRemoteRecipe(ID, recipes.get(i).brewer, recipes.get(i).title, recipes.get(i).iteration);
 				// open the file to write to
 				
 			}
@@ -315,51 +343,70 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 		}
 	}
 
-	private String getRemoteRecipe(int ID) {
+	private String getRemoteRecipe(int ID, String Title, String Brewer, int iteration) {
 		try
 	    {
-	
-	        String url = "jdbc:mysql://mysql1.gohsphere.com:3306/gmnoel_strangebrew";
-	        Class.forName ("com.mysql.jdbc.Driver");
-	        Connection conn = DriverManager.getConnection (url,"gmnoel_strange","brew1234");
-	        //System.out.println ("Database connection established");
-	    
-	        PreparedStatement query = conn.prepareStatement("SELECT  Brewer, Title, Style, Iteration, Recipe FROM recipes WHERE ID = ?;");
-	        query.setInt(1, ID);
-	        ResultSet allRecipesQuery = query.executeQuery();
-	        if(allRecipesQuery.last()) {
-	        	
-	        	allRecipesQuery.first();
-	        	Blob recipe = allRecipesQuery.getBlob("Recipe");
-	        	String Title = allRecipesQuery.getString("Title");
-	        	String Brewer = allRecipesQuery.getString("Brewer");
-	        	int iteration = allRecipesQuery.getInt("Iteration");
-	        	
-	        	
-	        	// check if we already have this file
-	        	String file = Title + " - " + Brewer + " ("+ iteration + ").xml";
-	        	
-	        	File recipeFile = new File(currentDir, file);
-	        	
-	        	if(recipeFile.exists()) {
-	        		
-	        		JOptionPane.showMessageDialog(null, "This file already exists!");
-	        		return recipeFile.getAbsolutePath();
-	        		
-	        	}
-	        	Debug.print("Writing recipe file: " + recipeFile.getAbsolutePath());
-	        	// file doesn't exist, lets dump the file 
-	        	OutputStream oStream = new FileOutputStream(recipeFile);
-	        	oStream.write(recipe.getBytes(1, (int) recipe.length()));
-	        	oStream.close();
-	        	return recipeFile.getAbsolutePath();
-	        } else { 
-	        	JOptionPane.showMessageDialog(null, "Couldn't find the selected recipe (ID "+ ID +")");
-        		conn.close();
+			String baseURL = Options.getInstance().getProperty("cloudURL");
+	    	
+	    	URL url = new URL(baseURL+"/recipes/"+ID);
+	    	InputStream response = url.openStream();
+	    	
+	    	HttpURLConnection huc =  ( HttpURLConnection )  url.openConnection (); 
+    	   huc.setRequestMethod ("GET"); 
+    	   huc.connect () ; 
+    	  
+    	   int code = huc.getResponseCode (  ) ;
+	    	
+	    	if(code != 200) {
+	    		JOptionPane.showMessageDialog(null, "Couldn't find the selected recipe (ID "+ ID +")");
+        		huc.disconnect();
         		this.close = true;
         		return ""	;
 	        	
-	        }
+	    	}
+	    	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+	        dbf.setValidating(false);
+	        dbf.setIgnoringComments(false);
+	        dbf.setIgnoringElementContentWhitespace(true);
+	        dbf.setNamespaceAware(true);
+	        // dbf.setCoalescing(true);
+	        // dbf.setExpandEntityReferences(true);
+
+	        DocumentBuilder db = null;
+	        db = dbf.newDocumentBuilder();
+	        //db.setEntityResolver(new NullResolver());
+
+	        // db.setErrorHandler( new MyErrorHandler());
+
+	        Document readXML = db.parse(response);
+	      
+        	// check if we already have this file
+        	String file = Title + " - " + Brewer + " ("+ iteration + ").xml";
+        	
+        	File recipeFile = new File(currentDir, file);
+        	
+        	if(recipeFile.exists()) {
+        		
+        		JOptionPane.showMessageDialog(null, "This file already exists!");
+        		return recipeFile.getAbsolutePath();
+        		
+        	}
+        	Debug.print("Writing recipe file: " + recipeFile.getAbsolutePath());
+        	// file doesn't exist, lets dump the file 
+        	Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        	transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        	
+        	StreamResult result = new StreamResult(new StringWriter());
+        	DOMSource source = new DOMSource(readXML);
+        	transformer.transform(source, result);
+        	
+        	OutputStream oStream = new FileOutputStream(recipeFile);
+        	String outXML = result.getWriter().toString();
+        	oStream.write(outXML.getBytes(Charset.forName("UTF-8")));
+        	oStream.close();
+        	return recipeFile.getAbsolutePath();
+	        
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	    	return "";

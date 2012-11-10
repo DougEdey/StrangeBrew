@@ -24,6 +24,16 @@
 
 package ca.strangebrew;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,6 +48,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
@@ -2007,40 +2018,69 @@ public class Recipe {
 	public boolean pushRecipe() {
 
 		// Pushes this Recipe to the remote output
-		Connection conn = null;
+		
 
 	    try
 	    {
-	
-	        String url = "jdbc:mysql://mysql1.gohsphere.com:3306/gmnoel_strangebrew";
-	        Class.forName ("com.mysql.jdbc.Driver");
-	        conn = DriverManager.getConnection (url,"gmnoel_strange","brew1234");
-	        System.out.println ("Database connection established");
-	    
-	        PreparedStatement pStatement = conn.prepareStatement("SELECT MAX(Iteration) FROM recipes WHERE Title = ?;");
-	        pStatement.setString(1, this.getName());
-	        ResultSet allRecipesQuery = pStatement.executeQuery();
-	        int iteration = 0;
-	        Debug.print("seach for: " + this.getName());
-	        if(allRecipesQuery.last()) {
-	        	Debug.print("Found a recipe max: " + allRecipesQuery.getInt(1));
-	        	// we have more than one recipe, get the max
-	        	allRecipesQuery.first();
-	        	iteration = allRecipesQuery.getInt(1);
-	        	iteration++;
-	        	
-	        } 
-	        
-	        // now we can insert
-	        PreparedStatement iStatement = conn.prepareStatement("INSERT INTO recipes (Brewer, Title, Style, Iteration, Recipe) VALUES (?, ?, ?, ?, ?)");
-	        
-	        iStatement.setString(1, this.getBrewer());
-	        iStatement.setString(2, this.getName());
-	        iStatement.setString(3, this.getStyle());
-	        iStatement.setInt(4, iteration);
-	        iStatement.setBlob(5, new javax.sql.rowset.serial.SerialBlob(this.toXML(null).getBytes()));
-	        
-	        iStatement.executeUpdate();
+	    	Debug.print("Need to push the recipe");
+	    	URLConnection urlconnection=null;
+	    	try{
+	    		  String xml = this.toXML(null);
+	    		  String baseURL = Options.getInstance().getProperty("cloudURL");
+	  	    	
+	    		  URL url = new URL(baseURL+"/recipes/");
+	    	
+	    		  urlconnection = url.openConnection();
+	    		  urlconnection.setDoOutput(true);
+	    		  urlconnection.setDoInput(true);
+	    	
+	    	if (urlconnection instanceof HttpURLConnection) {
+	    		try {
+	    	//     ((HttpURLConnection)urlconnection).setRequestMethod("POST");
+	    	  //   ((HttpURLConnection)urlconnection).setRequestProperty("Content-type", "text/html");
+	    	     ((HttpURLConnection)urlconnection).connect();
+
+
+	    	    } catch (ProtocolException e) {
+	    	     // TODO Auto-generated catch block
+	    	     e.printStackTrace();
+	    	    }
+	    	   }
+
+
+	    	   
+	    	   
+	    	   OutputStreamWriter writer = new OutputStreamWriter(urlconnection.getOutputStream());
+	    	   writer.write(this.toXML(null));
+	    	   writer.flush();
+	    	   
+	    	   System.out.println("Pushed");
+	    	   System.out.println(((HttpURLConnection)urlconnection).getResponseMessage());
+	    	  }
+	    	  catch(Exception e)
+	    	  {
+	    	   e.printStackTrace();
+	    	  }
+	    	  try {
+
+	    	   InputStream inputStream;
+	    	   int responseCode=((HttpURLConnection)urlconnection).getResponseCode();
+	    	   if ((responseCode>= 200) &&(responseCode<=202) ) {
+	    	    inputStream = ((HttpURLConnection)urlconnection).getInputStream();
+	    	    int j;
+	    	    while ((j = inputStream.read()) >0) {
+	    	     System.out.println(j);
+	    	    }
+
+	    	   } else {
+	    	    inputStream = ((HttpURLConnection)urlconnection).getErrorStream();
+	    	   }
+	    	   ((HttpURLConnection)urlconnection).disconnect();
+
+	    	  } catch (IOException e) {
+	    	   // TODO Auto-generated catch block
+	    	   e.printStackTrace();
+	    	  }
 	        return true;
 	    } catch (Exception e) {
 	    	e.printStackTrace();

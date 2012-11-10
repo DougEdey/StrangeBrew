@@ -8,7 +8,9 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -17,6 +19,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -27,6 +30,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JOptionPane;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.mindprod.csv.CSVReader;
 
@@ -1614,31 +1624,52 @@ public class Database {
 	    try
 	    {
 	
-	        String url = "jdbc:mysql://mysql1.gohsphere.com:3306/gmnoel_strangebrew";
-	        Class.forName ("com.mysql.jdbc.Driver");
-	        conn = DriverManager.getConnection (url,"gmnoel_strange","brew1234");
-	        System.out.println ("Database connection established");
-	    
-	        Statement query = conn.createStatement();
-	        ResultSet allRecipesQuery;
-	        if(query.execute("SELECT ID, Brewer, Title, Style, Iteration FROM recipes;")) {
+	    	String baseURL = Options.getInstance().getProperty("cloudURL");
+	    	
+	    	URL url = new URL(baseURL+"/recipes/");
+	    	InputStream response = url.openStream();
+	    	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+	        dbf.setValidating(false);
+	        dbf.setIgnoringComments(false);
+	        dbf.setIgnoringElementContentWhitespace(true);
+	        dbf.setNamespaceAware(true);
+	        // dbf.setCoalescing(true);
+	        // dbf.setExpandEntityReferences(true);
+
+	        DocumentBuilder db = null;
+	        db = dbf.newDocumentBuilder();
+	        //db.setEntityResolver(new NullResolver());
+
+	        // db.setErrorHandler( new MyErrorHandler());
+
+	        Document readXML = db.parse(response);
 	        
-	        	allRecipesQuery = query.getResultSet();
-	        	if(!allRecipesQuery.last()) {
-	        		JOptionPane.showMessageDialog(null, "No Recipes found in the online database!");
-	        		conn.close();
-	        		
-	        		return false;
-	        	}
-	        	
-	        	allRecipesQuery.first();
+	        
+	        NodeList childNodes = readXML.getChildNodes();
+	        
+	        Debug.print("Found: " + childNodes.getLength() + "Recipes " + childNodes.item(0).getNodeName());
+	        // check that we have a valid first node recipe
+	        if(childNodes.item(0).getNodeName().equals("recipes")){
 	        	return true;
-	        	
-	        } else { 
-	        	
-	        	System.out.println("could not get recipes!");
-	        	return false;
 	        }
+	        
+	        Debug.print("False");
+	        return false;
+	        /*
+	        for(int x = 0; x < childNodes.getLength(); x++ ) {
+	        	
+	        	
+	        	Node child = childNodes.item(x);
+		        
+	        	NamedNodeMap childAttr = child.getAttributes();
+	        	
+	        	childAttr.getNamedItem("id");
+	        	
+	        	
+		    
+	        }*/
+	        
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	    	return false;
