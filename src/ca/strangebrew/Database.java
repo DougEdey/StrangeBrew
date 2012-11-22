@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.text.DateFormat;
@@ -1625,8 +1626,9 @@ public class Database {
 	    {
 	
 	    	String baseURL = Options.getInstance().getProperty("cloudURL");
-	    	
-	    	URL url = new URL(baseURL+"/recipes/");
+	    	URI rURI = new URI("http", null, baseURL, 80, "/recipes/", null, null);
+	    	Debug.print("Trying to access: " + rURI.toString());
+	    	URL url = rURI.toURL();
 	    	InputStream response = url.openStream();
 	    	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 

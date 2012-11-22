@@ -26,10 +26,12 @@ package ca.strangebrew.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -39,6 +41,7 @@ import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.sql.Blob;
@@ -54,11 +57,13 @@ import java.util.Properties;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
@@ -80,6 +85,7 @@ import ca.strangebrew.OpenImport;
 import ca.strangebrew.Options;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
+import ca.strangebrew.ui.swing.ComboModel;
 import ca.strangebrew.ui.swing.StrangeSwing;
 
 public class RemoteRecipes extends javax.swing.JDialog implements ActionListener {
@@ -94,7 +100,9 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 	private JScrollPane recipeScrollPane;
 	private FindTableModel recipeTableModel;
 	private Options opt;
-
+	private JTabbedPane jTabbedPane1 = new JTabbedPane();
+	private JComboBox styles = new JComboBox();
+	private ComboModel styleModel = new ComboModel();
 	private List<BasicRecipe> recipes = new ArrayList<BasicRecipe>();
 	private List<File> files = new ArrayList<File>();
 	private File currentDir;
@@ -128,26 +136,38 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 
 	private void initGUI() {
 		try {
-			GridBagLayout thisLayout = new GridBagLayout();
-			thisLayout.columnWeights = new double[]{0.1};
+			BoxLayout thisLayout = new BoxLayout(this.getContentPane(), javax.swing.BoxLayout.Y_AXIS);
+			/*thisLayout.columnWeights = new double[]{0.1};
 			thisLayout.columnWidths = new int[]{7};
 			thisLayout.rowWeights = new double[]{0.7, 0.1, 0.1};
-			thisLayout.rowHeights = new int[]{7, 7, 7};
+			thisLayout.rowHeights = new int[]{7, 7, 7};*/
 			this.getContentPane().setLayout(thisLayout);
+			
+			this.getContentPane().add(jTabbedPane1);
 			{
-				findPanel = new JPanel();
-				this.getContentPane().add(
-						findPanel,
+				
+				findPanel = new JPanel(new GridBagLayout());
+				
+				
+				jTabbedPane1.addTab("Browse", null, findPanel, "Browse Recipes");
+/*				
 						new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.NORTH,
-								GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-				BoxLayout findPanelLayout = new BoxLayout(findPanel, javax.swing.BoxLayout.X_AXIS);
+								GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));*/
+				BoxLayout findPanelLayout = new BoxLayout(findPanel, javax.swing.BoxLayout.Y_AXIS);
+				//findPanelLayout.layoutContainer(thisLayout);
 				findPanel.setLayout(findPanelLayout);
-				findPanel.setPreferredSize(new java.awt.Dimension(392, 269));
+				//findPanel.setPreferredSize(new java.awt.Dimension(392, 269));
 				{
+					
+					styleModel.setList(getListOfStyles());
+					styles.setModel(styleModel);
+					styles.addActionListener(this);
+					
+					findPanel.add(styles);
+					
 					recipeScrollPane = new JScrollPane();
 					findPanel.add(recipeScrollPane);
-					// recipeScrollPane.setPreferredSize(new
-					// java.awt.Dimension(152, 75));
+					//recipeScrollPane.setPreferredSize(new java.awt.Dimension(152, 75));
 					{
 						recipeTableModel = new FindTableModel();
 						recipeTable = new JTable();
@@ -162,14 +182,16 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 				browsePanel = new JPanel();
 				this.getContentPane().add(
 						browsePanel,
-						new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
+						new GridBagConstraints(0, 1, 1, 1, 0.0, 0., GridBagConstraints.CENTER,
 								GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 				BorderLayout browsePanelLayout = new BorderLayout();
+				
 				browsePanel.setLayout(browsePanelLayout);
 				browsePanel.setBorder(BorderFactory.createTitledBorder("Directory"));
-				browsePanel.setPreferredSize(new java.awt.Dimension(392, 244));
+				browsePanel.setPreferredSize(new java.awt.Dimension(392, this.getFontMetrics(this.getFont()).getHeight()*5));
 				{
 					dirLocationText = new JTextField();
+					
 					browsePanel.add(dirLocationText, BorderLayout.CENTER);
 					dirLocationText.setText("jTextField1");
 				}
@@ -227,16 +249,83 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 	}
 
 	private void loadRecipes(File dir) {
+		/*
+	    try
+	    {
+	
+        	String baseURL = Options.getInstance().getProperty("cloudURL");
+        	URL url = new URI("http", baseURL, "recipes").toURL();
+	    	//URL url = new URL(baseURL+"/recipes/");
+	    	InputStream response = url.openStream();
+	    	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
-		// Reads the list of recipes on the remote Database
-		Connection conn = null;
+	        dbf.setValidating(false);
+	        dbf.setIgnoringComments(false);
+	        dbf.setIgnoringElementContentWhitespace(true);
+	        dbf.setNamespaceAware(true);
+	        // dbf.setCoalescing(true);
+	        // dbf.setExpandEntityReferences(true);
+
+	        DocumentBuilder db = null;
+	        db = dbf.newDocumentBuilder();
+	        //db.setEntityResolver(new NullResolver());
+
+	        // db.setErrorHandler( new MyErrorHandler());
+
+	        Document readXML = db.parse(response);
+	        
+	        
+	        NodeList childNodes = readXML.getElementsByTagName("recipe");
+	        
+	        
+	        Debug.print("Loading recipes from online: "+ childNodes.getLength());    
+	        for(int x = 0; x < childNodes.getLength(); x++ ) {
+	        	
+	        	
+	        	Node child = childNodes.item(x);
+		        
+	        	NamedNodeMap childAttr = child.getAttributes();
+	        	
+	        	
+	        	// generate the recipe list
+	        	
+				int ID = Integer.parseInt( childAttr.getNamedItem("id").getNodeValue() );
+				String Brewer = childAttr.getNamedItem("brewer").getNodeValue().toString();
+				String Title = childAttr.getNamedItem("name").getNodeValue().toString();
+				String Style = childAttr.getNamedItem("style").getNodeValue().toString();
+				int iteration = 0;//Integer.parseInt(childAttr.getNamedItem("iteration").getNodeValue());
+				Debug.print("Loading: " + Title);
+				BasicRecipe rRecipe = new BasicRecipe(ID, Brewer, Style, Title, iteration);
+				recipes.add(rRecipe);
+				
+		    
+	        }
+		    
+		
+	        recipeTableModel.setData(recipes);
+			recipeTable.updateUI();
+	    }
+	    catch (Exception e)
+	    {
+	        e.printStackTrace();
+	
+	    }
+		
+*/	
+
+	}
+	
+	private void loadRecipesByStyle(String style) {
 
 	    try
 	    {
 	
         	String baseURL = Options.getInstance().getProperty("cloudURL");
 	    	
-	    	URL url = new URL(baseURL+"/recipes/");
+	    	//URL url = new URL(baseURL+"/style/" + style);
+        	URI rURI = new URI("http", null, baseURL, 80, "/styles/"+style, null, null);
+	    	URL url = rURI.toURL();
+	    	
 	    	InputStream response = url.openStream();
 	    	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
@@ -291,22 +380,139 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 	        e.printStackTrace();
 	
 	    }
-		// done with the connection, close it
-        if (conn != null)
-        {
-            try
-            {
-                conn.close ();
-                //System.out.println ("Database connection terminated");
-            }
-            catch (Exception e) { /* ignore close errors */ }
-        }
+		
+
 
 	}
+	
+	private void loadRecipesByBrewer(String brewer) {
+
+	    try
+	    {
+	
+        	String baseURL = Options.getInstance().getProperty("cloudURL");
+        	URI rURI = new URI("http", null, baseURL, 80, "/brewer/"+brewer, null, null);
+	    	URL url = rURI.toURL();
+	    	InputStream response = url.openStream();
+	    	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+	        dbf.setValidating(false);
+	        dbf.setIgnoringComments(false);
+	        dbf.setIgnoringElementContentWhitespace(true);
+	        dbf.setNamespaceAware(true);
+	        // dbf.setCoalescing(true);
+	        // dbf.setExpandEntityReferences(true);
+
+	        DocumentBuilder db = null;
+	        db = dbf.newDocumentBuilder();
+	        //db.setEntityResolver(new NullResolver());
+
+	        // db.setErrorHandler( new MyErrorHandler());
+
+	        Document readXML = db.parse(response);
+	        
+	        
+	        NodeList childNodes = readXML.getElementsByTagName("recipe");
+	        
+	        
+	        Debug.print("Loading recipes from online: "+ childNodes.getLength());    
+	        for(int x = 0; x < childNodes.getLength(); x++ ) {
+	        	
+	        	
+	        	Node child = childNodes.item(x);
+		        
+	        	NamedNodeMap childAttr = child.getAttributes();
+	        	
+	        	
+	        	// generate the recipe list
+	        	
+				int ID = Integer.parseInt( childAttr.getNamedItem("id").getNodeValue() );
+				String Brewer = childAttr.getNamedItem("brewer").getNodeValue().toString();
+				String Title = childAttr.getNamedItem("name").getNodeValue().toString();
+				String Style = childAttr.getNamedItem("style").getNodeValue().toString();
+				int iteration = 0;//Integer.parseInt(childAttr.getNamedItem("iteration").getNodeValue());
+				Debug.print("Loading: " + Title);
+				BasicRecipe rRecipe = new BasicRecipe(ID, Brewer, Style, Title, iteration);
+				recipes.add(rRecipe);
+				
+		    
+	        }
+		    
+		
+			recipeTableModel.setData(recipes);
+			recipeTable.updateUI();
+	    }
+	    catch (Exception e)
+	    {
+	        e.printStackTrace();
+	
+	    }
+		
+
+
+	}
+	
+	private List<String> getListOfStyles() {
+
+		List<String> styles = new ArrayList<String>();
+	        
+	    try
+	    {
+	
+        	String baseURL = Options.getInstance().getProperty("cloudURL");
+        	URI rURI = new URI("http", null, baseURL, 80, "/styles/", null, null);
+	    	URL url = rURI.toURL();
+	    	//URL url = new URL(baseURL+"/styles/");
+	    	InputStream response = url.openStream();
+	    	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+	        dbf.setValidating(false);
+	        dbf.setIgnoringComments(false);
+	        dbf.setIgnoringElementContentWhitespace(true);
+	        dbf.setNamespaceAware(true);
+	        // dbf.setCoalescing(true);
+	        // dbf.setExpandEntityReferences(true);
+
+	        DocumentBuilder db = null;
+	        db = dbf.newDocumentBuilder();
+
+	        Document readXML = db.parse(response);
+	        NodeList childNodes = readXML.getElementsByTagName("style");
+	        
+	        
+	        Debug.print("Loading Styles from online: "+ childNodes.getLength());
+	      
+	        for(int x = 0; x < childNodes.getLength(); x++ ) {
+	        	
+	        	
+	        	Node child = childNodes.item(x);
+		        
+	        	// generate the style list
+	        	Debug.print("Style: " + child.getTextContent());
+	        	if(child.getTextContent() != null) {
+	        		styles.add(child.getTextContent());
+	        	}								
+		    
+	        }
+		    
+		
+			
+	    }
+	    catch (Exception e)
+	    {
+	        e.printStackTrace();
+	
+	    }
+		
+	    return styles;
+
+	}
+	
 	
 	public void focusGained() {
 		
 	}
+	
 	public void actionPerformed(ActionEvent e) {
 		if(close) {
 			Debug.print("Closing window");
@@ -340,6 +546,9 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 			setVisible(false);
 			dispose();
 			return;
+		} else if (o == styles) {
+			// someone selected a style, update the list based on the recipes
+			loadRecipesByStyle(styles.getSelectedItem().toString());
 		}
 	}
 
@@ -438,6 +647,11 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 
 		public FindTableModel() {
 			// data = new ArrayList();
+		}
+		
+		public FindTableModel(String filter) {
+			// data = new ArrayList();
+			// check to see if the filter value is a style or brewer
 		}
 
 		public void setData(List<BasicRecipe> l) {
