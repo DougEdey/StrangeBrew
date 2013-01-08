@@ -1640,16 +1640,20 @@ public class Recipe {
 
 		if (mash.getStepSize() > 0) {
 			sb.append("\nMash:\n");
-			sb.append(Recipe.padLeft("Step ", 10, ' ') + "  Temp   End    Ramp    Min\n");
+			sb.append(Recipe.padLeft("Step ", 10, ' ') + "  Temp   End    Ramp    Min	Input	Output	Water Temp\n");
 
-			mf = new MessageFormat("{0} {1} {2} {3} {4}\n");
+			mf = new MessageFormat("{0} {1} {2} {3} {4} {5} {6} {7}\n");
 			for (int i = 0; i < mash.getStepSize(); i++) {
 
 				final Object[] objm = { Recipe.padLeft(mash.getStepType(i), 10, ' '),
 						Recipe.padRight(" " + mash.getStepStartTemp(i), 6, ' '),
 						Recipe.padRight(" " + mash.getStepEndTemp(i), 6, ' '),
 						Recipe.padRight(" " + mash.getStepRampMin(i), 4, ' '),
-						Recipe.padRight(" " + mash.getStepMin(i), 6, ' ') };
+						Recipe.padRight(" " + mash.getStepMin(i), 6, ' '),
+						Recipe.padRight(" " + SBStringUtils.format(mash.getStepInVol(i), 2) , 6, ' '),
+						Recipe.padRight(" " + SBStringUtils.format(mash.getStepOutVol(i), 2), 6, ' '),
+						Recipe.padRight(" " + mash.getStepTemp(i), 6, ' ')};
+
 				sb.append(mf.format(objm));
 			}
 		}
