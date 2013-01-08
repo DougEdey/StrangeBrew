@@ -23,7 +23,7 @@ class MashTableModel extends AbstractTableModel {
 
 
 	private String[] columnNames = {"Type", "Method", "Start Temp", "End Temp",
-			"Ramp Min", "Step Min", "Weight", "Vol", "Temp" };
+			"Ramp Min", "Step Min", "Weight", "In", "Out", "Temp" };
 
 	private Mash data = null;
 
@@ -80,8 +80,10 @@ class MashTableModel extends AbstractTableModel {
 				case 6 :
 					return SBStringUtils.format(data.getStepWeight(row), 1);
 				case 7 :
-					return SBStringUtils.format(data.getStepVol(row), 1);
+					return SBStringUtils.format(data.getStepInVol(row), 1);
 				case 8 :
+					return SBStringUtils.format(data.getStepOutVol(row), 1);
+				case 9 :
 					return SBStringUtils.format(data.getStepTemp(row), 1);	
 
 

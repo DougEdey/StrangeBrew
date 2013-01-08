@@ -113,7 +113,8 @@ public class Mash {
 		private double temp;
 		private double weightLbs;
 		
-		public Quantity vol = new Quantity();
+		public Quantity inVol = new Quantity();
+		public Quantity outVol = new Quantity();
 		
 		// public Quantity decoctVol = new Quantity();
 
@@ -158,14 +159,22 @@ public class Mash {
 			this.endTemp = endTemp;
 		}
 
-		public Quantity getVol() {
-			return vol;
+		public Quantity getInVol() {
+			return inVol;
 		}
 
-		public void setvol(Quantity vol) {
-			this.vol = vol;
+		public void setInVol(Quantity vol) {
+			this.inVol = vol;
+		}
+		
+		public Quantity getOutVol() {
+			return outVol;
 		}
 
+		public void setOutVol(Quantity vol) {
+			this.outVol = vol;
+		}
+		
 		public String getMethod() {
 			return method;
 		}
@@ -525,12 +534,17 @@ public class Mash {
 		return ((MashStep)steps.get(i)).getMinutes();	
 	}
 
-	public double getStepVol(int i) {
-		double vol = ((MashStep)steps.get(i)).getVol().getValue();
+	public double getStepInVol(int i) {
+		double vol = ((MashStep)steps.get(i)).getInVol().getValue();
 		return Quantity.convertUnit(Quantity.QT, volUnits, vol);
 	
 	}
 	
+	public double getStepOutVol(int i) {
+		double vol = ((MashStep)steps.get(i)).getOutVol().getValue();
+		return Quantity.convertUnit(Quantity.QT, volUnits, vol);
+	
+	}
 	
 	public int getStepSize(){
 		return steps.size();
@@ -604,8 +618,8 @@ public class Mash {
 		mashVolQTS = calcMashVol(totalWeightLbs, mr);
 		totalMashTime += stp.minutes;
 		mashWaterQTS += waterAddedQTS;		
-		stp.vol.setUnits(Quantity.QT);
-		stp.vol.setAmount(waterAddedQTS);
+		stp.inVol.setUnits(Quantity.QT);
+		stp.inVol.setAmount(waterAddedQTS);
 		stp.temp = strikeTemp;
 		stp.method = INFUSION;
 		stp.weightLbs = totalWeightLbs;
@@ -617,7 +631,7 @@ public class Mash {
 
 		if (tempUnits == "C")
 			strikeTemp = BrewCalcs.fToC(strikeTemp);
-		stp.directions = "Mash in with " + SBStringUtils.format(stp.vol.getValueAs(volUnits),1 ) + " " + volUnits
+		stp.directions = "Mash in with " + SBStringUtils.format(stp.inVol.getValueAs(volUnits),1 ) + " " + volUnits
 				+ " of water at " + SBStringUtils.format(strikeTemp, 1) + " " + tempUnits;
 
 		// set TargetTemp to the end temp
@@ -630,6 +644,7 @@ public class Mash {
 			
 			// if this is a former sparge step that's been changed, change
 			// the method to infusion
+			Debug.print("Mash step Type: " + stp.type + " Method: " + stp.method);
 			if (!stp.type.equals(SPARGE) && ( stp.method.equals(FLY) || stp.method.equals(BATCH)))
 					stp.method = INFUSION;
 			
@@ -643,13 +658,14 @@ public class Mash {
 				waterAddedQTS = calcWaterAddition(targetTemp, currentTemp,
 						waterEquiv, boilTempF);
 				
-				stp.vol.setUnits(Quantity.QT);
-				stp.vol.setAmount(waterAddedQTS);
+				stp.outVol.setAmount(0);
+				stp.inVol.setUnits(Quantity.QT);
+				stp.inVol.setAmount(waterAddedQTS);
 				stp.temp = strikeTemp;
 				stp.weightLbs = totalWeightLbs;
 				if (tempUnits == "C")
 					strikeTemp = 100;				
-				stp.directions = "Add " + SBStringUtils.format(stp.vol.getValueAs(volUnits), 1) + " " + volUnits
+				stp.directions = "Add " + SBStringUtils.format(stp.inVol.getValueAs(volUnits), 1) + " " + volUnits
 						+ " of water at " + SBStringUtils.format(strikeTemp, 1) + " " + tempUnits;
 
 				mashWaterQTS += waterAddedQTS;
@@ -670,13 +686,14 @@ public class Mash {
 					ratio = thinDecoctRatio;
 				// Calculate volume (qts) of mash to remove
 				decoct = calcDecoction2(targetTemp, currentTemp, mashWaterQTS, ratio, totalWeightLbs);				
-				stp.vol.setUnits(Quantity.QT);
-				stp.vol.setAmount(decoct);
+				stp.outVol.setUnits(Quantity.QT);
+				stp.outVol.setAmount(decoct);
+				stp.inVol.setAmount(0);
 				stp.temp = boilTempF;
 				stp.weightLbs = totalWeightLbs;
 				
 				// Updated the decoction, convert to right units & make directions
-				stp.directions = "Remove " + SBStringUtils.format(stp.vol.getValueAs(volUnits), 1) + " " + volUnits
+				stp.directions = "Remove " + SBStringUtils.format(stp.outVol.getValueAs(volUnits), 1) + " " + volUnits
 						+ " of mash, boil, and return to mash.";
 
 			} else if (stp.method.equals(DIRECT)) { // calculate a direct heat step
@@ -688,7 +705,8 @@ public class Mash {
 					displTemp = BrewCalcs.fToC(displTemp);
 				stp.directions = "Add direct heat until mash reaches " + displTemp
 						+ " " + tempUnits + ".";
-				stp.vol.setAmount(0);
+				stp.inVol.setAmount(0);
+				stp.outVol.setAmount(0);
 				stp.temp = 0;
 				stp.weightLbs = totalWeightLbs;
 				
@@ -730,8 +748,9 @@ public class Mash {
 
 				totalMashTime += stp.minutes;				
 				mashWaterQTS += waterAddedQTS + extraWaterQTS;		
-				stp.vol.setUnits(Quantity.QT);
-				stp.vol.setAmount(waterAddedQTS);				
+				stp.inVol.setUnits(Quantity.QT);
+				stp.inVol.setAmount(waterAddedQTS);
+				stp.outVol.setAmount(0);
 				stp.temp = strikeTemp;				
 				
 				// make directions
@@ -758,6 +777,9 @@ public class Mash {
 				// add cereal mash to total weight
 				totalWeightLbs += stp.weightLbs;
 
+			} else {
+			
+				Debug.print("Unrecognised mash step: " + stp.method);
 			}
 
 			if (stp.type.equals(SPARGE)) 
@@ -776,12 +798,13 @@ public class Mash {
 		volQts = mashVolQTS;
 
 		// water use stats:
-		absorbedQTS = totalWeightLbs * 0.55; // figure from HBD
+		Debug.print("Total weight: " + totalWeightLbs);
+		absorbedQTS = totalWeightLbs * 0.52; // figure from HBD
 		
 		// spargeTotalQTS = (myRecipe.getPreBoilVol("qt")) - (mashWaterQTS - absorbedQTS);
 		totalWaterQTS = mashWaterQTS;
 		spargeQTS = myRecipe.getPreBoilVol(Quantity.QT) - (mashWaterQTS - absorbedQTS);		
-		
+		Debug.print("Sparge Quarts: " + spargeQTS);
 		
 		// Now let's figure out the sparging:		
 		if (numSparge == 0)
@@ -792,21 +815,30 @@ public class Mash {
 	    double collect[] = new double[numSparge];
 	    double totalCollectQts = myRecipe.getPreBoilVol(Quantity.QT);
 	    
-	    if (col < mashWaterQTS - absorbedQTS) {
-		     charge[0] = 0;
-		     collect[0] = mashWaterQTS - absorbedQTS;
-		     totalCollectQts = totalCollectQts - collect[0];
-		   }
-		   else {
-		     charge[0] = col - (mashWaterQTS - absorbedQTS);
-		     collect[0] = col;
-		     totalCollectQts = totalCollectQts - collect[0];
-		   }
-
-		   // do we need any more steps?
-		   if (numSparge > 1) {
-
-			col = totalCollectQts / (numSparge - 1);
+	    
+	    // do we need to add more water to charge up
+	    // is the amount we need to collect less than the initial mash volume - absorbption
+	    Debug.print("Col: " + col + " - " + mashWaterQTS + " - " + absorbedQTS);
+	   if (col < mashWaterQTS - absorbedQTS) {
+	    charge[0] = 0;
+	     collect[0] = mashWaterQTS - absorbedQTS; // how much we collected
+	     totalCollectQts = totalCollectQts - collect[0];
+	   }
+	   else {
+	     charge[0] = col - (mashWaterQTS - absorbedQTS); // add the additional water to get out the desired first collection amount PER sparge
+	     collect[0] = col;
+	     totalCollectQts = totalCollectQts - collect[0];
+	   }
+	    
+       // do we need any more steps?
+	    if(numSparge > 1) {
+	    	/*
+		    batch_1_sparge_liters = (boil_size_l/<total number of steps> – mash_water_l + grain_wt_kg * 0.625)
+		    		batch_2_liters = boil_size_l / <total number of steps>
+		    	*/
+		   Debug.print("NumSparge: " + numSparge);
+			
+			Debug.print("Collecting: " + col);
 			for (int i = 1; i < numSparge; i++) {
 				charge[i] = col;
 				collect[i] = col;
@@ -816,9 +848,13 @@ public class Mash {
 	    int j=0;
 		for (int i = 1; i < steps.size(); i++) {
 			stp = ((MashStep) steps.get(i));			
-			if (stp.getType().equals(SPARGE)) {	
-				stp.vol.setUnits(Quantity.QT);
-				stp.vol.setAmount(collect[j]);
+			if (stp.getType().equals(SPARGE)) {
+
+				stp.inVol.setUnits(Quantity.QT);
+				stp.inVol.setAmount(charge[j]);
+				
+				stp.outVol.setUnits(Quantity.QT);
+				stp.outVol.setAmount(collect[j]);
 				stp.temp = SPARGETMPF;
 				totalSpargeTime += stp.getMinutes();
 				String collectStr = SBStringUtils.format(Quantity.convertUnit(Quantity.QT, volUnits, collect[j]), 1) +
@@ -837,8 +873,12 @@ public class Mash {
 					stp.setDirections("Add " + add + " at " + tempStr + " to collect " + collectStr);
 					
 				} else {
-					stp.vol.setUnits(Quantity.QT);
-					stp.vol.setAmount(spargeQTS);
+					stp.inVol.setUnits(Quantity.QT);
+					stp.inVol.setAmount(spargeQTS);
+
+					stp.outVol.setUnits(Quantity.QT);
+					stp.outVol.setAmount(collect[j]);
+					
 					stp.setMethod(FLY);					
 					stp.setDirections("Sparge with " + 
 							SBStringUtils.format(Quantity.convertUnit("qt", volUnits, spargeQTS), 1) +
