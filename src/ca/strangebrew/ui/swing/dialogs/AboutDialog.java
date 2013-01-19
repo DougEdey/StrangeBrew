@@ -20,23 +20,31 @@
 package ca.strangebrew.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
+import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.SBVersion;
 
 
@@ -55,6 +63,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 	private JPanel readmePanel;
 	private JPanel aboutPanel;
 	private JButton okButton;
+	private JButton updateButton;
 
 	
 	private String version;
@@ -68,6 +77,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 	
 	private void initGUI() {
 		try {
+			String iniPath = SBStringUtils.getAppPath("ini");
 			BoxLayout thisLayout = new BoxLayout(this.getContentPane(), javax.swing.BoxLayout.Y_AXIS);
 			this.getContentPane().setLayout(thisLayout);
 			{
@@ -125,20 +135,24 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 							jScrollPane1.setViewportView(readmeTextArea);
 							readmeTextArea.setText("jTextArea1");							
 							readmeTextArea.setWrapStyleWord(true);
-							
-							File readme = new File("readme");
-							FileReader in = new FileReader(readme);
-							BufferedReader inb = new BufferedReader(in);
-							String c;
-							String s="";
-							// TODO: what if there's no readme file?
-					        while ((c = inb.readLine()) != null){
-					        	s = s + c + "\n";
-					        }					           
-					        readmeTextArea.setText(s);
-					        readmeTextArea.setLineWrap(true);
-
-					        in.close();
+							try {
+								
+								File readme = new File(iniPath + "readme");
+								FileReader in = new FileReader(readme);
+								BufferedReader inb = new BufferedReader(in);
+								String c;
+								String s="";
+								// TODO: what if there's no readme file?
+						        while ((c = inb.readLine()) != null){
+						        	s = s + c + "\n";
+						        }					           
+						        readmeTextArea.setText(s);
+						        readmeTextArea.setLineWrap(true);
+	
+						        in.close();
+							} catch (FileNotFoundException e) {
+								
+							}
 						}
 					}
 				}
@@ -154,7 +168,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 							licenseTextArea = new JTextArea();
 							jScrollPane2.setViewportView(licenseTextArea);
 							licenseTextArea.setText("jTextArea1");
-							File readme = new File("gpl.txt");
+							File readme = new File(iniPath + "gpl.txt");
 							FileReader in = new FileReader(readme);
 							BufferedReader inb = new BufferedReader(in);
 							String c;
@@ -176,8 +190,10 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 				FlowLayout jPanel1Layout = new FlowLayout();
 				jPanel1Layout.setAlignment(FlowLayout.RIGHT);
 				buttonPanel.setLayout(jPanel1Layout);
-				this.getContentPane().add(buttonPanel);				
+				this.getContentPane().add(buttonPanel);
+				buttonPanel.add(getUpdateButton());
 				buttonPanel.add(getOkButton());				
+				
 			}
 			this.setSize(518, 372);
 		} catch (Exception e) {
@@ -196,11 +212,92 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 		return okButton;
 	}
 	
+	private JButton getUpdateButton () {
+		if (updateButton == null){
+			updateButton = new JButton();
+			buttonPanel.add(updateButton);
+			updateButton.setText("Check for Updates");
+			updateButton.addActionListener(this);
+		
+		}
+		
+		return updateButton;
+	}
+	
+	private void checkVersion() {
+		// check the latest URL on github
+		URL Build = null;
+		try {
+			Build = new URL("https://raw.github.com/DougEdey/StrangeBrew/master/src/ca/strangebrew/SBVersion.java");
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			return;
+		}
+		
+        BufferedReader in;
+		try {
+			in = new BufferedReader(
+			new InputStreamReader(Build.openStream()));
+	        String inputLine;
+	        while ((inputLine = in.readLine()) != null)
+	            if(inputLine.contains("BUILDNUMBER")) {
+	            	//got the build ID line
+	            	String [] splitLine = inputLine.split(" ");
+	            	String vTemp = splitLine[splitLine.length-1];
+	            	vTemp = vTemp.substring(1, vTemp.length()-2);
+	            	int newBuildID = Integer.parseInt(vTemp);
+	            	
+	            	if( newBuildID > Integer.parseInt(SBVersion.BUILDNUMBER)) {
+	            		// newest Build ID means there's a new download avalable!
+	            		Object[] options = {"Yes, please",
+	                            "No, thanks"};
+	            		
+	            		int n = JOptionPane.showOptionDialog(this.getContentPane(),
+	            			    "New download available (Build ID " + SBVersion.BUILDNUMBER + ")"
+	            			    + ". Would you like to download it?",
+	            				
+	            			    "New Version Available!",
+	            			    JOptionPane.YES_NO_OPTION,
+	            			    JOptionPane.QUESTION_MESSAGE,
+	            			    null,
+	            			    options,
+	            			    options[0]);
+	            		
+	            		if (n == 0) {
+	            			// User Selected Yes to download
+	            			Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+	            		    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+	            		        try {
+	            		        	URL DLURL = new URL("https://github.com/DougEdey/StrangeBrew/blob/master/StrangeBrew-2.1.0-b"+newBuildID+".zip?raw=true");
+	            		        	
+	            		            desktop.browse(DLURL.toURI());
+	            		        } catch (Exception e) {
+	            		            e.printStackTrace();
+	            		        }
+	            		    }
+	            		}
+	            	} else {
+	            		JOptionPane.showMessageDialog(this.getContentPane(),
+	            			    "No updates available!");
+	            	}
+	            }
+	        in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return;
+	}
+	
 //	Make the button do the same thing as the default close operation
 	//(DISPOSE_ON_CLOSE).
 	public void actionPerformed(ActionEvent e) {
-		setVisible(false);
-		dispose();
+		if (e.getSource() == updateButton) {
+			checkVersion();
+		} else {
+			setVisible(false);
+			dispose();
+		}
 	}
 
 }

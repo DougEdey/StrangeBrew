@@ -6,7 +6,7 @@
 		/** JabaDex major release version */
 		public final static String VERSION =
 			2 + "." + 1 + "." + 0;
-		public final static String BUILDDATE = "January  7, 2013";
-		public final static String BUILDNUMBER = "109";
+		public final static String BUILDDATE = "January 18, 2013";
+		public final static String BUILDNUMBER = "116";
 	}
 	
