@@ -11,6 +11,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 import javax.swing.MutableComboBoxModel;
 
+import ca.strangebrew.Debug;
 import ca.strangebrew.Fermentable;
 import ca.strangebrew.Hop;
 import ca.strangebrew.Style;
@@ -64,11 +65,10 @@ public class ComboModel<T> extends AbstractListModel implements MutableComboBoxM
 		// otherwise, set the found index to the selected index
 		
 		if (!found) {
+			Debug.print("removing dupe " + o.toString());
 			list.add(o);			
 			selected = o;
-		}
-		
-		else {
+		} else {
 			selected = list.get(i-1);
 		}
 
@@ -97,13 +97,18 @@ public class ComboModel<T> extends AbstractListModel implements MutableComboBoxM
 	}
 
 	public void setList(List<T> l) {
+		Debug.print("Size of list ("+l.size() + ") incoming: " + list.size());
 		list = l;
+		Debug.print("Size of list outgoing: " + list.size());
 	}
 	
 	public void setList(T[] sList) {
+		Debug.print("Size of list ("+sList.length + ") incoming: " + list.size());
+		list.clear();
 		for (int i=0; i<sList.length; i++) {
 			list.add(sList[i]);
 		}
+		Debug.print("Size of list outgoing: " + list.size());
 	}
 
 	public void addElement(Object item) {

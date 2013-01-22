@@ -249,6 +249,14 @@ public class Database {
 		}
 		
 		try {
+			styleDB.clear();
+			stockFermDB.clear();
+			fermDB.clear();
+			stockHopsDB.clear();
+			hopsDB.clear();
+			yeastDB.clear();
+			waterDB.clear();
+			
 			readFermentables(dbPath);
 			readPrimeSugar(dbPath);
 			readHops(dbPath);
@@ -257,6 +265,7 @@ public class Database {
 			importStyles(dbPath, styleYear);
 			readWater(dbPath);
 		
+			
 			// sort
 			Debug.print(styleDB.size());
 			Collections.sort(styleDB);
@@ -315,7 +324,7 @@ public class Database {
 							
 							sql = "insert into fermentables (Name,Yield,Lov,Cost,Stock,Units,Mash,Descr,Steep,Modified) " +
 														"values(?, ?,    ?,  ? ,  ? ,   ?,    ?,    ?,   ?,     ?)";	
-							Debug.print("Adding fermentable "+fields[nameIdx]);
+							
 							pStatement = conn.prepareStatement(sql);
 							 pStatement.setString(1, fields[nameIdx]);
 							 pStatement.setString(2, fields[pppgIdx]);
@@ -357,12 +366,14 @@ public class Database {
 			
 			Fermentable f = new Fermentable();
 			ResultSet res = statement.executeQuery("SELECT * FROM fermentables");
+			// we weren't clearing this when updating
+			stockFermDB.clear();
 			
 			
 			while (res.next()) {
 				f = new Fermentable();
 				//Item,Name,Yield,Lov,Cost,Stock,Units,Mash,Descr,Steep,Modified 
-				Debug.print("Loading from database: "+ res.getString("Name"));
+				
 				f.setName(res.getString("Name"));
 				f.setPppg(Double.parseDouble(res.getString("Yield")));
 				f.setLov(Double.parseDouble(res.getString("Lov")));
@@ -378,7 +389,7 @@ public class Database {
 				else
 					f.setStock(0);
 				
-				Debug.print("Loading from DB Stock: " + res.getString("Stock")+ " - " + f.getStock());
+				
 				f.setDescription(res.getString("Descr"));
 				f.setModified(Boolean.valueOf(res.getString("Modified")).booleanValue());
 				fermDB.add(f);
@@ -390,6 +401,8 @@ public class Database {
 					stockFermDB.add(f); 
 				} 
 			}
+			Debug.print("Ferm Found " + res.getRow());
+			
 			Collections.sort(fermDB);
 
 		} catch (IOException e) {
@@ -474,7 +487,7 @@ public class Database {
 				pStatement.setString(1, f.getName());
 				res = pStatement.executeQuery();
 				res.next();
-				Debug.print("Checking for: "+f.getName() + " ("+ f.getPppg() + ") - " + res.getInt(1));
+				
 				if(res.getInt(1) == 0){
 					insertFerm.setString(1, f.getName());
 					insertFerm.setString(2, Double.toString(f.getPppg()));
@@ -572,7 +585,7 @@ public class Database {
 						fields = reader.getAllFieldsInLine();
 						
 						//Item,Name,Alpha,Cost,Stock,Units,Descr,Storage,Date,Modified
-						Debug.print("SELECT COUNT(*) FROM hops WHERE name='"+fields[nameIdx]+"';");
+						
 						pStatement = conn.prepareStatement("SELECT COUNT(*) FROM hops WHERE name=?;");
 						
 						pStatement.setString(1, fields[nameIdx]);
@@ -583,7 +596,7 @@ public class Database {
 							
 						sql = "insert into hops (Name,Alpha,Cost,Stock,Units,Descr,Storage,Date,Modified) " +
 													"values(?,  ?,  ? ,  ? ,   ?,    ?,    ?,   ?,   ?)";	
-						Debug.print("Adding hop "+fields[nameIdx]);
+						
 						pStatement = conn.prepareStatement(sql);
 							 pStatement.setString(1, fields[nameIdx]);
 							 pStatement.setString(2, fields[alphaIdx]);
@@ -633,8 +646,8 @@ public class Database {
 			// read the hops from the csv file
 			res = statement.executeQuery("SELECT * FROM hops");
 		
-		
-		
+			hopsDB.clear();
+			
 		while (res.next()) {
 			Hop h = new Hop();
 			//Item,Name,Alpha,Cost,Stock,Units,Descr,Storage,Date,Modified
@@ -664,9 +677,10 @@ public class Database {
 			} 
 			
 			//Item,Name,Yield,Lov,Cost,Stock,Units,Mash,Descr,Steep,Modified 
-			Debug.print("Loading from database: "+ res.getString("Name"));
+			
 			
 		}
+		Debug.print("Hops Found " + res.getRow());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -732,12 +746,9 @@ public class Database {
 					res = rStatement.executeQuery();
 					
 					res.next();
-					Debug.print(h.getName() + " - " + h.getStock());
+					
 					if(res.getInt(1) == 0) {
-						Debug.print("SELECT COUNT(*) FROM hops WHERE name = " + h.getName() + 
-								" AND Alpha=" + h.getAlpha() +" AND Cost= " + Double.toString(h.getCostPerU()) + 
-								" AND Stock=" + h.getStorage() + " AND " +
-								"Units= " + h.getUnitsAbrv() + " AND Descr= " + h.getDescription() + " AND Storage= " + Double.toString(h.getStorage()) +" ;" );
+						
 						updateMisc.setString(1, Double.toString(h.getAlpha()));
 						updateMisc.setString(2, Double.toString(h.getCostPerU()));
 						updateMisc.setString(3, Double.toString(h.getStock()));
@@ -813,7 +824,7 @@ public class Database {
 									
 									sql = "insert into yeast (Name,Cost,Descr,Modified) " +
 																"values(?,  ?,  ? ,  ? )";	
-									Debug.print("Adding yeast "+fields[nameIdx]);
+									
 									pStatement = conn.prepareStatement(sql);
 									 pStatement.setString(1, fields[nameIdx]);
 									 pStatement.setString(2, fields[costIdx]);
@@ -858,24 +869,27 @@ public class Database {
 					// read the hops from the csv file
 					res = statement.executeQuery("SELECT * FROM yeast");
 				
+					yeastDB.clear();
 				
-				
-				while (res.next()) {
-					Yeast y = new Yeast();
-					
-					y.setName(res.getString("Name"));
+					while (res.next()) {
+						Yeast y = new Yeast();
+						
+						y.setName(res.getString("Name"));
+	
+						if (!res.getString("Cost").equals(""))
+							y.setCost(Double.parseDouble(res.getString("Cost")));
+						
+						y.setDescription(res.getString("Descr"));
+						y.setModified(Boolean.valueOf(res.getString("Modified")).booleanValue());
+						yeastDB.add(y);
+						
+						
+						
+						
+					}
 
-					if (!res.getString("Cost").equals(""))
-						y.setCost(Double.parseDouble(res.getString("Cost")));
-					
-					y.setDescription(res.getString("Descr"));
-					y.setModified(Boolean.valueOf(res.getString("Modified")).booleanValue());
-					yeastDB.add(y);
-					
-					
-					Debug.print("Loading from database: "+ res.getString("Name"));
-					
-				}
+				Debug.print("Yeast" + res.getRow());
+			
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -980,7 +994,7 @@ public class Database {
 							
 							sql = "insert into styleguide (Name, Category,OG_Low,OG_High,Alc_Low,Alc_High,IBU_Low,IBU_High,Lov_Low,Lov_High,Comm_examples,Descr, Year) " +
 														"values(?, ?,  ?,  ? ,  ?,?,  ?,  ? ,  ?, ?,  ?,  ?, ?  )";	
-							Debug.print("Adding Style "+fields[nameIdx]);
+							
 							pStatement = conn.prepareStatement(sql);
 							 pStatement.setString(1, fields[nameIdx]);
 							 pStatement.setString(2, fields[catIdx]);
@@ -1021,8 +1035,10 @@ public class Database {
 				statement = conn.createStatement();
 			// read the hops from the csv file
 			res = statement.executeQuery("SELECT * FROM styleguide");
-		
-		
+			
+			
+			
+			styleDB.clear();
 		
 			while (res.next()) {
 			Style s = new Style();
@@ -1042,6 +1058,8 @@ public class Database {
 			s.comments = res.getString("Descr");
 			styleDB.add(s);
 			}
+			
+			Debug.print("Style Found " + res.getRow());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1062,22 +1080,22 @@ public class Database {
 		try {
 			
 			 styleFile = new File(path, styleFileName);
-			 Debug.print(".");
+			 
 		} catch (NullPointerException e) {
 			// do nothing
 			e.printStackTrace();
 		}
-		Debug.print(styleFile.toString() + Boolean.toString(styleFile.exists()));
+		
 		if(styleFile != null && styleFile.exists()) {
 			Debug.print("Opening: " + path + styleFile.toString() + ".\n");
 			
 			ImportXml imp = new ImportXml(styleFile.toString(), "style");
-			Debug.print(".");
+			
 			styleDB = imp.styleHandler.getStyles();
 			
 			for(Style style : styleDB) {
 				sql = "SELECT COUNT(*) FROM styleguide WHERE name = ? AND year = ?";
-				Debug.print(sql);
+				
 				try {
 					pStatement = conn.prepareStatement(sql);
 					pStatement.setString(1, style.getName());
@@ -1086,7 +1104,7 @@ public class Database {
 					res = pStatement.executeQuery();
 					
 					res.next();
-					Debug.print("Found " + res.getInt(1) + "rows");
+					
 					if(res.getInt(1) == 0 && !style.name.equals("")) {
 						// Add this to the style db
 						//Item,Name, Category, OG_Low, OG_High, IBU_Low, IBU_High, Lov_Low, Lov_High,"
@@ -1137,7 +1155,7 @@ public class Database {
 			
 			
 		} // File existed, we can now move on and read from the DB
-		Debug.print("Year: " + year);
+		
 		try {
 			sql = "SELECT * FROM styleguide WHERE year = ?";
 			pStatement = conn.prepareStatement(sql);
@@ -1217,7 +1235,7 @@ public class Database {
 					while (true) {
 						fields = reader.getAllFieldsInLine();
 						//Item,Name,Descr,Stock,Units,Cost,Stage,Modified
-						Debug.print("SELECT COUNT(*) FROM misc WHERE name='"+fields[nameIdx]+"';");
+						
 						pStatement = conn.prepareStatement("SELECT COUNT(*) FROM misc WHERE name=?;");
 						
 					
@@ -1232,7 +1250,7 @@ public class Database {
 							
 						sql = "insert into misc (Name,Descr,Stock,Units,Cost,Stage) " +
 													"values(?, ?,  ?,  ? ,  ?,?  )";	
-						Debug.print("Adding misc "+fields[nameIdx]);
+						
 						
 						pStatement = conn.prepareStatement(sql);
 						
@@ -1272,22 +1290,24 @@ public class Database {
 			Debug.print("Loading misc ingredients");
 			pStatement = conn.prepareStatement("SELECT * FROM misc;");
 			
+			miscDB.clear();
 			ResultSet res = pStatement.executeQuery();
 			// get the first line and set up the index:
 			while(res.next()) {
 				Misc m = new Misc();
 				
 				m.setName(res.getString("Name"));
-				Debug.print(res.getString("Cost"));
+				
 				if ((res.getString("Cost") != null) && !res.getString("Cost").equals(""))
 					m.setCost(Double.parseDouble(res.getString("Cost")));
-				Debug.print(".");
+				
 				m.setDescription(res.getString("Descr"));
 				m.setUnits(res.getString("Units"));
 				m.setStage(res.getString("Stage"));	
 				m.setModified(Boolean.valueOf(res.getString("Modified")).booleanValue());
 				miscDB.add(m);
 			}
+			Debug.print("Found " + res.getRow());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1371,7 +1391,7 @@ public class Database {
 					while (true) {
 						fields = reader.getAllFieldsInLine();
 						sql = "SELECT COUNT(*) FROM prime WHERE Name = ?";
-						Debug.print(sql);
+						
 						pStatement = conn.prepareStatement(sql);
 						pStatement.setString(1, fields[nameIdx]);
 						res = pStatement.executeQuery();
@@ -1380,7 +1400,6 @@ public class Database {
 							// No results from the DB, add it in
 							sql = "INSERT INTO prime (Name,Yield,Units,Descr) VALUES ("+
 														"?, ?, ?, ?);";
-							Debug.print(sql);
 							pStatement = conn.prepareStatement(sql);
 							
 							pStatement.setString(1, fields[nameIdx]);
@@ -1410,7 +1429,8 @@ public class Database {
 		try {
 			pStatement = conn.prepareStatement("SELECT * FROM prime;");
 			res = pStatement.executeQuery();
-		
+			
+			primeSugarDB.clear();
 			// loop the results
 			while(res.next()) {
 				PrimeSugar p = new PrimeSugar();
@@ -1422,6 +1442,8 @@ public class Database {
 				p.setDescription(res.getString("Descr"));
 				primeSugarDB.add(p);
 			}
+			Debug.print("Prime Found " + res.getRow());
+			
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1464,7 +1486,7 @@ public class Database {
 					while (true) {
 						//Name,Descr,Ca,Mg,Na,SO4,HCO3,Cl,Hardness,TDS,PH,Alk
 						fields = reader.getAllFieldsInLine();
-						Debug.print("SELECT COUNT(*) FROM water_profiles WHERE name = " + fields[nameIdx] + nameIdx);
+						
 						sql = "SELECT COUNT(*) FROM water_profiles WHERE name = ?";
 						pStatement = conn.prepareStatement(sql);
 						pStatement.setString(1, fields[nameIdx]);
@@ -1529,7 +1551,7 @@ public class Database {
 			
 			pStatement = conn.prepareStatement("SELECT * FROM water_profiles;");
 			res = pStatement.executeQuery();
-			
+			waterDB.clear();
 			while(res.next() ) {
 				
 				//Name,Descr,Ca,Mg,Na,SO4,HCO3,Cl,Hardness,TDS,PH,Alk
@@ -1549,6 +1571,8 @@ public class Database {
 								
 				waterDB.add(w);
 			}
+			
+			Debug.print("Water Found " + res.getRow());
 		}catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
@@ -1589,7 +1613,7 @@ public class Database {
 				public int compare(Hop h1, Hop h2){
 					
 					int result = h1.getName().compareToIgnoreCase(h2.getName());
-					Debug.print("Hop comparing: "+h1.getName() + " to: " + h2.getName() + " got " + result);	
+						
 					return result ;
 				}
 			

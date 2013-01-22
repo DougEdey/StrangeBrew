@@ -480,6 +480,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		cmbStyleModel.setList(DB.styleDB);
 		cmbYeastModel.setList(DB.yeastDB);
 		
+		
 		// check to see if we are hiding non stock ingredients
 		Debug.print("OptHideNonStock: "+preferences.getProperty("optHideNonStock"));
 		if(preferences.getProperty("optHideNonStock") != null && preferences.getBProperty("optHideNonStock") ) {
@@ -2137,6 +2138,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			scaleRecipe.setModal(true);
 			scaleRecipe.setVisible(true);
 		} else if (o == editPrefsMenuItem) {
+			Debug.print("Style length: "+DB.styleDB.size());
 			PreferencesDialog d = new PreferencesDialog(this);			
 			d.setVisible(true);
 			preferences = d.getOpts();
@@ -2145,6 +2147,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				path = SBStringUtils.getAppPath("data");
 				DB.readDB(path, preferences.getProperty("optStyleYear"));
 				Debug.print("OptHideNonStock: "+preferences.getProperty("optHideNonStock"));
+				Debug.print("Style length: "+DB.styleDB.size());
+				
 				if(preferences.getProperty("optHideNonStock") != null && preferences.getBProperty("optHideNonStock") ) {
 					Debug.print("Hiding Stock");
 					cmbMaltModel.setList(DB.stockFermDB);			
