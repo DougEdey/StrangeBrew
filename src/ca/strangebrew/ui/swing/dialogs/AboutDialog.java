@@ -253,7 +253,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 	                            "No, thanks"};
 	            		
 	            		int n = JOptionPane.showOptionDialog(this.getContentPane(),
-	            			    "New download available (Build ID " + SBVersion.BUILDNUMBER + ")"
+	            			    "New download available (Build ID " + newBuildID + ")"
 	            			    + ". Would you like to download it?",
 	            				
 	            			    "New Version Available!",
