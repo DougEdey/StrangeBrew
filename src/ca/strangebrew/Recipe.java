@@ -942,6 +942,7 @@ public class Recipe {
 				if(h1.getAmountAs(Quantity.LB) < h2.getAmountAs(Quantity.LB))
 					return -1;
 				if(h1.getAmountAs(Quantity.LB) == h2.getAmountAs(Quantity.LB))
+					// same amount, check later
 					return 0;
 				return 0;
 				
@@ -967,6 +968,7 @@ public class Recipe {
 
 	public void setMaltLov(final int i, final double l) {
 		isDirty = true;
+		
 		fermentables.get(i).setLov(l);
 	}
 
@@ -1213,7 +1215,7 @@ public class Recipe {
 	 */
 	public void addMalt(final Fermentable m) {
 		isDirty = true;
-		fermentables.add(m);
+		
 		Comparator<Fermentable> c = new Comparator<Fermentable>()  {
 			public int compare(Fermentable h1, Fermentable h2){
 				
@@ -1231,6 +1233,7 @@ public class Recipe {
 		};
 		Collections.sort(fermentables, c);
 		Collections.reverse(fermentables);
+		fermentables.add(m);
 		calcMaltTotals();
 	}
 

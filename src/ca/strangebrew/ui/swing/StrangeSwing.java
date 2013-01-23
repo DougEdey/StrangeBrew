@@ -1904,6 +1904,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			if (myRecipe != null) {
 				Fermentable f = new Fermentable(myRecipe.getMaltUnits());
 				myRecipe.addMalt(f);
+				
+				maltTable.setRowSelectionInterval(maltTable.getRowCount()-1, maltTable.getRowCount()-1);
 				maltTable.updateUI();
 				displayRecipe();
 			}
@@ -1924,7 +1926,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			if (myRecipe != null) {
 				Hop h = new Hop(myRecipe.getHopUnits(), preferences.getProperty("optHopsType"));
 				myRecipe.addHop(h);
+				hopsTable.setRowSelectionInterval(hopsTable.getRowCount()-1, hopsTable.getRowCount()-1);
 				hopsTable.updateUI();
+				
 				displayRecipe();
 
 			}
@@ -1975,7 +1979,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			Fermentable f = (Fermentable) cmbMaltModel.getSelectedItem();
 			
 			int i = maltTable.getSelectedRow();
-			Debug.print("Malt combo box selected");
+			Debug.print("Malt combo box selected" + i);
 			if (myRecipe != null && i != -1) {
 				// check if we're adding a new ingredient
 				Fermentable f2 = myRecipe.getFermentable(i);

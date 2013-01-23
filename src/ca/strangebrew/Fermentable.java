@@ -75,7 +75,10 @@ public class Fermentable extends Ingredient  {
 	public boolean getPrime() { return prime; }
 
 	// setter methods:	
-	public void setLov(double l){ lov = l; }
+	public void setLov(double l){
+		
+		lov = l; 
+	}
 	public void setMashed(boolean m){ mashed = m; }
 	public void setPercent(double p){ percent = p; }
 	public void setPppg(double p){ pppg = p; }

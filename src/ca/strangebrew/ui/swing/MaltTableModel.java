@@ -74,6 +74,7 @@ class MaltTableModel extends AbstractTableModel {
 				case 5 :
 					return SBStringUtils.format(data.getMaltPppg(row), 3);
 				case 6 :
+					Debug.print(row + "Malt Lov: " + data.getMaltLov(row));
 					return SBStringUtils.format(data.getMaltLov(row), 0);
 				case 7 :
 					return new Double(data.getMaltCostPerUAs(row, data.getMaltUnits()));
@@ -134,6 +135,7 @@ class MaltTableModel extends AbstractTableModel {
 					if (value instanceof Fermentable) {
 						Fermentable m = (Fermentable)value;
 						data.setMaltPppg(row, m.getPppg());
+						Debug.print("Setting value from name: " + m.getLov());
 						data.setMaltLov(row, m.getLov());
 						data.setMaltSteep(row, m.getSteep());
 						data.setMaltMashed(row, m.getMashed());						
@@ -175,6 +177,7 @@ class MaltTableModel extends AbstractTableModel {
 					try {
 						NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
 						Number number = format.parse(value.toString().trim());
+						Debug.print("Setting malt lov from lov setting; " + number.doubleValue());
 						data.setMaltLov(row, number.doubleValue());
 					} catch (NumberFormatException m) {
 						Debug.print("Could not parse "+ value.toString() + " as a double");
