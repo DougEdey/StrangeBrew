@@ -745,7 +745,7 @@ public class Recipe {
 	public FermentStep delFermentStep(final int i) {
 		isDirty = true;
 		FermentStep temp = null;
-		if (!fermentationSteps.isEmpty() && (i > -1)) {
+		if (!fermentationSteps.isEmpty() && (i > -1) && (i < fermentationSteps.size())) {
 			temp = fermentationSteps.remove(i);
 			Collections.sort(fermentationSteps);
 			calcFermentTotals();
@@ -1236,7 +1236,7 @@ public class Recipe {
 
 	public void delMalt(final int i) {
 		isDirty = true;
-		if (!fermentables.isEmpty() && (i > -1)) {
+		if (!fermentables.isEmpty() && (i > -1) && (i < fermentables.size())) {
 			fermentables.remove(i);
 			calcMaltTotals();
 		}
@@ -1251,7 +1251,7 @@ public class Recipe {
 
 	public void delHop(final int i) {
 		isDirty = true;
-		if (!hops.isEmpty() && (i > -1)) {
+		if (!hops.isEmpty() && (i > -1) && (i < hops.size())) {
 			hops.remove(i);
 			calcHopsTotals();
 		}
@@ -1265,7 +1265,7 @@ public class Recipe {
 
 	public void delMisc(final int i) {
 		isDirty = true;
-		if (!misc.isEmpty() && (i > -1)) {
+		if (!misc.isEmpty() && (i > -1) && (i < misc.size())) {
 			misc.remove(i);
 			calcMiscCost();
 		}
@@ -1286,7 +1286,7 @@ public class Recipe {
 
 	public void delNote(final int i) {
 		isDirty = true;
-		if (!notes.isEmpty() && (i > -1)) {
+		if (!notes.isEmpty() && (i > -1) && (i < notes.size())) {
 			notes.remove(i);
 		}
 	}
@@ -1927,6 +1927,7 @@ public class Recipe {
 	}
 
 	public void delSalt(final int i) {
+		if(!brewingSalts.isEmpty() && (i > -1) && (i < brewingSalts.size()))
 		this.brewingSalts.remove(i);
 	}
 
