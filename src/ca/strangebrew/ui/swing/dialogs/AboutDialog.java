@@ -247,7 +247,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 	            	vTemp = vTemp.substring(1, vTemp.length()-2);
 	            	int newBuildID = Integer.parseInt(vTemp);
 	            	
-	            	if( newBuildID > Integer.parseInt(SBVersion.BUILDNUMBER)) {
+	            	if( newBuildID != Integer.parseInt(SBVersion.BUILDNUMBER)) {
 	            		// newest Build ID means there's a new download avalable!
 	            		Object[] options = {"Yes, please",
 	                            "No, thanks"};
