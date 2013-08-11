@@ -95,7 +95,13 @@ class HopsTableModel extends AbstractTableModel {
 			return true;
 		}
 	}
-
+	
+	@Override
+	public Class<?> getColumnClass(int c) {
+		Debug.print("Hop Column Class: " +getValueAt(0, c).getClass() );
+		return getValueAt(0, c).getClass();
+	}
+	
 	/*
 	 * Don't need to implement this method unless your table's data can
 	 * change.

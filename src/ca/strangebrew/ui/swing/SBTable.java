@@ -7,6 +7,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
+import ca.strangebrew.Debug;
 import ca.strangebrew.Options;
 
 /*
@@ -77,6 +78,12 @@ public class SBTable extends JTable {
 		
 	}
 
+	@Override
+	public Class<?> getColumnClass(int c) {
+		Debug.print("Column Class " + c + " is " + getValueAt(0, c).getClass());
+		return getValueAt(0, c).getClass();
+	}
+	
 	public String getName() {
 		return name;
 	}

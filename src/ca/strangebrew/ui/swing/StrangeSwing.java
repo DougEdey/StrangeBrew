@@ -1311,6 +1311,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									}
 								};
 
+								maltTable.setRowHeight((int)Math.ceil(maltTable.getFont().getSize()*1.5));
 								jScrollPane1.setViewportView(maltTable);
 								maltTable.setModel(maltTableModel);
 								// maltTable.setAutoCreateColumnsFromModel(false);
@@ -1411,7 +1412,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 								jScrollPane2.setViewportView(hopsTable);
 								hopsTable.setModel(hopsTableModel);
 								hopsTable.getTableHeader().setReorderingAllowed(false);
-
+								hopsTable.setRowHeight((int)Math.ceil(hopsTable.getFont().getSize()*1.5));
+								
 								TableColumn hopColumn = hopsTable.getColumnModel().getColumn(0);
 								// Install the custom key selection manager
 								SmartComboBox.enable(hopComboBox);

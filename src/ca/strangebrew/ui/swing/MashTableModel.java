@@ -117,6 +117,10 @@ class MashTableModel extends AbstractTableModel {
 		}
 	}
 
+	public Class<?> getColumnClass(int c) {
+		return getValueAt(0, c).getClass();
+	}
+	
 	/*
 	 * Don't need to implement this method unless your table's data can
 	 * change.

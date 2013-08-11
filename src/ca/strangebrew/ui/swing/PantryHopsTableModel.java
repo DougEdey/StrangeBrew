@@ -60,6 +60,10 @@ public class PantryHopsTableModel extends AbstractTableModel {
 		return columnNames[col];
 	}
 	
+	public Class<?> getColumnClass(int c) {
+		return getValueAt(0, c).getClass();
+	}
+	
 	public Object getValueAt(int row, int col) {
 		// Hop h = (Hop) data.get(row);
 		try {
