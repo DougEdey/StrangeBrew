@@ -64,7 +64,7 @@ public class BrewCalcs {
 	}
 	
 	public static double guToSG(double gu) {
-		return (gu * 1000 )+ 1;
+		return (gu / 1000 ) + 1;
 	}
 
 	public static double hydrometerCorrection(double tempC, double SG, double refTempC)
