@@ -483,7 +483,10 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		
 		// check to see if we are hiding non stock ingredients
 		Debug.print("OptHideNonStock: "+preferences.getProperty("optHideNonStock"));
-		if(preferences.getProperty("optHideNonStock") != null && preferences.getBProperty("optHideNonStock") ) {
+		if(hopsTable != null && hopsTable.getRowCount() > 0) {
+			Debug.print("Not changing the list for stock");
+		} else if(preferences.getProperty("optHideNonStock") != null && preferences.getBProperty("optHideNonStock") ) {
+			
 			Debug.print("Hiding Stock");
 			cmbMaltModel.setList(DB.stockFermDB);			
 			cmbHopsModel.setList(DB.stockHopsDB); 
@@ -673,7 +676,16 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	public void focusGained(FocusEvent e) {
 		//We gained focus, update all elements
 		Debug.print("Gained focus on StrangeSwing "+ e.getSource());
-		this.cmbMaltModel.setList(DB.fermDB);
+		if(hopsTable.getRowCount() > 0) {
+			Debug.print("Not changing the list for stock");
+		} else if(preferences.getProperty("optHideNonStock") != null && preferences.getBProperty("optHideNonStock") ) {
+			Debug.print("Hiding Stock");
+			cmbMaltModel.setList(DB.stockFermDB);			
+			cmbHopsModel.setList(DB.stockHopsDB); 
+		} else {
+			cmbMaltModel.setList(DB.fermDB);			
+			cmbHopsModel.setList(DB.hopsDB);
+		};
 	}
 	
 
@@ -2020,6 +2032,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			int i = hopsTable.getSelectedRow();
 			if (myRecipe != null && i != -1) {
 				Hop h2 = myRecipe.getHop(i);
+				if (h2 == null) {
+					return;
+				}
 				h2.setAlpha(h.getAlpha());
 				h2.setDescription(h.getDescription());
 				h2.setCost(h.getCostPerU());

@@ -316,11 +316,10 @@ public class Pantry extends javax.swing.JDialog implements ActionListener, Chang
 		
 		Debug.print("Action performed on: " + o);
 		if(o == okButton) {
-			
-			
 			// update everything in the fermDB
 			db.fermDB = pantryFermTableModel.data;			
 			db.writeFermentables();
+			
 			db.hopsDB = pantryHopsTableModel.data;
 			db.writeHops();
 			
@@ -343,8 +342,7 @@ public class Pantry extends javax.swing.JDialog implements ActionListener, Chang
 			int i = pantryHopsTable.getSelectedRow();
 			pantryHopsTableModel.data.get(i).setUnits(u);
 			pantryHopsTableModel.data.get(i).convertTo(u);
-		}
-		
+		} 
 	}
 	
 	public void focusLost(FocusEvent e) {

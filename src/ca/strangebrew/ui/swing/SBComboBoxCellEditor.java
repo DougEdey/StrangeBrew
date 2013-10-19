@@ -35,7 +35,7 @@ public class SBComboBoxCellEditor extends AbstractCellEditor implements
 	public void actionPerformed(java.awt.event.ActionEvent e) {
 		// Selecting an item results in an actioncommand "comboBoxChanged".
 		// We should ignore these ones.
-
+		Debug.print("SBCOMBO: " + e.getSource().toString());
 		// Hitting enter results in an actioncommand "comboBoxEdited"
 		if (e.getActionCommand().equals("comboBoxEdited")) {
 			stopCellEditing();

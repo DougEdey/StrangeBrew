@@ -767,7 +767,11 @@ public class Recipe {
 	}
 
 	public Hop getHop(final int i) {
-		return hops.get(i);
+		if(i < hops.size()) {
+			return hops.get(i);
+		} else {
+			return null;
+		}
 	}
 
 	public int getHopsListSize() {

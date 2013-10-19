@@ -25,8 +25,6 @@ public class PantryFermTableModel extends AbstractTableModel {
 	
 	public List<Fermentable> data = new ArrayList<Fermentable>();
 
-	
-
 	public PantryFermTableModel() {
 		
 	}

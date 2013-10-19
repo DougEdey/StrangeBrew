@@ -27,6 +27,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -104,23 +105,41 @@ public class Database {
 			
 			Statement stat = conn.createStatement();
 			
-			if(!tables.contains("styleguide")) {
+			if (!tables.contains("styleguide")) {
 				// no Style guide
 				Debug.print("Creating styleguide table");
 				stat.executeUpdate("create table styleguide (Item INT AUTO_INCREMENT,Name, Category, OG_Low, OG_High, Alc_Low, Alc_High, IBU_Low, IBU_High, Lov_Low, Lov_High," +
 						"Appearance, Aroma, Flavor, Mouthfeel, Impression, Comments, Ingredients, Comm_examples, Year );");
 			}
 			
-			if(!tables.contains("fermentables")) {
+			if (!tables.contains("fermentables")) {
 				// no fermentables
 				Debug.print("Creating fermentables table");
 				stat.executeUpdate("create table fermentables (Item INT AUTO_INCREMENT,Name UNIQUE,Yield,Lov,Cost,Stock,Units,Mash,Descr,Steep,Modified );");
 			}
 			
-			if(!tables.contains("hops")) {
+			if (!tables.contains("hops")) {
 				// no hops
 				Debug.print("Creating hops table");
-				stat.executeUpdate("create table hops (Item INT AUTO_INCREMENT,Name,Alpha,Cost,Stock,Units,Descr,Storage,Date,Modified);");
+				stat.executeUpdate("create table hops (Item INT AUTO_INCREMENT,Name,Alpha,Cost,Stock,Units,Descr,Storage,Date,Modified,Type);");
+			} else {
+				
+				// Add a new column to store the type
+				ResultSet testColumns = stat.executeQuery("SELECT * FROM hops LIMIT 1;");
+				ResultSetMetaData cmd = testColumns.getMetaData();
+				int colCount = cmd.getColumnCount();
+				boolean hopColumn = false;
+				
+				for (int i = 1; i <= colCount; i++) {
+					if (cmd.getColumnName(i).equalsIgnoreCase("Type")) {
+						hopColumn = true;
+					}
+				}
+				
+				if (hopColumn == false) {
+					// add the column
+					stat.executeQuery("ALTER TABLE hops ADD Type");
+				}
 			}
 	        
 			if(!tables.contains("misc")) {
@@ -577,7 +596,7 @@ public class Database {
 					int storeIdx = getIndex(fields, "Storage");
 					int dateIdx = getIndex(fields, "Date");
 					int modIdx = getIndex(fields, "Modified");
-	
+					
 					String sql = new String();
 					PreparedStatement pStatement;
 					while (true) {
@@ -670,6 +689,16 @@ public class Database {
 			h.setDate(res.getString("Date"));
 			
 			h.setModified(Boolean.valueOf(res.getString("Modified")).booleanValue());
+			
+			{ // test for the type
+				String tempType = res.getString("Type");
+				if (tempType == null || tempType.equalsIgnoreCase("false")) {
+					tempType = preferences.getProperty("optHopsType");
+				}
+				
+				h.setType(tempType);
+			}
+			
 			hopsDB.add(h);
 			
 			if(h.getStock() > 0 && preferences.getProperty("optHideNonStock") != null && preferences.getProperty("optHideNonStock") == "true") {
@@ -697,15 +726,15 @@ public class Database {
 			PreparedStatement pStatement = conn.prepareStatement("SELECT COUNT(*) FROM hops WHERE name = ?;");
 			PreparedStatement rStatement = conn.prepareStatement("SELECT COUNT(*) FROM hops WHERE name = ?" +
 					" AND Alpha=? AND Cost=? AND Stock=? AND " +
-					"Units=? AND Descr=? AND Storage=? ;");
+					"Units=? AND Descr=? AND Storage=? AND Type = ?;");
 			
-			String sql = "insert into hops (Name,Alpha,Cost,Stock,Units,Descr,Storage,Date) " +
-					"values(?, ?,  ? , ?, ?, ?, ?, ? )";
+			String sql = "insert into hops (Name,Alpha,Cost,Stock,Units,Descr,Storage,Date, Type) " +
+					"values(?, ?,  ? , ?, ?, ?, ?, ?, ? )";
 			
 			PreparedStatement insertMisc = conn.prepareStatement(sql);
 			
 			sql = "UPDATE hops SET Alpha=?,Cost=?,Stock=?," +
-					"Units=?,Descr=?,Storage=?,Date=? " +
+					"Units=?,Descr=?,Storage=?,Date=?,Type=? " +
 					"WHERE name = ?";
 			
 			PreparedStatement updateMisc = conn.prepareStatement(sql);
@@ -723,6 +752,7 @@ public class Database {
 				pStatement.setString(1, h.getName());
 				res = pStatement.executeQuery();
 				res.next();
+				// Does this hop exist?
 				if(res.getInt(1) == 0){
 					insertMisc.setString(1, h.getName());
 					insertMisc.setString(2, Double.toString(h.getAlpha()));
@@ -732,8 +762,10 @@ public class Database {
 					insertMisc.setString(6, h.getDescription());
 					insertMisc.setString(7, Double.toString(h.getStorage()));
 					insertMisc.setString(8, h.getDate().toString());
+					insertMisc.setString(9, h.getType());
+			
 					insertMisc.executeUpdate();
-				} else { // check to see if we need to update
+				} else { // check to see if we need to update this hop
 					
 					rStatement.setString(1, h.getName());
 					rStatement.setString(2, Double.toString(h.getAlpha()));
@@ -742,13 +774,15 @@ public class Database {
 					rStatement.setString(5, h.getUnitsAbrv());
 					rStatement.setString(6, h.getDescription());
 					rStatement.setString(7, Double.toString(h.getStorage()));
+					rStatement.setString(8, h.getType());
 					
+					System.out.println(h.getName() + " - " + h.getType());
 					res = rStatement.executeQuery();
 					
 					res.next();
-					
+				
 					if(res.getInt(1) == 0) {
-						
+						// update required
 						updateMisc.setString(1, Double.toString(h.getAlpha()));
 						updateMisc.setString(2, Double.toString(h.getCostPerU()));
 						updateMisc.setString(3, Double.toString(h.getStock()));
@@ -756,10 +790,10 @@ public class Database {
 						updateMisc.setString(5, h.getDescription());
 						updateMisc.setString(6, Double.toString(h.getStorage()));
 						updateMisc.setString(7, h.getDate().toString());
-						
+						updateMisc.setString(8, h.getType());
 						// where
-						updateMisc.setString(8, h.getName());
-						
+						updateMisc.setString(9, h.getName());
+						System.out.println(updateMisc.toString());
 						updateMisc.executeUpdate();
 					}
 					

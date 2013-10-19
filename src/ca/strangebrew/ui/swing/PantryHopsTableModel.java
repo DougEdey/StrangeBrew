@@ -103,7 +103,7 @@ public class PantryHopsTableModel extends AbstractTableModel {
 	 */
 	
 	  public void setValueAt(Object value, int row, int col) {
-	
+		  Debug.print("Value: " + value.toString() + " in row: " + row + " col: " + col);
 		// Hop h = (Hop) data.get(row);
 		try {
 			switch (col) {
@@ -117,6 +117,7 @@ public class PantryHopsTableModel extends AbstractTableModel {
 				break;
 			case 1:
 				data.get(row).setType(value.toString());
+				Debug.print("Changed the type of " + data.get(row).getName() + " to " + value.toString());
 				break;
 			case 2:
 				try {
@@ -150,8 +151,6 @@ public class PantryHopsTableModel extends AbstractTableModel {
 		} catch (Exception e) {
 		}
 		
-	
-	
 		fireTableCellUpdated(row, col);
 		fireTableDataChanged();		
 	

@@ -22,8 +22,12 @@ public class ComboModel<T> extends AbstractListModel implements MutableComboBoxM
 	
 	List<T> list = new ArrayList<T>();
 	T selected = null;
-
 	
+	public ComboModel() {
+	 super();
+     
+     }
+     
 	public void addOrInsert(T o) {
 
 		int i = 0;
