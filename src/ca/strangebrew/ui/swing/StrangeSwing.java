@@ -483,9 +483,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		
 		// check to see if we are hiding non stock ingredients
 		Debug.print("OptHideNonStock: "+preferences.getProperty("optHideNonStock"));
-		if(hopsTable != null && hopsTable.getRowCount() > 0) {
-			Debug.print("Not changing the list for stock");
-		} else if(preferences.getProperty("optHideNonStock") != null && preferences.getBProperty("optHideNonStock") ) {
+		
+		if(preferences.getProperty("optHideNonStock") != null && preferences.getBProperty("optHideNonStock") ) {
 			
 			Debug.print("Hiding Stock");
 			cmbMaltModel.setList(DB.stockFermDB);			
