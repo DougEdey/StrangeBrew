@@ -701,7 +701,7 @@ public class Database {
 			
 			hopsDB.add(h);
 			
-			if(h.getStock() > 0 && preferences.getProperty("optHideNonStock") != null && preferences.getProperty("optHideNonStock") == "true") {
+			if (h.getStock() > 0) {
 				stockHopsDB.add(h); 
 			} 
 			
