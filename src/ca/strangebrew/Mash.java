@@ -810,6 +810,7 @@ public class Mash {
 		if (numSparge == 0)
 			return;
 		
+		// Amount to collect per sparge
 		double col = myRecipe.getPreBoilVol(Quantity.QT) / numSparge;
 		double charge[] = new double[numSparge];
 	    double collect[] = new double[numSparge];
@@ -818,22 +819,21 @@ public class Mash {
 	    
 	    // do we need to add more water to charge up
 	    // is the amount we need to collect less than the initial mash volume - absorbption
-	    Debug.print("Col: " + col + " - " + mashWaterQTS + " - " + absorbedQTS);
-	   if (col < mashWaterQTS - absorbedQTS) {
-	    charge[0] = 0;
-	     collect[0] = mashWaterQTS - absorbedQTS; // how much we collected
-	     totalCollectQts = totalCollectQts - collect[0];
-	   }
-	   else {
-	     charge[0] = col - (mashWaterQTS - absorbedQTS); // add the additional water to get out the desired first collection amount PER sparge
-	     collect[0] = col;
-	     totalCollectQts = totalCollectQts - collect[0];
-	   }
+	    Debug.print("Collecting: " + col + " MashWater " + mashWaterQTS + " Absorbed " + absorbedQTS);
+		if (col >= (mashWaterQTS - absorbedQTS)) {
+			charge[0] = 0;
+			collect[0] = mashWaterQTS - absorbedQTS; // how much is left over from the mash
+			totalCollectQts = totalCollectQts - collect[0];
+		} else {
+			charge[0] = col - (mashWaterQTS - absorbedQTS); // add the additional water to get out the desired first collection amount PER sparge
+			collect[0] = col;
+			totalCollectQts = totalCollectQts - collect[0];
+		}
 	    
        // do we need any more steps?
 	    if(numSparge > 1) {
 	    	/*
-		    batch_1_sparge_liters = (boil_size_l/<total number of steps> – mash_water_l + grain_wt_kg * 0.625)
+		    batch_1_sparge_liters = (boil_size_l/<total number of steps> ) mash_water_l + grain_wt_kg * 0.625)
 		    		batch_2_liters = boil_size_l / <total number of steps>
 		    	*/
 		   Debug.print("NumSparge: " + numSparge);
