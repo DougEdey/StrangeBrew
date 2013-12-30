@@ -1090,6 +1090,7 @@ public class Database {
 			s.setExamples(res.getString("Comm_examples"));
 			s.setYear(res.getString("Year"));
 			s.comments = res.getString("Descr");
+			s.setComplete();
 			styleDB.add(s);
 			}
 			
@@ -1229,6 +1230,7 @@ public class Database {
 				if(res.getString("Ingredients") != null)
 					s.ingredients = res.getString("Ingredients");
 		//		Debug.print("Adding style " + s.getName() + s.toText());
+				s.setComplete();
 				styleDB.add(s);
 			}
 			

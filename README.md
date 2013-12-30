@@ -8,7 +8,6 @@ Thank you for downloading and trying StrangeBrew Java.
 
 This file contains:
 * What is this?
-* Recipes at bodensatz.com
 * Running StrangeBrew Java
 * Extra help for running on Linux
 * Setting the look and feel
@@ -36,19 +35,11 @@ software, StrangeBrew (www.strangebrew.ca).
 Ingredients can now be added/edited from the application, removing the
 need to edit the data files directly.
 
-Donations are accepted on the SourceForge project homepage.
-
 NOTE: We've changed the numbering of Java releases to 2.0, based on 
 the idea that this is a continuation of the Windows version 1.8.
 
 
-
-Recipes at bodensatz.com
-========================
-
-There is a repository of StrangeBrew recipes available for viewing and
-download at www.bodensatz.com/sb, hosted by Alan McKay.  Please feel free
-to download recipes to open with StrangeBrew Java.  
+ 
 
 
  Running StrangeBrew Java
@@ -73,20 +64,20 @@ Extra help for running on Linux
 ===============================
 
 
-*I do not recommend this, just use ``` java -jar strangebrew.jar ``` *
+**I do not recommend this, just use ``` java -jar strangebrew.jar ```**
 
 These are notes from Scott Alfter via rec.crafts.brewing:
 
-1) Make sure CONFIG_BINFMT_MISC is enabled in the kernel (built-in or
+1. Make sure CONFIG_BINFMT_MISC is enabled in the kernel (built-in or
    module)...look in Executable file formats/Emulations -> Kernel support
-   for MISC binaries.
-2) Add the following to /etc/fstab:
+   for MISC binaries. 
+2. Add the following to /etc/fstab:
    binfmt_misc /proc/sys/fs/binfmt_misc binfmt_misc defaults 0 0
-3) Create /usr/bin/jexec with the following contents and make it executable
+3. Create /usr/bin/jexec with the following contents and make it executable
    by everybody:
    #!/bin/sh
    java -jar $*
-4) Add the following to whatever script your distro provides for local
+4. Add the following to whatever script your distro provides for local
    customization (in Gentoo, it's /etc/conf.d/local.start):
    echo ':jarexec:M::PK\x03\x04::/usr/bin/jexec:' >/proc/sys/fs/binfmt_misc/register
 
@@ -110,14 +101,18 @@ Update default system JVM:
 
 See https://help.ubuntu.com/community/Java for more help with Ubuntu.
 
+**This bug below is fixed**
+
 Greg LaPolla points out:
 When you create a launcher on the desktop and start the app with the java -jar 
 command it displays the "can't find the database" error.  You can create a shell
 script to fix it by simply changing to the StrangeBrew directory first:
 
+```
 #!/bin/sh
 cd ~/StrangeBrew
 java -jar StrangeBrew.jar
+```
 
 
 Setting the Look and Feel
@@ -146,25 +141,28 @@ Download the .jar file you'd like to try, and put it in your Java home directory
 
 You can set the Look and Feel in a couple of ways:
 
-1. From the Command-line:
+1) From the Command-line:
 Use the -Dswing.defaultlaf= option when starting the application.
 Here's an example of starting StrangeBrew using the Synthetica LAF:
-java -Dswing.defaultlaf=de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel -jar strangebrew.jar
+
+```java -Dswing.defaultlaf=de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel -jar strangebrew.jar```
 
 The "de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel" bit is the full class 
 name of the Look And Feel -- you'll have to read the documentation for each LAF to find 
 out the proper text to put here
 
-2. Using swing.properties:
+2) Using swing.properties:
 You can set the default LAF for all Java Swing applications by editing the swing.properties
 file in your $JAVA_HOME/lib directory.  You need to add two lines for your new LAF, and
 change the default line.  Here's an example of the new & changed lines using the Tonic
 LAF:
+```
 swing.installedlaf.tonic.name = Tonic
 swing.installedlaf.tonic.class = com.digitprop.tonic.TonicLookAndFeel
 swing.defaultlaf=com.digitprop.tonic.TonicLookAndFeel
+```
 
-3. Using the preferences options. Under the "Brewer" pane you can select from any of the L&Fs installed 
+3) Using the preferences options. Under the "Brewer" pane you can select from any of the L&Fs installed 
 on your system. This gets saved.
 
 Now start StrangeBrew as you would normally, and it should use the new LAF.
@@ -240,6 +238,8 @@ What's New
 - Added more themes
 - Moved to a DB for storing ingredients
 - Fixed the Refractometer tool
+- Add ingredients from the UI (Under the "Edit -> Add *" menus)
+- Fix styles having the high and low the wrong way round
 
 2.0.2
 --------

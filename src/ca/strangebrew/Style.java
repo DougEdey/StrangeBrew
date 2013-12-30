@@ -302,6 +302,42 @@ public class Style implements Comparable<Style> {
 		int result = this.getName().compareTo(s.getName());
 		return (result == 0 ? -1 : result);
 	}
+	
+	/*********
+	 * Set the style as complete so any values can be switched
+	 */
+	public void setComplete() {
+		double temp = 0.0;
+		
+		// Check the IBU
+		if (ibuHigh < ibuLow) {
+			temp = ibuHigh;
+			ibuHigh = ibuLow;
+			ibuLow = temp;
+		}
+		
+		// check the SRM
+		if (srmHigh < srmLow) {
+			temp = srmHigh;
+			srmHigh = srmLow;
+			srmLow = temp;
+		}
+		
+		// check the OG
+		if (ogHigh < ogLow) {
+			temp = ogHigh;
+			ogHigh = ogLow;
+			ogLow = temp;
+		}
+		
+		// check the ALC
+		if (alcHigh < alcLow) {
+			temp = alcHigh;
+			alcHigh = alcLow;
+			alcLow = temp;
+		}
+		
+	}
 
 	
 }
