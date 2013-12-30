@@ -23,7 +23,12 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.UnsupportedEncodingException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 
@@ -218,6 +223,8 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JCheckBox useWebServer = new JCheckBox("Recipe Webserver");
 	final private JLabel labelWebPort = new JLabel("WebServer Port: ");
 	final private JTextField txtWebPort = new JTextField();
+	final private JLabel lblIPAddr = new JLabel();
+	
 	
 	// Carb
 	final private GridBagLayout layoutCarbPanel = new GridBagLayout();
@@ -256,6 +263,35 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		super(owner, "Recipe Preferences", true);
 		opts = Options.getInstance();
 		sb = owner;
+		
+		Enumeration<NetworkInterface> interfaces;
+		try {
+			interfaces = NetworkInterface.getNetworkInterfaces();
+		
+			while (interfaces.hasMoreElements()){
+			    NetworkInterface current = interfaces.nextElement();
+			    try {
+					if (!current.isUp() || current.isLoopback() || current.isVirtual()) continue;
+				
+				    Enumeration<InetAddress> addresses = current.getInetAddresses();
+				    while (addresses.hasMoreElements()){
+				        InetAddress current_addr = addresses.nextElement();
+				        System.out.println("Found an address " + current_addr);
+				        if (current_addr.isLoopbackAddress()) continue;
+				        if (current_addr instanceof Inet4Address) {
+				        	lblIPAddr.setText("IP Address is: " + current_addr.toString());
+				        }
+				    }
+			    
+				} catch (SocketException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} catch (SocketException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		layoutUi();		
 		setLocation(owner.getLocation());
@@ -979,6 +1015,11 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
 					pnlBrewer.add(txtWebPort, new GridBagConstraints(3, 5, 1, 1, 0.0, 0.0,
+							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
+									0, 0, 0), 0, 0));
+				}
+				{
+					pnlBrewer.add(lblIPAddr, new GridBagConstraints(3, 6, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
 					
