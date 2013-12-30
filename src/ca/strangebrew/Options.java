@@ -312,8 +312,9 @@ public class Options {
 	public void setBProperty(String key, boolean value) {
 		if (value) {
 			props.setProperty(key, "true");
+		} else {
+			props.setProperty(key, "false");
 		}
-		props.setProperty(key, "false");
 	}
 	
 	public Locale getLocale() {

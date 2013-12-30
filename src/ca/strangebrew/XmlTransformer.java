@@ -23,6 +23,7 @@ package ca.strangebrew;
 
 import java.io.File;
 import java.io.OutputStream;
+import java.io.StringWriter;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -106,6 +107,15 @@ public class XmlTransformer {
 			throws TransformerConfigurationException, TransformerException {
 		
 		writeStream(xml, new StreamSource(xsltFile), output);
+	}
+	
+	public static String getString(Source xml, File xsltFile) 
+			throws TransformerConfigurationException, TransformerException{
+		TransformerFactory factory = TransformerFactory.newInstance();
+		Transformer transformer = factory.newTransformer(new StreamSource(xsltFile));
+		StringWriter writer = new StringWriter();
+		transformer.transform(xml, new StreamResult(writer));
+		return writer.getBuffer().toString();
 	}
 
 }

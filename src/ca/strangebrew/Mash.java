@@ -1002,6 +1002,7 @@ public class Mash {
 		 
 	 public String toXml() {
 	
+		calcMashSchedule();
 		StringBuffer sb = new StringBuffer();
 		sb.append("  <MASH>\n");
 		sb.append(SBStringUtils.xmlElement("NAME", name, 4));

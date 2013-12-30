@@ -405,6 +405,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		
 		try {
 		final StrangeSwing inst = new StrangeSwing();
+		inst.setTitle("StrangeBrew");
 		inst.setVisible(true);
 		
 		

@@ -231,6 +231,9 @@ What's New
 
 2.1.0
 ---------
+- New FEATURE! Web Server to allow you to read any recipes you have in your recipes directory on any device connected to the network
+-- I'll be making this nicer soon
+-- You can currently enable/disable this and set the Port in the Brewer Preferences panel, you must restart StrangeBrew when changing the values
 - Lots of changes, I'll add any I can remember
 - A lot of bugfixes
 - Mash Calculator was broken so it would advise you to collect less than you needed

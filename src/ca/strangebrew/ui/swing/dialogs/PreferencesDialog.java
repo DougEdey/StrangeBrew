@@ -67,7 +67,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 
 	// Mutables
 	private Options opts;
-
+	
 	// Final UI elements
 	final private GridBagLayout gridBag = new GridBagLayout();
 	final private JPanel pnlBrewer = new JPanel();
@@ -214,6 +214,11 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JLabel currentTheme = new JLabel();
 	final private JCheckBox checkStock = new JCheckBox("Show Stock");
 	
+	// Recipe webserver
+	final private JCheckBox useWebServer = new JCheckBox("Recipe Webserver");
+	final private JLabel labelWebPort = new JLabel("WebServer Port: ");
+	final private JTextField txtWebPort = new JTextField();
+	
 	// Carb
 	final private GridBagLayout layoutCarbPanel = new GridBagLayout();
 	final private GridBagConstraints constraints = new GridBagConstraints();
@@ -310,7 +315,8 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		txtServTemp.setText(opts.getProperty("optServTemp"));
 		txtVol.setText(opts.getProperty("optVolsCO2"));
 		checkKegged.setSelected(opts.getBProperty("optKegged"));
-		checkStock.setSelected(opts.getBProperty("optHideNonStock"));
+		
+		
 		comboTubingID.setSelectedItem(opts.getProperty("optTubingID"));
 		textHeight.setText(opts.getProperty("optHeightAboveKeg"));
 		
@@ -329,7 +335,11 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 			}
 		}
 		txtRecipe.setText(recipeDir);
-		localeComboBox.setSelectedItem(opts.getLocale());		
+		localeComboBox.setSelectedItem(opts.getLocale());	
+		
+		checkStock.setSelected(opts.getBProperty("optHideNonStock"));
+		useWebServer.setSelected(opts.getBProperty("optWebServer"));
+		txtWebPort.setText(opts.getProperty("optWebServerPort"));
 
 		// calculations tab:
 		rbTinseth.setSelected(opts.getProperty("optIBUCalcMethod").equalsIgnoreCase(BrewCalcs.TINSETH));
@@ -404,10 +414,27 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		opts.setProperty("optAppearance", ((Looks)swingComboBox.getSelectedItem()).value);
 		
 		if (checkStock.isSelected()) {
-			opts.setProperty("optHideNonStock", "true");
-			
+			opts.setBProperty("optHideNonStock", true);
 		} else {
-			opts.setProperty("optHideNonStock", "false");
+			opts.setBProperty("optHideNonStock", false);
+		}
+		
+		if (useWebServer.isSelected()) {
+			opts.setBProperty("optWebServer", true);
+		} else {
+			opts.setBProperty("optWebServer", false);
+		}
+		
+		if (!txtWebPort.getText().equals("")) {
+			// Try to parse as a text
+			try {
+				int port = Integer.parseInt(txtWebPort.getText().trim());
+				opts.setIProperty("optWebServerPort", port);
+			} catch (NumberFormatException e) {
+				// Couldn't parse as an integer
+				// We should print an error message
+				e.printStackTrace();
+			}
 		}
 		
 		// TODO
@@ -852,7 +879,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					localeLabel.setText("Set Locale:");
 				}
 				{
-					pnlBrewer.add(checkStock, constraints);
+					
 					pnlBrewer.add(localeComboBox, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));					
@@ -941,6 +968,21 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 									0, 0), 0, 0));
 					swingTheme.setText("Swing Theme is " + UIManager.getLookAndFeel().getName());
 				}	
+				{
+					pnlBrewer.add(checkStock, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
+							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
+									0, 0, 0), 0, 0));
+					pnlBrewer.add(useWebServer, new GridBagConstraints(1, 5, 1, 1, 0.0, 0.0,
+							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
+									0, 0, 0), 0, 0));
+					pnlBrewer.add(labelWebPort, new GridBagConstraints(2, 5, 1, 1, 0.0, 0.0,
+							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
+									0, 0, 0), 0, 0));
+					pnlBrewer.add(txtWebPort, new GridBagConstraints(3, 5, 1, 1, 0.0, 0.0,
+							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
+									0, 0, 0), 0, 0));
+					
+				}
 			}
 			{
 				

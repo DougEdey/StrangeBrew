@@ -22,9 +22,10 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import sun.font.FontScaler;
-
 import ca.strangebrew.Debug;
 import ca.strangebrew.Options;
+import ca.strangebrew.ServerRunner;
+import ca.strangebrew.WebServer;
 
 
 public class Splash {
@@ -110,6 +111,24 @@ public class Splash {
     		System.setProperty("apple.laf.useScreenMenuBar","true");
     		System.setProperty("com.apple.mrj.application.apple.menu.about.name","StrangeBrew");
     	}
+    	
+    	System.out.println("Checking for webserver");
+    	// Startup the WebServer if it's requested (this'll be set to on for now)
+    	if (opts.getBProperty("optWebServer")) {
+    		
+    		int port = opts.getIProperty("optWebPort");
+    		if ( port == 0 ) {
+    			port = 8080;
+    		}
+    		
+    		System.out.println("Starting the webserver on port " + port);
+    		
+    		ServerRunner server = new ServerRunner(WebServer.class, port);
+    		Thread serverThread = new Thread(server);
+    		serverThread.start();
+    		
+    	}
+    	System.out.println("Server started");
     	
         SplashWindow.splash(Splash.class.getResource("splash.gif"));
         SplashWindow.invokeMain("StrangeSwing", args);
