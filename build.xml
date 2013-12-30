@@ -91,7 +91,7 @@
 		
 		<copy file="gpl.txt" todir="${dist}"/>
 		<copy file="ChangeLog.txt" todir="${dist}"/>
-		<copy file="readme" todir="${dist}"/>
+		<copy file="README.md" todir="${dist}"/>
     <mkdir dir="${dist}/recipes"/>
 		<copy todir="${dist}/recipes">
 		  <fileset dir="recipes"/>
