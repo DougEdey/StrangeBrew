@@ -1,8 +1,6 @@
-================================================
-+                   README                     +
-================================================
+StrangeBrew Java - 2.1.0
+=============
 
-StrangeBrew Java - 2.0.3
 (c)2000-2008 Drew Avis - drew.avis@gmail.com
 Doug Edey - doug.edey@gmail.com
 
@@ -24,7 +22,7 @@ This file contains:
 * Contributors
 * Copyrights and Licenses
 
-===============
+
  What is this?
 ===============
 
@@ -44,7 +42,7 @@ NOTE: We've changed the numbering of Java releases to 2.0, based on
 the idea that this is a continuation of the Windows version 1.8.
 
 
-========================
+
 Recipes at bodensatz.com
 ========================
 
@@ -52,7 +50,7 @@ There is a repository of StrangeBrew recipes available for viewing and
 download at www.bodensatz.com/sb, hosted by Alan McKay.  Please feel free
 to download recipes to open with StrangeBrew Java.  
 
-==========================
+
  Running StrangeBrew Java
 ==========================
 
@@ -70,9 +68,12 @@ src/ca/strangebrew/data/
 When you unzip the file, be sure to preserve directory names, so
 that StrangeBrew can find this data.
 
-===============================
+
 Extra help for running on Linux
 ===============================
+
+
+*I do not recommend this, just use ``` java -jar strangebrew.jar ``` *
 
 These are notes from Scott Alfter via rec.crafts.brewing:
 
@@ -118,7 +119,7 @@ script to fix it by simply changing to the StrangeBrew directory first:
 cd ~/StrangeBrew
 java -jar StrangeBrew.jar
 
-=========================
+
 Setting the Look and Feel
 =========================
 
@@ -168,7 +169,7 @@ on your system. This gets saved.
 
 Now start StrangeBrew as you would normally, and it should use the new LAF.
 
-==========
+
 Files 
 ==========
 
@@ -188,7 +189,6 @@ The file you downloaded should contain these files (at least):
     that StrangeBrew requires.
 
 
-============
 Required JRE
 ============
 
@@ -198,7 +198,7 @@ http://java.sun.com/j2se/1.5.0/index.jsp). As of version 2.0.1,
 StrangeBrew no longer runs under version 1.4.   StrangeBrew has
 been tested and runs on Linux, MacOS-X, and Windows.  
 
-============
+
 Known Issues
 ============
 
@@ -210,17 +210,36 @@ the ingredient is a sugar.  This applies to all sugar-type fermentables, such
 as honey, DME, LME, maple syrup, and sugars.
 
 
-==============
+Running from Eclipse
+============
+Add a new Run or debug configuration with 
+``` ca.strangebrew.ui.swing.dialogs.Splash ```
+
+As the Main class, then you need to add the build directory to the Configuration, you may need to run a build first and refresh the eclipse directory
+
+Class Path -> Advanced -> Add Folder -> find the "Build" directory
+
+
 Reporting Bugs
 ==============
 
-We're using the Sourceforge tracking feature to track bugs.  Please go to 
-www.sourceforge.net/projects/strangebrew and click on "bugs" to view a list
-of reported bugs.  If you've found one that's not there, please report it!
+Look to the top right, there's a button for "Issues" click that, and report anything.
 
-==========
+Or use http://reddit.com/r/StrangeBrew
+
+
 What's New
 ==========
+
+2.1.0
+---------
+- Lots of changes, I'll add any I can remember
+- A lot of bugfixes
+- Mash Calculator was broken so it would advise you to collect less than you needed
+- Added a pantry mode so you can record how much of an ingredient you have
+- Added more themes
+- Moved to a DB for storing ingredients
+- Fixed the Refractometer tool
 
 2.0.2
 --------
@@ -355,7 +374,7 @@ Bugs Fixed:
 - Mash tab now shows step volume and temp. (Bug 1489258)  
 
   
-=========
+
  Roadmap
 =========
 
@@ -385,13 +404,14 @@ include some additional functionality.)
 
 Comments or questions should be directed to drew.avis@gmail.com.
 
-====================
+
 Building the project
 ====================
 
 Complete StrangeBrew Java source is included in the strangebrew.jar file.
-StrangeBrew Java source is also available via CVS via an annonymous pserver 
-connection (see http://sourceforge.net/cvs/?group_id=121177 for more information).
+StrangeBrew Java source is also available via github
+
+(http://github.com/DougEdey/StrangeBrew)[Github Repo] for more information.
 
 I'm building the project in Eclipse, which is freely available at eclipse.org.  
 Once you've un-archived the source from the jar file (or obtained it from cvs), you
@@ -413,7 +433,6 @@ targets:
   also unpacks the other jars and incorporates them into the distributable
   jar and it also creates the manifest file. 
 
-============
 Contributors
 ============
 
@@ -432,7 +451,7 @@ program:
 * Greg LaPolla - bug fixes / ant build / windows installer
 * Sean Cotterill - for his research into Refractometer accuracy
 
-==========
+
 Copyrights
 ==========
 
@@ -446,7 +465,7 @@ Parts of this program are copyright by:
         Copyright (c) 2005-2006, Michael Baranov
         (Microba library)
 
-=======
+
 License
 =======
 
