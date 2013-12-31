@@ -118,7 +118,7 @@ public class StrangeBrew {
     	// Startup the WebServer if it's requested (this'll be set to on for now)
     	if (opts.getBProperty("optWebServer")) {
     		
-    		int port = opts.getIProperty("optWebPort");
+    		int port = opts.getIProperty("optWebServerPort");
     		if ( port == 0 ) {
     			port = 8080;
     		}
