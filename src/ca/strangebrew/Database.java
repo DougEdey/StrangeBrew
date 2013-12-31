@@ -1685,7 +1685,7 @@ public class Database {
 	    {
 	
 	    	String baseURL = Options.getInstance().getProperty("cloudURL");
-	    	URI rURI = new URI("http", null, baseURL, 80, "/styles/", null, null);
+	    	URI rURI = new URI("http", null, baseURL, 80, "/recipes/", null, null);
 	    	Debug.print("Trying to access: " + rURI.toString());
 	    	URL url = rURI.toURL();
 	    	InputStream response = url.openStream();
