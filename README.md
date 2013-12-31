@@ -7,6 +7,7 @@ Doug Edey - doug.edey@gmail.com
 Thank you for downloading and trying StrangeBrew Java.
 
 This file contains:
+* What's New in this release?
 * What is this?
 * Running StrangeBrew Java
 * Extra help for running on Linux
@@ -15,11 +16,29 @@ This file contains:
 * Required JRE
 * Known Issues (bugs)
 * Reporting Bugs
-* What's New in this release?
+* Older Releases
 * Roadmap
 * Building the project
 * Contributors
 * Copyrights and Licenses
+
+What's New
+==========
+
+2.1.0
+---------
+- New FEATURE! Web Server to allow you to read any recipes you have in your recipes directory on any device connected to the network
+-- I'll be making this nicer soon
+-- You can currently enable/disable this and set the Port in the Brewer Preferences panel, you must restart StrangeBrew when changing the values
+- Lots of changes, I'll add any I can remember
+- A lot of bugfixes
+- Mash Calculator was broken so it would advise you to collect less than you needed
+- Added a pantry mode so you can record how much of an ingredient you have
+- Added more themes
+- Moved to a DB for storing ingredients
+- Fixed the Refractometer tool
+- Add ingredients from the UI (Under the "Edit -> Add *" menus)
+- Fix styles having the high and low the wrong way round
 
 
  What is this?
@@ -226,23 +245,8 @@ Look to the top right, there's a button for "Issues" click that, and report anyt
 Or use http://reddit.com/r/StrangeBrew
 
 
-What's New
-==========
-
-2.1.0
----------
-- New FEATURE! Web Server to allow you to read any recipes you have in your recipes directory on any device connected to the network
--- I'll be making this nicer soon
--- You can currently enable/disable this and set the Port in the Brewer Preferences panel, you must restart StrangeBrew when changing the values
-- Lots of changes, I'll add any I can remember
-- A lot of bugfixes
-- Mash Calculator was broken so it would advise you to collect less than you needed
-- Added a pantry mode so you can record how much of an ingredient you have
-- Added more themes
-- Moved to a DB for storing ingredients
-- Fixed the Refractometer tool
-- Add ingredients from the UI (Under the "Edit -> Add *" menus)
-- Fix styles having the high and low the wrong way round
+Older Release 
+==============
 
 2.0.2
 --------
