@@ -154,7 +154,9 @@ public class Options {
 			{"maltTable0", "10"},
 			{"maltTable1", "10"},
 			{"maltTable2", "200"},
-			{"hopsTable0", "200"}
+			{"hopsTable0", "200"},
+			
+			{"cloudURL", "strangebrewcloud.appspot.com"}
 	};
 	
 	// default constructor, create options for a recipe

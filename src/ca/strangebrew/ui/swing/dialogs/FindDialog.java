@@ -33,6 +33,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,12 +91,17 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 				JOptionPane.showMessageDialog(frame, "Couldn't get the App Path for the find recipe dialog.");
 			}
 		}
-		currentDir = new File(recipeDir);
-	
-		initGUI();
-		dirLocationText.setText(currentDir.getAbsolutePath());
-		loadRecipes(currentDir);
 		
+		try {
+			currentDir = new File(recipeDir);
+			initGUI();
+			dirLocationText.setText(currentDir.getAbsolutePath());
+			loadRecipes(currentDir);
+		} catch (Exception e) {
+			StringWriter sStream = new StringWriter();
+			e.printStackTrace(new PrintWriter(sStream));
+			JOptionPane.showMessageDialog(frame, "Please set your recipe directory in preferences");
+		}
 		
 	}
 
@@ -202,7 +209,9 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 
 		recipes.clear();
 		files.clear();
-
+		if (dir == null) {
+			return;
+		}
 		for (int i = 0; i < dir.list().length; i++) {
 			File file = new File(dir.list()[i]);
 
