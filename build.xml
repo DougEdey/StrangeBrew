@@ -76,7 +76,7 @@
      
     <manifest file="MANIFEST.MF">
       <attribute name="Built-By" value="${user.name}"/>
-      <attribute name="Main-Class" value="ca.strangebrew.ui.swing.dialogs.Splash"/>
+      <attribute name="Main-Class" value="ca.strangebrew.ui.swing.dialogs.StrangeBrew"/>
       <attribute name="Implementation-Version" value="${VER_MAJOR}.${VER_MINOR}.${VER_POINT}-b${build.number}"/> 
   		
     </manifest>

@@ -28,7 +28,7 @@ import ca.strangebrew.ServerRunner;
 import ca.strangebrew.WebServer;
 
 
-public class Splash {
+public class StrangeBrew {
     /**
      * Shows the splash screen, launches the application and then disposes
      * the splash screen.
@@ -40,14 +40,24 @@ public class Splash {
     public static void main(String[] args) {
     	opts = Options.getInstance();
     	
+    	// check if this is a mac/osx machine, and deal accordingly
+    	String lcOSName = System.getProperty("os.name").toLowerCase();
+    	Debug.print("OS is: " + lcOSName);
+    	//Debug.flush();
+    	
+    	if (lcOSName.indexOf("mac") > -1) {
+    		System.setProperty("apple.laf.useScreenMenuBar","true");
+    		System.setProperty("com.apple.mrj.application.apple.menu.about.name","StrangeBrew");
+    	}
+    	
     	// Set the default exception handler, there's a lot of places where errors are not caught
     	if (args.length > 0){
-			
 			// Are we in debug mode?
 			if (args[0].equals("-d")) {
 				Debug.set(true);
 			}
 		}
+    	
     	//Not the cleanest, but it'll do as a backup until I can fix stuff.
     	Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 		    public void uncaughtException(Thread t, Throwable e) {
@@ -102,15 +112,7 @@ public class Splash {
     		 
     	}
 		
-    	// check if this is a mac/osx machine, and deal accordingly
-    	String lcOSName = System.getProperty("os.name").toLowerCase();
-    	Debug.print("OS is: " + lcOSName);
-    	//Debug.flush();
     	
-    	if (lcOSName.indexOf("mac") > -1) {
-    		System.setProperty("apple.laf.useScreenMenuBar","true");
-    		System.setProperty("com.apple.mrj.application.apple.menu.about.name","StrangeBrew");
-    	}
     	
     	System.out.println("Checking for webserver");
     	// Startup the WebServer if it's requested (this'll be set to on for now)
@@ -129,8 +131,9 @@ public class Splash {
     		
     	}
     	System.out.println("Server started");
+
     	
-        SplashWindow.splash(Splash.class.getResource("splash.gif"));
+        SplashWindow.splash(StrangeBrew.class.getResource("splash.gif"));
         SplashWindow.invokeMain("StrangeSwing", args);
         SplashWindow.disposeSplash();
     }

@@ -94,7 +94,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 						splashPanel.setLayout(splashPanelLayout);
 						aboutPanel.add(splashPanel);
 												
-						java.net.URL imgURL = Splash.class.getResource("splash.gif");						
+						java.net.URL imgURL = StrangeBrew.class.getResource("splash.gif");						
 						JLabel splashLabel = new JLabel(new ImageIcon(imgURL));						
 						splashPanel.add(splashLabel);
 						
