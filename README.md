@@ -229,6 +229,10 @@ as honey, DME, LME, maple syrup, and sugars.
 
 Running from Eclipse
 ============
+
+StrangeBrew.launch in the repository contains the Run configurations listed here.
+
+
 Add a new Run or debug configuration with 
 ``` ca.strangebrew.ui.swing.dialogs.Splash ```
 
