@@ -563,7 +563,7 @@ public class Mash {
 		double waterAddedQTS = 0;
 		double waterEquiv = 0;
 		double mr = mashRatio;
-		double currentTemp = grainTempF;
+		double currentTemp = getGrainTemp();
 
 		double displTemp = 0;
 		double tunLoss; // figure out a better way to do this, eg: themal mass
@@ -629,8 +629,10 @@ public class Mash {
 
 		// Updated the water added
 
-		if (tempUnits == "C")
+		if (tempUnits == "C") {
 			strikeTemp = BrewCalcs.fToC(strikeTemp);
+		}
+		
 		stp.directions = "Mash in with " + SBStringUtils.format(stp.inVol.getValueAs(volUnits),1 ) + " " + volUnits
 				+ " of water at " + SBStringUtils.format(strikeTemp, 1) + " " + tempUnits;
 
