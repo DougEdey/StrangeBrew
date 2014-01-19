@@ -34,9 +34,19 @@ public class SBComboBoxCellEditor extends AbstractCellEditor implements
 	// Implementing ActionListener
 	public void actionPerformed(java.awt.event.ActionEvent e) {
 		// Selecting an item results in an actioncommand "comboBoxChanged".
-		// We should ignore these ones.
-		Debug.print("SBCOMBO: " + e.getSource().toString());
-		// Hitting enter results in an actioncommand "comboBoxEdited"
+		// We should be reacting to these since the drop down doesn't update immediately. 
+		// Hitting enter results in an actioncommand "comboBoxEdited" 
+		// But checking for isValid() tells us if an item was selected
+		// SB ComboBoxes are meant to be JComboBoxes
+		
+		if (e.getSource() instanceof JComboBox) {
+			JComboBox source = (JComboBox) e.getSource();
+			if (source.isValid()) {
+				stopCellEditing();
+				return;
+			}
+		}
+		// Fall back if needed
 		if (e.getActionCommand().equals("comboBoxEdited")) {
 			stopCellEditing();
 		}
