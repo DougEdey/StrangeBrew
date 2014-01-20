@@ -10,6 +10,7 @@ import javax.swing.JComponent;
 import javax.swing.table.TableCellEditor;
 
 import ca.strangebrew.Debug;
+import ca.strangebrew.Mash;
 
 public class SBComboBoxCellEditor extends AbstractCellEditor implements
 		ActionListener, TableCellEditor, Serializable {
@@ -71,6 +72,38 @@ public class SBComboBoxCellEditor extends AbstractCellEditor implements
 	public java.awt.Component getTableCellEditorComponent(
 			javax.swing.JTable table, Object value, boolean isSelected,
 			int row, int column) {
+		
+		if (table.getName().equals("MashTable")) {
+			// Check to see if we have a row and column for the sparge type
+			if (column == 1) {
+				if (row == 0) {
+					
+				} else {
+					comboBox.removeAllItems();
+					
+					int countSparge = 0;
+					
+					for (int i = 0; i < table.getRowCount(); i++) {
+						if (((String)table.getValueAt(i, 0)).equals(Mash.SPARGE)) {
+							countSparge++;
+						}
+					}
+					
+					 // We are in the types column on the mash table
+					if (((String) table.getValueAt(row, 0)).equals(Mash.SPARGE)) {
+						if (countSparge == 1) {
+							comboBox.addItem(Mash.FLY);
+						} else {
+							comboBox.addItem(Mash.SPARGE);
+						}
+					} else {
+						for (String s : Mash.methods) {
+							comboBox.addItem(s);
+						}
+					}
+				}
+			}
+		}
 		setValue(value);
 		return comboBox;
 	}

@@ -452,6 +452,9 @@ public class Recipe {
 		double e;
 		if (evapMethod.equals("Constant")) {
 			e = getEvap() * getBoilMinutes() / 60;
+			
+			Quantity tVol = new Quantity(getVolUnits(), e);
+			return tVol.getValueAs(s);
 		} else { // %
 			e = getPostBoilVol(s) * (getEvap() / 100) * getBoilMinutes() / 60;
 		}

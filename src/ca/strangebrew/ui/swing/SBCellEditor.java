@@ -1,5 +1,6 @@
 package ca.strangebrew.ui.swing;
 
+import java.awt.Component;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.text.NumberFormat;
@@ -8,14 +9,22 @@ import java.util.EventObject;
 import java.util.Locale;
 
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTable;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
+
+import ca.strangebrew.Mash;
 
 public class SBCellEditor extends DefaultCellEditor implements FocusListener {
 
+	private DefaultComboBoxModel model;
+	
 	public SBCellEditor(final JTextField textField) {			
 		super(textField);
 		super.clickCountToStart = 1;
-		textField.addFocusListener(this);			
+		textField.addFocusListener(this);		
+		
 	}
 
 	public boolean shouldSelectCell(EventObject anEvent) {
@@ -45,4 +54,5 @@ public class SBCellEditor extends DefaultCellEditor implements FocusListener {
 	public void focusLost(FocusEvent e) {			
 	}
 
+	
 }

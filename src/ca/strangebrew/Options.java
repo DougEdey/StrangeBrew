@@ -129,6 +129,7 @@ public class Options {
 			{"optMashRatio", "1.25"},
 			{"optGrainTemp", "68"},
 			{"optTunLossF", "3"},
+			{"optDeadSpace", "0"},
 			{"optBoilTempF", "212"},
 			{"optThickDecoctRatio", "0.6"},
 			{"optThinDecoctRatio", "0.9"},

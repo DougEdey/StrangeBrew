@@ -189,6 +189,11 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private ButtonGroup colourGroup = new ButtonGroup();
 	final private JPanel colourPanel = new JPanel();
 	
+	// Mash Tun Dead Space
+	final private JLabel deadSpaceLabel = new JLabel();
+	final private JTextField deadSpaceText = new JTextField();
+	final private JLabel deadSpaceUnits = new JLabel();
+	
 	final private JPanel appearancePanel = new JPanel();
 	final private JTextField boilTempTxt = new JTextField();
 	final private JLabel jLabel12 = new JLabel();
@@ -532,6 +537,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		
 		opts.setProperty("optMashRatioU", mashRatioUCombo.getSelectedItem().toString());
 		opts.setProperty("optMashRatio", mashRatioTxt.getText());
+		opts.setProperty("optDeadSpace", deadSpaceText.getText());
 		
 		// appearances:
 		
@@ -1287,7 +1293,20 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					constraints.gridx = 2;
 					mashPanel.add(mashRatioUCombo, constraints);
 					mashRatioUCombo.setModel(mashRatioUComboModel);
-					mashRatioUCombo.setPreferredSize(new java.awt.Dimension(71, mashRatioUCombo.getFont().getSize()*2));				
+					mashRatioUCombo.setPreferredSize(new java.awt.Dimension(71, mashRatioUCombo.getFont().getSize()*2));
+					
+					// Dead space
+					constraints.gridx = 0;
+					constraints.gridy = 4;
+					mashPanel.add(deadSpaceLabel, constraints);
+					deadSpaceLabel.setText("Dead Space:");	
+					constraints.gridx = 1;
+					mashPanel.add(deadSpaceText, constraints);
+					deadSpaceText.setText(opts.getProperty("optDeadSpace"));
+					deadSpaceText.setPreferredSize(new java.awt.Dimension(45, deadSpaceText.getFont().getSize()*2));	
+					constraints.gridx = 2;
+					mashPanel.add(deadSpaceUnits, constraints);
+					deadSpaceUnits.setText(opts.getProperty("optSizeU"));
 				}
 				
 				// Misc

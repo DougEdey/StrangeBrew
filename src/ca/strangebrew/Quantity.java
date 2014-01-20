@@ -158,7 +158,7 @@ public class Quantity {
 		fromBase = getBaseValue(u, unit);
 		toBase = getBaseValue(u, to);
 
-		return value * toBase / fromBase;
+		return value * (toBase / fromBase);
 	}
 
 

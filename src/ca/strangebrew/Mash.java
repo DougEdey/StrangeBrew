@@ -22,8 +22,10 @@ public class Mash {
 	private String volUnits;
 	private double grainTempF;
 	private double boilTempF;
+	
 	// private double thermalMass;
 	private double tunLossF;
+	private Quantity deadSpace;
 	private double thinDecoctRatio;
 	private double thickDecoctRatio;
 	private double cerealMashTemp;
@@ -97,6 +99,12 @@ public class Mash {
 		 thickDecoctRatio = opts.getDProperty("optThickDecoctRatio");
 		 thinDecoctRatio = opts.getDProperty("optThinDecoctRatio");
 		 cerealMashTemp = opts.getDProperty("optCerealMashTmpF");
+		 
+		 deadSpace = new Quantity();
+		 deadSpace.setAmount(opts.getDProperty("optDeadSpace"));
+		 deadSpace.setUnits(volUnits);
+		 
+		 tunLossF = opts.getDProperty("optTunLossF");
 		 name = "Mash";
 
 		 myRecipe = r;
@@ -313,6 +321,14 @@ public class Mash {
 		else
 			tunLossF = t * 1.8;
 		calcMashSchedule();
+	}
+	
+	public void setDeadSpace(double d) {
+		deadSpace.setAmount(d);
+	}
+	
+	public double getDeadSpace() {
+		return deadSpace.getValue();
 	}
 	
 	public void setDecoctRatio(String type, double r){
@@ -805,7 +821,9 @@ public class Mash {
 		
 		// spargeTotalQTS = (myRecipe.getPreBoilVol("qt")) - (mashWaterQTS - absorbedQTS);
 		totalWaterQTS = mashWaterQTS;
-		spargeQTS = myRecipe.getPreBoilVol(Quantity.QT) - (mashWaterQTS - absorbedQTS);		
+		spargeQTS = myRecipe.getPreBoilVol(Quantity.QT) - 
+				(mashWaterQTS - absorbedQTS - deadSpace.getValueAs(Quantity.QT));
+		
 		Debug.print("Sparge Quarts: " + spargeQTS);
 		
 		// Now let's figure out the sparging:		
@@ -821,8 +839,10 @@ public class Mash {
 	    
 	    // do we need to add more water to charge up
 	    // is the amount we need to collect less than the initial mash volume - absorbption
-	    Debug.print("Collecting: " + col + " MashWater " + mashWaterQTS + " Absorbed " + absorbedQTS);
-		if (col >= (mashWaterQTS - absorbedQTS)) {
+	    System.out.println("Collecting: " + col + " MashWater " + mashWaterQTS + 
+	    		" Absorbed " + absorbedQTS + " Loss: " + deadSpace.getValueAs(Quantity.QT));
+	    
+		if (col <= (mashWaterQTS - absorbedQTS)) {
 			charge[0] = 0;
 			collect[0] = mashWaterQTS - absorbedQTS; // how much is left over from the mash
 			totalCollectQts = totalCollectQts - collect[0];
@@ -835,11 +855,11 @@ public class Mash {
        // do we need any more steps?
 	    if(numSparge > 1) {
 	    	/*
-		    batch_1_sparge_liters = (boil_size_l/<total number of steps> ) mash_water_l + grain_wt_kg * 0.625)
+		    batch_1_sparge_liters = (boil_size_l/<total number of steps> ) - mash_water_l + grain_wt_kg * 0.625)
 		    		batch_2_liters = boil_size_l / <total number of steps>
 		    	*/
 		   Debug.print("NumSparge: " + numSparge);
-			
+		   
 			Debug.print("Collecting: " + col);
 			for (int i = 1; i < numSparge; i++) {
 				charge[i] = col;
@@ -857,9 +877,10 @@ public class Mash {
 				
 				stp.outVol.setUnits(Quantity.QT);
 				stp.outVol.setAmount(collect[j]);
+				
 				stp.temp = SPARGETMPF;
 				totalSpargeTime += stp.getMinutes();
-				String collectStr = SBStringUtils.format(Quantity.convertUnit(Quantity.QT, volUnits, collect[j]), 1) +
+				String collectStr = SBStringUtils.format(Quantity.convertUnit(Quantity.QT, volUnits, collect[j]), 2) +
 				" " + volUnits;
 				String tempStr;
 				if (tempUnits.equals("F")){
@@ -870,7 +891,7 @@ public class Mash {
 				
 				if (numSparge > 1){
 					stp.setMethod(BATCH);
-					String add = SBStringUtils.format(Quantity.convertUnit(Quantity.QT, volUnits, charge[j]), 1) +
+					String add = SBStringUtils.format(Quantity.convertUnit(Quantity.QT, volUnits, charge[j]), 2) +
 					" " + volUnits;			
 					stp.setDirections("Add " + add + " at " + tempStr + " to collect " + collectStr);
 					
@@ -1051,4 +1072,6 @@ public class Mash {
 		sb.append("  </MASH>\n");
 		return sb.toString();
 	}
+
+	
 }

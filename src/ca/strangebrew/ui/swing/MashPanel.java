@@ -38,6 +38,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableColumn;
 
@@ -91,6 +92,12 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	final private JComboBox ratioUnitsCombo = new JComboBox();
 	final private ComboBoxModel ratioUnitsComboModel = new DefaultComboBoxModel(Mash.ratioUnits);
 	final private JTextField ratioText = new JTextField();
+	
+	// Dead space
+	final private JLabel deadSpaceLabel = new JLabel();
+	final private JTextField deadSpaceText = new JTextField();
+	final private JLabel deadSpaceUnit = new JLabel();
+	
 	// private ButtonGroup tempUnitsButtonGroup;
 	final private JComboBox volUnitsCombo = new JComboBox();
 	final private ComboModel<String> volUnitsComboModel = new ComboModel<String>();
@@ -100,6 +107,8 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	final private JPanel settingsPanel = new JPanel();
 	final private JPanel tablePanel = new JPanel();
 	final private JButton saveButton = new JButton();
+	final private JComboBox typesComboBox = new JComboBox();
+	final private JComboBox methodComboBox = new JComboBox();
 	
 	final private SBCellEditor sTempEditor = new SBCellEditor(new JTextField());								
 	final private SBCellEditor eTempEditor = new SBCellEditor(new JTextField());		
@@ -112,7 +121,8 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	public MashPanel(Recipe r) {
 		super();
 		myRecipe = r;
-		mashModel = new MashTableModel();			
+		mashModel = new MashTableModel();
+		
 		if (myRecipe != null) {
 			mashModel.setData(myRecipe.getMash());
 
@@ -172,18 +182,26 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 						tblMash.setModel(mashModel);
 						tblMash.setAutoCreateColumnsFromModel(false);
 						tblMash.getTableHeader().setReorderingAllowed(false);
-
+						tblMash.setName("MashTable");
+						
 						// set up type combo
-						JComboBox typesComboBox = new JComboBox(Mash.types);
+						for (String s : Mash.types) {
+							typesComboBox.addItem(s);
+						}
 						SmartComboBox.enable(typesComboBox);
 						TableColumn mashColumn = tblMash.getColumnModel().getColumn(0);
 						mashColumn.setCellEditor(new SBComboBoxCellEditor(typesComboBox));
-
+						typesComboBox.addActionListener(this);
+						
 						// set up method combo;
-						JComboBox methodComboBox = new JComboBox(Mash.methods);
+						for (String s : Mash.methods) {
+							methodComboBox.addItem(s);
+						}
+						
 						SmartComboBox.enable(methodComboBox);
 						mashColumn = tblMash.getColumnModel().getColumn(1);
 						mashColumn.setCellEditor(new SBComboBoxCellEditor(methodComboBox));
+						
 						
 						mashColumn = tblMash.getColumnModel().getColumn(2);
 						mashColumn.setCellEditor(sTempEditor);
@@ -242,9 +260,9 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 						0.1};
 				settingsPanelLayout.rowHeights = new int[]{7, 7, 7, 7, 7, 7, 7, 7};
 				settingsPanelLayout.columnWeights = new double[]{0.3};
-				settingsPanelLayout.columnWidths = new int[]{7};
+				settingsPanelLayout.columnWidths = new int[]{7, 7, 7};
 				settingsPanel.setLayout(settingsPanelLayout);
-				settingsPanel.setPreferredSize(new java.awt.Dimension(170, 208));
+				settingsPanel.setPreferredSize(new java.awt.Dimension(190, 208));
 
 				settingsPanel.add(jLabel14, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
 						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
@@ -334,8 +352,41 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 					volUnitsCombo.setPreferredSize(new java.awt.Dimension(57, volUnitsCombo.getFont().getSize()*2));
 					volUnitsCombo.addActionListener(this);
 				}
+				
+				// Volume lost in Tun
+				settingsPanel.add(deadSpaceLabel, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
+						GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
+				deadSpaceLabel.setText("Dead Space:");
+				/*{
+					volUnitsComboModel.setList(Quantity.getListofUnits("vol", true));
+					SmartComboBox.enable(volUnitsCombo);
+					settingsPanel.add(volUnitsCombo, new GridBagConstraints(2, 5, 1, 1, 0.0, 0.0,
+							GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0,
+									0, 0, 0), 0, 0));
+					volUnitsCombo.setModel(volUnitsComboModel);
+					volUnitsCombo.setPreferredSize(new java.awt.Dimension(57, volUnitsCombo.getFont().getSize()*2));
+					volUnitsCombo.addActionListener(this);
+				}*/
 
-				settingsPanel.add(jLabel2, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
+				settingsPanel.add(deadSpaceText, new GridBagConstraints(1, 5, 1, 1, 0.0, 0.0,
+						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
+				//deadSpaceText.setText(opts.getProperty("optDeadSpace"));
+				deadSpaceText.setPreferredSize(new java.awt.Dimension(50, deadSpaceText.getFont().getSize()*2));
+
+				deadSpaceText.addFocusListener(this);
+				deadSpaceText.addActionListener(this);
+				
+				
+				settingsPanel.add(deadSpaceUnit, new GridBagConstraints(2, 5, 1, 1, 0.0, 0.0,
+						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
+						0, 0));
+				deadSpaceUnit.setText("x");
+				
+				// Cereal Mash
+
+				settingsPanel.add(jLabel2, new GridBagConstraints(0, 6, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0),
 						0, 0));
 				jLabel2.setText("Cereal Mash:");
@@ -486,8 +537,11 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			grainTempText.setText(new Double(myRecipe.mash.getGrainTemp()).toString());
 			boilTempTxt.setText(new Double(myRecipe.mash.getBoilTemp()).toString());
 			tunLossTxt.setText(SBStringUtils.format(myRecipe.mash.getTunLoss(), 1));
+			Double d = myRecipe.mash.getDeadSpace();
+			deadSpaceText.setText(SBStringUtils.format(d, 1));
 			tempFrb.setSelected(myRecipe.mash.getMashTempUnits().equalsIgnoreCase("F"));
 			nameTxt.setText(myRecipe.mash.getName());
+			deadSpaceUnit.setText(myRecipe.mash.getMashVolUnits());
 
 		}
 	}
@@ -564,6 +618,16 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 				Debug.print("Could not parse "+ s + " as a double");
 				tunLossTxt.setText(Double.toString(myRecipe.mash.getTunLoss()));
 			}
+		} else if (o == deadSpaceText) {
+			String s = deadSpaceText.getText();
+			try {
+				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+				Number number = format.parse(s.toString().trim());
+				myRecipe.mash.setDeadSpace(number.doubleValue());
+			} catch (ParseException m) {
+				Debug.print("Could not parse "+ s + " as a double");
+				deadSpaceText.setText(Double.toString(myRecipe.mash.getDeadSpace()));
+			}
 		} else if (o == nameTxt) {
 			myRecipe.mash.setName(nameTxt.getText());
 		} else if (o == defaultsButton){
@@ -578,10 +642,16 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			String name = ((JMenuItem)o).getText();
 			md.set(name, myRecipe);	
 			mashModel.setData(myRecipe.getMash());				
+		} else if (o == typesComboBox && typesComboBox.isValid()) {
+			
 		}
-
-		tblMash.updateUI();
-		displayMash();
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				tblMash.updateUI();
+			  	displayMash();
+			}
+		});
 
 	}
 
