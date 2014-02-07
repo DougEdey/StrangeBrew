@@ -126,6 +126,9 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 	final private JLabel lblModified = new JLabel();
 	final private JCheckBox bModified = new JCheckBox();
 	
+	final private JLabel lblFerments = new JLabel();
+	final private JCheckBox bFerments = new JCheckBox();
+	
 	final private JButton okButton = new JButton();
 	final private JButton cancelButton = new JButton();
 		
@@ -180,12 +183,9 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 			{
 				lOne.add(lblName, c);
 				lblName.setText("Name: ");
-				
 	
 				lOne.add(txtName, c);
 				txtName.setPreferredSize(new java.awt.Dimension(120, txtName.getFont().getSize()*2));
-	
-				
 				
 				lOne.add(lblYield, c);
 				lblYield.setText("Yield: ");
@@ -193,8 +193,6 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 				lOne.add(txtYield, c);
 				txtYield.setText("1.000");
 				txtYield.setPreferredSize(new java.awt.Dimension(55, txtYield.getFont().getSize()*2));
-	
-				//c.gridwidth = GridBagConstraints.REMAINDER;
 				
 			}
 			// Second Line	
@@ -206,8 +204,6 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 				txtLov.setText("14");
 				txtLov.setPreferredSize(new java.awt.Dimension(55, txtLov.getFont().getSize()*2));
 	
-				
-				
 				lTwo.add(lblCost, c);
 				lblCost.setText("Cost: ");
 	
@@ -229,19 +225,12 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 			}
 			//Third
 			{
-			
-	
-				
-//				Mash.setPreferredSize(new java.awt.Dimension(55, 20));
-				
 				txtDescr.setLineWrap(true);
-				//txtDescr.setPreferredSize(new java.awt.Dimension(400, 40));
 				
 				jScrollDescr.setPreferredSize(new java.awt.Dimension(400,jScrollDescr.getFont().getSize()*6)); 
 				jScrollDescr.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 				jScrollDescr.setLayout(new ScrollPaneLayout());
 	
-				//c.gridwidth = GridBagConstraints.REMAINDER;
 			}
 			//Fourth
 			{
@@ -254,21 +243,23 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 				
 				lFour.add(lblMash, c);
 				lblMash.setText("Mashed: ");
-	
 				lFour.add(bMash, c);
 				
 				lFour.add(lblSteep, c);
 				lblSteep.setText("Steep: ");
-	
 				lFour.add(bSteep, c);
 				
 	
 				lFour.add(lblModified, c);
 				lblModified.setText("Modified: ");
-	
 				lFour.add(bModified, c);
-				//Modified.setPreferredSize(new java.awt.Dimension(55, 20));
-				//c.gridwidth = GridBagConstraints.REMAINDER;
+				
+				lFour.add(lblFerments, c);
+				lblFerments.setText("Ferments: ");
+				lFour.add(bFerments, c);
+				// Default to true
+				bFerments.setSelected(true);
+	
 			}
 			//fifth
 			{
@@ -334,6 +325,7 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 			i.setDescription(txtDescr.getText());
 			i.setModified(bModified.isSelected());
 			i.setSteep(bSteep.isSelected());
+			i.ferments(bFerments.isSelected());
 			
 			int result = 1;
 			int found = 0;
@@ -385,32 +377,34 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 			
 				// we have the index, load it into the hop
 				temp = db.fermDB.get(result);
+				
 				// set the fields
-				if(Double.toString(temp.getPppg())!= null)
+				if (Double.toString(temp.getPppg())!= null) {
 					txtYield.setText(Double.toString(temp.getPppg()));
+				}
 				
-				if(Double.toString(temp.getLov()) != null)
+				if (Double.toString(temp.getLov()) != null) {
 					txtCost.setText(Double.toString(temp.getLov()));
+				}
 				
-				if(Double.toString(temp.getCostPerU()) != null)
+				if (Double.toString(temp.getCostPerU()) != null) {
 					txtCost.setText(Double.toString(temp.getCostPerU()));
+				}
 				
-				if(Double.toString(temp.getStock()) != null)
+				if (Double.toString(temp.getStock()) != null) {
 					txtStock.setText(Double.toString(temp.getStock()));
+				}
 				
-				if(temp.getUnits() != null)
+				if (temp.getUnits() != null) {
 					cUnits.setSelectedItem(temp.getUnits());
+				}
+			
+				bMash.setSelected(temp.getMashed());
+				bSteep.setSelected(temp.getSteep());
+				bModified.setSelected(temp.getModified());
+				bFerments.setSelected(temp.ferments());
 				
-				if(temp.getMashed()) 
-					bMash.setSelected(temp.getMashed());
-				
-				if(temp.getSteep()) 
-					bSteep.setSelected(temp.getSteep());
-				
-				if(temp.getModified()) 
-					bModified.setSelected(temp.getModified());
-				
-				if(temp.getDescription() != null){
+				if (temp.getDescription() != null){
 					
 					txtDescr.setText(temp.getDescription());
 					jScrollDescr.invalidate();
@@ -429,9 +423,7 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 	public void stateChanged(ChangeEvent e){
 		Object o = e.getSource();
 		
-		Debug.print("State changed on: " + o);
-		
-		
+		Debug.print("State changed on: " + o);		
 	}
 
 
@@ -439,6 +431,5 @@ public class AddFermDialog extends javax.swing.JDialog implements ActionListener
 		// TODO Auto-generated method stub
 		
 	}
-	
 
 }

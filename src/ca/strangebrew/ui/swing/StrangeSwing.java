@@ -411,6 +411,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		
 		} catch (Exception e){
 			System.err.println("Trouble starting up: " + e.getMessage());
+			e.printStackTrace();
 		}
 
 	}
@@ -537,6 +538,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 				instance = new StrangeSwing();
 			} catch (Exception e) {
 				System.err.println("Trouble starting up: " + e.getMessage());
+				e.printStackTrace();
 			}
 		}
 

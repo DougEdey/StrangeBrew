@@ -19,9 +19,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Properties;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -115,7 +118,34 @@ public class Database {
 			if (!tables.contains("fermentables")) {
 				// no fermentables
 				Debug.print("Creating fermentables table");
-				stat.executeUpdate("create table fermentables (Item INT AUTO_INCREMENT,Name UNIQUE,Yield,Lov,Cost,Stock,Units,Mash,Descr,Steep,Modified );");
+				stat.executeUpdate("create table fermentables (Item INT AUTO_INCREMENT,Name UNIQUE,Yield,Lov,Cost,Stock,Units,Mash,Descr,Steep,Modified, Ferments );");
+			} else {
+				Debug.print("Checking for fermentables updates");
+				
+				// This will cover us if we need to add new rows in the future, to enable people to update the DB
+				Map<String, String> newColumns = new HashMap<String, String>();
+				
+				newColumns.put("Ferments", "True");
+				
+				ResultSet fermentColumns = meta.getColumns(null, null, "fermentables", null);
+				
+				// Iterate the Map
+				Iterator <Entry<String, String>> it = newColumns.entrySet().iterator();
+				
+				while (it.hasNext()) {
+					Entry<String, String> e = it.next();
+					try {
+						fermentColumns.getBoolean(e.getKey());
+					} catch (SQLException noColumn) {
+						// Column doesn't Exist
+						try {
+							stat.executeUpdate("ALTER TABLE fermentables ADD " + e.getKey() + " DEFAULT " + e.getValue());
+						} catch (SQLException columnExists) {
+							// Ignore it
+						}
+					}
+				}
+				
 			}
 			
 			if (!tables.contains("hops")) {
@@ -138,7 +168,7 @@ public class Database {
 				
 				if (hopColumn == false) {
 					// add the column
-					stat.executeQuery("ALTER TABLE hops ADD Type");
+					stat.executeUpdate("ALTER TABLE hops ADD Type");
 				}
 			}
 	        
@@ -324,6 +354,7 @@ public class Database {
 					int descrIdx = getIndex(fields, "Descr");
 					int steepIdx = getIndex(fields, "Steep");
 					int modIdx = getIndex(fields, "Modified");
+					int fermIdx = getIndex(fields, "Ferments");
 					
 					String sql = new String();
 					PreparedStatement pStatement;
@@ -341,8 +372,8 @@ public class Database {
 						res.next();
 						if(res.getInt(1) == 0 ){
 							
-							sql = "insert into fermentables (Name,Yield,Lov,Cost,Stock,Units,Mash,Descr,Steep,Modified) " +
-														"values(?, ?,    ?,  ? ,  ? ,   ?,    ?,    ?,   ?,     ?)";	
+							sql = "insert into fermentables (Name,Yield,Lov,Cost,Stock,Units,Mash,Descr,Steep,Modified,Ferments) " +
+														"values(?, ?,    ?,  ? ,  ? ,   ?,    ?,    ?,   ?,     ?,       ?)";	
 							
 							pStatement = conn.prepareStatement(sql);
 							 pStatement.setString(1, fields[nameIdx]);
@@ -356,6 +387,7 @@ public class Database {
 							 
 							 pStatement.setString(9, fields[steepIdx]);
 							 pStatement.setString(10, fields[modIdx]);
+							 pStatement.setString(11, fields[fermIdx]);
 						
 							pStatement.executeUpdate();
 							fields = null;
@@ -400,9 +432,17 @@ public class Database {
 				f.setUnits(res.getString("Units"));
 				f.setMashed(Boolean.valueOf(res.getString("Mash")).booleanValue());
 				f.setSteep(Boolean.valueOf(res.getString("Steep")).booleanValue());
+				f.ferments(Boolean.valueOf(res.getString("Ferments")).booleanValue());
 				
+				if (f.getName().equals("Lactose")) {
+					if (f.ferments()) {
+						System.out.println("Lactose ferments");
+					} else {
+						System.out.println("Lactose doesn't ferment");
+					}
+				}
+ 
 				if (!res.getString("Stock").equals("")) {
-					
 					f.setStock(Double.parseDouble(res.getString("Stock")));
 				}
 				else
@@ -477,16 +517,16 @@ public class Database {
 			
 			PreparedStatement rStatement = conn.prepareStatement("SELECT COUNT(*) FROM fermentables " +
 					"WHERE name = ? AND Yield =? AND Lov=? AND Cost=? AND Stock=? AND" +
-					" Units=? AND Mash=? AND Descr=? AND Steep=? ;");
+					" Units=? AND Mash=? AND Descr=? AND Steep=? AND Ferments=?;");
 			
 			
-			String sql = "insert into fermentables (Name,Yield,Lov,Cost,Stock,Units,Mash,Descr,Steep) " +
-					"values(?, ?,  ? , ?, ?, ?, ?, ?, ? )";
+			String sql = "insert into fermentables (Name,Yield,Lov,Cost,Stock,Units,Mash,Descr,Steep, Ferments) " +
+					"values(?, ?,  ? , ?, ?, ?, ?, ?, ?, ? )";
 			
 			PreparedStatement insertFerm = conn.prepareStatement(sql);
 			
 			sql = "UPDATE fermentables SET Yield =?, Lov=?, Cost=?, Stock=?," +
-					" Units=?, Mash=?, Descr=?, Steep=? " +
+					" Units=?, Mash=?, Descr=?, Steep=?, Ferments=? " +
 					" WHERE name = ?";
 			
 			PreparedStatement updateFerm = conn.prepareStatement(sql);
@@ -517,9 +557,10 @@ public class Database {
 					insertFerm.setString(7, Boolean.toString(f.getMashed()));
 					insertFerm.setString(8, f.getDescription());
 					insertFerm.setString(9, Boolean.toString(f.getSteep()));
+					insertFerm.setString(10, Boolean.toString(f.ferments()));
 					insertFerm.execute();
 				} else {
-					
+					res.close();
 					rStatement.setString(1, f.getName());
 					rStatement.setString(2, Double.toString(f.getPppg()));
 					rStatement.setString(3, Double.toString(f.getLov()));
@@ -529,10 +570,12 @@ public class Database {
 					rStatement.setString(7, Boolean.toString(f.getMashed()));
 					rStatement.setString(8, f.getDescription());
 					rStatement.setString(9, Boolean.toString(f.getSteep()));
+					rStatement.setString(10, Boolean.toString(f.ferments()));
 					res = rStatement.executeQuery();
 					
 					// we have a name match, see if anything has changed
 					if(res.getInt(1) == 0) {
+						res.close();
 						Debug.print("Fermentables Update");
 						updateFerm.setString(1, Double.toString(f.getPppg()));
 						updateFerm.setString(2, Double.toString(f.getLov()));
@@ -542,9 +585,10 @@ public class Database {
 						updateFerm.setString(6, Boolean.toString(f.getMashed()));
 						updateFerm.setString(7, f.getDescription());
 						updateFerm.setString(8, Boolean.toString(f.getSteep()));
+						updateFerm.setString(9, Boolean.toString(f.ferments()));
 						// where cause
-						updateFerm.setString(9, f.getName());
-						updateFerm.execute();
+						updateFerm.setString(10, f.getName());
+						updateFerm.executeUpdate();
 						
 					}
 				}

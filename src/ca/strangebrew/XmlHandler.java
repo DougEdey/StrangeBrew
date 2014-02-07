@@ -164,7 +164,9 @@ public class XmlHandler extends DefaultHandler{
 				else if (str.equalsIgnoreCase("color"))
 					m.setLov(Double.parseDouble(currentAttributes.getValue(i)));
 				else if (str.equalsIgnoreCase("extract"))
-					m.setPppg(Double.parseDouble(currentAttributes.getValue(i)));						
+					m.setPppg(Double.parseDouble(currentAttributes.getValue(i)));	
+				else if (str.equalsIgnoreCase("ferments"))
+					m.ferments(Boolean.parseBoolean(currentAttributes.getValue(i)));
 			}
 		}
 		// we have to do this here, because <batch> is an empty element

@@ -55,6 +55,7 @@ public class SBTable extends JTable {
 		// TODO Auto-generated constructor stub
 	}
 	
+	
 	public void setColumnWidths(Options p){
 		if (name == "") return;
 		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

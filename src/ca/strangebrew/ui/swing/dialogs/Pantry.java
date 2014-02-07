@@ -406,14 +406,12 @@ public class Pantry extends javax.swing.JDialog implements ActionListener, Chang
 		Object o = e.getSource();
 		
 		Debug.print("State changed on: " + o);
-		
-		
+	
 	}
 
 
 	public void focusGained(FocusEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 	
 

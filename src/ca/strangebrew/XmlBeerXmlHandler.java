@@ -157,11 +157,6 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 				myRecipe.getYeastObj().setDescription(descrBuf);
 			
 		}
-		
-
-
-
-
 	}
 
 	/**
@@ -209,7 +204,9 @@ public class XmlBeerXmlHandler extends DefaultHandler {
 				if (currentElement.equalsIgnoreCase("color"))
 					f.setLov(Double.parseDouble(s.trim()));
 				if (currentElement.equalsIgnoreCase("RECOMMEND_MASH"))
-					f.setMashed(s.trim().equalsIgnoreCase("true"));				
+					f.setMashed(s.trim().equalsIgnoreCase("true"));		
+				if (currentElement.equalsIgnoreCase("ferments"))
+					f.setMashed(s.trim().equalsIgnoreCase("true"));	
 			}
 			else if (currentList.equalsIgnoreCase("mash")){
 				if (currentElement.equalsIgnoreCase("type"))

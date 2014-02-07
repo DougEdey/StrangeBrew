@@ -138,7 +138,8 @@ class MaltTableModel extends AbstractTableModel {
 						Debug.print("Setting value from name: " + m.getLov());
 						data.setMaltLov(row, m.getLov());
 						data.setMaltSteep(row, m.getSteep());
-						data.setMaltMashed(row, m.getMashed());						
+						data.setMaltMashed(row, m.getMashed());
+						data.setMaltFerments(row, m.ferments());	
 					}
 					break;
 				case 3 :

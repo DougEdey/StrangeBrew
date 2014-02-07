@@ -68,6 +68,7 @@ public class Recipe {
 	private GregorianCalendar created;
 	private double efficiency;
 	private double estOg;
+	private double estFermOg; // Used to take into account the non fermentables
 	private double estFg;
 	private double evap;
 	private double ibu;
@@ -923,6 +924,10 @@ public class Recipe {
 	public boolean getMaltSteep(final int i) {
 		return fermentables.get(i).getSteep();
 	}
+	
+	public boolean getMaltFerments(final int i) {
+		return fermentables.get(i).ferments();
+	}
 
 	// fermentable set methods
 	public void setMaltName(final int i, final String n) {
@@ -1004,6 +1009,11 @@ public class Recipe {
 	public void setMaltMashed(final int i, final boolean c) {
 		isDirty = true;
 		fermentables.get(i).setMashed(c);
+	}
+	
+	public void setMaltFerments(final int i, final boolean c) {
+		isDirty = true;
+		fermentables.get(i).ferments(c);
 	}
 
 	// misc get/set functions
@@ -1343,38 +1353,57 @@ public class Recipe {
 			return;
 		}
 		double maltPoints = 0;
+		double fermentingMaltPoints = 0;
 		totalMaltLbs = 0;
 		totalMaltCost = 0;
 		totalMashLbs = 0;
 
+		double curPoints = 0.0;
+		
 		// first figure out the total we're dealing with
 		for (int i = 0; i < fermentables.size(); i++) {
 			final Fermentable m = fermentables.get(i);
+			if (m.getName().equals("") || m.getAmountAs(Quantity.LB) <= 0.00) {
+				continue;
+			}
 			totalMaltLbs += (m.getAmountAs(Quantity.LB));
 			if (m.getMashed()) { // apply efficiency and add to mash weight
-				maltPoints += (m.getPppg() - 1) * m.getAmountAs(Quantity.LB) * getEfficiency()
+				curPoints = (m.getPppg() - 1) * m.getAmountAs(Quantity.LB) * getEfficiency()
 						/ getPostBoilVol(Quantity.GAL);
 				totalMashLbs += (m.getAmountAs(Quantity.LB));
 			} else {
-				maltPoints += (m.getPppg() - 1) * m.getAmountAs(Quantity.LB) * 100 / getPostBoilVol(Quantity.GAL);
+				curPoints += (m.getPppg() - 1) * m.getAmountAs(Quantity.LB) * 100 / getPostBoilVol(Quantity.GAL);
 			}
-			Debug.print("Cost: " + m.getCostPerU() + m.getAmountAs(m.getUnits()) + m.getUnits());
-			totalMaltCost += m.getCostPerU() * m.getAmountAs(m.getUnits());
-		}
-
-		// now set the malt % by weight:
-		for (int i = 0; i < fermentables.size(); i++) {
-			final Fermentable m = fermentables.get(i);
+			
+			maltPoints += curPoints;
+			
+			// Check to see if we can ferment this sugar
+			if (m.ferments()) {
+				System.out.println(m.getName() + i + " ferments when calc");
+				fermentingMaltPoints += curPoints;
+			} else {
+				System.out.println(m.getName() + i + " does NOT ferments when calc");
+			}
+			
+			// Malt % By Weight
 			if (m.getAmountAs(Quantity.LB) == 0) {
 				m.setPercent(0);
 			} else {
 				m.setPercent((m.getAmountAs(Quantity.LB) / totalMaltLbs * 100));
 			}
+			
+			Debug.print("Cost: " + m.getCostPerU() + m.getAmountAs(m.getUnits()) + m.getUnits());
+			totalMaltCost += m.getCostPerU() * m.getAmountAs(m.getUnits());
 		}
 
 		// set the fields in the object
 		estOg = (maltPoints / 100) + 1;
-		estFg = 1 + ((estOg - 1) * ((100 - getAttenuation()) / 100));
+		estFermOg = (fermentingMaltPoints/100) + 1;
+		
+		double attGrav = (estFermOg - 1) * (getAttenuation() / 100);
+		
+		// FG
+		estFg = estOg - attGrav;
 		// mash.setMaltWeight(totalMashLbs);
 	}
 

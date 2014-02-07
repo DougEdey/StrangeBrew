@@ -18,6 +18,7 @@ public class Fermentable extends Ingredient  {
 	private double lov;
 	private boolean mashed;
 	private boolean steeped;
+	private boolean fermentable = true;
 	private double percent;
 	private boolean prime;
 	
@@ -73,6 +74,7 @@ public class Fermentable extends Ingredient  {
 	public double getPppg(){ return pppg; }
 	public boolean getSteep(){return steeped; }
 	public boolean getPrime() { return prime; }
+	public boolean ferments() { return fermentable; } 
 
 	// setter methods:	
 	public void setLov(double l){
@@ -84,6 +86,7 @@ public class Fermentable extends Ingredient  {
 	public void setPppg(double p){ pppg = p; }
 	public void setSteep(boolean s){ steeped = s; }
 	public void setPrime(boolean b) { prime = b; }
+	public void ferments(boolean f) { fermentable = f; }
 	
 	// Need to add the spaces and type attributes to make this
 	// backwards-compatible with SB1.8:
@@ -98,6 +101,7 @@ public class Fermentable extends Ingredient  {
 	    sb.append( "      <LOV>"+lov+"</LOV>\n" );
 	    sb.append( "      <MASHED>"+mashed+"</MASHED>\n" );
 	    sb.append( "      <STEEPED>"+steeped+"</STEEPED>\n" );
+	    sb.append( "      <FERMENTS>"+fermentable+"</FERMENTS>\n" );
 	    sb.append( "      <COSTLB>"+getCostPerU()+"</COSTLB>\n" );
 	    sb.append( "      <DESCRIPTION>"+SBStringUtils.subEntities(getDescription())+"</DESCRIPTION>\n" );
 	    sb.append( "    </ITEM>\n" );
