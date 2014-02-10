@@ -60,6 +60,9 @@ class MiscTableModel extends AbstractTableModel {
 	}
 
 	public Class<?> getColumnClass(int c) {
+		if (null == getValueAt(0, c)) {
+			return String.class;
+		}
 		return getValueAt(0, c).getClass();
 	}
 	

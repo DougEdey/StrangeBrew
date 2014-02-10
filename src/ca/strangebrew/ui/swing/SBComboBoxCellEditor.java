@@ -73,7 +73,7 @@ public class SBComboBoxCellEditor extends AbstractCellEditor implements
 			javax.swing.JTable table, Object value, boolean isSelected,
 			int row, int column) {
 		
-		if (table.getName().equals("MashTable")) {
+		if (table.getName() != null && table.getName().equals("MashTable")) {
 			// Check to see if we have a row and column for the sparge type
 			if (column == 1) {
 				if (row == 0) {

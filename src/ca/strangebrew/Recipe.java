@@ -1379,10 +1379,7 @@ public class Recipe {
 			
 			// Check to see if we can ferment this sugar
 			if (m.ferments()) {
-				System.out.println(m.getName() + i + " ferments when calc");
 				fermentingMaltPoints += curPoints;
-			} else {
-				System.out.println(m.getName() + i + " does NOT ferments when calc");
 			}
 			
 			// Malt % By Weight

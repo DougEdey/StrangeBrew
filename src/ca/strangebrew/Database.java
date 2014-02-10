@@ -332,7 +332,6 @@ public class Database {
 		// get the current date just because
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
 		Date date = new Date();
-		//System.out.println();
 		
 		try {
 			Statement statement = conn.createStatement();
@@ -434,14 +433,6 @@ public class Database {
 				f.setSteep(Boolean.valueOf(res.getString("Steep")).booleanValue());
 				f.ferments(Boolean.valueOf(res.getString("Ferments")).booleanValue());
 				
-				if (f.getName().equals("Lactose")) {
-					if (f.ferments()) {
-						System.out.println("Lactose ferments");
-					} else {
-						System.out.println("Lactose doesn't ferment");
-					}
-				}
- 
 				if (!res.getString("Stock").equals("")) {
 					f.setStock(Double.parseDouble(res.getString("Stock")));
 				}
