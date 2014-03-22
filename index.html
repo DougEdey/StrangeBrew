@@ -1,85 +1,560 @@
 <!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Strangebrew by DougEdey</title>
 
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
-  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/script.js"></script>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Strangebrew</h1>
+        <p>Strangebrew 2.x Java Project</p>
 
-  <title>Strangebrew</title>
-  <meta name="description" content="Strangebrew 2.x Java Project">
+        <p class="view"><a href="https://github.com/DougEdey/StrangeBrew">View the Project on GitHub <small>DougEdey/StrangeBrew</small></a></p>
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-</head>
+        <ul>
+          <li><a href="https://github.com/DougEdey/StrangeBrew/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/DougEdey/StrangeBrew/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/DougEdey/StrangeBrew">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="strangebrew-java---210" class="anchor" href="#strangebrew-java---210"><span class="octicon octicon-link"></span></a>StrangeBrew Java - 2.1.0</h1>
 
-<body>
+<p>(c)2000-2008 Drew Avis - <a href="mailto:drew.avis@gmail.com">drew.avis@gmail.com</a>
+Doug Edey - <a href="mailto:doug.edey@gmail.com">doug.edey@gmail.com</a></p>
 
-  <div class="wrapper">
-    <header>
-      <h1 class="title">Strangebrew</h1>
-    </header>
-    <div id="container">
-      <p class="tagline">Strangebrew 2.x Java Project</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/DougEdey/StrangeBrew/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/DougEdey/StrangeBrew/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/DougEdey/StrangeBrew" class="code">View Strangebrew on GitHub</a>
-        </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
-        <article class="markdown-body">
-          <h3>Welcome to GitHub Pages.</h3>
+<p>Thank you for downloading and trying StrangeBrew Java.</p>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>This file contains:</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<ul>
+<li>What's New in this release?</li>
+<li>What is this?</li>
+<li>Running StrangeBrew Java</li>
+<li>Extra help for running on Linux</li>
+<li>Setting the look and feel</li>
+<li>Files in this release</li>
+<li>Required JRE</li>
+<li>Known Issues (bugs)</li>
+<li>Reporting Bugs</li>
+<li>Older Releases</li>
+<li>Roadmap</li>
+<li>Building the project</li>
+<li>Contributors</li>
+<li>Copyrights and Licenses</li>
+</ul><h1>
+<a name="whats-new" class="anchor" href="#whats-new"><span class="octicon octicon-link"></span></a>What's New</h1>
+
+<h2>
+<a name="210" class="anchor" href="#210"><span class="octicon octicon-link"></span></a>2.1.0</h2>
+
+<ul>
+<li>New FEATURE! Web Server to allow you to read any recipes you have in your recipes directory on any device connected to the network
+-- I'll be making this nicer soon
+-- You can currently enable/disable this and set the Port in the Brewer Preferences panel, you must restart StrangeBrew when changing the values</li>
+<li>Lots of changes, I'll add any I can remember</li>
+<li>A lot of bugfixes</li>
+<li>Mash Calculator was broken so it would advise you to collect less than you needed</li>
+<li>Added a pantry mode so you can record how much of an ingredient you have</li>
+<li>Added more themes</li>
+<li>Moved to a DB for storing ingredients</li>
+<li>Fixed the Refractometer tool</li>
+<li>Add ingredients from the UI (Under the "Edit -&gt; Add *" menus)</li>
+<li>
+<p>Fix styles having the high and low the wrong way round</p>
+
+<h1>
+<a name="what-is-this" class="anchor" href="#what-is-this"><span class="octicon octicon-link"></span></a>What is this?</h1>
+</li>
+</ul><p>This is a "release quality" release of StrangeBrew Java, which means 
+it's feature-complete, and is pretty stable.  If you find bugs, please
+report them via the Github Project. Or email a developer above</p>
+
+<p>StrangeBrew Java is a Java port of the popular Windows homebrewing
+software, StrangeBrew (<a href="http://www.strangebrew.ca">www.strangebrew.ca</a>).</p>
+
+<p>Ingredients can now be added/edited from the application, removing the
+need to edit the data files directly.</p>
+
+<p>NOTE: We've changed the numbering of Java releases to 2.0, based on 
+the idea that this is a continuation of the Windows version 1.8.</p>
+
+<h1>
+<a name="-running-strangebrew-java" class="anchor" href="#-running-strangebrew-java"><span class="octicon octicon-link"></span></a> Running StrangeBrew Java</h1>
+
+<p>Running StrangeBrew:
+1. Unzip the sb_XXX.zip file (where XXX is the latest version, eg: "sb_2.0.1").
+Be sure to preserve the directory structure.
+2. Type "java -jar strangebrew.jar" at the command line.  Under Windows,
+you can right-click this file, select "Open With &gt; " and select a Java
+installation. You can also just double-click the file, if ".jar" files
+are associated with javaw.exe.  Double-clicking reportedly also works on
+Mac OSX.  There's probably a Linux way to do this, but I don't know what it is.</p>
+
+<p>NOTE: StrangeBrew loads data (ingredients, styles, etc) from:
+src/ca/strangebrew/data/
+When you unzip the file, be sure to preserve directory names, so
+that StrangeBrew can find this data.</p>
+
+<h1>
+<a name="extra-help-for-running-on-linux" class="anchor" href="#extra-help-for-running-on-linux"><span class="octicon octicon-link"></span></a>Extra help for running on Linux</h1>
+
+<p><strong>I do not recommend this, just use <code>java -jar strangebrew.jar</code></strong></p>
+
+<p>These are notes from Scott Alfter via rec.crafts.brewing:</p>
+
+<ol>
+<li>Make sure CONFIG_BINFMT_MISC is enabled in the kernel (built-in or
+module)...look in Executable file formats/Emulations -&gt; Kernel support
+for MISC binaries. </li>
+<li>Add the following to /etc/fstab:
+binfmt_misc /proc/sys/fs/binfmt_misc binfmt_misc defaults 0 0</li>
+<li>Create /usr/bin/jexec with the following contents and make it executable
+by everybody:
+#!/bin/sh
+java -jar $*</li>
+<li>Add the following to whatever script your distro provides for local
+customization (in Gentoo, it's /etc/conf.d/local.start):
+echo ':jarexec:M::PK\x03\x04::/usr/bin/jexec:' &gt;/proc/sys/fs/binfmt_misc/register</li>
+</ol><p>When you reboot (or if you execute the preceding from a root prompt), you
+can chmod 755 strangeBrew_fat.jar and then run it with the following:</p>
+
+<p>./strangeBrew_fat.jar</p>
+
+<p>NOTE: At least one person has experienced problems running StrangeBrew on Fedora
+using their 1.4.2 JRE, which is the GNU gcj.  The problem was solved by using the
+1.5 JRE from Sun.  </p>
+
+<p>For Ubuntu:
+Install Sun's JRE:
+    $ sudo apt-get install sun-java6-jre
+Update default system JVM:
+    $ sudo update-alternatives --config java
+  Select java-6 from the list
+    $ sudo update-alternatives --config jar
+  Select java-6 from the list</p>
+
+<p>See <a href="https://help.ubuntu.com/community/Java">https://help.ubuntu.com/community/Java</a> for more help with Ubuntu.</p>
+
+<p><strong>This bug below is fixed</strong></p>
+
+<p>Greg LaPolla points out:
+When you create a launcher on the desktop and start the app with the java -jar 
+command it displays the "can't find the database" error.  You can create a shell
+script to fix it by simply changing to the StrangeBrew directory first:</p>
+
+<pre><code>#!/bin/sh
+cd ~/StrangeBrew
+java -jar StrangeBrew.jar
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<h1>
+<a name="setting-the-look-and-feel" class="anchor" href="#setting-the-look-and-feel"><span class="octicon octicon-link"></span></a>Setting the Look and Feel</h1>
 
-<h3>Designer Templates</h3>
+<p>The Java Swing library (which StrangeBrew uses for its user interface) supports
+a "pluggable look and feel" (LAF) -- meaning you can easily change the appearance 
+of Swing applications to suit your own tastes.  </p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>The default is the System Look and Feel, this means that the application should 
+fairly closely match your Operating Systems Look &amp; Feel (there are some exceptions,
+such as KDE based environments)</p>
 
-<h3>Rather Drive Stick?</h3>
+<p>(Some betas of StrangeBrew used the JGoodies Looks LAF, but I removed
+it as the default to give users more control over how the application looks).</p>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>Very nice look and feels are available on-line from several sources.  Here are 
+a few of my favourites for StrangeBrew:</p>
 
-<h3>Authors and Contributors</h3>
+<ul>
+<li>JGoodies Looks: <a href="http://javootoo.l2fprod.com/plaf/jgoodies/index.php">http://javootoo.l2fprod.com/plaf/jgoodies/index.php</a>
+</li>
+<li>Liquid L&amp;F: <a href="https://liquidlnf.dev.java.net/">https://liquidlnf.dev.java.net/</a>
+</li>
+<li>Synthetica L&amp;F: <a href="http://www.javasoft.de/jsf/public/products/synthetica">http://www.javasoft.de/jsf/public/products/synthetica</a>
+</li>
+<li>Tonic L&amp;F: <a href="http://www.digitprop.com/p.php?page=toniclf">http://www.digitprop.com/p.php?page=toniclf</a>
+</li>
+</ul><p>Download the .jar file you'd like to try, and put it in your Java home directory under
+/lib/ext.</p>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>You can set the Look and Feel in a couple of ways:</p>
 
-<h3>Support or Contact</h3>
+<p>1) From the Command-line:
+Use the -Dswing.defaultlaf= option when starting the application.
+Here's an example of starting StrangeBrew using the Synthetica LAF:</p>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-        </article>
-      </div>
+<p><code>java -Dswing.defaultlaf=de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel -jar strangebrew.jar</code></p>
+
+<p>The "de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel" bit is the full class 
+name of the Look And Feel -- you'll have to read the documentation for each LAF to find 
+out the proper text to put here</p>
+
+<p>2) Using swing.properties:
+You can set the default LAF for all Java Swing applications by editing the swing.properties
+file in your $JAVA_HOME/lib directory.  You need to add two lines for your new LAF, and
+change the default line.  Here's an example of the new &amp; changed lines using the Tonic
+LAF:</p>
+
+<pre><code>swing.installedlaf.tonic.name = Tonic
+swing.installedlaf.tonic.class = com.digitprop.tonic.TonicLookAndFeel
+swing.defaultlaf=com.digitprop.tonic.TonicLookAndFeel
+</code></pre>
+
+<p>3) Using the preferences options. Under the "Brewer" pane you can select from any of the L&amp;Fs installed 
+on your system. This gets saved.</p>
+
+<p>Now start StrangeBrew as you would normally, and it should use the new LAF.</p>
+
+<h1>
+<a name="files-" class="anchor" href="#files-"><span class="octicon octicon-link"></span></a>Files </h1>
+
+<p>The file you downloaded should contain these files (at least):</p>
+
+<ul>
+<li>strangebrew.jar: a Fat Jar file which you can run (see above).  This
+file also contains the complete Java source for the application.  To
+view the source, decompress this file with an archive utility.</li>
+<li>gpl.txt: the GPL license this software is distributed under</li>
+<li>readme.txt: this file</li>
+<li>src/ca/strangebrew/data: data files and the xslt files required 
+for exporting HTML and printing.  You can modify the xslt files if 
+you want to customize the look of the HTML.</li>
+<li>help/: help files.  These files are under development.</li>
+<li>recipes/: example recipe files in various formats.<br>
+</li>
+<li>src/*: all the Java files you need to build and run StrangeBrew yourself.<br>
+You will need to either download or extract a couple of other .jar files 
+that StrangeBrew requires.</li>
+</ul><h1>
+<a name="required-jre" class="anchor" href="#required-jre"><span class="octicon octicon-link"></span></a>Required JRE</h1>
+
+<p>You require a Java Runtime Environment (JRE) on your system to run
+StrangeBrew.  It requires versions 1.5 and up (See 
+<a href="http://java.sun.com/j2se/1.5.0/index.jsp">http://java.sun.com/j2se/1.5.0/index.jsp</a>). As of version 2.0.1, 
+StrangeBrew no longer runs under version 1.4.   StrangeBrew has
+been tested and runs on Linux, MacOS-X, and Windows.  </p>
+
+<h1>
+<a name="known-issues" class="anchor" href="#known-issues"><span class="octicon octicon-link"></span></a>Known Issues</h1>
+
+<ul>
+<li>When importing recipes from StrangeBrew for Windows (1.8 or earlier),
+fermentables that are sugars are incorrectly considered "grains".  Their
+gravity contribution is calculated using the recipe efficiency, rather than
+100%.  You should uncheck the "M" (for mashed) column, which indicates that
+the ingredient is a sugar.  This applies to all sugar-type fermentables, such
+as honey, DME, LME, maple syrup, and sugars.</li>
+</ul><h1>
+<a name="running-from-eclipse" class="anchor" href="#running-from-eclipse"><span class="octicon octicon-link"></span></a>Running from Eclipse</h1>
+
+<p>StrangeBrew.launch in the repository contains the Run configurations listed here.</p>
+
+<p>Add a new Run or debug configuration with 
+<code>ca.strangebrew.ui.swing.dialogs.Splash</code></p>
+
+<p>As the Main class, then you need to add the build directory to the Configuration, you may need to run a build first and refresh the eclipse directory</p>
+
+<p>Class Path -&gt; Advanced -&gt; Add Folder -&gt; find the "Build" directory</p>
+
+<h1>
+<a name="reporting-bugs" class="anchor" href="#reporting-bugs"><span class="octicon octicon-link"></span></a>Reporting Bugs</h1>
+
+<p>Look to the top right, there's a button for "Issues" click that, and report anything.</p>
+
+<p>Or use <a href="http://reddit.com/r/StrangeBrew">http://reddit.com/r/StrangeBrew</a></p>
+
+<h1>
+<a name="older-release-" class="anchor" href="#older-release-"><span class="octicon octicon-link"></span></a>Older Release </h1>
+
+<h2>
+<a name="202" class="anchor" href="#202"><span class="octicon octicon-link"></span></a>2.0.2</h2>
+
+<p>New Features:</p>
+
+<ul>
+<li>You can now specify the BJCP style year you want to use (2004 or 2008).</li>
+<li>Random Name Generator for recipes!</li>
+<li>Table column sizes are now remembered when you close and restart the application
+(Request 1493295).</li>
+<li>Diluted recipe feature works a lot better.  Diluted specs show up on the main recipe
+details tab.<br>
+</li>
+<li>If StrangeBrew can't find the ingredient databases, it will ask you where they are instead
+of silently starting anyway.<br>
+</li>
+<li>StrangeBrew now looks more like a native MacOS/X application on Macs.<br>
+</li>
+<li>Windows Installer</li>
+<li>Ingredients can be added/edited from the GUI, under the Edit menu.</li>
+</ul><p>Bugs Fixed:</p>
+
+<ul>
+<li>Pre/Post boil volumes don't match the Unit</li>
+<li>Mac is now detected correctly</li>
+<li>BeerXML now opens files correctly</li>
+<li>Hops sorted correctly for timings, not name</li>
+<li>Switching temperature units no longer corrupts the value</li>
+<li>Adding fermentables now orders them correctly and they do not switch order when selecting the name</li>
+<li>Strangebrew now looks in the correct location for data files</li>
+<li>Misc water loss is now set correctly on the Water tab.</li>
+<li>Rager formula bug fixed.</li>
+<li>New Recipe Defaults: Temp Units now displays properly.</li>
+</ul><h2>
+<a name="201" class="anchor" href="#201"><span class="octicon octicon-link"></span></a>2.0.1</h2>
+
+<p>New Features:</p>
+
+<ul>
+<li>New Gravity Teperature Tool Dialog (Request 1222300)</li>
+<li>New selectable user locale, which affects date format (Bug 1480514)</li>
+<li>New Fermentation Schedule tab</li>
+<li>New Carbonation tab</li>
+<li>New Water Treatment tab</li>
+</ul><p>Bugs Fixed:</p>
+
+<ul>
+<li>Default hop type (Leaf, Pellet, Plug) is now configurable (Request 1489276) </li>
+<li>Text field auto selection (Bug 1489252)</li>
+<li>You can now select-by-typing in malt and hop lists (Bug 1493279)</li>
+<li>Mash Steps now insert at end of list (Request 1497970)</li>
+<li>Changed default bottle unit and size to imperal (Bug 1493267) </li>
+<li>UI improvments to the saved "default" mash schedules</li>
+</ul><h2>
+<a name="200" class="anchor" href="#200"><span class="octicon octicon-link"></span></a>2.0.0</h2>
+
+<p>Bugs Fixed:</p>
+
+<ul>
+<li>Mash ratio and ratio units are now properly displayed.</li>
+<li>After storing ingredients from an imported recipe, the database is no longer corrupted.</li>
+<li>Malt and hop drop-downs behave better (Bugs 1580524 and 1511954).</li>
+<li>Selecting a date now permanently changes it (Bug 1581203).</li>
+<li>The comments scrollbar now behaves correctly.</li>
+<li>File extensions don't keep multiplying every time you open the Save/SaveAs/Export dialogs.</li>
+<li>The Min column in the hops table is now handled correctly.</li>
+<li>The style dropdown now displays from the top of the list, rather than the bottom, for an empty style (Bug 1493269).</li>
+</ul><h2>
+<a name="20rc1" class="anchor" href="#20rc1"><span class="octicon octicon-link"></span></a>2.0.rc1</h2>
+
+<p>New Features:</p>
+
+<ul>
+<li>StrangeBrew no longer uses the JGoodies Look And Feel by default, as this was
+causing some refresh issues on older versions of Mac OSX.  Instead, you can set
+the LAF yourself. (See the "Setting the Look And Feel" section above).</li>
+<li>You can now set the bottom of temp ranges used to determine mashout and sparge
+steps.  The defaults are 161F for mashout, and 170F for sparge.  This means that
+when you add a mashout step, it uses the middle of the range (161 + 170 / 2, or
+165.5F) when you add a mashout step, and if you change the start temp to &lt;161, it
+becomes a different step type.  You can adjust these numbers to suit your mashing
+preferences.</li>
+<li>More and better StrangeBrew Java-specific help.<br>
+</li>
+<li>New Print toolbar button.</li>
+</ul><p>Bugs Fixed:</p>
+
+<ul>
+<li>FWH, mash hop, and dry hop IBU values are now correctly calculated.</li>
+<li>The strangebrew.ini file is now saved and read from the correct location on 
+non-Windows machines.</li>
+<li>HTML export now works again on non-Windows machines.<br>
+</li>
+</ul><h2>
+<a name="20b7" class="anchor" href="#20b7"><span class="octicon octicon-link"></span></a>2.0.b7</h2>
+
+<p>New Features:</p>
+
+<ul>
+<li>You can now apply default mash schedules on the Mash tab to quickly load
+a popular schedule.  You can also save the current schedule to the list of
+defaults.  You can edit the /data/mashdefaults.csv file by hand to add or 
+remove a default schedule.</li>
+<li>The Resize Recipe dialog now allows you to also convert hops and fermentables
+(Bug 1489903).</li>
+<li>New potential extract calculator.<br>
+</li>
+<li>You can now add sparge steps to a mash schedule.  Add a step, and change the 
+type to "sparge".  If you add more than one sparge step, it's automatically
+considered a batch sparge, and correct additions are calculated.<br>
+</li>
+<li>You can now set the parameters for a thick and thin decoction on the 
+settings tab.</li>
+<li>You can now add cereal mash steps to a mash schedule.  Add a step, and change the
+method to "cereal mash".  Enter the weight of the grain used in the cereal mash.
+Other values will update accordingly.  Note: the temperature of the step is adjusted
+if the cereal mash addition brings the step above the targe temp.  Try
+decreasing the weight and adjusting the temperature until you get the values you
+want.<br>
+</li>
+<li>New Refractometer Utility lets you peform various calculations with readings
+from a refractometer.<br>
+</li>
+</ul><p>Bugs Fixed:</p>
+
+<ul>
+<li>You can now specify a default boil time on the Preferences Dialog (Bug 1493270)</li>
+<li>Style tab now displays correct SRM value when you're using EBC colour (Bug 1497989)</li>
+<li>You can now set various mash defaults on the Preferences dialog (Bug 1489256)</li>
+<li>You can now set boil units (C or F) as well as boil temp on the Preferences
+dialog (Bug 1489250)</li>
+<li>Cost tab now re-calculates correctly when values change (Bug 1493994)</li>
+<li>Final beer volume shown on cost tab now matches volume shown on water tab (Bug 1493294)</li>
+<li>BU:GU ratio is now displayed correctly on the Style panel (Bug 1493283).</li>
+<li>Dilution panel is now updated when you first open a recipe (Bug 1492475).</li>
+<li>Setting pre-boil amount now correctly updates post-boil amount.</li>
+<li>Changing mash temp units to C now correctly converts tun loss (Bug 1492220).</li>
+<li>Yeast now imports in BeerXML recipes. (Note: if there's more than one yeast
+listed, only the last is imported w/ the recipe).</li>
+<li>Find toolbar button now works (Bug 1489274).<br>
+</li>
+<li>Water panel numbers now aligned (Bug 1493293).</li>
+<li>On the preferences dialog, when you select a constant evaporation rate, the
+units are correctly displayed as the current default recipe volume units 
+(Bug 1493263).</li>
+<li>Removed the extra note area on the notes tab (Bug 1493286).</li>
+<li>Malts with a weight of 0 are correctly displayed as being 0% (Bug 1493276).<br>
+</li>
+<li>Malt and hop amounts are rounded to 2 decimal places instead of 1 (Bug 1493281).</li>
+<li>Preferences are saved in the right place on non-Windows machines.</li>
+<li>Misc ingredient table column widths are now nicer (Bug 1493284).</li>
+<li>%alc, ibu, colour method combos are wider so text isn't cut off (Bug 1489271).</li>
+<li>Switching between % and constant evaporation doesn't redraw the Preferences
+tab. (Bug 1493266)</li>
+<li>
+<p>Mash tab now shows step volume and temp. (Bug 1489258)  </p>
+
+<h1>
+<a name="roadmap" class="anchor" href="#roadmap"><span class="octicon octicon-link"></span></a>Roadmap</h1>
+</li>
+</ul><p>Features on the "TODO List" for StrangeBrew:</p>
+
+<ul>
+<li>mash tun thermal mass</li>
+<li>hop scaling</li>
+<li>real application help (not the SB Win version)</li>
+<li>save / load mash profiles</li>
+<li>specify mash temp ranges</li>
+<li>cereal mash</li>
+<li>allow user-specified precision of values</li>
+</ul><p>Planned StrangeBrew  Pro Features:</p>
+
+<ul>
+<li>advanced water profiling</li>
+<li>inventory tracking</li>
+<li>brewday timeline generation</li>
+<li>brew sessions (vs recipes)</li>
+<li>saved mash schedules</li>
+<li>alternate malt/hop selection dialog</li>
+<li>ingredient database editing</li>
+<li>equipment databases</li>
+<li>iPod Note export</li>
+</ul><p>(StrangeBrew Java will be released under a "dual-license": a free 
+Open Source version and a commercial "Pro" version that will 
+include some additional functionality.)</p>
+
+<p>Comments or questions should be directed to <a href="mailto:drew.avis@gmail.com">drew.avis@gmail.com</a>.</p>
+
+<h1>
+<a name="building-the-project" class="anchor" href="#building-the-project"><span class="octicon octicon-link"></span></a>Building the project</h1>
+
+<p>Complete StrangeBrew Java source is included in the strangebrew.jar file.
+StrangeBrew Java source is also available via github</p>
+
+<p>(<a href="http://github.com/DougEdey/StrangeBrew)%5BGithub">http://github.com/DougEdey/StrangeBrew)[Github</a> Repo] for more information.</p>
+
+<p>I'm building the project in Eclipse, which is freely available at eclipse.org.<br>
+Once you've un-archived the source from the jar file (or obtained it from cvs), you
+can import it as a new project into Eclipse.  You'll need to:</p>
+
+<ul>
+<li>add the 3rd party .jar files in /lib (in the strangebrew.jar archive) to the 
+project libraries</li>
+<li>add an appropriate Sun JRE (1.5+) to the project libraries, if one is not already
+selected</li>
+</ul><p>That should be all you need to build and run the program.</p>
+
+<p>If you wish to build the application from Ant, Greg LaPolla has kindly contributed
+a build file (build.xml in the top level of the source tree).  This file has three
+targets:</p>
+
+<ul>
+<li>ant build - build the application</li>
+<li>ant clean - clean the workspace</li>
+<li>ant zip - build a zip file for distribution.  You have to edit
+the version.num property at the top of the build.xml file.  This build target
+also unpacks the other jars and incorporates them into the distributable
+jar and it also creates the manifest file. </li>
+</ul><h1>
+<a name="contributors" class="anchor" href="#contributors"><span class="octicon octicon-link"></span></a>Contributors</h1>
+
+<p>The following people have contributed to the development of this 
+program:</p>
+
+<ul>
+<li>Mike Charlton - SWT gui development / Java consulting</li>
+<li>Jim Clark - bug fixing and new feature development</li>
+<li>Chris Cook - xslt development</li>
+<li>Andy Davison - testing</li>
+<li>Mike Gibson - testing and the splash screen / logo</li>
+<li>Kris Henderson (Zymurgist) - preferences coding</li>
+<li>Don Kelly - Promash recipe format decoding</li>
+<li>Colin Kilburn - testing / bug fixes</li>
+<li>Jason Landry - database updates</li>
+<li>Jeroen Wouters - bug fixes</li>
+<li>Greg LaPolla - bug fixes / ant build / windows installer</li>
+<li>Sean Cotterill - for his research into Refractometer accuracy</li>
+</ul><h1>
+<a name="copyrights" class="anchor" href="#copyrights"><span class="octicon octicon-link"></span></a>Copyrights</h1>
+
+<p>Parts of this program are copyright by:
+        Copyright (C) 2002-2004 Roedy Green 
+        (CSVReader and CSVWriter classes)
+        Copyright (C) Copyright (c) 2003-2004 Werner Randelshofer
+        (Splash and SplashWindow classes)
+        Copyright (c) 2001-2006 JGoodies Karsten Lentzsch. All rights reserved.
+        (JGoodies Look and Feel)
+        Copyright (c) 2005-2006, Michael Baranov
+        (Microba library)</p>
+
+<h1>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
+
+<pre><code>    Copyright (C) 2006-2008  Drew Avis
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+See the gpl.txt file for more information.
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/DougEdey">DougEdey</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
     </div>
-    <footer>
-      <div class="owner">
-      <p><a href="https://github.com/DougEdey" class="avatar"><img src="https://secure.gravatar.com/avatar/fbff194e067b8dab77bea59841fc20fd?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" width="48" height="48"/></a> <a href="https://github.com/DougEdey">DougEdey</a> maintains <a href="https://github.com/DougEdey/StrangeBrew">Strangebrew</a></p>
-      </div>
-      <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
-    </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/DougEdey/StrangeBrew/tarball/master" class="tar">tar</a><a href="https://github.com/DougEdey/StrangeBrew/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
-
-  
-</body>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
 </html>
