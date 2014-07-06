@@ -32,10 +32,11 @@
     <javac srcdir="${src}" destdir="${build}" target="1.5" source="1.5"
     	debug="true" debuglevel="lines,vars,source">
     <classpath>
-      <pathelement path="${classpath}"/>
-      <pathelement location="lib/microba.jar"/>
-      <pathelement location="lib/BrowserLauncher2-all-10rc4.jar"/>
-      <pathelement location="lib/sqlite-jdbc-3.7.2.jar"/>
+      	<pathelement path="${classpath}"/>
+      	<pathelement location="lib/microba.jar"/>
+      	<pathelement location="lib/BrowserLauncher2-all-10rc4.jar"/>
+      	<pathelement location="lib/sqlite-jdbc-3.7.2.jar"/>
+    	<pathelement location="lib/synthetica.jar"/>
     </classpath>
     </javac>
     <copy todir="${build}">

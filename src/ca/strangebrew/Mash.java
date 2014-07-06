@@ -529,7 +529,6 @@ public class Mash {
 	public double getStepWeight(int i) {
 		double w = 	((MashStep)steps.get(i)).weightLbs;
 		return Quantity.convertUnit(Quantity.LB, myRecipe.getMaltUnits(), w);
-
 	}
 	
 	public void setStepWeight(int i, double w){

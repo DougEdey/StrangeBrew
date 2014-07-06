@@ -947,14 +947,11 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 									0, 0), 0, 0));
 					defaultLocaleLable.setText("System Locale is " + Locale.getDefault().toString());
 				}	
-				{
-					
-					
-					
-					
+				{					
 					ArrayList<Looks> looks = new ArrayList<Looks>();
 					int currentLook = 0;
 					int i = 0;
+
 					for(UIManager.LookAndFeelInfo look : UIManager.getInstalledLookAndFeels()) {
 						
 						Debug.print(look.getClassName());
@@ -966,6 +963,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 						looks.add(new Looks(look.getName(), look.getClassName()));
 						
 					}
+					
 					
 					swingComboBox = new JComboBox(looks.toArray());
 					

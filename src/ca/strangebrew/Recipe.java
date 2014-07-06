@@ -1381,8 +1381,12 @@ public class Recipe {
 			if (m.ferments()) {
 				fermentingMaltPoints += curPoints;
 			}
-			
+		}
+		
+		// Now calculate the percentages
+		for (int i = 0; i < fermentables.size(); i++) {
 			// Malt % By Weight
+		    Fermentable m = fermentables.get(i);
 			if (m.getAmountAs(Quantity.LB) == 0) {
 				m.setPercent(0);
 			} else {

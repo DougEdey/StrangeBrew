@@ -45,6 +45,9 @@ public class StrangeBrew {
     	Debug.print("OS is: " + lcOSName);
     	//Debug.flush();
     	
+    	// Manually add extras, until I can find out why the L&F manager doesn't find it.
+        UIManager.installLookAndFeel("Synthetica", "de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel");
+        
     	if (lcOSName.indexOf("mac") > -1) {
     		System.setProperty("apple.laf.useScreenMenuBar","true");
     		System.setProperty("com.apple.mrj.application.apple.menu.about.name","StrangeBrew");

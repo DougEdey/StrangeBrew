@@ -108,9 +108,4 @@ public class Fermentable extends Ingredient  {
 	    return sb.toString();
 	}
 
-	
-	
-	
-	
-
 }
