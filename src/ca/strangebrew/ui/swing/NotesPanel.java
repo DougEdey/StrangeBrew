@@ -329,7 +329,7 @@ public class NotesPanel extends javax.swing.JPanel implements ActionListener {
 
 		public DateEditor() {
 			datePicker = new DatePicker();
-			datePicker.setDateStyle(DateFormat.SHORT);
+			datePicker.setDateFormat(DateFormat.getDateInstance(DateFormat.SHORT));
 			datePicker.setLocale(Options.getInstance().getLocale());
 		}
 

@@ -133,9 +133,8 @@ import ca.strangebrew.ui.swing.dialogs.ScaleRecipeDialog;
 
 import com.michaelbaranov.microba.calendar.DatePicker;
 
-
 import edu.stanford.ejalbert.BrowserLauncher;
-import edu.stanford.ejalbert.BrowserLauncherRunner;
+import edu.stanford.ejalbert.exception.BrowserLaunchingExecutionException;
 import edu.stanford.ejalbert.exception.BrowserLaunchingInitializingException;
 import edu.stanford.ejalbert.exception.UnsupportedOperatingSystemException;
 
@@ -1032,7 +1031,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 									0, 0));
 							// txtDate.setText("Date");
 							txtDate.setPreferredSize(new java.awt.Dimension(73, txtDate.getFont().getSize()*2));
-							txtDate.setDateStyle(DateFormat.SHORT);
+							txtDate.setDateFormat(DateFormat.getDateInstance(DateFormat.SHORT));
 							txtDate.setLocale(preferences.getLocale());
 						}
 						{
@@ -2111,9 +2110,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			BrowserLauncher launcher;
 			try {
 				launcher = new BrowserLauncher(logger);
-				BrowserLauncherRunner runner = new BrowserLauncherRunner(launcher, urlString, null);
-				Thread launcherThread = new Thread(runner);
-				launcherThread.start();
+				launcher.openURLinBrowser(urlString);
 			} catch (BrowserLaunchingInitializingException ex) {
 				ex.printStackTrace();
 			} catch (UnsupportedOperatingSystemException ex) {

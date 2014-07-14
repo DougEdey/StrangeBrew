@@ -25,7 +25,7 @@ import ca.strangebrew.Debug;
 import ca.strangebrew.ui.swing.SmartComboBox;
 import ca.strangebrew.ui.swing.StrangeSwing;
 import edu.stanford.ejalbert.BrowserLauncher;
-import edu.stanford.ejalbert.BrowserLauncherRunner;
+import edu.stanford.ejalbert.exception.BrowserLaunchingExecutionException;
 import edu.stanford.ejalbert.exception.BrowserLaunchingInitializingException;
 import edu.stanford.ejalbert.exception.UnsupportedOperatingSystemException;
 
@@ -146,13 +146,10 @@ public class PrintDialog extends javax.swing.JDialog implements ActionListener {
 				AbstractLogger logger = new SystemLogger();
 				BrowserLauncher launcher;
 				launcher = new BrowserLauncher(logger);
-				BrowserLauncherRunner runner = new BrowserLauncherRunner(launcher, urlString, null);
-				Thread launcherThread = new Thread(runner);
-				launcherThread.start();
+				launcher.openURLinBrowser(urlString);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-
 			} catch (BrowserLaunchingInitializingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -327,6 +327,7 @@ public class Options {
 		if (lang == null || lang == "") {
 			l = Locale.getDefault();
 		} else {
+		    System.out.println("Langauge: " + lang);
 			l =  new Locale(lang,
 						getProperty("optLocaleCountry"),
 						getProperty("optLocaleVariant"));			
