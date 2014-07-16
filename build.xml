@@ -70,7 +70,7 @@
 	</echo>
 </target>
 
-  <target name="dist" depends="version,compile">
+  <target name="dist" depends="compile">
     <!-- Create the distribution directory -->
     <mkdir dir="${dist}"/>
     <delete file="${dist}/StrangeBrew.jar"/>
@@ -113,7 +113,7 @@
   	</copy>
   </target>
   
-  <target name="zip" description="Create Zipped Distribution" depends="dist">
+  <target name="zip" description="Create Zipped Distribution" depends="version,dist">
     <zip destfile="StrangeBrew-${VER_MAJOR}.${VER_MINOR}.${VER_POINT}-b${build.number}.zip" basedir="${dist}"/>
   </target>  
 
