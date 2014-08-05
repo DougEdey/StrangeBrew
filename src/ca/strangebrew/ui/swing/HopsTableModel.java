@@ -22,6 +22,7 @@ class HopsTableModel extends AbstractTableModel {
 			"Units", "Add", "Min", "IBU", "Cost/u"};
 
 	private Recipe data = null;
+	private int prevRow = -1;
 
 	public HopsTableModel(StrangeSwing app) {
 		data = app.myRecipe;
@@ -109,6 +110,10 @@ class HopsTableModel extends AbstractTableModel {
 	
 	  public void setValueAt(Object value, int row, int col) {
 
+	      if (prevRow == -1) {
+	          prevRow = row;
+	      }
+	      
 		// Hop h = (Hop) data.get(row);
 		try {
 			switch (col) {
@@ -169,12 +174,13 @@ class HopsTableModel extends AbstractTableModel {
 			}
 		} catch (Exception e) {
 		}
-		;
 
-		app.myRecipe.calcHopsTotals();
-		fireTableCellUpdated(row, col);
-		fireTableDataChanged();		
-		app.displayRecipe();
+		if (prevRow != row) {
+    		app.myRecipe.calcHopsTotals();
+    		fireTableCellUpdated(row, col);
+    		fireTableDataChanged();		
+    		app.displayRecipe();
+		}
 	}
 	 
 }

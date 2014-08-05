@@ -11,6 +11,7 @@ import ca.strangebrew.Recipe;
 public class FermentTableModel extends AbstractTableModel {
 	private static final String[] columnNames = {"Type", "Days", "Temp", "U"};
 	private Recipe data = null;
+	private int prevRow = -1;
 
 	public FermentTableModel() {
 	}
@@ -94,6 +95,9 @@ public class FermentTableModel extends AbstractTableModel {
 	 */
 	public void setValueAt(Object value, int row, int col) {
 
+	    if (prevRow == -1) {
+	        prevRow = row;
+	    }
 		// Fermentable m = (Fermentable) data.get(row);
 		try {
 			switch (col) {
@@ -124,9 +128,13 @@ public class FermentTableModel extends AbstractTableModel {
 		} catch (Exception e) {
 		};
 		
-		data.calcFermentTotals();
-		fireTableCellUpdated(row, col);
-		fireTableDataChanged();		
+		if (prevRow != row) {
+    		data.calcFermentTotals();
+    		// Don't fire off the updates until the row is deselected
+    		
+    		fireTableCellUpdated(row, col);
+    		fireTableDataChanged();
+		}
 		//displayRecipe();		
 	}
 }

@@ -21,7 +21,8 @@ class MaltTableModel extends AbstractTableModel {
 			"Lov", "Cost/U", "%"};
 
 	private Recipe data = null;
-
+	private int prevRow = -1;
+	
 	public MaltTableModel(StrangeSwing app) {
 		data = app.myRecipe;
 		this.app = app;
@@ -118,6 +119,10 @@ class MaltTableModel extends AbstractTableModel {
 	public void setValueAt(Object value, int row, int col) {
 		Debug.print("Setting at " + row + "/" + col);
 		// Fermentable m = (Fermentable) data.get(row);
+		if (prevRow == -1) {
+		    prevRow = row;
+		}
+		
 		try {
 			switch (col) {
 				case 0: 
@@ -199,9 +204,15 @@ class MaltTableModel extends AbstractTableModel {
 		};
 		
 		Debug.print("FireTableCellUpdated");
-		app.myRecipe.calcMaltTotals();
-		fireTableCellUpdated(row, col);
-		fireTableDataChanged();		
-		app.displayRecipe();
+		
+		// Don't update unless the row has changed
+		if (row != prevRow) {
+		    app.myRecipe.calcMaltTotals();
+		    System.out.println("Prev: " + prevRow + " : Cur: " + row);
+		    fireTableCellUpdated(row, col);
+		    fireTableDataChanged();
+		    app.displayRecipe();
+		    prevRow = row;
+		}	
 	}
 }

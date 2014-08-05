@@ -722,13 +722,11 @@ public class Recipe {
 	public void setFermentStepType(final int i, final String s) {
 		isDirty = true;
 		fermentationSteps.get(i).setType(s);
-		Collections.sort(fermentationSteps);
 	}
 
 	public void setFermentStepTime(final int i, final int t) {
 		isDirty = true;
 		fermentationSteps.get(i).setTime(t);
-		Collections.sort(fermentationSteps);
 	}
 
 	public void setFermentStepTemp(final int i, final double d) {
@@ -744,7 +742,6 @@ public class Recipe {
 	public void addFermentStep(final FermentStep fs) {
 		isDirty = true;
 		fermentationSteps.add(fs);
-		Collections.sort(fermentationSteps);
 		calcFermentTotals();
 	}
 
@@ -753,7 +750,6 @@ public class Recipe {
 		FermentStep temp = null;
 		if (!fermentationSteps.isEmpty() && (i > -1) && (i < fermentationSteps.size())) {
 			temp = fermentationSteps.remove(i);
-			Collections.sort(fermentationSteps);
 			calcFermentTotals();
 		}
 
@@ -765,6 +761,8 @@ public class Recipe {
 		for (int i = 0; i < fermentationSteps.size(); i++) {
 			totalFermentTime += fermentationSteps.get(i).getTime();
 		}
+		
+		Collections.sort(fermentationSteps);
 	}
 
 	// hop list get functions:
@@ -854,7 +852,6 @@ public class Recipe {
 		isDirty = true;
 		// have to re-sort hops
 		hops.get(i).setMinutes(m);
-		Collections.sort(hops);
 	}
 
 	public void setHopCost(final int i, final String c) {
@@ -945,6 +942,10 @@ public class Recipe {
 	}
 
 	public void setMaltAmount(final int i, final double a) {
+	    setMaltAmount(i, a, false);
+	}
+	
+	public void setMaltAmount(final int i, final double a, final boolean sort) {
 		isDirty = true;
 		fermentables.get(i).setAmount(a);
 		Comparator<Fermentable> c = new Comparator<Fermentable>()  {
@@ -963,9 +964,10 @@ public class Recipe {
 			}
 		
 		};
-		
-		Collections.sort(fermentables, c);
-		Collections.reverse(fermentables);
+	
+		if (sort) {
+		    calcMaltTotals();
+		}
 	}
 
 	public void setMaltAmountAs(final int i, final double a, final String u) {
@@ -1235,23 +1237,8 @@ public class Recipe {
 	public void addMalt(final Fermentable m) {
 		isDirty = true;
 		
-		Comparator<Fermentable> c = new Comparator<Fermentable>()  {
-			public int compare(Fermentable h1, Fermentable h2){
-				
-				Debug.print("Comparing " + h1.getAmountAs(Quantity.LB) + " to " + h2.getAmountAs(Quantity.LB) );
-				if(h1.getAmountAs(Quantity.LB) > h2.getAmountAs(Quantity.LB))
-					return 1;
-				if(h1.getAmountAs(Quantity.LB) < h2.getAmountAs(Quantity.LB))
-					return -1;
-				if(h1.getAmountAs(Quantity.LB) == h2.getAmountAs(Quantity.LB))
-					return 0;
-				return 0;
-				
-			}
 		
-		};
-		Collections.sort(fermentables, c);
-		Collections.reverse(fermentables);
+		
 		fermentables.add(m);
 		calcMaltTotals();
 	}
@@ -1267,7 +1254,6 @@ public class Recipe {
 	public void addHop(final Hop h) {
 		isDirty = true;
 		hops.add(h);
-		Collections.sort(hops);
 		calcHopsTotals();
 	}
 
@@ -1406,6 +1392,9 @@ public class Recipe {
 		// FG
 		estFg = estOg - attGrav;
 		// mash.setMaltWeight(totalMashLbs);
+		
+        Collections.sort(fermentables, fermCompare);
+        Collections.reverse(fermentables);
 	}
 
 	public void calcHopsTotals() {
@@ -1413,6 +1402,7 @@ public class Recipe {
 		if (!allowRecalcs) {
 			return;
 		}
+	    Collections.sort(hops);
 		double ibuTotal = 0;
 		totalHopsCost = 0;
 		totalHopsOz = 0;
@@ -2137,4 +2127,19 @@ public class Recipe {
 
 	}
 
+	Comparator<Fermentable> fermCompare = new Comparator<Fermentable>()  {
+        public int compare(Fermentable h1, Fermentable h2){
+            
+            Debug.print("Comparing " + h1.getAmountAs(Quantity.LB) + " to " + h2.getAmountAs(Quantity.LB) );
+            if(h1.getAmountAs(Quantity.LB) > h2.getAmountAs(Quantity.LB))
+                return 1;
+            if(h1.getAmountAs(Quantity.LB) < h2.getAmountAs(Quantity.LB))
+                return -1;
+            if(h1.getAmountAs(Quantity.LB) == h2.getAmountAs(Quantity.LB))
+                return 0;
+            return 0;
+            
+        }
+    
+    };
 }
