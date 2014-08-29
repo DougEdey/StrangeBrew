@@ -34,6 +34,9 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -62,6 +65,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -84,6 +88,7 @@ import ca.strangebrew.Debug;
 import ca.strangebrew.OpenImport;
 import ca.strangebrew.Options;
 import ca.strangebrew.Recipe;
+import ca.strangebrew.RecipeURLPopup;
 import ca.strangebrew.SBStringUtils;
 import ca.strangebrew.ui.swing.ComboModel;
 import ca.strangebrew.ui.swing.StrangeSwing;
@@ -129,7 +134,6 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 		
 		initGUI();
 		dirLocationText.setText(currentDir.getAbsolutePath());
-		loadRecipes(currentDir);
 		
 		
 	}
@@ -173,6 +177,40 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 						recipeTable = new JTable();
 						recipeScrollPane.setViewportView(recipeTable);
 						recipeTable.setModel(recipeTableModel);
+						recipeTable.addMouseListener(new MouseAdapter() {
+						    @Override
+						    public void mouseReleased(MouseEvent e) {
+						        int r = recipeTable.rowAtPoint(e.getPoint());
+						        if (r >= 0 && r < recipeTable.getRowCount()) {
+						            recipeTable.setRowSelectionInterval(r, r);
+						        } else {
+						            recipeTable.clearSelection();
+						        }
+
+						        int rowindex = recipeTable.getSelectedRow();
+						        if (rowindex < 0)
+						            return;
+						        if (e.isPopupTrigger() && e.getComponent() instanceof JTable ) {
+						            createRecipeUrl(recipes.get(recipeTable.getSelectedRow()));
+						        }
+						    }
+						    @Override
+                            public void mousePressed(MouseEvent e) {
+                                int r = recipeTable.rowAtPoint(e.getPoint());
+                                if (r >= 0 && r < recipeTable.getRowCount()) {
+                                    recipeTable.setRowSelectionInterval(r, r);
+                                } else {
+                                    recipeTable.clearSelection();
+                                }
+
+                                int rowindex = recipeTable.getSelectedRow();
+                                if (rowindex < 0)
+                                    return;
+                                if (e.isPopupTrigger() && e.getComponent() instanceof JTable ) {
+                                    createRecipeUrl(recipes.get(recipeTable.getSelectedRow()));
+                                }
+                            }
+						});
 						// recipeTable.setPreferredSize(new
 						// java.awt.Dimension(148, 32));
 					}
@@ -212,7 +250,6 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 								Debug.print("getSelectedFile() : " + chooser.getSelectedFile());
 								currentDir = chooser.getSelectedFile();
 								dirLocationText.setText(currentDir.getAbsolutePath());
-								loadRecipes(currentDir);
 							} else {
 								Debug.print("No Selection ");
 							}
@@ -247,72 +284,12 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 			e.printStackTrace();
 		}
 	}
-
-	private void loadRecipes(File dir) {
-		/*
-	    try
-	    {
 	
-        	String baseURL = Options.getInstance().getProperty("cloudURL");
-        	URL url = new URI("http", baseURL, "recipes").toURL();
-	    	//URL url = new URL(baseURL+"/recipes/");
-	    	InputStream response = url.openStream();
-	    	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-
-	        dbf.setValidating(false);
-	        dbf.setIgnoringComments(false);
-	        dbf.setIgnoringElementContentWhitespace(true);
-	        dbf.setNamespaceAware(true);
-	        // dbf.setCoalescing(true);
-	        // dbf.setExpandEntityReferences(true);
-
-	        DocumentBuilder db = null;
-	        db = dbf.newDocumentBuilder();
-	        //db.setEntityResolver(new NullResolver());
-
-	        // db.setErrorHandler( new MyErrorHandler());
-
-	        Document readXML = db.parse(response);
-	        
-	        
-	        NodeList childNodes = readXML.getElementsByTagName("recipe");
-	        
-	        
-	        Debug.print("Loading recipes from online: "+ childNodes.getLength());    
-	        for(int x = 0; x < childNodes.getLength(); x++ ) {
-	        	
-	        	
-	        	Node child = childNodes.item(x);
-		        
-	        	NamedNodeMap childAttr = child.getAttributes();
-	        	
-	        	
-	        	// generate the recipe list
-	        	
-				int ID = Integer.parseInt( childAttr.getNamedItem("id").getNodeValue() );
-				String Brewer = childAttr.getNamedItem("brewer").getNodeValue().toString();
-				String Title = childAttr.getNamedItem("name").getNodeValue().toString();
-				String Style = childAttr.getNamedItem("style").getNodeValue().toString();
-				int iteration = 0;//Integer.parseInt(childAttr.getNamedItem("iteration").getNodeValue());
-				Debug.print("Loading: " + Title);
-				BasicRecipe rRecipe = new BasicRecipe(ID, Brewer, Style, Title, iteration);
-				recipes.add(rRecipe);
-				
-		    
-	        }
-		    
-		
-	        recipeTableModel.setData(recipes);
-			recipeTable.updateUI();
-	    }
-	    catch (Exception e)
-	    {
-	        e.printStackTrace();
-	
-	    }
-		
-*/	
-
+	private void createRecipeUrl(BasicRecipe r) {
+	    this.setModal(false);
+	    RecipeURLPopup rr = new RecipeURLPopup(r.id, r.brewer, r.title);
+        rr.setModal(true);
+        rr.setVisible(true);
 	}
 	
 	private void loadRecipesByStyle(String style) {
@@ -359,7 +336,7 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 	        	
 	        	// generate the recipe list
 	        	
-				int ID = Integer.parseInt( childAttr.getNamedItem("id").getNodeValue() );
+				long ID = Long.parseLong(childAttr.getNamedItem("id").getNodeValue() );
 				String Brewer = childAttr.getNamedItem("brewer").getNodeValue().toString();
 				String Title = childAttr.getNamedItem("name").getNodeValue().toString();
 				String Style = childAttr.getNamedItem("style").getNodeValue().toString();
@@ -367,11 +344,8 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 				Debug.print("Loading: " + Title);
 				BasicRecipe rRecipe = new BasicRecipe(ID, Brewer, Style, Title, iteration);
 				recipes.add(rRecipe);
-				
-		    
 	        }
 		    
-		
 			recipeTableModel.setData(recipes);
 			recipeTable.updateUI();
 	    }
@@ -426,7 +400,7 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 	        	
 	        	// generate the recipe list
 	        	
-				int ID = Integer.parseInt( childAttr.getNamedItem("id").getNodeValue() );
+				long ID = Long.parseLong( childAttr.getNamedItem("id").getNodeValue() );
 				String Brewer = childAttr.getNamedItem("brewer").getNodeValue().toString();
 				String Title = childAttr.getNamedItem("name").getNodeValue().toString();
 				String Style = childAttr.getNamedItem("style").getNodeValue().toString();
@@ -491,21 +465,15 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 	        	Debug.print("Style: " + child.getTextContent());
 	        	if(child.getTextContent() != null) {
 	        		styles.add(child.getTextContent());
-	        	}								
-		    
-	        }
-		    
-		
-			
+	        	}
+	        }		
 	    }
 	    catch (Exception e)
 	    {
 	        e.printStackTrace();
 	
 	    }
-		
 	    return styles;
-
 	}
 	
 	
@@ -537,7 +505,7 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 			Debug.print("Opening row " + i + " - " + recipes.size());
 			if (i > -1 && i < recipes.size()) {
 				// grab the Blob and name
-				int ID = recipes.get(i).id;
+				long ID = recipes.get(i).id;
 				StrangeSwing.getInstance().recipeFile = getRemoteRecipe(ID, recipes.get(i).brewer, recipes.get(i).title, recipes.get(i).iteration);
 				// open the file to write to
 				
@@ -552,11 +520,13 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 		}
 	}
 
-	private String getRemoteRecipe(int ID, String Title, String Brewer, int iteration) {
+	private String getRemoteRecipe(long ID, String Title, String Brewer, int iteration) {
 		try
 	    {
 			String baseURL = Options.getInstance().getProperty("cloudURL");
-	    	
+			if (!baseURL.startsWith("http://")) {
+                baseURL = "http://" + baseURL;
+            }
 	    	URL url = new URL(baseURL+"/recipes/"+ID);
 	    	InputStream response = url.openStream();
 	    	
@@ -624,13 +594,13 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 	
 	class BasicRecipe {
 		
-		public int id;
+		public long id;
 		public String brewer;
 		public String style;
 		public String title;
 		public int iteration;
 		
-		BasicRecipe(int ID, String Brewer, String Type, String Title, int Iteration) {
+		BasicRecipe(long ID, String Brewer, String Type, String Title, int Iteration) {
 			id = ID;
 			brewer = Brewer;
 			style = Type;
@@ -695,7 +665,7 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 			};
 			return "";
 		}
-
+		
 		/*
 		 * JTable uses this method to determine the default renderer/ editor for
 		 * each cell. If we didn't implement this method, then the last column
@@ -705,6 +675,8 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 		// public Class getColumnClass(int c) {
 		// return getValueAt(0, c).getClass();
 		// }
+		
+		
 	}
 
 }

@@ -161,7 +161,6 @@ public class RecipeUploadProgress extends JPanel implements ActionListener,
             ((JFrame) parent).dispose();
             return;
         }
-
     }
     
     private void setURLConnection(URL inUrl, String inXml) {

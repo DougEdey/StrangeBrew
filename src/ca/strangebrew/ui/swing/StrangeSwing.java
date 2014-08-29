@@ -2079,12 +2079,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			fd.setModal(true);
 			fd.setVisible(true);
 		} else if (o == remoteButton) {
-			
 			RemoteRecipes rr = new RemoteRecipes(this);
 			rr.setModal(true);
 			rr.setVisible(true);
-			
-			
 		} else if (o == printButton) {
 			PrintDialog pd = new PrintDialog(this);
 			pd.setModal(true);
