@@ -26,6 +26,7 @@ package ca.strangebrew.ui.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -2076,15 +2077,15 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			myRecipe.setName(txtName.getText());
 		} else if (o == findButton) {
 			FindDialog fd = new FindDialog(this);
-			fd.setModal(true);
+			fd.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 			fd.setVisible(true);
 		} else if (o == remoteButton) {
 			RemoteRecipes rr = new RemoteRecipes(this);
-			rr.setModal(true);
+			rr.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 			rr.setVisible(true);
 		} else if (o == printButton) {
 			PrintDialog pd = new PrintDialog(this);
-			pd.setModal(true);
+			pd.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 			pd.setVisible(true);
 		} else if (o == copyButton) {
 			// Copy current recipe to clipboard

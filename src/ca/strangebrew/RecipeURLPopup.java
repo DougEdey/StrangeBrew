@@ -3,6 +3,7 @@ package ca.strangebrew;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -46,7 +47,7 @@ public class RecipeURLPopup extends JDialog implements ActionListener {
         taskOutput = new JTextArea(5, 100);
         taskOutput.setMargin(new Insets(5,5,5,5));
         taskOutput.setEditable(false);
-        taskOutput.append(brewer + " by " + name);
+        taskOutput.append(name + " by " + brewer + "\n");
         taskOutput.append("Recipe URL is: \n");
         taskOutput.append(baseURL + "/recipes/" + id);
         
@@ -58,6 +59,8 @@ public class RecipeURLPopup extends JDialog implements ActionListener {
         this.pack();
         this.setVisible(true);
         this.setSize(400, 300);
+        this.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width)/2 - getWidth()/2,
+                (Toolkit.getDefaultToolkit().getScreenSize().height)/2 - getHeight()/2);
         this.setModal(true);
         this.setFocusable(true);
         

@@ -186,6 +186,8 @@ public class RecipeUploadProgress extends JPanel implements ActionListener,
  
         //Display the window.
         frame.pack();
+        frame.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width)/2 - frame.getWidth()/2,
+                (Toolkit.getDefaultToolkit().getScreenSize().height)/2 - frame.getHeight()/2);
         frame.setVisible(true);
         ((RecipeUploadProgress) newContentPane).setURLConnection(inUrl, inXml);
         //frame.dispose();

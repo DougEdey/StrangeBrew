@@ -26,12 +26,14 @@ package ca.strangebrew.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.LayoutManager;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -134,7 +136,9 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 		
 		initGUI();
 		dirLocationText.setText(currentDir.getAbsolutePath());
-		
+		this.pack();
+        setLocation((Toolkit.getDefaultToolkit().getScreenSize().width)/2 - getWidth()/2,
+                (Toolkit.getDefaultToolkit().getScreenSize().height)/2 - getHeight()/2);		
 		
 	}
 
@@ -280,15 +284,17 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 				}
 			}
 			this.setSize(400, 428);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private void createRecipeUrl(BasicRecipe r) {
-	    this.setModal(false);
+	    this.setModalityType(null);
 	    RecipeURLPopup rr = new RecipeURLPopup(r.id, r.brewer, r.title);
-        rr.setModal(true);
+        rr.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        rr.setVisible(false);
         rr.setVisible(true);
 	}
 	
