@@ -7,6 +7,6 @@
 		public final static String VERSION =
 			2 + "." + 1 + "." + 0;
 		public final static String BUILDDATE = "August 29, 2014";
-		public final static String BUILDNUMBER = "277";
+		public final static String BUILDNUMBER = "278";
 	}
 	
