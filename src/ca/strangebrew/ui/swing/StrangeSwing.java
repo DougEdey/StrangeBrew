@@ -1704,10 +1704,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	private void saveFile() {
 
 		int choice = 1;
-
+        // Make sure we update the recipe name.
+		myRecipe.setName(txtName.getText());
 		if (currentFile != null) {
 			File file = currentFile;
 			try {
+
 				FileWriter out = new FileWriter(file);
 				out.write(myRecipe.toXML(null));
 				out.close();
@@ -1840,15 +1842,12 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		Object o = e.getSource();
 		Debug.print("Clicked on " + o.toString());
 		// Fields
-		if (o == txtName)
+		if (o == txtName) {
 			myRecipe.setName(txtName.getText());
-		else if (o == brewerNameText)
+		} else if (o == brewerNameText) {
 			myRecipe.setBrewer(brewerNameText.getText());
-
-		else if (o == preBoilText) {
+		} else if (o == preBoilText) {
 			try {
-				
-				
 				double x = SBStringUtils.round(myRecipe.getPreBoilVol(myRecipe.getVolUnits()), 2);
 				
 				NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
@@ -2069,6 +2068,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 		// Button and Menu listners
 		else if (o == saveButton) {
+		    
 			saveFile();
 		} else if (o == randomButton){
 			// generate a random name!
