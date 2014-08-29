@@ -51,6 +51,7 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 
 import ca.strangebrew.NanoHTTPD.Response;
 
@@ -1457,12 +1458,15 @@ public class Recipe {
 	}
 
 	private String addXMLHeader(String in) {
-		in = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" + in;
+		in = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" 
+		        + "<?xml-stylesheet type=\"text/xsl\" href=\"http://strangebrewcloud.appspot.com/html/recipeToHtml.xslt\"?>"
+		        + in;
 		return in;
 	}
 
 	public String toXML(final String printOptions) {
 		final StringBuffer sb = new StringBuffer();
+
 		sb.append("<STRANGEBREWRECIPE version = \"" + version + "\">\n");
 		sb.append("<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->\n");
 		if (printOptions != null) {
@@ -2055,76 +2059,31 @@ public class Recipe {
 	public boolean pushRecipe() {
 
 		// Pushes this Recipe to the remote output
-		
+		RecipeUploadProgress uploadProgress = null;
 
-	    try
-	    {
-	    	Debug.print("Need to push the recipe");
-	    	URLConnection urlconnection=null;
-	    	try{
-	    		  String xml = this.toXML(null);
-	    		  String baseURL = Options.getInstance().getProperty("cloudURL");
-	  	    	
-	    		  URL url = new URL(baseURL+"/recipes/");
+	    try {
+	        Debug.print("Need to push the recipe");
+	    	HttpURLConnection urlconnection=null;
+	    	try {
+	    		String xml = this.toXML(null);
+	    		String baseURL = Options.getInstance().getProperty("cloudURL");
+	  	    	if (!baseURL.startsWith("http://")) {
+	  	    	    baseURL = "http://" + baseURL;
+	  	    	}
+	    		URL url = new URL(baseURL+"/recipes/");
 	    	
-	    		  urlconnection = url.openConnection();
-	    		  urlconnection.setDoOutput(true);
-	    		  urlconnection.setDoInput(true);
-	    	
-	    	if (urlconnection instanceof HttpURLConnection) {
-	    		try {
-	    	//     ((HttpURLConnection)urlconnection).setRequestMethod("POST");
-	    	  //   ((HttpURLConnection)urlconnection).setRequestProperty("Content-type", "text/html");
-	    	     ((HttpURLConnection)urlconnection).connect();
-
-
-	    	    } catch (ProtocolException e) {
-	    	     // TODO Auto-generated catch block
-	    	     e.printStackTrace();
-	    	    }
-	    	   }
-
-
-	    	   
-	    	   
-	    	   OutputStreamWriter writer = new OutputStreamWriter(urlconnection.getOutputStream());
-	    	   writer.write(this.toXML(null));
-	    	   writer.flush();
-	    	   
-	    	   System.out.println("Pushed");
-	    	   System.out.println(((HttpURLConnection)urlconnection).getResponseMessage());
-	    	  }
-	    	  catch(Exception e)
-	    	  {
-	    	   e.printStackTrace();
-	    	  }
-	    	  try {
-
-	    	   InputStream inputStream;
-	    	   int responseCode=((HttpURLConnection)urlconnection).getResponseCode();
-	    	   if ((responseCode>= 200) &&(responseCode<=202) ) {
-	    	    inputStream = ((HttpURLConnection)urlconnection).getInputStream();
-	    	    int j;
-	    	    while ((j = inputStream.read()) >0) {
-	    	     System.out.println(j);
-	    	    }
-
-	    	   } else {
-	    	    inputStream = ((HttpURLConnection)urlconnection).getErrorStream();
-	    	   }
-	    	   ((HttpURLConnection)urlconnection).disconnect();
-
-	    	  } catch (IOException e) {
-	    	   // TODO Auto-generated catch block
-	    	   e.printStackTrace();
-	    	  }
-	        return true;
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	    	return false;
-	    }
+	    		
+	    	    RecipeUploadProgress.createAndShowGUI(url, xml);
+	    	    
+	    	} catch(Exception e) {
+                e.printStackTrace();
+            }   
+        } catch (Exception e) {
+        	e.printStackTrace();
+        	return false;
+        }
 	    
-
+	    return true;
 	}
 
 	Comparator<Fermentable> fermCompare = new Comparator<Fermentable>()  {

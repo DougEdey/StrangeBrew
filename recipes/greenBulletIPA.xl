@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<STRANGEBREWRECIPE version = "2.1.0">
+<!-- This is a SBJava export.  StrangeBrew 1.8 will not import it. -->
+  <DETAILS>
+  <NAME>My Recipe</NAME>
+  <BREWER>Doug Edey</BREWER>
+  <NOTES></NOTES>
+  <EFFICIENCY>80.0</EFFICIENCY>
+  <OG>1.057</OG>
+  <FG>1.012</FG>
+  <STYLE>American IPA</STYLE>
+  <MASH>false</MASH>
+  <LOV>17.0</LOV>
+  <IBU>74.6</IBU>
+  <ALC>6.0</ALC>
+  <!-- SBJ1.0 Extensions: -->
+  <EVAP>1.5</EVAP>
+  <EVAP_METHOD>Constant</EVAP_METHOD>
+  <!-- END SBJ1.0 Extensions -->
+  <BOIL_TIME>60</BOIL_TIME>
+  <PRESIZE>22.1</PRESIZE>
+  <SIZE>20.0</SIZE>
+  <SIZE_UNITS>gallons US</SIZE_UNITS>
+  <MALT_UNITS>pounds</MALT_UNITS>
+  <HOPS_UNITS>ounces</HOPS_UNITS>
+  <YEAST>Safale US-05</YEAST>
+  <RECIPE_DATE>08/10/2014</RECIPE_DATE>
+  <ATTENUATION>79.83690418527064</ATTENUATION>
+  <!-- SBJ1.0 Extensions: -->
+  <ALC_METHOD>Volume</ALC_METHOD>
+  <IBU_METHOD>Tinseth</IBU_METHOD>
+  <COLOUR_METHOD>SRM</COLOUR_METHOD>
+  <KETTLE_LOSS>0.0</KETTLE_LOSS>
+  <TRUB_LOSS>0.0</TRUB_LOSS>
+  <MISC_LOSS>0.0</MISC_LOSS>
+  <PELLET_HOP_PCT>6.0</PELLET_HOP_PCT>
+  <YEAST_COST>0.0</YEAST_COST>
+  <OTHER_COST>5.0</OTHER_COST>
+  <!-- END SBJ1.0 Extensions -->
+  </DETAILS>
+  <FERMENTABLES>
+    <TOTAL>47.573714628775356</TOTAL>
+    <ITEM>
+      <MALT>Pale Ale</MALT>
+      <AMOUNT>46.62224033619985</AMOUNT>
+      <PERCENT>98.0</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.03</POINTS>
+      <LOV>14.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>true</STEEPED>
+      <FERMENTS>true</FERMENTS>
+      <COSTLB>0.0</COSTLB>
+      <DESCRIPTION></DESCRIPTION>
+    </ITEM>
+    <ITEM>
+      <MALT>Weyerman Carafamunich 2</MALT>
+      <AMOUNT>0.9514742925755073</AMOUNT>
+      <PERCENT>2.0</PERCENT>
+      <UNITS>lb</UNITS>
+      <POINTS>1.03</POINTS>
+      <LOV>45.0</LOV>
+      <MASHED>true</MASHED>
+      <STEEPED>true</STEEPED>
+      <FERMENTS>true</FERMENTS>
+      <COSTLB>0.9</COSTLB>
+      <DESCRIPTION>German Carafa Special - the darkest of the carafa dark malts, adds a roasty flavour and intense colour to beer.</DESCRIPTION>
+    </ITEM>
+  </FERMENTABLES>
+  <HOPS>
+    <TOTAL>9.8</TOTAL>
+    <ITEM>
+      <HOP>Green Bullet</HOP>
+      <AMOUNT>1.4</AMOUNT>
+      <TIME>70</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Pellet</FORM>
+      <ALPHA>13.5</ALPHA>
+      <COSTOZ>0.0</COSTOZ>
+      <ADD>FWH</ADD>
+      <DESCRIPTION>$0.00Although a new variety in relative terms, Green Bullet delivers a very real, traditional bittering quality and hop flavour. A flagship within the New Zealand brewing industry this hop has contributed to several International Brewing Industry Awards.  Considered a bittering variety typically for Lager, Green Bullet also carries a solid Styrian characteristic of subtle spiciness which finds it at home in a freshly drawn pint of Bitter or an Irish-style Dry Stout.  </DESCRIPTION>
+      <DATE>Sun Aug 10 08:38:52 EDT 2014</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Green Bullet</HOP>
+      <AMOUNT>1.4</AMOUNT>
+      <TIME>60</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Pellet</FORM>
+      <ALPHA>13.5</ALPHA>
+      <COSTOZ>0.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>$0.00Although a new variety in relative terms, Green Bullet delivers a very real, traditional bittering quality and hop flavour. A flagship within the New Zealand brewing industry this hop has contributed to several International Brewing Industry Awards.  Considered a bittering variety typically for Lager, Green Bullet also carries a solid Styrian characteristic of subtle spiciness which finds it at home in a freshly drawn pint of Bitter or an Irish-style Dry Stout.  </DESCRIPTION>
+      <DATE>Sun Aug 10 08:39:34 EDT 2014</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Green Bullet</HOP>
+      <AMOUNT>1.4</AMOUNT>
+      <TIME>40</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Pellet</FORM>
+      <ALPHA>13.5</ALPHA>
+      <COSTOZ>0.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION></DESCRIPTION>
+      <DATE>Sun Aug 10 08:39:49 EDT 2014</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Green Bullet</HOP>
+      <AMOUNT>1.4</AMOUNT>
+      <TIME>20</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Pellet</FORM>
+      <ALPHA>13.5</ALPHA>
+      <COSTOZ>0.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION></DESCRIPTION>
+      <DATE>Sun Aug 10 08:40:09 EDT 2014</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Green Bullet</HOP>
+      <AMOUNT>1.4</AMOUNT>
+      <TIME>10</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Pellet</FORM>
+      <ALPHA>13.5</ALPHA>
+      <COSTOZ>0.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION></DESCRIPTION>
+      <DATE>Sun Aug 10 08:40:25 EDT 2014</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Green Bullet</HOP>
+      <AMOUNT>1.4</AMOUNT>
+      <TIME>5</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Pellet</FORM>
+      <ALPHA>13.5</ALPHA>
+      <COSTOZ>0.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION>$0.00Although a new variety in relative terms, Green Bullet delivers a very real, traditional bittering quality and hop flavour. A flagship within the New Zealand brewing industry this hop has contributed to several International Brewing Industry Awards.  Considered a bittering variety typically for Lager, Green Bullet also carries a solid Styrian characteristic of subtle spiciness which finds it at home in a freshly drawn pint of Bitter or an Irish-style Dry Stout.  </DESCRIPTION>
+      <DATE>Sun Aug 10 08:40:38 EDT 2014</DATE>
+    </ITEM>
+    <ITEM>
+      <HOP>Green Bullet</HOP>
+      <AMOUNT>1.4</AMOUNT>
+      <TIME>1</TIME>
+      <UNITS>oz</UNITS>
+      <FORM>Pellet</FORM>
+      <ALPHA>13.5</ALPHA>
+      <COSTOZ>0.0</COSTOZ>
+      <ADD>Boil</ADD>
+      <DESCRIPTION></DESCRIPTION>
+      <DATE>Sun Aug 10 08:40:52 EDT 2014</DATE>
+    </ITEM>
+  </HOPS>
+  <MISC>
+  </MISC>
+  <MASH>
+    <NAME>Single infusion w/ sparge</NAME>
+    <MASH_VOLUME>19.86</MASH_VOLUME>
+    <MASH_VOL_U>gallons US</MASH_VOL_U>
+    <MASH_RATIO>1.25</MASH_RATIO>
+    <MASH_RATIO_U>qt/lb</MASH_RATIO_U>
+    <MASH_TIME>60</MASH_TIME>
+    <MASH_TMP_U>F</MASH_TMP_U>
+    <THICK_DECOCT_RATIO>0.6</THICK_DECOCT_RATIO>
+    <THIN_DECOCT_RATIO>0.9</THIN_DECOCT_RATIO>
+    <MASH_TUNLOSS_TEMP>3.0</MASH_TUNLOSS_TEMP>
+    <GRAIN_TEMP>68.0</GRAIN_TEMP>
+    <BOIL_TEMP>212.0</BOIL_TEMP>
+    <ITEM>
+      <TYPE>alpha</TYPE>
+      <TEMP>156.0</TEMP>
+      <DISPL_TEMP>156.0</DISPL_TEMP>
+      <END_TEMP>156.0</END_TEMP>
+      <DISPL_END_TEMP>156.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>infusion</METHOD>
+      <WEIGHT_LBS>47.573714628775356</WEIGHT_LBS>
+      <DIRECTIONS>Mash in with 14.9 gallons US of water at 172.5 F</DIRECTIONS>
+    </ITEM>
+    <ITEM>
+      <TYPE>sparge</TYPE>
+      <TEMP>170.0</TEMP>
+      <DISPL_TEMP>170.0</DISPL_TEMP>
+      <END_TEMP>170.0</END_TEMP>
+      <DISPL_END_TEMP>170.0</DISPL_END_TEMP>
+      <MIN>60</MIN>
+      <RAMP_MIN>0</RAMP_MIN>
+      <METHOD>fly</METHOD>
+      <WEIGHT_LBS>0.0</WEIGHT_LBS>
+      <DIRECTIONS>Sparge with 13.4 gallons US at 170.0F to collect 22.10 gallons US</DIRECTIONS>
+    </ITEM>
+  </MASH>
+   <FERMENTATION_SCHEDULE>
+   </FERMENTATION_SCHEDULE>
+   <CARB>
+      <BOTTLETEMP>68.0</BOTTLETEMP>
+      <SERVTEMP>45.0</SERVTEMP>
+      <VOL>2.4</VOL>
+      <SUGAR>Corn Sugar</SUGAR>
+      <AMOUNT>217.0</AMOUNT>
+      <SUGARU>g</SUGARU>
+      <TEMPU>F</TEMPU>
+      <KEG>true</KEG>
+      <PSI>13.72</PSI>
+   </CARB>
+   <WATER_PROFILE>
+      <SOURCE_WATER>
+         <NAME>Distilled/RO</NAME>
+         <CA>0.0</CA>
+         <MG>0.0</MG>
+         <NA>0.0</NA>
+         <SO4>0.0</SO4>
+         <HCO3>0.0</HCO3>
+         <CL>0.0</CL>
+         <HARDNESS>0.0</HARDNESS>
+         <TDS>0.0</TDS>
+         <PH>5.80000019073486</PH>
+         <ALKALINITY>0.0</ALKALINITY>
+      </SOURCE_WATER>
+      <TARGET_WATER>
+         <NAME>Distilled/RO</NAME>
+         <CA>0.0</CA>
+         <MG>0.0</MG>
+         <NA>0.0</NA>
+         <SO4>0.0</SO4>
+         <HCO3>0.0</HCO3>
+         <CL>0.0</CL>
+         <HARDNESS>0.0</HARDNESS>
+         <TDS>0.0</TDS>
+         <PH>5.80000019073486</PH>
+         <ALKALINITY>0.0</ALKALINITY>
+      </TARGET_WATER>
+      <ACID>
+         <NAME>Citric</NAME>
+         <AMT>0.00</AMT>
+         <ACIDU>mg</ACIDU>
+      </ACID>
+   </WATER_PROFILE>
+  <NOTES>
+  </NOTES>
+ <style>
+  <subcategory id="null">    <name>American IPA</name>
+    <aroma>
+A prominent to intense hop aroma with a citrusy, floral, perfume-like, resinous, piney, and/or fruity character derived from American hops. Many versions are dry hopped and can have an additional grassy aroma, although this is not required. Some clean malty sweetness may be found in the background, but should be at a lower level than in English examples. Fruitiness, either from esters or hops, may also be detected in some versions, although a neutral fermentation character is also acceptable. Some alcohol may be noted.</aroma>
+    <appearance>
+Color ranges from medium gold to medium reddish copper; some versions can have an orange-ish tint. Should be clear, although unfiltered dry-hopped versions may be a bit hazy. Good head stand should persist.</appearance>
+    <flavor>
+Hop flavor is medium to high, and should reflect an American hop character with citrusy, floral, resinous, piney or fruity aspects. Medium-high to very high hop bitterness, although the malt backbone will support the strong hop character and provide the best balance. Malt flavor should be low to medium, and is generally clean and malty sweet although some caramel or toasty flavors are acceptable at low levels. No diacetyl. Low fruitiness is acceptable but not required. The bitterness may linger into the aftertaste but should not be harsh. Medium-dry to dry finish. Some clean alcohol flavor can be noted in stronger versions. Oak is inappropriate in this style. Some sulfur may be present if sulfate water is used, but most examples do not exhibit this character.</flavor>
+    <mouthfeel>
+Smooth, medium-light to medium-bodied mouthfeel without hop-derived astringency, although moderate to medium-high carbonation can combine to render an overall dry sensation in the presence of malt sweetness. Some smooth alcohol warming can and should be sensed in stronger (but not all) versions. Body is generally less than in English counterparts.</mouthfeel>
+    <impression>
+A decidedly hoppy and bitter, moderately strong American pale ale.</impression>
+    <comments>null</comments>
+    <ingredients>
+Pale ale malt (well-modified and suitable for single-temperature infusion mashing); American hops; American yeast that can give a clean or slightly fruity profile. Generally all-malt, but mashed at lower temperatures for high attenuation. Water character varies from soft to moderately sulfate.</ingredients>
+ <stats>
+  <og flexible="false">
+      <low>1.056</low>
+      <high>1.075</high>
+  </og>
+  <fg flexible="false">
+      <low>0.0</low>
+      <high>0.0</high>
+  </fg>
+  <ibu flexible="false">
+      <low>40.0</low>
+      <high>60.0</high>
+  </ibu>
+  <srm flexible="false">
+      <low>6.0</low>
+      <high>15.0</high>
+  </srm>
+  <abv flexible="false">
+      <low>5.5</low>
+      <high>7.5</high>
+  </abv>
+</stats>
+    <examples>
+Stone IPA, Victory Hop Devil, Anderson Valley Hop Ottin', Anchor Liberty Ale, Sierra Nevada Celebration Ale, Three Floyds Alpha King, Harpoon IPA, Bell's Two-Hearted Ale, Avery IPA, Founder's Centennial IPA, Mendocino White Hawk Select IPA</examples>
+  </subcategory>
+ </style>
+</STRANGEBREWRECIPE>
