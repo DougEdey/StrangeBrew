@@ -17,9 +17,18 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -30,6 +39,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
@@ -42,9 +52,14 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableColumn;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
 import ca.strangebrew.Debug;
 import ca.strangebrew.Mash;
 import ca.strangebrew.MashDefaults;
+import ca.strangebrew.Options;
 import ca.strangebrew.Quantity;
 import ca.strangebrew.Recipe;
 import ca.strangebrew.SBStringUtils;
@@ -107,6 +122,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 	final private JPanel settingsPanel = new JPanel();
 	final private JPanel tablePanel = new JPanel();
 	final private JButton saveButton = new JButton();
+	final private JButton sendButton = new JButton();
 	final private JComboBox typesComboBox = new JComboBox();
 	final private JComboBox methodComboBox = new JComboBox();
 	
@@ -252,7 +268,16 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			
 			jPanel1.add(defaultsButton);
 			defaultsButton.setText("Defaults >");
-			defaultsButton.addActionListener(this);		
+			defaultsButton.addActionListener(this);
+			
+			// If the user has set up Elsinore in the properties, show the send button
+			String elsinoreServer = Options.getInstance().getProperty("elsinoreServer");
+			if (elsinoreServer != null && !elsinoreServer.equals("")) {
+    			jPanel1.add(sendButton);
+                sendButton.setText("Send >");
+                sendButton.addActionListener(this);
+    		}
+			
 			{
 				jTabbedPane1.addTab("Settings", null, settingsPanel, null);
 				GridBagLayout settingsPanelLayout = new GridBagLayout();
@@ -632,6 +657,8 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			myRecipe.mash.setName(nameTxt.getText());
 		} else if (o == defaultsButton){
 			mashMenu.show(defaultsButton, 10, 10);
+		} else if (o == sendButton) {
+		    sendMashToElsinore();
 		} else if (o == saveButton) {
 			myRecipe.mash.setName(nameTxt.getText());
 			md.add(myRecipe.mash, nameTxt.getText());
@@ -670,6 +697,130 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			displayMash();
 		}
 	}
-
+	
+	/**
+	 * Send the mash profile to elsinore.
+	 */
+	public void sendMashToElsinore() {
+	    String elsinoreLoc = Options.getInstance().getProperty("elsinoreServer");
+	    
+	    if (elsinoreLoc == null || elsinoreLoc.length() == 0) {
+	        JOptionPane.showMessageDialog(null, "Elsinore URL is not set");
+	        return;
+	    }
+	    
+	    if (!elsinoreLoc.startsWith("http://")) {
+	        elsinoreLoc = "http://" + elsinoreLoc;
+	    }
+	    
+	    String statusLoc = elsinoreLoc;
+	    if (!elsinoreLoc.endsWith("/getstatus")) {
+	        statusLoc += "/getstatus";
+	    } else {
+	        elsinoreLoc = elsinoreLoc.replace("/getstatus", "");
+	    }
+	    
+	    URL url;
+        try {
+            url = new URL(statusLoc);
+        
+            HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+            urlConn.setDoOutput(true);
+            urlConn.setDoInput(true);
+        
+    
+            urlConn.connect();
+            // Read back the response from the stream
+            InputStream inputStream;
+            int responseCode = urlConn.getResponseCode();
+            
+            if ((responseCode >= 200) && (responseCode<=202)) {
+                inputStream = urlConn.getInputStream();
+                int j;
+                Scanner s = new Scanner(inputStream);
+                s.useDelimiter("\\A");
+                String jsonStatus = s.next();
+                s.close();
+                JSONObject statusObject = (JSONObject) JSONValue.parse(jsonStatus);
+                String selectedDevice = getMashDevice(statusObject);
+                if (selectedDevice == null || selectedDevice.length() == 0) {
+                    return;
+                }
+                
+                if (!statusObject.get("mash").equals("Unset")) {
+                    JSONObject mashProfiles = (JSONObject) statusObject.get("mash");
+                    if (mashProfiles.get(selectedDevice) != null) {
+                        int overwrite = JOptionPane.showConfirmDialog(this, "Do you want to overwrite the mash profile?");
+                        if (overwrite == JOptionPane.NO_OPTION) {
+                            return;
+                        }
+                    }
+                }
+                // We got here, lets upload the Mash Profile.
+                URL uploadURL = new URL(elsinoreLoc + "/mashprofile");
+                HttpURLConnection mashConn = (HttpURLConnection) uploadURL.openConnection();
+                mashConn.setDoOutput(true);
+                mashConn.setDoInput(true);
+                mashConn.connect();
+                
+                OutputStreamWriter writer = new OutputStreamWriter(mashConn.getOutputStream());
+                String upload = myRecipe.mash.toJSONObject(selectedDevice).toString();
+                writer.write(upload);
+                writer.flush();
+                String response = mashConn.getResponseMessage();
+                JOptionPane.showMessageDialog(null, "Uploaded Mash profile for " + selectedDevice);
+             
+            } else {
+                JOptionPane.showMessageDialog(null, "Error contacting the server: " + urlConn.getResponseMessage());
+                return;
+            }
+        } catch (MalformedURLException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        } catch (ProtocolException e) {
+            String err = "Couldn't open connection: " + e.getMessage();
+            return;
+        } catch (IOException e) {
+            String err = "IOException on connection: " + e.getMessage();
+            return;
+        }
+	}
+	
+	public String getMashDevice(JSONObject statusObject) {
+	    JSONArray devices = (JSONArray) statusObject.get("vessels");
+	    // Throw an error if there's no devices
+	    if (devices == null) {
+	        JOptionPane.showMessageDialog(null, "No devices found on the server");
+            return null;
+	    }
+	    
+	    // Loop round to get the valid devices
+	    ArrayList<String> devArray = new ArrayList<String>();
+	    for (int i = 0; i < devices.size(); i++) {
+	        JSONObject dev = (JSONObject) devices.get(i);
+	        if (dev.get("pidstatus") != null) {
+	            devArray.add(dev.get("name").toString());
+	        }
+	    }
+	    
+	    // Throw an error if there's no PIDs
+	    if (devArray.size() == 0) {
+	        JOptionPane.showMessageDialog(null, "No PIDs found on the server");
+            return null;
+	    }
+	    
+	    devArray.add("");
+	    
+	    // Prompt the user to select the PID.
+	    String s = (String)JOptionPane.showInputDialog(
+	                        null,
+	                        "Which PID would you like to use?",
+	                        "PID Selection",
+	                        JOptionPane.PLAIN_MESSAGE,
+	                        null,
+	                        devArray.toArray(),
+	                        "");
+	    return s;
+	}
 }
 

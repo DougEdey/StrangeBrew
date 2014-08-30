@@ -3,6 +3,8 @@ package ca.strangebrew;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.json.simple.JSONObject;
+
 /**
  * $Id: Mash.java,v 1.37 2008/01/16 17:55:04 jimcdiver Exp $
  * @author aavis
@@ -1072,5 +1074,29 @@ public class Mash {
 		return sb.toString();
 	}
 
+	 /**
+	  * Return the current mash steps as a JSON Representation.
+	  * @return
+	  */
+	 public JSONObject toJSONObject(String device) {
+	     JSONObject mashObject = new JSONObject();
+	     
+	     for (int i = 0; i < steps.size(); i++) {
+	            MashStep st = (MashStep) steps.get(i);
+	            JSONObject currentStep = new JSONObject();
+	            currentStep.put("type", st.type);
+	            currentStep.put("method", st.method);
+	            currentStep.put("temp", st.getStartTemp());
+	            currentStep.put("duration", st.minutes);
+	            currentStep.put("tempUnit", this.tempUnits);
+	            currentStep.put("position", i);
+	            mashObject.put(i, currentStep);
+	     }
+	     
+	     if (device != null) {
+	         mashObject.put("pid", device);
+	     }
+	     return mashObject;
+	 }
 	
 }

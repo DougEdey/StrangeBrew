@@ -228,7 +228,10 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 	final private JCheckBox useWebServer = new JCheckBox("Recipe Webserver");
 	final private JLabel labelWebPort = new JLabel("WebServer Port: ");
 	final private JTextField txtWebPort = new JTextField();
+	
 	final private JLabel lblIPAddr = new JLabel();
+	final private JLabel lblElsinoreServer = new JLabel("Elsinore Server: ");
+	final private JTextField txtElsinoreServer = new JTextField();
 	
 	
 	// Carb
@@ -284,7 +287,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				        System.out.println("Found an address " + current_addr);
 				        if (current_addr.isLoopbackAddress()) continue;
 				        if (current_addr instanceof Inet4Address) {
-				        	lblIPAddr.setText("IP Address is: " + current_addr.toString());
+				        	lblIPAddr.setText("IP Address is: " + current_addr.getHostAddress().toString());
 				        }
 				    }
 			    
@@ -380,6 +383,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		
 		checkStock.setSelected(opts.getBProperty("optHideNonStock"));
 		useWebServer.setSelected(opts.getBProperty("optWebServer"));
+		txtElsinoreServer.setText(opts.getProperty("elsinoreServer"));
 		txtWebPort.setText(opts.getProperty("optWebServerPort"));
 
 		// calculations tab:
@@ -476,6 +480,11 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 				// We should print an error message
 				e.printStackTrace();
 			}
+		}
+		
+		if (txtElsinoreServer.getText().length() > 0) {
+		    // TODO: Check the server exists.
+		    opts.setProperty("elsinoreServer", txtElsinoreServer.getText().trim());
 		}
 		
 		// TODO
@@ -1026,6 +1035,15 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 					pnlBrewer.add(lblIPAddr, new GridBagConstraints(3, 6, 1, 1, 0.0, 0.0,
 							GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
 									0, 0, 0), 0, 0));
+				}
+				{
+
+                    pnlBrewer.add(lblElsinoreServer, new GridBagConstraints(0, 7, 1, 1, 0.0, 0.0,
+                            GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
+                                    0, 0, 0), 0, 0));
+					pnlBrewer.add(txtElsinoreServer, new GridBagConstraints(1, 7, 1, 1, 0.0, 0.0,
+                            GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,
+                                    0, 0, 0), 0, 0));
 					
 				}
 			}

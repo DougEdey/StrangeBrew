@@ -39,6 +39,7 @@
       	<pathelement location="lib/sqlite-jdbc-3.7.2.jar"/>
     	<pathelement location="lib/SteelSeries-3.9.31-SNAPSHOT.jar"/>
     	<pathelement location="lib/synthetica.jar"/>
+    	<pathelement location="lib/json-simple-1.1.1.jar"/>
     </classpath>
     </javac>
     <copy todir="${build}">
