@@ -22,8 +22,10 @@ package ca.strangebrew.ui.swing.dialogs;
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.FlowLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -128,32 +130,22 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 					{
 						jScrollPane1 = new JScrollPane();
 						jScrollPane1.setAutoscrolls(true);
-						readmePanel.add(jScrollPane1, BorderLayout.CENTER);						
+						readmePanel.add(jScrollPane1, BorderLayout.CENTER);
 						jScrollPane1.setPreferredSize(new java.awt.Dimension(3, 19));
-						{
-							readmeTextArea = new JTextArea();
-							jScrollPane1.setViewportView(readmeTextArea);
-							readmeTextArea.setText("jTextArea1");							
-							readmeTextArea.setWrapStyleWord(true);
-							try {
-								
-								File readme = new File(iniPath + "readme");
-								FileReader in = new FileReader(readme);
-								BufferedReader inb = new BufferedReader(in);
-								String c;
-								String s="";
-								// TODO: what if there's no readme file?
-						        while ((c = inb.readLine()) != null){
-						        	s = s + c + "\n";
-						        }					           
-						        readmeTextArea.setText(s);
-						        readmeTextArea.setLineWrap(true);
-	
-						        in.close();
-							} catch (FileNotFoundException e) {
-								
-							}
+
+                        /* Set contents for this tab */
+                        String content = "";
+						readmeTextArea = new JTextArea();
+						jScrollPane1.setViewportView(readmeTextArea);
+						try {
+						    content = fileToString(iniPath + "README.md");
+						} catch (FileNotFoundException e) {
+                            content = iniPath + "README.md not found";
 						}
+						readmeTextArea.setWrapStyleWord(true);
+						readmeTextArea.setLineWrap(true);
+                        readmeTextArea.setText(content);
+
 					}
 				}
 				{
@@ -164,24 +156,19 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 					{
 						jScrollPane2 = new JScrollPane();
 						licensePanel.add(jScrollPane2, BorderLayout.CENTER);
-												{
-							licenseTextArea = new JTextArea();
-							jScrollPane2.setViewportView(licenseTextArea);
-							licenseTextArea.setText("jTextArea1");
-							File readme = new File(iniPath + "gpl.txt");
-							FileReader in = new FileReader(readme);
-							BufferedReader inb = new BufferedReader(in);
-							String c;
-							String s="";
-							// TODO: what if there's no readme file?
-					        while ((c = inb.readLine()) != null){
-					        	s = s + c + "\n";
-					        }
-					        licenseTextArea.setText(s);
-					        licenseTextArea.setLineWrap(true);
-					        
-					        in.close();
-						}
+
+                        /* Set contents for this tab */
+                        String content = iniPath + "gpl.txt";
+						licenseTextArea = new JTextArea();
+						jScrollPane2.setViewportView(licenseTextArea);
+                        try {
+                            content = fileToString(content);
+                        } catch (FileNotFoundException e) {
+                            content += " not found";
+                        }
+					    licenseTextArea.setLineWrap(true);
+					    licenseTextArea.setText(content);
+
 					}
 				}
 			}
@@ -300,4 +287,14 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 		}
 	}
 
+    private String fileToString(String abspath) throws FileNotFoundException, IOException {
+        BufferedReader in = new BufferedReader(new FileReader(new File(abspath)));
+        StringBuilder out = new StringBuilder();
+	    String c;
+	    while ((c = in.readLine()) != null){
+	        out.append(c + "\n");
+	    }
+        in.close();
+        return out.toString();
+    }
 }
