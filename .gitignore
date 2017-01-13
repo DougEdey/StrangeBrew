@@ -1,4 +1,13 @@
+# Directories
 /target
-*.class
 /dist
 /build
+
+# Filetypes
+*.class
+*.zip
+
+# Specific Files
+strangebrew.jar
+MANIFEST.MF
+src/ca/strangebrew/SBVersion.java
