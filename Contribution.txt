@@ -1,0 +1,17 @@
+HomeBrewWare is based on the StrangeBrew Java (http://www.strangebrew.ca)
+
+The following people contributed to the development of StrangeBrew Java,
+and should be recognized for their contribution:
+
+Mike Charlton              - SWT gui development / Java consulting
+Jim Clark                  - bug fixing and new feature development
+Chris Cook                 - xslt development
+Andy Davison               - testing
+Mike Gibson                - testing and the splash screen / logo
+Kris Henderson (Zymurgist) - preferences coding
+Don Kelly                  - Promash recipe format decoding
+Colin Kilburn              - testing / bug fixes
+Jason Landry               - database updates
+Jeroen Wouters             - bug fixes
+Greg LaPolla               - bug fixes / ant build / windows installer
+Sean Cotterill             - for his research into Refractometer accuracy
