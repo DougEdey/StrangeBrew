@@ -1,13 +1,9 @@
-HomeBrewWare
-============
+# HomeBrewWare
 
 HomeBrewWare is an open-source cross-platform brewing recipe tool.
 
-This project is based off StrangeBrew Java (www.strangebrew.ca)
+This project is based off [StrangeBrew Java](www.strangebrew.ca)
 (c)2000-2008 Drew Avis, Doug Edey
-
-Features
-========
 
 0.9.0
 -----
@@ -17,16 +13,15 @@ Features
 Running HomeBrewWare
 ====================
 
-Running HomeBrewWare:
-    1. Unzip the hbw.zip into the desired location.
-    2. Run "java -jar homebrewware.jar" at the command line.
-
+```bash
+unzip hbw.zip
+java -jar hbw.har
+```
 
 Requirements
 ============
 
-HomeBrewWare requires a Java Runtime Environment (JRE). It requires versions
-1.5 and up (See http://java.sun.com/j2se/1.5.0/index.jsp).
+HomeBrewWare requires a [Java Runtime Environment (JRE) 1.5](http://java.sun.com/j2se/1.5.0/index.jsp).
 
 
 Known Issues
@@ -38,26 +33,26 @@ Known Issues
 Compilation
 ===========
 
-HomeBrewWare uses the apache-ant (http://ant.apache.org) build system to compile,
+HomeBrewWare uses the [apache-ant](http://ant.apache.org) build system to compile,
 distribute, and deploy.
 
 Targets
 
 * build
-    compile from source
+    - compile from source
 * version
-    helper target for maintaining the version
+    - helper target for maintaining the version
 * deploy
-    package build artifacts and resources for distribution
+    - package build artifacts and resources for distribution
 * distribute
-    package source code for distribution
+    - package source code for distribution
 
 Contributors
 ============
 
 Contribution.txt contains recognition for development of the
 this project and the project HomeBrewWare was based off,
-StrangeBrew Java (http://www.strangebrew.ca)
+[StrangeBrew Java](http://www.strangebrew.ca)
 (c)2000-2008 Drew Avis, Doug Edey
 
 
@@ -65,10 +60,10 @@ Copyrights
 ==========
 
 Parts of this program are copyrighted by:
-    Copyright (c) 2002-2004 Roedy Green (CSVReader and CSVWriter classes)
-    Copyright (c) 2003-2004 Werner Randelshofer (Splash and SplashWindow classes)
-    Copyright (c) 2001-2006 JGoodies Karsten Lentzsch. (JGoodies Look and Feel)
-    Copyright (c) 2005-2006, Michael Baranov (Microba library)
+* Copyright (c) 2002-2004 Roedy Green (CSVReader and CSVWriter classes)
+* Copyright (c) 2003-2004 Werner Randelshofer (Splash and SplashWindow classes)
+* Copyright (c) 2001-2006 JGoodies Karsten Lentzsch. (JGoodies Look and Feel)
+* Copyright (c) 2005-2006, Michael Baranov (Microba library)
 
 
 License
