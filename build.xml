@@ -69,8 +69,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
         <tstamp/>
         <mkdir dir="${dir.binary}"/>
 
-        <javac srcdir="${dir.source}" destdir="${dir.binary}" target="1.5" source="1.5"
-                debug="true" debuglevel="lines,vars,source">
+        <javac srcdir="${dir.source}" destdir="${dir.binary}"
+                target="${prj.jdk.target}" source="${prj.jdk.source}"
+                debug="true" debuglevel="lines,vars,source"
+                includeantruntime="false">
             <classpath>
                 <pathelement path="${classpath}"/>
                 <pathelement location="${dir.library}/${jar.trident}"/>
@@ -182,6 +184,7 @@ public class Version {
         <delete dir="${dir.binary}"/>
         <delete file="${prj.jar}"/>
         <delete file="${prj.manifest}"/>
+        <delete file="${dir.source}/${dir.package}/Version.java"/>
 
         <delete>
             <fileset dir="." includes="*.zip"/>

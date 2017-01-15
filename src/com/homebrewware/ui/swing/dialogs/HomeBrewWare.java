@@ -39,7 +39,6 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import sun.font.FontScaler;
 import com.homebrewware.Debug;
 import com.homebrewware.Options;
 import com.homebrewware.ServerRunner;
