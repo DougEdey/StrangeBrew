@@ -84,6 +84,7 @@ import com.homebrewware.Database;
 import com.homebrewware.Debug;
 import com.homebrewware.Hop;
 import com.homebrewware.Options;
+import com.homebrewware.Product;
 import com.homebrewware.Quantity;
 import com.homebrewware.StringUtils;
 import com.homebrewware.WaterProfile;
@@ -395,12 +396,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
 		txtEmail.setText(opts.getProperty("optEmail"));
 		String recipeDir = opts.getProperty("optRecipe");
 		if((recipeDir == null) || recipeDir.equalsIgnoreCase("") ) {
-			try {
-				recipeDir = StringUtils.getAppPath("recipes");
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		    recipeDir = Product.getAppPath(Product.Path.RECIPE);
 		}
 		txtRecipe.setText(recipeDir);
 		localeComboBox.setSelectedItem(opts.getLocale());

@@ -59,6 +59,7 @@ import javax.swing.table.AbstractTableModel;
 import com.homebrewware.Debug;
 import com.homebrewware.OpenImport;
 import com.homebrewware.Options;
+import com.homebrewware.Product;
 import com.homebrewware.Recipe;
 import com.homebrewware.StringUtils;
 import com.homebrewware.ui.swing.StrangeSwing;
@@ -89,12 +90,7 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
 			recipeDir = opt.getProperty("optRecipe");
 
 		if(recipeDir.equalsIgnoreCase("") ) {
-			try {
-				recipeDir = StringUtils.getAppPath("recipes");
-			} catch (UnsupportedEncodingException e) {
-				//
-				JOptionPane.showMessageDialog(frame, "Couldn't get the App Path for the find recipe dialog.");
-			}
+		    recipeDir = Product.getAppPath(Product.Path.RECIPE);
 		}
 
 		try {

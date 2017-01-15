@@ -103,7 +103,7 @@ public class Database {
 	// This is now a singleton
 	private Database() throws UnsupportedEncodingException {
 
-		dbPath = StringUtils.getAppPath("data");
+		dbPath = Product.getAppPath(Product.Path.DATA);
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
@@ -115,7 +115,7 @@ public class Database {
 
 
         	Debug.print("Trying to open database: "+ dbPath);
-			conn = DriverManager.getConnection("jdbc:sqlite:"+dbPath+File.separator+"sb_ingredients.db");
+			conn = DriverManager.getConnection("jdbc:sqlite:" + dbPath + File.separator + "ingredients.db");
 
 
 			Debug.print("Checking for tables");

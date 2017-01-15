@@ -104,6 +104,7 @@ import javax.swing.table.TableColumnModel;
 
 import net.sf.wraplog.AbstractLogger;
 import net.sf.wraplog.SystemLogger;
+
 import com.homebrewware.BrewCalcs;
 import com.homebrewware.Database;
 import com.homebrewware.Debug;
@@ -112,11 +113,11 @@ import com.homebrewware.Hop;
 import com.homebrewware.Ingredient;
 import com.homebrewware.OpenImport;
 import com.homebrewware.Options;
+import com.homebrewware.Product;
 import com.homebrewware.Quantity;
 import com.homebrewware.RandomName;
 import com.homebrewware.Recipe;
 import com.homebrewware.StringUtils;
-import com.homebrewware.Version;
 import com.homebrewware.Style;
 import com.homebrewware.XmlTransformer;
 import com.homebrewware.Yeast;
@@ -150,7 +151,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 	// The one and only StrangeSwing
 	private static StrangeSwing instance = null;
 
-	public String version = Version.VERSION;
+	public String version = Product.getVersion();
 	public String edition = "Free";
 
 	// Stuff that should be final
@@ -449,7 +450,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		// windows to pull up the public data stored here
 		// TODO
 		DB = Database.getInstance();
-		String path = StringUtils.getAppPath("data");
+		String path = Product.getAppPath(Product.Path.DATA);
 		Debug.print("DB Path: " + path);
 
 		// let's check that the path is good, if not, ask for a better one
@@ -514,7 +515,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 		if(preferences != null && preferences.getProperty("optRecipe") != null) {
 			path = preferences.getProperty("optRecipe");
 		} else {
-			path = StringUtils.getAppPath("recipes");
+			path = Product.getAppPath(Product.Path.RECIPE);
 		}
 		Debug.print("Recipes path:" + path);
 
@@ -718,8 +719,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 		// find the xslt stylesheet in the classpath
 		// URL xsltUrl = getClass().getClassLoader().getResource(xslt);
-		String path = StringUtils.getAppPath("data");
-		Debug.print("Using " + StringUtils.getAppPath("data"));
+		String path = Product.getAppPath(Product.Path.DATA);
+		Debug.print("Using " + path);
 		File xsltFile = new File(path, xslt);
 
 		FileOutputStream output = new FileOutputStream(f);
@@ -925,11 +926,9 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			// restore the saved size and location:
 			this.setSize(preferences.getIProperty("winWidth"), preferences.getIProperty("winHeight"));
 			this.setLocation(preferences.getIProperty("winX"), preferences.getIProperty("winY"));
-            /**
-             * DJF TODO: Hardcoded path needs removal
-             */
-			imgURL = getClass().getClassLoader().getResource("com/homebrewware/icons/sb2.gif");
-			icon = new ImageIcon(imgURL);
+
+            String gif = Product.getAppPath(Product.Path.IMAGES) + System.getProperty("file.separator") + "sb2.gif";
+			icon = new ImageIcon(gif);
 			this.setIconImage(icon.getImage());
 			this.setTitle("StrangeBrew " + version + " " + edition + " - [<new>]");
 			this.addWindowListener(new WindowAdapter() {
@@ -1238,44 +1237,28 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 							mainToolBar.add(saveButton);
 							saveButton.setMnemonic(java.awt.event.KeyEvent.VK_S);
-                            /**
-                             * DJF TODO: Hardcoded paths need removal
-                             */
-							saveButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
-									"com/homebrewware/icons/save.gif")));
+                            gif = Product.getAppPath(Product.Path.IMAGES) + System.getProperty("file.separator") + "save.gif";
+							saveButton.setIcon(new ImageIcon(gif));
 							saveButton.setToolTipText("Save Recipe");
 
 							mainToolBar.add(findButton);
-                            /**
-                             * DJF TODO: Hardcoded paths need removal
-                             */
-							findButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
-									"com/homebrewware/icons/find.gif")));
+                            gif = Product.getAppPath(Product.Path.IMAGES) + System.getProperty("file.separator") + "find.gif";
+							findButton.setIcon(new ImageIcon(gif));
 							findButton.setToolTipText("Find Recipes");
 
 							mainToolBar.add(remoteButton);
-                            /**
-                             * DJF TODO: Hardcoded paths need removal
-                             */
-							remoteButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
-									"com/homebrewware/icons/find.gif")));
+                            gif = Product.getAppPath(Product.Path.IMAGES) + System.getProperty("file.separator") + "find.gif";
+							remoteButton.setIcon(new ImageIcon(gif));
 							remoteButton.setToolTipText("Find Recipes from SB Online!");
 
-
 							mainToolBar.add(printButton);
-                            /**
-                             * DJF TODO: Hardcoded paths need removal
-                             */
-							printButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
-									"com/homebrewware/icons/print.gif")));
+                            gif = Product.getAppPath(Product.Path.IMAGES) + System.getProperty("file.separator") + "print.gif";
+							printButton.setIcon(new ImageIcon(gif));
 							printButton.setToolTipText("Print Recipe");
 
 							mainToolBar.add(copyButton);
-                            /**
-                             * DJF TODO: Hardcoded paths need removal
-                             */
-							copyButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
-									"com/homebrewware/icons/copy.gif")));
+                            gif = Product.getAppPath(Product.Path.IMAGES) + System.getProperty("file.separator") + "copy.gif";
+							copyButton.setIcon(new ImageIcon(gif));
 							copyButton.setToolTipText("Copy to clipboard");
 
 							{
@@ -1568,11 +1551,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 					}
 					{
-                        /**
-                         * DJF TODO: Hardcoded paths need removal
-                         */
-						imgURL = getClass().getClassLoader().getResource("com/homebrewware/icons/find.gif");
-						icon = new ImageIcon(imgURL);
+                        gif = Product.getAppPath(Product.Path.IMAGES) + System.getProperty("file.separator") + "find.gif";
+						icon = new ImageIcon(gif);
 						findFileMenuItem.setIcon(icon);
 						findFileMenuItem.setText("Find");
 						findFileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.CTRL_MASK));
@@ -1580,11 +1560,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 					}
 					{
-                        /**
-                         * DJF TODO: Hardcoded paths need removal
-                         */
-						imgURL = getClass().getClassLoader().getResource("com/homebrewware/icons/find.gif");
-						icon = new ImageIcon(imgURL);
+                        gif = Product.getAppPath(Product.Path.IMAGES) + System.getProperty("file.separator") + "find.gif";
+						icon = new ImageIcon(gif);
 						remoteFileMenuItem.setIcon(icon);
 						remoteFileMenuItem.setText("Find Remote Recipes");
 
@@ -1600,11 +1577,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 					}
 					{
-                        /**
-                         * DJF TODO: Hardcoded paths need removal
-                         */
-						imgURL = getClass().getClassLoader().getResource("com/homebrewware/icons/save.gif");
-						icon = new ImageIcon(imgURL);
+                        gif = Product.getAppPath(Product.Path.IMAGES) + System.getProperty("file.separator") + "save.gif";
+						icon = new ImageIcon(gif);
 						saveMenuItem.setText("Save");
 						saveMenuItem.setIcon(icon);
 						fileMenu.add(saveMenuItem);
@@ -1612,11 +1586,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
 					}
 					{
-                        /**
-                         * DJF TODO: Hardcoded paths need removal
-                         */
-						imgURL = getClass().getClassLoader().getResource("com/homebrewware/icons/saveas.gif");
-						icon = new ImageIcon(imgURL);
+                        gif = Product.getAppPath(Product.Path.IMAGES) + System.getProperty("file.separator") + "saveas.gif";
+						icon = new ImageIcon(gif);
 						saveAsMenuItem.setText("Save As ...");
 						saveAsMenuItem.setIcon(icon);
 						fileMenu.add(saveAsMenuItem);
@@ -1638,13 +1609,8 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 					}
 					{
 						fileMenu.add(clipboardMenuItem);
-
-
-                        /**
-                         * DJF TODO: Hardcoded paths need removal
-                         */
-						imgURL = getClass().getClassLoader().getResource("com/homebrewware/icons/print.gif");
-						icon = new ImageIcon(imgURL);
+                        gif = Product.getAppPath(Product.Path.IMAGES) + System.getProperty("file.separator") + "print.gif";
+						icon = new ImageIcon(gif);
 						printMenuItem.setIcon(icon);
 						fileMenu.add(printMenuItem);
 
@@ -2135,12 +2101,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			aboutDlg.setVisible(true);
 		} else if (o == helpMenuItem) {
 			String urlString = null;
-			try {
-				urlString = StringUtils.getAppPath("help") + "index.html";
-			} catch (UnsupportedEncodingException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			urlString = Product.getAppPath(Product.Path.HELP) + "index.html";
 			Debug.print(urlString);
 			AbstractLogger logger = new SystemLogger();
 			BrowserLauncher launcher;
@@ -2198,27 +2159,19 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			PreferencesDialog d = new PreferencesDialog(this);
 			d.setVisible(true);
 			preferences = d.getOpts();
-			String path;
-			try {
-				path = StringUtils.getAppPath("data");
-				DB.readDB(path, preferences.getProperty("optStyleYear"));
-				Debug.print("OptHideNonStock: "+preferences.getProperty("optHideNonStock"));
-				Debug.print("Style length: "+DB.styleDB.size());
+			String path = Product.getAppPath(Product.Path.DATA);
+			DB.readDB(path, preferences.getProperty("optStyleYear"));
+			Debug.print("OptHideNonStock: "+preferences.getProperty("optHideNonStock"));
+			Debug.print("Style length: "+DB.styleDB.size());
 
-				if(preferences.getProperty("optHideNonStock") != null && preferences.getBProperty("optHideNonStock") ) {
-					Debug.print("Hiding Stock");
-					cmbMaltModel.setList(DB.stockFermDB);
-					cmbHopsModel.setList(DB.stockHopsDB);
-				} else {
-					cmbMaltModel.setList(DB.fermDB);
-					cmbHopsModel.setList(DB.hopsDB);
-				}
-			} catch (UnsupportedEncodingException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			if(preferences.getProperty("optHideNonStock") != null && preferences.getBProperty("optHideNonStock") ) {
+				Debug.print("Hiding Stock");
+				cmbMaltModel.setList(DB.stockFermDB);
+				cmbHopsModel.setList(DB.stockHopsDB);
+			} else {
+				cmbMaltModel.setList(DB.fermDB);
+				cmbHopsModel.setList(DB.hopsDB);
 			}
-
-
 		} else if (o == exitMenuItem) {
 			// exit program
 			processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));

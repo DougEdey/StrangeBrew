@@ -29,6 +29,7 @@
  */
 package com.homebrewware.ui.swing;
 
+import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -83,6 +84,7 @@ import com.homebrewware.Debug;
 import com.homebrewware.Mash;
 import com.homebrewware.MashDefaults;
 import com.homebrewware.Options;
+import com.homebrewware.Product;
 import com.homebrewware.Quantity;
 import com.homebrewware.Recipe;
 import com.homebrewware.StringUtils;
@@ -284,10 +286,8 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
 			nameTxt.addActionListener(this);
 
 			jPanel1.add(saveButton);
-            /**
-             * DJF TODO: Hardcoded value needs removal
-             */
-			saveButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("com/homebrewware/icons/save.gif")));
+            String gif = Product.getAppPath(Product.Path.IMAGES) + System.getProperty("file.separator") + "save.gif";
+			saveButton.setIcon(new ImageIcon(gif));
 			saveButton.addActionListener(this);
 
 			jPanel1.add(defaultsButton);

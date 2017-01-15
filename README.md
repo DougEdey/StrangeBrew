@@ -2,8 +2,7 @@
 
 HomeBrewWare is an open-source cross-platform brewing recipe tool.
 
-This project is based off [StrangeBrew Java](www.strangebrew.ca)
-(c)2000-2008 Drew Avis, Doug Edey
+This project is based off [StrangeBrew Java](www.strangebrew.ca) (c) 2000-2008 Drew Avis, Doug Edey
 
 0.9.0
 -----
@@ -21,7 +20,13 @@ java -jar hbw.har
 Requirements
 ============
 
-HomeBrewWare requires a [Java Runtime Environment (JRE) 1.5](http://java.sun.com/j2se/1.5.0/index.jsp).
+Runtime
+-------
+[Java Runtime Environment (JRE) 1.8](http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html).
+
+Build
+-----
+[apache-ant](http://ant.apache.org) build system to compile,
 
 
 Known Issues
@@ -50,10 +55,9 @@ Targets
 Contributors
 ============
 
-Contribution.txt contains recognition for development of the
+contribution.txt contains recognition for development of the
 this project and the project HomeBrewWare was based off,
-[StrangeBrew Java](http://www.strangebrew.ca)
-(c)2000-2008 Drew Avis, Doug Edey
+[StrangeBrew Java](http://www.strangebrew.ca) (c) 2000-2008 Drew Avis, Doug Edey
 
 
 Copyrights
@@ -86,6 +90,5 @@ License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-    See gpl.txt file for more information.
-
+    See resources/license.txt file for more information.
 

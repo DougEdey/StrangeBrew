@@ -56,9 +56,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
-import com.homebrewware.StringUtils;
-import com.homebrewware.Version;
-
+import com.homebrewware.Product;
 
 public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 	private JTabbedPane aboutTabPanel;
@@ -89,7 +87,9 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 
 	private void initGUI() {
 		try {
-			String iniPath = StringUtils.getAppPath("ini");
+			String iniPath = Product.getAppPath(Product.Path.ROOT);
+            String gif = "";
+            iniPath += System.getProperty("file.separator");
 			BoxLayout thisLayout = new BoxLayout(this.getContentPane(), javax.swing.BoxLayout.Y_AXIS);
 			this.getContentPane().setLayout(thisLayout);
 			{
@@ -106,8 +106,8 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 						splashPanel.setLayout(splashPanelLayout);
 						aboutPanel.add(splashPanel);
 
-						java.net.URL imgURL = HomeBrewWare.class.getResource("splash.gif");
-						JLabel splashLabel = new JLabel(new ImageIcon(imgURL));
+                        gif = Product.getAppPath(Product.Path.IMAGES) + System.getProperty("files.separator") + "splash.gif";
+						JLabel splashLabel = new JLabel(new ImageIcon(gif));
 						splashPanel.add(splashLabel);
 
 					}
@@ -115,9 +115,9 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 						versionLabel = new JLabel();
 						aboutPanel.add(versionLabel);
 
-						versionLabel.setText("<html>Version: " + Version.VERSION + "<br />" +
-								"Build Date: " + Version.BUILDDATE + "<br />" +
-								"Build: " + Version.BUILDNUMBER + "</html>");
+						versionLabel.setText("<html>Version: " + Product.getVersion() + "<br />" +
+								"Build Date: " + Product.getBuildDate() + "<br />" +
+								"Build: " + Product.getBuildNumber() + "</html>");
 
 
 					}
@@ -168,7 +168,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 						licensePanel.add(jScrollPane2, BorderLayout.CENTER);
 
                         /* Set contents for this tab */
-                        String content = iniPath + "gpl.txt";
+                        String content = Product.getAppPath(Product.Path.RESOURCES) + System.getProperty("file.separator") + "license.txt";
 						licenseTextArea = new JTextArea();
 						jScrollPane2.setViewportView(licenseTextArea);
                         try {
@@ -244,7 +244,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 	            	vTemp = vTemp.substring(1, vTemp.length()-2);
 	            	int newBuildID = Integer.parseInt(vTemp);
 
-	            	if( newBuildID != Integer.parseInt(Version.BUILDNUMBER)) {
+	            	if( newBuildID != Integer.parseInt(Product.getBuildNumber())) {
 	            		// newest Build ID means there's a new download avalable!
 	            		Object[] options = {"Yes, please",
 	                            "No, thanks"};

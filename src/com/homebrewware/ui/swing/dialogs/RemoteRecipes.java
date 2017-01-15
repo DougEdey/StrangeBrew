@@ -95,6 +95,7 @@ import org.w3c.dom.NodeList;
 import com.homebrewware.Debug;
 import com.homebrewware.OpenImport;
 import com.homebrewware.Options;
+import com.homebrewware.Product;
 import com.homebrewware.Recipe;
 import com.homebrewware.RecipeURLPopup;
 import com.homebrewware.StringUtils;
@@ -131,12 +132,7 @@ public class RemoteRecipes extends javax.swing.JDialog implements ActionListener
 			recipeDir = opt.getProperty("optRecipe");
 
 		if(recipeDir.equalsIgnoreCase("") ) {
-			try {
-				recipeDir = StringUtils.getAppPath("recipes");
-			} catch (UnsupportedEncodingException e) {
-				//
-				JOptionPane.showMessageDialog(frame, "Couldn't get the App Path for the find recipe dialog.");
-			}
+		    recipeDir = Product.getAppPath(Product.Path.RECIPE);
 		}
 		currentDir = new File(recipeDir);
 

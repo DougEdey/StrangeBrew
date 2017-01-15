@@ -134,38 +134,6 @@ public class StringUtils {
 		return s;
 	}
 
-	public static String getAppPath(String type) throws UnsupportedEncodingException{
-        /**
-         * DJF TODO: This function should not be in StringUtils.
-         *
-         * It should also cache the strings, instead of finding it every time.
-         */
-		String appRoot = "";
-		String path = "";
-		String slash = System.getProperty("file.separator");
-
-		String jpath = new File(StringUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParentFile().getPath();
-		appRoot = URLDecoder.decode(jpath, "UTF-8");
-		Debug.print("Path: "+ appRoot);
-
-		if (type.equals("data"))
-			path = appRoot + slash + "src" + slash + "com"
-				+ slash + "homebrewware" + slash + "data";
-		else if (type.equals("icons"))
-			path = appRoot + slash + "src" + slash + "com"
-			+ slash + "homebrewware" + slash + "icons";
-		else if (type.equals("recipes"))
-			path = appRoot + slash + "recipes";
-		else if (type.equals("help"))
-			path = "file://" + appRoot + slash + "help" + slash;
-		else if (type.equals("ini"))
-			path = appRoot + slash;
-		else
-			path = appRoot;
-
-		return path;
-	}
-
 	static public String capitalize(String orig) {
 		StringBuffer buf = new StringBuffer(orig);
 		for (int i = 0; i < orig.length(); i++ ) {

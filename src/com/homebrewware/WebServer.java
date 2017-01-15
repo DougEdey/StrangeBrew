@@ -145,8 +145,8 @@ public class WebServer extends NanoHTTPD {
 
 				String xml = recipes.get(i).toXML(null);
 				StreamSource xmlSource = new StreamSource(new StringReader(xml));
-				String path = StringUtils.getAppPath("data");
-				Debug.print("Using " + StringUtils.getAppPath("data"));
+				String path = Product.getAppPath(Product.Path.DATA);
+				Debug.print("Using " + path);
 
 				File xsltFile = new File(path, "recipeToHtml.xslt");
 
@@ -159,9 +159,6 @@ public class WebServer extends NanoHTTPD {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (Exception e) {
 				System.out.println("Invalid recipe ID");
 				e.printStackTrace();
@@ -171,12 +168,7 @@ public class WebServer extends NanoHTTPD {
 		}
 
 		if(rootDir == null ) {
-			try {
-				rootDir = new File(StringUtils.getAppPath("ini"));
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+            rootDir = new File(Product.getAppPath(Product.Path.ROOT) + System.getProperty("file.separator"));
 		}
 
 		if (uri.equals("/")) {
@@ -388,11 +380,7 @@ public class WebServer extends NanoHTTPD {
 			recipeDir = opt.getProperty("optRecipe");
 
 		if(recipeDir.equalsIgnoreCase("") ) {
-			try {
-				recipeDir = StringUtils.getAppPath("recipes");
-			} catch (UnsupportedEncodingException e) {
-				return;
-			}
+            recipeDir = Product.getAppPath(Product.Path.RECIPE);
 		}
 		File dir = new File(recipeDir);
 

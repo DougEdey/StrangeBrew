@@ -1,5 +1,6 @@
 # Directories
 /bin
+/generated
 
 # Filetypes
 *.class
@@ -8,4 +9,4 @@
 # Specific Files
 hbw.jar
 MANIFEST.MF
-src/com/homebrewware/Version.java
+src/com/homebrewware/Build.java
