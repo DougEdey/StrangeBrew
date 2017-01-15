@@ -8,4 +8,4 @@
 # Specific Files
 hbw.jar
 MANIFEST.MF
-src/ca/strangebrew/SBVersion.java
+src/com/homebrewware/Version.java
