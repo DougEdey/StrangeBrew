@@ -222,8 +222,8 @@ public class SplashWindow extends Window {
      */
     public static void invokeMain(String className, String[] args) {
         //try {
-        	StrangeSwing inst = StrangeSwing.getInstance();
-        	inst.setVisible(true);
+            StrangeSwing inst = StrangeSwing.getInstance();
+            inst.setVisible(true);
         //} catch (Exception e) {
           //  InternalError error = new InternalError("Failed to invoke main method");
 //            error.initCause(e);

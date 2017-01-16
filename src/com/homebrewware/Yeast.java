@@ -30,12 +30,12 @@
 package com.homebrewware;
 
 public class Yeast extends Ingredient {
-	// I'm not sure what else needs to be added to yeast,
-	// but if we need to, we can add it here
+    // I'm not sure what else needs to be added to yeast,
+    // but if we need to, we can add it here
 
-	// should handle defaults here:
-	public Yeast(){
-		// setName("A yeast");
-	}
+    // should handle defaults here:
+    public Yeast(){
+        // setName("A yeast");
+    }
 
 }

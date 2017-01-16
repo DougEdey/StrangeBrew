@@ -97,7 +97,7 @@ public class Product
          */
         try {
             String jpath = new File(StringUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParentFile().getPath();
-		    Product.appRoot = URLDecoder.decode(jpath, "UTF-8");
+            Product.appRoot = URLDecoder.decode(jpath, "UTF-8");
         } catch(UnsupportedEncodingException e) {
             System.err.println("Unable to determine application path");
         }

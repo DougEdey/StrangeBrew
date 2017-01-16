@@ -97,211 +97,211 @@ import com.homebrewware.ui.swing.StrangeSwing;
 
 public class AddYeastDialog extends javax.swing.JDialog implements ActionListener, ChangeListener {
 
-	private Database db;
+    private Database db;
 
-	public static void main(String[] args) {
-		final JFrame frame = new JFrame();
-		AddYeastDialog inst = new AddYeastDialog(frame);
-		inst.setVisible(true);
-	}
+    public static void main(String[] args) {
+        final JFrame frame = new JFrame();
+        AddYeastDialog inst = new AddYeastDialog(frame);
+        inst.setVisible(true);
+    }
 
-	// Mutables
-	private Options opts;
+    // Mutables
+    private Options opts;
 
-	private final JPanel mainPanel = new JPanel();
-	// Final UI elements
-	final private GridBagLayout gridBag = new GridBagLayout();
-	final private JPanel pnlFerm = new JPanel();
-
-
-	final private JLabel lblName = new JLabel();
-	final private JTextField txtName = new JTextField();
-
-	final private JLabel lblCost = new JLabel();
-	final private JTextField txtCost = new JTextField();
-
-	final private JLabel lblDescr = new JLabel();
-	final private JTextArea txtDescr = new JTextArea();
-
-	final private JLabel lblModified = new JLabel();
-	final private JCheckBox bModified = new JCheckBox();
-
-	final private JButton okButton = new JButton();
-	final private JButton cancelButton = new JButton();
-
-/*	private ArrayList looks;*/
-
-	final private Frame sb;
-
-	public AddYeastDialog(Frame owner) {
-		super(owner, "Add Yeast", true);
-		opts = Options.getInstance();
-		sb = owner;
-		db = ((StrangeSwing)owner).DB;
-
-		layoutUi();
-		setLocation(owner.getLocation());
-		//setOptions();
-
-	}
+    private final JPanel mainPanel = new JPanel();
+    // Final UI elements
+    final private GridBagLayout gridBag = new GridBagLayout();
+    final private JPanel pnlFerm = new JPanel();
 
 
-	private void layoutUi() {
-		//Item,Name,Cost,Descr,Modified
+    final private JLabel lblName = new JLabel();
+    final private JTextField txtName = new JTextField();
 
-		GridLayout gridBag = new GridLayout(0,1);
-		GridBagConstraints c = new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
-		c.fill = GridBagConstraints.HORIZONTAL;
+    final private JLabel lblCost = new JLabel();
+    final private JTextField txtCost = new JTextField();
 
-		c = null;
+    final private JLabel lblDescr = new JLabel();
+    final private JTextArea txtDescr = new JTextArea();
 
-		JPanel lOne = new JPanel(new FlowLayout(FlowLayout.LEFT));//new GridLayout());
-		JPanel lTwo = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel lThree = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel lFour = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel lFive = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    final private JLabel lblModified = new JLabel();
+    final private JCheckBox bModified = new JCheckBox();
 
-		mainPanel.setLayout(gridBag);
-		getContentPane().add(mainPanel);
-		mainPanel.setBorder(BorderFactory.createTitledBorder("Add Yeast"));
+    final private JButton okButton = new JButton();
+    final private JButton cancelButton = new JButton();
 
-		mainPanel.setLayout(gridBag);
-		this.setTitle("Add Yeast");
-		this.setSize(500,300);
-		//
+/*  private ArrayList looks;*/
 
-		mainPanel.add(lOne);
-		mainPanel.add(lTwo);
-		mainPanel.add(lThree);
-		mainPanel.add(lFour);
-		mainPanel.add(lFive);
+    final private Frame sb;
 
-		try {
-			// First Line
-			{
-				lOne.add(lblName, c);
-				lblName.setText("Name: ");
+    public AddYeastDialog(Frame owner) {
+        super(owner, "Add Yeast", true);
+        opts = Options.getInstance();
+        sb = owner;
+        db = ((StrangeSwing)owner).DB;
+
+        layoutUi();
+        setLocation(owner.getLocation());
+        //setOptions();
+
+    }
 
 
-				lOne.add(txtName, c);
-				txtName.setPreferredSize(new java.awt.Dimension(120, txtName.getFont().getSize()*2));
+    private void layoutUi() {
+        //Item,Name,Cost,Descr,Modified
+
+        GridLayout gridBag = new GridLayout(0,1);
+        GridBagConstraints c = new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
+        c.fill = GridBagConstraints.HORIZONTAL;
+
+        c = null;
+
+        JPanel lOne = new JPanel(new FlowLayout(FlowLayout.LEFT));//new GridLayout());
+        JPanel lTwo = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel lThree = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel lFour = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel lFive = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        mainPanel.setLayout(gridBag);
+        getContentPane().add(mainPanel);
+        mainPanel.setBorder(BorderFactory.createTitledBorder("Add Yeast"));
+
+        mainPanel.setLayout(gridBag);
+        this.setTitle("Add Yeast");
+        this.setSize(500,300);
+        //
+
+        mainPanel.add(lOne);
+        mainPanel.add(lTwo);
+        mainPanel.add(lThree);
+        mainPanel.add(lFour);
+        mainPanel.add(lFive);
+
+        try {
+            // First Line
+            {
+                lOne.add(lblName, c);
+                lblName.setText("Name: ");
 
 
-			}
-			// Second Line
-			{
-				lTwo.add(lblCost, c);
-				lblCost.setText("Cost: ");
-
-				lTwo.add(txtCost, c);
-				txtCost.setText("$0.00");
-				txtCost.setPreferredSize(new java.awt.Dimension(55, txtCost.getFont().getSize()*2));
-
-			}
-			//Third
-			{
-
-				lThree.add(lblDescr, c);
-				lblDescr.setText("Description: ");
-
-				lThree.add(txtDescr, c);
-				txtDescr.setPreferredSize(new java.awt.Dimension(120, txtDescr.getFont().getSize()*6));
+                lOne.add(txtName, c);
+                txtName.setPreferredSize(new java.awt.Dimension(120, txtName.getFont().getSize()*2));
 
 
-				//c.gridwidth = GridBagConstraints.REMAINDER;
-			}
-			//Fourth
-			{
-				lFour.add(lblModified, c);
-				lblModified.setText("Modified: ");
+            }
+            // Second Line
+            {
+                lTwo.add(lblCost, c);
+                lblCost.setText("Cost: ");
 
-				lFour.add(bModified, c);
-				//Modified.setPreferredSize(new java.awt.Dimension(55, 20));
-				//c.gridwidth = GridBagConstraints.REMAINDER;
-			}
-			//fifth
-			{
-				//c.gridx = 1;
-				//c.fill = GridBagConstraints.NONE;
+                lTwo.add(txtCost, c);
+                txtCost.setText("$0.00");
+                txtCost.setPreferredSize(new java.awt.Dimension(55, txtCost.getFont().getSize()*2));
 
-				lFive.add(okButton, c);
-				okButton.setText("OK");
-				okButton.addActionListener(this);
+            }
+            //Third
+            {
 
-				lFive.add(cancelButton, c);
-				cancelButton.setText("Cancel");
-				cancelButton.addActionListener(this);
+                lThree.add(lblDescr, c);
+                lblDescr.setText("Description: ");
 
-				//c.gridwidth = GridBagConstraints.REMAINDER;
-			}
-		//
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	//	Action Performed
-	public void actionPerformed(ActionEvent e) {
-
-		Object o = e.getSource();
-
-		Debug.print("Action performed on: " + o);
-		if(o == okButton) {
-
-			Debug.print("Checking Yeast...");
-			// create a new Yeast object
-			Yeast i = new Yeast();
-			i.setName(txtName.getText());
-			i.setCost(txtCost.getText());
-			i.setDescription(txtDescr.getText());
-			i.setModified(bModified.isSelected());
-
-			int result = 1;
-			int found = 0;
-
-			// check to see if we have this fermentable already in the db
-			if((found = db.find(i)) >= 0){
-				// This already exists, do we want to overwrite?
-				result = JOptionPane.showConfirmDialog((Component) null,
-							"This ingredient exists, overwrite original?","alert", JOptionPane.YES_NO_CANCEL_OPTION);
-
-				switch(result) {
-				case JOptionPane.NO_OPTION:
-					setVisible(false);
-					dispose();
-					return;
-
-				case JOptionPane.YES_OPTION:
-					db.fermDB.remove(found);
-					break;
-
-				case JOptionPane.CANCEL_OPTION:
-					return;
-				}
-			}
+                lThree.add(txtDescr, c);
+                txtDescr.setPreferredSize(new java.awt.Dimension(120, txtDescr.getFont().getSize()*6));
 
 
-			Debug.print("Adding yeast: " + i.getName());
-			db.yeastDB.add(i);
-			db.writeYeast();
+                //c.gridwidth = GridBagConstraints.REMAINDER;
+            }
+            //Fourth
+            {
+                lFour.add(lblModified, c);
+                lblModified.setText("Modified: ");
 
-			setVisible(false);
-			dispose();
+                lFour.add(bModified, c);
+                //Modified.setPreferredSize(new java.awt.Dimension(55, 20));
+                //c.gridwidth = GridBagConstraints.REMAINDER;
+            }
+            //fifth
+            {
+                //c.gridx = 1;
+                //c.fill = GridBagConstraints.NONE;
 
-		} else if(o == cancelButton) {
-			dispose();
-		}
+                lFive.add(okButton, c);
+                okButton.setText("OK");
+                okButton.addActionListener(this);
 
-	}
+                lFive.add(cancelButton, c);
+                cancelButton.setText("Cancel");
+                cancelButton.addActionListener(this);
 
-	public void stateChanged(ChangeEvent e){
-		Object o = e.getSource();
+                //c.gridwidth = GridBagConstraints.REMAINDER;
+            }
+        //
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		Debug.print("State changed on: " + o);
+    }
+
+    //  Action Performed
+    public void actionPerformed(ActionEvent e) {
+
+        Object o = e.getSource();
+
+        Debug.print("Action performed on: " + o);
+        if(o == okButton) {
+
+            Debug.print("Checking Yeast...");
+            // create a new Yeast object
+            Yeast i = new Yeast();
+            i.setName(txtName.getText());
+            i.setCost(txtCost.getText());
+            i.setDescription(txtDescr.getText());
+            i.setModified(bModified.isSelected());
+
+            int result = 1;
+            int found = 0;
+
+            // check to see if we have this fermentable already in the db
+            if((found = db.find(i)) >= 0){
+                // This already exists, do we want to overwrite?
+                result = JOptionPane.showConfirmDialog((Component) null,
+                            "This ingredient exists, overwrite original?","alert", JOptionPane.YES_NO_CANCEL_OPTION);
+
+                switch(result) {
+                case JOptionPane.NO_OPTION:
+                    setVisible(false);
+                    dispose();
+                    return;
+
+                case JOptionPane.YES_OPTION:
+                    db.fermDB.remove(found);
+                    break;
+
+                case JOptionPane.CANCEL_OPTION:
+                    return;
+                }
+            }
 
 
-	}
+            Debug.print("Adding yeast: " + i.getName());
+            db.yeastDB.add(i);
+            db.writeYeast();
+
+            setVisible(false);
+            dispose();
+
+        } else if(o == cancelButton) {
+            dispose();
+        }
+
+    }
+
+    public void stateChanged(ChangeEvent e){
+        Object o = e.getSource();
+
+        Debug.print("State changed on: " + o);
+
+
+    }
 
 
 }

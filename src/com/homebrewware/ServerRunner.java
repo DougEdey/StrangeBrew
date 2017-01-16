@@ -32,12 +32,12 @@ import java.io.IOException;
 
 public class ServerRunner implements Runnable {
 
-	Class serverClass = null;
-	int port = 8080;
+    Class serverClass = null;
+    int port = 8080;
 
-	public ServerRunner(Class serverClass, int port) {
-    	this.serverClass = serverClass;
-    	this.port = port;
+    public ServerRunner(Class serverClass, int port) {
+        this.serverClass = serverClass;
+        this.port = port;
     }
 
     public static void executeInstance(NanoHTTPD server) {
@@ -60,12 +60,12 @@ public class ServerRunner implements Runnable {
         System.out.println("Server stopped.\n");
     }
 
-	@Override
-	public void run() {
-		 try {
-			executeInstance((NanoHTTPD) serverClass.getDeclaredConstructor(int.class).newInstance(port));
+    @Override
+    public void run() {
+         try {
+            executeInstance((NanoHTTPD) serverClass.getDeclaredConstructor(int.class).newInstance(port));
         } catch (Exception e) {
             e.printStackTrace();
         }
-	}
+    }
 }

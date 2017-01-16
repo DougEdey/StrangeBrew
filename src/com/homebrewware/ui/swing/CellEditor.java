@@ -44,41 +44,41 @@ import com.homebrewware.Mash;
 
 public class CellEditor extends DefaultCellEditor implements FocusListener {
 
-	private DefaultComboBoxModel model;
+    private DefaultComboBoxModel model;
 
-	public CellEditor(final JTextField textField) {
-		super(textField);
-		super.clickCountToStart = 1;
-		textField.addFocusListener(this);
+    public CellEditor(final JTextField textField) {
+        super(textField);
+        super.clickCountToStart = 1;
+        textField.addFocusListener(this);
 
-	}
+    }
 
-	public boolean shouldSelectCell(EventObject anEvent) {
-		return true;
-	}
+    public boolean shouldSelectCell(EventObject anEvent) {
+        return true;
+    }
 
-	// Automaticaly selectAll a field when it contains "0"
-	public void focusGained(FocusEvent e) {
-		JTextField textField = (JTextField)e.getComponent();
-		String text = textField.getText();
-		double value;
+    // Automaticaly selectAll a field when it contains "0"
+    public void focusGained(FocusEvent e) {
+        JTextField textField = (JTextField)e.getComponent();
+        String text = textField.getText();
+        double value;
 
-		try {
-			NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
-			Number number = format.parse(text.toString().trim());
-			value = number.doubleValue();
-		} catch (NumberFormatException ex) {
-			return;
-		} catch (ParseException m) {
-			return;
-		}
+        try {
+            NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+            Number number = format.parse(text.toString().trim());
+            value = number.doubleValue();
+        } catch (NumberFormatException ex) {
+            return;
+        } catch (ParseException m) {
+            return;
+        }
 
-		if (value == 0)
-			textField.selectAll();
-	}
+        if (value == 0)
+            textField.selectAll();
+    }
 
-	public void focusLost(FocusEvent e) {
-	}
+    public void focusLost(FocusEvent e) {
+    }
 
 
 }

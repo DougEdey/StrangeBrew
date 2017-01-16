@@ -51,23 +51,23 @@ import com.homebrewware.NanoHTTPD.Response.Status;
 public class WebServer extends NanoHTTPD {
 
 
-	private File rootDir;
-	private FileHandler fileHandler;
+    private File rootDir;
+    private FileHandler fileHandler;
     public final static Logger log = Logger.getLogger("com.strangebrew.WevServer");
     public String lineSep = System.getProperty("line.separator");
 
     private List<Recipe> recipes = new ArrayList<Recipe>();
-	private List<File> files = new ArrayList<File>();
+    private List<File> files = new ArrayList<File>();
 
-	/**
+    /**
      * Hashtable mapping (String)FILENAME_EXTENSION -> (String)MIME_TYPE
      */
     private static final Map<String, String> MIME_TYPES = new HashMap<String, String>() {/**
-		 *
-		 */
-		private static final long serialVersionUID = 1L;
+         *
+         */
+        private static final long serialVersionUID = 1L;
 
-	{
+    {
         put("css", "text/css");
         put("htm", "text/html");
         put("html", "text/html");
@@ -96,12 +96,12 @@ public class WebServer extends NanoHTTPD {
 
 
 
-	public WebServer(int port) throws IOException {
+    public WebServer(int port) throws IOException {
 
-		// just serve up on port 8080 for now
-		super(port);
+        // just serve up on port 8080 for now
+        super(port);
 
-		//setup the logging handlers
+        //setup the logging handlers
         Handler[] lH = log.getHandlers();
         for (Handler h : lH) {
                 h.setLevel(Level.INFO);
@@ -112,76 +112,76 @@ public class WebServer extends NanoHTTPD {
 
                 // default level, this can be changed
                 try {
-                	log.info("System property: "+System.getProperty("debug"));
-                	if (System.getProperty("debug").equalsIgnoreCase("INFO")) {
+                    log.info("System property: "+System.getProperty("debug"));
+                    if (System.getProperty("debug").equalsIgnoreCase("INFO")) {
 
-                		log.setLevel(Level.INFO);
-                		log.info("Enabled logging at an info level");
-                	}
+                        log.setLevel(Level.INFO);
+                        log.info("Enabled logging at an info level");
+                    }
                 } catch (NullPointerException e) {
-                	log.setLevel(Level.WARNING);
+                    log.setLevel(Level.WARNING);
                 }
 
         }
 
 
-	}
+    }
 
-	public WebServer() throws IOException{
-		this(8080);
-	}
+    public WebServer() throws IOException{
+        this(8080);
+    }
 
-	public Response serve( String uri, Method method,  Map<String, String> header, Map<String, String> parms, Map<String, String> files)
-	{
+    public Response serve( String uri, Method method,  Map<String, String> header, Map<String, String> parms, Map<String, String> files)
+    {
 
-		// Are we looking for recipe details?
-		if(uri.contains("/recipe_")) {
-			try {
-				int i = Integer.parseInt(uri.substring(uri.indexOf("/recipe_") + 8));
-				recipes.get(i).calcFermentTotals();
-				recipes.get(i).calcHopsTotals();
-				recipes.get(i).calcMaltTotals();
-				recipes.get(i).calcPrimeSugar();
+        // Are we looking for recipe details?
+        if(uri.contains("/recipe_")) {
+            try {
+                int i = Integer.parseInt(uri.substring(uri.indexOf("/recipe_") + 8));
+                recipes.get(i).calcFermentTotals();
+                recipes.get(i).calcHopsTotals();
+                recipes.get(i).calcMaltTotals();
+                recipes.get(i).calcPrimeSugar();
 
-				String xml = recipes.get(i).toXML(null);
-				StreamSource xmlSource = new StreamSource(new StringReader(xml));
-				String path = Product.getAppPath(Product.Path.DATA);
-				Debug.print("Using " + path);
+                String xml = recipes.get(i).toXML(null);
+                StreamSource xmlSource = new StreamSource(new StringReader(xml));
+                String path = Product.getAppPath(Product.Path.DATA);
+                Debug.print("Using " + path);
 
-				File xsltFile = new File(path, "recipeToHtml.xslt");
+                File xsltFile = new File(path, "recipeToHtml.xslt");
 
-				try {
-					return new Response(XmlTransformer.getString(xmlSource, xsltFile));
-				} catch (TransformerConfigurationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (TransformerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} catch (Exception e) {
-				System.out.println("Invalid recipe ID");
-				e.printStackTrace();
-			}
+                try {
+                    return new Response(XmlTransformer.getString(xmlSource, xsltFile));
+                } catch (TransformerConfigurationException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (TransformerException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid recipe ID");
+                e.printStackTrace();
+            }
 
 
-		}
+        }
 
-		if(rootDir == null ) {
+        if(rootDir == null ) {
             rootDir = new File(Product.getAppPath(Product.Path.ROOT) + System.getProperty("file.separator"));
-		}
+        }
 
-		if (uri.equals("/")) {
-			return listRecipes(uri);
-		}
+        if (uri.equals("/")) {
+            return listRecipes(uri);
+        }
 
-		if(new File(rootDir, uri).exists()) {
+        if(new File(rootDir, uri).exists()) {
             return serveFile(uri, header, rootDir);
-		}
-		return listRecipes(uri);
-	}
+        }
+        return listRecipes(uri);
+    }
 
-	/**
+    /**
      * Serves file from homeDir and its' subdirectories (only). Uses only URI, ignores all headers and HTTP parameters.
      */
     public Response serveFile(String uri, Map<String, String> header, File homeDir) {
@@ -371,100 +371,100 @@ public class WebServer extends NanoHTTPD {
     }
 
     private void loadRecipes() {
-		recipes.clear();
-		files.clear();
+        recipes.clear();
+        files.clear();
 
-		String recipeDir = "";
-		Options opt = Options.getInstance();
-		if(opt.getProperty("optRecipe") != null)
-			recipeDir = opt.getProperty("optRecipe");
+        String recipeDir = "";
+        Options opt = Options.getInstance();
+        if(opt.getProperty("optRecipe") != null)
+            recipeDir = opt.getProperty("optRecipe");
 
-		if(recipeDir.equalsIgnoreCase("") ) {
+        if(recipeDir.equalsIgnoreCase("") ) {
             recipeDir = Product.getAppPath(Product.Path.RECIPE);
-		}
-		File dir = new File(recipeDir);
+        }
+        File dir = new File(recipeDir);
 
-		for (int i = 0; i < dir.list().length; i++) {
-			File file = new File(dir.list()[i]);
+        for (int i = 0; i < dir.list().length; i++) {
+            File file = new File(dir.list()[i]);
 
-			if (file.getPath().endsWith(".rec") || file.getPath().endsWith(".qbrew")
-					|| file.getPath().endsWith(".xml")) {
+            if (file.getPath().endsWith(".rec") || file.getPath().endsWith(".qbrew")
+                    || file.getPath().endsWith(".xml")) {
 
-				Debug.print("Opening: " + file.getName() + ".\n");
-				// file.getAbsolutePath doesn't work here for some reason,
-				// so we have to build it ourselves
-				String fileName = dir.getAbsolutePath() + System.getProperty("file.separator")
-						+ file.getName();
-				file = new File(fileName);
-				OpenImport openImport = new OpenImport();
-				Recipe r = openImport.openFile(file);
-				if (openImport.getFileType().equals("sb")
-						|| openImport.getFileType().equals("qbrew")
-						|| openImport.getFileType().equals("promash")) {
-					recipes.add(r);
-					files.add(file);
+                Debug.print("Opening: " + file.getName() + ".\n");
+                // file.getAbsolutePath doesn't work here for some reason,
+                // so we have to build it ourselves
+                String fileName = dir.getAbsolutePath() + System.getProperty("file.separator")
+                        + file.getName();
+                file = new File(fileName);
+                OpenImport openImport = new OpenImport();
+                Recipe r = openImport.openFile(file);
+                if (openImport.getFileType().equals("sb")
+                        || openImport.getFileType().equals("qbrew")
+                        || openImport.getFileType().equals("promash")) {
+                    recipes.add(r);
+                    files.add(file);
 
-				} else if (openImport.getFileType().equals("beerxml")) {
-					List<Recipe> rs = openImport.getRecipes();
-					for (int j=0; j<rs.size(); j++){
-						recipes.add(rs.get(j));
-						files.add(file);
-					}
-				}
-			}
-		}
+                } else if (openImport.getFileType().equals("beerxml")) {
+                    List<Recipe> rs = openImport.getRecipes();
+                    for (int j=0; j<rs.size(); j++){
+                        recipes.add(rs.get(j));
+                        files.add(file);
+                    }
+                }
+            }
+        }
 
-	}
+    }
 
     public String getHeader() {
-		String header = "";
-		return header;
-	}
+        String header = "";
+        return header;
+    }
 
     public String addJS() {
-		String javascript =  "<link rel=\"stylesheet\" type=\"text/css\" href=\"/templates/static/raspibrew.css\" />" + lineSep +
-				 "<!-- Bootstrap -->" + lineSep +
-				"<link href=\"/templates/css/bootstrap.min.css\" rel=\"stylesheet\" media=\"screen\">" + lineSep +
+        String javascript =  "<link rel=\"stylesheet\" type=\"text/css\" href=\"/templates/static/raspibrew.css\" />" + lineSep +
+                 "<!-- Bootstrap -->" + lineSep +
+                "<link href=\"/templates/css/bootstrap.min.css\" rel=\"stylesheet\" media=\"screen\">" + lineSep +
 
-			"<script type=\"text/javascript\" src=\"/templates/js/bootstrap.min.js\"></script>";
+            "<script type=\"text/javascript\" src=\"/templates/js/bootstrap.min.js\"></script>";
 
-		return javascript;
+        return javascript;
 
-	}
+    }
 
-	private Response listRecipes(String uri) {
-
-
-		String msg = "<html>";
-	    msg += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" + lineSep +
-			getHeader() + lineSep +
-			"</head><body>" + lineSep +
-			addJS() + lineSep;
-
-		Response res = null;
-
-		if (recipes == null || recipes.size() == 0 ) {
-			loadRecipes();
-		}
-
-		Recipe curRecipe = null;
-		msg += "<div class=\"panel panel-primary\">";
-
-		for (int i = 1; i < recipes.size(); ++i) {
-			curRecipe = recipes.get(i);
-			msg += "<a href=\"" + encodeUri("recipe_" + i) + "\" class=\"btn btn-primary btn-lg active\" role=\"button\">"
-					+ curRecipe.getName() + " - " + curRecipe.getStyle() + " by " + curRecipe.getBrewer()+
-					"</a>" + lineSep;
-			msg += "<br/>" + lineSep;
-		}
-
-		msg += "</div>";
-		msg += "</body></html>";
-		res = new Response(msg);
+    private Response listRecipes(String uri) {
 
 
-		return res;
-	}
+        String msg = "<html>";
+        msg += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" + lineSep +
+            getHeader() + lineSep +
+            "</head><body>" + lineSep +
+            addJS() + lineSep;
+
+        Response res = null;
+
+        if (recipes == null || recipes.size() == 0 ) {
+            loadRecipes();
+        }
+
+        Recipe curRecipe = null;
+        msg += "<div class=\"panel panel-primary\">";
+
+        for (int i = 1; i < recipes.size(); ++i) {
+            curRecipe = recipes.get(i);
+            msg += "<a href=\"" + encodeUri("recipe_" + i) + "\" class=\"btn btn-primary btn-lg active\" role=\"button\">"
+                    + curRecipe.getName() + " - " + curRecipe.getStyle() + " by " + curRecipe.getBrewer()+
+                    "</a>" + lineSep;
+            msg += "<br/>" + lineSep;
+        }
+
+        msg += "</div>";
+        msg += "</body></html>";
+        res = new Response(msg);
+
+
+        return res;
+    }
 
 
 }
