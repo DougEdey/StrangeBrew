@@ -92,6 +92,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
             <zipgroupfileset dir="${dir.library}" includes="*.jar"/>
         </jar>
 
+        <!-- Copy the the ini file from the templates directory -->
+        <copy file="${dir.templates}/${prj.ini}" todir="."/>
+
     </target>
 
     <target name="version">
@@ -142,22 +145,23 @@ public class ${prj.gen} {
         <buildnumber file="build.number"/>
         <antcall target="build"/>
 
-        <property name="tmpdir" value="${prj.name.short}-${ver.string}-b${build.number}"/>
+        <property name="tmp" value="${prj.name.short}-${ver.string}-b${build.number}"/>
         <property name="src" value="${dir.source}/${prj.tld}/${prj.domain}"/>
 
         <!-- Fill temporary directory with files to zip -->
-        <mkdir dir="${tmpdir}"/>
+        <mkdir dir="${tmp}"/>
 
-        <copy file="${prj.jar}" todir="${tmpdir}"/>
-        <mkcp src="${dir.resources}/${dir.recipes}" dst="${tmpdir}/${dir.resources}/${dir.recipes}"/>
-        <mkcp src="${dir.resources}/${dir.data}" dst="${tmpdir}/${dir.resources}/${dir.data}"/>
-        <mkcp src="${dir.resources}/${dir.images}" dst="${tmpdir}/${dir.resources}/${dir.images}"/>
-        <mkcp src="${dir.help}" dst="${tmpdir}/${dir.help}"/>
-        <mkcp src="${dir.resources}" dst="${tmpdir}/${dir.resources}"/>
+        <copy file="${prj.jar}" todir="${tmp}"/>
+        <copy file="${dir.templates}/${prj.ini}" todir="${tmp}/${dir.templates}/${prj.ini}"/>
+        <mkcp src="${dir.resources}/${dir.recipes}" dst="${tmp}/${dir.resources}/${dir.recipes}"/>
+        <mkcp src="${dir.resources}/${dir.data}" dst="${tmp}/${dir.resources}/${dir.data}"/>
+        <mkcp src="${dir.resources}/${dir.images}" dst="${tmp}/${dir.resources}/${dir.images}"/>
+        <mkcp src="${dir.help}" dst="${tmp}/${dir.help}"/>
+        <mkcp src="${dir.resources}" dst="${tmp}/${dir.resources}"/>
 
         <!-- Zip then Remove the temporary folder -->
-        <!--<zip destfile="${tmpdir}.zip" basedir="${tmpdir}"/>-->
-        <!--<delete dir="${tmpdir}"/>-->
+        <zip destfile="${tmp}.zip" basedir="${tmp}"/>
+        <delete dir="${tmp}"/>
     </target>
 
     <target name="distribute" description="Distribute Zipped Source Code">
@@ -171,6 +175,9 @@ public class ${prj.gen} {
 
         <!-- Fill temporary directory with files to zip -->
         <mkdir dir="${tmp}"/>
+
+        <!-- Copy Templates -->
+        <copy file="${dir.templates}/${prj.ini}" todir="${tmp}/${dir.templates}/${prj.ini}"/>
 
         <!-- Copy Resources -->
         <mkcp src="${dir.resources}/${dir.recipes}" dst="${tmp}/${dir.resources}/${dir.recipes}"/>
@@ -198,6 +205,7 @@ public class ${prj.gen} {
         <delete dir="${dir.gen}"/>
         <delete file="${prj.jar}"/>
         <delete file="${prj.manifest}"/>
+        <delete file="${prj.ini}"/>
 
         <delete>
             <fileset dir="." includes="*.zip"/>

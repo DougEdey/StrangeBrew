@@ -200,7 +200,7 @@ public class Options {
 
     private void loadProperties() {
 
-        String path = Product.getAppPath(Product.Path.RESOURCES);
+        String path = Product.getAppPath(Product.Path.ROOT);
         path += System.getProperty("file.separator");
         String fname = path + Product.getName() + ".ini";
 
@@ -216,7 +216,7 @@ public class Options {
 
     public void saveProperties() {
 
-        String path = Product.getAppPath(Product.Path.RESOURCES);
+        String path = Product.getAppPath(Product.Path.ROOT);
         path += System.getProperty("file.separator");
         String fname = path + Product.getName() + ".ini";
 

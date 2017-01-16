@@ -87,9 +87,9 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 
     private void initGUI() {
         try {
-            String iniPath = Product.getAppPath(Product.Path.ROOT);
+            String rootPath = Product.getAppPath(Product.Path.ROOT);
+            rootPath += System.getProperty("file.separator");
             String gif = "";
-            iniPath += System.getProperty("file.separator");
             BoxLayout thisLayout = new BoxLayout(this.getContentPane(), javax.swing.BoxLayout.Y_AXIS);
             this.getContentPane().setLayout(thisLayout);
             {
@@ -148,9 +148,9 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
                         readmeTextArea = new JTextArea();
                         jScrollPane1.setViewportView(readmeTextArea);
                         try {
-                            content = fileToString(iniPath + "README.md");
+                            content = fileToString(rootPath + "README.md");
                         } catch (FileNotFoundException e) {
-                            content = iniPath + "README.md not found";
+                            content = rootPath + "README.md not found";
                         }
                         readmeTextArea.setWrapStyleWord(true);
                         readmeTextArea.setLineWrap(true);
