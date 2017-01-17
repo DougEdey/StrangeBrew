@@ -168,7 +168,7 @@ public class WebServer extends NanoHTTPD {
         }
 
         if(rootDir == null ) {
-            rootDir = new File(Product.getAppPath(Product.Path.ROOT) + System.getProperty("file.separator"));
+            rootDir = new File(Product.getAppPath(Product.Path.ROOT, ""));
         }
 
         if (uri.equals("/")) {

@@ -40,28 +40,44 @@ public class Product
             Product.setAppPaths();
         }
 
+        String returnPath = appRoot;
         switch(dir) {
 
             case ROOT:
-                return appRoot;
+                break;
+
             case DATA:
-                return dataDir;
+                returnPath = dataDir;
+                break;
+
             case IMAGES:
-                return imagesDir;
+                returnPath = imagesDir;
+                break;
+
             case RECIPE:
-                return recipesDir;
+                returnPath = recipesDir;
+                break;
+
             case HELP:
-                return helpDir;
+                returnPath = helpDir;
+                break;
+
             case RESOURCES:
-                return resourceDir;
+                returnPath = resourceDir;
+                break;
+
             default:
                 /**
                  * No good way to handle this, previous implementation
                  * allowed the default case to return the appRoot
                  */
                 System.err.println("Unknown Directory: " + dir);
-                return appRoot;
         }
+        return returnPath;
+    }
+
+    public static String getAppPath(Product.Path dir, String mRelativePath) {
+        return getAppPath(dir) + System.getProperty("file.separator") + mRelativePath;
     }
 
     /**
@@ -88,6 +104,7 @@ public class Product
     private static String imagesDir = "";
     private static String recipesDir = "";
     private static String resourceDir = "";
+
 
     private static void setAppPaths() {
 

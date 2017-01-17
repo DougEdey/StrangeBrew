@@ -106,7 +106,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
                         splashPanel.setLayout(splashPanelLayout);
                         aboutPanel.add(splashPanel);
 
-                        gif = Product.getAppPath(Product.Path.IMAGES) + System.getProperty("files.separator") + "splash.gif";
+                        gif = Product.getAppPath(Product.Path.IMAGES, "splash.gif");
                         JLabel splashLabel = new JLabel(new ImageIcon(gif));
                         splashPanel.add(splashLabel);
 
@@ -168,7 +168,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
                         licensePanel.add(jScrollPane2, BorderLayout.CENTER);
 
                         /* Set contents for this tab */
-                        String content = Product.getAppPath(Product.Path.RESOURCES) + System.getProperty("file.separator") + "license.txt";
+                        String content = Product.getAppPath(Product.Path.RESOURCES, "license.txt");
                         licenseTextArea = new JTextArea();
                         jScrollPane2.setViewportView(licenseTextArea);
                         try {
