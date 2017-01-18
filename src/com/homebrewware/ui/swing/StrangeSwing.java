@@ -151,7 +151,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
     // The one and only StrangeSwing
     private static StrangeSwing instance = null;
 
-    public String version = Product.getVersion();
+    public String version = Product.getInstance().getVersion();
     public String edition = "Free";
 
     // Stuff that should be final
@@ -450,7 +450,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
         // windows to pull up the public data stored here
         // TODO
         DB = Database.getInstance();
-        String path = Product.getAppPath(Product.Path.DATA);
+        String path = Product.getInstance().getAppPath(Product.Path.DATA);
         Debug.print("DB Path: " + path);
 
         // let's check that the path is good, if not, ask for a better one
@@ -515,7 +515,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
         if(preferences != null && preferences.getProperty("optRecipe") != null) {
             path = preferences.getProperty("optRecipe");
         } else {
-            path = Product.getAppPath(Product.Path.RECIPE);
+            path = Product.getInstance().getAppPath(Product.Path.RECIPE);
         }
         Debug.print("Recipes path:" + path);
 
@@ -719,7 +719,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
         // find the xslt stylesheet in the classpath
         // URL xsltUrl = getClass().getClassLoader().getResource(xslt);
-        String path = Product.getAppPath(Product.Path.DATA);
+        String path = Product.getInstance().getAppPath(Product.Path.DATA);
         Debug.print("Using " + path);
         File xsltFile = new File(path, xslt);
 
@@ -927,7 +927,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
             this.setSize(preferences.getIProperty("winWidth"), preferences.getIProperty("winHeight"));
             this.setLocation(preferences.getIProperty("winX"), preferences.getIProperty("winY"));
 
-            String gif = Product.getAppPath(Product.Path.IMAGES, "sb2.gif");
+            String gif = Product.getInstance().getAppPath(Product.Path.IMAGES, "sb2.gif");
             icon = new ImageIcon(gif);
             this.setIconImage(icon.getImage());
             this.setTitle("StrangeBrew " + version + " " + edition + " - [<new>]");
@@ -1237,27 +1237,27 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
                             mainToolBar.add(saveButton);
                             saveButton.setMnemonic(java.awt.event.KeyEvent.VK_S);
-                            gif = Product.getAppPath(Product.Path.IMAGES, "save.gif");
+                            gif = Product.getInstance().getAppPath(Product.Path.IMAGES, "save.gif");
                             saveButton.setIcon(new ImageIcon(gif));
                             saveButton.setToolTipText("Save Recipe");
 
                             mainToolBar.add(findButton);
-                            gif = Product.getAppPath(Product.Path.IMAGES, "find.gif");
+                            gif = Product.getInstance().getAppPath(Product.Path.IMAGES, "find.gif");
                             findButton.setIcon(new ImageIcon(gif));
                             findButton.setToolTipText("Find Recipes");
 
                             mainToolBar.add(remoteButton);
-                            gif = Product.getAppPath(Product.Path.IMAGES, "find.gif");
+                            gif = Product.getInstance().getAppPath(Product.Path.IMAGES, "find.gif");
                             remoteButton.setIcon(new ImageIcon(gif));
                             remoteButton.setToolTipText("Find Recipes from SB Online!");
 
                             mainToolBar.add(printButton);
-                            gif = Product.getAppPath(Product.Path.IMAGES, "print.gif");
+                            gif = Product.getInstance().getAppPath(Product.Path.IMAGES, "print.gif");
                             printButton.setIcon(new ImageIcon(gif));
                             printButton.setToolTipText("Print Recipe");
 
                             mainToolBar.add(copyButton);
-                            gif = Product.getAppPath(Product.Path.IMAGES, "copy.gif");
+                            gif = Product.getInstance().getAppPath(Product.Path.IMAGES, "copy.gif");
                             copyButton.setIcon(new ImageIcon(gif));
                             copyButton.setToolTipText("Copy to clipboard");
 
@@ -1551,7 +1551,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
                     }
                     {
-                        gif = Product.getAppPath(Product.Path.IMAGES, "find.gif");
+                        gif = Product.getInstance().getAppPath(Product.Path.IMAGES, "find.gif");
                         icon = new ImageIcon(gif);
                         findFileMenuItem.setIcon(icon);
                         findFileMenuItem.setText("Find");
@@ -1560,7 +1560,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
                     }
                     {
-                        gif = Product.getAppPath(Product.Path.IMAGES, "find.gif");
+                        gif = Product.getInstance().getAppPath(Product.Path.IMAGES, "find.gif");
                         icon = new ImageIcon(gif);
                         remoteFileMenuItem.setIcon(icon);
                         remoteFileMenuItem.setText("Find Remote Recipes");
@@ -1577,7 +1577,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
                     }
                     {
-                        gif = Product.getAppPath(Product.Path.IMAGES, "save.gif");
+                        gif = Product.getInstance().getAppPath(Product.Path.IMAGES, "save.gif");
                         icon = new ImageIcon(gif);
                         saveMenuItem.setText("Save");
                         saveMenuItem.setIcon(icon);
@@ -1586,7 +1586,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 
                     }
                     {
-                        gif = Product.getAppPath(Product.Path.IMAGES, "saveas.gif");
+                        gif = Product.getInstance().getAppPath(Product.Path.IMAGES, "saveas.gif");
                         icon = new ImageIcon(gif);
                         saveAsMenuItem.setText("Save As ...");
                         saveAsMenuItem.setIcon(icon);
@@ -1609,7 +1609,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
                     }
                     {
                         fileMenu.add(clipboardMenuItem);
-                        gif = Product.getAppPath(Product.Path.IMAGES, "print.gif");
+                        gif = Product.getInstance().getAppPath(Product.Path.IMAGES, "print.gif");
                         icon = new ImageIcon(gif);
                         printMenuItem.setIcon(icon);
                         fileMenu.add(printMenuItem);
@@ -2101,7 +2101,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
             aboutDlg.setVisible(true);
         } else if (o == helpMenuItem) {
             String urlString = null;
-            urlString = Product.getAppPath(Product.Path.HELP, "index.html");
+            urlString = Product.getInstance().getAppPath(Product.Path.HELP, "index.html");
             Debug.print(urlString);
             AbstractLogger logger = new SystemLogger();
             BrowserLauncher launcher;
@@ -2159,7 +2159,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
             PreferencesDialog d = new PreferencesDialog(this);
             d.setVisible(true);
             preferences = d.getOpts();
-            String path = Product.getAppPath(Product.Path.DATA);
+            String path = Product.getInstance().getAppPath(Product.Path.DATA);
             DB.readDB(path, preferences.getProperty("optStyleYear"));
             Debug.print("OptHideNonStock: "+preferences.getProperty("optHideNonStock"));
             Debug.print("Style length: "+DB.styleDB.size());

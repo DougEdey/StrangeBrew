@@ -396,7 +396,7 @@ public class PreferencesDialog extends javax.swing.JDialog implements ActionList
         txtEmail.setText(opts.getProperty("optEmail"));
         String recipeDir = opts.getProperty("optRecipe");
         if((recipeDir == null) || recipeDir.equalsIgnoreCase("") ) {
-            recipeDir = Product.getAppPath(Product.Path.RECIPE);
+            recipeDir = Product.getInstance().getAppPath(Product.Path.RECIPE);
         }
         txtRecipe.setText(recipeDir);
         localeComboBox.setSelectedItem(opts.getLocale());

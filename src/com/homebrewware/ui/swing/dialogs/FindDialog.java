@@ -90,7 +90,7 @@ public class FindDialog extends javax.swing.JDialog implements ActionListener {
             recipeDir = opt.getProperty("optRecipe");
 
         if(recipeDir.equalsIgnoreCase("") ) {
-            recipeDir = Product.getAppPath(Product.Path.RECIPE);
+            recipeDir = Product.getInstance().getAppPath(Product.Path.RECIPE);
         }
 
         try {

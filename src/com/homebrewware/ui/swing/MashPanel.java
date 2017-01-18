@@ -286,7 +286,7 @@ public class MashPanel extends javax.swing.JPanel implements ActionListener, Foc
             nameTxt.addActionListener(this);
 
             jPanel1.add(saveButton);
-            String gif = Product.getAppPath(Product.Path.IMAGES, "save.gif");
+            String gif = Product.getInstance().getAppPath(Product.Path.IMAGES, "save.gif");
             saveButton.setIcon(new ImageIcon(gif));
             saveButton.addActionListener(this);
 

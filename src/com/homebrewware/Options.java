@@ -200,10 +200,11 @@ public class Options {
 
     private void loadProperties() {
 
-        String fname = Product.getAppPath(Product.Path.ROOT, Product.getName() + ".ini");
+        String propFname = Product.getInstance().getName() + ".ini";
+        String fname = Product.getInstance().getAppPath(Product.Path.ROOT, propFname);
         try {
             props.load(new FileInputStream(new File(fname)));
-            Debug.print(Product.getName() + ".ini file read: " + fname + ". Contents:");
+            Debug.print(propFname + "file read: " + fname + ". Contents:");
             Debug.print(props.toString());
         } catch (Exception e) {
             System.err.println(e);
@@ -212,7 +213,8 @@ public class Options {
 
     public void saveProperties() {
 
-        String fname = Product.getAppPath(Product.Path.ROOT, Product.getName() + ".ini");
+        String propFname = Product.getInstance().getName() + ".ini";
+        String fname = Product.getInstance().getAppPath(Product.Path.ROOT, propFname);
         try{
             Debug.print("Storing props: " + fname);
             FileOutputStream out = new FileOutputStream(fname);

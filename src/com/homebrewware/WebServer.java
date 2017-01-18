@@ -145,7 +145,7 @@ public class WebServer extends NanoHTTPD {
 
                 String xml = recipes.get(i).toXML(null);
                 StreamSource xmlSource = new StreamSource(new StringReader(xml));
-                String path = Product.getAppPath(Product.Path.DATA);
+                String path = Product.getInstance().getAppPath(Product.Path.DATA);
                 Debug.print("Using " + path);
 
                 File xsltFile = new File(path, "recipeToHtml.xslt");
@@ -168,7 +168,7 @@ public class WebServer extends NanoHTTPD {
         }
 
         if(rootDir == null ) {
-            rootDir = new File(Product.getAppPath(Product.Path.ROOT, ""));
+            rootDir = new File(Product.getInstance().getAppPath(Product.Path.ROOT, ""));
         }
 
         if (uri.equals("/")) {
@@ -380,7 +380,7 @@ public class WebServer extends NanoHTTPD {
             recipeDir = opt.getProperty("optRecipe");
 
         if(recipeDir.equalsIgnoreCase("") ) {
-            recipeDir = Product.getAppPath(Product.Path.RECIPE);
+            recipeDir = Product.getInstance().getAppPath(Product.Path.RECIPE);
         }
         File dir = new File(recipeDir);
 

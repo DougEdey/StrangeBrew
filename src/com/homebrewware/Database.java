@@ -103,7 +103,7 @@ public class Database {
     // This is now a singleton
     private Database() throws UnsupportedEncodingException {
 
-        dbPath = Product.getAppPath(Product.Path.DATA);
+        dbPath = Product.getInstance().getAppPath(Product.Path.DATA);
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {

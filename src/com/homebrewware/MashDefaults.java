@@ -100,7 +100,7 @@ public class MashDefaults {
 
     private void save() {
 
-        String path = Product.getAppPath(Product.Path.DATA);
+        String path = Product.getInstance().getAppPath(Product.Path.DATA);
         try {
             File file = new File(path, fileName);
             CSVWriter writer = new CSVWriter(new FileWriter(file));
@@ -118,7 +118,7 @@ public class MashDefaults {
     }
 
     private void load(){
-        String path = Product.getAppPath(Product.Path.DATA);
+        String path = Product.getInstance().getAppPath(Product.Path.DATA);
         defaults = new ArrayList<ArrayList<String>>();
         try {
             File file = new File(path, fileName);
