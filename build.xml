@@ -117,11 +117,13 @@ public class ${prj.gen} {
         public final static int MAJOR = ${ver.major};
         public final static int MINOR = ${ver.minor};
         public final static int REV   = ${ver.rev};
+        public final static int NUMBER = ${build.number};
     }
 
     public class Domain {
-        public final static String DOMAIN = "${prj.domain}";
-        public final static String TLD    = "${prj.tld}";
+        public final static String DOMAIN  = "${prj.domain}";
+        public final static String TLD     = "${prj.tld}";
+        public final static String SRC_URL = "${prj.update.url}";
     }
 
     public class Dir {
@@ -135,7 +137,6 @@ public class ${prj.gen} {
 
     public final static String NAME   = "${prj.domain}";
     public final static String DATE   = "${datestr}";
-    public final static String NUMBER = "${build.number}";
 }
         </echo>
     </target>

@@ -221,76 +221,36 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
         return updateButton;
     }
 
-    private void checkVersion() {
-        // check the latest URL on github
-        URL Build = null;
-        try {
-            Build = new URL("https://raw.github.com/DougEdey/StrangeBrew/master/src/ca/strangebrew/Version.java");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        BufferedReader in;
-        try {
-            in = new BufferedReader(
-            new InputStreamReader(Build.openStream()));
-            String inputLine;
-            while ((inputLine = in.readLine()) != null)
-                if(inputLine.contains("BUILDNUMBER")) {
-                    //got the build ID line
-                    String [] splitLine = inputLine.split(" ");
-                    String vTemp = splitLine[splitLine.length-1];
-                    vTemp = vTemp.substring(1, vTemp.length()-2);
-                    int newBuildID = Integer.parseInt(vTemp);
-
-                    if( newBuildID != Integer.parseInt(Product.getInstance().getBuildNumber())) {
-                        // newest Build ID means there's a new download avalable!
-                        Object[] options = {"Yes, please",
-                                "No, thanks"};
-
-                        int n = JOptionPane.showOptionDialog(this.getContentPane(),
-                                "New download available (Build ID " + newBuildID + ")"
-                                + ". Would you like to download it?",
-
-                                "New Version Available!",
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.QUESTION_MESSAGE,
-                                null,
-                                options,
-                                options[0]);
-
-                        if (n == 0) {
-                            // User Selected Yes to download
-                            Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-                            if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-                                try {
-                                    URL DLURL = new URL("https://github.com/DougEdey/StrangeBrew/blob/master/StrangeBrew-2.1.0-b"+newBuildID+".zip?raw=true");
-
-                                    desktop.browse(DLURL.toURI());
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(this.getContentPane(),
-                                "No updates available!");
-                    }
-                }
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return;
-    }
-
-//  Make the button do the same thing as the default close operation
-    //(DISPOSE_ON_CLOSE).
     public void actionPerformed(ActionEvent e) {
+
         if (e.getSource() == updateButton) {
-            checkVersion();
+
+            String update = "";
+            if(Product.getInstance().isNewSoftwareAvailable()) {
+
+                String[] options = {"Yes, please", "No, thanks"};
+                String updateMsg = "New download available. Would you like to download it?";
+                int n = JOptionPane.showOptionDialog(this.getContentPane(),
+                    updateMsg, "New Version Available!", JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+                //if (n == JOptionPane.YES_OPTION) {
+
+                //    //Product.getInstance().downloadNewSoftware();
+                //    Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+                //    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+                //        try {
+                //            URL DLURL = new URL("https://github.com/DougEdey/StrangeBrew/blob/master/StrangeBrew-2.1.0-b"+newBuildID+".zip?raw=true");
+                //            desktop.browse(DLURL.toURI());
+                //        } catch (Exception e) {
+                //            System.err.println(e.getMessage());
+                //        }
+                //    }
+                //}
+            } else {
+                update = "No Updates Available!";
+                JOptionPane.showMessageDialog(this.getContentPane(), update);
+            }
         } else {
             setVisible(false);
             dispose();

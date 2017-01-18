@@ -12,10 +12,16 @@
  */
 package com.homebrewware;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
+import java.net.URL;
 import java.net.URLDecoder;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import generated.Build;
 
@@ -29,6 +35,66 @@ public class Product
         IMAGES,
         RESOURCES,
     };
+
+    public boolean isNewSoftwareAvailable() {
+        return (isNewBuildAvailable() || isNewVersionAvailable());
+    }
+
+        //BufferedReader in;
+        //try {
+        //    in = new BufferedReader(new InputStreamReader(Build.openStream()));
+
+        //    String inputLine;
+        //    while ((inputLine = in.readLine()) != null)
+
+
+        //        if(inputLine.contains("BUILDNUMBER")) {
+        //            //got the build ID line
+        //            String [] splitLine = inputLine.split(" ");
+        //            String vTemp = splitLine[splitLine.length-1];
+        //            vTemp = vTemp.substring(1, vTemp.length()-2);
+        //            int newBuildID = Integer.parseInt(vTemp);
+
+        //            if( newBuildID != Integer.parseInt(Product.getInstance().getBuildNumber())) {
+        //                // newest Build ID means there's a new download avalable!
+        //                Object[] options = {"Yes, please",
+        //                        "No, thanks"};
+
+        //                int n = JOptionPane.showOptionDialog(this.getContentPane(),
+        //                        "New download available (Build ID " + newBuildID + ")"
+        //                        + ". Would you like to download it?",
+
+        //                        "New Version Available!",
+        //                        JOptionPane.YES_NO_OPTION,
+        //                        JOptionPane.QUESTION_MESSAGE,
+        //                        null,
+        //                        options,
+        //                        options[0]);
+
+        //                if (n == 0) {
+        //                    // User Selected Yes to download
+        //                    Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        //                    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+        //                        try {
+        //                            URL DLURL = new URL("https://github.com/DougEdey/StrangeBrew/blob/master/StrangeBrew-2.1.0-b"+newBuildID+".zip?raw=true");
+
+        //                            desktop.browse(DLURL.toURI());
+        //                        } catch (Exception e) {
+        //                            e.printStackTrace();
+        //                        }
+        //                    }
+        //                }
+        //            } else {
+        //                JOptionPane.showMessageDialog(this.getContentPane(),
+        //                        "No updates available!");
+        //            }
+        //        }
+        //    in.close();
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
+
+        //return;
 
     public String getAppPath(Product.Path dir) {
 
@@ -76,8 +142,8 @@ public class Product
         return Build.DATE;
     }
 
-    public String getBuildNumber() {
-        return Build.NUMBER;
+    public int getBuildNumber() {
+        return Build.Version.NUMBER;
     }
 
     public static Product getInstance() {
@@ -108,6 +174,10 @@ public class Product
     private String imagesDir;
     private String recipesDir;
     private String resourceDir;
+    private Pattern buildNumberPattern;
+    private Pattern majorRevPattern;
+    private Pattern minorRevPattern;
+    private Pattern revPattern;
 
     private volatile static Product uniqueInstance;
 
@@ -120,13 +190,74 @@ public class Product
             System.err.println("Unable to determine application path");
         }
 
+        /* Cache the directory names */
         String separator = System.getProperty("file.separator");
-
         resourceDir = rootDir + separator + Build.Dir.RESOURCES;
         imagesDir = resourceDir + separator + Build.Dir.IMAGES;
         dataDir = resourceDir + separator + Build.Dir.DATA;
         recipesDir = resourceDir + separator + Build.Dir.RECIPES;
-
         helpDir = "file://" + rootDir + separator + Build.Dir.HELP;
+
+        /* Cache each regex */
+        buildNumberPattern = Pattern.compile("build\\.number=\\d+");
+        majorRevPattern = Pattern.compile("ver\\.major=\\d+");
+        minorRevPattern = Pattern.compile("ver\\.minor=\\d+");
+        revPattern = Pattern.compile("ver\\.rev=\\d+");
+    }
+
+    private boolean isNewBuildAvailable() {
+
+        Matcher m;
+        boolean rval = false;
+
+        try {
+            URL url = new URL(Build.Domain.SRC_URL + "/build.number");
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+
+            String inputLine;
+            while((inputLine = in.readLine()) != null) {
+                 m = buildNumberPattern.matcher(inputLine);
+                 if(m.find()) {
+                     rval = (Integer.parseInt(m.group(0).split("=")[1]) > getBuildNumber());
+                     break;
+                 }
+            }
+            in.close();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        return rval;
+    }
+
+    private boolean isNewVersionAvailable() {
+
+        Matcher m;
+        boolean rval = false;
+
+        try {
+            URL url = new URL(Build.Domain.SRC_URL + "/build.properties");
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+
+            String inputLine;
+            Pattern[] patterns = { majorRevPattern, minorRevPattern, revPattern };
+            int[] revisions = { Build.Version.MAJOR, Build.Version.MINOR, Build.Version.REV };
+
+            while((rval == false) && (inputLine = in.readLine()) != null) {
+
+                for(int i = 0; i < patterns.length; i++) {
+
+                    m = patterns[i].matcher(inputLine);
+                    if(m.find()) {
+                        rval = (Integer.parseInt(m.group(0).split("=")[1]) > revisions[i]);
+                    }
+                 }
+            }
+            in.close();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        return rval;
     }
 }
