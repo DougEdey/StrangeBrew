@@ -1,4 +1,13 @@
-/target
+# Directories
+/bin
+/generated
+
+# Filetypes
 *.class
-/dist
-/build
+*.zip
+
+# Specific Files
+MANIFEST.MF
+hbw.jar
+homebrewware.ini
+src/com/homebrewware/Build.java
