@@ -36,65 +36,20 @@ public class Product
         RESOURCES,
     };
 
-    public boolean isNewSoftwareAvailable() {
-        return (isNewBuildAvailable() || isNewVersionAvailable());
-    }
+    public void downloadNewSoftware() {
 
-        //BufferedReader in;
-        //try {
-        //    in = new BufferedReader(new InputStreamReader(Build.openStream()));
-
-        //    String inputLine;
-        //    while ((inputLine = in.readLine()) != null)
-
-
-        //        if(inputLine.contains("BUILDNUMBER")) {
-        //            //got the build ID line
-        //            String [] splitLine = inputLine.split(" ");
-        //            String vTemp = splitLine[splitLine.length-1];
-        //            vTemp = vTemp.substring(1, vTemp.length()-2);
-        //            int newBuildID = Integer.parseInt(vTemp);
-
-        //            if( newBuildID != Integer.parseInt(Product.getInstance().getBuildNumber())) {
-        //                // newest Build ID means there's a new download avalable!
-        //                Object[] options = {"Yes, please",
-        //                        "No, thanks"};
-
-        //                int n = JOptionPane.showOptionDialog(this.getContentPane(),
-        //                        "New download available (Build ID " + newBuildID + ")"
-        //                        + ". Would you like to download it?",
-
-        //                        "New Version Available!",
-        //                        JOptionPane.YES_NO_OPTION,
-        //                        JOptionPane.QUESTION_MESSAGE,
-        //                        null,
-        //                        options,
-        //                        options[0]);
-
-        //                if (n == 0) {
-        //                    // User Selected Yes to download
-        //                    Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-        //                    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-        //                        try {
-        //                            URL DLURL = new URL("https://github.com/DougEdey/StrangeBrew/blob/master/StrangeBrew-2.1.0-b"+newBuildID+".zip?raw=true");
-
-        //                            desktop.browse(DLURL.toURI());
-        //                        } catch (Exception e) {
-        //                            e.printStackTrace();
-        //                        }
-        //                    }
-        //                }
-        //            } else {
-        //                JOptionPane.showMessageDialog(this.getContentPane(),
-        //                        "No updates available!");
-        //            }
-        //        }
-        //    in.close();
-        //} catch (IOException e) {
-        //    e.printStackTrace();
+        /* This feature will not be available until the website is up and running */
+        System.err.println("Download failed from: https://www.homebrewware.com");
+        //Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        //if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+        //    try {
+        //        URL DLURL = new URL("https://github.com/DougEdey/StrangeBrew/blob/master/StrangeBrew-2.1.0-b"+newBuildID+".zip?raw=true");
+        //        desktop.browse(DLURL.toURI());
+        //    } catch (Exception e) {
+        //        e.printStackTrace();
+        //    }
         //}
-
-        //return;
+    }
 
     public String getAppPath(Product.Path dir) {
 
@@ -165,6 +120,10 @@ public class Product
 
     public String getVersion() {
         return Build.Version.MAJOR + "." + Build.Version.MINOR + "." + Build.Version.REV;
+    }
+
+    public boolean isNewSoftwareAvailable() {
+        return (isNewBuildAvailable() || isNewVersionAvailable());
     }
 
     private String rootDir;

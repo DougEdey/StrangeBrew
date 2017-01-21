@@ -234,19 +234,9 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
                     updateMsg, "New Version Available!", JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
-                //if (n == JOptionPane.YES_OPTION) {
-
-                //    //Product.getInstance().downloadNewSoftware();
-                //    Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-                //    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-                //        try {
-                //            URL DLURL = new URL("https://github.com/DougEdey/StrangeBrew/blob/master/StrangeBrew-2.1.0-b"+newBuildID+".zip?raw=true");
-                //            desktop.browse(DLURL.toURI());
-                //        } catch (Exception e) {
-                //            System.err.println(e.getMessage());
-                //        }
-                //    }
-                //}
+                if (n == JOptionPane.YES_OPTION) {
+                    Product.getInstance().downloadNewSoftware();
+                }
             } else {
                 update = "No Updates Available!";
                 JOptionPane.showMessageDialog(this.getContentPane(), update);
