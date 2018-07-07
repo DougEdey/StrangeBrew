@@ -4,5 +4,5 @@ Created-By: 1.8.0_171-8u171-b11-0ubuntu0.18.04.1-b11 (Oracle Corporati
  on)
 Built-By: doug
 Main-Class: ca.strangebrew.ui.swing.dialogs.StrangeBrew
-Implementation-Version: 2.1.0-b241
+Implementation-Version: 2.1.0-b285
 
