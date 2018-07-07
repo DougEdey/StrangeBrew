@@ -91,7 +91,7 @@
 
       <zipgroupfileset dir="lib" includes="*.jar" excludes="source/**"/>
      
-		</jar>
+    </jar>
 		
 		<copy file="gpl.txt" todir="${dist}"/>
 		<copy file="ChangeLog.txt" todir="${dist}"/>

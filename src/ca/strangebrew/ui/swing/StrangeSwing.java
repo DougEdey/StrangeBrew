@@ -2093,7 +2093,7 @@ public class StrangeSwing extends javax.swing.JFrame implements ActionListener, 
 			StringSelection ss = new StringSelection(myRecipe.toText());
 			clipboard.setContents(ss, ss);
 		} else if (o == aboutMenuItem) {
-			aboutDlg = new AboutDialog(this, version + " " + edition);
+			aboutDlg = new AboutDialog(this);
 			aboutDlg.setVisible(true);
 		} else if (o == helpMenuItem) {
 			String urlString = null;

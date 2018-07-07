@@ -49,29 +49,13 @@ import ca.strangebrew.SBVersion;
 
 
 public class AboutDialog extends javax.swing.JDialog implements ActionListener {
-	private JTabbedPane aboutTabPanel;
-	private JPanel buttonPanel;
-	private JPanel licensePanel;
-	private JTextArea licenseTextArea;
-	private JScrollPane jScrollPane2;
-	private JTextArea readmeTextArea;
-	private JScrollPane jScrollPane1;
-	private JLabel copyrightLabel;
-	private JLabel emailLabel;
-	private JLabel versionLabel;
-	private JPanel splashPanel;
-	private JPanel readmePanel;
-	private JPanel aboutPanel;
-	private JButton okButton;
+    private JPanel buttonPanel;
+    private JButton okButton;
 	private JButton updateButton;
 
-	
-	private String version;
 
-	
-	public AboutDialog(JFrame frame, String v) {
+    public AboutDialog(JFrame frame) {
 		super(frame);
-		version = v;
 		initGUI();
 	}
 	
@@ -81,15 +65,15 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 			BoxLayout thisLayout = new BoxLayout(this.getContentPane(), javax.swing.BoxLayout.Y_AXIS);
 			this.getContentPane().setLayout(thisLayout);
 			{
-				aboutTabPanel = new JTabbedPane();
+                JTabbedPane aboutTabPanel = new JTabbedPane();
 				this.getContentPane().add(aboutTabPanel);				
 				{
-					aboutPanel = new JPanel();
+                    JPanel aboutPanel = new JPanel();
 					BoxLayout aboutPanelLayout = new BoxLayout(aboutPanel, javax.swing.BoxLayout.Y_AXIS);
 					aboutPanel.setLayout(aboutPanelLayout);
 					aboutTabPanel.addTab("About", null, aboutPanel, null);
 					{
-						splashPanel = new JPanel();
+                        JPanel splashPanel = new JPanel();
 						FlowLayout splashPanelLayout = new FlowLayout();
 						splashPanel.setLayout(splashPanelLayout);
 						aboutPanel.add(splashPanel);
@@ -100,7 +84,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 						
 					}
 					{
-						versionLabel = new JLabel();
+                        JLabel versionLabel = new JLabel();
 						aboutPanel.add(versionLabel);
 						
 						versionLabel.setText("<html>Version: " + SBVersion.VERSION + "<br />" +
@@ -110,28 +94,28 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 							
 					}
 					{
-						emailLabel = new JLabel();
+                        JLabel emailLabel = new JLabel();
 						aboutPanel.add(emailLabel);
 						emailLabel.setText("Contact: doug.edey@gmail.com");
 					}
 					{
-						copyrightLabel = new JLabel();
+                        JLabel copyrightLabel = new JLabel();
 						aboutPanel.add(copyrightLabel);
 						copyrightLabel.setText("(c) 2005-2006 Drew Avis");
 					}
 				}
 				{
-					readmePanel = new JPanel();
+                    JPanel readmePanel = new JPanel();
 					BorderLayout readmePanelLayout = new BorderLayout();
 					readmePanel.setLayout(readmePanelLayout);
 					aboutTabPanel.addTab("Readme", null, readmePanel, null);
 					{
-						jScrollPane1 = new JScrollPane();
+                        JScrollPane jScrollPane1 = new JScrollPane();
 						jScrollPane1.setAutoscrolls(true);
 						readmePanel.add(jScrollPane1, BorderLayout.CENTER);						
 						jScrollPane1.setPreferredSize(new java.awt.Dimension(3, 19));
 						{
-							readmeTextArea = new JTextArea();
+                            JTextArea readmeTextArea = new JTextArea();
 							jScrollPane1.setViewportView(readmeTextArea);
 							readmeTextArea.setText("jTextArea1");							
 							readmeTextArea.setWrapStyleWord(true);
@@ -141,43 +125,43 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 								FileReader in = new FileReader(readme);
 								BufferedReader inb = new BufferedReader(in);
 								String c;
-								String s="";
+								StringBuilder stringBuilder = new StringBuilder();
 								// TODO: what if there's no readme file?
 						        while ((c = inb.readLine()) != null){
-						        	s = s + c + "\n";
+						        	stringBuilder.append(c).append("\n");
 						        }					           
-						        readmeTextArea.setText(s);
+						        readmeTextArea.setText(stringBuilder.toString());
 						        readmeTextArea.setLineWrap(true);
 	
 						        in.close();
-							} catch (FileNotFoundException e) {
+							} catch (FileNotFoundException ignored) {
 								
 							}
 						}
 					}
 				}
 				{
-					licensePanel = new JPanel();
+                    JPanel licensePanel = new JPanel();
 					BorderLayout licensePanelLayout = new BorderLayout();
 					licensePanel.setLayout(licensePanelLayout);
 					aboutTabPanel.addTab("License", null, licensePanel, null);
 					{
-						jScrollPane2 = new JScrollPane();
+                        JScrollPane jScrollPane2 = new JScrollPane();
 						licensePanel.add(jScrollPane2, BorderLayout.CENTER);
 												{
-							licenseTextArea = new JTextArea();
+                                                    JTextArea licenseTextArea = new JTextArea();
 							jScrollPane2.setViewportView(licenseTextArea);
 							licenseTextArea.setText("jTextArea1");
 							File readme = new File(iniPath + "gpl.txt");
 							FileReader in = new FileReader(readme);
 							BufferedReader inb = new BufferedReader(in);
 							String c;
-							String s="";
-							// TODO: what if there's no readme file?
-					        while ((c = inb.readLine()) != null){
-					        	s = s + c + "\n";
-					        }
-					        licenseTextArea.setText(s);
+                            StringBuilder stringBuilder = new StringBuilder();
+                            // TODO: what if there's no readme file?
+                            while ((c = inb.readLine()) != null){
+                                stringBuilder.append(c).append("\n");
+                            }
+                            licenseTextArea.setText(stringBuilder.toString());
 					        licenseTextArea.setLineWrap(true);
 					        
 					        in.close();
@@ -226,7 +210,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 	
 	private void checkVersion() {
 		// check the latest URL on github
-		URL Build = null;
+		URL Build;
 		try {
 			Build = new URL("https://raw.github.com/DougEdey/StrangeBrew/master/src/ca/strangebrew/SBVersion.java");
 		} catch (MalformedURLException e) {
@@ -247,39 +231,41 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 	            	vTemp = vTemp.substring(1, vTemp.length()-2);
 	            	int newBuildID = Integer.parseInt(vTemp);
 	            	
-	            	if( newBuildID != Integer.parseInt(SBVersion.BUILDNUMBER)) {
-	            		// newest Build ID means there's a new download available!
-	            		Object[] options = {"Yes, please",
-	                            "No, thanks"};
-	            		
-	            		int n = JOptionPane.showOptionDialog(this.getContentPane(),
-	            			    "New download available (Build ID " + newBuildID + ")"
-	            			    + ". Would you like to download it?",
-	            				
-	            			    "New Version Available!",
-	            			    JOptionPane.YES_NO_OPTION,
-	            			    JOptionPane.QUESTION_MESSAGE,
-	            			    null,
-	            			    options,
-	            			    options[0]);
-	            		
-	            		if (n == 0) {
-	            			// User Selected Yes to download
-	            			Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-	            		    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-	            		        try {
-	            		        	URL DLURL = new URL("https://github.com/DougEdey/StrangeBrew/blob/master/StrangeBrew-2.1.0-b"+newBuildID+".zip?raw=true");
-	            		        	
-	            		            desktop.browse(DLURL.toURI());
-	            		        } catch (Exception e) {
-	            		            e.printStackTrace();
-	            		        }
-	            		    }
-	            		}
-	            	} else {
-	            		JOptionPane.showMessageDialog(this.getContentPane(),
-	            			    "No updates available!");
-	            	}
+	            	if (newBuildID == Integer.parseInt(SBVersion.BUILDNUMBER)) {
+                        JOptionPane.showMessageDialog(this.getContentPane(),
+                                "No updates available!");
+                        return;
+                    }
+
+                    // newest Build ID means there's a new download available!
+                    Object[] options = {"Yes, please",
+                            "No, thanks"};
+
+                    int n = JOptionPane.showOptionDialog(this.getContentPane(),
+                            "New download available (Build ID " + newBuildID + ")"
+                            + ". Would you like to download it?",
+
+                            "New Version Available!",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            options,
+                            options[0]);
+
+                    if (n != 0) {
+                        return;
+                    }
+                    // User Selected Yes to download
+                    Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+                    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+                        try {
+                            String ZIP_FILE_URL = "https://github.com/DougEdey/StrangeBrew/releases/download/2.1.0-b%1$s/StrangeBrew-2.1.0-b%1$s.zip";
+                            URL DLURL = new URL(String.format(ZIP_FILE_URL, newBuildID));
+                            desktop.browse(DLURL.toURI());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
 	            }
 	        in.close();
 		} catch (IOException e) {
