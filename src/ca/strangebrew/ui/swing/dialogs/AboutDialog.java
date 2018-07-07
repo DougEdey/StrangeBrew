@@ -248,7 +248,7 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 	            	int newBuildID = Integer.parseInt(vTemp);
 	            	
 	            	if( newBuildID != Integer.parseInt(SBVersion.BUILDNUMBER)) {
-	            		// newest Build ID means there's a new download avalable!
+	            		// newest Build ID means there's a new download available!
 	            		Object[] options = {"Yes, please",
 	                            "No, thanks"};
 	            		
@@ -285,8 +285,6 @@ public class AboutDialog extends javax.swing.JDialog implements ActionListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return;
 	}
 	
 //	Make the button do the same thing as the default close operation
